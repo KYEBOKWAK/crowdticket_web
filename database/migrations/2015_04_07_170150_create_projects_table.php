@@ -1,0 +1,57 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateProjectsTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('projects', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->integer('organization_id')->unsigned();
+            $table->foreign('organization_id')->references('id')->on('organizations');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('city_id')->unsigned();
+            $table->foreign('city_id')->references('id')->on('cities');
+            $table->boolean('published')->default(false)->index();
+            $table->boolean('funding_finished')->default(false)->index();
+            $table->boolean('performance_finished')->default(false)->index();
+            $table->boolean('location_fixed')->default(false)->index();
+            $table->string('title')->index();
+            $table->string('poster_url')->nullable();
+            $table->string('detailed_address')->nullable();
+            $table->integer('pledged_amount')->unsigned();
+            $table->integer('funded_amount')->unsigned()->default(0);
+            $table->integer('audiences_limit')->unsigned();
+            $table->integer('audiences_count')->unsigned()->default(0);
+            $table->integer('news_count')->unsigned()->default(0);
+            $table->integer('supporters_count')->unsigned()->default(0);
+            $table->integer('comments_count')->unsigned()->default(0);
+            $table->enum('commision_type', ['all_or_nothing', 'take_it_anyway']);
+			$table->timestamps();
+            $table->timestamp('funding_closing_at')->nullable();
+            $table->timestamp('performance_opening_at')->nullable();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+	    
+	}
+
+}
