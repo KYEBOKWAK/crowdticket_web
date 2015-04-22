@@ -33,6 +33,9 @@ Route::put('projects/{id}/approval', 'ProjectController@approveProject'); // adm
 Route::post('projects/{id}/news', 'NewsController@createNews'); // master
 Route::get('projects/{id}/news', 'NewsController@getNews');
 
+Route::post('tickets/{id}/orders', 'OrderController@createOrder'); // user
+Route::delete('orders/{id}', 'OrderController@deleteOrder'); // user
+
 Route::get('organizations', 'OrganizationController@getOrganizations');
 Route::get('organizations/{id}', 'OrganizationController@getOrganization');
 Route::get('organizations/{id}/members', 'MemberController@getMembers');
