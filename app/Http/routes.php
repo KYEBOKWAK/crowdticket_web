@@ -1,21 +1,46 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::controllers([
+	'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
 
 Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+Route::post('blueprints', 'BlueprintController@createBlueprint'); // user
+Route::get('blueprints/form', 'BlueprintController@getBlueprintForm'); // user
+Route::get('blueprints', 'BlueprintController@getBlueprints'); // admin
+Route::get('blueprints/{id}', 'BlueprintController@getBlueprint'); // admin
+Route::put('blueprints/{id}/approval', 'BlueprintController@approveBlueprint'); // admin
+
+Route::get('categories/{id}/projects', 'ProjectController@getCategoryProjectsById');
+Route::get('categories/{title}/projects', 'ProjectController@getCategoryProjectsByTitle');
+Route::get('cities/{id}/projects', 'ProjectController@getCityProjectsById');
+Route::get('cities/{name}/projects', 'ProjectController@getCityProjectsByName');
+
+Route::post('projects', 'ProjectController@createProject'); // approved
+Route::get('projects/form', 'ProjectController@getProjectForm'); // approved
+Route::get('projects', 'ProjectController@getProjects');
+Route::get('projects/{id}', 'ProjectController@getProject');
+Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
+Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); // master
+Route::get('projects/{id}/stats', 'ProjectController@getProjectStats'); // master
+Route::put('projects/{id}', 'ProjectController@updateProject'); // master
+Route::put('projects/{id}/approval', 'ProjectController@approveProject'); // admin
+
+Route::post('projects/{id}/news', 'NewsController@createNews'); // master
+Route::get('projects/{id}/news', 'NewsController@getNews');
+
+Route::get('organizations', 'OrganizationController@getOrganizations');
+Route::get('organizations/{id}', 'OrganizationController@getOrganization');
+Route::get('organizations/{id}/members', 'MemberController@getMembers');
+
+Route::get('users/{id}', 'UserController@getUser');
+Route::get('users/{id}/orders', 'UserController@getUserOrders');
+Route::get('users/{id}/projects', 'UserController@getUserProjects');
+
+Route::post('{entity}/{id}/comments', 'CommentController@createComment'); // user
+Route::get('{entity}/{id}/comments', 'CommentController@getComments');
+Route::delete('comments/{id}', 'CommentController@deleteComment'); // master

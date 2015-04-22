@@ -1,7 +1,5 @@
 <?php namespace App\Models;
 
-class BluePrint extends Model {
-
-	protected $table = 'blueprints';
+class Blueprint extends Model {
 
 }
