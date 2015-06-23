@@ -10,6 +10,7 @@ Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
 
 Route::post('blueprints', 'BlueprintController@createBlueprint'); // user
+Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 Route::get('blueprints/form', 'BlueprintController@getBlueprintForm'); // user
 Route::get('blueprints', 'BlueprintController@getBlueprints'); // admin
 Route::get('blueprints/{id}', 'BlueprintController@getBlueprint'); // admin
