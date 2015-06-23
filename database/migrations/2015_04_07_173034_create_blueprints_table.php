@@ -21,6 +21,12 @@ class CreateBlueprintsTable extends Migration {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->string('code')->index();
             $table->boolean('approved')->default(false)->index();
+			$table->enum('type', ['funding', 'sale']);
+			$table->string('user_introduction');
+			$table->string('project_introduction');
+			$table->string('story');
+			$table->string('estimated_amount');
+			$table->string('contact');
 			$table->timestamps();
 		});
 	}
