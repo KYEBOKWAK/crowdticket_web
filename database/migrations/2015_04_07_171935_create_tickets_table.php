@@ -19,11 +19,11 @@ class CreateTicketsTable extends Migration {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->integer('ticket_id')->unsigned()->nullable();
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->string('title');
-            $table->string('detail');
+            $table->string('description')->default('');
             $table->integer('audiences_limit')->unsigned();
             $table->integer('audiences_count')->unsigned()->default(0);
             $table->integer('price')->unsigned();
+			$table->integer('real_ticket_count')->unsigned()->default(0);
             $table->boolean('require_shipping')->default(false);
             $table->integer('shipping_charge')->unsigned()->default(0);
             $table->timestamp('delivery_date')->nullable();
