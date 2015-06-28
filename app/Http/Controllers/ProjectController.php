@@ -29,6 +29,7 @@ class ProjectController extends Controller {
 		\Auth::user()->checkOwnership($project);
 		
 		$project->load('tickets');
+		echo $project->toJson();
 		return view('project.form', [
 			'project' => $project
 		]);
@@ -60,7 +61,7 @@ class ProjectController extends Controller {
 	}
 	
 	private function getProjectByBlueprintCode($code) {
-		$blueprint = Blueprint::where('code', '=', $code)->first();
+		$blueprint = Blueprint::findByCode($code);
 		
 		\Auth::user()->checkOwnership($blueprint);
 		

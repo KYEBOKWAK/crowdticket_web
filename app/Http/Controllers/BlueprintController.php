@@ -7,9 +7,19 @@ class BlueprintController extends Controller {
 	public function createBlueprint() {
 		$blueprint = new Blueprint(\Input::all());
 		$blueprint->user()->associate(\Auth::user());
-		$blueprint->setAttribute('code', str_random(40));
+		$blueprint->setAttribute('code', $this->generateUniqueCode());
 		$blueprint->save();
 		return view('blueprint.created');
+	}
+	
+	private function generateUniqueCode() {
+		$code = str_random(40);
+		$blueprint = Blueprint::findByCode($code);
+		if ($blueprint) {
+			return $this->generateUniqueCode();
+		} else {
+			return $code;
+		}
 	}
 	
 	public function getBlueprintWelcome() {
