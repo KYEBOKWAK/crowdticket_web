@@ -6,21 +6,23 @@ use Validator;
 
 abstract class Model extends BaseModel {
 	
+	protected static $typeRules = array();
+	
 	protected static $creationRules = array();
 	
 	protected static $updateRules = array();
 	
 	public function __construct(array $attributes = array()) {
 		parent::__construct($attributes);
-		$this->validate($attributes, static::$creationRules);
+		if (!empty($attributes)) {
+			$this->validate($attributes, static::$typeRules);
+			$this->validate($attributes, static::$creationRules);
+		}
 	}
 	
 	public function update(array $attributes = array()) {
-		if (empty(static::$updateRules)) {
-			$this->validate($attributes, static::$creationRules);
-		} else {
-			$this->validate($attributes, static::$updateRules);
-		}
+		$this->validate($attributes, static::$typeRules);
+		$this->validate($attributes, static::$updateRules);
 		$this->fill($attributes);
 	}
 	
