@@ -9,42 +9,58 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
-Route::post('blueprints', 'BlueprintController@createBlueprint'); // user
 Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
-Route::get('blueprints/form', 'BlueprintController@getBlueprintForm'); // user
-Route::get('blueprints', 'BlueprintController@getBlueprints'); // admin
-Route::get('blueprints/{id}', 'BlueprintController@getBlueprint'); // admin
-Route::put('blueprints/{id}/approval', 'BlueprintController@approveBlueprint'); // admin
+
+Route::get('projects', 'ProjectController@getProjects');
+Route::get('projects/{id}', 'ProjectController@getProjectById');
+Route::get('projects/{name}', 'ProjectController@getProjectByName');
+Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
+
+Route::get('projects/{id}/news', 'NewsController@getNews');
 
 Route::get('categories/{id}/projects', 'ProjectController@getCategoryProjectsById');
 Route::get('categories/{title}/projects', 'ProjectController@getCategoryProjectsByTitle');
+
 Route::get('cities/{id}/projects', 'ProjectController@getCityProjectsById');
 Route::get('cities/{name}/projects', 'ProjectController@getCityProjectsByName');
-
-Route::post('projects', 'ProjectController@createProject'); // approved
-Route::get('projects/form', 'ProjectController@getProjectForm'); // approved
-Route::get('projects', 'ProjectController@getProjects');
-Route::get('projects/{id}', 'ProjectController@getProject');
-Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
-Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); // master
-Route::get('projects/{id}/stats', 'ProjectController@getProjectStats'); // master
-Route::put('projects/{id}', 'ProjectController@updateProject'); // master
-Route::put('projects/{id}/approval', 'ProjectController@approveProject'); // admin
-
-Route::post('projects/{id}/news', 'NewsController@createNews'); // master
-Route::get('projects/{id}/news', 'NewsController@getNews');
-
-Route::post('tickets/{id}/orders', 'OrderController@createOrder'); // user
-Route::delete('orders/{id}', 'OrderController@deleteOrder'); // user
 
 Route::get('organizations', 'OrganizationController@getOrganizations');
 Route::get('organizations/{id}', 'OrganizationController@getOrganization');
 Route::get('organizations/{id}/members', 'MemberController@getMembers');
 
+Route::get('{entity}/{id}/comments', 'CommentController@getComments');
+
 Route::get('users/{id}', 'UserController@getUser');
 Route::get('users/{id}/orders', 'UserController@getUserOrders');
 Route::get('users/{id}/projects', 'UserController@getUserProjects');
 
-Route::post('{entity}/{id}/comments', 'CommentController@createComment'); // user
-Route::get('{entity}/{id}/comments', 'CommentController@getComments');
-Route::delete('comments/{id}', 'CommentController@deleteComment'); // master
+Route::group(['middleware' => ['auth']], function() {
+	
+	Route::post('blueprints', 'BlueprintController@createBlueprint'); 
+	Route::get('blueprints/form', 'BlueprintController@getBlueprintForm'); 
+	
+	Route::get('projects/form/{id}', 'ProjectController@getProjectFormById');
+	Route::get('projects/form/{code}', 'ProjectController@getProjectFormByCode');
+	Route::put('projects/{id}', 'ProjectController@updateProject'); 
+	Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); 
+	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');
+	 
+	Route::post('projects/{id}/news', 'NewsController@createNews'); 
+	
+	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 
+	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 
+	
+	Route::post('{entity}/{id}/comments', 'CommentController@createComment'); 
+	Route::delete('comments/{id}', 'CommentController@deleteComment'); 
+	
+});
+
+Route::group(['middleware' => ['admin']], function() {
+	
+	Route::get('blueprints', 'BlueprintController@getBlueprints'); 
+	Route::get('blueprints/{id}', 'BlueprintController@getBlueprint'); 
+	Route::put('blueprints/{id}/approval', 'BlueprintController@approveBlueprint'); 
+	
+	Route::put('projects/{id}/approval', 'ProjectController@approveProject'); 
+	
+});
