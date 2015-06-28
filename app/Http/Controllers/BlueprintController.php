@@ -1,9 +1,15 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Blueprint as Blueprint;
+
 class BlueprintController extends Controller {
 
 	public function createBlueprint() {
-		return 5;
+		$blueprint = new Blueprint(\Input::all());
+		$blueprint->user()->associate(\Auth::user());
+		$blueprint->setAttribute('code', str_random(40));
+		$blueprint->save();
+		return view('blueprint.created');
 	}
 	
 	public function getBlueprintWelcome() {
@@ -15,15 +21,18 @@ class BlueprintController extends Controller {
 	}
 	
 	public function getBlueprints() {
-		
+		return Blueprint::all();
 	}
 	
 	public function getBlueprint($id) {
-		
+		return Blueprint::findOrFail($id);
 	}
 	
 	public function approveBlueprint($id) {
-		
+		$bluePrint = $this->getBlueprint($id);
+		$bluePrint->approve();
+		$code = $bluePrint->code;
+		// send email
 	}
 
 }
