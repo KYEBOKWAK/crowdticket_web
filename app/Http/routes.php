@@ -1,5 +1,9 @@
 <?php
 
+Route::pattern('id', '[0-9]+');
+Route::pattern('code', '[a-zA-Z0-9]+');
+Route::pattern('name', '[a-zA-Z0-9]+');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
@@ -37,10 +41,10 @@ Route::get('users/{id}/projects', 'UserController@getUserProjects');
 Route::group(['middleware' => ['auth']], function() {
 	
 	Route::post('blueprints', 'BlueprintController@createBlueprint'); 
-	Route::get('blueprints/form', 'BlueprintController@getBlueprintForm'); 
+	Route::get('blueprints/form', 'BlueprintController@getCreateForm'); 
 	
-	Route::get('projects/form/{id}', 'ProjectController@getProjectFormById');
-	Route::get('projects/form/{code}', 'ProjectController@getProjectFormByCode');
+	Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
+	Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
 	Route::put('projects/{id}', 'ProjectController@updateProject'); 
 	Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); 
 	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');

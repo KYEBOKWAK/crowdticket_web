@@ -35,5 +35,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function orders() {
 		return $this->hasMany('App\Models\Order');
 	}
+	
+	public function checkOwnership($entity) {
+		if (!$this->isOwnerOf($entity)) {
+			throw new \App\Exceptions\OwnershipException;
+		}
+	}
+	
+	public function isOwnerOf($entity) {
+		return $this->id === $entity->user_id;
+	}
 
 }
