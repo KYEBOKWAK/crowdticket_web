@@ -15,11 +15,11 @@ class CreateProjectsTable extends Migration {
 		Schema::create('projects', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->default(0);
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('city_id')->unsigned();
+            $table->integer('city_id')->unsigned()->default(0);
             $table->foreign('city_id')->references('id')->on('cities');
             $table->integer('organization_id')->unsigned()->nullable();
             $table->foreign('organization_id')->references('id')->on('organizations');
@@ -38,7 +38,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('news_count')->unsigned()->default(0);
             $table->integer('supporters_count')->unsigned()->default(0);
             $table->integer('comments_count')->unsigned()->default(0);
-            $table->enum('commision_type', ['all_or_nothing', 'take_it_anyway']);
+            $table->enum('commision_type', ['all_or_nothing', 'take_it_anyway'])->default('all_or_nothing');
 			$table->timestamps();
             $table->timestamp('funding_closing_at')->nullable();
             $table->timestamp('performance_opening_at')->nullable();
