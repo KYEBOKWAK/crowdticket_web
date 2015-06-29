@@ -29,7 +29,6 @@ class ProjectController extends Controller {
 		\Auth::user()->checkOwnership($project);
 		
 		$project->load('tickets');
-		echo $project->toJson();
 		return view('project.form', [
 			'project' => $project
 		]);
