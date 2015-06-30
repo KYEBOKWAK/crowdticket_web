@@ -32,17 +32,25 @@ class Blueprint extends Model {
 	public function approve() {
 		$this->setAttribute('approved', true);
 		$this->save();
-	} 
+	}
+	
+	public function hasApproved() {
+		return $this->approved;
+	}
 	
 	public function user() {
 		return $this->belongsTo('App\Models\User');
 	}
 	
 	public function project() {
-		return $this->belongsTo('App\Models\Project');
+		if ($this->hasApproved()) {
+			return $this->belongsTo('App\Models\Project');
+		} else {
+			throw new \App\Exceptions\UnapprovedStateException;
+		}
 	}
 	
-	public function isProjectCreated() {
+	public function hasProjectCreated() {
 		return !empty($this->project_id);
 	}
 	

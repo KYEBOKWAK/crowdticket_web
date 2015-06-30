@@ -64,7 +64,7 @@ class ProjectController extends Controller {
 		
 		\Auth::user()->checkOwnership($blueprint);
 		
-		if ($blueprint->isProjectCreated()) {
+		if ($blueprint->hasProjectCreated()) {
 			return $blueprint->project()->first();
 		} else {
 			$project = $this->createProject();
