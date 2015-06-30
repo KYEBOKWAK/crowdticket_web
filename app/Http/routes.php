@@ -38,7 +38,7 @@ Route::get('users/{id}', 'UserController@getUser');
 Route::get('users/{id}/orders', 'UserController@getUserOrders');
 Route::get('users/{id}/projects', 'UserController@getUserProjects');
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => 'auth'], function() {
 	
 	Route::post('blueprints', 'BlueprintController@createBlueprint'); 
 	Route::get('blueprints/form', 'BlueprintController@getCreateForm'); 
@@ -59,12 +59,11 @@ Route::group(['middleware' => ['auth']], function() {
 	
 });
 
-Route::group(['middleware' => ['admin']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth|admin']], function() {
 	
-	Route::get('blueprints', 'BlueprintController@getBlueprints'); 
-	Route::get('blueprints/{id}', 'BlueprintController@getBlueprint'); 
-	Route::put('blueprints/{id}/approval', 'BlueprintController@approveBlueprint'); 
-	
-	Route::put('projects/{id}/approval', 'ProjectController@approveProject'); 
+	Route::get('/', 'AdminController@getDashboard');
+	Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
+	Route::put('projects/{id}/rejection', 'AdminController@rejectProject');
+	Route::put('projects/{id}/approval', 'AdminController@approveProject');
 	
 });
