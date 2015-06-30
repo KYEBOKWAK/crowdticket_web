@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth'], function() {
 	
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth|admin']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	
 	Route::get('/', 'AdminController@getDashboard');
 	Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
