@@ -8,6 +8,7 @@
 	<title>CrowdTicket</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+	@yield('css')
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -20,6 +21,7 @@
 	<![endif]-->
 </head>
 <body>
+	@section('navbar')
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -55,6 +57,7 @@
 			</div>
 		</div>
 	</nav>
+	@show
 
 	@yield('content')
 	
