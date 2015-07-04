@@ -9,7 +9,7 @@ class Project extends Model {
 	
 	protected static $fillableByState = [
 		Project::STATE_READY => [
-			'title', 'poster_url', 'description', 'video_url',
+			'title', 'alias', 'poster_url', 'description', 'video_url',
 			'detailed_address', 'pledged_amount', 'audiences_limit', 
 			'funding_closing_at', 'performance_opening_at'
 		],
@@ -30,7 +30,8 @@ class Project extends Model {
 	];
 	
 	protected static $typeRules = [
-		'title' => 'string',
+		'title' => 'string|min:1|max:30',
+		'alias' => 'regex:/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}$/',
 		'poster_url' => 'active_url',
 		'description' => 'string',
 		'video_url' => 'active_url',
