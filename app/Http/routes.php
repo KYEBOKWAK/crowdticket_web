@@ -2,7 +2,7 @@
 
 Route::pattern('id', '[0-9]+');
 Route::pattern('code', '[a-zA-Z0-9]+');
-Route::pattern('alias', '[a-zA-Z]{1}[a-zA-Z0-9-_]{3,}');
+Route::pattern('alias', '[a-zA-Z0-9-_]+');
 Route::pattern('name', '[a-zA-Z]+');
 
 Route::controllers([
@@ -19,6 +19,7 @@ Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 Route::get('projects', 'ProjectController@getProjects');
 Route::get('projects/{id}', 'ProjectController@getProjectById');
 Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
+Route::get('projects/{alias}/validity', 'ProjectController@validateProjectAlias');
 Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
 
 Route::get('projects/{id}/news', 'NewsController@getNews');
@@ -50,7 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); 
 	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');
 	 
-	Route::post('projects/{id}/news', 'NewsController@createNews'); 
+	Route::post('projects/{id}/news', 'NewsController@createNews');
 	
 	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 
 	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 

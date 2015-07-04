@@ -50,6 +50,21 @@ class ProjectController extends Controller {
 		return Project::where('alias', '=', $alias)->firstOrFail();
 	}
 	
+	public function validateProjectAlias($alias) {
+		$pattern = '/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}/';
+		$match = preg_match($pattern, $alias);
+		if ($match) {
+			$project = Project::where('alias', '=', $alias)->first();
+			if (!$project) {
+				return "";
+			} else {
+				return \App::abort(409);
+			}
+		} else {
+			return \App::abort(422);
+		}
+	}
+	
 	public function approveProject($id) {
 		$project = $this->getProjectById($id);
 		$project->approve();

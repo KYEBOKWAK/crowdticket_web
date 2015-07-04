@@ -194,6 +194,7 @@
 				</div>
 				<div id="creator" role="tabpanel" class="tab-pane"></div>
 			</div>
+			<input type="hidden" id="project_id" value="{{ $project->id }}" />
 		</div>
 	</div>
 </div>
