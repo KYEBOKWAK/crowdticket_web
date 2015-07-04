@@ -24,7 +24,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('organization_id')->unsigned()->nullable();
             $table->foreign('organization_id')->references('id')->on('organizations');
 			$table->enum('type', ['funding', 'sale'])->index();
-			$table->boolean('accepted')->default(false)->index();
+			$table->tinyInteger('state')->default(1)->index();
             $table->boolean('published')->default(false)->index();
             $table->string('title')->index()->default('');
 			$table->string('alias')->index()->default('');
