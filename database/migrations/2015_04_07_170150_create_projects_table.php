@@ -26,8 +26,8 @@ class CreateProjectsTable extends Migration {
 			$table->enum('type', ['funding', 'sale'])->index();
 			$table->tinyInteger('state')->default(1)->index();
             $table->boolean('published')->default(false)->index();
-            $table->string('title')->index()->default('');
-			$table->string('alias')->index()->default('');
+            $table->string('title')->default('')->index();
+			$table->string('alias')->default('')->unique();
             $table->string('poster_url')->default('');
 			$table->string('description')->default('');
 			$table->string('video_url')->default('');
