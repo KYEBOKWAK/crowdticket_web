@@ -2,6 +2,8 @@
 
 use App\Models\Project as Project;
 use App\Models\Blueprint as Blueprint;
+use App\Models\Category as Category;
+use App\Models\City as City;
 
 class ProjectController extends Controller {
 	
@@ -30,7 +32,9 @@ class ProjectController extends Controller {
 		
 		$project->load('tickets');
 		return view('project.form', [
-			'project' => $project
+			'project' => $project,
+			'categories' => Category::orderBy('id')->get(),
+			'cities' => City::orderBy('id')->get()
 		]);
 	}
 	
@@ -42,8 +46,8 @@ class ProjectController extends Controller {
 		return Project::findOrFail($id);
 	}
 	
-	public function getProjectByName($name) {
-		return Project::where('name', '=', $name)->first();
+	public function getProjectByAlias($alias) {
+		return Project::where('alias', '=', $alias)->firstOrFail();
 	}
 	
 	public function approveProject($id) {

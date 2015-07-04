@@ -2,7 +2,8 @@
 
 Route::pattern('id', '[0-9]+');
 Route::pattern('code', '[a-zA-Z0-9]+');
-Route::pattern('name', '[a-zA-Z0-9]+');
+Route::pattern('alias', '[a-zA-Z]{1}[a-zA-Z0-9-_]{3,}');
+Route::pattern('name', '[a-zA-Z]+');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
@@ -17,7 +18,7 @@ Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 
 Route::get('projects', 'ProjectController@getProjects');
 Route::get('projects/{id}', 'ProjectController@getProjectById');
-Route::get('projects/{name}', 'ProjectController@getProjectByName');
+Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
 Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
 
 Route::get('projects/{id}/news', 'NewsController@getNews');
