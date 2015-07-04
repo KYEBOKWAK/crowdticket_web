@@ -19,7 +19,7 @@
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">공연제목</label>
 							<div class="col-sm-8">
-								<input id="title" name="title" type="text" class="form-control" value="{{ $project->title }}" />
+								<input id="title" name="title" maxlength="30" type="text" class="form-control" value="{{ $project->title }}" />
 								<p class="help-block">
 									'크라우드밴드의 2015 단독공연', '000 추모공연', '000 봄 전시회' 등<br/>
 									직접적으로 공연을 나타낼 수 있는 제목도 좋고요<br/>
@@ -32,7 +32,13 @@
 							<label for="category" class="col-sm-2 control-label">분류</label>
 							<div class="col-sm-2">
 								<select id="category" name="category" class="form-control">
-									<option value="1">뮤지컬</option>
+									@foreach($categories as $category)
+										@if ($category->id === $project->category_id)
+											<option value="{{ $category->id }}" selected>{{ $category->title }}</option>
+										@else
+											<option value="{{ $category->id }}">{{ $category->title }}</option>
+										@endif
+									@endforeach
 								</select>
 							</div>
 						</div>
@@ -40,7 +46,13 @@
 							<label for="city" class="col-sm-2 control-label">장소</label>
 							<div class="col-sm-2">
 								<select id="city" name="city" class="form-control">
-									<option value="1">서울</option>
+									@foreach($cities as $city)
+										@if ($city->id === $project->city_id)
+											<option value="{{ $city->id }}" selected>{{ $city->name }}</option>
+										@else
+											<option value="{{ $city->id }}">{{ $city->name }}</option>
+										@endif
+									@endforeach
 								</select>
 							</div>
 						</div>
@@ -51,7 +63,7 @@
 									<div class="input-group-addon">http://crowdticket.kr/projects/</div>
 									<input id="alias" name="alias" type="text" class="form-control" value="{{ $project->alias }}" />
 								</div>
-								<button id="alias_check" class="btn btn-primary">중복검사</button>
+								<button id="check_alias" class="btn btn-primary">중복검사</button>
 								<p class="help-block">사람들에게 펀딩을 홍보할 때 사용하게 될 URL을 직접 입력해보세요!</p>
 							</div>
 						</div>
@@ -188,15 +200,5 @@
 @endsection
 
 @section('script')
-<script>
-	$(document).ready(function() {
-		$('.contact').bind('change', function() {
-			var contactFirst = $('#contact_first').val();
-			var contactMiddle = $('#contact_middle').val();
-			var contactLast = $('#contact_last').val();
-			
-			$('#contact').val(contactFirst + contactMiddle + contactLast);
-		});
-	});
-</script>
+<script src="{{ asset('/script/project/form.js') }}"></script>
 @endsection
