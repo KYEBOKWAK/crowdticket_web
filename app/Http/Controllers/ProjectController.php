@@ -13,6 +13,19 @@ class ProjectController extends Controller {
 		\Auth::user()->checkOwnership($project);
 		
 		$project->update(\Input::all());
+		
+		if (\Input::has('category_id')) {
+			$categoryId = \Input::get('category_id');
+			$category = Category::findOrFail($categoryId);
+			$project->category()->associate($category);
+		}
+		
+		if (\Input::has('city_id')) {
+			$cityId = \Input::get('city_id');
+			$city = City::findOrFail($cityId);
+			$project->city()->associate($city);
+		}
+		
 		$project->save();
 		return $project;
 	}
