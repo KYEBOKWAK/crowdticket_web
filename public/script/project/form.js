@@ -65,14 +65,7 @@ $(document).ready(function() {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId + '/tickets';
 		var method = 'post';
-		var data = {
-			'price': $('#ticket_price').val(),
-			'real_ticket_count': $('#ticket_real_count').val(),
-			'reward': $('#ticket_reward').val(),
-			'require_shipping': $('#ticket_require_shipping').is(':checked') === 'true' ? 1 : 0,
-			'audiences_limit': $('#ticket_audiences_limit').val(),
-			'delivery_date': $('#ticket_delivery_date').val()
-		};
+		var data = getTicketFormData();
 		var success = function(result) {
 			clearTicketForm();
 			addTicketRow(result);
@@ -91,6 +84,17 @@ $(document).ready(function() {
 		}); 
 	};
 	
+	var getTicketFormData = function() {
+		return {
+			'price': $('#ticket_price').val(),
+			'real_ticket_count': $('#ticket_real_count').val(),
+			'reward': $('#ticket_reward').val(),
+			'require_shipping': $('#ticket_require_shipping').is(':checked') ? 1 : 0,
+			'audiences_limit': $('#ticket_audiences_limit').val(),
+			'delivery_date': $('#ticket_delivery_date').val()
+		};
+	};
+	
 	var clearTicketForm = function() {
 		$('#ticket_price').val('');
 		$('#ticket_real_count').val('');
@@ -101,27 +105,91 @@ $(document).ready(function() {
 	};
 	
 	var addTicketRow = function(ticket) {
-		console.log(ticket);
 		var template = $('#template_ticket').html();
 		var compiled = _.template(template);
 		var row = compiled({ 'ticket': ticket });
 		$('#ticket_list').append(row);
+		
+		$(document).on('click', '.modify-ticket', modifyTicket);
+		$(document).on('click', '.delete-ticket', deleteTicket);
 	};
 	
 	var modifyTicket = function() {
+		setCreateTicketButtonShown(false);
 		
+		var ticket = $(this).closest('.ticket');
+		$('#ticket_price').val(ticket.find('.ticket-price').text());
+		$('#ticket_real_count').val(ticket.find('.ticket-real-count').text());
+		$('#ticket_reward').val(ticket.find('.ticket-reward').text());
+		$('#ticket_audiences_limit').val(ticket.find('.ticket-audiences-limit').text());
+		$('#ticket_delivery_date').val(ticket.find('.ticket-delivery-date').text());
+		$('#ticket_require_shipping').prop('checked', ticket.find('.ticket-require-shipping').val() === '1');
+		
+		$('#update_ticket').attr('data-ticket-id', ticket.attr('data-ticket-id'));
 	};
 	
 	var cancelModifyTicket = function() {
-		
+		setCreateTicketButtonShown(true);
+		clearTicketForm();
+	};
+	
+	var setCreateTicketButtonShown = function(shown) {
+		if (shown) {
+			$('#create_ticket').show();
+			$('#update_ticket, #cancel_modify_ticket').hide();
+		} else {
+			$('#create_ticket').hide();
+			$('#update_ticket, #cancel_modify_ticket').show();
+		}
 	};
 	
 	var updateTicket = function() {
+		var ticketId = $(this).attr('data-ticket-id');
+		var url = '/tickets/' + ticketId;
+		var method = 'put';
+		var data = getTicketFormData();
+		var success = function(result) {
+			var ticket = $('.ticket[data-ticket-id=' + ticketId + ']');
+			ticket.find('.ticket-price').text(result.price);
+			ticket.find('.ticket-real-count').text(result.real_ticket_count);
+			ticket.find('.ticket-reward').text(result.reward);
+			ticket.find('.ticket-audiences-limit').text(result.audiences_limit);
+			ticket.find('.ticket-delivery-date').text(result.delivery_date);
+			ticket.find('.ticket-require-shipping').val(result.require_shipping);
+			
+			cancelModifyTicket();
+		};
+		var error = function(request) {
+			alert('수정에 실패하였습니다.');
+		};
 		
+		$.ajax({
+			'url': url,
+			'method': method,
+			'data': data,
+			'success': success,
+			'error': error
+		}); 
 	};
 	
 	var deleteTicket = function() {
+		var ticket = $(this).closest('.ticket');
+		var ticketId = ticket.attr('data-ticket-id');
+		var url = '/tickets/' + ticketId;
+		var method = 'delete';
+		var success = function(result) {
+			ticket.remove();
+		};
+		var error = function(request) {
+			alert('삭제에 실패하였습니다.');
+		};
 		
+		$.ajax({
+			'url': url,
+			'method': method,
+			'success': success,
+			'error': error
+		}); 
 	};
 	
 	var updatePoster = function() {
@@ -146,5 +214,7 @@ $(document).ready(function() {
 	$('.modify-ticket').bind('click', modifyTicket);
 	$('.delete-ticket').bind('click', deleteTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
+	
+	setCreateTicketButtonShown(true);
 	
 });

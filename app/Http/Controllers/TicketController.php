@@ -18,11 +18,24 @@ class TicketController extends Controller {
 	}
 	
 	public function updateTicket($id) {
+		$ticket = Ticket::findOrFail($id);
+		$project = $ticket->project()->firstOrFail();
 		
+		\Auth::user()->checkOwnership($project);
+		
+		$ticket->update(\Input::all());
+		$ticket->save();
+		
+		return $ticket;
 	}
 	
 	public function deleteTicket($id) {
+		$ticket = Ticket::findOrFail($id);
+		$project = $ticket->project()->firstOrFail();
 		
+		\Auth::user()->checkOwnership($project);
+		
+		$ticket->delete();
 	}
 
 }

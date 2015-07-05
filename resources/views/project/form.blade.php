@@ -109,23 +109,27 @@
 										<span class="ticket-real-count">{{ $ticket->real_ticket_count }}</span>
 										<span> + </span>
 									@endif
-									<span>{{ $ticket->reward }}</span>
+									<span class="ticket-reward">{{ $ticket->reward }}</span>
 								</p>
 								<p><span>보상 실행일 : </span><span class="ticket-delivery-date">{{ date('Y-m-d', strtotime($ticket->delivery_date)) }}</span></p>
 								<p>
 									@if ($ticket->audiences_limit > 0)
 										<span class="ticket-audiences-limit">제한 없음</span>
 									@else
-										<span class="ticket-audiences-limit">{{ $ticket->audiences_limit }}개 제한</span>
+										<span class="ticket-audiences-limit">{{ $ticket->audiences_limit }}</span>
+										<span>개 제한</span>
 									@endif
 									<span> / </span>
 									<span class="ticket-audiences-count">{{ $ticket->audiences_count }}</span>
 									<span>명이 선택 중</span>
 								</p>
-								<p>
-									<button class="btn btn-primary modify-ticket">수정</button>
-									<button class="btn btn-primary delete-ticket">삭제</button>
-								</p>
+								@if ($ticket->audiences_count == 0)
+									<p>
+										<button class="btn btn-primary modify-ticket">수정</button>
+										<button class="btn btn-primary delete-ticket">삭제</button>
+									</p>
+								@endif
+								<input type="hidden" class="ticket-require-shipping" value="{{ $ticket->require_shipping }}" />
 							</li>
 						@endforeach
 					</ul>
@@ -216,14 +220,15 @@
 				<span class="ticket-real-count"><%= ticket.real_ticket_count %></span>
 				<span> + </span>
 			<% } %>
-			<span><%= ticket.reward %></span>
+			<span class="ticket-reward"><%= ticket.reward %></span>
 		</p>
 		<p><span>보상 실행일 : </span><span class="ticket-delivery-date"><%= ticket.delivery_date %></span></p>
 		<p>
 			<% if (ticket.audiences_limit > 0) { %>
 				<span class="ticket-audiences-limit">제한 없음</span>
 			<% } else { %>
-				<span class="ticket-audiences-limit"><%= ticket.audiences_limit %>개 제한</span>
+				<span class="ticket-audiences-limit"><%= ticket.audiences_limit %></span>
+				<span>개 제한</span>
 			<% } %>
 			<span> / </span>
 			<span class="ticket-audiences-count">0</span>
@@ -233,6 +238,7 @@
 			<button class="btn btn-primary modify-ticket">수정</button>
 			<button class="btn btn-primary delete-ticket">삭제</button>
 		</p>
+		<input type="hidden" class="ticket-require-shipping" value="<%= ticket.require_shipping %>" />
 	</li>
 </script>
 <script src="{{ asset('/script/project/form.js') }}"></script>

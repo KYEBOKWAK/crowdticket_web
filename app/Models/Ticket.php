@@ -30,8 +30,16 @@ class Ticket extends Model {
 		if ($this->audiences_count === 0) {
 			parent::update($attributes);
 		} else {
-			// throw exception?
+			return new \App\Exceptions\InvalidTicketStateException;
 		}
+	}
+	
+	public function delete() {
+		if ($this->audiences_count === 0) {
+			parent::delete();
+		} else {
+			return new \App\Exceptions\InvalidTicketStateException;
+		} 
 	}
 	
 	public function project() {
