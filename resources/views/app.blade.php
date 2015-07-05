@@ -8,6 +8,7 @@
 	<title>CrowdTicket</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
 	@yield('css')
 
 	<!-- Fonts -->
@@ -65,6 +66,7 @@
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="{{ asset('/script/jquery-ui.min.js') }}"></script>
 	<script src="{{ asset('/script/app.js') }}"></script>
 	
 	@yield('script')
