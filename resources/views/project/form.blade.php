@@ -86,7 +86,7 @@
 						<div class="form-group">
 							<label for="funding_closing_at" class="col-sm-2 control-label">펀딩 마감일</label>
 							<div class="col-sm-2">
-								<input id="funding_closing_at" name="funding_closing_at" type="text" class="form-control" value="{{ $project->funding_closing_at }}" />
+								<input id="funding_closing_at" name="funding_closing_at" type="text" class="form-control" value="{{ date('Y-m-d', strtotime($project->funding_closing_at)) }}" />
 							</div>
 						</div>
 					</div>
