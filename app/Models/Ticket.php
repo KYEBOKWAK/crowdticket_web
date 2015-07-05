@@ -2,25 +2,37 @@
 
 class Ticket extends Model {
 	
-	protected $fillable = ['title', 'detail', 'audiences_limit', 'price', 'require_shipping', 'shipping_charge', 'delivery_date'];
+	protected $fillable = [
+		'price', 'real_ticket_count', 'reward',
+		'require_shipping', 'audiences_limit',
+		'delivery_date', 'shipping_charge'
+	];
+	
+	protected static $typeRules = [
+		'price' => 'integer',
+		'real_ticket_count' => 'integer',
+		'reward' => 'string|min:1',
+		'audiences_limit' => 'integer',
+		'delivery_date' => 'date_format:Y-m-d',
+		'shipping_charge' => 'integer'
+	];
 	
 	protected static $creationRules = [
-		'title' => 'required',
-		'detail' => 'required',
-		'audiences_limit' => 'required|integer|min:1',
-		'price' => 'required|integer|min:1',
-		'require_shipping' => 'required:boolean',
-		'shipping_charge' => 'required_if:require_shipping,true,1|integer|min:1',
-		'delivery_date' => 'date_format:Y-m-d'
+		'price' => 'required',
+		'real_ticket_count' => 'required',
+		'reward' => 'required',
+		'require_shipping' => 'required',
+		'audiences_limit' => 'required',
+		'delivery_date' => 'required'
 	];
 	
-	protected static $updateRules = [
-		'audiences_limit' => 'integer|min:1',
-		'price' => 'required_without',
-		'require_shipping' => 'required_without',
-		'shipping_charge' => 'required_without',
-		'delivery_date' => 'date_format:Y-m-d'
-	];
+	public function update(array $attributes = array()) {
+		if ($this->audiences_count === 0) {
+			parent::update($attributes);
+		} else {
+			// throw exception?
+		}
+	}
 	
 	public function project() {
 		return $this->belongsTo('App\Models\Project');

@@ -99,9 +99,9 @@
 						펀딩에 성공한 후 기획하게 될 공연의 티켓을 비롯하여 싸인CD, 머그컵, 티셔츠 등 <br/>
 						여러가지 보상품으로 좀 더 다채로운 펀딩을 기획해 보세요!
 					</h4>
-					<ul id="ticket_list">
+					<ul id="ticket_list" class="list-group">
 						@foreach ($project->tickets as $ticket)
-							<li data-ticket-id="{{ $ticket->id }}" class="ticket">
+							<li data-ticket-id="{{ $ticket->id }}" class="ticket list-group-item">
 								<p><span class="ticket-price">{{ $ticket->price }}</span><span>원 이상을 후원하시는 분께</span></p>
 								<p>
 									@if ($ticket->real_ticket_count > 0)
@@ -111,8 +111,8 @@
 									@endif
 									<span>{{ $ticket->reward }}</span>
 								</p>
-								<p><span>보상 실행일 : </span><span class="ticket-delivery-date">{{ $ticket->delivery_date }}</span></p>
-								<div>
+								<p><span>보상 실행일 : </span><span class="ticket-delivery-date">{{ date('Y-m-d', strtotime($ticket->delivery_date)) }}</span></p>
+								<p>
 									@if ($ticket->audiences_limit > 0)
 										<span class="ticket-audiences-limit">제한 없음</span>
 									@else
@@ -121,9 +121,11 @@
 									<span> / </span>
 									<span class="ticket-audiences-count">{{ $ticket->audiences_count }}</span>
 									<span>명이 선택 중</span>
-									<button class="btn btn-primary btn-modify-ticket pull-right">수정</button>
-									<button class="btn btn-primary btn-delete-ticket pull-right">삭제</button>
-								</div>
+								</p>
+								<p>
+									<button class="btn btn-primary modify-ticket">수정</button>
+									<button class="btn btn-primary delete-ticket">삭제</button>
+								</p>
 							</li>
 						@endforeach
 					</ul>
@@ -181,7 +183,11 @@
 								<input id="ticket_delivery_date" name="delivery_date" type="text" class="form-control" />
 							</div>
 						</div>
-						<button id="update_default" class="btn btn-success pull-right">추가하기</button>
+						<span class="pull-right">
+							<button id="cancel_modify_ticket" class="btn btn-default">취소하기</button>
+							<button id="update_ticket" class="btn btn-success">수정하기</button>
+							<button id="create_ticket" class="btn btn-success">추가하기</button>
+						</span>
 					</div>
 				</div>
 				<div id="poster" role="tabpanel" class="tab-pane">
@@ -201,5 +207,33 @@
 @endsection
 
 @section('script')
+<script type="text/template" id="template_ticket">
+	<li data-ticket-id="<%= ticket.id %>" class="ticket list-group-item">
+		<p><span class="ticket-price"><%= ticket.price %></span><span>원 이상을 후원하시는 분께</span></p>
+		<p>
+			<% if (ticket.real_ticket_count > 0) { %>
+				<span>티켓 </span>
+				<span class="ticket-real-count"><%= ticket.real_ticket_count %></span>
+				<span> + </span>
+			<% } %>
+			<span><%= ticket.reward %></span>
+		</p>
+		<p><span>보상 실행일 : </span><span class="ticket-delivery-date"><%= ticket.delivery_date %></span></p>
+		<p>
+			<% if (ticket.audiences_limit > 0) { %>
+				<span class="ticket-audiences-limit">제한 없음</span>
+			<% } else { %>
+				<span class="ticket-audiences-limit"><%= ticket.audiences_limit %>개 제한</span>
+			<% } %>
+			<span> / </span>
+			<span class="ticket-audiences-count">0</span>
+			<span>명이 선택 중</span>
+		</p>
+		<p>
+			<button class="btn btn-primary modify-ticket">수정</button>
+			<button class="btn btn-primary delete-ticket">삭제</button>
+		</p>
+	</li>
+</script>
 <script src="{{ asset('/script/project/form.js') }}"></script>
 @endsection

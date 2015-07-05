@@ -5,8 +5,10 @@
 	};
 	var removeInvalidData = function(data) {
 		$.each(data, function(key, value) {
-			if (!value || value.length === 0) {
-				delete data[key];
+			if (typeof value === 'string' || value instanceof String) {
+				if (!value || value.length === 0) {
+					delete data[key];
+				}
 			}
 		});
 	};

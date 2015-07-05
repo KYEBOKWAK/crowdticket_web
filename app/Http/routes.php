@@ -47,9 +47,13 @@ Route::group(['middleware' => 'auth'], function() {
 	
 	Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
 	Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
-	Route::put('projects/{id}', 'ProjectController@updateProject'); 
+	Route::put('projects/{id}', 'ProjectController@updateProject');
 	Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); 
 	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');
+	
+	Route::post('projects/{id}/tickets', 'TicketController@createTicket');
+	Route::put('tickets/{id}', 'TicketController@updateTicket');
+	Route::delete('tickets/{id}', 'TicketController@deleteTicket');
 	 
 	Route::post('projects/{id}/news', 'NewsController@createNews');
 	
