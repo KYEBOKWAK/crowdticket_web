@@ -5,7 +5,7 @@ class Project extends Model {
 	const STATE_READY = 1;
 	const STATE_READY_AFTER_FUNDING = 2;
 	const STATE_UNDER_INVESTIGATION = 3;
-	const STATE_ACCEPTED = 4;
+	const STATE_APPROVED = 4;
 	
 	protected static $fillableByState = [
 		Project::STATE_READY => [
@@ -24,7 +24,7 @@ class Project extends Model {
 			// nothing can update
 		],
 		
-		Project::STATE_ACCEPTED => [
+		Project::STATE_APPROVED => [
 			'poster_url', 'description', 'video_url', 'detailed_address'
 		]
 	];
@@ -45,6 +45,32 @@ class Project extends Model {
 	public function update(array $attributes = array()) {
 		$this->fillable = static::$fillableByState[$this->state];
 		parent::update($attributes);
+	}
+	
+	public function submit() {
+		if ($this->state === Project::STATE_READY ||
+			$this->state === Project::STATE_READY_AFTER_FUNDING) {
+			$this->setAttribute('state', Project::STATE_UNDER_INVESTIGATION);
+			$this->save();
+		}
+	}
+	
+	public function approve() {
+		$this->setAttribute('state', Project::STATE_APPROVED);
+		$this->save();
+	}
+	
+	public function reject() {
+		if ($this->type === 'funding') {
+			$this->setAttribute('state', Project::STATE_READY);
+		} else if ($this->type === 'sale') {
+			if ($this->funding_closing_at) {
+				$this->setAttribute('state', Project::STATE_READY_AFTER_FUNDING);
+			} else {
+				$this->setAttribute('state', Project::STATE_READY);
+			}
+		}
+		$this->save();
 	}
 	
 	public function category() {

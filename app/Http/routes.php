@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
 	Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
 	Route::put('projects/{id}', 'ProjectController@updateProject');
+	Route::put('projects/{id}/submit', 'ProjectController@submitProject');
 	Route::get('projects/{id}/orders', 'ProjectController@getProjectOrders'); 
 	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');
 	

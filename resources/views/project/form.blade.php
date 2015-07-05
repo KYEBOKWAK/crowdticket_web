@@ -208,7 +208,7 @@
 		</div>
 		<div class="col-md-3">
 			<a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success" target="_blank">미리보기</a>
-			<button class="btn btn-primary">제출하기</button>
+			<button id="submit_project" class="btn btn-primary">제출하기</button>
 		</div>
 	</div>
 </div>

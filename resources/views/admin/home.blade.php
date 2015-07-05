@@ -104,8 +104,23 @@
 						@endif
 					@endforeach
 				</ul>
-				<div id="project" role="tabpanel" class="tab-pane">
-				</div>
+				<ul id="project" role="tabpanel" class="tab-pane">
+					@foreach ($projects as $project)
+						<li class="list-group-item">
+							<a href="{{ url('/projects/') }}/{{ $project->id }}" target="_blank"><p class="list-group-item-text">{{ $project->title }}</p></a>
+							<form action="{{ url('/admin/projects/') }}/{{ $project->id }}/approval" method="post">
+								<button type="submit" class="btn btn-primary">승인하기</button>
+								<input type="hidden" name="_method" value="PUT">
+    							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							</form>
+							<form action="{{ url('/admin/projects/') }}/{{ $project->id }}/rejection" method="post">
+								<button type="submit" class="btn btn-primary">반려하기</button>
+								<input type="hidden" name="_method" value="PUT">
+    							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+							</form>
+						</li>
+					@endforeach
+				</ul>
 			</div>
 		</div>
 	</div>

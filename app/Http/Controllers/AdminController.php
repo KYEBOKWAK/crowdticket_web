@@ -10,7 +10,7 @@ class AdminController extends Controller {
 		
 			'blueprints' => Blueprint::orderBy('id', 'desc')->get()->load('user'),
 			
-			/*'projects' => Project::where('submitted', '=', true)->get()*/
+			'projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get()
 			
 		]);
 	}

@@ -78,10 +78,14 @@ class ProjectController extends Controller {
 		}
 	}
 	
-	public function approveProject($id) {
+	public function submitProject($id) {
 		$project = $this->getProjectById($id);
-		$project->approve();
-		// return something
+		
+		\Auth::user()->checkOwnership($project);
+		
+		$project->submit();
+		
+		return "";
 	}
 	
 	private function createProject() {

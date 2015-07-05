@@ -204,6 +204,28 @@ $(document).ready(function() {
 		
 	};
 	
+	var submitProject = function() {
+		if (window.confirm('정말 제출하시겠습니까?')) {
+			var projectId = $('#project_id').val();
+			var url = '/projects/' + projectId + '/submit';
+			var method = 'put';
+			var success = function(result) {
+				alert('제출 성공'); 
+			};
+			var error = function(request, status) {
+				// alert('제출에 실패하였습니다.');
+				alert(request);
+			};
+			
+			$.ajax({
+				'url': url,
+				'method': method,
+				'success': success,
+				'error': error
+			}); 
+		}
+	};
+	
 	$('.contact').bind('change', mergeContact);
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
@@ -214,6 +236,7 @@ $(document).ready(function() {
 	$('.modify-ticket').bind('click', modifyTicket);
 	$('.delete-ticket').bind('click', deleteTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
+	$('#submit_project').bind('click', submitProject);
 	
 	setCreateTicketButtonShown(true);
 	
