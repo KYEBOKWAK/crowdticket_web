@@ -88,4 +88,5 @@ $(document).ready(function() {
 	$('.contact').bind('change', mergeContact);
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
+	$('#funding_closing_at').datepicker();
 });
