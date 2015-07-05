@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-9">
 			<ul role="tablist" class="nav nav-tabs">
 				<li role="presentation" class="active"><a href="#default" aria-controls="default" role="tab" data-toggle="tab">기본정보</a></li>
 				<li role="presentation"><a href="#ticket" aria-controls="ticket" role="tab" data-toggle="tab">보상</a></li>
@@ -205,6 +205,10 @@
 				<div id="creator" role="tabpanel" class="tab-pane"></div>
 			</div>
 			<input type="hidden" id="project_id" value="{{ $project->id }}" />
+		</div>
+		<div class="col-md-3">
+			<a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success" target="_blank">미리보기</a>
+			<button class="btn btn-primary">제출하기</button>
 		</div>
 	</div>
 </div>
