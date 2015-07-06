@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->integer('ticket_id')->unsigned()->nullable();
             $table->foreign('ticket_id')->references('id')->on('tickets');
-            $table->string('description')->default('');
+            $table->string('reward')->default('');
             $table->integer('audiences_limit')->unsigned();
             $table->integer('audiences_count')->unsigned()->default(0);
             $table->integer('price')->unsigned();
