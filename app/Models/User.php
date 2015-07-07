@@ -43,7 +43,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	}
 	
 	public function isOwnerOf($entity) {
-		return $this->id === $entity->user_id;
+		return $this->id === $entity->user_id || $this->isAdmin();
+	}
+	
+	private function isAdmin() {
+		return \DB::table('admins')->where('user_id', '=', $this->id)->count() > 0;
 	}
 
 }

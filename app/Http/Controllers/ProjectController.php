@@ -75,11 +75,25 @@ class ProjectController extends Controller {
 	}
 	
 	public function getProjectById($id) {
-		return Project::findOrFail($id);
+		$project = Project::findOrFail($id);
+		return $this->returnApprovedProject($project);
 	}
 	
 	public function getProjectByAlias($alias) {
-		return Project::where('alias', '=', $alias)->firstOrFail();
+		$project = Project::where('alias', '=', $alias)->firstOrFail();
+		return $this->returnApprovedProject($project);
+	}
+
+	private function returnApprovedProject($project) {
+		if ($project->state !== Project::STATE_APPROVED) {
+			if (\Auth::check()) {
+				\Auth::user()->checkOwnership($project);
+			} else {
+				throw new \App\Exceptions\OwnershipException;
+			} 
+		}
+		
+		return $project;
 	}
 	
 	public function validateProjectAlias($alias) {
