@@ -1,9 +1,13 @@
 @extends('app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('/css/editor.css') }}"/>
+@endsection
+
 @section('content')
 <div class="container">
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-10">
 			<ul role="tablist" class="nav nav-tabs">
 				<li role="presentation" class="active"><a href="#default" aria-controls="default" role="tab" data-toggle="tab">기본정보</a></li>
 				<li role="presentation"><a href="#ticket" aria-controls="ticket" role="tab" data-toggle="tab">보상</a></li>
@@ -18,7 +22,7 @@
 			</div>
 			<input type="hidden" id="project_id" value="{{ $project->id }}" />
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success" target="_blank">미리보기</a>
 			<button id="submit_project" class="btn btn-primary">제출하기</button>
 		</div>
@@ -26,6 +30,7 @@
 </div>
 @endsection
 
-@section('script')
+@section('js')
 	@include('template.ticket')
+	<script src="{{ asset('/js/project/form.js') }}"></script>
 @endsection

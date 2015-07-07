@@ -1,7 +1,7 @@
 <div id="story" role="tabpanel" class="tab-pane">
 	<h3>스토리 작성</h3>
 	<h4>여러분이 펀딩을 받고 공연을 기획하고자 하는 이야기가 무엇인가요?<br/>담백하고 진정성 있는 이야기를 들려주세요.</h4>
-	<form id="story_form" action="{{ url('/projects/') }}/{{ $project->id }}" method="post" class="form-horizontal" role="form">
+	<div id="story_form"class="form-horizontal">
 		<div class="form-group">
 			<label for="video_url" class="col-sm-2 control-label">영상 등록</label>
 			<div class="col-sm-8">
@@ -15,12 +15,10 @@
 		</div>
 		<div class="form-group">
 			<label for="story_editor" class="col-sm-2 control-label">포스터 설명</label>
-			<div class="col-sm-8">
-				<textarea id="story_editor" name="story"></textarea>
+			<div class="col-sm-10">
+				@include('editor')
 			</div>
 		</div>
-		<input type="hidden" name="_method" value="PUT">
-		<input type="hidden" name="_token" value="{{ csrf_token() }}">
-		<button type="submit" class="btn btn-success pull-right">저장하기</button>
-	</form>
+		<button id="update_story" class="btn btn-success pull-right">저장하기</button>
+	</div>
 </div>

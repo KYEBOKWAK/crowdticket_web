@@ -28,4 +28,3 @@
 		<input type="hidden" class="ticket-require-shipping" value="<%= ticket.require_shipping %>" />
 	</li>
 </script>
-<script src="{{ asset('/script/project/form.js') }}"></script>
