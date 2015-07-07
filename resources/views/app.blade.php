@@ -68,6 +68,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="{{ asset('/script/underscore-min.js') }}"></script>
 	<script src="{{ asset('/script/jquery-ui.min.js') }}"></script>
+	<script src="{{ asset('/script/jquery.form.min.js') }}"></script>
 	<script src="{{ asset('/script/app.js') }}"></script>
 	
 	@yield('script')

@@ -1,13 +1,16 @@
 <?php namespace App\Http\Controllers;
 
+use Storage as Storage;
+use Illuminate\Http\Request as Request;
 use App\Models\Project as Project;
 use App\Models\Blueprint as Blueprint;
 use App\Models\Category as Category;
 use App\Models\City as City;
+use App\Models\Model as Model;
 
 class ProjectController extends Controller {
 	
-	public function updateProject($id) {
+	public function updateProject(Request $request, $id) {
 		$project = $this->getProjectById($id);
 		
 		\Auth::user()->checkOwnership($project);
@@ -26,8 +29,24 @@ class ProjectController extends Controller {
 			$project->city()->associate($city);
 		}
 		
+		if ($request->file('poster')) {
+			$this->uploadPoster($project, $request);
+		}
+		
 		$project->save();
 		return $project;
+	}
+	
+	private function uploadPoster($project, $request) {
+		$poster_url_partial = Model::S3_POSTER_BUCKET . $project->id . '.jpg';
+		
+		Storage::put(
+			$poster_url_partial,
+			file_get_contents($request->file('poster')->getRealPath())
+		);
+		
+		$poster_url = Model::S3_BASE_URL . $poster_url_partial;
+		$project->setAttribute('poster_url', $poster_url);
 	}
 	
 	public function getUpdateFormById($id) {

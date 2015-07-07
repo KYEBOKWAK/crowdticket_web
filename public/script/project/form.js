@@ -192,8 +192,23 @@ $(document).ready(function() {
 		}); 
 	};
 	
-	var updatePoster = function() {
-		
+	var posterAjaxOption = {
+		'success': function(result) {
+			alert('저장되었습니다.');
+		}, 
+		'error': function() {
+			alert("저장에 실패하였습니다.");
+		}
+	};
+	
+	var showPosterPreview = function() {
+		if (this.files && this.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#poster_preview').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(this.files[0]);
+		}
 	};
 	
 	var updateStory = function() {
@@ -213,8 +228,7 @@ $(document).ready(function() {
 				alert('제출 성공'); 
 			};
 			var error = function(request, status) {
-				// alert('제출에 실패하였습니다.');
-				alert(request);
+				alert('제출에 실패하였습니다.');
 			};
 			
 			$.ajax({
@@ -236,8 +250,11 @@ $(document).ready(function() {
 	$('.modify-ticket').bind('click', modifyTicket);
 	$('.delete-ticket').bind('click', deleteTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
+	$('#poster_form').ajaxForm(posterAjaxOption);
+	$('#poster_file').change(showPosterPreview);
 	$('#submit_project').bind('click', submitProject);
 	
 	setCreateTicketButtonShown(true);
 	
 });
+

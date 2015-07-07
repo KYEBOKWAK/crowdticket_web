@@ -9,13 +9,13 @@ class Project extends Model {
 	
 	protected static $fillableByState = [
 		Project::STATE_READY => [
-			'title', 'alias', 'poster_url', 'description', 'video_url',
+			'title', 'alias', 'description', 'video_url',
 			'detailed_address', 'pledged_amount', 'audiences_limit', 
 			'funding_closing_at', 'performance_opening_at'
 		],
 		
 		Project::STATE_READY_AFTER_FUNDING => [
-			'poster_url', 'description', 'video_url',
+			'description', 'video_url',
 			'detailed_address', 'audiences_limit',
 			'performance_opening_at'
 		],
@@ -25,7 +25,7 @@ class Project extends Model {
 		],
 		
 		Project::STATE_APPROVED => [
-			'poster_url', 'description', 'video_url', 'detailed_address'
+			'description', 'video_url', 'detailed_address'
 		]
 	];
 	
