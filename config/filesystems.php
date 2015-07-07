@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'default' => 'local',
+	'default' => 's3',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
 			'driver' => 's3',
 			'key'    => 'AKIAJNXJ3NZKCF6FYDAA',
 			'secret' => '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',
-			'region' => 'Tokyo',
+			'region' => 'ap-northeast-1',
 			'bucket' => 'crowdticket',
 		],
 
