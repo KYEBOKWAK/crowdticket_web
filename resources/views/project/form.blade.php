@@ -9,7 +9,6 @@
 				<li role="presentation"><a href="#ticket" aria-controls="ticket" role="tab" data-toggle="tab">보상</a></li>
 				<li role="presentation"><a href="#poster" aria-controls="poster" role="tab" data-toggle="tab">포스터</a></li>
 				<li role="presentation"><a href="#story" aria-controls="story" role="tab" data-toggle="tab">스토리, 공연 소개</a></li>
-				<li role="presentation"><a href="#creator" aria-controls="creator" role="tab" data-toggle="tab">기획자 소개</a></li>
 			</ul>
 			<div class="tab-content">
 				<div id="default" role="tabpanel" class="tab-pane active">
@@ -202,7 +201,6 @@
 					<h3>스토리 작성</h3>
 					<h4>여러분이 펀딩을 받고 공연을 기획하고자 하는 이야기가 무엇인가요?<br/>담백하고 진정성 있는 이야기를 들려주세요.</h4>
 				</div>
-				<div id="creator" role="tabpanel" class="tab-pane"></div>
 			</div>
 			<input type="hidden" id="project_id" value="{{ $project->id }}" />
 		</div>
