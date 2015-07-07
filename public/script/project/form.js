@@ -215,10 +215,6 @@ $(document).ready(function() {
 		
 	};
 	
-	var updateOrganization = function() {
-		
-	};
-	
 	var submitProject = function() {
 		if (window.confirm('정말 제출하시겠습니까?')) {
 			var projectId = $('#project_id').val();

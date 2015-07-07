@@ -1,8 +1,10 @@
 <div id="default" role="tabpanel" class="tab-pane active">
 	<h3>기본 정보 입력</h3>
-	<h4>프로젝트의 기본정보를 입력하는 단계입니다. 입력 하신 후에는 변경할 수 없으니,
-	<br/>
-	모든 항복을 펀딩참여자와 미래의 관객들을 생각하여 신중하게 결정해 주세요!</h4>
+	<h4>
+		프로젝트의 기본정보를 입력하는 단계입니다. 입력 하신 후에는 변경할 수 없으니,
+		<br/>
+		모든 항복을 펀딩참여자와 미래의 관객들을 생각하여 신중하게 결정해 주세요!
+	</h4>
 	<div class="form-horizontal" data-toggle="validator" role="form">
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">공연제목</label>

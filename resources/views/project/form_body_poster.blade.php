@@ -5,20 +5,16 @@
 		<div class="form-group">
 			<label for="poster_file" class="col-sm-2 control-label">대표 이미지</label>
 			<div class="col-sm-8">
-				<div class="input-group">
-					<input id="poster_file" type="file" name="poster" />
-					<p class="help-block">여러분의 프로젝트를 가장 잘 나타낼 수 있는 이미지를 업로드 해주세요</p>
-					<img id="poster_preview" width="600" height="400" src="{{ $project->poster_url }}" />
-				</div>
+				<input id="poster_file" type="file" name="poster" />
+				<p class="help-block">여러분의 프로젝트를 가장 잘 나타낼 수 있는 이미지를 업로드 해주세요</p>
+				<img id="poster_preview" width="600" height="400" src="{{ $project->poster_url }}" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="poster_description" class="col-sm-2 control-label">포스터 설명</label>
 			<div class="col-sm-8">
-				<div class="input-group">
-					<textarea id="poster_description" class="form-control" name="description" maxlength="60">{{ $project->description }}</textarea>
-					<p class="help-block">한 문장으로 여러분의 프로젝트를 설명해야 한다면, 뭐라고 하시겠어요?</p>
-				</div>
+				<textarea id="poster_description" class="form-control" name="description" maxlength="60">{{ $project->description }}</textarea>
+				<p class="help-block">한 문장으로 여러분의 프로젝트를 설명해야 한다면, 뭐라고 하시겠어요?</p>
 			</div>
 		</div>
 		<input type="hidden" name="_method" value="PUT">
