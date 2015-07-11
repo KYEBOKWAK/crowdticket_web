@@ -27,11 +27,12 @@ class CreateProjectsTable extends Migration {
 			$table->tinyInteger('state')->default(1)->index();
             $table->boolean('published')->default(false)->index();
             $table->string('title')->default('')->index();
-			$table->string('alias')->default('')->unique();
+			$table->string('alias')->nullable()->default(null)->unique();
             $table->string('poster_url')->default('');
 			$table->string('description')->default('');
 			$table->string('video_url')->default('');
             $table->string('detailed_address')->default('');
+            $table->mediumText('story');
             $table->integer('pledged_amount')->unsigned()->default(0);
             $table->integer('funded_amount')->unsigned()->default(0);
             $table->integer('audiences_limit')->unsigned()->default(0);
