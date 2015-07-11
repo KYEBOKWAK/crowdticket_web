@@ -47,11 +47,16 @@ TrexConfig.addAttacher(
 		wysiwygonly: _TRUE,
 		objattr: {},
 		features: { left:250, top:65, width:797, height:644 },
-		popPageUrl: "#host#path/pages/trex/image.html"
+		popPageUrl: "#host#path/pages/trex/image.php"
 	},
 	function(root){
 		var _config = TrexConfig.getAttacher("image", root);
 		_config.popPageUrl = TrexConfig.getUrl(_config.popPageUrl);
+		
+		if (document.getElementById('tx_image_params')) {
+			_config.popPageUrl += '?' + document.getElementById('tx_image_params').value;
+		}
+		
 		_config.features = TrexConfig.getPopFeatures(_config.features);
 	}
 );

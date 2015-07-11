@@ -30,23 +30,60 @@ class ProjectController extends Controller {
 		}
 		
 		if ($request->file('poster')) {
-			$this->uploadPoster($project, $request);
+			$posterUrl = $this->uploadPosterImage($request, $project);
+			$project->setAttribute('poster_url', $posterUrl);
 		}
 		
 		$project->save();
 		return $project;
 	}
 	
-	private function uploadPoster($project, $request) {
-		$poster_url_partial = Model::S3_POSTER_BUCKET . $project->id . '.jpg';
+	private function uploadPosterImage($request, $project) {
+		$posterUrlPartial = Model::S3_POSTER_DIRECTORY . $project->id . '.jpg';
 		
 		Storage::put(
-			$poster_url_partial,
+			$posterUrlPartial,
 			file_get_contents($request->file('poster')->getRealPath())
 		);
 		
-		$poster_url = Model::S3_BASE_URL . $poster_url_partial;
-		$project->setAttribute('poster_url', $poster_url);
+		return Model::S3_BASE_URL . $posterUrlPartial;
+	}
+	
+	public function uploadStoryImage(Request $request, $id) {
+		$project = $this->getProjectById($id);
+		
+		\Auth::user()->checkOwnership($project);
+		
+		
+		$file = $request->file('image');
+		$originalName = $file->getClientOriginalName();
+		$hashedName = md5($originalName);
+		$storyUrlPartial = Model::S3_STORY_DIRECTORY . $project->id . '/' . $hashedName . '.jpg';
+		
+		Storage::put(
+			$storyUrlPartial,
+			file_get_contents($file->getRealPath())
+		);
+		
+		return Model::S3_BASE_URL . $storyUrlPartial;
+	}
+	
+	public function uploadNewsImage(Request $request, $id) {
+		$project = $this->getProjectById($id);
+		
+		\Auth::user()->checkOwnership($project);
+		
+		$file = $request->file('image');
+		$originalName = $file->getClientOriginalName();
+		$hashedName = md5($originalName);
+		$newsUrlPartial = Model::S3_NEWS_DIRECTORY . $project->id . '/' . $hashedName . '.jpg';
+		
+		Storage::put(
+			$newsUrlPartial,
+			file_get_contents($file->getRealPath())
+		);
+		
+		return Model::S3_BASE_URL . $newsUrlPartial;
 	}
 	
 	public function getUpdateFormById($id) {
@@ -93,7 +130,9 @@ class ProjectController extends Controller {
 			} 
 		}
 		
-		return $project;
+		return view('project.detail', [
+			'project' => $project
+		]);
 	}
 	
 	public function validateProjectAlias($alias) {
@@ -124,6 +163,7 @@ class ProjectController extends Controller {
 	private function createProject() {
 		$project = new Project(\Input::all());
 		$project->user()->associate(\Auth::user());
+		$project->setAttribute('story', ' ');
 		$project->save();
 		return $project;
 	}

@@ -7,10 +7,10 @@ use Validator;
 abstract class Model extends BaseModel {
 	
 	const S3_BASE_URL = "https://crowdticket.s3.amazonaws.com/";
-	const S3_POSTER_BUCKET = "posters/";
-	const S3_STORY_BUCKET = "stories/";
-	const S3_NEWS_BUCKET = "news";
-	const S3_USER_BUCKET = "users";
+	const S3_POSTER_DIRECTORY = "posters/";
+	const S3_STORY_DIRECTORY = "stories/";
+	const S3_NEWS_DIRECTORY = "news/";
+	const S3_USER_DIRECTORY = "users/";
 	
 	protected static $typeRules = array();
 	

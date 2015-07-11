@@ -14,8 +14,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="story_editor" class="col-sm-2 control-label">포스터 설명</label>
+			<label class="col-sm-2 control-label">포스터 설명</label>
 			<div class="col-sm-10">
+				<input type="hidden" id="tx_image_params" value="url={{ url() }}/projects/{{ $project->id }}/story/images&csrf_token={{ csrf_token() }}" />
+				<textarea id="tx_load_content" style="display: none">{{ $project->story }}</textarea>
 				@include('editor')
 			</div>
 		</div>

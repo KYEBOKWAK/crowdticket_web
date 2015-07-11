@@ -22,6 +22,9 @@
 	<![endif]-->
 </head>
 <body>
+	<input type="hidden" id="base_url" value="{{ url() }}" />
+	<input type="hidden" id="asset_url" value="{{ asset('/') }}" />
+	
 	@section('navbar')
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -61,8 +64,6 @@
 	@show
 
 	@yield('content')
-	
-	<input type="hidden" id="base_url" value="{{ url() }}" />
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>

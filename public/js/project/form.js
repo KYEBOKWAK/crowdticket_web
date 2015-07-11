@@ -212,7 +212,13 @@ $(document).ready(function() {
 	};
 	
 	var updateStory = function() {
-		
+		EasyDaumEditor.save(function(content) {
+			console.log(content);
+			updateProject({
+				'video_url': $('#video_url').val(),
+				'story': content
+			});
+		});
 	};
 	
 	var submitProject = function() {
@@ -248,6 +254,7 @@ $(document).ready(function() {
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
 	$('#poster_form').ajaxForm(posterAjaxOption);
 	$('#poster_file').change(showPosterPreview);
+	$('#update_story').bind('click', updateStory);
 	$('#submit_project').bind('click', submitProject);
 	
 	setCreateTicketButtonShown(true);

@@ -86,7 +86,7 @@ var CORE_FILES = [
 	/** attacher */
 	"trex/attachment.js",
 	"trex/attachbox.js",
-	"trex/attachbox/attachbox_ui.js",
+	// "trex/attachbox/attachbox_ui.js",
 	"trex/attachbox/filecapacity.js",
 	"trex/attacher.js",
 
