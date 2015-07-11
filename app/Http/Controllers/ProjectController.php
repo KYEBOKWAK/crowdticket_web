@@ -87,7 +87,7 @@ class ProjectController extends Controller {
 	}
 	
 	public function getUpdateFormById($id) {
-		$project = $this->getProjectById($id);
+		$project = Project::findOrFail($id);
 		return $this->getUpdateForm($project);
 	} 
 	
@@ -113,7 +113,10 @@ class ProjectController extends Controller {
 	
 	public function getProjectById($id) {
 		$project = Project::findOrFail($id);
-		return $this->returnApprovedProject($project);
+        $project = $this->returnApprovedProject($project);
+		return view('project.detail', [
+			'project' => $project
+		]);
 	}
 	
 	public function getProjectByAlias($alias) {
@@ -129,10 +132,7 @@ class ProjectController extends Controller {
 				throw new \App\Exceptions\OwnershipException;
 			} 
 		}
-		
-		return view('project.detail', [
-			'project' => $project
-		]);
+        return $project;
 	}
 	
 	public function validateProjectAlias($alias) {
