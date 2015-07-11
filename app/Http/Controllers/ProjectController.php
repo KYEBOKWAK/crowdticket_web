@@ -11,10 +11,7 @@ use App\Models\Model as Model;
 class ProjectController extends Controller {
 	
 	public function updateProject(Request $request, $id) {
-		$project = $this->getProjectById($id);
-		
-		\Auth::user()->checkOwnership($project);
-		
+	    $project = $this->getSecureProjectById($id);
 		$project->update(\Input::all());
 		
 		if (\Input::has('category_id')) {
@@ -50,10 +47,7 @@ class ProjectController extends Controller {
 	}
 	
 	public function uploadStoryImage(Request $request, $id) {
-		$project = $this->getProjectById($id);
-		
-		\Auth::user()->checkOwnership($project);
-		
+	    $project = $this->getSecureProjectById($id);
 		
 		$file = $request->file('image');
 		$originalName = $file->getClientOriginalName();
@@ -69,9 +63,7 @@ class ProjectController extends Controller {
 	}
 	
 	public function uploadNewsImage(Request $request, $id) {
-		$project = $this->getProjectById($id);
-		
-		\Auth::user()->checkOwnership($project);
+	    $project = $this->getSecureProjectById($id);
 		
 		$file = $request->file('image');
 		$originalName = $file->getClientOriginalName();
@@ -87,18 +79,16 @@ class ProjectController extends Controller {
 	}
 	
 	public function getUpdateFormById($id) {
-		$project = Project::findOrFail($id);
-		return $this->getUpdateForm($project);
+	    $project = $this->getSecureProjectById($id);
+		return $this->returnUpdateForm($project);
 	} 
 	
 	public function getUpdateFormByCode($code) {
 		$project = $this->getProjectByBlueprintCode($code);
-		return $this->getUpdateForm($project);
+		return $this->returnUpdateForm($project);
 	}
 	
-	private function getUpdateForm($project) {
-		\Auth::user()->checkOwnership($project);
-		
+	private function returnUpdateForm($project) {
 		$project->load('tickets');
 		return view('project.form', [
 			'project' => $project,
@@ -110,13 +100,16 @@ class ProjectController extends Controller {
 	public function getProjects() {
 		return Project::all();
 	}
+    
+    private function getSecureProjectById($id) {
+        $project = Project::findOrFail($id);
+        \Auth::user()->checkOwnership($project);
+        return $project;
+    }
 	
 	public function getProjectById($id) {
 		$project = Project::findOrFail($id);
-        $project = $this->returnApprovedProject($project);
-		return view('project.detail', [
-			'project' => $project
-		]);
+        return $this->returnApprovedProject($project);
 	}
 	
 	public function getProjectByAlias($alias) {
@@ -124,16 +117,18 @@ class ProjectController extends Controller {
 		return $this->returnApprovedProject($project);
 	}
 
-	private function returnApprovedProject($project) {
-		if ($project->state !== Project::STATE_APPROVED) {
-			if (\Auth::check()) {
-				\Auth::user()->checkOwnership($project);
-			} else {
-				throw new \App\Exceptions\OwnershipException;
-			} 
-		}
-        return $project;
-	}
+    private function returnApprovedProject($project) {
+        if ($project->state !== Project::STATE_APPROVED) {
+            if (\Auth::check()) {
+                \Auth::user()->checkOwnership($project);
+            } else {
+                throw new \App\Exceptions\OwnershipException;
+            } 
+        }
+        return view('project.detail', [
+            'project' => $project
+        ]);
+    }
 	
 	public function validateProjectAlias($alias) {
 		$pattern = '/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}/';
@@ -151,13 +146,9 @@ class ProjectController extends Controller {
 	}
 	
 	public function submitProject($id) {
-		$project = $this->getProjectById($id);
-		
-		\Auth::user()->checkOwnership($project);
-		
+	    $project = $this->getSecureProjectById($id);
 		$project->submit();
-		
-		return "";
+		return $project;
 	}
 	
 	private function createProject() {
