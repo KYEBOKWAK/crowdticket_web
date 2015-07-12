@@ -104,5 +104,11 @@ class Project extends Model {
 	public function comments() {
 		return $this->morphMany('App\Models\Comment', 'commentable');
 	}
+	
+	public function dayUntilFundingClosed() {
+		$diff = abs(strtotime($this->funding_closing_at) - time());
+		$secondsInDay = 60 * 60 * 24;
+		return floor($diff / $secondsInDay);
+	}
 
 }

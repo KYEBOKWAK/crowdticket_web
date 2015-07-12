@@ -125,6 +125,7 @@ class ProjectController extends Controller {
                 throw new \App\Exceptions\OwnershipException;
             } 
         }
+		$project->load(['category', 'city', 'tickets']);
         return view('project.detail', [
             'project' => $project
         ]);
