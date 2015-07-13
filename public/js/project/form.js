@@ -213,7 +213,6 @@ $(document).ready(function() {
 	
 	var updateStory = function() {
 		EasyDaumEditor.save(function(content) {
-			console.log(content);
 			updateProject({
 				'video_url': $('#video_url').val(),
 				'story': content
