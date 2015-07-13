@@ -174,5 +174,10 @@ class ProjectController extends Controller {
 			return $project;
 		}
 	}
+	
+	public function getNews($id) {
+		$project = Project::findOrFail($id);
+		return $project->news()->get();
+	}
 
 }

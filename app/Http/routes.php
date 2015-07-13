@@ -21,9 +21,8 @@ Route::get('projects', 'ProjectController@getProjects');
 Route::get('projects/{id}', 'ProjectController@getProjectById');
 Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
 Route::get('projects/{alias}/validity', 'ProjectController@validateProjectAlias');
-Route::get('projects/{id}/supporters', 'ProjectController@getProjectSupporters');
-
-Route::get('projects/{id}/news', 'NewsController@getNews');
+Route::get('projects/{id}/supporters', 'ProjectController@getSupporters');
+Route::get('projects/{id}/news', 'ProjectController@getNews');
 
 Route::get('categories/{id}/projects', 'ProjectController@getCategoryProjectsById');
 Route::get('categories/{title}/projects', 'ProjectController@getCategoryProjectsByTitle');
@@ -52,15 +51,14 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
 	Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
 	Route::put('projects/{id}/submit', 'ProjectController@submitProject');
-	Route::get('projects/{id}/stats', 'ProjectController@getProjectStats');
+	Route::get('projects/{id}/stats', 'ProjectController@getStats');
 	
 	Route::post('projects/{id}/tickets', 'TicketController@createTicket');
 	Route::put('tickets/{id}', 'TicketController@updateTicket');
 	Route::delete('tickets/{id}', 'TicketController@deleteTicket');
 	 
-	Route::get('projects/{id}/news', 'NewsController@getNews');
-	Route::get('projects/{id}/news/form', 'NewsController@getCreateForm');
 	Route::post('projects/{id}/news', 'NewsController@createNews');
+	Route::get('projects/{id}/news/form', 'NewsController@getCreateForm');
 	Route::delete('news/{id}', 'NewsController@deleteNews');
 	
 	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 

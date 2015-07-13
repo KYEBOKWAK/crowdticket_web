@@ -105,6 +105,10 @@ class Project extends Model {
 		return $this->morphMany('App\Models\Comment', 'commentable');
 	}
 	
+	public function news() {
+		return $this->hasMany('App\Models\News');
+	}
+	
 	public function dayUntilFundingClosed() {
 		$diff = abs(strtotime($this->funding_closing_at) - time());
 		$secondsInDay = 60 * 60 * 24;

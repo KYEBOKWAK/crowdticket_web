@@ -1,5 +1,7 @@
 $(document).ready(function() {
-	var newsLoader = new Loader('/projects/news', 8);
+	var projectId = $('#project_id').val();
+	
+	var newsLoader = new Loader('/projects/' + projectId + '/news', 8);
 	newsLoader.setTemplate('#template_news');
 	newsLoader.setContainer('#news_container');
 	

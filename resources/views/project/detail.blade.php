@@ -68,6 +68,7 @@
 			@endforeach
 		</ul>
 	</div>
+	<input type="hidden" id="project_id" value="{{ $project->id }}" />
 </div>
 @endsection
 
