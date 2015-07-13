@@ -5,8 +5,12 @@
 	<div class="row">
 		<div class="col-md-12">
 			<h1>{{ $project->title }}</h1>
-			<span>{{ $project->city->name }}</span>
-			<span>{{ $project->category->title }}</span>
+			@if ($project->city)
+				<span>{{ $project->city->name }}</span>
+			@endif
+			@if ($project->category)
+				<span>{{ $project->category->title }}</span>
+			@endif
 		</div>
 	</div>
 	<div class="row">
@@ -29,7 +33,7 @@
 		</div>
 		<div class="col-md-4">
 			<p>목표금액 {{ $project->pledged_amount }}원 중 모인금액</p>
-			<h3>{{ $project->funded_amount }}원, {{ $project->audiences_count }}장, {{ ceil($project->funded_amount / $project->pledged_amount)  }}%</h3>
+			<h3>{{ $project->funded_amount }}원, {{ $project->audiences_count }}장, {{ $project->getProgress() }}%</h3>
 			<p>후원자</p>
 			<h3>{{ $project->audiences_count }}명</h3>
 			<p>펀딩 마감까지 남은 시간</p>

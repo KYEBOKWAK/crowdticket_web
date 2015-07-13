@@ -110,5 +110,12 @@ class Project extends Model {
 		$secondsInDay = 60 * 60 * 24;
 		return floor($diff / $secondsInDay);
 	}
+	
+	public function getProgress() {
+		if ($this->pledged_amount > 0) {
+			return ceil($this->funded_amount / $this->pledged_amount);
+		}
+		return 0;
+	}
 
 }
