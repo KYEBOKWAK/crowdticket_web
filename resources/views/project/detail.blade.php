@@ -43,16 +43,19 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-			<a href="#">공연소개</a>
-			<a href="#">업데이트 ({{ $project->news_count }})</a>
-			<a href="#">댓글 ({{ $project->comments_count }})</a>
-			<a href="#">후원자 ({{ $project->supporters_count }})</a>
-		</div>
+		<ul class="col-md-4 col-md-offset-2 nav nav-pills">
+			<li role="presentation" class="active"><a href="#story" aria-controls="default" role="tab" data-toggle="tab" >공연소개</a></li>
+			<li role="presentation"><a href="#news" aria-controls="default" role="tab" data-toggle="tab">업데이트 ({{ $project->news_count }})</a></li>
+			<li role="presentation"><a href="#comments" aria-controls="default" role="tab" data-toggle="tab">댓글 ({{ $project->comments_count }})</a></li>
+			<li role="presentation"><a href="#supporters" aria-controls="default" role="tab" data-toggle="tab">후원자 ({{ $project->supporters_count }})</a></li>
+		</ul>
 	</div>
 	<div class="row">
-		<div class="col-md-7 panel panel-default">
-			<div class="panel-body">{!! html_entity_decode($project->story) !!}</div>
+		<div class="col-md-7 tab-content">
+			<div id="story" role="tabpanel" class="tab-pane active">{!! html_entity_decode($project->story) !!}</div>
+			<div id="news" role="tabpanel" class="tab-pane loadable"><ul id="news_container" class="list-group-item"></ul></div>
+			<div id="comments" role="tabpanel" class="tab-pane loadable"><ul id="comments_container" class="list-group-item"></ul></div>
+			<div id="supporters" role="tabpanel" class="tab-pane loadable"><ul id="supporters_container" class="list-group-item"></ul></div>
 		</div>
 		<ul class="col-md-4 list-group">
 			@foreach ($project->tickets as $ticket)
@@ -67,3 +70,9 @@
 	</div>
 </div>
 @endsection
+
+@section('js')
+	@include('template.news')
+	<script src="{{ asset('/js/project/detail.js') }}"></script>
+@endsection
+

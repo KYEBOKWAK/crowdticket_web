@@ -23,7 +23,7 @@
 		};
 		
 		this.setContainer = function(containerId) {
-			mContainer = $(container);
+			mContainer = $(containerId);
 		};
 		
 		this.setLoadedListener = function(l) {
@@ -58,6 +58,10 @@
 			
 			var method = "get";
 			var success = function(result) {
+				if (!mTemplate || !mContainer) {
+					return;
+				}
+				
 				for (var i = 0, l = result.length; i < l; i++) {
 					var row = mTemplate({ "data": result[i] });
 					mContainer.append(row);
