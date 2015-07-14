@@ -52,10 +52,21 @@
 	</div>
 	<div class="row">
 		<div class="col-md-7 tab-content">
-			<div id="story" role="tabpanel" class="tab-pane active">{!! html_entity_decode($project->story) !!}</div>
-			<div id="news" role="tabpanel" class="tab-pane loadable"><ul id="news_container" class="list-group"></ul></div>
-			<div id="comments" role="tabpanel" class="tab-pane loadable"><ul id="comments_container" class="list-group"></ul></div>
-			<div id="supporters" role="tabpanel" class="tab-pane loadable"><ul id="supporters_container" class="list-group"></ul></div>
+			<div id="story" role="tabpanel" class="tab-pane active">
+				{!! html_entity_decode($project->story) !!}
+			</div>
+			<div id="news" role="tabpanel" class="tab-pane loadable">
+				@if (\Auth::check() && \Auth::user()->id === $project->user_id)
+					<a href="{{ url('/projects') }}/{{ $project->id }}/news/form" class="btn btn-default">작성하기</a>
+				@endif
+				<ul id="news_container" class="list-group"></ul>
+			</div>
+			<div id="comments" role="tabpanel" class="tab-pane loadable">
+				<ul id="comments_container" class="list-group"></ul>
+			</div>
+			<div id="supporters" role="tabpanel" class="tab-pane loadable">
+				<ul id="supporters_container" class="list-group"></ul>
+			</div>
 		</div>
 		<ul class="col-md-4 list-group">
 			@foreach ($project->tickets as $ticket)

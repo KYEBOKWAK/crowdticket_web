@@ -19,13 +19,40 @@ class NewsController extends Controller {
 		return $news;
 	}
 	
+	public function updateNews($id) {
+		$news = News::findOrFail($id);
+		$project = $news->project()->first();
+		
+		\Auth::user()->checkOwnership($project);
+		
+		$news->update(\Input::all());
+		$news->save();
+		
+		return $news;
+	}
+	
 	public function getCreateForm($projectId) {
 		$project = Project::findOrFail($projectId);
 		
 		\Auth::user()->checkOwnership($project);
 		
 		return view('project.news.form', [
-			'project' => $project
+			'ajax_url' => '/projects/' . $projectId . '/news',
+			'project' => $project,
+			'news' => null
+		]);
+	}
+	
+	public function getUpdateForm($id) {
+		$news = News::findOrFail($id);
+		$project = $news->project()->first();
+		
+		\Auth::user()->checkOwnership($project);
+		
+		return view('project.news.form', [
+			'ajax_url' => '/news/' . $id,
+			'project' => $project,
+			'news' => $news
 		]);
 	}
 	

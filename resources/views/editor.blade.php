@@ -383,7 +383,10 @@
 	EditorJSLoader.ready(function(Editor) {
 		var config = EasyDaumEditor.getConfig();
 		var editor = new Editor(config);
-		EasyDaumEditor.load(document.getElementById('tx_load_content').value);
+		var loadElement = document.getElementById('tx_load_content');
+		if (loadElement) {
+			EasyDaumEditor.load(loadElement.value);
+		}
 	});
 	
 	window.validForm = function(editor) {

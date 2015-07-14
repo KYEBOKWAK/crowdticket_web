@@ -59,6 +59,8 @@ Route::group(['middleware' => 'auth'], function() {
 	 
 	Route::post('projects/{id}/news', 'NewsController@createNews');
 	Route::get('projects/{id}/news/form', 'NewsController@getCreateForm');
+	Route::get('news/{id}/form', 'NewsController@getUpdateForm');
+	Route::put('news/{id}', 'NewsController@updateNews');
 	Route::delete('news/{id}', 'NewsController@deleteNews');
 	
 	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 
