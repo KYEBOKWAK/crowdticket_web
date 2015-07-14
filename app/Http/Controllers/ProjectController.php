@@ -127,7 +127,8 @@ class ProjectController extends Controller {
         }
 		$project->load(['category', 'city', 'tickets']);
         return view('project.detail', [
-            'project' => $project
+            'project' => $project,
+            'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
         ]);
     }
 	

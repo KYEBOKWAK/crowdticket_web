@@ -56,7 +56,7 @@
 				{!! html_entity_decode($project->story) !!}
 			</div>
 			<div id="news" role="tabpanel" class="tab-pane loadable">
-				@if (\Auth::check() && \Auth::user()->id === $project->user_id)
+				@if ($is_master)
 					<a href="{{ url('/projects') }}/{{ $project->id }}/news/form" class="btn btn-default">작성하기</a>
 				@endif
 				<ul id="news_container" class="list-group"></ul>
