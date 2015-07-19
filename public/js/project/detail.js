@@ -2,10 +2,15 @@ $(document).ready(function() {
 	var projectId = $('#project_id').val();
 	
 	var newsLoader = new Loader('/projects/' + projectId + '/news', 8);
-	newsLoader.setTemplate('#template_news');
-	newsLoader.setContainer('#news_container');
+	newsLoader.setTemplate('#template-news');
+	newsLoader.setContainer('#news-container');
+	
+	var supportersLoader = new Loader('/projects/' + projectId + '/supporters', 20);
+	supportersLoader.setTemplate('#template-supporter');
+	supportersLoader.setContainer('#supporters-container');
 	
 	$('#tab-news').data('loader', newsLoader);
+	$('#tab-supporters').data('loader', supportersLoader);
 	
 	var loadContents = function(e) {
 		var href = $(e.target).attr('href');

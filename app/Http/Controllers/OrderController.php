@@ -31,6 +31,7 @@ class OrderController extends Controller {
 		$supporter = new Supporter;
 		$supporter->project()->associate($project);
 		$supporter->user()->associate($user);
+		$supporter->save();
 		
 		$user->increment('supports_count');
 		$user->increment('tickets_count');
@@ -39,13 +40,16 @@ class OrderController extends Controller {
 		
 		\DB::commit();
 		
-		return $order;
+		return '주문완료';
 	} 
 	
 	public function getProjectOrders($projectId) {
 		$project = Project::findOrFail($projectId);
 		\Auth::user()->checkOwnership($project);
-		return $project->orders()->get();
+		$project->load(['orders', 'orders.user']);
+		return view('project.order.list', [
+			'project' => $project
+		]);
 	}
 
 }

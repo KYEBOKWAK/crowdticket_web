@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+	@if (\Auth::check() && \Auth::user()->isOwnerOf($project))
+		<div class="row">
+			<div class="col-md-4 col-md-offset-8">
+				<a href="{{ url('/projects/form') }}/{{ $project->id }}/" class="btn btn-primary">정보수정</a>
+				<a href="{{ url('/projects') }}/{{ $project->id }}/orders" class="btn btn-primary">관리하기</a>
+			</div>
+		</div>
+	@endif
 	<div class="row">
 		<div class="col-md-12">
 			<h1>{{ $project->title }}</h1>
@@ -80,16 +88,16 @@
 				@if ($is_master)
 					<a href="{{ url('/projects') }}/{{ $project->id }}/news/form" class="btn btn-default">작성하기</a>
 				@endif
-				<ul id="news_container" class="list-group"></ul>
+				<ul id="news-container" class="list-group"></ul>
 			</div>
 			<div id="tab-comments" role="tabpanel" class="tab-pane loadable">
 				@if (\Auth::check())
 					<textarea id="input_comment" class="form-control" rows="3" placeholder="댓글을 입력해주세요"></textarea>
 				@endif
-				<ul id="comments_container" class="list-group"></ul>
+				<ul id="comments-container" class="list-group"></ul>
 			</div>
 			<div id="tab-supporters" role="tabpanel" class="tab-pane loadable">
-				<ul id="supporters_container" class="list-group"></ul>
+				<ul id="supporters-container" class="list-group"></ul>
 			</div>
 		</div>
 		<ul class="col-md-4 list-group">
@@ -111,6 +119,7 @@
 
 @section('js')
 	@include('template.news')
+	@include('template.supporter')
 	<script src="{{ asset('/js/project/detail.js') }}"></script>
 @endsection
 
