@@ -43,28 +43,52 @@
 		</div>
 	</div>
 	<div class="row">
-		<ul class="col-md-4 col-md-offset-2 nav nav-pills">
-			<li role="presentation" class="active"><a href="#story" aria-controls="default" role="tab" data-toggle="tab" >공연소개</a></li>
-			<li role="presentation"><a href="#news" aria-controls="default" role="tab" data-toggle="tab">업데이트 ({{ $project->news_count }})</a></li>
-			<li role="presentation"><a href="#comments" aria-controls="default" role="tab" data-toggle="tab">댓글 ({{ $project->comments_count }})</a></li>
-			<li role="presentation"><a href="#supporters" aria-controls="default" role="tab" data-toggle="tab">후원자 ({{ $project->supporters_count }})</a></li>
-		</ul>
+		<div class="col-md-6 col-md-offset-2">
+			@include('helper.nav', [
+				'nav_class' => 'nav-pills',
+				'tabs' => [
+					0 => [
+						'id' => 'tab-story',
+						'class' => 'active',
+						'title' => '공연소개'
+					],
+					
+					1 => [
+						'id' => 'tab-news',
+						'title' => '업데이트 (' . $project->news_count . ')'
+					],
+					
+					2 => [
+						'id' => 'tab-comments',
+						'title' => '댓글 (' . $project->comments_count . ')'
+					],
+					
+					3 => [
+						'id' => 'tab-supporters',
+						'title' => '후원자 (' . $project->supporters_count . ')'
+					]
+				]
+			])
+		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-7 tab-content">
-			<div id="story" role="tabpanel" class="tab-pane active">
+			<div id="tab-story" role="tabpanel" class="tab-pane active">
 				{!! html_entity_decode($project->story) !!}
 			</div>
-			<div id="news" role="tabpanel" class="tab-pane loadable">
+			<div id="tab-news" role="tabpanel" class="tab-pane loadable">
 				@if ($is_master)
 					<a href="{{ url('/projects') }}/{{ $project->id }}/news/form" class="btn btn-default">작성하기</a>
 				@endif
 				<ul id="news_container" class="list-group"></ul>
 			</div>
-			<div id="comments" role="tabpanel" class="tab-pane loadable">
+			<div id="tab-comments" role="tabpanel" class="tab-pane loadable">
+				@if (\Auth::check())
+					<textarea id="input_comment" class="form-control" rows="3" placeholder="댓글을 입력해주세요"></textarea>
+				@endif
 				<ul id="comments_container" class="list-group"></ul>
 			</div>
-			<div id="supporters" role="tabpanel" class="tab-pane loadable">
+			<div id="tab-supporters" role="tabpanel" class="tab-pane loadable">
 				<ul id="supporters_container" class="list-group"></ul>
 			</div>
 		</div>

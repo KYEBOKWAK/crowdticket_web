@@ -5,7 +5,7 @@ $(document).ready(function() {
 	newsLoader.setTemplate('#template_news');
 	newsLoader.setContainer('#news_container');
 	
-	$('#news').data('loader', newsLoader);
+	$('#tab-news').data('loader', newsLoader);
 	
 	var loadContents = function(e) {
 		var href = $(e.target).attr('href');
