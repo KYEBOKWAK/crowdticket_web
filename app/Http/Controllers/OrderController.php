@@ -3,6 +3,7 @@
 use App\Models\Order as Order;
 use App\Models\Ticket as Ticket;
 use App\Models\Project as Project;
+use App\Models\Supporter as Supporter;
 
 class OrderController extends Controller {
 	
@@ -17,13 +18,26 @@ class OrderController extends Controller {
 		$dummy['address'] = 'dummy_address';
 		$dummy['contact'] = '01000000000';
 		
+		$user = \Auth::user();
+		
+		\DB::beginTransaction();
+		
 		$order = new Order($dummy);
 		$order->project()->associate($project);
 		$order->ticket()->associate($ticket);
-		$order->user()->associate(\Auth::user());
+		$order->user()->associate($user);
 		$order->save();
 		
+		$supporter = new Supporter;
+		$supporter->project()->associate($project);
+		$supporter->user()->associate($user);
+		
+		$user->increment('supports_count');
+		$user->increment('tickets_count');
+		$project->increment('supporters_count');
 		$ticket->increment('audiences_count');
+		
+		\DB::commit();
 		
 		return $order;
 	} 
