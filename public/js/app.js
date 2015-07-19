@@ -39,3 +39,21 @@
 		jqueryAjax(form);
 	};
 })();
+
+
+$(document).ready(function() {
+	$('.concatable').each(function() {
+		var parent = $(this);
+		var sources = $(this).find('.concatable-source');
+		var target = $(this).find('.concatable-target');
+		sources.each(function() {
+			$(this).bind('change', function() {
+				var concat = '';
+				sources.each(function() {
+					concat += $(this).val();
+				});
+				target.val(concat);
+			});
+		});
+	});
+});
