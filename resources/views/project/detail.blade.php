@@ -38,7 +38,7 @@
 			<h3>{{ $project->audiences_count }}명</h3>
 			<p>펀딩 마감까지 남은 시간</p>
 			<h3>{{ $project->dayUntilFundingClosed() }}일</h3>
-			<button class="btn btn-primary">후원하기</button>
+			<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" class="btn btn-primary">후원하기</a>
 			<p>프로젝트 진행자</p>
 		</div>
 	</div>
@@ -95,7 +95,9 @@
 		<ul class="col-md-4 list-group">
 			@foreach ($project->tickets as $ticket)
 				<li class="ticket list-group-item">
-					<h4>{{ $ticket->price }}원 이상 후원, 티켓 {{ $ticket->real_ticket_count }}매 포함</h4>
+					<a href="{{ url('/tickets/') }}/{{ $ticket->id }}/orders">
+						<h4>{{ $ticket->price }}원 이상 후원, 티켓 {{ $ticket->real_ticket_count }}매 포함</h4>
+					</a>
 					<p>{{ $ticket->reward }}</p>
 					<p>예상 실행일 : {{ date('Y-m-d', strtotime($ticket->delivery_date)) }}</p>
 					<p>{{ $ticket->audiences_count }}명이 선택중 / {{ $ticket->audiences_limit }}명 제한</p>

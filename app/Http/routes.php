@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
 	
 	Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
 	Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
+	Route::get('projects/{id}/tickets', 'ProjectController@getTickets');
 	Route::put('projects/{id}', 'ProjectController@updateProject');
 	Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
 	Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
@@ -63,7 +64,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::put('news/{id}', 'NewsController@updateNews');
 	Route::delete('news/{id}', 'NewsController@deleteNews');
 	
-	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 
+	// Route::post('tickets/{id}/orders', 'OrderController@createOrder');
+	Route::get('tickets/{id}/orders', 'OrderController@createOrder'); // test 
 	Route::get('projects/{id}/orders', 'OrderController@getProjectOrders'); 
 	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 
 	

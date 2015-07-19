@@ -107,24 +107,30 @@ class ProjectController extends Controller {
         return $project;
     }
 	
-	public function getProjectById($id) {
-		$project = Project::findOrFail($id);
-        return $this->returnApprovedProject($project);
-	}
-	
-	public function getProjectByAlias($alias) {
-		$project = Project::where('alias', '=', $alias)->firstOrFail();
-		return $this->returnApprovedProject($project);
-	}
-
-    private function returnApprovedProject($project) {
-        if ($project->state !== Project::STATE_APPROVED) {
+	private function getApprovedProject($project) {
+		if ($project->state !== Project::STATE_APPROVED) {
             if (\Auth::check()) {
                 \Auth::user()->checkOwnership($project);
             } else {
                 throw new \App\Exceptions\OwnershipException;
             } 
         }
+		return $project;
+	}
+	
+	public function getProjectById($id) {
+		$project = Project::findOrFail($id);
+		$project = $this->getApprovedProject($project);
+		return $this->getProjectDetailView($project);
+	}
+	
+	public function getProjectByAlias($alias) {
+		$project = Project::where('alias', '=', $alias)->firstOrFail();
+		$project = $this->getApprovedProject($project);
+		return $this->getProjectDetailView($project);
+	}
+
+    private function getProjectDetailView($project) {
 		$project->load(['category', 'city', 'tickets']);
         return view('project.detail', [
             'project' => $project,
@@ -176,9 +182,23 @@ class ProjectController extends Controller {
 		}
 	}
 	
+	public function getTickets($id) {
+		$project = Project::findOrFail($id);
+		$project = $this->getApprovedProject($project);
+		$project->load(['tickets']);
+		return view('project.ticket.list', [
+			'project' => $project,
+		]);
+	}
+	
 	public function getNews($id) {
 		$project = Project::findOrFail($id);
 		return $project->news()->get();
+	}
+	
+	public function getSupporters($id) {
+		$project = Project::findOrFail($id);
+		return $project->supporters()->get();
 	}
 
 }
