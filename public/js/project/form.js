@@ -1,12 +1,4 @@
 $(document).ready(function() {
-	var mergeContact = function() {
-		var contactFirst = $('#contact_first').val();
-		var contactMiddle = $('#contact_middle').val();
-		var contactLast = $('#contact_last').val();
-		
-		$('#contact').val(contactFirst + contactMiddle + contactLast);
-	};
-	
 	var checkAliasDuplicate = function() {
 		var alias = $('#alias').val();
 		var url = '/projects/' + alias + '/validity';
@@ -241,7 +233,6 @@ $(document).ready(function() {
 		}
 	};
 	
-	$('.contact').bind('change', mergeContact);
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
 	$('#funding_closing_at').datepicker({'dateFormat': 'yy-mm-dd'});
