@@ -49,5 +49,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	private function isAdmin() {
 		return \DB::table('admins')->where('user_id', '=', $this->id)->count() > 0;
 	}
+	
+	public function getPhotoUrl() {
+		if ($this->profile_photo_url) {
+			return $this->profile_photo_url;
+		}
+		return 'http://orig06.deviantart.net/ea2a/f/2010/213/6/d/facebook_default_picture_by_graffadetoart.jpg';
+	}
 
 }

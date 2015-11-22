@@ -90,15 +90,66 @@ class ProjectController extends Controller {
 	
 	private function returnUpdateForm($project) {
 		$project->load('tickets');
+		$tab = $this->getValidUpdateFormTab();
 		return view('project.form', [
+			'selected_tab' => $tab,
 			'project' => $project,
 			'categories' => Category::orderBy('id')->get(),
 			'cities' => City::orderBy('id')->get()
 		]);
 	}
 	
+	private function getValidUpdateFormTab() {
+		$tab = \Input::get('tab');
+		switch ($tab) {
+			case 'base':
+			case 'reward':
+			case 'ticket':
+			case 'poster':
+			case 'story':
+			case 'creator':
+				return $tab;
+			default:
+				return 'base';
+		}
+	}
+	
 	public function getProjects() {
-		return Project::all();
+		$projects = [];
+		$tab = $this->getValidExploreTab();
+		switch ($tab) {
+			default:
+			case 'all':
+				$projects = Project::where('state', 4)->get();
+				break;
+				
+			case 'funding':
+			case 'sale':
+				$projects = Project::where('type', '=', $tab)->where('state', 4)->get();
+				break;
+				
+			case 'date':
+				$projects = Project::where('state', 4)->get();
+				break;
+		}
+		
+		return view('project.explore', [
+			'selected_tab' => $tab,
+			'projects' => $projects
+		]);
+	}
+	
+	private function getValidExploreTab() {
+		$tab = \Input::get('tab');
+		switch ($tab) {
+			case 'all':
+			case 'funding':
+			case 'sale':
+			case 'date':
+				return $tab;
+			default:
+				return 'all';
+		}
 	}
     
     private function getSecureProjectById($id) {
@@ -169,6 +220,9 @@ class ProjectController extends Controller {
 	
 	private function getProjectByBlueprintCode($code) {
 		$blueprint = Blueprint::findByCode($code);
+		if (!$blueprint->approved) {
+			throw new \Exception;
+		}
 		
 		\Auth::user()->checkOwnership($blueprint);
 		

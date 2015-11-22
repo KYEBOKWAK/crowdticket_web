@@ -13,7 +13,7 @@ class Blueprint extends Model {
 		'project_introduction' => 'string|min:1',
 		'story' => 'string|min:1',
 		'estimated_amount' => 'string|min:1',
-		'contact' => 'numeric'
+		'contact' => 'email'
 	];
 	
 	protected static $creationRules = [

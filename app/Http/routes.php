@@ -42,6 +42,9 @@ Route::get('users/{id}/projects', 'UserController@getUserProjects');
 
 Route::group(['middleware' => 'auth'], function() {
 	
+	Route::get('users/{id}/form', 'UserController@getUpdateForm');
+	Route::put('users/{id}', 'UserController@updateUser');
+	
 	Route::post('blueprints', 'BlueprintController@createBlueprint'); 
 	Route::get('blueprints/form', 'BlueprintController@getCreateForm'); 
 	

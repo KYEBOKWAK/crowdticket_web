@@ -108,6 +108,14 @@ class Project extends Model {
 	public function news() {
 		return $this->hasMany('App\Models\News');
 	}
+
+	public function isFinished() {
+		if ($this->type === 'funding') {
+			return strtotime($this->funding_closing_at) - time() < 0;
+		} else {
+			return strtotime($this->performance_opening_at) - time() < 0;
+		}
+	}
 	
 	public function dayUntilFundingClosed() {
 		$diff = abs(strtotime($this->funding_closing_at) - time());
@@ -115,11 +123,31 @@ class Project extends Model {
 		return floor($diff / $secondsInDay);
 	}
 	
+	public function getPosterUrl() {
+		if ($this->poster_url) {
+			return $this->poster_url;
+		}
+		return "http://immortaldc.com/wp-content/themes/sentient/img/no_image.png";
+	}
+	
 	public function getProgress() {
 		if ($this->pledged_amount > 0) {
-			return ceil($this->funded_amount / $this->pledged_amount);
+			return (int) (($this->funded_amount / $this->pledged_amount) * 100);
 		}
 		return 0;
+	}
+	
+	public function getTicketDateFormatted() {
+		$date = new \DateTime($this->performance_opening_at);
+		return $date->format('Y. m. d');
+	}
+
+	public function getFundingClosingAtOrNow() {
+		$time = time();
+		if ($this->funding_closing_at) {
+			$time = strtotime($this->funding_closing_at);
+		}
+		return date('Y-m-d', $time);
 	}
 
 }
