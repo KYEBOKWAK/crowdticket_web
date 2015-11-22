@@ -2,12 +2,10 @@
 
 class WelcomeController extends Controller {
 
-	public function __construct() {
-		$this->middleware('guest');
-	}
-
 	public function index() {
-		return view('welcome');
+		return view('welcome', [
+			'projects' => \App\Models\Project::where('state', 4)->get()
+		]);
 	}
 
 }

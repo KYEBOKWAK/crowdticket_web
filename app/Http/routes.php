@@ -16,8 +16,6 @@ Route::get('terms/', function() { return view('customer.terms'); });
 Route::get('privacy/', function() { return view('customer.privacy'); });
 Route::get('help/', function() { return view('customer.help'); });
 
-Route::get('home', 'HomeController@index');
-
 Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 
 Route::get('projects', 'ProjectController@getProjects');
