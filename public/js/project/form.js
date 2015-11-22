@@ -37,10 +37,10 @@ $(document).ready(function() {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId;
 		var method = 'put';
-		var success = function() {
+		var success = function(e) {
 			alert('저장되었습니다.');
 		};
-		var error = function() {
+		var error = function(e) {
 			alert('저장에 실패하였습니다.');
 		};
 		
@@ -193,6 +193,10 @@ $(document).ready(function() {
 		}
 	};
 	
+	var performPosterFileClick = function() {
+		$('#poster_file').trigger('click');
+	};
+	
 	var showPosterPreview = function() {
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
@@ -233,6 +237,18 @@ $(document).ready(function() {
 		}
 	};
 	
+	var listOldTickets = function() {
+		var ticketsJson = $('#tickets_json').val();
+		if (ticketsJson) {
+			var tickets = $.parseJSON(ticketsJson);
+			if (tickets.length > 0) {
+				for (var i = 0, l = tickets.length; i < l; i++) {
+					addTicketRow(tickets[i]);
+				}
+			}
+		}
+	};
+	
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
 	$('#funding_closing_at').datepicker({'dateFormat': 'yy-mm-dd'});
@@ -246,8 +262,15 @@ $(document).ready(function() {
 	$('#poster_file').change(showPosterPreview);
 	$('#update_story').bind('click', updateStory);
 	$('#submit_project').bind('click', submitProject);
+	$('#poster_file_fake').bind('click', performPosterFileClick);
 	
 	setCreateTicketButtonShown(true);
+	
+	listOldTickets();
+	
+	$(window).bind('beforeunload', function() {
+		// return '페이지를 나가기 전에 저장되지 않은 정보를 확인하세요';
+	});
 	
 });
 
