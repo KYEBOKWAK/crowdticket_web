@@ -69,7 +69,7 @@
 				</div>
 			</div>
 		</div>
-		<a id="btn-blueprint-help" role="button" href="{{ url('/') }}" class="btn btn-default">도움이 필요하신가요?</a>
+		<a id="btn-blueprint-help" role="button" href="{{ url('/help') }}" class="btn btn-default">도움이 필요하신가요?</a>
 	</div>
 </div>
 @endsection
