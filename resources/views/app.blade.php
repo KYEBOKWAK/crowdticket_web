@@ -43,7 +43,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/projects') }}">전체 공연 보기</a></li>
 					<li><a href="{{ url('/blueprints/welcome') }}">공연 개설 신청</a></li>
-					<li><a href="{{ url('/') }}">도움말</a></li>
+					<li><a href="{{ url('/help') }}">도움말</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
@@ -75,9 +75,9 @@
 			<img src="{{ asset('/img/app/logo_bottom.png') }}" class="logo-footer" />
 			<div>
 				<ul>
-					<li><a href="{{ url('/') }}">이용약관</a></li>
-					<li><a href="{{ url('/') }}">개인정보취급방침</a></li>
-					<li><a href="{{ url('/') }}">문의하기</a></li>
+					<li><a href="{{ url('/terms') }}">이용약관</a></li>
+					<li><a href="{{ url('/privacy') }}">개인정보취급방침</a></li>
+					<li><a href="mailto:jun@crowdticket.kr">문의하기</a></li>
 				</ul>
 				<p>COPYRIGHT (C) 2015 CROWD TICKET</p>
 				<p>

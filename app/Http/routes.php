@@ -12,6 +12,9 @@ Route::controllers([
 ]);
 
 Route::get('/', 'WelcomeController@index');
+Route::get('terms/', function() { return view('customer.terms'); });
+Route::get('privacy/', function() { return view('customer.privacy'); });
+Route::get('help/', function() { return view('customer.help'); });
 
 Route::get('home', 'HomeController@index');
 
