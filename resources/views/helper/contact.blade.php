@@ -12,4 +12,5 @@
 		<input type="text" maxlength="4" class="form-control contact concatable-source" pattern="^\d{4}$" {{ $required or '' }} />
 		<input type="hidden" name="{{ $name }}" class="concatable-target" />
 	</div>
+	<p class="help-block">{{ $help }}</p>
 </div>
