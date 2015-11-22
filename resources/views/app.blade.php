@@ -7,6 +7,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<title>CrowdTicket</title>
 
+	<link href="{{ asset('/css/base.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
 	@yield('css')
@@ -38,22 +39,24 @@
 				<a class="navbar-brand" href="{{ url('/') }}">CROWD TICKET</a>
 			</div>
 
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">MORE TICKETS</a></li>
-					<li><a href="{{ url('/blueprints/welcome') }}">BE ON STAGE</a></li>
-					<li><a href="{{ url('/') }}">HOW IT WORKS</a></li>
+					<li><a href="{{ url('/projects') }}">전체 공연 보기</a></li>
+					<li><a href="{{ url('/blueprints/welcome') }}">공연 개설 신청</a></li>
+					<li><a href="{{ url('/') }}">도움말</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
-						<li><a href="{{ url('/auth/login') }}">Login</a></li>
-						<li><a href="{{ url('/auth/register') }}">Register</a></li>
+						<li><a href="{{ url('/auth/login') }}">LOGIN</a></li>
+						<li><a href="{{ url('/auth/register') }}">JOIN</a></li>
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+								<li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
+								<li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+								<li><a href="{{ url('/auth/logout') }}">로그아웃</a></li>
 							</ul>
 						</li>
 					@endif
@@ -63,7 +66,35 @@
 	</nav>
 	@show
 
-	@yield('content')
+	<div id="main">
+		@yield('content')
+	</div>
+	
+	<footer>
+		<div class="container">
+			<img src="{{ asset('/img/app/logo_bottom.png') }}" class="logo-footer" />
+			<div>
+				<ul>
+					<li><a href="{{ url('/') }}">이용약관</a></li>
+					<li><a href="{{ url('/') }}">개인정보취급방침</a></li>
+					<li><a href="{{ url('/') }}">문의하기</a></li>
+				</ul>
+				<p>COPYRIGHT (C) 2015 CROWD TICKET</p>
+				<p>
+					<span>크라우드티켓</span>
+					<span><strong>대표</strong>신효준</span>
+					<span><strong>사업자등록번호</strong>105-87-52823</span>
+					<span><strong>영업소재지</strong>서울시 홍대역 놀이터</span>
+				</p>
+				<p>
+					<span><strong>통신판매업</strong>2011-서울홍대-0081</span>
+					<span><strong>전화</strong>010-0000-0000</span>
+					<span><strong>팩스</strong>070-0000-0000</span>
+					<span><strong>관리자 이메일</strong><a href="mailto:jun@crowdticket.kr">jun@crowdticket.kr</span>
+				</p>
+			</div>
+		</div>
+	</footer>
 	
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
