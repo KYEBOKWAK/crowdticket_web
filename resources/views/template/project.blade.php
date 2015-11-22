@@ -10,8 +10,10 @@
 		<div class="@if (!isset($colOnly)) col-md-4 @endif project-grid">
 			<div class="project-grid-wrapper">
 				<div>
-					<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
-					<h4 class="text-ellipsize project-title">{{ $project->title }}</h3>
+					<a href="{{ url('/projects') }}/{{ $project->id }}">
+						<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
+					</a>
+					<h4 class="text-ellipsize project-title"><a href="{{ url('/projects') }}/{{ $project->id }}">{{ $project->title }}</a></h3>
 					<h6 class="text-ellipsize-2 project-description">{{ $project->description }}</h4>
 				</div>
 				
