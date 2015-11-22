@@ -23,6 +23,10 @@
 		color: #FFFFFF;
 		font-weight: bold;
 	}
+	.ps-welcome-buttons {
+		margin-top: 2em;
+		margin-bottom: 90px;
+	}
 </style>
 @endsection
 
@@ -40,5 +44,11 @@
 </div>
 <div class="container">
 	@include('template.project', ['projects' => $projects ])
+	<div class="row ps-welcome-buttons">
+		<div class="col-md-12 text-center">
+			<a href="{{ url('/blueprints/welcome') }}" class="btn btn-default">공연 개설하기</a>
+			<a href="{{ url('/projects') }}" class="btn btn-default">공연 더 보기</a>
+		</div>
+	</div>
 </div>
 @endsection
