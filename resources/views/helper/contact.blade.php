@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group clear">
 	<label for="input-contact">{{ $label }}</label>
 	<div class="form-inline concatable">
 		<select class="form-control concatable-source">
