@@ -2,9 +2,6 @@
 
 @section('css')
 <style>
-	.container {
-		margin-bottom: 5em;
-	}
 	.ps-detail-header {
 		background-color: #FFFFFF;
 	}
@@ -32,7 +29,7 @@
 @section('content')
 <div class="first-container ps-detail-header">
 	<div class="ps-detail-user-wrapper">
-		<img src="{{ $user->getPhotoUrl() }}" class="user-photo-big" />
+		<div class="user-photo-big bg-base center-block" style="background-image: url('{{ $user->getPhotoUrl() }}');"></div>
 		<h3><strong>{{ $user->name }}</strong></h3>
 	</div>
 </div>

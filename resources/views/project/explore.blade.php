@@ -2,9 +2,6 @@
 
 @section('css')
 <style>
-	.container {
-		margin-bottom: 5em;
-	}
 	.ps-explore-tabs {
 		margin-top: 48px;
 		margin-bottom: 35px;

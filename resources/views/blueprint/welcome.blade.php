@@ -7,9 +7,6 @@
 		background-position: center;
 		background-size: cover;
 	}
-	.box-container {
-		margin-bottom: 20px;
-	}
 	.box-container h4 {
 		padding-left: 2em;
 	}

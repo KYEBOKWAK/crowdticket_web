@@ -25,6 +25,12 @@
 	.ps-password-group input {
 		margin-bottom: 10px;
 	}
+	.user-photo-middle {
+		margin-bottom: 15px;
+	}
+	.ps-modify-user-photo {
+		margin-top: 35px;
+	}
 </style>
 @endsection
 
@@ -48,8 +54,8 @@
 					<div class="form-group">
 						<label for="input-user-intro">프로필 사진</label>
 						<div>
-							<img src="{{ $user->getPhotoUrl() }}" class="user-photo-middle" />
-							<a href="#" class="btn btn-default">변경하기</a>
+							<div class="user-photo-middle bg-base pull-left" style="background-image: url('{{ $user->getPhotoUrl() }}');"></div>
+							<a href="#" class="btn btn-default ps-modify-user-photo">변경하기</a>
 						</div>
 					</div>
 					@include('helper.contact', [

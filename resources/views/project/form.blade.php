@@ -3,9 +3,6 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('/css/editor.css') }}"/>
 <style>
-	.container {
-		margin-bottom: 5em;
-	}
 	.ps-update-tabs {
 		margin-top: 48px;
 		margin-bottom: 35px;

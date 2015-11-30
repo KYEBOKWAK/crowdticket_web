@@ -3,7 +3,7 @@
 		<h6><strong>프로젝트 개설자</strong></h6>
 	</div>
 	<div class="col-md-4">
-		<img src="{{ $user->getPhotoUrl() }}" class="user-photo-creator" />
+		<div class="user-photo-creator bg-base" style="background-image: url('{{ $user->getPhotoUrl() }}');"></div>
 	</div>
 	<div class="col-md-2">
 		<p><strong>이 름</strong></p>

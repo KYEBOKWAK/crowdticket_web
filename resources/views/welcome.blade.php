@@ -25,7 +25,6 @@
 	}
 	.ps-welcome-buttons {
 		margin-top: 2em;
-		margin-bottom: 90px;
 	}
 </style>
 @endsection
