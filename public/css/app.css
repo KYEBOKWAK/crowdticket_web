@@ -320,6 +320,13 @@
   	border-radius: 35px;
 }
 
+.btn-admin {
+	position: fixed;
+    left: 0;
+    top: 100px;
+    cursor: pointer;
+}
+
 .logo-footer {
 	width: 204px;
 	height: 23px;

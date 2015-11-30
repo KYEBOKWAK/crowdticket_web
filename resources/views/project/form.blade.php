@@ -139,6 +139,7 @@
 @endsection
 
 @section('content')
+@include('helper.btn_admin', ['project' => $project])
 <div class="first-container">
 	<div class="container">
 		<div class="row ps-update-tabs">

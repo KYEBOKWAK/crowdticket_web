@@ -6,11 +6,6 @@
 		margin-top: 60px;
 		margin-bottom: 25px;
 	}
-	.ps-detail-admin {
-		position: fixed;
-	    left: 0;
-	    top: 100px;
-	}
 	.ps-detail-category {
 		margin-bottom: 30px;
 	}
@@ -94,9 +89,7 @@
 @endsection
 
 @section('content')
-@if (\Auth::check() && \Auth::user()->isOwnerOf($project))
-<a href="{{ url('/projects') }}/form/{{ $project->id }}" class="ps-detail-admin"><img src="{{ asset('img/app/btn_admin.png') }}" /></a>
-@endif
+@include('helper.btn_admin', ['project' => $project])
 <div class="first-container container">
 	<div class="row">
 		<div class="col-md-12">
