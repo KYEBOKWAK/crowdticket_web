@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	var projectId = $('#project_id').val();
 	
+	var commentsLoader = new Loader('/projects/' + projectId + '/comments', 20);
+	commentsLoader.setTemplate("#template-comments");
+	commentsLoader.setContainer("#comments-container");
+	
 	var newsLoader = new Loader('/projects/' + projectId + '/news', 8);
 	newsLoader.setTemplate('#template-news');
 	newsLoader.setContainer('#news-container');
@@ -9,6 +13,7 @@ $(document).ready(function() {
 	supportersLoader.setTemplate('#template-supporter');
 	supportersLoader.setContainer('#supporters-container');
 	
+	$('#tab-comments').data('loader', commentsLoader);
 	$('#tab-news').data('loader', newsLoader);
 	$('#tab-supporters').data('loader', supportersLoader);
 	

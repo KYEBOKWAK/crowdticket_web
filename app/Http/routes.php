@@ -24,6 +24,7 @@ Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
 Route::get('projects/{alias}/validity', 'ProjectController@validateProjectAlias');
 Route::get('projects/{id}/supporters', 'ProjectController@getSupporters');
 Route::get('projects/{id}/news', 'ProjectController@getNews');
+Route::get('projects/{id}/comments', 'ProjectController@getComments');
 
 Route::get('categories/{id}/projects', 'ProjectController@getCategoryProjectsById');
 Route::get('categories/{title}/projects', 'ProjectController@getCategoryProjectsByTitle');
@@ -73,7 +74,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('projects/{id}/orders', 'OrderController@getProjectOrders'); 
 	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 
 	
-	Route::post('{entity}/{id}/comments', 'CommentController@createComment'); 
+	Route::post('{entity}/{id}/comments', 'CommentController@createComment');
 	Route::delete('comments/{id}', 'CommentController@deleteComment'); 
 	
 });
