@@ -90,7 +90,7 @@
 					<span><strong>통신판매업</strong>2011-서울홍대-0081</span>
 					<span><strong>전화</strong>010-0000-0000</span>
 					<span><strong>팩스</strong>070-0000-0000</span>
-					<span><strong>관리자 이메일</strong><a href="mailto:jun@crowdticket.kr">jun@crowdticket.kr</span>
+					<span><strong>관리자 이메일</strong><a href="mailto:jun@crowdticket.kr">jun@crowdticket.kr</a></span>
 				</p>
 			</div>
 		</div>
