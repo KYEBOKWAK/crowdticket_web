@@ -50,10 +50,10 @@ return [
 
 		's3' => [
 			'driver' => 's3',
-			'key'    => 'AKIAJNXJ3NZKCF6FYDAA',
-			'secret' => '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',
+			'key'    => 'AKIAIHG4L3MAE22LAJ7Q',
+			'secret' => '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',
 			'region' => 'ap-northeast-1',
-			'bucket' => 'crowdticket',
+			'bucket' => 'crowdticket0',
 		],
 
 		'rackspace' => [
