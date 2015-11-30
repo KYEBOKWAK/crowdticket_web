@@ -10,6 +10,7 @@
 	<link href="{{ asset('/css/base.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
 	@yield('css')
 
 	<!-- Fonts -->
@@ -101,6 +102,9 @@
 	<script src="{{ asset('/js/underscore-min.js') }}"></script>
 	<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 	<script src="{{ asset('/js/jquery.form.min.js') }}"></script>
+	<script src="{{ asset('/js/jquery.toast.min.js') }}"></script>
+	<script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
+	<script src="{{ asset('/js/additional-methods.min.js') }}"></script>
 	<script src="{{ asset('/js/app.js') }}"></script>
 	<script src="{{ asset('/js/loader.js') }}"></script>
 	

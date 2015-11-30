@@ -6,7 +6,7 @@ use Validator;
 
 abstract class Model extends BaseModel {
 	
-	const S3_BASE_URL = "https://crowdticket.s3.amazonaws.com/";
+	const S3_BASE_URL = "https://s3-ap-northeast-1.amazonaws.com/crowdticket0/";
 	const S3_POSTER_DIRECTORY = "posters/";
 	const S3_STORY_DIRECTORY = "stories/";
 	const S3_NEWS_DIRECTORY = "news/";

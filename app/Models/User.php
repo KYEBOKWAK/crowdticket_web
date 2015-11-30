@@ -9,7 +9,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 	use Authenticatable, CanResetPassword;
 
-	protected $fillable = ['email', 'name', 'password', 'profile_photo_url'];
+	protected $fillable = ['email', 'name', 'password', 'profile_photo_url', 'contact', 'website'];
 
 	protected $hidden = ['password', 'remember_token', 'facebook_id'];
 	
@@ -21,7 +21,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	
 	protected static $updateRules = [
 		'name' => 'alpha',
-		'profile_photo_url' => 'active_url'
+		'profile_photo_url' => 'active_url',
+		'contact' => 'numeric',
+		'website' => 'url'
 	];
 	
 	public function projects() {

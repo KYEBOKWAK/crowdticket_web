@@ -7,5 +7,26 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 abstract class Controller extends BaseController {
 
 	use DispatchesCommands, ValidatesRequests;
+	
+	protected function messageError($message) {
+		return [
+			'level' => 'e',
+			'message' => $message
+		];
+	}
+	
+	protected function messageSuccess($message) {
+		return [
+			'level' => 's',
+			'message' => $message
+		];
+	}
+	
+	protected function messageInfo($message) {
+		return [
+			'level' => 'i',
+			'message' => $message
+		];
+	}
 
 }
