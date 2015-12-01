@@ -13,8 +13,8 @@
 	</div>
 	<div class="col-md-6">
 		<p>{{ $user->name }}</p>
-		<p>{{ $user->name }}</p>
-		<p>{{ $user->email }}</p>
-		<p>{{ $user->email }}</p>
+		<p>{{ $user->contact }}</p>
+		<p><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></p>
+		<p><a href="{{ $user->website }}" target="_blank">{{ $user->website }}</a></p>
 	</div>
 </div>
