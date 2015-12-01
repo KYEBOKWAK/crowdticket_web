@@ -16,11 +16,21 @@
 .comment-list:last-child {
 	border: none;
 }
+.comment-list .reply-wrapper li {
+	padding: 10px 0px 10px 0px;
+    border-bottom: 1px #e6e3de solid;
+}
+.comment-list .reply-wrapper li:last-child {
+	border: none;
+}
 .comment-list .comment-section-right {
 	margin-top: 8px;
 }
 .comment-list .user-photo-comment {
 	margin-right: 20px;
+}
+.comment-list .user-photo-reply {
+	margin-right: 10px;
 }
 .comment-list .comment-username {
 	font-size: 15px;
@@ -35,6 +45,32 @@
 .comment-list .comment-content {
 	font-size: 14px;
 	color: #666;
+}
+.comment-list .toggle-reply {
+	cursor: pointer;
+}
+.comment-list .reply-wrapper {
+	margin-top: 15px;
+	padding-left: 70px;
+}
+.comment-list ul {
+	padding: 0
+}
+.comment-list form {
+	display: none;
+}
+.comment-list form textarea {
+	height: 50px;
+}
+.comment-list form .reply-textarea,
+.comment-list form .reply-button {
+	padding: 0;
+}
+.comment-list form .reply-button {
+	margin-top: 20px;
+}
+.comment-list form .reply-button .btn {
+	font-size: 11px;
 }
 
 .news-list {
@@ -311,13 +347,19 @@
   	-moz-border-radius: 40px;
   	border-radius: 40px;
 }
-
 .user-photo-comment {
 	width: 70px;
 	height: 70px;
 	-webkit-border-radius: 35px;
   	-moz-border-radius: 35px;
   	border-radius: 35px;
+}
+.user-photo-reply {
+	width: 52px;
+	height: 52px;
+	-webkit-border-radius: 26px;
+  	-moz-border-radius: 26px;
+  	border-radius: 26px;
 }
 
 .btn-admin {

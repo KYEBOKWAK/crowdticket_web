@@ -4,6 +4,14 @@ $(document).ready(function() {
 	var commentsLoader = new Loader('/projects/' + projectId + '/comments', 20);
 	commentsLoader.setTemplate("#template-comments");
 	commentsLoader.setContainer("#comments-container");
+	commentsLoader.setCompleteListener(function() {
+		$(".toggle-reply").each(function() {
+			$(this).bind('click', function() {
+				var list = $(this).closest('.comment-list');
+				list.find("form").toggle();
+			});
+		});
+	});
 	
 	var newsLoader = new Loader('/projects/' + projectId + '/news', 8);
 	newsLoader.setTemplate('#template-news');

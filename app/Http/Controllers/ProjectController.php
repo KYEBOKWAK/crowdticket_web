@@ -257,7 +257,7 @@ class ProjectController extends Controller {
 	
 	public function getComments($id) {
 		$project = Project::findOrFail($id);
-		return $project->comments()->with('user')->get();
+		return $project->comments()->with('user', 'comments', 'comments.user')->get();
 	}
 
 }
