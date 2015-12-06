@@ -15,13 +15,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	
 	protected static $creationRules = [
 		'email' => 'required|email|unique:users',
-		'name' => 'required|alpha',
-		'profile_photo_url' => 'active_url'
+		'name' => 'required|string',
+		'profile_photo_url' => 'url'
 	];
 	
 	protected static $updateRules = [
-		'name' => 'alpha',
-		'profile_photo_url' => 'active_url',
+		'name' => 'string',
+		'profile_photo_url' => 'url',
 		'contact' => 'numeric',
 		'website' => 'url'
 	];

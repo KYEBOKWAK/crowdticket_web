@@ -13,6 +13,12 @@ return [
 	| to have a conventional place to find your various credentials.
 	|
 	*/
+	
+	'facebook' => [
+	    'client_id' => '965413480199226',
+	    'client_secret' => '9dcd16c610e5c2e46b1f94cbce151a9f',
+	    'redirect' => 'http://localhost/cr/public/index.php/facebook/callback',
+	],
 
 	'mailgun' => [
 		'domain' => '',

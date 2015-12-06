@@ -33,6 +33,9 @@
 				</ul>
 			</div>
 			@endif
+			<div class="text-center">
+				<a href="{{ url('/facebook') }}">페이스북으로 로그인</a>
+			</div>
 			<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 

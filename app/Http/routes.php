@@ -10,6 +10,8 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+Route::get('/facebook', 'Auth\SocialAuthController@redirect');
+Route::get('/facebook/callback', 'Auth\SocialAuthController@callback');
 
 Route::get('/', 'WelcomeController@index');
 Route::get('terms/', function() { return view('customer.terms'); });

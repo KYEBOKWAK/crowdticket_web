@@ -29,6 +29,9 @@
 					</ul>
 				</div>
 			@endif
+			<div class="text-center">
+				<a href="{{ url('/facebook') }}">페이스북으로 로그인</a>
+			</div>
 			<form role="form" method="POST" action="{{ url('/auth/login') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 

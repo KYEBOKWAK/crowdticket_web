@@ -135,6 +135,11 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
+		
+		/**
+		 * Social Authentication Provider
+		 */
+		 'Laravel\Socialite\SocialiteServiceProvider',
 
 		/*
 		 * Application Service Providers...
