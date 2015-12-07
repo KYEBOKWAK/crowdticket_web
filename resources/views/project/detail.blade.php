@@ -25,7 +25,7 @@
 		height: 450px;
 	}
 	.ps-detail-description p,
-	.ps-detail-share-facebook button {
+	.ps-detail-share-facebook a {
 		width: 100%;
 		height: 50px;
 	}
@@ -43,14 +43,15 @@
 	.ps-detail-share-facebook {
 		padding-left: 0;
 	}
-	.ps-detail-share-facebook button {
+	.ps-detail-share-facebook a {
 		border: none;
 		border-radius: 0;
 		color: white;
 		font-size: 12px;
 		background-color: #3a5795;
+		padding-top: 15px;
 	}
-	.ps-detail-share-facebook button:hover {
+	.ps-detail-share-facebook a:hover {
 		color: #eee;
 	}
 	.ps-detail-tabs {
@@ -108,7 +109,7 @@
 	<div class="row">
 		<div class="col-md-8">
 			<div class="row ps-detail-left-page">
-				<div class="col-md-12">
+				<div class="col-md-12 project-video">
 					@if ($project->video_url)
 					<iframe class="project-video" src="{{ $project->video_url }}" frameborder="0" allowfullscreen></iframe>
 					@else ($project->poster_url)
@@ -119,7 +120,7 @@
 					<p class="text-ellipsize">{{ $project->description }}</p>
 				</div>
 				<div class="col-md-3 ps-detail-share-facebook">
-					<button class="btn">페이스북 공유하기</button>
+					<a href="https://www.facebook.com/dialog/share?app_id=965413480199226&display=popup&href={{ url('/projects/') }}/{{ $project->id }}&redirect_uri={{ url('/facebook/callback') }}" class="btn">페이스북 공유하기</a>
 				</div>
 				<div class="col-md-12 ps-detail-tabs">
 					@include('helper.nav', [
