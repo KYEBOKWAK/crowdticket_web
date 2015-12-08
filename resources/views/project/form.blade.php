@@ -107,7 +107,7 @@
 	.ps-update-poster .form-group .bg-base {
 		position: relative;
 		width: 100%;
-		height: 320px;
+		height: 480px;
 	}
 	.ps-update-poster .form-group .bg-base .middle {
 		width: 100%;
