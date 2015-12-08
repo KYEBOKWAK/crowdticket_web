@@ -29,7 +29,8 @@ $(document).ready(function() {
 			'category_id': $('#category').val(),
 			'city_id': $('#city').val(),
 			'pledged_amount': $('#pledged_amount').val(),
-			'funding_closing_at': $('#funding_closing_at').val()
+			'funding_closing_at': $('#funding_closing_at').val(),
+			'detailed_address': $('#stage').val()
 		});
 	};
 	

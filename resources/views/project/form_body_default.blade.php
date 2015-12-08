@@ -20,7 +20,7 @@
 			<label for="category" class="col-sm-2 control-label">분류</label>
 			<div class="col-sm-2">
 				<select id="category" name="category" class="form-control">
-					@foreach($categories as $category)
+					@foreach ($categories as $category)
 					@if ($category->id === $project->category_id)
 					<option value="{{ $category->id }}" selected>{{ $category->title }}</option>
 					@else
@@ -34,7 +34,7 @@
 			<label for="city" class="col-sm-2 control-label">지역</label>
 			<div class="col-sm-2">
 				<select id="city" name="city" class="form-control">
-					@foreach($cities as $city)
+					@foreach ($cities as $city)
 					@if ($city->id === $project->city_id)
 					<option value="{{ $city->id }}" selected>{{ $city->name }}</option>
 					@else
@@ -44,6 +44,14 @@
 				</select>
 			</div>
 		</div>
+		@if ($project->type === 'sale')
+		<div class="form-group">
+			<label for="stage" class="col-sm-2 control-label">공연장</label>
+			<div class="col-sm-8">
+				<input id="stage" name="detailed_address" maxlength="64" type="text" placeholder="세부 주소 입력" class="form-control" value="{{ $project->detailed_address }}" />
+			</div>
+		</div>
+		@endif
 		<div class="form-group">
 			<label for="alias" class="col-sm-2 control-label">페이지주소</label>
 			<div class="col-sm-8 form-inline">
@@ -81,7 +89,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="funding_closing_at" class="col-sm-2 control-label">펀딩 마감일</label>
+			<label for="funding_closing_at" class="col-sm-2 control-label">@if ($project->type === 'funding') 펀딩 마감일 @else 티켓팅 마감일 @endif</label>
 			<div class="col-sm-2">
 				<input id="funding_closing_at" name="funding_closing_at" type="text" class="form-control" value="{{ $project->getFundingClosingAtOrNow() }}" />
 			</div>
