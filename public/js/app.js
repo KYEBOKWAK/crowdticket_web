@@ -4,13 +4,15 @@
 		return string.indexOf(needle) === 0;
 	};
 	var removeInvalidData = function(data) {
-		$.each(data, function(key, value) {
-			if (typeof value === 'string' || value instanceof String) {
-				if (!value || value.length === 0) {
-					delete data[key];
+		if ($.isArray(data)) {
+			$.each(data, function(key, value) {
+				if (typeof value === 'string' || value instanceof String) {
+					if (!value || value.length === 0) {
+						delete data[key];
+					}
 				}
-			}
-		});
+			});
+		}
 	};
 	
 	$.ajax = function(form) {

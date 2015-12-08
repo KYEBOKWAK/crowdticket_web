@@ -900,6 +900,9 @@ textarea {
 a, a:visited, a:hover, a:active {
   color: inherit;
 }
+a.btn {
+	color: white;
+}
 a {
   text-decoration: none;
 }

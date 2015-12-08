@@ -13,7 +13,7 @@
 				<input id="poster_file" type="file" name="poster" style="height: 0; visibility: hidden" />
 				<div id="poster_preview" style="background-image: url('{{ $project->getPosterUrl() }}');" class="bg-base">
 					<div class="middle">
-						<button id="poster_file_fake" class="btn btn-primary">찾아보기</button>
+						<a href="#" id="poster_file_fake" class="btn btn-primary">찾아보기</a>
 					</div>
 				</div>
 				<p class="help-block">

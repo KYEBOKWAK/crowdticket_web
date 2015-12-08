@@ -250,10 +250,18 @@ $(document).ready(function() {
 	};
 	
 	var posterAjaxOption = {
+		'beforeSerialize': function($form, options) {
+			$posterFile = $('#poster_file');
+			if ($posterFile.val() === '') {
+				$posterFile.prop("disabled", true);
+			} else {
+				$posterFile.prop("disabled", false);
+			}
+		},
 		'success': function(result) {
 			alert('저장되었습니다.');
 		}, 
-		'error': function() {
+		'error': function(data) {
 			alert("저장에 실패하였습니다.");
 		}
 	};
@@ -262,14 +270,20 @@ $(document).ready(function() {
 		$('#poster_file').trigger('click');
 	};
 	
-	var showPosterPreview = function() {
+	var onPosterChanged = function() {
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$('#poster_preview').attr('src', e.target.result);
+				$('#poster_preview').css('background-image', "url('" + e.target.result + "')");
+				$('.project-thumbnail').css('background-image', "url('" + e.target.result + "')");
 			};
 			reader.readAsDataURL(this.files[0]);
 		}
+	};
+	
+	var onDescriptionChanged = function() {
+		var description = $('#poster_description').val();
+		$('.project-description').text(description);
 	};
 	
 	var updateStory = function() {
@@ -312,10 +326,11 @@ $(document).ready(function() {
 	$('.delete-ticket').bind('click', deleteTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
 	$('#poster_form').ajaxForm(posterAjaxOption);
-	$('#poster_file').change(showPosterPreview);
 	$('#update_story').bind('click', updateStory);
 	$('#submit_project').bind('click', submitProject);
 	$('#poster_file_fake').bind('click', performPosterFileClick);
+	$('#poster_file').change(onPosterChanged);
+	$('#poster_description').bind('input', onDescriptionChanged);
 	
 	setCreateTicketButtonShown(true);
 	
