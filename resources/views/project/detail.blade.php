@@ -64,6 +64,9 @@
 	.ps-detail-tabs .active {
 		font-weight: bold;
 	}
+	.ps-detail-right-section {
+		padding: 0px;
+	}
 	.tab-pane {
 		border-bottom-left-radius: 4px;
 		border-bottom-right-radius: 4px;
@@ -85,6 +88,15 @@
 	}
 	#comments-container {
 		padding: 0;
+	}
+	#ticket_list {
+		margin-top: 30px;
+	}
+	.ticket {
+		padding: 0px;
+	}
+	.creator-wrapper {
+		margin-top: 30px;
 	}
 </style>
 @endsection
@@ -176,7 +188,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4 ps-detail-right-section">
 			<div class="row">
 				<div class="col-md-12">
 					<p>목표금액 {{ $project->pledged_amount }}원 중 모인금액</p>
@@ -187,12 +199,14 @@
 					<h3>{{ $project->dayUntilFundingClosed() }}일</h3>
 					<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" class="btn btn-primary">후원하기</a>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-12 creator-wrapper">
 					@include('template.creator_profile', ['user' => $project->user])
 				</div>
 			</div>
+			<div id="ticket_list" class="row" data-tickets="{{ $project->tickets }}"></div>
 		</div>
 	</div>
+	<input type="hidden" id="project_type" value="{{ $project->type }}" />
 	<input type="hidden" id="project_id" value="{{ $project->id }}" />
 </div>
 @endsection
@@ -201,6 +215,7 @@
 	@include('template.comment')
 	@include('template.news')
 	@include('template.supporter')
+	@include('template.ticket')
 	<script src="{{ asset('/js/project/detail.js') }}"></script>
 @endsection
 

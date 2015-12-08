@@ -53,54 +53,115 @@ $(document).ready(function() {
 		});
 	};
 	
+	var listOldTickets = function() {
+		var ticketsJson = $('#tickets_json').val();
+		if (ticketsJson) {
+			var tickets = $.parseJSON(ticketsJson);
+			if (tickets.length > 0) {
+				for (var i = 0, l = tickets.length; i < l; i++) {
+					addTicketRow(tickets[i]);
+				}
+			}
+		}
+	};
+	
+	var validateTicketData = function(ticket) {
+		if (ticket.reward.length === 0) {
+			alert("내용을 입력해주세요");
+			return false;
+		}
+		return true;
+	};
+	
 	var createTicket = function() {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId + '/tickets';
 		var method = 'post';
 		var data = getTicketFormData();
-		var success = function(result) {
-			clearTicketForm();
-			addTicketRow(result);
-			// add row
-		};
-		var error = function(request) {
-			alert('보상 추가에 실패하였습니다.');
-		};
 		
-		$.ajax({
-			'url': url,
-			'method': method,
-			'data': data,
-			'success': success,
-			'error': error
-		}); 
+		if (validateTicketData(data)) {
+			var success = function(result) {
+				clearTicketForm();
+				addTicketRow(result);
+			};
+			var error = function(request) {
+				alert('보상 추가에 실패하였습니다.');
+			};
+			
+			$.ajax({
+				'url': url,
+				'method': method,
+				'data': data,
+				'success': success,
+				'error': error
+			}); 
+		}
 	};
 	
 	var getTicketFormData = function() {
+		var projectType = $('#project_type').val();
+		var realTicketCount;
+		var requireShipping;
+		var deliveryDate;
+		if (projectType === 'funding') {
+			realTicketCount = $('#ticket_real_count').val();
+			requireShipping = $('#ticket_require_shipping').is(':checked') ? 1 : 0;
+			deliveryDate = $('#ticket_delivery_date').val() + " 00:00:00";
+		} else if (projectType === 'sale') {
+			realTicketCount = 1;
+			requireShipping = 0;
+			var hour = Number($('#ticket_delivery_hour').val());
+			var min = Number($('#ticket_delivery_min').val());
+			if (hour < 10) {
+				hour = "0" + hour;
+			}
+			if (min < 10) {
+				min = "0" + min;
+			}
+			deliveryDate = $('#ticket_delivery_date').val() + " " + hour + ":" + min + ":00";
+		} else {
+			return;
+		}
+		
 		return {
 			'price': $('#ticket_price').val(),
-			'real_ticket_count': $('#ticket_real_count').val(),
 			'reward': $('#ticket_reward').val(),
-			'require_shipping': $('#ticket_require_shipping').is(':checked') ? 1 : 0,
 			'audiences_limit': $('#ticket_audiences_limit').val(),
-			'delivery_date': $('#ticket_delivery_date').val()
+			'real_ticket_count': realTicketCount,
+			'require_shipping': requireShipping,
+			'delivery_date': deliveryDate
 		};
 	};
 	
 	var clearTicketForm = function() {
-		$('#ticket_price').val('');
-		$('#ticket_real_count').val('');
+		$('#ticket_price').val('0');
+		$('#ticket_real_count').val('0');
 		$('#ticket_reward').val('');
 		$('#ticket_require_shipping').removeAttr('checked');
-		$('#ticket_audiences_limit').val('');
-		$('#ticket_delivery_date').val('');
+		$('#ticket_audiences_limit').val('0');
+		$('#ticket_delivery_date').val(getDateFormatted(new Date()));
+	};
+	
+	var getDateFormatted = function(date) {
+	    var dd = date.getDate();
+	    var mm = date.getMonth() + 1;
+	    var yyyy = date.getFullYear();
+	    if(dd < 10) {
+	        dd = '0' + dd;
+	    } 
+	    if(mm < 10) {
+	        mm = '0' + mm;
+	    }
+	    return yyyy + '-' + mm + '-' + dd; 
 	};
 	
 	var addTicketRow = function(ticket) {
 		var template = $('#template_ticket').html();
 		var compiled = _.template(template);
-		var row = compiled({ 'ticket': ticket });
-		$('#ticket_list').append(row);
+		var row = compiled({ 'ticket': ticket, 'type': $('#project_type').val(), 'style': 'modifyable' });
+		var $row = $($.parseHTML(row));
+		$row.data('ticketData', ticket);
+		$('#ticket_list').append($row);
 		
 		$(document).on('click', '.modify-ticket', modifyTicket);
 		$(document).on('click', '.delete-ticket', deleteTicket);
@@ -110,12 +171,17 @@ $(document).ready(function() {
 		setCreateTicketButtonShown(false);
 		
 		var ticket = $(this).closest('.ticket');
-		$('#ticket_price').val(ticket.find('.ticket-price').text());
-		$('#ticket_real_count').val(ticket.find('.ticket-real-count').text());
-		$('#ticket_reward').val(ticket.find('.ticket-reward').text());
-		$('#ticket_audiences_limit').val(ticket.find('.ticket-audiences-limit').text());
-		$('#ticket_delivery_date').val(ticket.find('.ticket-delivery-date').text());
-		$('#ticket_require_shipping').prop('checked', ticket.find('.ticket-require-shipping').val() === '1');
+		var ticketData = ticket.data('ticketData');
+		var deliveryDate = new Date(ticketData.delivery_date);
+		
+		$('#ticket_price').val(ticketData.price);
+		$('#ticket_real_count').val(ticketData.real_ticket_count);
+		$('#ticket_reward').val(ticketData.reward);
+		$('#ticket_audiences_limit').val(ticketData.audiences_limit);
+		$('#ticket_delivery_date').val(getDateFormatted(deliveryDate));
+		$('#ticket_delivery_hour').val(deliveryDate.getHours());
+		$('#ticket_delivery_min').val(deliveryDate.getMinutes());
+		$('#ticket_require_shipping').prop('checked', ticketData.require_shipping === '1');
 		
 		$('#update_ticket').attr('data-ticket-id', ticket.attr('data-ticket-id'));
 	};
@@ -140,28 +206,26 @@ $(document).ready(function() {
 		var url = '/tickets/' + ticketId;
 		var method = 'put';
 		var data = getTicketFormData();
-		var success = function(result) {
-			var ticket = $('.ticket[data-ticket-id=' + ticketId + ']');
-			ticket.find('.ticket-price').text(result.price);
-			ticket.find('.ticket-real-count').text(result.real_ticket_count);
-			ticket.find('.ticket-reward').text(result.reward);
-			ticket.find('.ticket-audiences-limit').text(result.audiences_limit);
-			ticket.find('.ticket-delivery-date').text(result.delivery_date);
-			ticket.find('.ticket-require-shipping').val(result.require_shipping);
-			
-			cancelModifyTicket();
-		};
-		var error = function(request) {
-			alert('수정에 실패하였습니다.');
-		};
 		
-		$.ajax({
-			'url': url,
-			'method': method,
-			'data': data,
-			'success': success,
-			'error': error
-		}); 
+		if (validateTicketData(data)) {
+			var success = function(result) {
+				var ticket = $('.ticket[data-ticket-id=' + ticketId + ']');
+				ticket.remove();
+				addTicketRow(result);
+				cancelModifyTicket();
+			};
+			var error = function(request) {
+				alert('수정에 실패하였습니다.');
+			};
+			
+			$.ajax({
+				'url': url,
+				'method': method,
+				'data': data,
+				'success': success,
+				'error': error
+			}); 
+		}
 	};
 	
 	var deleteTicket = function() {
@@ -234,18 +298,6 @@ $(document).ready(function() {
 				'success': success,
 				'error': error
 			}); 
-		}
-	};
-	
-	var listOldTickets = function() {
-		var ticketsJson = $('#tickets_json').val();
-		if (ticketsJson) {
-			var tickets = $.parseJSON(ticketsJson);
-			if (tickets.length > 0) {
-				for (var i = 0, l = tickets.length; i < l; i++) {
-					addTicketRow(tickets[i]);
-				}
-			}
 		}
 	};
 	

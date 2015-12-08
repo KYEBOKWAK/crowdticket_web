@@ -1137,6 +1137,9 @@ mark,
 .text-primary {
   color: #7ec52a;
 }
+.text-important {
+	font-weight: bold;
+}
 a.text-primary:hover {
   color: #286090;
 }

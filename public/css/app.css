@@ -93,14 +93,40 @@
 }
 
 .ticket {
+  	margin-bottom: 20px;
+	position: relative;
+}
+.ticket .ticket-wrapper {
 	background-color: #FFFFFF;
 	border: 1px #DAD8CC solid;
 	-webkit-border-radius: 5px;
   	-moz-border-radius: 5px;
   	border-radius: 5px;
-  	margin-bottom: 20px;
-  	padding-top: 14px;
-  	padding-bottom: 14px;
+  	padding: 0px;
+}
+.ticket .ticket-body {
+	padding: 13px 15px 0px 15px;
+}
+.ticket .ticket-body span {
+	font-weight: bold;
+	font-size: 15px;
+}
+.ticket .ticket-body span img {
+	margin-top: -5px;
+}
+.ticket .ticket-body p {
+	font-size: 13px;
+	margin: 15px 0px 15px 0px;
+}
+.ticket .ticket-footer {
+	background-color: #efefef;
+	padding: 8px 15px 8px 15px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+  	-moz-border-radius-bottomleft: 5px;
+  	-moz-border-radius-bottomright: 5px;
+  	border-bottom-left-radius: 5px;
+  	border-bottom-right-radius: 5px;
 }
 
 .form-group {

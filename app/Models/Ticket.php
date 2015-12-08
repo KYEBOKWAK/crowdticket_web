@@ -9,11 +9,11 @@ class Ticket extends Model {
 	];
 	
 	protected static $typeRules = [
-		'price' => 'integer',
-		'real_ticket_count' => 'integer',
+		'price' => 'integer|min:0',
+		'real_ticket_count' => 'integer|min:0',
 		'reward' => 'string|min:1',
-		'audiences_limit' => 'integer',
-		'delivery_date' => 'date_format:Y-m-d',
+		'audiences_limit' => 'integer|min:0',
+		'delivery_date' => 'date_format:Y-m-d H:i:s',
 		'shipping_charge' => 'integer'
 	];
 	

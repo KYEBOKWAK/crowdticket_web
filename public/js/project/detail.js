@@ -37,5 +37,25 @@ $(document).ready(function() {
 		}
 	};
 	
+	var listTickets = function() {
+		var tickets = $('#ticket_list').data('tickets');
+		if (tickets.length > 0) {
+			for (var i = 0, l = tickets.length; i < l; i++) {
+				addTicketRow(tickets[i]);
+			}
+		}
+	};
+	
+	var addTicketRow = function(ticket) {
+		var template = $('#template_ticket').html();
+		var compiled = _.template(template);
+		var row = compiled({ 'ticket': ticket, 'type': $('#project_type').val(), 'style': 'normal' });
+		var $row = $($.parseHTML(row));
+		$row.data('ticketData', ticket);
+		$('#ticket_list').append($row);
+	};
+	
+	listTickets();
+	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', loadContents);
 });

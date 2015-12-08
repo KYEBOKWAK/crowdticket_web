@@ -62,24 +62,21 @@
 	.ps-update-body .form-group label {
 		padding-right: 0;
 	}
-	.ticket {
-		/* override */
-		background-color: rgba(0, 0, 0, 0);
-		border: none;
-		padding-top: 0px;
-  		padding-bottom: 0px;
-		/* override end */
-		position: relative;
+	.ps-col-width-17p2 {
+		width: 17.2%;
 	}
-	.ticket .col-md-11 {
-		background-color: #FFFFFF;
-		border: 1px #DAD8CC solid;
-		padding-top: 14px;
-  		padding-bottom: 14px;
-		-webkit-border-radius: 5px;
-	  	-moz-border-radius: 5px;
-	  	border-radius: 5px;
-	  	border-bottom-right-radius: 0;
+	#ticket_reward {
+		height: 130px;
+	}
+	#ticket_list {
+		margin-bottom: 3em;
+	}
+	.ticket .ticket-footer,
+	.ticket .ticket-wrapper {
+		border-bottom-right-radius: 0;
+	}
+	.ticket .ticket-body span {
+		font-size: 20px;
 	}
 	.ticket .col-md-1 {
 	    position: absolute;
@@ -96,7 +93,7 @@
 	.ticket .col-md-1 p {
 		margin: 0;
 	}
-	.ticket .modify-ticket {
+	.ticket .col-md-1 .modify-ticket {
 		margin-bottom: 5px;
 	}
 	.ps-update-poster .col-md-8 {
@@ -221,6 +218,6 @@
 @endsection
 
 @section('js')
-	@include('template.ticket_modifyable')
+	@include('template.ticket')
 	<script src="{{ asset('/js/project/form.js') }}"></script>
 @endsection
