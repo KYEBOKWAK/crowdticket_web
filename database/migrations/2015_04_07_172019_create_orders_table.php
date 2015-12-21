@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration {
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('contact');
-            $table->integer('count')->unsigned()->default(1);
+            $table->integer('count')->unsigned();
 			$table->timestamps();
 		});
 	}
