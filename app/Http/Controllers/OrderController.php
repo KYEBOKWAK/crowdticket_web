@@ -14,11 +14,18 @@ class OrderController extends Controller {
 		$inputs['count'] = $this->ticketCount;
 		$inputs['price'] = $this->price;
 		
+		\DB::beginTransaction();
+		
 		$order = new Order($inputs);
 		$order->project()->associate($this->project);
 		$order->ticket()->associate($this->ticket);
 		$order->user()->associate($this->user);
 		$order->save();
+		
+		$this->user->increment('supports_count');
+		$this->user->increment('tickets_count');
+		
+		\DB::commit();
 		
 		return view('order.complete', [
 			'project' => $this->project,
@@ -30,10 +37,24 @@ class OrderController extends Controller {
 		$this->initOrder($ticketId);
 		
 		return view('order.form', [
+			'order' => null,
 			'project' => $this->project,
 			'ticket' => $this->ticket,
 			'price' => $this->price,
 			'ticket_count' => $this->ticketCount
+		]);
+	}
+	
+	public function getOrder($orderId) {
+		$order = Order::where('id', $orderId)->withTrashed()->first();
+		\Auth::user()->checkOwnership($order);
+		
+		return view('order.form', [
+			'order' => $order,
+			'project' => $order->project()->first(),
+			'ticket' => $order->ticket()->first(),
+			'price' => $order->price * $order->count,
+			'ticket_count' => $order->count
 		]);
 	}
 	
@@ -103,46 +124,39 @@ class OrderController extends Controller {
 		}
 	}
 	
-	public function approveOrder($orderId) {
-		\DB::beginTransaction();
-		
-		$order = Order::findOrFail($orderId);
-		$user = $order->ticket()->first();
-		$ticket = $order->ticket()->first();
-		$project = $order->ticket()->first();
-		
-		// check duplicate supporter?
-		$supporter = new Supporter;
-		$supporter->project()->associate($project);
-		$supporter->user()->associate($user);
-		$supporter->save();
-		
-		$user->increment(['supports_count', 'tickets_count']);
-		$project->increment('supporters_count');
-		$ticket->increment('audiences_count');
-		
-		\DB::commit();
-		
-		return "success";
-	}
-	
 	public function deleteOrder($orderId) {
+		$order = Order::where('id', $orderId)->withTrashed()->first();
+		\Auth::user()->checkOwnership($order);
+		
+		$user = $order->user()->first();
+		$ticket = $order->ticket()->first();
+		$project = $order->project()->first();
+		
 		\DB::beginTransaction();
 		
-		$order = Order::findOrFail($orderId);
-		$user = $order->ticket()->first();
-		$ticket = $order->ticket()->first();
-		$project = $order->ticket()->first();
-		
-		// remove supporter
-		
-		$user->decrement(['supports_count', 'tickets_count']);
-		$project->decrement('supporters_count');
-		$ticket->decrement('audiences_count');
+		$order->delete();
+		if ($user->supports_count > 0) {
+			$user->decrement('supports_count');
+		}
+		if ($user->tickets_count > 0) {
+			$user->decrement('tickets_count');
+		}
+		if ($order->confirmed) {
+			$supporter = Supporter::where('project_id', $project->id)->where('user_id', $user->id)->first();
+			if ($supporter) {
+				$supporter->delete();
+			}
+			if ($project->supporters_count > 0) {
+				$project->decrement('supporters_count');
+			}
+			if ($ticket->audiences_count > 0) {
+				$ticket->decrement('audiences_count');
+			}
+		}
 		
 		\DB::commit();
 		
-		return "success";
+		return redirect()->action('UserController@getUserOrders', [$user->id]);
 	}
 
 }

@@ -41,13 +41,12 @@ Route::get('organizations/{id}/members', 'MemberController@getMembers');
 Route::get('{entity}/{id}/comments', 'CommentController@getComments');
 
 Route::get('users/{id}', 'UserController@getUser');
-Route::get('users/{id}/orders', 'UserController@getUserOrders');
-Route::get('users/{id}/projects', 'UserController@getUserProjects');
 
 Route::group(['middleware' => 'auth'], function() {
 	
 	Route::get('users/{id}/form', 'UserController@getUpdateForm');
 	Route::put('users/{id}', 'UserController@updateUser');
+	Route::get('users/{id}/orders', 'UserController@getUserOrders');
 	
 	Route::post('blueprints', 'BlueprintController@createBlueprint'); 
 	Route::get('blueprints/form', 'BlueprintController@getCreateForm'); 
@@ -75,6 +74,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('tickets/{id}/orders', 'OrderController@getTicketOrders');
 	Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
 	Route::get('projects/{id}/tickets', 'OrderController@getTickets');
+	Route::get('orders/{id}', 'OrderController@getOrder');
 	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 
 	
 	Route::post('{entity}/{id}/comments', 'CommentController@createComment');
@@ -88,6 +88,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
 	Route::put('projects/{id}/rejection', 'AdminController@rejectProject');
 	Route::put('projects/{id}/approval', 'AdminController@approveProject');
-	Route::put('order/{id}/approval', 'Adm11111111111111inController@approveOrder');
+	Route::put('order/{id}/approval', 'AdminController@approveOrder');
 	
 });

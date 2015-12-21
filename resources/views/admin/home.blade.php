@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container first-container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<ul role="tablist" class="nav nav-tabs">
@@ -27,6 +27,7 @@
 				<li role="presentation"><a href="#blueprint-approved" aria-controls="blueprint-approved" role="tab" data-toggle="tab">제안서 (승인완료)</a></li>
 				<li role="presentation"><a href="#blueprint-project-created" aria-controls="blueprint-project-created" role="tab" data-toggle="tab">제안서 (공연생성)</a></li>
 				<li role="presentation"><a href="#project" aria-controls="project" role="tab" data-toggle="tab">프로젝트</a></li>
+				<li role="presentation"><a href="#order" aria-controls="order" role="tab" data-toggle="tab">주문</a></li>
 			</ul>
 			<div class="tab-content">
 				<ul id="blueprint" role="tabpanel" class="tab-pane active list-group">
@@ -118,6 +119,41 @@
 								<input type="hidden" name="_method" value="PUT">
     							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							</form>
+						</li>
+					@endforeach
+				</ul>
+				<ul id="order" role="tabpanel" class="tab-pane">
+					@foreach ($orders as $order)
+						<li class="list-group-item">
+							<h4 class="list-group-item-heading">공연이름</h4>
+							<p class="list-group-item-text">{{ $order->project->title }}</p>
+							<h4 class="list-group-item-heading">입금자이름</h4>
+							<p class="list-group-item-text">{{ $order->account_name }}</p>
+							<h4 class="list-group-item-heading">가격</h4>
+							<p class="list-group-item-text">{{ $order->price }}</p>
+							<h4 class="list-group-item-heading">티켓매수</h4>
+							<p class="list-group-item-text">{{ $order->count }}</p>
+							<h4 class="list-group-item-heading">결제금액</h4>
+							<p class="list-group-item-text">{{ $order->count * $order->price }}</p>
+							<h4 class="list-group-item-heading">주문날짜</h4>
+							<p class="list-group-item-text">{{ $order->created_at }}</p>
+							@if ($order->deleted_at)
+								@if ($order->confirmed)
+								<span class="label label-success">환불요청</span>
+								@else
+								<span class="label label-success">취소했음</span>
+								@endif
+							@else
+								@if ($order->confirmed)
+								<span class="label label-success">입금확인완료</span>
+								@else
+								<form action="{{ url('/admin/order/') }}/{{ $order->id }}/approval" method="post">
+									<button type="submit" class="btn btn-primary">입금승인</button>
+									<input type="hidden" name="_method" value="PUT">
+	    							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								</form>
+								@endif
+							@endif
 						</li>
 					@endforeach
 				</ul>

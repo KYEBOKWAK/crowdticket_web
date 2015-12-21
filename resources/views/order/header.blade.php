@@ -2,6 +2,7 @@
 	<div class="col-md-12">
 		<h2 class="text-center">{{ $project->title }}</h2>
 	</div>
+	@if ($step > 0)
 	<div class="col-md-10 col-md-offset-1">
 		<div class="col-md-4">
 			<img src="{{ asset('img/app/ico_step_progress01.png') }}" class="center-block" />
@@ -25,4 +26,5 @@
 			확 인</h3>
 		</div>
 	</div>
+	@endif
 </div>

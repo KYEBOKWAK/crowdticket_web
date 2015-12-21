@@ -31,7 +31,9 @@
 	#order-account-name {
 		width: 16.667%;
 	}
-	form .btn-success {
+	form .btn-success,
+	form .btn-danger,
+	form .btn-muted {
 		margin-top: 50px;
 	}
 </style>
@@ -39,8 +41,20 @@
 
 @section('content')
 <div class="container first-container">
-	@include ('order.header', ['project' => $project, 'step' => 2])
+	@if ($order)
+		@include ('order.header', ['project' => $project, 'step' => 0])
+	@else
+		@include ('order.header', ['project' => $project, 'step' => 2])
+	@endif
+	
+	@if ($order)
+	<form class="row form-horizontal" data-toggle="validator" role="form" action="{{ url('/orders/') }}/{{ $order->id }}/" method="post">
+	@include('form_method_spoofing', ['method' => 'delete'])
+	@else
 	<form class="row form-horizontal" data-toggle="validator" role="form" action="{{ url('/tickets/') }}/{{ $ticket->id }}/orders" method="post">
+	@include('csrf_field')
+	@endif
+	
 		@if ($project->type === 'funding')
 		<h4 class="col-md-12 ps-section-title">1. 선택한 보상</h4>
 		@else
@@ -112,7 +126,11 @@
 				<div class="form-group">
 					<label for="order-account-name" class="col-sm-2 control-label">입금자성명</label>
 					<div class="col-sm-10">
+						@if ($order)
+						<input id="order-account-name" name="account_name" type="text" class="form-control" value="{{ $order->account_name }}" readonly="readonly" />
+						@else
 						<input id="order-account-name" name="account_name" type="text" class="form-control" value="{{ \Auth::user()->name }}" required="required" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
@@ -135,45 +153,75 @@
 				<div class="form-group">
 					<label for="order-name" class="col-sm-2 control-label">이름</label>
 					<div class="col-sm-2">
+						@if ($order)
+						<input id="order-name" name="name" type="text" class="form-control" value="{{ $order->name }}" readonly="readonly" />
+						@else
 						<input id="order-name" name="name" type="text" class="form-control" value="{{ \Auth::user()->name }}" required="required" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-contact" class="col-sm-2 control-label">휴대폰번호</label>
 					<div class="col-sm-2">
+						@if ($order)
+						<input id="order-contact" name="contact" type="text" class="form-control" value="{{ $order->contact }}" readonly="readonly" />
+						@else
 						<input id="order-contact" name="contact" type="text" class="form-control" value="{{ \Auth::user()->contact }}" required="required" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-email" class="col-sm-2 control-label">이메일</label>
 					<div class="col-sm-4">
+						@if ($order)
+						<input id="order-email" name="email" type="email" class="form-control" value="{{ $order->email }}" readonly="readonly" />
+						@else
 						<input id="order-email" name="email" type="email" class="form-control" value="{{ \Auth::user()->email }}" required="required" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-address" class="col-sm-2 control-label">주소</label>
 					<div class="col-sm-2">
+						@if ($order)
+						<input id="order-address" name="postcode" type="text" class="form-control postcodify_postcode5"  readonly="readonly" placeholder="우편번호" value="{{ $order->postcode }}" />
+						@else
 						<input id="order-address" name="postcode" type="text" class="form-control postcodify_postcode5" required="required" readonly="readonly" placeholder="우편번호" />
+						@endif
 					</div>
 					<div class="col-sm-2">
+						@if (!$order)
 						<a href="#" id="postcodify_search_button" style="display: none;">검색</a>
 						<a href="#" class="btn btn-default" id="postcodify_search_button_fake" >검색</a>
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-6 col-sm-offset-2">
+						@if ($order)
+						<input type="text" name="address_main" class="form-control postcodify_address" readonly="readonly" value="{{ $order->address_main }}" />
+						@else
 						<input type="text" name="address_main" class="form-control postcodify_address" required="required" readonly="readonly" placeholder="주소를 검색해주세요" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-6 col-sm-offset-2">
+						@if ($order)
+						<input type="text" name="address_detail" class="form-control postcodify_details" readonly="readonly" value="{{ $order->address_detail }}" />
+						@else
 						<input type="text" name="address_detail" class="form-control postcodify_details" required="required" placeholder="상세주소를 입력해주세요" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-comment" class="col-sm-2 control-label">비고</label>
 					<div class="col-sm-8">
+						@if ($order)
+						<input id="order-comment" name="requirement" type="text" class="form-control" readonly="readonly" value="{{ $order->requirement }}" />
+						@else
 						<input id="order-comment" name="requirement" type="text" class="form-control" placeholder="보상품 세부사항 및 기타 요청 사항" />
+						@endif
 					</div>
 				</div>
 			</div>
@@ -185,21 +233,34 @@
 				<div class="form-group">
 					<label for="order-refund-name" class="col-sm-2 control-label">예금주</label>
 					<div class="col-sm-2">
+						@if ($order)
+						<input id="order-refund-name" name="refund_name" type="text" class="form-control" readonly="readonly" value="{{ $order->refund_name }}" />
+						@else
 						<input id="order-refund-name" name="refund_name" type="text" class="form-control" value="{{ \Auth::user()->name }}" required="required" />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-refund-bank" class="col-sm-2 control-label">은행명</label>
 					<div class="col-sm-2">
+						@if ($order)
+						<input id="order-refund-bank" name="refund_bank" type="text" class="form-control" readonly="readonly" value="{{ $order->refund_bank }}" />
+						@else
 						<input id="order-refund-bank" name="refund_bank" type="text" class="form-control" required="required"  />
+						@endif
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="order-refund-account" class="col-sm-2 control-label">계좌번호</label>
 					<div class="col-sm-4">
+						@if ($order)
+						<input id="order-refund-account" name="refund_account" type="text" class="form-control" readonly="readonly" value="{{ $order->refund_account }}" />
+						@else
 						<input id="order-refund-account" name="refund_account" type="text" class="form-control" placeholder="-를 제외하고 입력해주세요" required="required"  />
+						@endif
 					</div>
 				</div>
+				@if (!$order)
 				<div class="form-group">
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-8">
@@ -209,9 +270,11 @@
 						</p>
 					</div>
 				</div>
+				@endif
 			</div>
 		</div>
 		
+		@if (!$order)
 		<h4 class="col-md-12 ps-section-title">5. 약관 동의</h4>
 		<div class="col-md-12">
 			<div class="ps-box">
@@ -253,12 +316,27 @@
 				</div>
 			</div>
 		</div>
+		@endif
 		
 		<div class="col-md-12 text-center">
+			@if ($order)
+				@if ($order->deleted_at)
+					@if ($order->confirmed)
+					<button class="btn btn-muted">환불처리중</button>
+					@else
+					<button class="btn btn-muted">취소됨</button>
+					@endif
+				@else
+					@if ($order->confirmed)
+					<button class="btn btn-danger">환불하기</button>
+					@else
+					<button class="btn btn-danger">취소하기</button>
+					@endif
+				@endif
+			@else
 			<button class="btn btn-success">결제하기</button>
+			@endif
 		</div>
-		
-		@include('csrf_field')
 	</form>
 </div>
 @endsection
@@ -271,6 +349,17 @@
 		$('#postcodify_search_button_fake').bind('click', function() {
 			$('#postcodify_search_button').trigger('click');
 			return false;
+		});
+		$('.btn-muted').each(function() {
+			$(this).bind('click', function() {
+				return false;
+			});
+		});
+		$('.btn-danger').each(function() {
+			$(this).bind('click', function() {
+				var form = $(this).closest('form');
+				return confirm('정말 취소하시겠습니까?');
+			});
 		});
 	});
 </script>

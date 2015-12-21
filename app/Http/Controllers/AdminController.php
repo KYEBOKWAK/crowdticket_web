@@ -2,6 +2,8 @@
 
 use App\Models\Blueprint as Blueprint;
 use App\Models\Project as Project;
+use App\Models\Order as Order;
+use App\Models\Supporter as Supporter;
 
 class AdminController extends Controller {
 
@@ -10,7 +12,9 @@ class AdminController extends Controller {
 		
 			'blueprints' => Blueprint::orderBy('id', 'desc')->get()->load('user'),
 			
-			'projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get()
+			'projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get(),
+			
+			'orders' => Order::withTrashed()->orderBy('id', 'desc')->get()->load('project')
 			
 		]);
 	}
@@ -34,6 +38,30 @@ class AdminController extends Controller {
 		$project->approve();
 		
 		return redirect('/admin/');
+	}
+	
+	public function approveOrder($orderId) {
+		$order = Order::findOrFail($orderId);
+		$user = $order->user()->first();
+		$ticket = $order->ticket()->first();
+		$project = $order->project()->first();
+		
+		\DB::beginTransaction();
+		
+		$supporter = new Supporter;
+		$supporter->project()->associate($project);
+		$supporter->user()->associate($user);
+		$supporter->save();
+		
+		$order->confirmed = true;
+		$order->save();
+		
+		$project->increment('supporters_count');
+		$ticket->increment('audiences_count');
+		
+		\DB::commit();
+		
+		return "success";
 	}
 
 }

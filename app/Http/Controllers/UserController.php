@@ -13,8 +13,8 @@ class UserController extends Controller {
 		$user = User::findOrFail($id);
         return view('user.detail', [
         	'user' => $user,
-            'orders' => Project::take(3)->get(),
-            'created' => Project::skip(3)->take(3)->get()
+            'orders' => $this->getProjectsByOrders($this->getValidUniqueOrders($user)),
+            'created' => $user->projects()->take(3)->get()
         ]);
 	}
 	
@@ -47,6 +47,32 @@ class UserController extends Controller {
 		$user->save();
 		
 		return $this->getUpdateView($user, $this->messageSuccess('변경되었습니다.'));
+	}
+	
+	public function getUserOrders($id) {
+		$user = $this->ensureLoginUser($id);
+		$orders = $this->getFullOrders($user);
+		$orders->load('project');
+		return view('user.orders', [
+			'user' => $user,
+			'orders' => $orders
+		]);
+	}
+	
+	private function getValidUniqueOrders($user) {
+		return $user->orders()->groupBy('project_id')->get();
+	}
+	
+	private function getProjectsByOrders($orders) {
+		$projectIds = [];
+		foreach ($orders as $order) {
+			array_push($projectIds, $order->project_id);
+		}
+		return Project::whereIn('id', $projectIds)->get();
+	}
+	
+	private function getFullOrders($user) {
+		return $user->orders()->withTrashed()->orderBy('created_at', 'desc')->get();
 	}
 	
 	private function uploadPosterImage($request, $user) {

@@ -57,6 +57,7 @@
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
 								<li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+								<li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
 								<li><a href="{{ url('/auth/logout') }}">로그아웃</a></li>
 							</ul>
 						</li>
