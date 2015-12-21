@@ -236,15 +236,6 @@ class ProjectController extends Controller {
 		}
 	}
 	
-	public function getTickets($id) {
-		$project = Project::findOrFail($id);
-		$project = $this->getApprovedProject($project);
-		$project->load(['tickets']);
-		return view('project.ticket.list', [
-			'project' => $project,
-		]);
-	}
-	
 	public function getNews($id) {
 		$project = Project::findOrFail($id);
 		return $project->news()->get();
@@ -258,6 +249,11 @@ class ProjectController extends Controller {
 	public function getComments($id) {
 		$project = Project::findOrFail($id);
 		return $project->comments()->with('user', 'comments', 'comments.user')->get();
+	}
+	
+	public function getOrders($id) {
+		$project = $this->getSecureProjectById($id);
+		return $project->orders()->with('user')->get();
 	}
 
 }
