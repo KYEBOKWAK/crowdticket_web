@@ -1,5 +1,9 @@
 <script type="text/template" id="template_ticket">
 	<div data-ticket-id="<%= ticket.id %>" class="ticket col-md-12">
+		<% if (style === 'normal') { %>
+		<a href="{{ url('/projects/') }}/<%= projectId %>/tickets?selected_ticket=<%= ticket.id %>">
+		<% } %>
+		
 		<div class="ticket-wrapper <% if (style === 'modifyable') { %> col-md-11 <% } %>">
 			<div class="ticket-body">
 				<% if (type === 'funding') { %>
@@ -55,6 +59,10 @@
 				<% } %>
 			</div>
 		</div>
+		
+		<% if (style === 'normal') { %>
+		</a>
+		<% } %>
 		
 		<% if (style === 'modifyable') { %>
 		<div class="col-md-1">

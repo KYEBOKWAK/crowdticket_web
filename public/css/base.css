@@ -899,16 +899,13 @@ textarea {
 }
 a, a:visited, a:hover, a:active {
   color: inherit;
+  text-decoration: none;
 }
 a.btn {
 	color: white;
 }
-a {
-  text-decoration: none;
-}
-a:hover,
-a:focus {
-  text-decoration: underline;
+a.btn-default {
+	color: #333333;
 }
 a:focus {
   outline: thin dotted;
@@ -1168,7 +1165,7 @@ a.text-warning:hover {
   color: #66512c;
 }
 .text-danger {
-  color: #a94442;
+  color: #cc0000;
 }
 a.text-danger:hover {
   color: #843534;
