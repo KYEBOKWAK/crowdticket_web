@@ -25,6 +25,7 @@ class AddColumnsToOrdersTable extends Migration {
 			$table->string('refund_name');
 			$table->string('refund_bank');
 			$table->string('refund_account');
+			$table->boolean('confirmed');
 		});
 	}
 
