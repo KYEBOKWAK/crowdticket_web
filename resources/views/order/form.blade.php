@@ -86,8 +86,8 @@
 					<label for="order-price" class="col-sm-2 control-label">결제금액</label>
 					<div class="col-sm-2">
 						<div class="input-group">
-							<input type="hidden" name="count" value="{{ $ticket_count }}" />
-							<input id="order-price" name="price" type="text" disabled="disabled" class="form-control" value="{{ $price }}" />
+							<input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
+							<input id="order-price" name="request_price" type="text" readonly="readonly" class="form-control" value="{{ $price }}" />
 							<div class="input-group-addon">
 								원
 							</div>
@@ -153,7 +153,7 @@
 				<div class="form-group">
 					<label for="order-address" class="col-sm-2 control-label">주소</label>
 					<div class="col-sm-2">
-						<input id="order-address" name="postcode" type="text" class="form-control postcodify_postcode5" required="required" disabled="disabled" placeholder="우편번호" />
+						<input id="order-address" name="postcode" type="text" class="form-control postcodify_postcode5" required="required" readonly="readonly" placeholder="우편번호" />
 					</div>
 					<div class="col-sm-2">
 						<a href="#" id="postcodify_search_button" style="display: none;">검색</a>
@@ -162,7 +162,7 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-6 col-sm-offset-2">
-						<input type="text" name="address_main" class="form-control postcodify_address" required="required" disabled="disabled" placeholder="주소를 검색해주세요" />
+						<input type="text" name="address_main" class="form-control postcodify_address" required="required" readonly="readonly" placeholder="주소를 검색해주세요" />
 					</div>
 				</div>
 				<div class="form-group">

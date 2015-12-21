@@ -8,12 +8,13 @@ use App\Models\Supporter as Supporter;
 class OrderController extends Controller {
 	
 	public function createOrder($ticketId) {
-		$inputs = \Input::all();
-		return $inputs;
-		
 		$this->initOrder($ticketId);
 		
-		$order = new Order(\Input::all());
+		$inputs = \Input::only(['contact', 'account_name', 'name', 'email', 'postcode', 'address_main', 'address_detail', 'requirement', 'refund_name', 'refund_bank', 'refund_account']);
+		$inputs['count'] = $this->ticketCount;
+		$inputs['price'] = $this->price;
+		
+		$order = new Order($inputs);
 		$order->project()->associate($this->project);
 		$order->ticket()->associate($this->ticket);
 		$order->user()->associate($this->user);
