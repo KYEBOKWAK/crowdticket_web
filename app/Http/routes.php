@@ -54,12 +54,12 @@ Route::group(['middleware' => 'auth'], function() {
 	
 	Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
 	Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
-	Route::get('projects/{id}/tickets', 'ProjectController@getTickets');
 	Route::put('projects/{id}', 'ProjectController@updateProject');
 	Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
 	Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
 	Route::put('projects/{id}/submit', 'ProjectController@submitProject');
 	Route::get('projects/{id}/stats', 'ProjectController@getStats');
+	Route::get('projects/{id}/orders', 'ProjectController@getOrders'); 
 	
 	Route::post('projects/{id}/tickets', 'TicketController@createTicket');
 	Route::put('tickets/{id}', 'TicketController@updateTicket');
@@ -71,9 +71,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::put('news/{id}', 'NewsController@updateNews');
 	Route::delete('news/{id}', 'NewsController@deleteNews');
 	
-	// Route::post('tickets/{id}/orders', 'OrderController@createOrder');
-	Route::get('tickets/{id}/orders', 'OrderController@createOrder'); // test 
-	Route::get('projects/{id}/orders', 'OrderController@getProjectOrders'); 
+	Route::post('tickets/{id}/orders', 'OrderController@createOrder'); 
+	Route::get('tickets/{id}/orders', 'OrderController@getTicketOrders');
+	Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
+	Route::get('projects/{id}/tickets', 'OrderController@getTickets');
 	Route::delete('orders/{id}', 'OrderController@deleteOrder'); 
 	
 	Route::post('{entity}/{id}/comments', 'CommentController@createComment');
@@ -87,5 +88,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
 	Route::put('projects/{id}/rejection', 'AdminController@rejectProject');
 	Route::put('projects/{id}/approval', 'AdminController@approveProject');
+	Route::put('order/{id}/approval', 'Adm11111111111111inController@approveOrder');
 	
 });
