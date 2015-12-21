@@ -42,9 +42,11 @@
 				
 				@if ($project->isFinished())
 				<div class="project-mask">
-					<div class="project-indicator-wrapper">
-						<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
-					</div>
+					<a href="{{ url('/projects') }}/{{ $project->id }}" style="display: block; width: 100%; height: 100%">
+						<div class="project-indicator-wrapper">
+							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
+						</div>
+					</a>
 				</div>
 				@endif
 			</div>

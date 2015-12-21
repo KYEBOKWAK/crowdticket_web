@@ -7,6 +7,7 @@ use App\Models\Blueprint as Blueprint;
 use App\Models\Category as Category;
 use App\Models\City as City;
 use App\Models\Model as Model;
+use App\Models\Order as Order;
 
 class ProjectController extends Controller {
 	
