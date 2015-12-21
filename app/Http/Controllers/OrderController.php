@@ -73,21 +73,34 @@ class OrderController extends Controller {
 		if ($requestPrice < $ticket->price) {
 			throw new \App\Exceptions\InvalidTicketStateException;
 		}
+		
 		$ticketCount = (int) \Input::get('ticket_count');
 		if ($ticketCount < 1) {
 			throw new \App\Exceptions\InvalidTicketStateException;
 		}
+		
+		if ($ticket->audiences_limit > 0) {
+			$remainCount = $ticket->audiences_limit - $ticket->audiences_count;
+			if ($ticketCount > $remainCount) {
+				throw new \App\Exceptions\InvalidTicketStateException;
+			}
+		}
+		
 		$this->price = $requestPrice * $ticketCount;
 		$this->ticketCount = $ticketCount;
-		
-		// ticket is sold out
 	}
 	
 	private function validateProject($project) {
 		if ($project->state !== Project::STATE_APPROVED) {
 			throw new \App\Exceptions\InvalidTicketStateException;
         }
-		// project is out of date
+		
+		$now = strtotime('now');
+		$end = $project->type === 'funding' ? $project->funding_closing_at : $project->performance_opening_at;
+		$end = strtotime($end);
+		if ($end < $now) {
+			throw new \App\Exceptions\InvalidTicketStateException;
+		}
 	}
 	
 	public function approveOrder($orderId) {
