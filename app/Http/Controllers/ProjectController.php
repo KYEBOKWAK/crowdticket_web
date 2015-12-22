@@ -254,7 +254,10 @@ class ProjectController extends Controller {
 	
 	public function getOrders($id) {
 		$project = $this->getSecureProjectById($id);
-		return $project->orders()->with('user')->get();
+		return view('project.orders', [
+			'project' => $project,
+			'orders' => $project->orders()->withTrashed()->with('user')->get()
+		]);
 	}
 
 }
