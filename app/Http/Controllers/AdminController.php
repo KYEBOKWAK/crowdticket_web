@@ -56,8 +56,10 @@ class AdminController extends Controller {
 		$order->confirmed = true;
 		$order->save();
 		
+		$ticketCount = $ticket->real_ticket_count * $order->count;
+		$project->increment('tickets_count', $ticketCount);
 		$project->increment('supporters_count');
-		$ticket->increment('audiences_count');
+		$ticket->increment('audiences_count', $order->count);
 		
 		\DB::commit();
 		

@@ -14,7 +14,23 @@ class TicketController extends Controller {
 		$ticket->project()->associate($project);
 		$ticket->save();
 		
+		if ($project->type === 'sale') {
+			$this->updateProjectPerformanceDate($project, $ticket);
+		}
+		
 		return $ticket;
+	}
+	
+	private function updateProjectPerformanceDate($project) {
+		$tickets = $project->tickets()->orderBy('delivery_date', 'asc')->get();
+		$ticketCount = count($tickets);
+		if ($ticketCount > 0) {
+			$openTicket = $tickets[0];
+			$closeTicket = $tickets[$ticketCount - 1];
+			$project->performance_opening_at = $openTicket->delivery_date;
+			$project->performance_closing_at = $closeTicket->delivery_date;
+			$project->save();
+		}
 	}
 	
 	public function updateTicket($id) {

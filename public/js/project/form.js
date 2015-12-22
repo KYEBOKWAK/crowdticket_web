@@ -39,6 +39,7 @@ $(document).ready(function() {
 		var url = '/projects/' + projectId;
 		var method = 'put';
 		var success = function(e) {
+			console.log(e);
 			alert('저장되었습니다.');
 		};
 		var error = function(e) {

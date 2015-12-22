@@ -116,10 +116,11 @@ class OrderController extends Controller {
 			throw new \App\Exceptions\InvalidTicketStateException;
         }
 		
-		$now = strtotime('now');
-		$end = $project->type === 'funding' ? $project->funding_closing_at : $project->performance_opening_at;
-		$end = strtotime($end);
-		if ($end < $now) {
+		if ($project->funding_closing_at) {
+			if (strtotime('now') > strtotime($project->funding_closing_at)) {
+				throw new \App\Exceptions\InvalidTicketStateException;
+			}
+		} else {
 			throw new \App\Exceptions\InvalidTicketStateException;
 		}
 	}
@@ -146,11 +147,15 @@ class OrderController extends Controller {
 			if ($supporter) {
 				$supporter->delete();
 			}
+			$ticketCount = $ticket->real_ticket_count * $order->count;
+			if ($project->tickets_count - $ticketCount >= 0) {
+				$project->decrement('tickets_count', $ticketCount);
+			}
 			if ($project->supporters_count > 0) {
 				$project->decrement('supporters_count');
 			}
-			if ($ticket->audiences_count > 0) {
-				$ticket->decrement('audiences_count');
+			if ($ticket->audiences_count - $order->count >= 0) {
+				$ticket->decrement('audiences_count', $order->count);
 			}
 		}
 		

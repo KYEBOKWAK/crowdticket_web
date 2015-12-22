@@ -225,6 +225,99 @@
 	line-height: 1.4em;
 }
 
+.project-detail .project-body {
+	padding: 8px;
+}
+.project-detail .project-mask {
+	padding: 8px;
+}
+.project-detail .project-indicator-img {
+	margin-bottom: 25px;
+}
+.project-detail .project-pledged-amount {
+	font-size: 13px;
+	margin-bottom: 0px;
+}
+.project-detail .project-funded-amount {
+	font-size: 17px;
+	margin-bottom: 14px;
+}
+.project-detail .project-funded-amount strong {
+	font-size: 49px;
+}
+.project-detail .project-progress-wrapper {
+	margin-bottom: 25px;
+}
+.project-detail .project-progress-wrapper .progress {
+	width: 250px;
+	margin-bottom: 0px;
+}
+.project-detail .project-progress-wrapper .project-progress-number {
+	float: right;
+	color: #333;
+}
+.project-detail .project-half {
+	margin-bottom: 25px;
+}
+.project-detail .project-half h5 {
+	font-size: 15px;
+	margin-bottom: 0px;
+}
+.project-detail .project-half span {
+	font-size: 19px;
+}
+.project-detail .project-half span strong {
+	font-size: 33px;
+}
+.project-detail .project-half-divider {
+	border-right: 1px #DAD8CC solid;
+}
+.project-detail .project-button-box {
+	background-color: #FFFFFF;
+	border: 1px #DAD8CC solid;
+	-webkit-border-radius: 5px;
+  	-moz-border-radius: 5px;
+  	border-radius: 5px;
+  	padding: 10px 20px 10px 20px;
+}
+.project-detail .project-button-box span {
+	display: inline-block;
+	margin-top: -5px;
+	font-size: 15px;
+}
+.project-detail .project-button-box span strong {
+	font-size: 28px;
+}
+.project-detail .project-button-box .btn {
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+.project-detail .project-full-button .btn {
+	width: 100%;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	font-size: 25px;
+}
+.project-detail .project-label {
+	padding: 12px 0px 12px 0px;
+	border-bottom: 1px #DAD8CC solid;
+}
+.project-detail .project-label.last-child {
+	border-bottom: none;
+	margin-bottom: 20px;
+}
+.project-detail .project-label-title {
+	font-size: 15px;
+	color: #666;
+	padding: 4px 0px 0px 0px;
+}
+.project-detail .project-label-body {
+	color: #333;
+	font-size: 17px;
+	padding: 0px;
+	font-weight: bold;
+}
+
 .project-grid {
 	padding: 12px;
 }
@@ -294,7 +387,7 @@
 	float: right;
 	margin-bottom: 15px;
 }
-.project-grid-wrapper .project-mask {
+.project-mask {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -309,7 +402,7 @@
 	position: absolute;
 	bottom: 0;
 }
-.project-grid-wrapper .project-indicator-img {
+.project-indicator-img {
 	width: 100px;
 	height: 57px;
 	display: block;

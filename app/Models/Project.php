@@ -11,13 +11,12 @@ class Project extends Model {
 		Project::STATE_READY => [
 			'title', 'alias', 'description', 'video_url', 'story',
 			'detailed_address', 'pledged_amount', 'audiences_limit', 
-			'funding_closing_at', 'performance_opening_at'
+			'funding_closing_at'
 		],
 		
 		Project::STATE_READY_AFTER_FUNDING => [
 			'description', 'video_url', 'story',
-			'detailed_address', 'audiences_limit',
-			'performance_opening_at'
+			'detailed_address', 'audiences_limit'
 		],
 		
 		Project::STATE_UNDER_INVESTIGATION => [
@@ -110,15 +109,14 @@ class Project extends Model {
 	}
 
 	public function isFinished() {
-		if ($this->type === 'funding') {
+		if ($this->funding_closing_at) {
 			return strtotime($this->funding_closing_at) - time() < 0;
-		} else {
-			return strtotime($this->performance_opening_at) - time() < 0;
 		}
+		return true;
 	}
 	
 	public function dayUntilFundingClosed() {
-		$diff = abs(strtotime($this->funding_closing_at) - time());
+		$diff = max(strtotime($this->funding_closing_at) - time(), 0);
 		$secondsInDay = 60 * 60 * 24;
 		return floor($diff / $secondsInDay);
 	}
@@ -138,8 +136,15 @@ class Project extends Model {
 	}
 	
 	public function getTicketDateFormatted() {
-		$date = new \DateTime($this->performance_opening_at);
-		return $date->format('Y. m. d');
+		$open = new \DateTime('now');
+		$close = new \DateTime('now');
+		if ($this->performance_opening_at) {
+			$open = new \DateTime($this->performance_opening_at);
+		}
+		if ($this->performance_closing_at) {
+			$close = new \DateTime($this->performance_closing_at);
+		}
+		return $open->format('Y. m. d') . ' ~ ' . $close->format('Y. m. d');
 	}
 
 	public function getFundingClosingAtOrNow() {

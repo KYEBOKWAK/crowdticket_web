@@ -65,7 +65,7 @@
 		font-weight: bold;
 	}
 	.ps-detail-right-section {
-		padding: 0px;
+		padding: 0px 10px 0px 10px;
 	}
 	.tab-pane {
 		border-bottom-left-radius: 4px;
@@ -97,6 +97,9 @@
 	}
 	.creator-wrapper {
 		margin-top: 30px;
+	}
+	.project-detail {
+		padding: 0px;
 	}
 </style>
 @endsection
@@ -190,14 +193,77 @@
 		</div>
 		<div class="col-md-4 ps-detail-right-section">
 			<div class="row">
-				<div class="col-md-12">
-					<p>목표금액 {{ $project->pledged_amount }}원 중 모인금액</p>
-					<h3>{{ $project->funded_amount }}원, {{ $project->audiences_count }}장, {{ $project->getProgress() }}%</h3>
-					<p>후원자</p>
-					<h3>{{ $project->audiences_count }}명</h3>
-					<p>펀딩 마감까지 남은 시간</p>
-					<h3>{{ $project->dayUntilFundingClosed() }}일</h3>
-					<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" class="btn btn-primary">후원하기</a>
+				<div class="col-md-12 project-detail">
+					<div class="project-body">
+						@if ($project->type === 'funding')
+						<img src="{{ asset('/img/app/img_funding_progress.png') }}" class="project-indicator-img" />
+						<p class="project-pledged-amount">목표금액 {{ $project->pledged_amount }}원 중 모인금액</p>
+						<span class="project-funded-amount"><strong>{{ $project->funded_amount }}</strong>원</span>
+						<div class="project-progress-wrapper">
+							<div class="progress">
+							  	<div class="progress-bar" role="progressbar" aria-valuenow="{{ $project->getProgress() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $project->getProgress() }}%;">
+							    	<span class="sr-only">{{ $project->getProgress() }}</span>
+							  	</div>
+						  	</div>
+							<span class="project-progress-number"><strong>{{ $project->getProgress() }}</strong>%</span>
+						</div>
+						<div class="col-md-6 project-half project-half-divider">
+							<h5 class="text-center">후원자</h5>
+							<span class="center-block text-center"><strong>{{ $project->audiences_count }}</strong>명</h3>
+						</div>
+						<div class="col-md-6 project-half">
+							<h5 class="text-center">티켓구매</h5>
+							<span class="center-block text-center"><strong>{{ $project->tickets_count }}</strong>매</h3>
+						</div>
+						<div class="project-button-box clear">
+							<span>펀딩 마감까지 <strong>{{ $project->dayUntilFundingClosed() }}</strong>일</span>
+							<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" @if ($project->isFinished()) disabled="disabled" @endif  class="btn btn-primary pull-right">후원하기</a>
+							<div class="clear"></div>
+						</div>
+						@else
+						<img src="{{ asset('/img/app/img_ticket_progress.png') }}" class="project-indicator-img" />
+						<div class="col-md-12 project-label">
+							<div class="col-md-4 project-label-title">
+								<span>공연장</span>
+							</div>
+							<div class="col-md-8 project-label-body">
+								<span>{{ $project->detailed_address }}</span>
+							</div>
+						</div>
+						<div class="col-md-12 project-label">
+							<div class="col-md-4 project-label-title">
+								<span>위치</span>
+							</div>
+							<div class="col-md-8 project-label-body">
+								<span>{{ $project->detailed_address }}</span>
+							</div>
+						</div>
+						<div class="col-md-12 project-label last-child">
+							<div class="col-md-4 project-label-title">
+								<span>공연날짜</span>
+							</div>
+							<div class="col-md-8 project-label-body">
+								<span>{{ $project->getTicketDateFormatted() }}</span>
+							</div>
+						</div>
+						<div class="col-md-6 col-md-offset-3 project-half">
+							<h5 class="text-center">티켓구매</h5>
+							<span class="center-block text-center"><strong>{{ $project->tickets_count }}</strong>매</span>
+						</div>
+						<div class="clear"></div>
+						<div class="project-full-button">
+							<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" @if ($project->isFinished()) disabled="disabled" @endif class="btn btn-primary">티켓구매</a>
+						</div>
+						@endif
+					</div>
+					
+					@if ($project->isFinished())
+					<div class="project-mask">
+						<div class="project-indicator-wrapper">
+							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
+						</div>
+					</div>
+					@endif
 				</div>
 				<div class="col-md-12 creator-wrapper">
 					@include('template.creator_profile', ['user' => $project->user])
