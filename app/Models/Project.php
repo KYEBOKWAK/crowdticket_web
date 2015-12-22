@@ -154,5 +154,9 @@ class Project extends Model {
 		}
 		return date('Y-m-d', $time);
 	}
+	
+	public function isReady() {
+		return $this->state === Project::STATE_READY || $this->state === Project::STATE_READY_AFTER_FUNDING;
+	}
 
 }

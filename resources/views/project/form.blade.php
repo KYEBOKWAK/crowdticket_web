@@ -191,9 +191,11 @@
 			<div class="col-md-1">
 				<a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success" target="_blank">미리보기</a>
 			</div>
+			@if ($project->isReady())
 			<div class="col-md-1">
 				<button id="submit_project" class="btn btn-primary">제출하기</button>
 			</div>
+			@endif
 		</div>
 		<div class="ps-update-body">
 			@if ($selected_tab === 'base')
