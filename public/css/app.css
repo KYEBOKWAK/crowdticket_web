@@ -9,6 +9,21 @@
 	padding-top: 50px; /* header height */
 }
 
+.supporter-list {
+	padding: 20px 15px 20px 15px;
+    border-bottom: 1px #e6e3de solid;
+}
+.supporter-list:last-child {
+	border: none;
+}
+.supporter-list .user-photo-support {
+	margin-right: 20px;
+}
+.supporter-list .supporter-text {
+	margin-top: 20px;
+	font-size: 14px;
+}
+
 .comment-list {
 	padding: 20px 15px 20px 15px;
     border-bottom: 1px #e6e3de solid;
@@ -525,6 +540,7 @@
   	-moz-border-radius: 40px;
   	border-radius: 40px;
 }
+.user-photo-support,
 .user-photo-comment {
 	width: 70px;
 	height: 70px;

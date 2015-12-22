@@ -143,7 +143,7 @@ class OrderController extends Controller {
 			$user->decrement('tickets_count');
 		}
 		if ($order->confirmed) {
-			$supporter = Supporter::where('project_id', $project->id)->where('user_id', $user->id)->first();
+			$supporter = Supporter::where('project_id', $project->id)->where('user_id', $user->id)->where('ticket_id', $ticket->id)->first();
 			if ($supporter) {
 				$supporter->delete();
 			}

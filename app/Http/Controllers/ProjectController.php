@@ -244,7 +244,7 @@ class ProjectController extends Controller {
 	
 	public function getSupporters($id) {
 		$project = Project::findOrFail($id);
-		return $project->supporters()->with('user')->get();
+		return $project->supporters()->with(['user', 'ticket'])->get();
 	}
 	
 	public function getComments($id) {

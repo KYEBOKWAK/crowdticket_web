@@ -50,6 +50,7 @@ class AdminController extends Controller {
 		
 		$supporter = new Supporter;
 		$supporter->project()->associate($project);
+		$supporter->ticket()->associate($ticket);
 		$supporter->user()->associate($user);
 		$supporter->save();
 		
