@@ -209,7 +209,7 @@
 						</div>
 						<div class="col-md-6 project-half project-half-divider">
 							<h5 class="text-center">후원자</h5>
-							<span class="center-block text-center"><strong>{{ $project->audiences_count }}</strong>명</h3>
+							<span class="center-block text-center"><strong>{{ $project->supporters_count }}</strong>명</h3>
 						</div>
 						<div class="col-md-6 project-half">
 							<h5 class="text-center">티켓구매</h5>

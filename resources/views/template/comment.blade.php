@@ -37,7 +37,11 @@
 				<% for (var i = 0, l = data.comments.length; i < l; i++) { %>
 				<% var reply = data.comments[i]; %>
 				<li>
+					<% if (reply.user.profile_photo_url) { %>
 					<div class="user-photo-reply bg-base pull-left" style="background-image: url('<%= reply.user.profile_photo_url %>');"></div>
+					<% } else { %>
+					<div class="user-photo-reply bg-base pull-left" style="background-image: url('http://orig06.deviantart.net/ea2a/f/2010/213/6/d/facebook_default_picture_by_graffadetoart.jpg');"></div>
+					<% } %>
 					<div class="comment-section-right">
 						<span class="comment-username"><strong><%= reply.user.name %></strong></span>
 						<span class="comment-created-at"><%= reply.created_at %></span>
