@@ -40,6 +40,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('news_count')->unsigned()->default(0);
             $table->integer('supporters_count')->unsigned()->default(0);
             $table->integer('comments_count')->unsigned()->default(0);
+			$table->integer('tickets_count')->unsigned()->default(0);
 			$table->timestamps();
             $table->timestamp('funding_closing_at')->nullable();
             $table->timestamp('performance_opening_at')->nullable();
