@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration {
             $table->string('contact');
             $table->integer('count')->unsigned();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

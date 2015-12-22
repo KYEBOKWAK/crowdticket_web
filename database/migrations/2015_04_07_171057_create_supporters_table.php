@@ -19,7 +19,7 @@ class CreateSupportersTable extends Migration {
             $table->foreign('project_id')->references('id')->on('projects');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamp('created_at');
+            $table->timestamps();
 		});
 	}
 

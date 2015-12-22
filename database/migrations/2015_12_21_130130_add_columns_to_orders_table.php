@@ -21,11 +21,11 @@ class AddColumnsToOrdersTable extends Migration {
 			$table->string('postcode');
 			$table->string('address_main');
 			$table->string('address_detail');
-			$table->string('requirement');
+			$table->string('requirement')->default('');
 			$table->string('refund_name');
 			$table->string('refund_bank');
 			$table->string('refund_account');
-			$table->boolean('confirmed');
+			$table->boolean('confirmed')->default(false);
 		});
 	}
 
