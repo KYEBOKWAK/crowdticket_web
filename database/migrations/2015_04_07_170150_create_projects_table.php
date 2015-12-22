@@ -44,6 +44,7 @@ class CreateProjectsTable extends Migration {
 			$table->timestamps();
             $table->timestamp('funding_closing_at')->nullable();
             $table->timestamp('performance_opening_at')->nullable();
+			$table->timestamp('performance_closing_at')->nullable();
 		});
 	}
 

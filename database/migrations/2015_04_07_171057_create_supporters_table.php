@@ -17,6 +17,8 @@ class CreateSupportersTable extends Migration {
 			$table->increments('id')->unsigned();
             $table->integer('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects');
+			$table->integer('ticket_id')->unsigned();
+			$table->foreign('ticket_id')->references('id')->on('tickets');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
