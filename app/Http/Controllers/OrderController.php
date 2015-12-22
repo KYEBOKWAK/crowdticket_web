@@ -147,6 +147,10 @@ class OrderController extends Controller {
 			if ($supporter) {
 				$supporter->delete();
 			}
+			$funded = $order->count * $order->price;
+			if ($project->funded_amount - $funded >= 0) {
+				$project->decrement('funded_amount', $funded);
+			}
 			$ticketCount = $ticket->real_ticket_count * $order->count;
 			if ($project->tickets_count - $ticketCount >= 0) {
 				$project->decrement('tickets_count', $ticketCount);

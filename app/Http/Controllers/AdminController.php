@@ -58,6 +58,7 @@ class AdminController extends Controller {
 		$order->save();
 		
 		$ticketCount = $ticket->real_ticket_count * $order->count;
+		$project->increment('funded_amount', $order->count * $order->price);
 		$project->increment('tickets_count', $ticketCount);
 		$project->increment('supporters_count');
 		$ticket->increment('audiences_count', $order->count);
