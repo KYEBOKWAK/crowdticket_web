@@ -112,7 +112,7 @@ class OrderController extends Controller {
 	}
 	
 	private function validateProject($project) {
-		if ($project->state !== Project::STATE_APPROVED) {
+		if ((int) $project->state !== Project::STATE_APPROVED) {
 			throw new \App\Exceptions\InvalidTicketStateException;
         }
 		
