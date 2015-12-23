@@ -47,8 +47,8 @@ class Project extends Model {
 	}
 	
 	public function submit() {
-		if ($this->state === Project::STATE_READY ||
-			$this->state === Project::STATE_READY_AFTER_FUNDING) {
+		if ((int) $this->state === Project::STATE_READY ||
+			(int) $this->state === Project::STATE_READY_AFTER_FUNDING) {
 			$this->setAttribute('state', Project::STATE_UNDER_INVESTIGATION);
 			$this->save();
 		}
