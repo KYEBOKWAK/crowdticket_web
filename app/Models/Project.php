@@ -156,7 +156,7 @@ class Project extends Model {
 	}
 	
 	public function isReady() {
-		return $this->state === Project::STATE_READY || $this->state === Project::STATE_READY_AFTER_FUNDING;
+		return (int) $this->state === Project::STATE_READY || (int) $this->state === Project::STATE_READY_AFTER_FUNDING;
 	}
 
 }

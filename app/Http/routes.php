@@ -14,6 +14,7 @@ Route::get('/facebook', 'Auth\SocialAuthController@redirect');
 Route::get('/facebook/callback', 'Auth\SocialAuthController@callback');
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/home', 'WelcomeController@index');
 Route::get('terms/', function() { return view('customer.terms'); });
 Route::get('privacy/', function() { return view('customer.privacy'); });
 Route::get('help/', function() { return view('customer.help'); });
