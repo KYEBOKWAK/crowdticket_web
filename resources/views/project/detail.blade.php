@@ -227,7 +227,7 @@
 								<span>공연장</span>
 							</div>
 							<div class="col-md-8 project-label-body">
-								<span>{{ $project->detailed_address }}</span>
+								<span><strong>{{ $project->concert_hall }}</strong></span>
 							</div>
 						</div>
 						<div class="col-md-12 project-label">
@@ -243,7 +243,7 @@
 								<span>공연날짜</span>
 							</div>
 							<div class="col-md-8 project-label-body">
-								<span>{{ $project->getTicketDateFormatted() }}</span>
+								<span><strong>{{ $project->getTicketDateFormatted() }}</strong></span>
 							</div>
 						</div>
 						<div class="col-md-6 col-md-offset-3 project-half">

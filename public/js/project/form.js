@@ -30,7 +30,8 @@ $(document).ready(function() {
 			'city_id': $('#city').val(),
 			'pledged_amount': $('#pledged_amount').val(),
 			'funding_closing_at': $('#funding_closing_at').val(),
-			'detailed_address': $('#stage').val()
+			'detailed_address': $('#detailed_address').val(),
+			'concert_hall': $('#concert_hall').val()
 		});
 	};
 	

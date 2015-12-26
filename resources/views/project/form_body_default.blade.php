@@ -47,8 +47,14 @@
 		@if ($project->type === 'sale')
 		<div class="form-group">
 			<label for="stage" class="col-sm-2 control-label">공연장</label>
+			<div class="col-sm-2">
+				<input id="concert_hall" name="concert_hall" maxlength="16" type="text" placeholder="공연장 이름 입력" class="form-control" value="{{ $project->concert_hall }}" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label"></label>
 			<div class="col-sm-8">
-				<input id="stage" name="detailed_address" maxlength="64" type="text" placeholder="세부 주소 입력" class="form-control" value="{{ $project->detailed_address }}" />
+				<input id="detailed_address" name="detailed_address" maxlength="128" type="text" placeholder="세부 주소 입력" class="form-control" value="{{ $project->detailed_address }}" />
 			</div>
 		</div>
 		@endif

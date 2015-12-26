@@ -35,7 +35,7 @@
 				@else
 				<div class="project-ticket-info">
 					<span>{{ $project->getTicketDateFormatted() }}</span>
-					<span class="right">{{ $project->detailed_address }}</span>
+					<span class="right">{{ $project->concert_hall }}</span>
 				</div>
 				<img src="{{ asset('/img/app/img_ticket_progress.png') }}" class="project-indicator-img" />
 				@endif

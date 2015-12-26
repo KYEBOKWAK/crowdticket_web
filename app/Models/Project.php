@@ -10,13 +10,13 @@ class Project extends Model {
 	protected static $fillableByState = [
 		Project::STATE_READY => [
 			'title', 'alias', 'description', 'video_url', 'story',
-			'detailed_address', 'pledged_amount', 'audiences_limit', 
+			'detailed_address', 'concert_hall', 'pledged_amount', 'audiences_limit', 
 			'funding_closing_at'
 		],
 		
 		Project::STATE_READY_AFTER_FUNDING => [
 			'description', 'video_url', 'story',
-			'detailed_address', 'audiences_limit'
+			'detailed_address', 'concert_hall', 'audiences_limit'
 		],
 		
 		Project::STATE_UNDER_INVESTIGATION => [
@@ -24,7 +24,7 @@ class Project extends Model {
 		],
 		
 		Project::STATE_APPROVED => [
-			'description', 'video_url', 'detailed_address', 'story'
+			'description', 'video_url', 'story'
 		]
 	];
 	
@@ -35,6 +35,7 @@ class Project extends Model {
 		'description' => 'string',
 		'video_url' => 'url',
 		'detailed_address' => 'string',
+		'concert_hall' => 'string',
 		'pledged_amount' => 'integer|min:0',
 		'audiences_limit' => 'integer|min:0',
 		'funding_closing_at' => 'date_format:Y-m-d',
