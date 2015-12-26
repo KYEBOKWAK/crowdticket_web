@@ -1,5 +1,5 @@
 <div class="row ps-update-creator">
-	<img src="{{ asset('/img/app/img_update_project_ticket.png') }}" class="center-block" />
+	<img src="{{ asset('/img/app/img_update_project_creator.png') }}" class="center-block" />
 	<h2>개설자소개</h2>
 	<div class="col-md-12">
 		<h5 class="bg-info">이 프로젝트를 개설하고자 하는 당신은 누구신가요?

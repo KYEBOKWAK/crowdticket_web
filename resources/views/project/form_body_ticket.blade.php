@@ -1,8 +1,9 @@
 <div class="row">
-	<img src="{{ asset('/img/app/img_update_project_reward.png') }}" class="center-block" />
 	@if ($project->type === 'funding')
+	<img src="{{ asset('/img/app/img_update_project_reward.png') }}" class="center-block" />
 	<h2>펀딩 보상 입력</h2>
 	@else
+	<img src="{{ asset('/img/app/img_update_project_ticket.png') }}" class="center-block" />
 	<h2>티켓 설정</h2>
 	@endif
 	<div class="col-md-12">

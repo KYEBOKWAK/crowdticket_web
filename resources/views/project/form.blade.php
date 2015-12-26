@@ -158,7 +158,7 @@
 					array_push($tabs, [
 						'key' => 'ticket',
 						'title' => '티켓',
-						'ico_url' => asset('/img/app/ico_tap02.png')
+						'ico_url' => asset('/img/app/ico_tap02_01.png')
 					]);
 				}
 				array_push($tabs, [
