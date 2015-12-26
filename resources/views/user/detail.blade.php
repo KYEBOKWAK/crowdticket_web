@@ -34,14 +34,19 @@
 	</div>
 </div>
 <div class="container">
-	@if (sizeof($orders) > 0)
-	<h3 class="ps-detail-title"><strong>참여한 공연</strong></h3>
-	@include('template.project', ['projects' => $orders])
-	@endif
+	@if (sizeof($creating) > 0)
+	<h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
+	@include('template.project', ['projects' => $creating])
+	@endif 
 	
 	@if (sizeof($created) > 0)
 	<h3 class="ps-detail-title"><strong>개설한 공연</strong></h3>
 	@include('template.project', ['projects' => $created])
 	@endif 
+	
+	@if (sizeof($orders) > 0)
+	<h3 class="ps-detail-title"><strong>참여한 공연</strong></h3>
+	@include('template.project', ['projects' => $orders])
+	@endif
 </div>
 @endsection

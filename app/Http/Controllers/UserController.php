@@ -14,8 +14,18 @@ class UserController extends Controller {
         return view('user.detail', [
         	'user' => $user,
             'orders' => $this->getProjectsByOrders($this->getValidUniqueOrders($user)),
-            'created' => $user->projects()->get()
+            'created' => $user->projects()->where('state', Project::STATE_APPROVED)->orderBy('id', 'desc')->get(),
+            'creating' => $this->getCreatingProject($user)
         ]);
+	}
+	
+	private function getCreatingProject($user) {
+		if (\Auth::check()) {
+			if ($user->id === \Auth::user()->id) {
+				return $user->projects()->where('state', '!=', Project::STATE_APPROVED)->orderBy('id', 'desc')->get();
+			}
+		}
+		return [];
 	}
 	
 	public function getUpdateForm($id) {
