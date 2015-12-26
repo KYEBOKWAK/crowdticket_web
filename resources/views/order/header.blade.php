@@ -14,13 +14,13 @@
 				@endif
 		</div>
 		<div class="col-md-4">
-			<img src="{{ asset('img/app/ico_step_progress01.png') }}" class="center-block" />
+			<img src="{{ asset('img/app/ico_step_progress02.png') }}" class="center-block" />
 			<h3 class="text-center @if ($step === 2) text-primary @endif text-important"><strong>STEP 2</strong>
 			<br/>
 			정보입력 및 결제</h3>
 		</div>
 		<div class="col-md-4">
-			<img src="{{ asset('img/app/ico_step_progress01.png') }}" class="center-block" />
+			<img src="{{ asset('img/app/ico_step_progress03.png') }}" class="center-block" />
 			<h3 class="text-center @if ($step === 3) text-primary @endif text-important"><strong>STEP 3</strong>
 			<br/>
 			확 인</h3>
