@@ -31,9 +31,9 @@ class Project extends Model {
 	protected static $typeRules = [
 		'title' => 'string|min:1|max:30',
 		'alias' => 'regex:/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}$/',
-		'poster_url' => 'active_url',
+		'poster_url' => 'url',
 		'description' => 'string',
-		'video_url' => 'active_url',
+		'video_url' => 'url',
 		'detailed_address' => 'string',
 		'pledged_amount' => 'integer|min:0',
 		'audiences_limit' => 'integer|min:0',
@@ -157,6 +157,13 @@ class Project extends Model {
 	
 	public function isReady() {
 		return (int) $this->state === Project::STATE_READY || (int) $this->state === Project::STATE_READY_AFTER_FUNDING;
+	}
+	
+	public function getValidYouTubeUrl() {
+		$path = parse_url($this->video_url, PHP_URL_PATH);
+		$pathFragments = explode('/', $path);
+		$end = end($pathFragments);
+		return "https://youtube.com/v/" . $end;
 	}
 
 }

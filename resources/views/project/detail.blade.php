@@ -126,7 +126,7 @@
 			<div class="row ps-detail-left-page">
 				<div class="col-md-12 project-video">
 					@if ($project->video_url)
-					<iframe class="project-video" src="{{ $project->video_url }}" frameborder="0" allowfullscreen></iframe>
+					<iframe class="project-video" src="{{ $project->getValidYouTubeUrl() }}" frameborder="0" allowfullscreen></iframe>
 					@else ($project->poster_url)
 					<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
 					@endif
