@@ -75,6 +75,7 @@
 				</p>
 			</div>
 		</div>
+		@if ($project->type === 'funding')
 		<div class="form-group">
 			<label for="pledged_amount" class="col-sm-2 control-label">목표금액</label>
 			<div class="col-sm-8">
@@ -92,6 +93,7 @@
 				</p>
 			</div>
 		</div>
+		@endif
 		<div class="form-group">
 			<label for="funding_closing_at" class="col-sm-2 control-label">@if ($project->type === 'funding') 펀딩 마감일 @else 티켓팅 마감일 @endif</label>
 			<div class="col-sm-2">

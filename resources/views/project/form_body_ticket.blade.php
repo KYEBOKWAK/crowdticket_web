@@ -10,9 +10,15 @@
 		@if ($project->type === 'funding')
 		<h5 class="bg-info">펀딩에 성공한 후 기획하게 될 공연의 티켓을 비롯하여, 싸인CD, 머그컵, 티셔츠 등
 		<br/>
-		여러가지 보상품으로 좀 더 다채로운 펀딩을 기획해 보세요!</h5>
+		여러가지 보상품으로 좀 더 다채로운 펀딩을 기획해 보세요!
+		<br/><br/>
+		<span class="text-danger">한명이라도 선택한 보상은 수정할 수 없습니다.</span>
+		</h5>
 		@else
-		<h5 class="bg-info">날짜별, 가격별 공연 티켓을 자유롭게 기획하여 판매해 보세요!</h5>
+		<h5 class="bg-info">날짜별, 가격별 공연 티켓을 자유롭게 기획하여 판매해 보세요!
+		<br/><br/>
+		<span class="text-danger">한명이라도 선택한 티켓은 수정할 수 없습니다.</span>
+		</h5>
 		@endif
 	</div>
 </div>
