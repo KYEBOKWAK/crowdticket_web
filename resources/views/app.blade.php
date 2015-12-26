@@ -79,7 +79,6 @@
 				<ul>
 					<li><a href="{{ url('/terms') }}">이용약관</a></li>
 					<li><a href="{{ url('/privacy') }}">개인정보취급방침</a></li>
-					<li><a href="mailto:jun@crowdticket.kr">문의하기</a></li>
 				</ul>
 				<p>COPYRIGHT (C) 2015 CROWD TICKET</p>
 				<p>
