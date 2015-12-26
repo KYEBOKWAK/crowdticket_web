@@ -71,7 +71,7 @@
 					</div>
 					<div class="form-group">
 						<label for="input-website">웹사이트</label>
-						<input id="input-website" name="website" type="url" class="form-control" value="{{ $user->website }}" />
+						<input id="input-website" name="website" type="url" class="form-control" value="{{ $user->website }}" placeholder="http://crowdticket.kr 형식으로 작성해주세요 :)" />
 						<p class="help-block">
 							회원님을 더 자세히 알고자 하는 사람들을 위하여 웹사이트를 입력해주세요
 						</p>
