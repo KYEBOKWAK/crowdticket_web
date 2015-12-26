@@ -37,7 +37,9 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url('/') }}">CROWD TICKET</a>
+				<a class="navbar-brand" href="{{ url('/') }}">
+					<img src="{{ asset('/img/app/logo_nav.png') }}" />
+				</a>
 			</div>
 
 			<div class="collapse navbar-collapse">
