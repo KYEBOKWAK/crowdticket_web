@@ -177,6 +177,9 @@
 	text-align: center;
 	padding: 0;
 }
+.box-creator-profile .col-md-6 {
+	padding-right: 0px;
+}
 .box-creator-profile .col-md-8 {
 	padding: 0;
 }
