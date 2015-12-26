@@ -14,7 +14,7 @@ class UserController extends Controller {
         return view('user.detail', [
         	'user' => $user,
             'orders' => $this->getProjectsByOrders($this->getValidUniqueOrders($user)),
-            'created' => $user->projects()->take(3)->get()
+            'created' => $user->projects()->get()
         ]);
 	}
 	

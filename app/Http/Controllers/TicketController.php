@@ -10,12 +10,6 @@ class TicketController extends Controller {
 		
 		\Auth::user()->checkOwnership($project);
 		
-		if (\Input::has('audiences_limit')) {
-			if ((int) \Input::get('audiences_limit') < 1) {
-				throw new \InvalidTicketStateException;
-			}
-		}
-		
 		$ticket = new Ticket(\Input::all());
 		$ticket->project()->associate($project);
 		$ticket->save();
@@ -48,6 +42,10 @@ class TicketController extends Controller {
 		$ticket->update(\Input::all());
 		$ticket->save();
 		
+		if ($project->type === 'sale') {
+			$this->updateProjectPerformanceDate($project, $ticket);
+		}
+		
 		return $ticket;
 	}
 	
@@ -58,6 +56,10 @@ class TicketController extends Controller {
 		\Auth::user()->checkOwnership($project);
 		
 		$ticket->delete();
+		
+		if ($project->type === 'sale') {
+			$this->updateProjectPerformanceDate($project, $ticket);
+		}
 	}
 
 }

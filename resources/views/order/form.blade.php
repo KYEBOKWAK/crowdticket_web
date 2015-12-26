@@ -93,7 +93,7 @@
 			</div>
 		</div>
 		
-		@if ($price > 0)
+		@if ($request_price > 0)
 		<h4 class="col-md-12 ps-section-title">결제정보</h4>
 		<div class="col-md-12">
 			<div class="ps-box">
@@ -102,7 +102,8 @@
 					<div class="col-sm-2">
 						<div class="input-group">
 							<input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
-							<input id="order-price" name="request_price" type="text" readonly="readonly" class="form-control" value="{{ $price }}" />
+							<input type="hidden" name="request_price" value="{{ $request_price }}" />
+							<input id="order-price" type="text" readonly="readonly" class="form-control" value="{{ $request_price * $ticket_count }}" />
 							<div class="input-group-addon">
 								원
 							</div>
@@ -149,7 +150,7 @@
 		</div>
 		@else
 		<input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
-		<input id="order-price" name="request_price" type="hidden" readonly="readonly" class="form-control" value="{{ $price }}" />
+		<input id="order-price" name="request_price" type="hidden" readonly="readonly" class="form-control" value="{{ $request_price }}" />
 		<input id="order-account-name" name="account_name" type="hidden" class="form-control" value="{{ \Auth::user()->name }}" readonly="readonly" />
 		@endif
 		
@@ -235,7 +236,7 @@
 			</div>
 		</div>
 		
-		@if ($price > 0)
+		@if ($request_price > 0)
 		<h4 class="col-md-12 ps-section-title">환불계좌정보 <span>펀딩 마감일까지 목표한 금액이 모이지 않으면 결제하신 금액은 전액 환불됩니다.</span></h4>
 		<div class="col-md-12">
 			<div class="ps-box">

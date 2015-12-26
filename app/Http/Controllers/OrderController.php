@@ -12,7 +12,7 @@ class OrderController extends Controller {
 		
 		$inputs = \Input::only(['contact', 'account_name', 'name', 'email', 'postcode', 'address_main', 'address_detail', 'requirement', 'refund_name', 'refund_bank', 'refund_account']);
 		$inputs['count'] = $this->ticketCount;
-		$inputs['price'] = $this->price;
+		$inputs['price'] = $this->requestPrice;
 		if ($inputs['postcode'] === null) {
 			$inputs['postcode'] = '';
 		}
@@ -52,7 +52,7 @@ class OrderController extends Controller {
 			'order' => null,
 			'project' => $this->project,
 			'ticket' => $this->ticket,
-			'price' => $this->price,
+			'request_price' => $this->requestPrice,
 			'ticket_count' => $this->ticketCount
 		]);
 	}
@@ -65,7 +65,7 @@ class OrderController extends Controller {
 			'order' => $order,
 			'project' => $order->project()->first(),
 			'ticket' => $order->ticket()->first(),
-			'price' => $order->price * $order->count,
+			'request_price' => $order->price,
 			'ticket_count' => $order->count
 		]);
 	}
@@ -119,7 +119,7 @@ class OrderController extends Controller {
 			}
 		}
 		
-		$this->price = $requestPrice * $ticketCount;
+		$this->requestPrice = $requestPrice;
 		$this->ticketCount = $ticketCount;
 	}
 	

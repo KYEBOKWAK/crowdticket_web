@@ -158,7 +158,9 @@ $(document).ready(function() {
 	};
 	
 	var addTicketRow = function(ticket) {
-		ticket.audiences_count = 0;
+		if (!ticket.audiences_count) {
+			ticket.audiences_count = 0;
+		}
 		var template = $('#template_ticket').html();
 		var compiled = _.template(template);
 		var row = compiled({ 'ticket': ticket, 'type': $('#project_type').val(), 'style': 'modifyable' });
@@ -166,8 +168,8 @@ $(document).ready(function() {
 		$row.data('ticketData', ticket);
 		$('#ticket_list').append($row);
 		
-		$(document).on('click', '.modify-ticket', modifyTicket);
-		$(document).on('click', '.delete-ticket', deleteTicket);
+		$row.find('.modify-ticket').bind('click', modifyTicket);
+		$row.find('.delete-ticket').bind('click', deleteTicket);
 	};
 	
 	var modifyTicket = function() {
@@ -236,6 +238,7 @@ $(document).ready(function() {
 		var ticketId = ticket.attr('data-ticket-id');
 		var url = '/tickets/' + ticketId;
 		var method = 'delete';
+		
 		var success = function(result) {
 			ticket.remove();
 		};
@@ -261,9 +264,11 @@ $(document).ready(function() {
 			}
 		},
 		'success': function(result) {
+			console.log(result);
 			alert('저장되었습니다.');
 		}, 
 		'error': function(data) {
+			console.log(data.responseText);
 			alert("저장에 실패하였습니다.");
 		}
 	};
@@ -324,8 +329,6 @@ $(document).ready(function() {
 	$('#create_ticket').bind('click', createTicket);
 	$('#update_ticket').bind('click', updateTicket);
 	$('#cancel_modify_ticket').bind('click', cancelModifyTicket);
-	$('.modify-ticket').bind('click', modifyTicket);
-	$('.delete-ticket').bind('click', deleteTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
 	$('#poster_form').ajaxForm(posterAjaxOption);
 	$('#update_story').bind('click', updateStory);

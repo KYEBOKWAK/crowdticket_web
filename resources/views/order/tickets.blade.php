@@ -63,13 +63,14 @@
 					<div class="col-md-9 display-cell">
 						<div class="form-group stop-propagation">
 							<div class="input-group col-sm-4">
+								<input id="available_ticket_count" type="hidden" value="{{ $ticket->audiences_limit - $ticket->audiences_count }}" />
 								@if ($project->type === 'funding')
 								<input name="request_price" type="number" class="form-control" value="{{ $ticket->price }}" min="{{ $ticket->price }}" />
-								<input name="ticket_count" type="hidden" name="ticket_count" value="1" />
+								<input id="ticket_count" name="ticket_count" type="hidden" value="1" />
 								<div class="input-group-addon">원</div>
 								@else
 								<input name="request_price" type="hidden" value="{{ $ticket->price }}" />
-								<input name="ticket_count" type="number" class="form-control" value="1" min="1" />
+								<input id="ticket_count" name="ticket_count" type="number" class="form-control" value="1" min="1" />
 								<div class="input-group-addon">매</div>
 								@endif
 							</div>
@@ -120,7 +121,14 @@
 		});
 		$(".ps-submit-wrapper img").each(function() {
 			$(this).bind('click', function() {
-				$(this).next().click();
+				var form = $(this).closest('form');
+				var availableTicketCount = form.find('#available_ticket_count').val();
+				var ticketCount = form.find('#ticket_count').val();
+				if (availableTicketCount >= ticketCount) {
+					$(this).next().click();
+				} else {
+					alert("매수 제한으로 참여할 수 없습니다.");
+				}
 			});
 		});
 	});
