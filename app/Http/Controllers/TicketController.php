@@ -10,6 +10,12 @@ class TicketController extends Controller {
 		
 		\Auth::user()->checkOwnership($project);
 		
+		if (\Input::has('audiences_limit')) {
+			if ((int) \Input::get('audiences_limit') < 1) {
+				throw new \InvalidTicketStateException;
+			}
+		}
+		
 		$ticket = new Ticket(\Input::all());
 		$ticket->project()->associate($project);
 		$ticket->save();

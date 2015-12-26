@@ -102,7 +102,7 @@
 						본 티켓을
 						@endif
 					</div>
-					<input id="ticket_audiences_limit" name="audiences_limit" type="number" class="form-control" min="0" value="0" />
+					<input id="ticket_audiences_limit" name="audiences_limit" type="number" class="form-control" @if ($project->type === 'funding') min="0" value="0" @else min="1" value="1" @endif />
 					<div class="input-group-addon">
 						@if ($project->type === 'funding')
 						명으로 제한합니다.
@@ -111,6 +111,11 @@
 						@endif
 					</div>
 				</div>
+				@if ($project->type === 'sale')
+				<p class="help-block">
+					최소 제한 매수는 1매입니다
+				</p>
+				@endif
 			</div>
 		</div>
 		@if ($project->type === 'funding')
