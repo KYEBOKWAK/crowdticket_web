@@ -566,8 +566,8 @@
 }
 
 .logo-footer {
-	width: 204px;
-	height: 23px;
+	width: 100px;
+	height: 100px;
 }
 
 .right {
@@ -620,13 +620,11 @@ footer {
 }
 footer .container {
 	margin: 0 auto;
+	padding-left: 140px;
 }
 footer .container img,
 footer .container div {
 	float: left;
-}
-footer .container img {
-	margin-top: 30px;
 }
 footer .container p {
 	margin-left: 40px;

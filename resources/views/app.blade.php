@@ -74,7 +74,9 @@
 	
 	<footer>
 		<div class="container">
-			<img src="{{ asset('/img/app/logo_bottom.png') }}" class="logo-footer" />
+			<a href="{{ url('') }}">
+				<img src="{{ asset('/img/app/logo_footer.png') }}" class="logo-footer" />
+			</a>
 			<div>
 				<ul>
 					<li><a href="{{ url('/terms') }}">이용약관</a></li>
