@@ -158,6 +158,7 @@ $(document).ready(function() {
 	};
 	
 	var addTicketRow = function(ticket) {
+		ticket.audiences_count = 0;
 		var template = $('#template_ticket').html();
 		var compiled = _.template(template);
 		var row = compiled({ 'ticket': ticket, 'type': $('#project_type').val(), 'style': 'modifyable' });
