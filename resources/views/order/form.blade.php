@@ -56,9 +56,9 @@
 	@endif
 	
 		@if ($project->type === 'funding')
-		<h4 class="col-md-12 ps-section-title">1. 선택한 보상</h4>
+		<h4 class="col-md-12 ps-section-title">선택한 보상</h4>
 		@else
-		<h4 class="col-md-12 ps-section-title">1. 선택한 티켓</h4>
+		<h4 class="col-md-12 ps-section-title">선택한 티켓</h4>
 		@endif
 		<div class="ticket order col-md-12">
 			<div class="ticket-wrapper">
@@ -93,7 +93,8 @@
 			</div>
 		</div>
 		
-		<h4 class="col-md-12 ps-section-title">2. 결제정보</h4>
+		@if ($price > 0)
+		<h4 class="col-md-12 ps-section-title">결제정보</h4>
 		<div class="col-md-12">
 			<div class="ps-box">
 				<div class="form-group">
@@ -146,8 +147,13 @@
 				</div>
 			</div>
 		</div>
+		@else
+		<input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
+		<input id="order-price" name="request_price" type="hidden" readonly="readonly" class="form-control" value="{{ $price }}" />
+		<input id="order-account-name" name="account_name" type="hidden" class="form-control" value="{{ \Auth::user()->name }}" readonly="readonly" />
+		@endif
 		
-		<h4 class="col-md-12 ps-section-title">3. 수령정보</h4>
+		<h4 class="col-md-12 ps-section-title">수령정보</h4>
 		<div class="col-md-12">
 			<div class="ps-box">
 				<div class="form-group">
@@ -229,7 +235,8 @@
 			</div>
 		</div>
 		
-		<h4 class="col-md-12 ps-section-title">4. 환불계좌정보 <span>펀딩 마감일까지 목표한 금액이 모이지 않으면 결제하신 금액은 전액 환불됩니다.</span></h4>
+		@if ($price > 0)
+		<h4 class="col-md-12 ps-section-title">환불계좌정보 <span>펀딩 마감일까지 목표한 금액이 모이지 않으면 결제하신 금액은 전액 환불됩니다.</span></h4>
 		<div class="col-md-12">
 			<div class="ps-box">
 				<div class="form-group">
@@ -275,9 +282,14 @@
 				@endif
 			</div>
 		</div>
+		@else
+		<input id="order-refund-name" name="refund_name" type="hidden" class="form-control" value="{{ \Auth::user()->name }}" required="required" />
+		<input id="order-refund-bank" name="refund_bank" type="hidden" class="form-control" readonly="readonly" value=" " />
+		<input id="order-refund-account" name="refund_account" type="hidden" class="form-control" value=" " required="required"  />
+		@endif
 		
 		@if (!$order)
-		<h4 class="col-md-12 ps-section-title">5. 약관 동의</h4>
+		<h4 class="col-md-12 ps-section-title">약관 동의</h4>
 		<div class="col-md-12">
 			<div class="ps-box">
 				<div class="form-group">
