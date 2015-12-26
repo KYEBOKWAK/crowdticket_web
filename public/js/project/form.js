@@ -184,7 +184,7 @@ $(document).ready(function() {
 		$('#ticket_delivery_date').val(getDateFormatted(deliveryDate));
 		$('#ticket_delivery_hour').val(deliveryDate.getHours());
 		$('#ticket_delivery_min').val(deliveryDate.getMinutes());
-		$('#ticket_require_shipping').prop('checked', ticketData.require_shipping === '1');
+		$('#ticket_require_shipping').prop('checked', ""+ticketData.require_shipping === '1');
 		
 		$('#update_ticket').attr('data-ticket-id', ticket.attr('data-ticket-id'));
 	};
