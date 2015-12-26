@@ -83,9 +83,9 @@
 							@endif
 						@else
 							@if ($order->confirmed)
-								입금완료
+								승인완료
 							@else
-								입금 확인중
+								확인중
 							@endif
 						@endif
 					</span>
