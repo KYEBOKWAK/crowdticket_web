@@ -13,6 +13,18 @@ class OrderController extends Controller {
 		$inputs = \Input::only(['contact', 'account_name', 'name', 'email', 'postcode', 'address_main', 'address_detail', 'requirement', 'refund_name', 'refund_bank', 'refund_account']);
 		$inputs['count'] = $this->ticketCount;
 		$inputs['price'] = $this->price;
+		if ($inputs['postcode'] === null) {
+			$inputs['postcode'] = '';
+		}
+		if ($inputs['address_main'] === null) {
+			$inputs['address_main'] = '';
+		}
+		if ($inputs['address_detail'] === null) {
+			$inputs['address_detail'] = '';
+		}
+		if ($inputs['requirement'] === null) {
+			$inputs['requirement'] = '';
+		}
 		
 		\DB::beginTransaction();
 		

@@ -180,6 +180,7 @@
 						@endif
 					</div>
 				</div>
+				@if ($ticket->require_shipping)
 				<div class="form-group">
 					<label for="order-address" class="col-sm-2 control-label">주소</label>
 					<div class="col-sm-2">
@@ -224,6 +225,7 @@
 						@endif
 					</div>
 				</div>
+				@endif
 			</div>
 		</div>
 		
