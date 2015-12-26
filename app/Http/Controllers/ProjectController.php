@@ -211,16 +211,18 @@ class ProjectController extends Controller {
 		return $project;
 	}
 	
-	private function createProject() {
+	private function createProject($blueprint) {
 		$project = new Project(\Input::all());
 		$project->user()->associate(\Auth::user());
 		$project->setAttribute('story', ' ');
+		$project->setAttribute('type', $blueprint->type);
 		$project->save();
 		return $project;
 	}
 	
 	private function getProjectByBlueprintCode($code) {
 		$blueprint = Blueprint::findByCode($code);
+		
 		if (!$blueprint->approved) {
 			throw new \Exception;
 		}
@@ -230,7 +232,7 @@ class ProjectController extends Controller {
 		if ($blueprint->hasProjectCreated()) {
 			return $blueprint->project()->first();
 		} else {
-			$project = $this->createProject();
+			$project = $this->createProject($blueprint);
 			$blueprint->project()->associate($project);
 			$blueprint->save();
 			return $project;
