@@ -56,9 +56,7 @@
 			<label for="alias" class="col-sm-2 control-label">페이지주소</label>
 			<div class="col-sm-8 form-inline">
 				<div class="input-group">
-					<div class="input-group-addon">
-						http://crowdticket.kr/projects/
-					</div>
+					<div class="input-group-addon">{{ url('/projects') }}</div>
 					<input id="alias" name="alias" type="text" class="form-control" value="{{ $project->alias }}" />
 				</div>
 				<button id="check_alias" class="btn btn-default">
