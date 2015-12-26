@@ -160,7 +160,7 @@ class ProjectController extends Controller {
     }
 	
 	private function getApprovedProject($project) {
-		if ($project->state !== Project::STATE_APPROVED) {
+		if ((int) $project->state !== Project::STATE_APPROVED) {
             if (\Auth::check()) {
                 \Auth::user()->checkOwnership($project);
             } else {
