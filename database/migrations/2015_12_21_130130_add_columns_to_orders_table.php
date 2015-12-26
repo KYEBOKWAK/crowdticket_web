@@ -18,9 +18,9 @@ class AddColumnsToOrdersTable extends Migration {
 			$table->string('account_name');
 			$table->string('name');
 			$table->string('email');
-			$table->string('postcode');
-			$table->string('address_main');
-			$table->string('address_detail');
+			$table->string('postcode')->default('');
+			$table->string('address_main')->default('');
+			$table->string('address_detail')->default('');
 			$table->string('requirement')->default('');
 			$table->string('refund_name');
 			$table->string('refund_bank');
