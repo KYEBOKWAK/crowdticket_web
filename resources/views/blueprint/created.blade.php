@@ -46,14 +46,11 @@
 				</h4>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<a href="{{ url('/projects') }}" class="btn btn-success ">더 둘러보기</a>
+			</div>
+		</div>
 	</div>
 </div>
-@endsection
-
-@section('js')
-<script>
-	setTimeout(function() {
-		window.location.href = "{{ url('/') }}";
-	}, 2000);
-</script>
 @endsection
