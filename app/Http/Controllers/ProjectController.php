@@ -60,6 +60,21 @@ class ProjectController extends Controller {
 			file_get_contents($file->getRealPath())
 		);
 		
+		$imageSize = getimagesize($file);
+		$imageWidth = $imageSize[0];
+		$imageHeight = $imageSize[1];
+		if ($imageWidth > 560) {
+			$imageResizeRatio = 560 / $imageWidth;
+			$imageWidth = 560;
+			$imageHeight = (int) ($imageHeight * $imageResizeRatio);
+		}
+		
+		return [
+			'image_url' => Model::S3_BASE_URL . $storyUrlPartial,
+			'image_width' => $imageWidth,
+			'image_height' => $imageHeight 
+		];
+		
 		return Model::S3_BASE_URL . $storyUrlPartial;
 	}
 	
@@ -75,8 +90,21 @@ class ProjectController extends Controller {
 			$newsUrlPartial,
 			file_get_contents($file->getRealPath())
 		);
+		 
+		$imageSize = getimagesize($file);
+		$imageWidth = $imageSize[0];
+		$imageHeight = $imageSize[1];
+		if ($imageWidth > 525) {
+			$imageResizeRatio = 525 / $imageWidth;
+			$imageWidth = 525;
+			$imageHeight = (int) ($imageHeight * $imageResizeRatio);
+		}
 		
-		return Model::S3_BASE_URL . $newsUrlPartial;
+		return [
+			'image_url' => Model::S3_BASE_URL . $newsUrlPartial,
+			'image_width' => $imageWidth,
+			'image_height' => $imageHeight 
+		];
 	}
 	
 	public function getUpdateFormById($id) {

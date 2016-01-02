@@ -1,11 +1,19 @@
 $(document).ready(function() {
 	var showImagePreview = function() {
 		if (this.files && this.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#image_preview').attr('src', e.target.result);
-			};
-			reader.readAsDataURL(this.files[0]);
+			var MAX_SIZE = 1 * 1024 * 1024;
+			var image = this.files[0];
+			if (image.size <= MAX_SIZE) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#image_preview').attr('src', e.target.result);
+				};
+				reader.readAsDataURL(this.files[0]);
+			} else {
+				$('#image').val('');
+				$('#image_preview').attr('src', '');
+				alert("1MB 이하의 이미지를 올려주세요.");
+			}
 		}
 	};
 	

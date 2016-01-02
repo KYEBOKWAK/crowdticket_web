@@ -13,7 +13,7 @@
 		<h1>사진 첨부</h1>
 	</div>	
 	<form id="image_form" class="body" method="post" action="<?php echo $_GET['url']; ?>">
-		<input id="image" type="file" name="image" />
+		<input id="image" type="file" name="image" accept="image/*" />
 		<img id="image_preview" width="600" height="400" />
 		<input type="hidden" name="_method" value="PUT">
 		<input type="hidden" name="_token" value="<?php echo $_GET['csrf_token']; ?>" />

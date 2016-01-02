@@ -92,19 +92,21 @@
 		    var attacher = getAttacher('image', opener);
 		    registerAction(attacher);
 		},
-		'attach': function(imageUrl) {
+		'attach': function(image) {
 			if (typeof(execAttach) == 'undefined') {
 				console.log("execAttach is undefined");
 		        return;
 		    }
 		    
 			execAttach({
-				'imageurl': imageUrl,
-				'filename': imageUrl,
+				'width': image.image_width,
+				'height': image.image_height,
+				'imageurl': image.image_url,
+				'filename': image.image_url,
 				'filesize': 0,
 				'imagealign': 'C',
-				'originalurl': imageUrl,
-				'thumburl': imageUrl
+				'originalurl': image.image_url,
+				'thumburl': image.image_url
 			});
 			closeWindow();
 		}
