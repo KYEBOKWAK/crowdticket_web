@@ -102,7 +102,7 @@ class Project extends Model {
 	}
 
 	public function supporters() {
-		return $this->hasMany('App\Models\Supporter');
+		return $this->hasMany('App\Models\Supporter')->orderBy('created_at', 'desc');
 	}
 	
 	public function comments() {
@@ -149,7 +149,12 @@ class Project extends Model {
 		if ($this->performance_closing_at) {
 			$close = new \DateTime($this->performance_closing_at);
 		}
-		return $open->format('Y. m. d') . ' ~ ' . $close->format('Y. m. d');
+		$open = $open->format('Y. m. d');
+		$close = $close->format('Y. m. d');
+		if ($open === $close) {
+			return $open;
+		}
+		return  $open. ' ~ ' . $close;
 	}
 
 	public function getFundingClosingAtOrNow() {
@@ -170,6 +175,10 @@ class Project extends Model {
 	
 	public function isPublic() {
 		return (int) $this->state === Project::STATE_APPROVED;
+	}
+	
+	public function isSuccess() {
+		return $this->funded_amount >= $this->pledged_amount;
 	}
 	
 	public function getValidYouTubeUrl() {

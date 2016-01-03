@@ -9,9 +9,6 @@
 	.ps-detail-category {
 		margin-bottom: 30px;
 	}
-	.ps-detail-category img {
-		margin-right: 5px;
-	}
 	.ps-detail-category span {
 		font-size: 1.2em;
 	}
@@ -111,7 +108,7 @@
 		<div class="col-md-12">
 			<h2 class="text-center"><strong>{{ $project->title }}</strong></h2>
 			<div class="text-center ps-detail-category">
-				<img src="{{ asset('/img/app/ico_map.png') }}" />
+				<img src="{{ asset('/img/app/ico_map.png') }}" width="25px" height="25px" />
 				@if ($project->city)
 				<span><strong>{{ $project->city->name }}</strong></span>
 				@endif

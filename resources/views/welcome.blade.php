@@ -43,20 +43,6 @@
 		bottom: 0;
 		background-color: rgba(0, 0, 0, 0.2);
 	}
-	.ps-header-top-mask {
-		 width: 100%;
-		 height: 30%;
-		 position: absolute;
-		 top: 0;
-		 background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4),rgba(0,0,0,0));
-	}
-	.ps-header-bottom-mask {
-		 width: 100%;
-		 height: 30%;
-		 position: absolute;
-		 bottom: 0;
-		 background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4),rgba(0,0,0,0.6));
-	}
 	.ps-welcome-header .btn {
 		color: white;
 		background: none;
@@ -100,15 +86,19 @@
 		font-size: 30px;
 	}
 	#main {
-		padding-bottom: 232px;
+		padding-bottom: 202px;
+	}
+	.ps-banner {
+		margin-top: 50px;
+		margin-bottom: 70px;
 	}
 </style>
 @endsection
 
 @section('content')
 <div class="first-container ps-welcome-header bg-base">
-	<div class="ps-header-top-mask"></div>
-	<div class="ps-header-bottom-mask"></div>
+	<div class="top-mask"></div>
+	<div class="bottom-mask"></div>
 	<div class="ps-header-message">
 		<h1 class="text-white">BE ON STAGE</h1>
 		<p class="text-white">크라우드펀딩으로 공연을 기획하고<br/>바로 티켓을 판매해 보세요 </p>
@@ -120,6 +110,11 @@
 <div class="container ps-project-wrapper">
 	<h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
 	@include('template.project', ['projects' => $projects ])
+</div>
+<div class="container ps-banner">
+	<a href="{{ url('/blueprints/welcome') }}">
+		<img src="{{ asset('/img/app/img_banner_blueprint.png') }}" />
+	</a>
 </div>
 <div class="ps-help-wrapper">
 	<div class="container">
@@ -207,14 +202,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div class="container">
-	<div class="row ps-welcome-buttons">
-		<div class="col-md-12 text-center">
-			<a href="{{ url('/blueprints/welcome') }}" class="btn btn-default">공연 개설하기</a>
-			<a href="{{ url('/projects') }}" class="btn btn-default">공연 더 보기</a>
 		</div>
 	</div>
 </div>

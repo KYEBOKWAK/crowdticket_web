@@ -12,7 +12,9 @@
 				<div>
 					@if ($project->isPublic())
 					<a href="{{ url('/projects') }}/{{ $project->id }}">
-						<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
+						<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')">
+							<div class="white-mask"></div>
+						</div>
 					</a>
 					<h4 class="text-ellipsize project-title"><a href="{{ url('/projects') }}/{{ $project->id }}">{{ $project->title }}</a></h3>
 					@else
@@ -26,42 +28,29 @@
 				
 				@if ($project->type === 'funding')
 				<div class="project-progress-wrapper">
-					<span class="project-progress-number"><strong>{{ $project->getProgress() }}</strong>%</span>
 					<div class="progress">
 					  	<div class="progress-bar" role="progressbar" aria-valuenow="{{ $project->getProgress() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $project->getProgress() }}%;">
 					    	<span class="sr-only">{{ $project->getProgress() }}</span>
 					  	</div>
 				  	</div>
+					<span class="project-progress-number"><strong>{{ $project->getProgress() }}</strong>%</span>
 				  	@if ($project->isFinished())
-				  	<span class="project-progress-dday">CLOSED</span>
+				  		@if ($project->isSuccess())
+					  	<span class="project-progress-dday text-danger">성공!</span>
+				  		@else
+				  		<span class="project-progress-dday">CLOSED</span>
+				  		@endif
 				  	@else
-				  	<span class="project-progress-dday">D-{{ $project->dayUntilFundingClosed() }}</span>
+				  	<span class="project-progress-dday">{{ $project->dayUntilFundingClosed() }}일 남았어요!</span>
 				  	@endif
 				</div>
-				<img src="{{ asset('/img/app/img_funding_progress.png') }}" class="project-indicator-img" />
 				@else
-				<div class="project-ticket-info">
-					<span>{{ $project->getTicketDateFormatted() }}</span>
-					<span class="right">{{ $project->concert_hall }}</span>
+				<div class="project-ticket-concert text-center">
+					<img src="{{ asset('/img/app/ico_map.png') }}" width="18px" height="18px" />
+					<span>{{ $project->concert_hall }}</span>
 				</div>
-				<img src="{{ asset('/img/app/img_ticket_progress.png') }}" class="project-indicator-img" />
-				@endif
-				
-				@if ($project->isFinished())
-				<div class="project-mask">
-					@if ($project->isPublic())
-					<a href="{{ url('/projects') }}/{{ $project->id }}" style="display: block; width: 100%; height: 100%">
-						<div class="project-indicator-wrapper">
-							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
-						</div>
-					</a>
-					@else
-					<a href="{{ url('/projects') }}/form/{{ $project->id }}" style="display: block; width: 100%; height: 100%">
-						<div class="project-indicator-wrapper">
-							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
-						</div>
-					</a>
-					@endif
+				<div class="project-ticket-date text-center">
+					<span>{{ $project->getTicketDateFormatted() }}</span>
 				</div>
 				@endif
 			</div>

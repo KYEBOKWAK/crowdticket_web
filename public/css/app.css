@@ -357,27 +357,42 @@
   	-moz-border-radius-topright: 5px;
   	border-top-left-radius: 5px;
   	border-top-right-radius: 5px;
-	
+	position: relative;
+}
+.project-grid-wrapper .project-thumbnail .white-mask {
+	display: none;
+}
+.project-grid-wrapper .project-thumbnail:hover .white-mask {
+	display: block;
 }
 .project-grid-wrapper .project-title {
 	margin: 19px 0 13px 0;
-	padding: 0 8px 0 8px;
+	padding: 0 12px 0 12px;
 	font-weight: bold;
 }
 .project-grid-wrapper .project-description {
 	min-height: 36px;
 	line-height: 1.5em;
-	margin-bottom: 24px;
-	padding: 0 8px 0 8px;
+	margin-bottom: 15px;
+	padding: 0 12px 0 12px;
 }
-.project-grid-wrapper .project-ticket-info {
+.project-grid-wrapper .project-ticket-concert {
+	background-color: #eee;
+	color: #555;
 	font-weight: bold;
-	margin-bottom: 22px;
-	padding: 0 8px 0 8px;
+	font-size: 14px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+.project-grid-wrapper .project-ticket-date {
+	color: #999;
+	font-size: 13px;
+	padding-top: 3px;
+	padding-bottom: 4px;
 }
 .project-grid-wrapper .project-progress-wrapper {
-	margin-bottom: 10px;
-	padding: 0 8px 0 8px;
+	margin-bottom: 15px;
+	padding: 0 12px 0 12px;
 }
 .project-progress-wrapper .project-progress-number {
 	margin-right: 10px;
@@ -389,10 +404,8 @@
 	font-size: 30px;
 }
 .project-progress-wrapper .progress {
-	width: 170px;
-	height: 10px;
+	height: 6px;
 	margin-bottom: 15px;
-	display: inline-block;
 	vertical-align: middle;
 	border-radius: 5px;
 }
@@ -402,7 +415,7 @@
 .project-progress-wrapper .project-progress-dday {
 	font-weight: bold;
 	float: right;
-	margin-bottom: 15px;
+	margin-top: 2px;
 }
 .project-mask {
 	width: 100%;
@@ -506,6 +519,30 @@
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
+}
+
+
+.top-mask {
+	width: 100%;
+	height: 30%;
+	position: absolute;
+	top: 0;
+	background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4),rgba(0,0,0,0));
+}
+.bottom-mask {
+	width: 100%;
+	height: 30%;
+	position: absolute;
+	bottom: 0;
+	background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4),rgba(0,0,0,0.6));
+}
+.white-mask {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.3) 
 }
 
 .ico-space {
