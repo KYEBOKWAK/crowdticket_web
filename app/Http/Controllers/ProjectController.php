@@ -118,14 +118,18 @@ class ProjectController extends Controller {
 	}
 	
 	private function returnUpdateForm($project) {
-		$project->load('tickets');
-		$tab = $this->getValidUpdateFormTab();
-		return view('project.form', [
-			'selected_tab' => $tab,
-			'project' => $project,
-			'categories' => Category::orderBy('id')->get(),
-			'cities' => City::orderBy('id')->get()
-		]);
+		if ($project->isUnderConstruction()) {
+			return view('project.form_not_permitted');
+		} else {
+			$project->load('tickets');
+			$tab = $this->getValidUpdateFormTab();
+			return view('project.form', [
+				'selected_tab' => $tab,
+				'project' => $project,
+				'categories' => Category::orderBy('id')->get(),
+				'cities' => City::orderBy('id')->get()
+			]);
+		}
 	}
 	
 	private function getValidUpdateFormTab() {

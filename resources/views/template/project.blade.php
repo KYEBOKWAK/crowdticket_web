@@ -10,10 +10,17 @@
 		<div class="@if (!isset($colOnly)) col-md-4 @endif project-grid">
 			<div class="project-grid-wrapper">
 				<div>
+					@if ($project->isPublic())
 					<a href="{{ url('/projects') }}/{{ $project->id }}">
 						<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
 					</a>
 					<h4 class="text-ellipsize project-title"><a href="{{ url('/projects') }}/{{ $project->id }}">{{ $project->title }}</a></h3>
+					@else
+					<a href="{{ url('/projects') }}/form/{{ $project->id }}">
+						<div class="bg-base project-thumbnail" style="background-image: url('{{ $project->getPosterUrl() }}')"></div>
+					</a>
+					<h4 class="text-ellipsize project-title"><a href="{{ url('/projects') }}/form/{{ $project->id }}">{{ $project->title }}</a></h3>
+					@endif
 					<h6 class="text-ellipsize-2 project-description">{{ $project->description }}</h4>
 				</div>
 				
@@ -42,11 +49,19 @@
 				
 				@if ($project->isFinished())
 				<div class="project-mask">
+					@if ($project->isPublic())
 					<a href="{{ url('/projects') }}/{{ $project->id }}" style="display: block; width: 100%; height: 100%">
 						<div class="project-indicator-wrapper">
 							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
 						</div>
 					</a>
+					@else
+					<a href="{{ url('/projects') }}/form/{{ $project->id }}" style="display: block; width: 100%; height: 100%">
+						<div class="project-indicator-wrapper">
+							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
+						</div>
+					</a>
+					@endif
 				</div>
 				@endif
 			</div>

@@ -164,6 +164,10 @@ class Project extends Model {
 		return (int) $this->state === Project::STATE_READY || (int) $this->state === Project::STATE_READY_AFTER_FUNDING;
 	}
 	
+	public function isUnderConstruction() {
+		return (int) $this->state === Project::STATE_UNDER_INVESTIGATION;
+	}
+	
 	public function isPublic() {
 		return (int) $this->state === Project::STATE_APPROVED;
 	}

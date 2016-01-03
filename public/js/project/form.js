@@ -342,7 +342,7 @@ $(document).ready(function() {
 	listOldTickets();
 	
 	$(window).bind('beforeunload', function() {
-		return '페이지를 나가기 전에 저장되지 않은 정보를 확인하세요';
+		// return '페이지를 나가기 전에 저장되지 않은 정보를 확인하세요';
 	});
 	
 });
