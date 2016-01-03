@@ -618,6 +618,9 @@ footer {
 	padding-bottom: 40px;
 	color: #999999;
 }
+footer .footer-body {
+	padding-top: 15px;
+}
 footer .container {
 	margin: 0 auto;
 	padding-left: 140px;
