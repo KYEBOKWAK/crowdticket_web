@@ -177,7 +177,10 @@ $(document).ready(function() {
 		
 		var ticket = $(this).closest('.ticket');
 		var ticketData = ticket.data('ticketData');
-		var deliveryDate = new Date(ticketData.delivery_date);
+		var rawDate = ticketData.delivery_date.split(" ");
+		var d = rawDate[0].split("-");
+		var t = rawDate[1].split(":");
+		var deliveryDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
 		
 		$('#ticket_price').val(ticketData.price);
 		$('#ticket_real_count').val(ticketData.real_ticket_count);
@@ -264,11 +267,9 @@ $(document).ready(function() {
 			}
 		},
 		'success': function(result) {
-			console.log(result);
 			alert('저장되었습니다.');
 		}, 
 		'error': function(data) {
-			console.log(data.responseText);
 			alert("저장에 실패하였습니다.");
 		}
 	};

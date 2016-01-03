@@ -11,6 +11,9 @@
 		padding-left: 2em;
 		padding-right: 2em;
 	}
+	a.btn-link {
+		color: #333;
+	}
 </style>
 @endsection
 

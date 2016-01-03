@@ -655,6 +655,7 @@
 	overflow-y: scroll;
 	padding: 8px;
 	font-size: 14px;
+	white-space: pre-wrap;
 }
 
 footer {

@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 		if ($this->profile_photo_url) {
 			return $this->profile_photo_url;
 		}
-		return 'http://orig06.deviantart.net/ea2a/f/2010/213/6/d/facebook_default_picture_by_graffadetoart.jpg';
+		return asset('/img/app/default-user-image.png');
 	}
 
 }
