@@ -138,31 +138,54 @@
 					<a href="https://www.facebook.com/dialog/share?app_id=965413480199226&display=popup&href={{ url('/projects/') }}/{{ $project->id }}&redirect_uri={{ url('/facebook/callback') }}" class="btn">페이스북 공유하기</a>
 				</div>
 				<div class="col-md-12 ps-detail-tabs">
-					@include('helper.nav', [
-						'nav_class' => 'nav-tabs nav-justified',
-						'tabs' => [
-							0 => [
-								'id' => 'tab-story',
-								'class' => 'active',
-								'title' => '공연소개'
-							],
-							
-							1 => [
-								'id' => 'tab-news',
-								'title' => '업데이트 (' . $project->news_count . ')'
-							],
-							
-							2 => [
-								'id' => 'tab-comments',
-								'title' => '댓글 (' . $project->comments_count . ')'
-							],
-							
-							3 => [
-								'id' => 'tab-supporters',
-								'title' => '후원자 (' . $project->supporters_count . ')'
+					@if ($project->type === 'funding')
+						@include('helper.nav', [
+							'nav_class' => 'nav-tabs nav-justified',
+							'tabs' => [
+								0 => [
+									'id' => 'tab-story',
+									'class' => 'active',
+									'title' => '공연소개'
+								],
+								
+								1 => [
+									'id' => 'tab-news',
+									'title' => '업데이트 (' . $project->news_count . ')'
+								],
+								
+								2 => [
+									'id' => 'tab-comments',
+									'title' => '댓글 (' . $project->comments_count . ')'
+								],
+								
+								3 => [
+									'id' => 'tab-supporters',
+									'title' => '후원자 (' . $project->supporters_count . ')'
+								]
 							]
-						]
-					])
+						])
+					@else
+						@include('helper.nav', [
+							'nav_class' => 'nav-tabs nav-justified',
+							'tabs' => [
+								0 => [
+									'id' => 'tab-story',
+									'class' => 'active',
+									'title' => '공연소개'
+								],
+								
+								1 => [
+									'id' => 'tab-news',
+									'title' => '업데이트 (' . $project->news_count . ')'
+								],
+								
+								2 => [
+									'id' => 'tab-comments',
+									'title' => '댓글 (' . $project->comments_count . ')'
+								]
+							]
+						])
+					@endif
 				</div>
 				<div class="col-md-12 tab-content">
 					<div id="tab-story" role="tabpanel" class="tab-pane active">
