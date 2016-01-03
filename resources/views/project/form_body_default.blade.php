@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">공연제목</label>
 			<div class="col-sm-8">
-				<input id="title" name="title" maxlength="30" type="text" class="form-control" value="{{ $project->title }}" />
+				<input id="title" name="title" maxlength="30" type="text" class="form-control" value="{{ $project->title }}" @if ($project->isPublic()) readonly="readonly" @endif />
 				<p class="help-block">
 					'00밴드의 단독공연' 등 직접적으로 공연을 나타낼 수 있는 제목도 좋고요, <br/>
 					추상적으로 공연의 느낌을 잘 드러낼 수 있는 모호한 느낌의 제목도 좋습니다. <br/>
@@ -19,7 +19,7 @@
 		<div class="form-group">
 			<label for="category" class="col-sm-2 control-label">분류</label>
 			<div class="col-sm-2">
-				<select id="category" name="category" class="form-control">
+				<select id="category" name="category" class="form-control" @if ($project->isPublic()) readonly="readonly" @endif>
 					@foreach ($categories as $category)
 					@if ($category->id === $project->category_id)
 					<option value="{{ $category->id }}" selected>{{ $category->title }}</option>
@@ -33,7 +33,7 @@
 		<div class="form-group">
 			<label for="city" class="col-sm-2 control-label">지역</label>
 			<div class="col-sm-2">
-				<select id="city" name="city" class="form-control">
+				<select id="city" name="city" class="form-control" @if ($project->isPublic()) readonly="readonly" @endif>
 					@foreach ($cities as $city)
 					@if ($city->id === $project->city_id)
 					<option value="{{ $city->id }}" selected>{{ $city->name }}</option>
@@ -48,13 +48,13 @@
 		<div class="form-group">
 			<label for="stage" class="col-sm-2 control-label">공연장</label>
 			<div class="col-sm-2">
-				<input id="concert_hall" name="concert_hall" maxlength="16" type="text" placeholder="공연장 이름 입력" class="form-control" value="{{ $project->concert_hall }}" />
+				<input id="concert_hall" name="concert_hall" maxlength="16" type="text" placeholder="공연장 이름 입력" class="form-control" value="{{ $project->concert_hall }}"  @if ($project->isPublic()) readonly="readonly" @endif />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label"></label>
 			<div class="col-sm-8">
-				<input id="detailed_address" name="detailed_address" maxlength="128" type="text" placeholder="세부 주소 입력" class="form-control" value="{{ $project->detailed_address }}" />
+				<input id="detailed_address" name="detailed_address" maxlength="128" type="text" placeholder="세부 주소 입력" class="form-control" value="{{ $project->detailed_address }}" @if ($project->isPublic()) readonly="readonly" @endif />
 			</div>
 		</div>
 		@endif
@@ -62,8 +62,8 @@
 			<label for="alias" class="col-sm-2 control-label">페이지주소</label>
 			<div class="col-sm-8 form-inline">
 				<div class="input-group">
-					<div class="input-group-addon">{{ url('/projects') }}</div>
-					<input id="alias" name="alias" type="text" class="form-control" value="{{ $project->alias }}" />
+					<div class="input-group-addon">{{ url('/projects') }}/</div>
+					<input id="alias" name="alias" type="text" class="form-control" value="{{ $project->alias }}" @if ($project->isPublic()) readonly="readonly" @endif />
 				</div>
 				<button id="check_alias" class="btn btn-default">
 					중복검사
@@ -80,7 +80,7 @@
 			<label for="pledged_amount" class="col-sm-2 control-label">목표금액</label>
 			<div class="col-sm-8">
 				<div class="input-group col-sm-4">
-					<input id="pledged_amount" name="pledged_amount" type="number" class="form-control" value="{{ $project->pledged_amount }}" />
+					<input id="pledged_amount" name="pledged_amount" type="number" class="form-control" value="{{ $project->pledged_amount }}" @if ($project->isPublic()) readonly="readonly" @endif />
 					<div class="input-group-addon">
 						원
 					</div>
@@ -97,7 +97,7 @@
 		<div class="form-group">
 			<label for="funding_closing_at" class="col-sm-2 control-label">@if ($project->type === 'funding') 펀딩 마감일 @else 티켓팅 마감일 @endif</label>
 			<div class="col-sm-2">
-				<input id="funding_closing_at" name="funding_closing_at" type="text" class="form-control" value="{{ $project->getFundingClosingAtOrNow() }}" />
+				<input id="funding_closing_at" name="funding_closing_at" type="text" class="form-control" value="{{ $project->getFundingClosingAtOrNow() }}" @if ($project->isPublic()) readonly="readonly" @endif />
 			</div>
 		</div>
 	</div>

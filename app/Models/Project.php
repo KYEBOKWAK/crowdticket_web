@@ -164,6 +164,10 @@ class Project extends Model {
 		return (int) $this->state === Project::STATE_READY || (int) $this->state === Project::STATE_READY_AFTER_FUNDING;
 	}
 	
+	public function isPublic() {
+		return (int) $this->state === Project::STATE_APPROVED;
+	}
+	
 	public function getValidYouTubeUrl() {
 		$path = parse_url($this->video_url, PHP_URL_PATH);
 		$pathFragments = explode('/', $path);
