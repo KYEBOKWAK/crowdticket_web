@@ -106,11 +106,11 @@ class Project extends Model {
 	}
 	
 	public function comments() {
-		return $this->morphMany('App\Models\Comment', 'commentable');
+		return $this->morphMany('App\Models\Comment', 'commentable')->orderBy('created_at', 'desc');
 	}
 	
 	public function news() {
-		return $this->hasMany('App\Models\News');
+		return $this->hasMany('App\Models\News')->orderBy('created_at', 'desc');
 	}
 
 	public function isFinished() {
