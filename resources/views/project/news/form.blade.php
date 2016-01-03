@@ -41,6 +41,7 @@
 					@if ($news)
 					<button id="update_news" class="btn btn-success">수정하기</button>
 					<input type="hidden" id="method" value="put" />
+					<a href="#" id="delete_news" class="btn btn-danger">삭제하기</a>
 					@else
 					<button id="update_news" class="btn btn-success">작성하기</button>
 					<input type="hidden" id="method" value="post" />

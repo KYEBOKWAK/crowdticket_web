@@ -7,8 +7,7 @@
 		<p><%= data.content %></p>
 		@if ($is_master)
 		<div class="text-right">
-			<a href="{{ url('/news/') }}/<%= data.id %>/form" class="btn btn-default">수정</a>
-			<a href="{{ url('/news/') }}/<%= data.id %>/form" class="btn btn-default">삭제</a>
+			<a href="{{ url('/news/') }}/<%= data.id %>/form" class="btn btn-default">수정하기</a>
 		</div>
 		@endif
 	</li>
