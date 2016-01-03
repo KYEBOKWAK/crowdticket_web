@@ -1,6 +1,6 @@
 <script type="text/template" id="template_ticket">
 	<div data-ticket-id="<%= ticket.id %>" class="ticket col-md-12">
-		<% if (style === 'normal') { %>
+		<% if (style === 'normal' && !finished) { %>
 		<a href="{{ url('/projects/') }}/<%= projectId %>/tickets?selected_ticket=<%= ticket.id %>">
 		<% } %>
 		
@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		
-		<% if (style === 'normal') { %>
+		<% if (style === 'normal' && !finished) { %>
 		</a>
 		<% } %>
 		

@@ -49,7 +49,13 @@ $(document).ready(function() {
 	var addTicketRow = function(ticket) {
 		var template = $('#template_ticket').html();
 		var compiled = _.template(template);
-		var row = compiled({ 'ticket': ticket, 'type': $('#project_type').val(), 'style': 'normal', 'projectId': projectId });
+		var row = compiled({ 
+			'ticket': ticket, 
+			'type': $('#project_type').val(), 
+			'style': 'normal', 
+			'projectId': projectId, 
+			'finished': $('#project_finished').val() === "1" 
+		});
 		var $row = $($.parseHTML(row));
 		$row.data('ticketData', ticket);
 		$('#ticket_list').append($row);
