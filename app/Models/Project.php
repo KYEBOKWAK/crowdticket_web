@@ -90,7 +90,11 @@ class Project extends Model {
 	}
 
 	public function tickets() {
-		return $this->hasMany('App\Models\Ticket');
+		if ($this->type === 'funding') {
+			return $this->hasMany('App\Models\Ticket')->orderBy('price', 'asc');
+		} else {
+			return $this->hasMany('App\Models\Ticket')->orderBy('delivery_date', 'asc');
+		}
 	}
 
 	public function orders() {

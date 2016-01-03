@@ -211,7 +211,7 @@ class ProjectController extends Controller {
 	}
 
     private function getProjectDetailView($project) {
-		$project->load(['category', 'city', 'tickets']);
+    	$project->load(['category', 'city', 'tickets']);
         return view('project.detail', [
             'project' => $project,
             'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
