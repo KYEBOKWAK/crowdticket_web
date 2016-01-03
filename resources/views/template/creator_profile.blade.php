@@ -17,6 +17,6 @@
 		<p class="text-ellipsize" ><a class="text-important" href="{{ url('/users') }}/{{ $user->id }}" target="_blank" title="{{ $user->name }}">{{ $user->name }}</a></p>
 		<p class="text-ellipsize" >{{ $user->contact }}</p>
 		<p class="text-ellipsize" ><a href="mailto:{{ $user->email }}" title="{{ $user->email }}">{{ $user->email }}</a></p>
-		<p class="text-ellipsize"><a href="{{ $user->website }}" target="_blank"title="{{ $user->website }}">{{ $user->website }}</a></p>
+		<p class="text-ellipsize"><a href="{{ $user->website }}" target="_blank" title="{{ $user->website }}">{{ $user->website }}</a></p>
 	</div>
 </div>

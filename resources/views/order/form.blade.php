@@ -296,14 +296,7 @@
 				<div class="form-group">
 					<label class="col-sm-10 col-sm-offset-1">크라우드티켓 이용약관</label>
 					<div class="col-sm-10 col-sm-offset-1">
-						<p class="scroll-box">
-							이용약관1<br/>
-							asdflkjh<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-						</p>
+						<p class="scroll-box">@include ('helper.terms_content')</p>
 						<div class="checkbox pull-right">
 							<label>
 								<input type="checkbox" name="approval1" required="required" />동의합니다
@@ -314,14 +307,7 @@
 				<div class="form-group">
 					<label class="col-sm-10 col-sm-offset-1">배송 및 결제 관련 제3자 정보제공 동의</label>
 					<div class="col-sm-10 col-sm-offset-1">
-						<p class="scroll-box">
-							이용약관1<br/>
-							asdflkjh<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-							lkjhlkjasdf<br/>
-						</p>
+						<p class="scroll-box">@include ('helper.privacy_content')</p>
 						<div class="checkbox pull-right">
 							<label>
 								<input type="checkbox" name="approval2" required="required" />동의합니다
