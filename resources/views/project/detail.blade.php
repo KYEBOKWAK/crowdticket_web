@@ -216,8 +216,7 @@
 				<div class="col-md-12 project-detail">
 					<div class="project-body">
 						@if ($project->type === 'funding')
-						<img src="{{ asset('/img/app/img_funding_progress.png') }}" class="project-indicator-img" />
-						<p class="project-pledged-amount">목표금액 {{ $project->pledged_amount }}원 중 모인금액</p>
+						<p class="project-pledged-amount"><strong>목표금액 {{ $project->pledged_amount }}원 중 모인금액</strong></p>
 						<span class="project-funded-amount"><strong>{{ $project->funded_amount }}</strong>원</span>
 						<div class="project-progress-wrapper">
 							<div class="progress">
@@ -226,6 +225,7 @@
 							  	</div>
 						  	</div>
 							<span class="project-progress-number"><strong>{{ $project->getProgress() }}</strong>%</span>
+							<div class="clear"></div>
 						</div>
 						<div class="col-md-6 project-half project-half-divider">
 							<h5 class="text-center">후원자</h5>
@@ -236,12 +236,19 @@
 							<span class="center-block text-center"><strong>{{ $project->tickets_count }}</strong>매</h3>
 						</div>
 						<div class="project-button-box clear">
-							<span>펀딩 마감까지 <strong>{{ $project->dayUntilFundingClosed() }}</strong>일</span>
-							<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" @if ($project->isFinished()) disabled="disabled" @endif  class="btn btn-primary pull-right">후원하기</a>
-							<div class="clear"></div>
+							@if ($project->isFinished())
+								@if ($project->isSuccess())
+								<span class="text-danger">성공했습니다!</span>
+								@else
+								<span class="text-danger">마감되었습니다</span>
+								@endif
+							@else
+								<span>펀딩 마감까지 <strong>{{ $project->dayUntilFundingClosed() }}</strong>일</span>
+								<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" @if ($project->isFinished()) disabled="disabled" @endif  class="btn btn-primary pull-right">후원하기</a>
+								<div class="clear"></div>
+							@endif
 						</div>
 						@else
-						<img src="{{ asset('/img/app/img_ticket_progress.png') }}" class="project-indicator-img" />
 						<div class="col-md-12 project-label">
 							<div class="col-md-4 project-label-title">
 								<span>공연장</span>
@@ -272,18 +279,14 @@
 						</div>
 						<div class="clear"></div>
 						<div class="project-full-button">
-							<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" @if ($project->isFinished()) disabled="disabled" @endif class="btn btn-primary">티켓구매</a>
+							@if ($project->isFinished())
+							<a href="#" disabled="disabled" class="btn btn-primary">마감된 공연</a>
+							@else
+							<a href="{{ url('/projects/') }}/{{ $project->id }}/tickets" class="btn btn-primary">티켓구매</a>
+							@endif
 						</div>
 						@endif
 					</div>
-					
-					@if ($project->isFinished())
-					<div class="project-mask">
-						<div class="project-indicator-wrapper">
-							<img src="{{ asset('/img/app/img_funding_finished.png') }}" class="project-indicator-img" />
-						</div>
-					</div>
-					@endif
 				</div>
 				<div class="col-md-12 creator-wrapper">
 					@include('template.creator_profile', ['user' => $project->user])

@@ -243,9 +243,6 @@
 	line-height: 1.4em;
 }
 
-.project-detail .project-body {
-	padding: 8px;
-}
 .project-detail .project-mask {
 	padding: 8px;
 }
@@ -257,22 +254,27 @@
 	margin-bottom: 0px;
 }
 .project-detail .project-funded-amount {
+	display: block;
 	font-size: 17px;
-	margin-bottom: 14px;
+	margin-top: 5px;
+	margin-bottom: 15px;
 }
 .project-detail .project-funded-amount strong {
 	font-size: 49px;
 }
 .project-detail .project-progress-wrapper {
-	margin-bottom: 25px;
+	margin-bottom: 10px;
 }
 .project-detail .project-progress-wrapper .progress {
-	width: 250px;
 	margin-bottom: 0px;
 }
 .project-detail .project-progress-wrapper .project-progress-number {
 	float: right;
 	color: #333;
+	line-height: inherit;
+}
+.project-detail .project-progress-wrapper .project-progress-number strong {
+	font-size: 18px;
 }
 .project-detail .project-half {
 	margin-bottom: 25px;
@@ -303,12 +305,23 @@
 	margin-top: -5px;
 	font-size: 15px;
 }
+.project-detail .project-button-box .text-danger {
+	margin-top: 0px;
+	display: block;
+	text-align: center;
+}
 .project-detail .project-button-box span strong {
 	font-size: 28px;
 }
 .project-detail .project-button-box .btn {
 	padding-top: 9px;
 	padding-bottom: 9px;
+}
+.project-detail .btn-primary {
+	background-color: #232c3d;
+	color: #81d71e;
+	font-weight: bold;
+	border-color: #232c3d;
 }
 .project-detail .project-full-button .btn {
 	width: 100%;

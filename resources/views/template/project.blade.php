@@ -50,7 +50,11 @@
 					<span>{{ $project->concert_hall }}</span>
 				</div>
 				<div class="project-ticket-date text-center">
+					@if ($project->isFinished())
+					<span>CLOSED</span>
+					@else
 					<span>{{ $project->getTicketDateFormatted() }}</span>
+					@endif
 				</div>
 				@endif
 			</div>
