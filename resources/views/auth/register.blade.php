@@ -21,9 +21,6 @@
 			<h1>회원가입</h1>
 			@if (count($errors) > 0)
 			<div class="alert alert-danger">
-				<strong>Whoops!</strong> There were some problems with your input.
-				<br>
-				<br>
 				<ul>
 					@foreach ($errors->all() as $error)
 					<li>
@@ -41,22 +38,22 @@
 
 				<div class="form-group">
 					<label class="control-label">이름</label>
-					<input type="text" class="form-control" name="name" value="{{ old('name') }}">
+					<input type="text" class="form-control" name="name" value="{{ old('name') }}" required="required">
 				</div>
 
 				<div class="form-group">
 					<label class="control-label">이메일</label>
-					<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+					<input type="email" class="form-control" name="email" value="{{ old('email') }}" required="required">
 				</div>
 
 				<div class="form-group">
 					<label class="control-label">비밀번호</label>
-					<input type="password" class="form-control" name="password">
+					<input type="password" class="form-control" name="password" required="required">
 				</div>
 
 				<div class="form-group">
 					<label class="control-label">비밀번호 확인</label>
-					<input type="password" class="form-control" name="password_confirmation">
+					<input type="password" class="form-control" name="password_confirmation" required="required">
 				</div>
 
 				<div class="form-group text-center">

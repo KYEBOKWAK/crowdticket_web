@@ -34,5 +34,9 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+	
+	protected function getFailedLoginMessage() {
+		return '가입되어 있지 않은 이메일이거나 비밀번호가 일치하지 않습니다.';
+	}
 
 }

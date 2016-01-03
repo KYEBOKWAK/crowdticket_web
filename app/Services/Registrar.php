@@ -18,7 +18,15 @@ class Registrar implements RegistrarContract {
 			'name' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
 			'password' => 'required|confirmed|min:6',
-		]);
+		], $this->messages());
+	}
+	
+	public function messages() {
+		return [
+			'email.unique' => '이미 사용중인 이메일입니다.',
+			'password.confirmed' => '비밀번호를 다시 한번 확인해주세요',
+			'password.min' => '비밀번호는 6자리 이상으로 입력해주세요'
+		];
 	}
 
 	/**
