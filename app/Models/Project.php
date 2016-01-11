@@ -187,5 +187,14 @@ class Project extends Model {
 		$end = end($pathFragments);
 		return "https://youtube.com/v/" . $end;
 	}
+	
+	public function countSessionDependentViewNum() {
+		$projectIds = session('project_ids');
+		if (is_array($projectIds) && in_array($this->id, $projectIds)) {
+			return;
+		}
+		$this->increment('view_count');
+		session()->push('project_ids', $this->id);
+	}
 
 }

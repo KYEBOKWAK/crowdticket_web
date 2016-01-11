@@ -20,6 +20,7 @@
 	<div class="row">
 		<img src="{{ asset('/img/app/img_update_project_reward.png') }}" class="center-block" />
 		<h2 class="text-center text-important">후원자 관리</h2>
+		<p class="text-center">조회수 {{ $project->view_count }}</p>
 	</div>
 </div>
 <div class="container">
