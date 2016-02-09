@@ -246,7 +246,7 @@ class ProjectController extends Controller {
 	
 	private function createProject($blueprint) {
 		$project = new Project(\Input::all());
-		$project->user()->associate(\Auth::user());
+		$project->user()->associate($blueprint->user);
 		$project->setAttribute('story', ' ');
 		$project->setAttribute('type', $blueprint->type);
 		$project->save();
