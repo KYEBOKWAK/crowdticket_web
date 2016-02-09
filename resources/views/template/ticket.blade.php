@@ -8,13 +8,13 @@
 			<div class="ticket-body">
 				<% if (type === 'funding') { %>
 					<span class="text-primary">
-						<span class="ticket-price"><%= ticket.price %></span>원 이상 후원
+						<span class="ticket-price"><%= ticket.price.format() %></span>원 이상 후원
 					</span>
 					<% if (ticket.real_ticket_count > 0) { %>
 						<span class="pull-right">
 							<img src="{{ asset('/img/app/ico_ticket2.png') }}" />
 							티켓
-							<span class="ticket-real-count"><%= ticket.real_ticket_count %></span>매 포함
+							<span class="ticket-real-count"><%= ticket.real_ticket_count.format() %></span>매 포함
 						</span>
 					<% } %>
 				<% } else if (type === 'sale') { %>
@@ -42,11 +42,11 @@
 			</div>
 			<div class="ticket-footer">
 				<span>
-					<span class="text-primary"><%= ticket.audiences_count %></span>명이 선택 중 /
+					<span class="text-primary"><%= ticket.audiences_count.format() %></span>명이 선택 중 /
 				</span>
 				<% if (ticket.audiences_limit > 0) { %>
 					<span>
-						<span class="ticket-audiences-limit"><%= ticket.audiences_limit %></span>개 제한
+						<span class="ticket-audiences-limit"><%= ticket.audiences_limit.format() %></span>개 제한
 					</span>
 				<% } else { %>
 					<span>제한 없음</span>

@@ -216,8 +216,8 @@
 				<div class="col-md-12 project-detail">
 					<div class="project-body">
 						@if ($project->type === 'funding')
-						<p class="project-pledged-amount"><strong>목표금액 {{ $project->pledged_amount }}원 중 모인금액</strong></p>
-						<span class="project-funded-amount"><strong>{{ $project->funded_amount }}</strong>원</span>
+						<p class="project-pledged-amount"><strong>목표금액 {{ number_format($project->pledged_amount) }}원 중 모인금액</strong></p>
+						<span class="project-funded-amount"><strong>{{ number_format($project->funded_amount) }}</strong>원</span>
 						<div class="project-progress-wrapper">
 							<div class="progress">
 							  	<div class="progress-bar" role="progressbar" aria-valuenow="{{ $project->getProgress() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $project->getProgress() }}%;">
@@ -229,11 +229,11 @@
 						</div>
 						<div class="col-md-6 project-half project-half-divider">
 							<h5 class="text-center">후원자</h5>
-							<span class="center-block text-center"><strong>{{ $project->supporters_count }}</strong>명</span>
+							<span class="center-block text-center"><strong>{{ number_format($project->supporters_count) }}</strong>명</span>
 						</div>
 						<div class="col-md-6 project-half">
 							<h5 class="text-center">티켓구매</h5>
-							<span class="center-block text-center"><strong>{{ $project->tickets_count }}</strong>매</span>
+							<span class="center-block text-center"><strong>{{ number_format($project->tickets_count) }}</strong>매</span>
 						</div>
 						<div class="project-button-box clear">
 							@if ($project->isFinished())
