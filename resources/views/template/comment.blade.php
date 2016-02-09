@@ -49,7 +49,7 @@
 					<div class="comment-section-right">
 						<a href="{{ url('/users') }}/<%= reply.user.id %>" target="_blank"><span class="comment-username"><strong><%= reply.user.name %></strong></span></a>
 						<span class="comment-created-at"><%= reply.created_at %></span>
-						<p class="comment-content"><%= reply.contents %></p>
+						<p class="comment-content"><%= reply.contents.split("\n").join("<br />") %></p>
 					</div>
 					<div class="clear"></div>
 				</li>

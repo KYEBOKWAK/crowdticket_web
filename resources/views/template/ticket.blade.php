@@ -38,7 +38,7 @@
 						<span class="ticket-price"><%= ticket.price %></span>원
 					</span>
 				<% } %>
-				<p class="ticket-reward"><%= ticket.reward %></p>
+				<p class="ticket-reward"><%= ticket.reward.split("\n").join("<br />") %></p>
 			</div>
 			<div class="ticket-footer">
 				<span>
