@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	
 	Route::get('/', 'AdminController@getDashboard');
+	Route::get('projects/{id}/orders', 'AdminController@getOrders');
 	Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
 	Route::put('projects/{id}/rejection', 'AdminController@rejectProject');
 	Route::put('projects/{id}/approval', 'AdminController@approveProject');

@@ -12,9 +12,9 @@ class AdminController extends Controller {
 		
 			'blueprints' => Blueprint::orderBy('id', 'desc')->get()->load('user'),
 			
-			'projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get(),
+			'investigation_projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get(),
 			
-			'orders' => Order::withTrashed()->orderBy('id', 'desc')->get()->load('project')
+			'approved_projects' => Project::where('state', '=', Project::STATE_APPROVED)->get()
 			
 		]);
 	}
@@ -38,6 +38,16 @@ class AdminController extends Controller {
 		$project->approve();
 		
 		return redirect('/admin/');
+	}
+	
+	public function getOrders($id) {
+		$project = Project::find($id);
+		return view('admin.orders', [
+			'project' => $project,
+			'tickets' => $project->tickets()->with(['orders' => function($query) {
+				$query->withTrashed();
+			}, 'orders.user'])->get()
+		]);
 	}
 	
 	public function approveOrder($orderId) {
@@ -65,7 +75,7 @@ class AdminController extends Controller {
 		
 		\DB::commit();
 		
-		return "success";
+		return redirect()->back();
 	}
 
 }

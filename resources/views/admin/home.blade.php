@@ -106,7 +106,7 @@
 					@endforeach
 				</ul>
 				<ul id="project" role="tabpanel" class="tab-pane">
-					@foreach ($projects as $project)
+					@foreach ($investigation_projects as $project)
 						<li class="list-group-item">
 							<a href="{{ url('/projects/') }}/{{ $project->id }}" target="_blank"><p class="list-group-item-text">{{ $project->title }}</p></a>
 							<form action="{{ url('/admin/projects/') }}/{{ $project->id }}/approval" method="post">
@@ -123,38 +123,10 @@
 					@endforeach
 				</ul>
 				<ul id="order" role="tabpanel" class="tab-pane">
-					@foreach ($orders as $order)
-						<li class="list-group-item">
-							<h4 class="list-group-item-heading">공연이름</h4>
-							<p class="list-group-item-text">{{ $order->project->title }}</p>
-							<h4 class="list-group-item-heading">입금자이름</h4>
-							<p class="list-group-item-text">{{ $order->account_name }}</p>
-							<h4 class="list-group-item-heading">가격</h4>
-							<p class="list-group-item-text">{{ $order->price }}</p>
-							<h4 class="list-group-item-heading">티켓매수</h4>
-							<p class="list-group-item-text">{{ $order->count }}</p>
-							<h4 class="list-group-item-heading">결제금액</h4>
-							<p class="list-group-item-text">{{ $order->count * $order->price }}</p>
-							<h4 class="list-group-item-heading">주문날짜</h4>
-							<p class="list-group-item-text">{{ $order->created_at }}</p>
-							@if ($order->deleted_at)
-								@if ($order->confirmed)
-								<span class="label label-success">환불요청</span>
-								@else
-								<span class="label label-success">취소했음</span>
-								@endif
-							@else
-								@if ($order->confirmed)
-								<span class="label label-success">입금확인완료</span>
-								@else
-								<form action="{{ url('/admin/order/') }}/{{ $order->id }}/approval" method="post">
-									<button type="submit" class="btn btn-primary">입금승인</button>
-									<input type="hidden" name="_method" value="PUT">
-	    							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-								</form>
-								@endif
-							@endif
-						</li>
+					@foreach($approved_projects as $project)
+					<li class="list-group-item">
+						<a href="{{ url('/admin/projects/') }}/{{ $project->id }}/orders" target="_blank">{{ $project->title }}</a>
+					</li>
 					@endforeach
 				</ul>
 			</div>
