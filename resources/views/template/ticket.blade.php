@@ -70,7 +70,7 @@
 		</a>
 		<% } %>
 		
-		<% if (style === 'modifyable' && ticket.audiences_count === 0) { %>
+		<% if (style === 'modifyable' && parseInt(ticket.audiences_count) === 0) { %>
 		<div class="col-md-1">
 			<p>
 				<button class="btn btn-primary modify-ticket">수정</button>
