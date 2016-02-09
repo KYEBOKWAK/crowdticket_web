@@ -118,11 +118,13 @@
 						@endif
 					</div>
 				</div>
-				@if ($project->type === 'sale')
 				<p class="help-block">
+				@if ($project->type === 'sale')
 					최소 제한 매수는 1매입니다
-				</p>
+				@else
+					제한이 없는 보상일 경우 '0명'으로 입력해 주세요.
 				@endif
+				</p>
 			</div>
 		</div>
 		@if ($project->type === 'funding')
