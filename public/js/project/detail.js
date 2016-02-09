@@ -54,7 +54,7 @@ $(document).ready(function() {
 			'type': $('#project_type').val(), 
 			'style': 'normal', 
 			'projectId': projectId, 
-			'finished': $('#project_finished').val() === "1" 
+			'buyable': $('#buyable').val() === "1" 
 		});
 		var $row = $($.parseHTML(row));
 		$row.data('ticketData', ticket);

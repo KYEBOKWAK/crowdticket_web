@@ -120,6 +120,10 @@ class Project extends Model {
 		return true;
 	}
 	
+	public function isBuyable() {
+		return !$this->isFinished() && (int) $this->state === 4;
+	}
+	
 	public function dayUntilFundingClosed() {
 		$diff = max(strtotime($this->funding_closing_at) - time(), 0);
 		$secondsInDay = 60 * 60 * 24;
