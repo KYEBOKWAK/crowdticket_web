@@ -26,6 +26,12 @@ class Ticket extends Model {
 		'delivery_date' => 'required'
 	];
 	
+	protected $casts = [
+		'audiences_limit' => 'integer',
+	    'audiences_count' => 'integer',
+	    'real_ticket_count' => 'integer',
+	];
+	
 	public function update(array $attributes = array()) {
 		if ($this->audiences_count === 0) {
 			parent::update($attributes);
