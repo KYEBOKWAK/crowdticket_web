@@ -83,18 +83,16 @@
 					<li><a href="{{ url('/terms') }}">이용약관</a></li>
 					<li><a href="{{ url('/privacy') }}">개인정보취급방침</a></li>
 				</ul>
-				<p>COPYRIGHT (C) 2015 CROWD TICKET</p>
+				<p>COPYRIGHT (C) 2016 CROWDTICKET</p>
 				<p>
 					<span>나인에이엠</span>
 					<span><strong>대표</strong>신효준</span>
-					<span><strong>전화</strong>010-9965-4308</span>
+					<span><strong>전화</strong>070-8819-4308</span>
 					<span><strong>관리자 이메일</strong><a href="mailto:jun@crowdticket.kr">jun@crowdticket.kr</a></span>
-					<!--
-					<span><strong>사업자등록번호</strong>105-87-52823</span>
-					<span><strong>영업소재지</strong>서울시 홍대역 놀이터</span>
-					-->
 				</p>
 				<p>
+					<span><strong>사업자 등록번호</strong>859-12-00216</span>
+					<span><strong>주소</strong>서울시 관악구 남부순환로 247길 81 4층</span>
 					<!--
 					<span><strong>통신판매업</strong>2011-서울홍대-0081</span>
 					-->

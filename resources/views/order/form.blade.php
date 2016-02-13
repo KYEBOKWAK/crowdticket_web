@@ -119,8 +119,8 @@
 							<strong>
 								[입금정보]<br/>
 								은행 : 우리은행<br/>
-								계좌번호 : 1002 547 856455<br/>
-								예금주 : 나인에이엠
+								계좌번호 : 1005-002-918436<br/>
+								예금주 : 신효준(나인에이엠)
 							</strong>
 						</p>
 					</div>
@@ -133,16 +133,20 @@
 						@else
 						<input id="order-account-name" name="account_name" type="text" class="form-control" value="{{ \Auth::user()->name }}" required="required" />
 						@endif
+						<p class="help-block">
+							입력한 이름과 동일한 이름으로 입금되지 않을 경우 입금확인이 안될 수 있습니다.<br/>
+							"입금 시 상대방의 계좌에 표시될 이름"을 정확히 입력해주세요.
+						</p>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">유의사항</label>
 					<div class="col-sm-8">
 						<p class="ps-form-control-like text-danger">
-							1. 5일(120시간)이 지나도 입금하지 않으시면 자동으로 취소됩니다.<br/>
-							2. 입금 확인 후 업무 시간 24시간 내에 펀딩 및 티켓구매에 반영됩니다.<br/>
-							3. 위에 입력한 이름과 동일한 이름으로 입금되지 않을 경우 입금확인이 안될 수 있습니다.<br/>
-							4. 입금정보와 금액은 마이페이지에서 다시 한 번 확인할 수 있습니다.
+							1. 입금이 확인되면 SMS로 결제내역을 알려드립니다! :)<br/>
+							2. 입금 확인 후 업무시간 24시간 이내에 펀딩 및 티켓 구매에 반영됩니다.<br/>
+							3. 입금 정보는 오른쪽 상단 '결제확인'에서 확인하실 수 있고, 주문 취소도 가능합니다.<br/>
+							4. 입금 후 환불 문의 : 070-8819-4308 크라우드티켓 담당자
 						</p>
 					</div>
 				</div>
@@ -185,6 +189,14 @@
 						@else
 						<input id="order-email" name="email" type="email" class="form-control" value="{{ \Auth::user()->email }}" required="required" />
 						@endif
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-8">
+						<p class="ps-form-control-like text-danger">
+							입력하신 개인 정보는 결제 확인 알림 및 현재 참여하고 있는 공연 정보 발송 외의 용도로는 절대 사용하지 않으니 걱정하지 마세요!
+						</p>
 					</div>
 				</div>
 				@if ($ticket->require_shipping)

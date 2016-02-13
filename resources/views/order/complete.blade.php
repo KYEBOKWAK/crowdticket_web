@@ -24,7 +24,6 @@
 		<div class="col-md-12">
 			<h2 class="text-center"><strong>THANK YOU!</strong></h2>
 			<h3 class="text-center"><strong>참여가 완료되었습니다.</strong></h3>
-			<h5 class="text-center"><strong>참여하신 프로젝트의 결제관련 사항은 '내 페이지'에서 다시 확인할 수 있습니다.</strong></h5>
 			
 			@if ($order->price > 0)
 			<div class="row ps-info">
@@ -38,13 +37,13 @@
 					<span>입금계좌</span>
 				</div>
 				<div class="col-md-6">
-					<span>1002 547 856455 우리은행</span>
+					<span>1005-002-918436 우리은행</span>
 				</div>
 				<div class="col-md-3 col-md-offset-2 text-right">
 					<span>예금주</span>
 				</div>
 				<div class="col-md-6">
-					<span>나인에이엠</span>
+					<span>신효준(나인에이엠)</span>
 				</div>
 				<div class="col-md-3 col-md-offset-2 text-right">
 					<span>입금하실 분의 성함</span>
@@ -54,8 +53,8 @@
 				</div>
 			</div>
 			<div class="text-center text-danger">
-				5일 이내에 위의 입금자 성함으로 입금하지 않으시면 참여는 자동 취소됩니다. <br/>
-				펀딩이 종료되는 날짜가 5일 이전이라면, 그 전에 입금을 해주셔야 반영됩니다.
+				입금이 확인되면 SMS로 알려드립니다! <br/>
+				위 입금 정보는 오른쪽 상단 '결제확인' 탭에서도 확인할 수 있습니다.
 			</div>
 			@endif
 		</div>
