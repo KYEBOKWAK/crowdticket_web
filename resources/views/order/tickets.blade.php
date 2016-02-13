@@ -126,7 +126,7 @@
 				var audiencesLimit = form.find('.ticket_audiences_limit').val();
 				var availableTicketCount = form.find('.available_ticket_count').val();
 				var ticketCount = form.find('.ticket_count').val();
-				if (audiencesLimit === '0' || availableTicketCount >= ticketCount) {
+				if (parseInt(audiencesLimit) === 0 || parseInt(availableTicketCount) >= parseInt(ticketCount)) {
 					$(this).next().click();
 				} else {
 					alert("매수 제한으로 참여할 수 없습니다.");
