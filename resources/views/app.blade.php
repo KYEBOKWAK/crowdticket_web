@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
+	<meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
 	<title>CrowdTicket</title>
 
 	<link href="{{ asset('/css/base.css') }}" rel="stylesheet">
