@@ -248,7 +248,7 @@
 			</div>
 		</div>
 		
-		@if ($request_price > 0)
+		@if ($request_price > 0 && $project->type === 'funding')
 		<h4 class="col-md-12 ps-section-title">환불계좌정보 <span>펀딩 마감일까지 목표한 금액이 모이지 않으면 결제하신 금액은 전액 환불됩니다.</span></h4>
 		<div class="col-md-12">
 			<div class="ps-box">
