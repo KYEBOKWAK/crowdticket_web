@@ -58,6 +58,7 @@
 	}
 	.ps-help-wrapper {
 		width: 100%;
+		margin-top: 30px;
 		padding: 0px 0 50px 0;
 		background-color: #edefed;
 	}
@@ -110,6 +111,9 @@
 <div class="container ps-project-wrapper">
 	<h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
 	@include('template.project', ['projects' => $projects ])
+</div>
+<div class="text-center">
+	<a href="{{ url('/projects') }}" class="btn btn-default">공연 더 보기</a>
 </div>
 <div class="ps-help-wrapper">
 	<div class="container">
