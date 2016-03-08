@@ -55,7 +55,7 @@
 					<div class="col-md-3 display-cell">
 						<span>
 							<span class="text-primary">공연일시</span><br/> 
-							<strong class="ps-strong-small">{{ date('Y.m.d H:m', strtotime($ticket->delivery_date)) }}</strong>
+							<strong class="ps-strong-small">{{ date('Y.m.d H:i', strtotime($ticket->delivery_date)) }}</strong>
 							<span class="pull-right">{{ $ticket->price }} 원</span>
 						</span>
 					</div>
