@@ -14,6 +14,9 @@
 	a.btn-link {
 		color: #333;
 	}
+	.ps-facebook-wrapper {
+		margin-top: 1em;
+	}
 </style>
 @endsection
 
@@ -31,9 +34,6 @@
 					</ul>
 				</div>
 			@endif
-			<div class="text-center">
-				<a href="{{ url('/facebook') }}">페이스북으로 로그인</a>
-			</div>
 			<form role="form" method="POST" action="{{ url('/auth/login') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -49,9 +49,13 @@
 
 				<div class="form-group text-center">
 					<a class="btn btn-link" href="{{ url('/password/email') }}">비밀번호가 기억나지 않나요?</a>
-					<button type="submit" class="btn btn-primary center-block">LOGIN</button>
+					<button type="submit" class="btn btn-default center-block">로그인</button>
 				</div>
 			</form>
+			<div class="text-center ps-facebook-wrapper">
+				<p>또는</p>
+				<a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 로그인</a>
+			</div>
 		</div>
 	</div>
 </div>

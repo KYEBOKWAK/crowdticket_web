@@ -11,6 +11,9 @@
 		padding-left: 2em;
 		padding-right: 2em;
 	}
+	.ps-facebook-wrapper {
+		margin-top: 1em;
+	}
 </style>
 @endsection
 
@@ -30,9 +33,6 @@
 				</ul>
 			</div>
 			@endif
-			<div class="text-center">
-				<a href="{{ url('/facebook') }}">페이스북으로 로그인</a>
-			</div>
 			<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -57,9 +57,13 @@
 				</div>
 
 				<div class="form-group text-center">
-					<button type="submit" class="btn btn-primary">JOIN</button>
+					<button type="submit" class="btn btn-default">가입</button>
 				</div>
 			</form>
+			<div class="text-center ps-facebook-wrapper">
+				<p>또는</p>
+				<a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 가입</a>
+			</div>
 		</div>
 	</div>
 </div>
