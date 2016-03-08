@@ -88,7 +88,7 @@
 					<span>나인에이엠</span>
 					<span><strong>대표</strong>신효준</span>
 					<span><strong>전화</strong>070-8819-4308</span>
-					<span><strong>관리자 이메일</strong><a href="mailto:jun@crowdticket.kr">jun@crowdticket.kr</a></span>
+					<span><strong>관리자 이메일</strong><a href="mailto:contact@crowdticket.kr">jun@crowdticket.kr</a></span>
 				</p>
 				<p>
 					<span><strong>사업자 등록번호</strong>859-12-00216</span>
