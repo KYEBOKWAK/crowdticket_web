@@ -148,21 +148,34 @@ class ProjectController extends Controller {
 	}
 	
 	public function getProjects() {
+		$now = date('Y-m-d H:i:s');
+		
 		$projects = [];
 		$tab = $this->getValidExploreTab();
 		switch ($tab) {
 			default:
 			case 'all':
-				$projects = Project::where('state', 4)->get();
+				$opened = Project::where('state', 4)
+						->where('funding_closing_at', '>', $now)
+						->orderBy('id', 'desc')->get();
+				$closed = Project::where('state', 4)
+						->where('funding_closing_at', '<', $now)
+						->orderBy('id', 'desc')->get();
+				$projects = $opened->merge($closed);
 				break;
 				
 			case 'funding':
 			case 'sale':
-				$projects = Project::where('type', '=', $tab)->where('state', 4)->get();
+				$projects = Project::where('state', 4)
+						->where('type', '=', $tab)
+						->where('funding_closing_at', '>', $now)
+						->orderBy('id', 'desc')->get();
 				break;
 				
 			case 'date':
-				$projects = Project::where('state', 4)->get();
+				$projects = Project::where('state', 4)
+						->where('funding_closing_at', '>', $now)
+						->orderBy('funding_closing_at', 'asc')->get();
 				break;
 		}
 		
