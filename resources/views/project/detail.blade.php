@@ -192,7 +192,7 @@
 						<ul id="news-container" class="list-group"></ul>
 						@if ($is_master)
 						<div class="text-center">
-							<button class="btn btn-success"><a href="{{ url('/projects') }}/{{ $project->id }}/news/form">업데이트 작성</a></button>
+							<a href="{{ url('/projects') }}/{{ $project->id }}/news/form" class="btn btn-success">업데이트 작성</a>
 						</div>
 						@endif
 					</div>
