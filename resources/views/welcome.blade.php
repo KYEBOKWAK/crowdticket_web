@@ -111,11 +111,6 @@
 	<h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
 	@include('template.project', ['projects' => $projects ])
 </div>
-<div class="container ps-banner">
-	<a href="{{ url('/blueprints/welcome') }}">
-		<img src="{{ asset('/img/app/img_banner_blueprint.png') }}" />
-	</a>
-</div>
 <div class="ps-help-wrapper">
 	<div class="container">
 		<h3 class="ps-detail-title text-center"><strong>HOW IT WORKS</strong></h3>
