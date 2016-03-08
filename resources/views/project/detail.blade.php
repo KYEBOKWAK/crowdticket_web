@@ -1,5 +1,13 @@
 @extends('app')
 
+@section('meta')
+<meta name="description" content="{{ $project->description }}" />
+@endsection
+
+@section('title')
+<title>{{ $project->title }}</title>
+@endsection
+
 @section('css')
 <style>
 	.container h2 {

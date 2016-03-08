@@ -5,7 +5,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
-	<title>CrowdTicket</title>
+	@section('meta')
+	<meta name="description" content="오직 공연 예술인을 위한 크라우드 펀딩" />
+	@show
+	
+	@section('title')
+	<title>크라우드티켓</title>
+	@show
 
 	<link href="{{ asset('/css/base.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
