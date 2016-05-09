@@ -36,6 +36,17 @@
 	form .btn-muted {
 		margin-top: 50px;
 	}
+	label.commission-label {
+		text-align: left !important;
+	}
+	.total-price input,
+	.total-price .input-group-addon {
+		border: 1px solid #CC0000;
+		font-weight: bold;
+	}
+	.total-price .input-group-addon {
+		border-left: 0
+	}
 </style>
 @endsection
 
@@ -96,14 +107,46 @@
 		@if ($request_price > 0)
 		<h4 class="col-md-12 ps-section-title">결제정보</h4>
 		<div class="col-md-12">
+			<?php
+				$orderPrice = $request_price * $ticket_count;
+				$commission = $ticket->real_ticket_count * $ticket_count * 500;
+				$totalPrice = $orderPrice + $commission;
+			?>
 			<div class="ps-box">
 				<div class="form-group">
-					<label for="order-price" class="col-sm-2 control-label">결제금액</label>
-					<div class="col-sm-2">
+					<label for="order-price" class="col-sm-2 control-label">상품금액</label>
+					<div class="col-sm-3">
 						<div class="input-group">
 							<input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
 							<input type="hidden" name="request_price" value="{{ $request_price }}" />
-							<input id="order-price" type="text" readonly="readonly" class="form-control" value="{{ $request_price * $ticket_count }}" />
+							<input id="order-price" type="text" readonly="readonly" class="form-control text-right" value="{{ $orderPrice }}" />
+							<div class="input-group-addon">
+								원
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">티켓 수수료</label>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input type="text" readonly="readonly" class="form-control text-right" value="{{ $commission }}" />
+							<div class="input-group-addon">
+								원
+							</div>
+						</div>
+						<p class="help-block text-right">
+							1매 500원 X {{ $ticket->real_ticket_count * $ticket_count }}매 = {{ $commission }}원
+						</p>
+					</div>
+					<label class="col-sm-4 control-label commission-label">
+					</label>
+				</div>
+				<div class="form-group total-price">
+					<label class="col-sm-2 control-label">결제금액</label>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<input type="text" readonly="readonly" class="form-control text-right" value="{{ $totalPrice }}" />
 							<div class="input-group-addon">
 								원
 							</div>
