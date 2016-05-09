@@ -13,6 +13,8 @@ class OrderController extends Controller {
 		$inputs = \Input::only(['contact', 'account_name', 'name', 'email', 'postcode', 'address_main', 'address_detail', 'requirement', 'refund_name', 'refund_bank', 'refund_account']);
 		$inputs['count'] = $this->ticketCount;
 		$inputs['price'] = $this->requestPrice;
+		$inputs['total_price'] = $this->getTotalPrice();
+		
 		if ($inputs['postcode'] === null) {
 			$inputs['postcode'] = '';
 		}
@@ -44,6 +46,12 @@ class OrderController extends Controller {
 			'order' => $order
 		]);
 	} 
+
+	private function getTotalPrice() {
+		$orderPrice = $this->requestPrice * $this->ticketCount;
+		$commission = $this->ticket->real_ticket_count * $this->ticketCount * 500;
+		return $orderPrice + $commission;
+	}
 	
 	public function getOrderForm($ticketId) {
 		$this->initOrder($ticketId);

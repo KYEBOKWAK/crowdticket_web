@@ -139,6 +139,9 @@
 							1매 500원 X {{ $ticket->real_ticket_count * $ticket_count }}매 = {{ $commission }}원
 						</p>
 					</div>
+					<div class="col-sm-4">
+						*티켓 발급 및 알림, 플랫폼 유지를 위해<br/>필요한 최소한의 수수료만을 받고 있습니다.
+					</div>
 					<label class="col-sm-4 control-label commission-label">
 					</label>
 				</div>

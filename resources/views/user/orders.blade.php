@@ -73,7 +73,7 @@
 				<div class="col-md-9">
 					<h3 class="text-ellipsize"><strong>{{ $order->project->title }}</strong></h3>
 					<h5>입금자 : <strong>{{ $order->account_name }}</strong></h5>
-					<h5>금액 : <strong>{{ $order->price * $order->count }}원</strong></h5>
+					<h5>금액 : <strong>{{ $order->total_price }}원</strong></h5>
 					<span class="ps-text-box text-center pull-right">
 						@if ($order->deleted_at)
 							@if ($order->confirmed)

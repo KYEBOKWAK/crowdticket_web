@@ -31,7 +31,7 @@
 					<span>금액</span>
 				</div>
 				<div class="col-md-6">
-					<span>{{ $order->price * $order->count }}원</span>
+					<span>{{ $order->total_price }}원</span>
 				</div>
 				<div class="col-md-3 col-md-offset-2 text-right">
 					<span>입금계좌</span>
