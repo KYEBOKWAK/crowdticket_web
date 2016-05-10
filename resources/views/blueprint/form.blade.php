@@ -90,7 +90,7 @@
 						@endif
 					</div>
 					<div class="form-group">
-						<label for="input-contact">연락가능한 이메일을 남겨주세요</label>
+						<label for="input-contact">이메일을 남겨주세요</label>
 						<input id="input-contact" name="contact" type="email" class="form-control" required />
 					</div>
 					<input type="submit" class="btn btn-success" value="신청하기" />
