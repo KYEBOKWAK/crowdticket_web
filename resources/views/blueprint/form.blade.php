@@ -93,6 +93,12 @@
 						<label for="input-contact">이메일을 남겨주세요</label>
 						<input id="input-contact" name="contact" type="email" class="form-control" required />
 					</div>
+					@include('helper.contact', [
+						'label' => '연락 가능한 전화번호를 남겨주세요',
+						'name' => 'tel',
+						'help' => '프로젝트 개설을 위한 연락 목적 외에는 절.대. 다른 용도로 사용되지 않습니다. 안심하세요',
+						'required' => 'required'
+					])
 					<input type="submit" class="btn btn-success" value="신청하기" />
 					<input type="hidden" name="type" value="{{ Input::get('type') }}" />
 					@include('csrf_field')

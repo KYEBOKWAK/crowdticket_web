@@ -5,7 +5,11 @@ use App\Models\Blueprint as Blueprint;
 class BlueprintController extends Controller {
 
 	public function createBlueprint() {
-		$blueprint = new Blueprint(\Input::all());
+		$inputs = \Input::all();
+		$inputs['user_introduction'] 
+			= $inputs['user_introduction'] . ' (' . $inputs['tel'] . ')';
+		
+		$blueprint = new Blueprint($inputs);
 		$blueprint->user()->associate(\Auth::user());
 		$blueprint->setAttribute('code', $this->generateUniqueCode());
 		$blueprint->save();
