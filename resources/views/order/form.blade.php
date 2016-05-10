@@ -221,9 +221,9 @@
 					<label for="order-contact" class="col-sm-2 control-label">휴대폰번호</label>
 					<div class="col-sm-2">
 						@if ($order)
-						<input id="order-contact" name="contact" type="text" class="form-control" value="{{ $order->contact }}" readonly="readonly" />
+						<input id="order-contact" name="contact" maxlength="11" type="text" class="form-control" value="{{ $order->contact }}" readonly="readonly" />
 						@else
-						<input id="order-contact" name="contact" type="text" class="form-control" value="{{ \Auth::user()->contact }}" required="required" />
+						<input id="order-contact" name="contact" maxlength="11" type="text" class="form-control" value="{{ \Auth::user()->contact }}" required="required" />
 						@endif
 					</div>
 				</div>
@@ -419,6 +419,22 @@
 				var form = $(this).closest('form');
 				return confirm('정말 취소하시겠습니까?');
 			});
+		});
+		
+		$('form').validate({
+			rules: {
+				"contact": {
+					minlength: 10,
+					digits: true
+				}
+			},
+			messages: {
+				"contact": {
+					minlength: "올바른 휴대폰 번호를 입력해주세요",
+					digits: "-를 제외한 숫자만 입력해주세요",
+					required: "휴대폰 번호를 입력해주세요"
+				}
+			}
 		});
 	});
 </script>
