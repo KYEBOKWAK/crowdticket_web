@@ -45,14 +45,17 @@
 						<img src="{{ asset('/img/app/img_blueprint_funding.png') }}" class="img-blueprint" />
 						<h5>
 							펀딩을 통해 공연기획비용을 마련하고 <br/>
-							공연을 기획하고 싶습니다.
+							공연을 기획하고 싶습니다. <br/><br/>
+							(대관 등 공연기획이 어느 정도 되어있는<br/>
+							상태라도 크라우드펀딩을 이용하면<br/> 
+							효과적인 홍보와 프로모션을<br/>
+							진행할 수 있습니다.)
 						</h5>
 					</div>
 					<div class="col-md-6">
 						<img src="{{ asset('/img/app/img_blueprint_ticket.png') }}" class="img-blueprint" />
 						<h5>
-							이미 대관 및 공연기획은 완료되었고, <br/>
-							크라우드티켓에서 티켓을 판매하고 싶습니다.
+							티켓 판매만을 진행하고 싶습니다.<br/>
 						</h5>
 					</div>
 				</div>
