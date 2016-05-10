@@ -613,6 +613,7 @@
     left: 0;
     top: 100px;
     cursor: pointer;
+    z-index: 9999;
 }
 
 .logo-footer {
