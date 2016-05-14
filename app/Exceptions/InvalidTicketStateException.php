@@ -2,6 +2,7 @@
 
 use Exception;
 
-class InvalidTicketStateException extends Exception {
+class InvalidTicketStateException extends Exception
+{
 
 }

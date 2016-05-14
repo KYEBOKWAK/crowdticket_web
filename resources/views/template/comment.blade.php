@@ -1,6 +1,6 @@
 <script type="text/template" id="template-comments">
-	<li class="comment-list">
-		<a href="{{ url('/users') }}/<%= data.user.id %>" target="_blank">
+    <li class="comment-list">
+        <a href="{{ url('/users') }}/<%= data.user.id %>" target="_blank">
 			<% if (data.user.profile_photo_url) { %>
 			<div class="user-photo-comment bg-base pull-left" style="background-image: url('<%= data.user.profile_photo_url %>');"></div>
 			<% } else { %>

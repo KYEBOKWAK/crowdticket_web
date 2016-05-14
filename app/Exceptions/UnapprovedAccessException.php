@@ -2,6 +2,7 @@
 
 use Exception;
 
-class UnapprovedAccessException extends Exception {
+class UnapprovedAccessException extends Exception
+{
 
 }

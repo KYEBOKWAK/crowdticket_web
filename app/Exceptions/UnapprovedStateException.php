@@ -2,6 +2,7 @@
 
 use Exception;
 
-class UnapprovedStateException extends Exception {
+class UnapprovedStateException extends Exception
+{
 
 }

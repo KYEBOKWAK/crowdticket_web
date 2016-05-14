@@ -2,6 +2,7 @@
 
 use Exception;
 
-class OwnershipException extends Exception {
+class OwnershipException extends Exception
+{
 
 }

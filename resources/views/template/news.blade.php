@@ -1,7 +1,7 @@
 <script type="text/template" id="template-news">
-	<li class="list-group-item news-list">
-		<div class="news-title-wrapper">
-			<h5 class="text-ellipsize"><%= data.title %></h5>
+    <li class="list-group-item news-list">
+        <div class="news-title-wrapper">
+            <h5 class="text-ellipsize"><%= data.title %></h5>
 			<span><%= data.created_at %></span>
 		</div>
 		<p><%= data.content %></p>
