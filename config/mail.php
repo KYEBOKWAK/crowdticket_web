@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => null, 'name' => null],
+	'from' => ['address' => 'contact@crowdticket.kr', 'name' => '크라우드티켓'],
 
 	/*
 	|--------------------------------------------------------------------------
