@@ -24,9 +24,9 @@ class OrderController extends Controller
         $info = new PaymentInfo();
         $info->withSignature($user->id, $project->id);
         $info->withAmount($this->getTotalPrice($ticket));
-        $info->withBirth(Input::get('birth'));
         $info->withCardNumber(Input::get('card_number'));
         $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
+        $info->withBirth(Input::get('birth'));
         $info->withPassword(Input::get('card_password'));
 
         $paymentService = new PaymentService();
@@ -109,8 +109,8 @@ class OrderController extends Controller
     {
         $inputs = Input::only(
             [
-                'contact', 'account_name', 'name', 'email', 'postcode',
-                'address_main', 'address_detail', 'requirement'
+                'name', 'contact', 'email',
+                'postcode', 'address_main', 'address_detail', 'requirement'
             ]
         );
         $inputs['price'] = $this->getOrderUnitPrice();
@@ -143,7 +143,7 @@ class OrderController extends Controller
             'project' => $project,
             'ticket' => $ticket,
             'request_price' => $this->getOrderUnitPrice(),
-            'ticket_count' => $this->getOrderCount()
+            'ticket_count' => $this->getOrderCount(),
         ]);
     }
 
@@ -175,6 +175,13 @@ class OrderController extends Controller
 
     public function deleteOrder($orderId)
     {
+        $user = Auth::user();
+        self::cancelOrder($orderId);
+        return redirect()->action('UserController@getUserOrders', [$user->id]);
+    }
+
+    public static function cancelOrder($orderId)
+    {
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
 
@@ -195,32 +202,31 @@ class OrderController extends Controller
         if ($user->tickets_count > 0) {
             $user->decrement('tickets_count');
         }
-        if ($order->confirmed) {
-            $supporter = Supporter::where('project_id', $project->id)->where('user_id', $user->id)->where('ticket_id', $ticket->id)->first();
-            if ($supporter) {
-                $supporter->delete();
-            }
-            $funded = $order->count * $order->price;
-            if ($project->funded_amount - $funded >= 0) {
-                $project->decrement('funded_amount', $funded);
-            }
-            $ticketCount = $ticket->real_ticket_count * $order->count;
-            if ($project->tickets_count - $ticketCount >= 0) {
-                $project->decrement('tickets_count', $ticketCount);
-            }
-            if ($project->supporters_count > 0) {
-                $project->decrement('supporters_count');
-            }
-            if ($ticket->audiences_count - $order->count >= 0) {
-                $ticket->decrement('audiences_count', $order->count);
-            }
+        $supporter = Supporter::where('project_id', $project->id)
+            ->where('user_id', $user->id)
+            ->where('ticket_id', $ticket->id)
+            ->first();
+        if ($supporter) {
+            $supporter->delete();
+        }
+        $funded = $order->count * $order->price;
+        if ($project->funded_amount - $funded >= 0) {
+            $project->decrement('funded_amount', $funded);
+        }
+        $ticketCount = $ticket->real_ticket_count * $order->count;
+        if ($project->tickets_count - $ticketCount >= 0) {
+            $project->decrement('tickets_count', $ticketCount);
+        }
+        if ($project->supporters_count > 0) {
+            $project->decrement('supporters_count');
+        }
+        if ($ticket->audiences_count - $order->count >= 0) {
+            $ticket->decrement('audiences_count', $order->count);
         }
 
         // TODO: send mail, sms
 
-        DB::commit();
-
-        return redirect()->action('UserController@getUserOrders', [$user->id]);
+        DB::commit();   
     }
 
 }

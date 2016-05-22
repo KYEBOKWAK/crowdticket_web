@@ -33,7 +33,7 @@
                             (공연생성)</a></li>
                     <li role="presentation"><a href="#project" aria-controls="project" role="tab"
                                                data-toggle="tab">프로젝트</a></li>
-                    <li role="presentation"><a href="#order" aria-controls="order" role="tab" data-toggle="tab">주문</a>
+                    <li role="presentation"><a href="#order" aria-controls="order" role="tab" data-toggle="tab">펀딩취소</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -138,10 +138,12 @@
                         @endforeach
                     </ul>
                     <ul id="order" role="tabpanel" class="tab-pane">
-                        @foreach($approved_projects as $project)
+                        @foreach($funding_projects as $project)
                             <li class="list-group-item">
-                                <a href="{{ url('/admin/projects/') }}/{{ $project->id }}/orders"
-                                   target="_blank">{{ $project->title }}</a>
+                                {{ $project->title }}
+                                <form action="{{ url(sprintf('/admin/projects/%d/cancel', $project->id)) }}" method="post">
+                                    <button type="submit" class="btn btn-danger">주문 취소</button>
+                                </form>
                             </li>
                         @endforeach
                     </ul>

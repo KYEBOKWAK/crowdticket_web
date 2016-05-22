@@ -2,8 +2,6 @@
 
 use App\Models\Blueprint as Blueprint;
 use App\Models\Project as Project;
-use App\Models\Order as Order;
-use App\Models\Supporter as Supporter;
 
 class AdminController extends Controller
 {
@@ -16,7 +14,7 @@ class AdminController extends Controller
 
             'investigation_projects' => Project::where('state', '=', Project::STATE_UNDER_INVESTIGATION)->get(),
 
-            'approved_projects' => Project::where('state', '=', Project::STATE_APPROVED)->get()
+            'funding_projects' => $this->getFailedFundingProjects()
 
         ]);
     }
@@ -48,7 +46,7 @@ class AdminController extends Controller
     public function getOrders($id)
     {
         $project = Project::find($id);
-        return view('admin.orders', [
+        return view('project.orders', [
             'project' => $project,
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->withTrashed();
@@ -56,33 +54,24 @@ class AdminController extends Controller
         ]);
     }
 
-    public function approveOrder($orderId)
+    public function cancelFundingProjectOrders($id)
     {
-        $order = Order::findOrFail($orderId);
-        $user = $order->user()->first();
-        $ticket = $order->ticket()->first();
-        $project = $order->project()->first();
+        $project = Project::find($id);
+        if ($project->type === 'funding') {
+            $orders = $project->orders();
+            foreach ($orders as $order) {
+                OrderController::cancelOrder($order->id);
+            }
+        }
+    }
 
-        \DB::beginTransaction();
-
-        $supporter = new Supporter;
-        $supporter->project()->associate($project);
-        $supporter->ticket()->associate($ticket);
-        $supporter->user()->associate($user);
-        $supporter->save();
-
-        $order->confirmed = true;
-        $order->save();
-
-        $ticketCount = $ticket->real_ticket_count * $order->count;
-        $project->increment('funded_amount', $order->count * $order->price);
-        $project->increment('tickets_count', $ticketCount);
-        $project->increment('supporters_count');
-        $ticket->increment('audiences_count', $order->count);
-
-        \DB::commit();
-
-        return redirect()->back();
+    private function getFailedFundingProjects()
+    {
+        return Project::where('type', 'funding')
+            ->where('funding_closing_at', '<', date('Y-m-d H:i:s', time()))
+            ->where('funded_amount', '>', 0)
+            ->whereRaw('funded_amount < pledged_amount')
+            ->get();
     }
 
 }

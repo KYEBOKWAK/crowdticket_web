@@ -96,6 +96,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::put('blueprints/{id}/approval', 'AdminController@approveBlueprint');
     Route::put('projects/{id}/rejection', 'AdminController@rejectProject');
     Route::put('projects/{id}/approval', 'AdminController@approveProject');
+    Route::post('projects/{id}/cancel', 'AdminController@cancelFundingProjectOrders');
     Route::put('order/{id}/approval', 'AdminController@approveOrder');
 
 });
