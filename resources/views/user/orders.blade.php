@@ -53,6 +53,7 @@
             background-color: #eee;
             border: 1px #dad8cc solid;
             border-radius: 5px;
+            margin-top: 2.5em;
         }
     </style>
 @endsection
@@ -82,23 +83,10 @@
                             </div>
                             <div class="col-md-9">
                                 <h3 class="text-ellipsize"><strong>{{ $order->project->title }}</strong></h3>
-                                <h5>입금자 : <strong>{{ $order->account_name }}</strong></h5>
                                 <h5>금액 : <strong>{{ $order->total_price }}원</strong></h5>
-					<span class="ps-text-box text-center pull-right">
-						@if ($order->deleted_at)
-                            @if ($order->confirmed)
-                                환불요청
-                            @else
-                                취소됨
-                            @endif
-                        @else
-                            @if ($order->confirmed)
-                                승인완료
-                            @else
-                                확인중
-                            @endif
-                        @endif
-					</span>
+                                @if ($order->deleted_at)
+                                    <span class="ps-text-box text-center pull-right">취소됨</span>
+                                @endif
                             </div>
                         </div>
                     </a>

@@ -85,17 +85,9 @@
                                     <td>{{ $order->count }}</td>
                                     <td>{{ $order->price * $order->count }}</td>
                                     @if ($order->deleted_at)
-                                        @if ($order->confirmed)
-                                            <td>환불요청</td>
-                                        @else
-                                            <td>취소함</td>
-                                        @endif
+                                        <td>취소함</td>
                                     @else
-                                        @if ($order->confirmed)
-                                            <td>입금완료</td>
-                                        @else
-                                            <td>미입금</td>
-                                        @endif
+                                        <td>-</td>
                                     @endif
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->email }}</td>
