@@ -1,8 +1,9 @@
 <?php namespace App\Models;
 
+use App\Exceptions\InvalidTicketStateException;
+
 class Ticket extends Model
 {
-
     protected $fillable = [
         'price', 'real_ticket_count', 'reward',
         'require_shipping', 'audiences_limit',
@@ -35,19 +36,19 @@ class Ticket extends Model
 
     public function update(array $attributes = array())
     {
-        if ($this->audiences_count === 0) {
+        if ((int)$this->audiences_count === 0) {
             parent::update($attributes);
         } else {
-            return new \App\Exceptions\InvalidTicketStateException;
+            return new InvalidTicketStateException;
         }
     }
 
     public function delete()
     {
-        if ($this->audiences_count === 0) {
+        if ((int)$this->audiences_count === 0) {
             parent::delete();
         } else {
-            return new \App\Exceptions\InvalidTicketStateException;
+            return new InvalidTicketStateException;
         }
     }
 
@@ -59,6 +60,26 @@ class Ticket extends Model
     public function orders()
     {
         return $this->hasMany('App\Models\Order');
+    }
+
+    public function validateOrder($price, $count)
+    {
+        if (!$this->project()->first()->canOrder()) {
+            throw new InvalidTicketStateException("Project is not valid state.");
+        }
+        if ($price < $this->price) {
+            throw new InvalidTicketStateException("Order Price must greater than ticket's price.");
+        }
+        if ($count < 1) {
+            throw new InvalidTicketStateException("Order count must greater than 1.");
+        }
+        $limit = $this->audiences_limit;
+        if ($limit > 0) {
+            $remain = $limit - $this->audiences_count;
+            if ($count > $remain) {
+                throw new InvalidTicketStateException("No available tickets.");
+            }
+        }
     }
 
 }

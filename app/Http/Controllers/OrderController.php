@@ -1,21 +1,122 @@
 <?php namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidTicketStateException;
 use App\Models\Order as Order;
-use App\Models\Ticket as Ticket;
 use App\Models\Project as Project;
 use App\Models\Supporter as Supporter;
+use App\Models\Ticket as Ticket;
+use App\Services\Payment;
+use App\Services\PaymentInfo;
+use App\Services\PaymentService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class OrderController extends Controller
 {
 
     public function createOrder($ticketId)
     {
-        $this->initOrder($ticketId);
+        $user = Auth::user();
+        $ticket = $this->getOrderableTicket($ticketId);
+        $project = $ticket->project()->first();
 
-        $inputs = \Input::only(['contact', 'account_name', 'name', 'email', 'postcode', 'address_main', 'address_detail', 'requirement', 'refund_name', 'refund_bank', 'refund_account']);
-        $inputs['count'] = $this->ticketCount;
-        $inputs['price'] = $this->requestPrice;
-        $inputs['total_price'] = $this->getTotalPrice();
+        $info = new PaymentInfo();
+        $info->withSignature($user->id, $project->id);
+        $info->withAmount($this->getTotalPrice($ticket));
+        $info->withBirth(Input::get('birth'));
+        $info->withCardNumber(Input::get('card_number'));
+        $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
+        $info->withPassword(Input::get('card_password'));
+
+        $paymentService = new PaymentService();
+        $payment = null;
+        if ($project->type === 'funding') {
+            $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+        } else {
+            $payment = $paymentService->rightNow($info);
+        }
+
+        DB::beginTransaction();
+
+        $order = new Order($this->getFilteredInput($ticket, $payment));
+        $order->project()->associate($project);
+        $order->ticket()->associate($ticket);
+        $order->user()->associate($user);
+        $order->save();
+
+        $supporter = new Supporter;
+        $supporter->project()->associate($project);
+        $supporter->ticket()->associate($ticket);
+        $supporter->user()->associate($user);
+        $supporter->save();
+
+        $project->increment('funded_amount', $this->getOrderPrice());
+        $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+        $project->increment('supporters_count');
+
+        $user->increment('supports_count');
+        $user->increment('tickets_count');
+
+        $ticket->increment('audiences_count', $this->getOrderCount());
+
+        // TODO: send mail, sms
+
+        DB::commit();
+
+        return view('order.complete', [
+            'project' => $project,
+            'order' => $order
+        ]);
+    }
+
+    private function getOrderUnitPrice()
+    {
+        return (int)Input::get('request_price');
+    }
+
+    private function getOrderCount()
+    {
+        return (int)Input::get('ticket_count');
+    }
+
+    private function getTicketOrderCount($ticket)
+    {
+        return $ticket->real_ticket_count * $this->getOrderCount();
+    }
+
+    private function getOrderPrice()
+    {
+        return $this->getOrderUnitPrice() * $this->getOrderCount();
+    }
+
+    private function getTotalPrice($ticket)
+    {
+        $orderPrice = $this->getOrderPrice();
+        $count = $this->getOrderCount();
+        $commission = $ticket->real_ticket_count * $count * 500;
+        return $orderPrice + $commission;
+    }
+
+    private function getOrderableTicket($ticketId)
+    {
+        $ticket = Ticket::findOrFail($ticketId);
+        $ticket->validateOrder($this->getOrderUnitPrice(), $this->getOrderCount());
+        return $ticket;
+    }
+
+    private function getFilteredInput(Ticket $ticket, Payment $payment)
+    {
+        $inputs = Input::only(
+            [
+                'contact', 'account_name', 'name', 'email', 'postcode',
+                'address_main', 'address_detail', 'requirement'
+            ]
+        );
+        $inputs['price'] = $this->getOrderUnitPrice();
+        $inputs['count'] = $this->getOrderCount();
+        $inputs['total_price'] = $this->getTotalPrice($ticket);
+        $inputs['imp_meta'] = $payment->toJson();
 
         if ($inputs['postcode'] === null) {
             $inputs['postcode'] = '';
@@ -29,43 +130,20 @@ class OrderController extends Controller
         if ($inputs['requirement'] === null) {
             $inputs['requirement'] = '';
         }
-
-        \DB::beginTransaction();
-
-        $order = new Order($inputs);
-        $order->project()->associate($this->project);
-        $order->ticket()->associate($this->ticket);
-        $order->user()->associate($this->user);
-        $order->save();
-
-        $this->user->increment('supports_count');
-        $this->user->increment('tickets_count');
-
-        \DB::commit();
-
-        return view('order.complete', [
-            'project' => $this->project,
-            'order' => $order
-        ]);
-    }
-
-    private function getTotalPrice()
-    {
-        $orderPrice = $this->requestPrice * $this->ticketCount;
-        $commission = $this->ticket->real_ticket_count * $this->ticketCount * 500;
-        return $orderPrice + $commission;
+        return $inputs;
     }
 
     public function getOrderForm($ticketId)
     {
-        $this->initOrder($ticketId);
+        $ticket = $this->getOrderableTicket($ticketId);
+        $project = $ticket->project()->first();
 
         return view('order.form', [
             'order' => null,
-            'project' => $this->project,
-            'ticket' => $this->ticket,
-            'request_price' => $this->requestPrice,
-            'ticket_count' => $this->ticketCount
+            'project' => $project,
+            'ticket' => $ticket,
+            'request_price' => $this->getOrderUnitPrice(),
+            'ticket_count' => $this->getOrderCount()
         ]);
     }
 
@@ -86,87 +164,29 @@ class OrderController extends Controller
     public function getTickets($projectId)
     {
         $project = Project::findOrFail($projectId);
-        $this->validateProject($project);
-        $project->load(['tickets']);
-
-        return view('order.tickets', [
-            'project' => $project,
-        ]);
-    }
-
-    private function initOrder($ticketId)
-    {
-        $this->injectOrderInfos($ticketId);
-        $this->validateState();
-    }
-
-    private function injectOrderInfos($ticketId)
-    {
-        $this->user = \Auth::user();
-        $this->ticket = Ticket::findOrFail($ticketId);
-        $this->project = $this->ticket->project()->first();
-    }
-
-    private function validateState()
-    {
-        $this->validateUser($this->user);
-        $this->validateTicket($this->project, $this->ticket);
-        $this->validateProject($this->project);
-    }
-
-    private function validateUser($user)
-    {
-        // user has unprocessed order
-    }
-
-    private function validateTicket($project, $ticket)
-    {
-        $requestPrice = (int)\Input::get('request_price');
-        if ($requestPrice < $ticket->price) {
-            throw new \App\Exceptions\InvalidTicketStateException;
+        if ($project->canOrder()) {
+            $project->load(['tickets']);
+            return view('order.tickets', [
+                'project' => $project,
+            ]);
         }
-
-        $ticketCount = (int)\Input::get('ticket_count');
-        if ($ticketCount < 1) {
-            throw new \App\Exceptions\InvalidTicketStateException;
-        }
-
-        if ($ticket->audiences_limit > 0) {
-            $remainCount = $ticket->audiences_limit - $ticket->audiences_count;
-            if ($ticketCount > $remainCount) {
-                throw new \App\Exceptions\InvalidTicketStateException;
-            }
-        }
-
-        $this->requestPrice = $requestPrice;
-        $this->ticketCount = $ticketCount;
-    }
-
-    private function validateProject($project)
-    {
-        if ((int)$project->state !== Project::STATE_APPROVED) {
-            throw new \App\Exceptions\InvalidTicketStateException;
-        }
-
-        if ($project->funding_closing_at) {
-            if (strtotime('now') > strtotime($project->funding_closing_at)) {
-                throw new \App\Exceptions\InvalidTicketStateException;
-            }
-        } else {
-            throw new \App\Exceptions\InvalidTicketStateException;
-        }
+        throw new InvalidTicketStateException();
     }
 
     public function deleteOrder($orderId)
     {
         $order = Order::where('id', $orderId)->withTrashed()->first();
-        \Auth::user()->checkOwnership($order);
+        Auth::user()->checkOwnership($order);
 
         $user = $order->user()->first();
         $ticket = $order->ticket()->first();
         $project = $order->project()->first();
 
-        \DB::beginTransaction();
+        $paymentService = new PaymentService();
+        $payment = $paymentService->getPayment($order->imp_meta);
+        $payment->cancel();
+
+        DB::beginTransaction();
 
         $order->delete();
         if ($user->supports_count > 0) {
@@ -196,7 +216,9 @@ class OrderController extends Controller
             }
         }
 
-        \DB::commit();
+        // TODO: send mail, sms
+
+        DB::commit();
 
         return redirect()->action('UserController@getUserOrders', [$user->id]);
     }

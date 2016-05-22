@@ -136,9 +136,9 @@ class Project extends Model
         return true;
     }
 
-    public function isBuyable()
+    public function canOrder()
     {
-        return !$this->isFinished() && (int)$this->state === 4;
+        return !$this->isFinished() && (int)$this->state === self::STATE_APPROVED;
     }
 
     public function dayUntilFundingClosed()
@@ -227,6 +227,13 @@ class Project extends Model
         }
         $this->increment('view_count');
         session()->push('project_ids', $this->id);
+    }
+
+    public function getFundingOrderConcludeAt()
+    {
+        $nextDay = strtotime("+1 day", strtotime($this->funding_closing_at));
+        $ymd = date("Y-m-d", $nextDay);
+        return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
     }
 
 }

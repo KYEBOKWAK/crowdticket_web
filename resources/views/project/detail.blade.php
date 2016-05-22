@@ -337,7 +337,7 @@
                 <div id="ticket_list" class="row" data-tickets="{{ $project->tickets }}"></div>
             </div>
         </div>
-        <input type="hidden" id="buyable" value="{{ $project->isBuyable() ? 1 : 0 }}"/>
+        <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>
         <input type="hidden" id="project_type" value="{{ $project->type }}"/>
         <input type="hidden" id="project_id" value="{{ $project->id }}"/>
     </div>
