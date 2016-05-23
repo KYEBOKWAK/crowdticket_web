@@ -5,4 +5,5 @@
 .env
 .project
 .settings/
+.idea/
 web.config
