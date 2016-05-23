@@ -39,7 +39,7 @@ class Project extends Model
         'concert_hall' => 'string',
         'pledged_amount' => 'integer|min:0',
         'audiences_limit' => 'integer|min:0',
-        'funding_closing_at' => 'date_format:Y-m-d',
+        'funding_closing_at' => 'date_format:Y-m-d H:i:s',
         'performance_opening_at' => 'date_format:Y-m-d'
     ];
 

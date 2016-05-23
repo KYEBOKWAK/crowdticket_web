@@ -24,6 +24,11 @@ class ProjectController extends Controller
             }
         }
 
+        if (isset($input['funding_closing_at'])) {
+            $closingDate = $input['funding_closing_at'];
+            $input['funding_closing_at'] = $closingDate . ' 23:59:59';
+        }
+
         $project->update($input);
 
         if ($request->has('category_id')) {
