@@ -78,7 +78,7 @@
                                         <input class="available_ticket_count" type="hidden"
                                                value="{{ $ticket->audiences_limit - $ticket->audiences_count }}"/>
                                         @if ($project->type === 'funding')
-                                            <input name="request_price" type="number" class="form-control"
+                                            <input name="request_price" type="number" class="form-control" max="2500000"
                                                    value="{{ $ticket->price }}" min="{{ $ticket->price }}"/>
                                             <input class="ticket_count" name="ticket_count" type="hidden" value="1"/>
                                             <div class="input-group-addon">원</div>
