@@ -57,8 +57,7 @@
                                         <p class="list-group-item-text">{{ $blueprint->contact }}</p>
                                         <h4 class="list-group-item-heading">요청 날짜</h4>
                                         <p class="list-group-item-text">{{ $blueprint->created_at }}</p>
-                                        <p class="list-group-item-text">프로젝트 생성 주소 : {{ url('/projects/form/') }}
-                                            /{{ $blueprint->code }}</p>
+                                        <p class="list-group-item-text">프로젝트 생성 주소 : {{ url('/projects/form/') }}/{{ $blueprint->code }}</p>
                                         <button type="submit" class="btn btn-primary">승인하기</button>
                                         <input type="hidden" name="_method" value="PUT">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
