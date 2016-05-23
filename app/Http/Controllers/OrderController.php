@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidTicketStateException;
+use App\Exceptions\PaymentFailedException;
 use App\Models\Order as Order;
 use App\Models\Project as Project;
 use App\Models\Supporter as Supporter;
@@ -29,45 +30,51 @@ class OrderController extends Controller
         $info->withBirth(Input::get('birth'));
         $info->withPassword(Input::get('card_password'));
 
-        $paymentService = new PaymentService();
-        $payment = null;
-        if ($project->type === 'funding') {
-            $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-        } else {
-            $payment = $paymentService->rightNow($info);
+        try {
+            $paymentService = new PaymentService();
+            $payment = null;
+            if ($project->type === 'funding') {
+                $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+            } else {
+                $payment = $paymentService->rightNow($info);
+            }
+
+            DB::beginTransaction();
+
+            $order = new Order($this->getFilteredInput($ticket, $payment));
+            $order->project()->associate($project);
+            $order->ticket()->associate($ticket);
+            $order->user()->associate($user);
+            $order->save();
+
+            $supporter = new Supporter;
+            $supporter->project()->associate($project);
+            $supporter->ticket()->associate($ticket);
+            $supporter->user()->associate($user);
+            $supporter->save();
+
+            $project->increment('funded_amount', $this->getOrderPrice());
+            $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+            $project->increment('supporters_count');
+
+            $user->increment('supports_count');
+            $user->increment('tickets_count');
+
+            $ticket->increment('audiences_count', $this->getOrderCount());
+
+            // TODO: send mail, sms
+
+            DB::commit();
+
+            return view('order.complete', [
+                'project' => $project,
+                'order' => $order
+            ]);
+        } catch (PaymentFailedException $e) {
+            return view('order.error', [
+                'message' => $e->getMessage()
+            ]);
         }
-
-        DB::beginTransaction();
-
-        $order = new Order($this->getFilteredInput($ticket, $payment));
-        $order->project()->associate($project);
-        $order->ticket()->associate($ticket);
-        $order->user()->associate($user);
-        $order->save();
-
-        $supporter = new Supporter;
-        $supporter->project()->associate($project);
-        $supporter->ticket()->associate($ticket);
-        $supporter->user()->associate($user);
-        $supporter->save();
-
-        $project->increment('funded_amount', $this->getOrderPrice());
-        $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
-        $project->increment('supporters_count');
-
-        $user->increment('supports_count');
-        $user->increment('tickets_count');
-
-        $ticket->increment('audiences_count', $this->getOrderCount());
-
-        // TODO: send mail, sms
-
-        DB::commit();
-
-        return view('order.complete', [
-            'project' => $project,
-            'order' => $order
-        ]);
     }
 
     private function getOrderUnitPrice()

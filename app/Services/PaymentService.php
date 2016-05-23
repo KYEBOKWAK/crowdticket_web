@@ -39,19 +39,31 @@ class PaymentService
             'buyer_addr' => '',
             'buyer_postcode' => ''
         ]);
-        $response = $res->response;
-        $impId = $response->imp_uid;
-        if ($impId !== '') {
-            return new OneTimePayment($impId, $info->getMerchantUid(), $info->getCustomerUid());
+
+        if ((int)$res->code === -1) {
+            throw new PaymentFailedException($res->message);
         }
-        throw new PaymentFailedException($response->fail_reason);
+        $impId = $res->response->imp_uid;
+        return new OneTimePayment($impId, $info->getMerchantUid(), $info->getCustomerUid());
     }
 
     public function schedule(PaymentInfo $info, $date)
     {
+        $customerUid = $info->getCustomerUid();
+        $checkRes = $this->api->post('/subscribe/customers/' . $customerUid, [
+            'customer_uid' => $customerUid,
+            'card_number' => $info->getCardNumber(),
+            'expiry' => $info->getExpiry(),
+            'birth' => $info->getBirth(),
+            'pwd_2digit' => $info->getPassword()
+        ]);
+
+        if ((int)$checkRes->code === -1) {
+            throw new PaymentFailedException($checkRes->message);
+        }
+
         $res = $this->api->post('/subscribe/payments/schedule', [
-            'customer_uid' => $info->getCustomerUid(),
-            'checking_amount' => '',
+            'customer_uid' => $customerUid,
             'card_number' => $info->getCardNumber(),
             'expiry' => $info->getExpiry(),
             'birth' => $info->getBirth(),
@@ -64,11 +76,11 @@ class PaymentService
                 ]
             ]
         ]);
-        $response = $res->response[0];
-        if ($response) {
-            return new ScheduledPayment($info->getMerchantUid(), $info->getCustomerUid());
+
+        if ((int)$res->code === -1) {
+            throw new PaymentFailedException($res->message);
         }
-        throw new PaymentFailedException($res->message); // no fail reason in response?
+        return new ScheduledPayment($info->getMerchantUid(), $info->getCustomerUid());
     }
 
     public static function getPayment($json)
