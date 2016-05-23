@@ -1,16 +1,22 @@
 $(document).ready(function() {
 	var checkAliasDuplicate = function() {
 		var alias = $('#alias').val();
-		var url = '/projects/' + alias + '/validity';
+		if (alias.length === 0) {
+			alert('주소를 입력해주세요.');
+			return;
+		}
+
+		var projectId = $('#project_id').val();
+		var url = '/projects/' + projectId + '/alias/' + alias;
 		var method = 'get';
 		var success = function() {
-			alert('사용가능한 이름입니다.');
+			alert('사용가능한 주소입니다.');
 		};
 		var error = function(request) {
 			if (request.status === 409) {
-				alert('이미 존재하는 이름입니다. 다른 이름을 사용해주세요.');
+				alert('이미 존재하는 주소입니다. 다른 이름을 사용해주세요.');
 			} else if (request.status === 422) {
-				alert('잘못된 형식의 이름입니다.');
+				alert('잘못된 형식의 주소입니다.');
 			}
 		};
 		

@@ -1,13 +1,13 @@
 <?php namespace App\Http\Controllers;
 
-use Storage as Storage;
-use Illuminate\Http\Request as Request;
-use App\Models\Project as Project;
 use App\Models\Blueprint as Blueprint;
 use App\Models\Category as Category;
 use App\Models\City as City;
 use App\Models\Model as Model;
-use App\Models\Order as Order;
+use App\Models\Project as Project;
+use Illuminate\Http\Request as Request;
+use Illuminate\Http\Response;
+use Storage as Storage;
 
 class ProjectController extends Controller
 {
@@ -15,15 +15,24 @@ class ProjectController extends Controller
     public function updateProject(Request $request, $id)
     {
         $project = $this->getSecureProjectById($id);
-        $project->update(\Input::all());
 
-        if (\Input::has('category_id')) {
+        $input = $request->all();
+        if (isset($input['alias'])) {
+            $alias = $input['alias'];
+            if (!$alias) {
+                $input['alias'] = null;
+            }
+        }
+
+        $project->update($input);
+
+        if ($request->has('category_id')) {
             $categoryId = \Input::get('category_id');
             $category = Category::findOrFail($categoryId);
             $project->category()->associate($category);
         }
 
-        if (\Input::has('city_id')) {
+        if ($request->has('city_id')) {
             $cityId = \Input::get('city_id');
             $city = City::findOrFail($cityId);
             $project->city()->associate($city);
@@ -252,14 +261,14 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function validateProjectAlias($alias)
+    public function checkProjectAlias($projectId, $alias)
     {
         $pattern = '/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}/';
         $match = preg_match($pattern, $alias);
         if ($match) {
             $project = Project::where('alias', '=', $alias)->first();
-            if (!$project) {
-                return "";
+            if (!$project || $project->id == $projectId) {
+                return Response::HTTP_ACCEPTED;
             } else {
                 return \App::abort(409);
             }

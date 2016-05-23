@@ -31,7 +31,7 @@ class Project extends Model
 
     protected static $typeRules = [
         'title' => 'string|min:1|max:30',
-        'alias' => 'regex:/^[a-zA-Z]{1}[a-zA-Z0-9-_]{3,63}$/',
+        'alias' => 'regex:/^([a-zA-Z]{1}[a-zA-Z0-9-_]{3,63})?$/',
         'poster_url' => 'url',
         'description' => 'string',
         'video_url' => 'url',

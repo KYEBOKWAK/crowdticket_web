@@ -30,7 +30,7 @@ Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 Route::get('projects', 'ProjectController@getProjects');
 Route::get('projects/{id}', 'ProjectController@getProjectById');
 Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
-Route::get('projects/{alias}/validity', 'ProjectController@validateProjectAlias');
+Route::get('projects/{id}/alias/{alias}', 'ProjectController@checkProjectAlias');
 Route::get('projects/{id}/supporters', 'ProjectController@getSupporters');
 Route::get('projects/{id}/news', 'ProjectController@getNews');
 Route::get('projects/{id}/comments', 'ProjectController@getComments');
