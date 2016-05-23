@@ -62,7 +62,7 @@ class PaymentInfo
 
     public function withAmount($amount)
     {
-        $rule = sprintf('integer|min:%d,max:%d', self::MIN_AMOUNT, self::MAX_AMOUNT);
+        $rule = sprintf('integer|min:%d|max:%d', self::MIN_AMOUNT, self::MAX_AMOUNT);
         $this->validateOrFail('amount', $amount, $rule);
         $this->amount = $amount;
     }
