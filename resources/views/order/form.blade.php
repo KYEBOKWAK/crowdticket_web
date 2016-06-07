@@ -124,7 +124,7 @@
             </div>
 
             @if ($request_price > 0)
-                <h4 class="col-md-12 ps-section-title">결제정보</h4>
+                <h4 class="col-md-12 ps-section-title">결제금액</h4>
                 <div class="col-md-12">
                     <?php
                     $orderPrice = $request_price * $ticket_count;
@@ -164,8 +164,6 @@
                             <div class="col-sm-4">
                                 *티켓 발급 및 알림, 플랫폼 유지를 위해<br/>필요한 최소한의 수수료만을 받고 있습니다.
                             </div>
-                            <label class="col-sm-4 control-label commission-label">
-                            </label>
                         </div>
                         <div class="form-group total-price">
                             <label class="col-sm-2 control-label">결제금액</label>
@@ -179,8 +177,40 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                @if ($project->type === 'funding')
+                    <h4 class="col-md-12 ps-section-title">결제 예약 정보 입력</h4>
+                @else
+                    <h4 class="col-md-12 ps-section-title">결제 정보 입력</h4>
+                @endif
+                <div class="col-md-12">
+                    <div class="ps-box">
                         <div class="form-group">
-                            <label for="order-name" class="col-sm-2 control-label">구매자성명</label>
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-8">
+                                <p class="ps-form-control-like">
+                                    @if ($project->type === 'funding')
+                                        <strong>※ "결제예약" 에 관하여</strong><br/><br/>
+                                        펀딩에 성공했을 경우, 후원금이 일괄적으로 결제가 됩니다.<br/>
+                                        ('펀딩완료일'에 갑자기 결제완료가 됐다는 카드사의 문자를 받아도 놀라지 마세요 ^^) <br/><br/>
+                                        카드분실, 잔액부족으로 인하여 예약된 결제가 제대로 처리되지 않을 수 있습니다.<br/>
+                                        결제에 실패하게 되면 따로 연락드리니 걱정하지 마세요!<br/><br/>
+                                        펀딩에 실패하면 아무 일도 일어나지 않습니다.<br/>
+                                        여러분이 입력한 카드정보는 당연히 폐기됩니다.<br/><br/>
+                                    @else
+                                        <strong>※ 알려드립니다.</strong><br/><br/>
+                                        크라우드티켓에서는 이용자의 편의를 위하여 비인증 결제방식을 제공하고 있습니다.<br/>
+                                        공인인증서 없이 아래 정보만 입력하면 바로 결제가 가능합니다. (카드결제만을 지원하고 있습니다.)<br/><br/>
+                                        이 방식은 사실상 아마존, 구글, 애플 등 대부분의 웹사이트에서 사용하는 방식으로,<br/>
+                                        여러분이 입력하는 정보는 철저히 암호화되며, 안전하게 보호됩니다. 안심하시고 사용하세요!<br/><br/>
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-name" class="col-sm-2 control-label">성명</label>
                             <div class="col-sm-2">
                                 @if ($order)
                                     <input id="order-name" name="name" type="text"
@@ -203,7 +233,7 @@
                                 @else
                                     <input id="order-contact" name="contact" maxlength="11" type="text"
                                            class="form-control" value="{{ \Auth::user()->contact }}"
-                                           required="required"/>
+                                           required="required" placeholder="-없이 숫자만 입력"/>
                                 @endif
                             </div>
                         </div>
@@ -225,7 +255,10 @@
                                 <div class="col-sm-4">
                                     <input id="order-card-number" name="card_number" type="text"
                                            class="form-control" autocomplete="off" required="required"
-                                           maxlength="16" placeholder="- 없이 숫자만 입력해주세요"/>
+                                           maxlength="16" placeholder="-없이 숫자만 입력"/>
+                                </div>
+                                <div class="col-sm-4">
+                                    *체크카드, 신용카드 모두 가능합니다.
                                 </div>
                             </div>
                             <div class="form-group">
@@ -248,17 +281,17 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="order-birth" class="col-sm-2 control-label">생년월일 6자리</label>
+                                <label for="order-birth" class="col-sm-2 control-label">생년월일</label>
                                 <div class="col-sm-2">
                                     <input id="order-birth" name="birth" type="text"
                                            class="form-control" autocomplete="off" required="required"
-                                           maxlength="6"/>
+                                           maxlength="6" placeholder="주민번호 앞6자리"/>
                                 </div>
                             </div>
                             <input class="prevent-autocomplete" type="text"/>
                             <div class="form-group">
                                 <label for="order-card-password" class="col-sm-2 control-label">
-                                    카드 비밀번호<br/>앞 2자리
+                                    카드비밀번호
                                 </label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
@@ -377,6 +410,23 @@
                                 <div class="checkbox pull-right">
                                     <label>
                                         <input type="checkbox" name="approval2" required="required"/>동의합니다
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-10 col-sm-offset-1">
+                                @if ($project->type === 'funding')
+                                    펀딩 결제예약 환불규정
+                                @else
+                                    티켓 환불규정
+                                @endif
+                            </label>
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <p class="scroll-box">@include ('helper.refund_terms_content', ['type' => $project->type])</p>
+                                <div class="checkbox pull-right">
+                                    <label>
+                                        <input type="checkbox" name="approval3" required="required"/>동의합니다
                                     </label>
                                 </div>
                             </div>
