@@ -43,4 +43,17 @@ abstract class Model extends BaseModel
         }
     }
 
+    public function required($attr)
+    {
+        if (!isset($this->$attr)) {
+            $this->load($attr);
+        }
+    }
+
+    public function requiredGet($attr)
+    {
+        $this->required($attr);
+        return $this->$attr;
+    }
+
 }

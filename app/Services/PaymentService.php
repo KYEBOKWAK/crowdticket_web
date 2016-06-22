@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Exceptions\InvalidPaymentException;
 use App\Exceptions\PaymentFailedException;
+use App\Models\Order;
 
 class PaymentService
 {
@@ -83,21 +84,21 @@ class PaymentService
         return new ScheduledPayment($info->getMerchantUid(), $info->getCustomerUid());
     }
 
-    public static function getPayment($json)
+    public static function getPayment($order)
     {
-        $deserializer = new PaymentAdapter();
-        return $deserializer->deserialize($json);
+        $adapter = new PaymentAdapter();
+        return $adapter->newInstance($order);
     }
 }
 
 class PaymentAdapter
 {
-    public function deserialize($serialized)
+    public function newInstance($order)
     {
-        $meta = json_decode($serialized);
+        $meta = json_decode($order->imp_meta);
         switch ($meta->serializer_uid) {
             case OneTimePayment::SERIALIZER_UID:
-                return new OneTimePayment($meta->imp_uid, $meta->merchant_uid, $meta->customer_uid);
+                return new OneTimePayment($order, $meta->imp_uid, $meta->merchant_uid, $meta->customer_uid);
 
             case ScheduledPayment::SERIALIZER_UID:
                 return new ScheduledPayment($meta->merchant_uid, $meta->customer_uid);
@@ -112,13 +113,21 @@ class OneTimePayment extends Payment
 {
     const SERIALIZER_UID = "onetime";
 
+    private $order;
+
+    public function __construct(Order $order, $impId, $merchantId, $customerId)
+    {
+        parent::__construct($impId, $merchantId, $customerId);
+        $this->order = $order;
+    }
+
     public function cancel()
     {
         $client = new IamPortApi();
         $res = $client->post('/payments/cancel', [
             'imp_uid' => $this->getImpId(),
             'merchant_uid' => '',
-            'amount' => '',
+            'amount' => $this->order->getRefundAmount(),
             'reason' => '',
             'refund_holder' => '',
             'refund_bank' => '',

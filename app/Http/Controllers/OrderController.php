@@ -9,9 +9,11 @@ use App\Models\Ticket as Ticket;
 use App\Services\Payment;
 use App\Services\PaymentInfo;
 use App\Services\PaymentService;
+use App\Services\SmsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -47,24 +49,38 @@ class OrderController extends Controller
             $order->user()->associate($user);
             $order->save();
 
+            $project->increment('funded_amount', $this->getOrderPrice());
+            $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+            $ticket->increment('audiences_count', $this->getOrderCount());
+            $user->increment('tickets_count');
+
             $supporter = new Supporter;
             $supporter->project()->associate($project);
             $supporter->ticket()->associate($ticket);
             $supporter->user()->associate($user);
             $supporter->save();
 
-            $project->increment('funded_amount', $this->getOrderPrice());
-            $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
             $project->increment('supporters_count');
-
             $user->increment('supports_count');
-            $user->increment('tickets_count');
-
-            $ticket->increment('audiences_count', $this->getOrderCount());
-
-            // TODO: send mail, sms
 
             DB::commit();
+
+            $sms = new SmsService();
+            $contact = $order->contact;
+            $emailTo = $order->email;
+            if ($project->type === 'funding') {
+                $sms->send([$contact], '결제 예약 완뇨');
+                Mail::raw('결제 예약 완뇨', function ($message) use ($emailTo) {
+                    $message->from('contact@crowdticket.kr', '크라우드티켓');
+                    $message->to($emailTo);
+                });
+            } else {
+                $sms->send([$contact], '결제 완뇨');
+                Mail::raw('결제 완뇨', function ($message) use ($emailTo) {
+                    $message->from('contact@crowdticket.kr', '크라우드티켓');
+                    $message->to($emailTo);
+                });
+            }
 
             return view('order.complete', [
                 'project' => $project,
@@ -151,6 +167,7 @@ class OrderController extends Controller
             'ticket' => $ticket,
             'request_price' => $this->getOrderUnitPrice(),
             'ticket_count' => $this->getOrderCount(),
+            'form_url' => url(sprintf('/tickets/%d/orders', $ticket->id))
         ]);
     }
 
@@ -164,7 +181,8 @@ class OrderController extends Controller
             'project' => $order->project()->first(),
             'ticket' => $order->ticket()->first(),
             'request_price' => $order->price,
-            'ticket_count' => $order->count
+            'ticket_count' => $order->count,
+            'form_url' => url(sprintf('/orders/%d', $order->id))
         ]);
     }
 
@@ -192,48 +210,70 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
 
+        if (!$order->canCancel()) {
+            throw new PaymentFailedException();
+        }
+
         $user = $order->user()->first();
         $ticket = $order->ticket()->first();
         $project = $order->project()->first();
 
-        $paymentService = new PaymentService();
-        $payment = $paymentService->getPayment($order->imp_meta);
-        $payment->cancel();
+        try {
+            $payment = PaymentService::getPayment($order);
+            $payment->cancel();
 
-        DB::beginTransaction();
+            DB::beginTransaction();
 
-        $order->delete();
-        if ($user->supports_count > 0) {
-            $user->decrement('supports_count');
-        }
-        if ($user->tickets_count > 0) {
-            $user->decrement('tickets_count');
-        }
-        $supporter = Supporter::where('project_id', $project->id)
-            ->where('user_id', $user->id)
-            ->where('ticket_id', $ticket->id)
-            ->first();
-        if ($supporter) {
-            $supporter->delete();
-        }
-        $funded = $order->count * $order->price;
-        if ($project->funded_amount - $funded >= 0) {
-            $project->decrement('funded_amount', $funded);
-        }
-        $ticketCount = $ticket->real_ticket_count * $order->count;
-        if ($project->tickets_count - $ticketCount >= 0) {
-            $project->decrement('tickets_count', $ticketCount);
-        }
-        if ($project->supporters_count > 0) {
-            $project->decrement('supporters_count');
-        }
-        if ($ticket->audiences_count - $order->count >= 0) {
-            $ticket->decrement('audiences_count', $order->count);
-        }
+            $order->delete();
+            if ($user->supports_count > 0) {
+                $user->decrement('supports_count');
+            }
+            if ($user->tickets_count > 0) {
+                $user->decrement('tickets_count');
+            }
+            $supporter = Supporter::where('project_id', $project->id)
+                ->where('user_id', $user->id)
+                ->where('ticket_id', $ticket->id)
+                ->first();
+            if ($supporter) {
+                $supporter->delete();
+            }
+            $funded = $order->getFundedAmount();
+            if ($project->funded_amount - $funded >= 0) {
+                $project->decrement('funded_amount', $funded);
+            }
+            $ticketCount = $ticket->real_ticket_count * $order->count;
+            if ($project->tickets_count - $ticketCount >= 0) {
+                $project->decrement('tickets_count', $ticketCount);
+            }
+            if ($project->supporters_count > 0) {
+                $project->decrement('supporters_count');
+            }
+            if ($ticket->audiences_count - $order->count >= 0) {
+                $ticket->decrement('audiences_count', $order->count);
+            }
 
-        // TODO: send mail, sms
+            DB::commit();
 
-        DB::commit();   
+            $sms = new SmsService();
+            $contact = $order->contact;
+            $emailTo = $order->email;
+            if ($project->type === 'funding') {
+                $sms->send([$contact], '결제 예약 취소 완뇨');
+                Mail::raw('결제 예약 취소 완뇨', function ($message) use ($emailTo) {
+                    $message->from('contact@crowdticket.kr', '크라우드티켓');
+                    $message->to($emailTo);
+                });
+            } else {
+                $sms->send([$contact], '결제 취소 완뇨');
+                Mail::raw('결제 취소 완뇨', function ($message) use ($emailTo) {
+                    $message->from('contact@crowdticket.kr', '크라우드티켓');
+                    $message->to($emailTo);
+                });
+            }
+        } catch (PaymentFailedException $e) {
+            return $e->getMessage();
+        }
     }
 
 }

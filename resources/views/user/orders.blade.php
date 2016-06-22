@@ -84,9 +84,7 @@
                             <div class="col-md-9">
                                 <h3 class="text-ellipsize"><strong>{{ $order->project->title }}</strong></h3>
                                 <h5>금액 : <strong>{{ $order->total_price }}원</strong></h5>
-                                @if ($order->deleted_at)
-                                    <span class="ps-text-box text-center pull-right">취소됨</span>
-                                @endif
+                                <span class="ps-text-box text-center pull-right">{{ $order->state_string }}</span>
                             </div>
                         </div>
                     </a>

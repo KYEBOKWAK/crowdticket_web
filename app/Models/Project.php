@@ -236,4 +236,14 @@ class Project extends Model
         return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
     }
 
+    public function isFundingType()
+    {
+        return $this->type === 'funding';
+    }
+
+    public function isSaleType()
+    {
+        return $this->type === 'sale';
+    }
+
 }

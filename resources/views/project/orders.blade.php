@@ -84,11 +84,7 @@
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->count }}</td>
                                     <td>{{ $order->price * $order->count }}</td>
-                                    @if ($order->deleted_at)
-                                        <td>취소함</td>
-                                    @else
-                                        <td>-</td>
-                                    @endif
+                                    <td>{{ $order->state_string }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->email }}</td>
                                     <td>{{ $order->contact }}</td>

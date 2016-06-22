@@ -63,26 +63,20 @@
             float: right;
             border: none;
         }
+
+        .ps-tooltip {
+            margin-top: 1em;
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="container first-container">
-        @if ($order)
-            @include ('order.header', ['project' => $project, 'step' => 0])
-            <?php $formUrl = url(sprintf('/orders/%d', $order->id)); ?>
-        @else
-            @include ('order.header', ['project' => $project, 'step' => 2])
-            <?php $formUrl = url(sprintf('/tickets/%d/orders', $ticket->id)); ?>
-        @endif
+        @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
 
         <form class="row form-horizontal" data-toggle="validator" role="form"
-              action="{{ $formUrl }}/" method="post">
-            @if ($order)
-                @include('form_method_spoofing', ['method' => 'delete'])
-            @else
-                @include('csrf_field')
-            @endif
+              action="{{ $form_url }}/" method="post">
+            @include('form_method_spoofing', ['method' => $order ? 'delete' : 'post'])
 
             @if ($project->type === 'funding')
                 <h4 class="col-md-12 ps-section-title">선택한 보상</h4>
@@ -94,26 +88,27 @@
                     <div class="ticket-body row display-table">
                         @if ($project->type === 'funding')
                             <div class="col-md-3 display-cell text-right">
-                                    <span><strong
-                                                class="text-primary ticket-price">{{ $ticket->price }}</strong> 원 이상</span>
+                                <span>
+                                    <strong class="text-primary ticket-price">{{ $ticket->price }}</strong> 원 이상
+                                </span>
                             </div>
                             <div class="col-md-9 display-cell">
                                 <p class="ticket-reward">{{ $ticket->reward }}</p>
                                 @if ($ticket->real_ticket_count > 0)
                                     <span class="ticket-real-count">
-                                            <img src="{{ asset('/img/app/ico_ticket2.png') }}"/>
+                                        <img src="{{ asset('/img/app/ico_ticket2.png') }}"/>
                                         {{ $ticket->real_ticket_count }}매
-                                        </span>
+                                    </span>
                                 @endif
                                 <span class="ticket-delivery-date">예상 실행일 : {{ date('Y년 m월 d일', strtotime($ticket->delivery_date)) }}</span>
                             </div>
                         @else
                             <div class="col-md-3 display-cell">
-                                    <span>
-                                        <span class="text-primary">공연일시</span><br/>
-                                        <strong class="ps-strong-small">{{ date('Y.m.d H:m', strtotime($ticket->delivery_date)) }}</strong>
-                                        <span class="pull-right">{{ $ticket->price }} 원</span>
-                                    </span>
+                                <span>
+                                    <span class="text-primary">공연일시</span><br/>
+                                    <strong class="ps-strong-small">{{ date('Y.m.d H:m', strtotime($ticket->delivery_date)) }}</strong>
+                                    <span class="pull-right">{{ $ticket->price }} 원</span>
+                                </span>
                             </div>
                             <div class="col-md-9 display-cell">
                                 <p class="ticket-reward ps-no-margin">{{ $ticket->reward }}</p>
@@ -181,34 +176,36 @@
                 </div>
 
                 @if ($project->type === 'funding')
-                    <h4 class="col-md-12 ps-section-title">결제 예약 정보 입력</h4>
+                    <h4 class="col-md-12 ps-section-title">결제 예약 정보</h4>
                 @else
-                    <h4 class="col-md-12 ps-section-title">결제 정보 입력</h4>
+                    <h4 class="col-md-12 ps-section-title">결제 정보</h4>
                 @endif
                 <div class="col-md-12">
                     <div class="ps-box">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"></label>
-                            <div class="col-sm-8">
-                                <p class="ps-form-control-like">
-                                    @if ($project->type === 'funding')
-                                        <strong>※ "결제예약" 에 관하여</strong><br/><br/>
-                                        펀딩에 성공했을 경우, 후원금이 일괄적으로 결제가 됩니다.<br/>
-                                        ('펀딩완료일'에 갑자기 결제완료가 됐다는 카드사의 문자를 받아도 놀라지 마세요 ^^) <br/><br/>
-                                        카드분실, 잔액부족으로 인하여 예약된 결제가 제대로 처리되지 않을 수 있습니다.<br/>
-                                        결제에 실패하게 되면 따로 연락드리니 걱정하지 마세요!<br/><br/>
-                                        펀딩에 실패하면 아무 일도 일어나지 않습니다.<br/>
-                                        여러분이 입력한 카드정보는 당연히 폐기됩니다.<br/><br/>
-                                    @else
-                                        <strong>※ 알려드립니다.</strong><br/><br/>
-                                        크라우드티켓에서는 이용자의 편의를 위하여 비인증 결제방식을 제공하고 있습니다.<br/>
-                                        공인인증서 없이 아래 정보만 입력하면 바로 결제가 가능합니다. (카드결제만을 지원하고 있습니다.)<br/><br/>
-                                        이 방식은 사실상 아마존, 구글, 애플 등 대부분의 웹사이트에서 사용하는 방식으로,<br/>
-                                        여러분이 입력하는 정보는 철저히 암호화되며, 안전하게 보호됩니다. 안심하시고 사용하세요!<br/><br/>
-                                    @endif
-                                </p>
+                        @if (!$order)
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <p class="ps-form-control-like">
+                                        @if ($project->type === 'funding')
+                                            <strong>※ "결제예약" 에 관하여</strong><br/><br/>
+                                            펀딩에 성공했을 경우, 후원금이 일괄적으로 결제가 됩니다.<br/>
+                                            ('펀딩완료일'에 갑자기 결제완료가 됐다는 카드사의 문자를 받아도 놀라지 마세요 ^^) <br/><br/>
+                                            카드분실, 잔액부족으로 인하여 예약된 결제가 제대로 처리되지 않을 수 있습니다.<br/>
+                                            결제에 실패하게 되면 따로 연락드리니 걱정하지 마세요!<br/><br/>
+                                            펀딩에 실패하면 아무 일도 일어나지 않습니다.<br/>
+                                            여러분이 입력한 카드정보는 당연히 폐기됩니다.<br/><br/>
+                                        @else
+                                            <strong>※ 알려드립니다.</strong><br/><br/>
+                                            크라우드티켓에서는 이용자의 편의를 위하여 비인증 결제방식을 제공하고 있습니다.<br/>
+                                            공인인증서 없이 아래 정보만 입력하면 바로 결제가 가능합니다. (카드결제만을 지원하고 있습니다.)<br/><br/>
+                                            이 방식은 사실상 아마존, 구글, 애플 등 대부분의 웹사이트에서 사용하는 방식으로,<br/>
+                                            여러분이 입력하는 정보는 철저히 암호화되며, 안전하게 보호됩니다. 안심하시고 사용하세요!<br/><br/>
+                                        @endif
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="form-group">
                             <label for="order-name" class="col-sm-2 control-label">성명</label>
                             <div class="col-sm-2">
@@ -444,10 +441,25 @@
                             <button class="btn btn-muted">환불됨</button>
                         @endif
                     @else
-                        @if ($project->type === 'funding')
-                            <button class="btn btn-danger">취소하기</button>
+                        @if ($order->canCancel())
+                            @if ($project->type === 'funding')
+                                <button class="btn btn-danger">취소하기</button>
+                            @else
+                                <button class="btn btn-danger">환불하기</button>
+                                @if ($order->hasCancellationFees())
+                                    <p class="ps-tooltip text-danger">
+                                        환불 정책에 따라 취소 수수료 {{ $order->getCancellationFees() }}원이 차감된 {{ $order->getRefundAmount() }}원이 환불됩니다.
+                                    </p>
+                                @endif
+                            @endif
                         @else
-                            <button class="btn btn-danger">환불하기</button>
+                            @if ($project->type === 'funding')
+                                <button class="btn btn-muted">취소불가</button>
+                                <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
+                            @else
+                                <button class="btn btn-muted">환불불가</button>
+                                <p class="ps-tooltip text-danger">환불 가능 일자가 만료되었습니다.</p>
+                            @endif
                         @endif
                     @endif
                 @else
