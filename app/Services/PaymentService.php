@@ -45,7 +45,7 @@ class PaymentService
             throw new PaymentFailedException($res->message);
         }
         $impId = $res->response->imp_uid;
-        return new OneTimePayment($impId, $info->getMerchantUid(), $info->getCustomerUid());
+        return new OneTimePayment(null, $impId, $info->getMerchantUid(), $info->getCustomerUid());
     }
 
     public function schedule(PaymentInfo $info, $date)
@@ -115,7 +115,7 @@ class OneTimePayment extends Payment
 
     private $order;
 
-    public function __construct(Order $order, $impId, $merchantId, $customerId)
+    public function __construct($order, $impId, $merchantId, $customerId)
     {
         parent::__construct($impId, $merchantId, $customerId);
         $this->order = $order;
