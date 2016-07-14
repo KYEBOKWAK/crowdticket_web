@@ -9,10 +9,10 @@ abstract class Model extends BaseModel
 {
 
     const S3_BASE_URL = "https://s3-ap-northeast-1.amazonaws.com/crowdticket0/";
-    const S3_POSTER_DIRECTORY = "test/posters/";
-    const S3_STORY_DIRECTORY = "test/stories/";
-    const S3_NEWS_DIRECTORY = "test/news/";
-    const S3_USER_DIRECTORY = "test/users/";
+    const S3_POSTER_DIRECTORY = "posters/";
+    const S3_STORY_DIRECTORY = "stories/";
+    const S3_NEWS_DIRECTORY = "news/";
+    const S3_USER_DIRECTORY = "users/";
 
     protected static $typeRules = array();
 
