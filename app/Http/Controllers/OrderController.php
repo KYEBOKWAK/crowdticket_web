@@ -67,15 +67,24 @@ class OrderController extends Controller
 
             $sms = new SmsService();
             $contact = $order->contact;
+            $limit = $project->type === 'funding' ? 10 : 14;
+            $titleLimit = str_limit($project->title, $limit, $end = '..');
+            $priceFormatted = number_format($order->getFundedAmount());
+            $totalRealTicket = $ticket->real_ticket_count * $order->count;
+            $ticketFormatted = $totalRealTicket > 0 ? sprintf('(티켓 %d매 포함)', $totalRealTicket) : '';
+            $datetime = date('Y/m/d H:i', strtotime($ticket->delivery_date));
+            $msg = $project->type === 'funding'
+                ? sprintf('%s %s원%s 후원완료', $titleLimit, $priceFormatted, $ticketFormatted)
+                : sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
+            $sms->send([$contact], $msg);
+
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                $sms->send([$contact], '결제 예약 완뇨');
                 Mail::raw('결제 예약 완뇨', function ($message) use ($emailTo) {
                     $message->from('contact@crowdticket.kr', '크라우드티켓');
                     $message->to($emailTo);
                 });
             } else {
-                $sms->send([$contact], '결제 완뇨');
                 Mail::raw('결제 완뇨', function ($message) use ($emailTo) {
                     $message->from('contact@crowdticket.kr', '크라우드티켓');
                     $message->to($emailTo);
@@ -200,11 +209,6 @@ class OrderController extends Controller
 
     public function deleteOrder($orderId)
     {
-        return self::cancelOrder($orderId);
-    }
-
-    public static function cancelOrder($orderId)
-    {
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
 
@@ -255,15 +259,20 @@ class OrderController extends Controller
 
             $sms = new SmsService();
             $contact = $order->contact;
+            $titleLimit = str_limit($project->title, 18, $end = '..');
+            $msg = $project->type === 'funding'
+                ? sprintf('%s 후원취소', $titleLimit)
+                : sprintf('%s 환불완료', $titleLimit);
+
+            $sms->send([$contact], $msg);
+
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                $sms->send([$contact], '결제 예약 취소 완뇨');
                 Mail::raw('결제 예약 취소 완뇨', function ($message) use ($emailTo) {
                     $message->from('contact@crowdticket.kr', '크라우드티켓');
                     $message->to($emailTo);
                 });
             } else {
-                $sms->send([$contact], '결제 취소 완뇨');
                 Mail::raw('결제 취소 완뇨', function ($message) use ($emailTo) {
                     $message->from('contact@crowdticket.kr', '크라우드티켓');
                     $message->to($emailTo);
