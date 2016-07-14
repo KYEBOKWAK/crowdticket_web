@@ -153,7 +153,7 @@ class Project extends Model
         if ($this->poster_url) {
             return $this->poster_url;
         }
-        return "http://immortaldc.com/wp-content/themes/sentient/img/no_image.png";
+        return asset('img/app/img_no_poster.png');
     }
 
     public function getProgress()
