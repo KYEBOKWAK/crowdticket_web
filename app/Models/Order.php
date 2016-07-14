@@ -7,8 +7,8 @@ class Order extends Model
 
     use SoftDeletes;
 
-    // 15%
-    const CANCELLATION_FEES_RATE = 0.15;
+    // 10%
+    const CANCELLATION_FEES_RATE = 0.1;
 
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
@@ -80,14 +80,14 @@ class Order extends Model
     public function getCancellationFees()
     {
         if ($this->hasCancellationFees()) {
-            return (int) ($this->getAmountWithoutCommission() * self::CANCELLATION_FEES_RATE);
+            return (int) ($this->total_price * self::CANCELLATION_FEES_RATE);
         }
         return 0;
     }
 
     public function getRefundAmount()
     {
-        return $this->total_amount - $this->getCancellationFees();
+        return $this->total_price - $this->getCancellationFees();
     }
 
     public function getFundedAmount()
