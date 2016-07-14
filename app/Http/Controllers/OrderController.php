@@ -200,9 +200,7 @@ class OrderController extends Controller
 
     public function deleteOrder($orderId)
     {
-        $user = Auth::user();
-        self::cancelOrder($orderId);
-        return redirect()->action('UserController@getUserOrders', [$user->id]);
+        return self::cancelOrder($orderId);
     }
 
     public static function cancelOrder($orderId)
@@ -271,8 +269,12 @@ class OrderController extends Controller
                     $message->to($emailTo);
                 });
             }
+
+            return redirect()->action('UserController@getUserOrders', [$user->id]);
         } catch (PaymentFailedException $e) {
-            return $e->getMessage();
+            return view('order.error', [
+                'message' => $e->getMessage()
+            ]);
         }
     }
 

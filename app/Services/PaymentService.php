@@ -11,7 +11,6 @@ namespace App\Services;
 
 use App\Exceptions\InvalidPaymentException;
 use App\Exceptions\PaymentFailedException;
-use App\Models\Order;
 
 class PaymentService
 {
@@ -133,6 +132,10 @@ class OneTimePayment extends Payment
             'refund_bank' => '',
             'refund_account' => ''
         ]);
+
+        if ((int)$res->code === -1) {
+            throw new PaymentFailedException($res->message);
+        }
         return $res;
     }
 
@@ -173,6 +176,10 @@ class ScheduledPayment extends Payment
             'customer_uid' => $this->getCustomerId(),
             'merchant_uid' => [$this->getMerchantId()]
         ]);
+
+        if ((int)$res->code === -1) {
+            throw new PaymentFailedException($res->message);
+        }
         return $res;
     }
 
