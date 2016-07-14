@@ -54,7 +54,7 @@ class ProjectController extends Controller
 
     private function uploadPosterImage($request, $project)
     {
-        $posterUrlPartial = Model::S3_POSTER_DIRECTORY . $project->id . '.jpg';
+        $posterUrlPartial = Model::getS3Directory(Model::S3_POSTER_DIRECTORY) . $project->id . '.jpg';
 
         Storage::put(
             $posterUrlPartial,
@@ -71,7 +71,7 @@ class ProjectController extends Controller
         $file = $request->file('image');
         $originalName = $file->getClientOriginalName();
         $hashedName = md5($originalName);
-        $storyUrlPartial = Model::S3_STORY_DIRECTORY . $project->id . '/' . $hashedName . '.jpg';
+        $storyUrlPartial = Model::getS3Directory(Model::S3_STORY_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
 
         Storage::put(
             $storyUrlPartial,
@@ -92,8 +92,6 @@ class ProjectController extends Controller
             'image_width' => $imageWidth,
             'image_height' => $imageHeight
         ];
-
-        return Model::S3_BASE_URL . $storyUrlPartial;
     }
 
     public function uploadNewsImage(Request $request, $id)
@@ -103,7 +101,7 @@ class ProjectController extends Controller
         $file = $request->file('image');
         $originalName = $file->getClientOriginalName();
         $hashedName = md5($originalName);
-        $newsUrlPartial = Model::S3_NEWS_DIRECTORY . $project->id . '/' . $hashedName . '.jpg';
+        $newsUrlPartial = Model::getS3Directory(Model::S3_NEWS_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
 
         Storage::put(
             $newsUrlPartial,

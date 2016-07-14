@@ -2,22 +2,30 @@
 
 use App\Exceptions\ValidationException;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Facades\Config;
 use Validator;
 
 abstract class Model extends BaseModel
 {
 
     const S3_BASE_URL = "https://s3-ap-northeast-1.amazonaws.com/crowdticket0/";
-    const S3_POSTER_DIRECTORY = "posters/";
-    const S3_STORY_DIRECTORY = "stories/";
-    const S3_NEWS_DIRECTORY = "news/";
-    const S3_USER_DIRECTORY = "users/";
+    const S3_POSTER_DIRECTORY = "test/posters/";
+    const S3_STORY_DIRECTORY = "test/stories/";
+    const S3_NEWS_DIRECTORY = "test/news/";
+    const S3_USER_DIRECTORY = "test/users/";
 
     protected static $typeRules = array();
 
     protected static $creationRules = array();
 
     protected static $updateRules = array();
+
+    public static function getS3Directory($dir) {
+        if (Config::get('app.debug')) {
+            return 'test/' . $dir;
+        }
+        return $dir;
+    }
 
     public function __construct(array $attributes = array())
     {
