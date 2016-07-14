@@ -9,7 +9,6 @@
 namespace App\Services;
 
 use EmmaSMS;
-use Illuminate\Support\Facades\Config;
 
 include "class.EmmaSMS.php";
 
@@ -19,10 +18,6 @@ class SmsService
 
     public function send(array $recipients = [], $message, $date = 0)
     {
-        if (Config::get('app.debug')) {
-            return;
-        }
-        
         foreach ($recipients as $recipient) {
             $sms = new EmmaSMS();
             $sms->login(env('SMS_ID'), env('SMS_PASSWORD'));
