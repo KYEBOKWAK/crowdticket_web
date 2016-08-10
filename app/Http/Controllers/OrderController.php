@@ -97,7 +97,10 @@ class OrderController extends Controller
             ]);
         } catch (PaymentFailedException $e) {
             return view('order.error', [
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                'ticket_id' => $ticket->id,
+                'request_price' => $this->getOrderUnitPrice(),
+                'ticket_count' => $this->getOrderCount()
             ]);
         }
     }
@@ -170,14 +173,14 @@ class OrderController extends Controller
         $ticket = $this->getOrderableTicket($ticketId);
         $project = $ticket->project()->first();
 
-        return view('order.form', [
+        return $this->responseWithNoCache(view('order.form', [
             'order' => null,
             'project' => $project,
             'ticket' => $ticket,
             'request_price' => $this->getOrderUnitPrice(),
             'ticket_count' => $this->getOrderCount(),
             'form_url' => url(sprintf('/tickets/%d/orders', $ticket->id))
-        ]);
+        ]));
     }
 
     public function getOrder($orderId)
@@ -185,14 +188,20 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)->withTrashed()->first();
         \Auth::user()->checkOwnership($order);
 
-        return view('order.form', [
+        return $this->responseWithNoCache(view('order.form', [
             'order' => $order,
             'project' => $order->project()->first(),
             'ticket' => $order->ticket()->first(),
             'request_price' => $order->price,
             'ticket_count' => $order->count,
             'form_url' => url(sprintf('/orders/%d', $order->id))
-        ]);
+        ]));
+    }
+
+    private function responseWithNoCache($contents) {
+        return response($contents)->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma','no-cache') //HTTP 1.0
+            ->header('Expires','Sat, 01 Jan 1990 00:00:00 GMT'); // Date in the past
     }
 
     public function getTickets($projectId)

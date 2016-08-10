@@ -20,5 +20,16 @@
                 <h5 class="text-center"><strong>{{ $message }}</strong></h5>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <form action="{{ url('/tickets/') }}/{{ $ticket_id }}/orders/form" method="post">
+                    @include('csrf_field')
+                    <input type="hidden" name="request_price" value="{{ $request_price }}" />
+                    <input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
+                    <button class="btn btn-success ">다시 입력하기</button>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
