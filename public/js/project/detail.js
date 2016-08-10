@@ -58,9 +58,26 @@ $(document).ready(function() {
 		});
 		var $row = $($.parseHTML(row));
 		$row.data('ticketData', ticket);
+		$row.bind('click', function () {
+			var form = $(this).closest('form');
+			var limit = ticket.audiences_limit;
+			var count = ticket.audiences_count;
+			if (parseInt(limit) === 0 || parseInt(limit) > parseInt(count)) {
+				var delivery = ticket.delivery_date;
+				if (Date.now() < Date.parse(delivery)) {
+					$(this).next().click();
+				} else {
+					alert("이미 지난 공연입니다.");
+					return false;
+				}
+			} else {
+				alert("매수 제한으로 참여할 수 없습니다.");
+				return false;
+			}
+		});
 		$('#ticket_list').append($row);
 	};
-	
+
 	listTickets();
 	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', loadContents);

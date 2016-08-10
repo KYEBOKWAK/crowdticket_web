@@ -208,7 +208,10 @@ class OrderController extends Controller
     {
         $project = Project::findOrFail($projectId);
         if ($project->canOrder()) {
-            $project->load(['tickets']);
+            $project->load(['tickets' => function ($query) {
+                $query->whereRaw('audiences_limit > audiences_count');
+                $query->where('delivery_date', '>', date('Y-m-d H:i:s', time()));
+            }]);
             return view('order.tickets', [
                 'project' => $project,
             ]);
