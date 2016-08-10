@@ -80,15 +80,9 @@ class OrderController extends Controller
 
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                Mail::raw('결제 예약 완뇨', function ($message) use ($emailTo) {
-                    $message->from('contact@crowdticket.kr', '크라우드티켓');
-                    $message->to($emailTo);
-                });
+                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
             } else {
-                Mail::raw('결제 완뇨', function ($message) use ($emailTo) {
-                    $message->from('contact@crowdticket.kr', '크라우드티켓');
-                    $message->to($emailTo);
-                });
+                $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
             }
 
             return view('order.complete', [
@@ -103,6 +97,106 @@ class OrderController extends Controller
                 'ticket_count' => $this->getOrderCount()
             ]);
         }
+    }
+
+    private function sendMail($to, $title, $data)
+    {
+        Mail::send('emails.test', $data, function ($m) use ($title, $to) {
+            $m->from('contact@crowdticket.kr', '크라우드티켓');
+            $m->to($to)->subject($title);
+        });
+    }
+
+    private function mailDataOnFunding(Project $project, Ticket $ticket, Order $order)
+    {
+        return [
+            'title' => '아래의 내역으로 결제예약이 완료되었습니다.',
+            'thead1' => '후원한 프로젝트',
+            'thead2' => $project->title,
+            'rows' => [
+                0 => [
+                    'col1' => '후원금',
+                    'col2' => $order->getFundedAmount() . '원'
+                ],
+                1 => [
+                    'col1' => '구매한 티켓',
+                    'col2' => $this->getTicketOrderCount($ticket) . '매'
+                ],
+                2 => [
+                    'col1' => '결제예정일',
+                    'col2' => '목표금액을 달성할 경우 ' . $project->funding_closing_at . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
+                ]
+            ]
+        ];
+    }
+
+    private function mailDataOnFundingCancel(Project $project, Ticket $ticket, Order $order)
+    {
+        return [
+            'title' => '취소한 내역은 아래와 같습니다.',
+            'thead1' => '취소한 프로젝트',
+            'thead2' => $project->title,
+            'rows' => [
+                0 => [
+                    'col1' => '취소한 금액',
+                    'col2' => $order->total_price . '원'
+                ],
+                1 => [
+                    'col1' => '취소한 티켓',
+                    'col2' => $order->count * $ticket->real_ticket_count . '매'
+                ]
+            ]
+        ];
+    }
+
+    private function mailDataOnTicketing(Project $project, Ticket $ticket)
+    {
+        return [
+            'title' => '구매하신 내역은 다음과 같습니다.',
+            'thead1' => '구매한 공연',
+            'thead2' => $project->title,
+            'rows' => [
+                0 => [
+                    'col1' => '공연 일시',
+                    'col2' => $ticket->delivery_date
+                ],
+                1 => [
+                    'col1' => '매수',
+                    'col2' => $this->getTicketOrderCount($ticket) . '매'
+                ]
+            ]
+        ];
+    }
+
+    private function mailDataOnTicketRefund(Project $project, Ticket $ticket, Order $order)
+    {
+        return [
+            'title' => '환불하신 내역은 다음과 같습니다.',
+            'thead1' => '환불한 공연',
+            'thead2' => $project->title,
+            'rows' => [
+                0 => [
+                    'col1' => '공연 일시',
+                    'col2' => $ticket->delivery_date
+                ],
+                1 => [
+                    'col1' => '매수',
+                    'col2' => $order->count . '매'
+                ],
+                2 => [
+                    'col1' => '환불 수수료',
+                    'col2' => '결제금액의 10% (공연 8일 전 ~ 2일 전 환불했을 경우 발생)'
+                ]
+            ]
+        ];
+    }
+
+    public function testWithMail()
+    {
+        \Illuminate\Support\Facades\Mail::send('emails.test', ['data' => 'fuckyou'], function ($m) {
+            $m->from('contact@crowdticket.kr', '안뇽 나야');
+            $m->to('mhdjang@gmail.com', 'wtf')->subject('제목?');
+        });
     }
 
     private function getOrderUnitPrice()
@@ -280,15 +374,9 @@ class OrderController extends Controller
 
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                Mail::raw('결제 예약 취소 완뇨', function ($message) use ($emailTo) {
-                    $message->from('contact@crowdticket.kr', '크라우드티켓');
-                    $message->to($emailTo);
-                });
+                $this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
             } else {
-                Mail::raw('결제 취소 완뇨', function ($message) use ($emailTo) {
-                    $message->from('contact@crowdticket.kr', '크라우드티켓');
-                    $message->to($emailTo);
-                });
+                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
             }
 
             return redirect()->action('UserController@getUserOrders', [$user->id]);
