@@ -109,6 +109,8 @@ class OrderController extends Controller
 
     private function mailDataOnFunding(Project $project, Ticket $ticket, Order $order)
     {
+        $closingAt = date('Y.m.d', strtotime($project->funding_closing_at));
+
         return [
             'title' => '아래의 내역으로 결제예약이 완료되었습니다.',
             'thead1' => '후원한 프로젝트',
@@ -124,7 +126,7 @@ class OrderController extends Controller
                 ],
                 2 => [
                     'col1' => '결제예정일',
-                    'col2' => '목표금액을 달성할 경우 ' . $project->funding_closing_at . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
+                    'col2' => '목표금액을 달성할 경우 ' . $closingAt . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
                 ]
             ]
         ];
@@ -151,6 +153,8 @@ class OrderController extends Controller
 
     private function mailDataOnTicketing(Project $project, Ticket $ticket)
     {
+        $deliveryDate = date('Y.m.d H:i', strtotime($ticket->delivery_date));
+
         return [
             'title' => '구매하신 내역은 다음과 같습니다.',
             'thead1' => '구매한 공연',
@@ -158,7 +162,7 @@ class OrderController extends Controller
             'rows' => [
                 0 => [
                     'col1' => '공연 일시',
-                    'col2' => $ticket->delivery_date
+                    'col2' => $deliveryDate
                 ],
                 1 => [
                     'col1' => '매수',
@@ -170,6 +174,8 @@ class OrderController extends Controller
 
     private function mailDataOnTicketRefund(Project $project, Ticket $ticket, Order $order)
     {
+        $deliveryDate = date('Y.m.d H:i', strtotime($ticket->delivery_date));
+
         return [
             'title' => '환불하신 내역은 다음과 같습니다.',
             'thead1' => '환불한 공연',
@@ -177,7 +183,7 @@ class OrderController extends Controller
             'rows' => [
                 0 => [
                     'col1' => '공연 일시',
-                    'col2' => $ticket->delivery_date
+                    'col2' => $deliveryDate
                 ],
                 1 => [
                     'col1' => '매수',
