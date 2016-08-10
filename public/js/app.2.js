@@ -60,8 +60,21 @@
 		
 		jqueryAjax(form);
 	};
-})();
 
+	$.fn.preventDoubleSubmission = function() {
+		$(this).on('submit', function (e) {
+			var $form = $(this);
+
+			if ($form.data('submitted') === true) {
+				e.preventDefault();
+			} else {
+				$form.data('submitted', true);
+			}
+		});
+
+		return this;
+	};
+})();
 
 $(document).ready(function() {
 	$('.concatable').each(function() {

@@ -460,7 +460,7 @@
                         @endif
                     @endif
                 @else
-                    <button class="btn btn-success">밀어주기</button>
+                    <button class="btn btn-success">결제하기</button>
                 @endif
             </div>
         </form>
@@ -488,6 +488,7 @@
                 });
             });
 
+            $('form').preventDoubleSubmission();
             $('form').validate({
                 rules: {
                     "contact": {
