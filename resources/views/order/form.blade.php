@@ -445,7 +445,8 @@
                                 <button class="btn btn-danger">환불하기</button>
                                 @if ($order->hasCancellationFees())
                                     <p class="ps-tooltip text-danger">
-                                        환불 정책에 따라 취소 수수료 {{ $order->getCancellationFees() }}원이 차감된 {{ $order->getRefundAmount() }}원이 환불됩니다.
+                                        환불 정책에 따라 취소 수수료 {{ $order->getCancellationFees() }}원이 차감된 {{ $order->getRefundAmount() }}원이 환불됩니다.<br/>
+                                        환불은 2~3일 정도 소요될 수 있습니다.
                                     </p>
                                 @endif
                             @endif
