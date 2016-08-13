@@ -22,7 +22,7 @@
                 <h1>비밀번호 찾기</h1>
                 @if (session('status'))
                     <div class="alert alert-success">
-                        {{ session('status') }}
+                        비밀번호를 변경할 수 있는 링크가 이메일로 전송되었습니다!
                     </div>
                 @endif
 
