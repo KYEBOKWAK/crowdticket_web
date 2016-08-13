@@ -59,12 +59,32 @@ $(document).ready(function() {
 		var $row = $($.parseHTML(row));
 		$row.data('ticketData', ticket);
 		$row.bind('click', function () {
+			var parseDate = function(input) {
+				var dash = '-';
+				var whitespace = ' ';
+				var colon = ':';
+				if (input.indexOf(dash) !== -1) {
+					var parts = input.split(dash);
+					var year = parts[0];
+					var month = parts[1] - 1; // Note: months are 0-based
+					var day = parts[2];
+					if (day.indexOf(whitespace) !== -1) {
+						var details = day.split(whitespace);
+						day = details[0];
+						var times = details[1].split(colon);
+						return new Date(year, month, day, times[0], times[1], times[2]);
+					}
+					return new Date(year, month, day);
+				}
+				return Date.parse(input);
+			};
+			
 			var form = $(this).closest('form');
 			var limit = ticket.audiences_limit;
 			var count = ticket.audiences_count;
 			if (parseInt(limit) === 0 || parseInt(limit) > parseInt(count)) {
 				var delivery = ticket.delivery_date;
-				if (Date.now() < Date.parse(delivery)) {
+				if (Date.now() < parseDate(delivery)) {
 					$(this).next().click();
 				} else {
 					alert("이미 지난 공연입니다.");
