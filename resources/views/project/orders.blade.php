@@ -80,7 +80,7 @@
                             <tbody>
                             @foreach ($ticket->orders as $order)
                                 <tr>
-                                    <td>{{ $order->account_name }}</td>
+                                    <td>{{ $order->name }}</td>
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->count }}</td>
                                     <td>{{ $order->price * $order->count }}</td>
