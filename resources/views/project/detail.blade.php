@@ -185,7 +185,7 @@
 
                                     2 => [
                                         'id' => 'tab-comments',
-                                        'title' => '댓글 (' . $project->comments_count . ')'
+                                        'title' => '응원&후기 (' . $project->comments_count . ')'
                                     ],
 
                                     3 => [
@@ -211,7 +211,7 @@
 
                                     2 => [
                                         'id' => 'tab-comments',
-                                        'title' => '댓글 (' . $project->comments_count . ')'
+                                        'title' => '응원&후기 (' . $project->comments_count . ')'
                                     ]
                                 ]
                             ])
