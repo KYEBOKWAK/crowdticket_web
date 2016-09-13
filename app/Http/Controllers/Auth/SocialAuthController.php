@@ -35,13 +35,20 @@ class SocialAuthController extends Controller
         }
 
         $user = User::create([
-            'email' => $facebookUser->email,
+            'email' => $this->getFacebookEmail($facebookUser),
             'name' => $facebookUser->name,
             'profile_photo_url' => $facebookUser->avatar,
             'password' => $facebookUser->id
         ]);
         $user->facebook_id = $facebookUser->id;
         return $user;
+    }
+
+    private function getFacebookEmail($facebookUser) {
+        if ($facebookUser->email) {
+            return $facebookUser->email;
+        }
+        return $facebookUser->id . '@facebook.com';
     }
 
 }
