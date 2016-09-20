@@ -34,7 +34,7 @@ class PaymentInfo
 
     public function withCardNumber($cardNumber)
     {
-        $this->validateOrFail('card_number', $cardNumber, 'digits:16');
+        $this->validateOrFail('card_number', $cardNumber, 'digits_between:15,16');
         $this->cardNumber = $this->formatCardNumber($cardNumber);
     }
 
