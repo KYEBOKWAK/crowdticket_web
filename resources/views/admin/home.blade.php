@@ -140,6 +140,8 @@
                                 {{ $project->title }}
                                 <form action="{{ url(sprintf('/admin/projects/%d/cancel', $project->id)) }}" method="post">
                                     <button type="submit" class="btn btn-danger">주문 취소</button>
+                                    <input type="hidden" name="_method" value="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                             </li>
                         @endforeach
