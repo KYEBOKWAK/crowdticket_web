@@ -61,7 +61,7 @@ class AdminController extends Controller
             $orders = $project->orders();
             foreach ($orders as $order) {
                 if ($order->canCancel()) {
-                    OrderController::cancelOrder($order->id);
+                    OrderController::deleteOrder($order->id);
                 }
             }
         }
