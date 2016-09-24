@@ -341,32 +341,35 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $order->delete();
-            if ($user->supports_count > 0) {
-                $user->decrement('supports_count');
-            }
-            if ($user->tickets_count > 0) {
-                $user->decrement('tickets_count');
-            }
-            $supporter = Supporter::where('project_id', $project->id)
-                ->where('user_id', $user->id)
-                ->where('ticket_id', $ticket->id)
-                ->first();
-            if ($supporter) {
-                $supporter->delete();
-            }
-            $funded = $order->getFundedAmount();
-            if ($project->funded_amount - $funded >= 0) {
-                $project->decrement('funded_amount', $funded);
-            }
-            $ticketCount = $ticket->real_ticket_count * $order->count;
-            if ($project->tickets_count - $ticketCount >= 0) {
-                $project->decrement('tickets_count', $ticketCount);
-            }
-            if ($project->supporters_count > 0) {
-                $project->decrement('supporters_count');
-            }
-            if ($ticket->audiences_count - $order->count >= 0) {
-                $ticket->decrement('audiences_count', $order->count);
+
+            if (!$bypass) {
+                if ($user->supports_count > 0) {
+                    $user->decrement('supports_count');
+                }
+                if ($user->tickets_count > 0) {
+                    $user->decrement('tickets_count');
+                }
+                $supporter = Supporter::where('project_id', $project->id)
+                    ->where('user_id', $user->id)
+                    ->where('ticket_id', $ticket->id)
+                    ->first();
+                if ($supporter) {
+                    $supporter->delete();
+                }
+                $funded = $order->getFundedAmount();
+                if ($project->funded_amount - $funded >= 0) {
+                    $project->decrement('funded_amount', $funded);
+                }
+                $ticketCount = $ticket->real_ticket_count * $order->count;
+                if ($project->tickets_count - $ticketCount >= 0) {
+                    $project->decrement('tickets_count', $ticketCount);
+                }
+                if ($project->supporters_count > 0) {
+                    $project->decrement('supporters_count');
+                }
+                if ($ticket->audiences_count - $order->count >= 0) {
+                    $ticket->decrement('audiences_count', $order->count);
+                }
             }
 
             DB::commit();
