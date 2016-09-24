@@ -58,11 +58,9 @@ class AdminController extends Controller
     {
         $project = Project::find($id);
         if ($project->type === 'funding') {
-            $orders = $project->orders();
+            $orders = $project->orders()->get();
             foreach ($orders as $order) {
-                if ($order->canCancel()) {
-                    OrderController::deleteOrder($order->id);
-                }
+                app('App\Http\Controllers\OrderController')->deleteOrder($order->id, true);
             }
         }
     }

@@ -319,13 +319,15 @@ class OrderController extends Controller
         throw new InvalidTicketStateException();
     }
 
-    public function deleteOrder($orderId)
+    public function deleteOrder($orderId, $bypass = false)
     {
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
 
-        if (!$order->canCancel()) {
-            throw new PaymentFailedException();
+        if (!$bypass) {
+            if (!$order->canCancel()) {
+                throw new PaymentFailedException();
+            }
         }
 
         $user = $order->user()->first();
