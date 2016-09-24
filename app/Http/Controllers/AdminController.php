@@ -60,7 +60,9 @@ class AdminController extends Controller
         if ($project->type === 'funding') {
             $orders = $project->orders();
             foreach ($orders as $order) {
-                OrderController::cancelOrder($order->id);
+                if ($order->canCancel()) {
+                    OrderController::cancelOrder($order->id);
+                }
             }
         }
     }
