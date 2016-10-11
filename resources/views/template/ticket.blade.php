@@ -41,9 +41,11 @@
 				<p class="ticket-reward"><%= ticket.reward.split("\n").join("<br />") %></p>
 			</div>
 			<div class="ticket-footer">
+			    <% if (type === 'funding') { %>
 				<span>
 					<span class="text-primary"><%= ticket.audiences_count.format() %></span>명이 선택 중 /
 				</span>
+				<% } %>
 				<% if (ticket.audiences_limit > 0) { %>
 					<span>
 						<span class="ticket-audiences-limit"><%= ticket.audiences_limit.format() %></span>개 제한
