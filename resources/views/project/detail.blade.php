@@ -314,11 +314,6 @@
                                         <span><strong>{{ $project->getTicketDateFormatted() }}</strong></span>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-md-offset-3 project-half">
-                                    <h5 class="text-center">티켓구매</h5>
-                                    <span class="center-block text-center"><strong>{{ $project->tickets_count }}</strong>매</span>
-                                </div>
-                                <div class="clear"></div>
                                 <div class="project-full-button">
                                     @if ($project->isFinished())
                                         <a href="#" disabled="disabled" class="btn btn-primary">마감된 공연</a>
