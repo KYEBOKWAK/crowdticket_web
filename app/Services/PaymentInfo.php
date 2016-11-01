@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class PaymentInfo
 {
-    const MIN_AMOUNT = 1000;
+    const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 2500000;
 
     private $cardNumber;

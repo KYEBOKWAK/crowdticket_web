@@ -303,8 +303,50 @@
                 <input type="hidden" name="ticket_count" value="{{ $ticket_count }}"/>
                 <input id="order-price" name="request_price" type="hidden" readonly="readonly"
                        class="form-control" value="{{ $request_price }}"/>
-                <input id="order-account-name" name="account_name" type="hidden" class="form-control"
-                       value="{{ \Auth::user()->name }}" readonly="readonly"/>
+                <div class="col-md-12">
+                    <div class="ps-box">
+                        <div class="form-group">
+                            <label for="order-name" class="col-sm-2 control-label">성명</label>
+                            <div class="col-sm-2">
+                                @if ($order)
+                                    <input id="order-name" name="name" type="text"
+                                           class="form-control" value="{{ $order->name }}"
+                                           readonly="readonly"/>
+                                @else
+                                    <input id="order-name" name="name" type="text"
+                                           class="form-control" value="{{ \Auth::user()->name }}"
+                                           required="required"/>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-contact" class="col-sm-2 control-label">휴대폰번호</label>
+                            <div class="col-sm-2">
+                                @if ($order)
+                                    <input id="order-contact" name="contact" maxlength="11" type="text"
+                                           class="form-control" value="{{ $order->contact }}"
+                                           readonly="readonly"/>
+                                @else
+                                    <input id="order-contact" name="contact" maxlength="11" type="text"
+                                           class="form-control" value="{{ \Auth::user()->contact }}"
+                                           required="required" placeholder="-없이 숫자만 입력"/>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-email" class="col-sm-2 control-label">이메일</label>
+                            <div class="col-sm-4">
+                                @if ($order)
+                                    <input id="order-email" name="email" type="email" class="form-control"
+                                           value="{{ $order->email }}" readonly="readonly"/>
+                                @else
+                                    <input id="order-email" name="email" type="email" class="form-control"
+                                           value="{{ \Auth::user()->email }}" required="required"/>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endif
 
             @if ($ticket->require_shipping)

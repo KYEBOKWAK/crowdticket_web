@@ -24,21 +24,16 @@ class OrderController extends Controller
         $ticket = $this->getOrderableTicket($ticketId);
         $project = $ticket->project()->first();
 
-        $info = new PaymentInfo();
-        $info->withSignature($user->id, $project->id);
-        $info->withAmount($this->getTotalPrice($ticket));
-        $info->withCardNumber(Input::get('card_number'));
-        $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
-        $info->withBirth(Input::get('birth'));
-        $info->withPassword(Input::get('card_password'));
-
         try {
-            $paymentService = new PaymentService();
             $payment = null;
-            if ($project->type === 'funding') {
-                $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-            } else {
-                $payment = $paymentService->rightNow($info);
+            if ($this->isPaymentProcess()) {
+                $info = $this->buildPaymentInfo($user, $project, $ticket);
+                $paymentService = new PaymentService();
+                if ($project->type === 'funding') {
+                    $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+                } else {
+                    $payment = $paymentService->rightNow($info);
+                }
             }
 
             DB::beginTransaction();
@@ -97,6 +92,21 @@ class OrderController extends Controller
                 'ticket_count' => $this->getOrderCount()
             ]);
         }
+    }
+
+    private function isPaymentProcess() {
+        return (int) $this->getOrderPrice() > 0;
+    }
+
+    private function buildPaymentInfo($user, $project, $ticket) {
+        $info = new PaymentInfo();
+        $info->withSignature($user->id, $project->id);
+        $info->withAmount($this->getTotalPrice($ticket));
+        $info->withCardNumber(Input::get('card_number'));
+        $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
+        $info->withBirth(Input::get('birth'));
+        $info->withPassword(Input::get('card_password'));
+        return $info;
     }
 
     private function sendMail($to, $title, $data)
@@ -227,10 +237,13 @@ class OrderController extends Controller
 
     private function getTotalPrice($ticket)
     {
-        $orderPrice = $this->getOrderPrice();
-        $count = $this->getOrderCount();
-        $commission = $ticket->real_ticket_count * $count * 500;
-        return $orderPrice + $commission;
+        if ($this->isPaymentProcess()) {
+            $orderPrice = $this->getOrderPrice();
+            $count = $this->getOrderCount();
+            $commission = $ticket->real_ticket_count * $count * 500;
+            return $orderPrice + $commission;
+        }
+        return 0;
     }
 
     private function getOrderableTicket($ticketId)
@@ -240,7 +253,7 @@ class OrderController extends Controller
         return $ticket;
     }
 
-    private function getFilteredInput(Ticket $ticket, Payment $payment)
+    private function getFilteredInput(Ticket $ticket, Payment $payment = null)
     {
         $inputs = Input::only(
             [
@@ -251,7 +264,7 @@ class OrderController extends Controller
         $inputs['price'] = $this->getOrderUnitPrice();
         $inputs['count'] = $this->getOrderCount();
         $inputs['total_price'] = $this->getTotalPrice($ticket);
-        $inputs['imp_meta'] = $payment->toJson();
+        $inputs['imp_meta'] = $payment ? $payment->toJson() : '{}';
 
         if ($inputs['postcode'] === null) {
             $inputs['postcode'] = '';
@@ -335,8 +348,10 @@ class OrderController extends Controller
         $project = $order->project()->first();
 
         try {
-            $payment = PaymentService::getPayment($order);
-            $payment->cancel();
+            if ((int)$order->total_price > 0) {
+                $payment = PaymentService::getPayment($order);
+                $payment->cancel();
+            }
 
             DB::beginTransaction();
 
