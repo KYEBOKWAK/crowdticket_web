@@ -1,6 +1,5 @@
 /bootstrap/compiled.php
 /vendor/
-/public/.htaccess
 .env.*.php
 .env.php
 .env
