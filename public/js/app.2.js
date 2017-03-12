@@ -52,12 +52,12 @@
 		}
 		
 		removeInvalidData(form.data);
-		
-		if (!startsWith(form.url, 'http')) {
-			var baseUrl = $('#base_url').val();
-			form.url = baseUrl + form.url;
-		}
-		
+
+        if (!(startsWith(form.url, 'http') || startsWith(form.url, '//'))) {
+            var baseUrl = $('#base_url').val();
+            form.url = baseUrl + form.url;
+        }
+
 		jqueryAjax(form);
 	};
 
