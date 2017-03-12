@@ -511,7 +511,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('/js/postcodify.js') }}"></script>
+    <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script>
         $(document).ready(function () {
             $("#postcodify_search_button").postcodifyPopUp();
