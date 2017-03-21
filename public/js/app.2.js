@@ -68,7 +68,9 @@
 			if ($form.data('submitted') === true) {
 				e.preventDefault();
 			} else {
-				$form.data('submitted', true);
+				if ($form.valid()) {
+                    $form.data('submitted', true);
+                }
 			}
 		});
 
