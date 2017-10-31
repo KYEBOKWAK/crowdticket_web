@@ -7,6 +7,10 @@ class WelcomeController extends Controller
     {
         $now = date('Y-m-d H:i:s');
 
+        $total_suppoter = 0;
+        $total_view = 0;
+        $total_amount = 0;
+
         $minExposedNum = 6;
         $projects = \App\Models\Project::where('state', 4)
             ->where('funding_closing_at', '>', $now)
@@ -23,8 +27,15 @@ class WelcomeController extends Controller
             $projects = $projects->merge($additional);
         }
 
+        $total_suppoter = \App\Models\Project::sum('supporters_count');
+        $total_view = \App\Models\Project::sum('view_count');
+        $total_amount = \App\Models\Project::sum('funded_amount');
+
         return view('welcome', [
-            'projects' => $projects
+            'projects' => $projects,
+            'total_suppoter' = $total_suppoter,
+            'total_view' = $total_view,
+            'total_amount' => $total_amount
         ]);
     }
 

@@ -130,73 +130,7 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <!-- <div class="item active"> -->
-                        @include('template.carousel_project', ['projects' => $projects ])
-                    <!-- </div> -->
-                    <!-- <div class="item">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/146">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/146.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/146">Light Up #4</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">아티스트와 관객을 위한 공연 브랜드 'Light Up' </h6>
-                                    </div>
-                                    <div class="project-ticket-concert text-center">
-                                        <img src="https://crowdticket.kr/img/app/ico_map.png" width="18px" height="18px"><span>퀸라이브홀</span>
-                                    </div>
-                                    <div class="project-ticket-date text-center">
-                                        <span>CLOSED</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/145">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/145.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/145">Golden Mic Battle Final</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">2017. 09. 9(토) Golden Mic Battle Final 무대 </h6>
-                                    </div>
-                                    <div class="project-ticket-concert text-center">
-                                        <img src="https://crowdticket.kr/img/app/ico_map.png" width="18px" height="18px"><span>Crack Hall</span>
-                                    </div>
-                                    <div class="project-ticket-date text-center">
-                                        <span>CLOSED</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/143">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/143.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/143">손님이 너무 많아 개점휴업</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">프로젝트그룹 「두각」 </h6>
-                                    </div>
-                                    <div class="project-ticket-concert text-center">
-                                        <img src="https://crowdticket.kr/img/app/ico_map.png" width="18px" height="18px"><span>해우소소극장</span>
-                                    </div>
-                                    <div class="project-ticket-date text-center">
-                                        <span>CLOSED</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                    @include('template.carousel_project', ['projects' => $projects ])
                 </div>
             </div>
         </div>
@@ -232,19 +166,19 @@
                 <h2>누적 공연 후원자수</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="150">0<span>&nbsp;명</span></h1>
+                <h1 class="counting" data-count="{{ $total_suppoter }}">0<span>&nbsp;명</span></h1>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <h2>공연 조회수</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="300000">0<span>&nbsp;명</span></h1>
+                <h1 class="counting" data-count="{{ $total_view }}">0<span>&nbsp;명</span></h1>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <h2>누적 펀딩 금액</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="3244">0<span>&nbsp;</span></h1>
+                <h1 class="counting" data-count="{{ $total_amount }}">0<span>&nbsp;</span></h1>
             </div>
         </div>
     </div>
