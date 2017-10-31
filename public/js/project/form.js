@@ -114,6 +114,8 @@ $(document).ready(function() {
 		if (projectType === 'funding') {
 			realTicketCount = $('#ticket_real_count').val();
 			requireShipping = $('#ticket_require_shipping').is(':checked') ? 1 : 0;
+			question = $('#ticket_question').val();
+			requireQuestion = $('#ticket_require_question').is(':checked') ? 1 : 0;
 			deliveryDate = $('#ticket_delivery_date').val() + " 00:00:00";
 		} else if (projectType === 'sale') {
 			realTicketCount = 1;
@@ -134,6 +136,7 @@ $(document).ready(function() {
 		return {
 			'price': $('#ticket_price').val(),
 			'reward': $('#ticket_reward').val(),
+			'question': $('#ticket_question').val(),
 			'audiences_limit': $('#ticket_audiences_limit').val(),
 			'real_ticket_count': realTicketCount,
 			'require_shipping': requireShipping,
@@ -145,7 +148,9 @@ $(document).ready(function() {
 		$('#ticket_price').val('0');
 		$('#ticket_real_count').val('0');
 		$('#ticket_reward').val('');
+		$('#ticket_question').val('');
 		$('#ticket_require_shipping').removeAttr('checked');
+		$('#ticket_require_question').removeAttr('checked');
 		$('#ticket_audiences_limit').val('0');
 		$('#ticket_delivery_date').val(getDateFormatted(new Date()));
 	};
@@ -191,11 +196,13 @@ $(document).ready(function() {
 		$('#ticket_price').val(ticketData.price);
 		$('#ticket_real_count').val(ticketData.real_ticket_count);
 		$('#ticket_reward').val(ticketData.reward);
+		$('#ticket_question').val(ticketData.question);
 		$('#ticket_audiences_limit').val(ticketData.audiences_limit);
 		$('#ticket_delivery_date').val(getDateFormatted(deliveryDate));
 		$('#ticket_delivery_hour').val(deliveryDate.getHours());
 		$('#ticket_delivery_min').val(deliveryDate.getMinutes());
 		$('#ticket_require_shipping').prop('checked', ""+ticketData.require_shipping === '1');
+		$('#ticket_require_question').prop('checked', ""+ticketData.require_question === '1');
 		
 		$('#update_ticket').attr('data-ticket-id', ticket.attr('data-ticket-id'));
 	};

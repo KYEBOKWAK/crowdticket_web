@@ -172,6 +172,14 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- <div class="form-group answer" @if( !$ticket->require_question) style="display:none;" @endif> -->
+                        <div class="form-group answer">
+                            <label class="col-sm-2 control-label">추가질문</label>
+                            <label class="col-sm-9">{{ $ticket->question }}</label>
+                            <div class="col-sm-offset-2 col-sm-9">
+                                <textarea id="order-answer" name="answer" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
