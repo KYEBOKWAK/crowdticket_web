@@ -1,6 +1,7 @@
 @extends('app')
 
 @section('meta')
+    <meta property="og:image" content="{{ $project->getPosterUrl() }}"/>
     <meta name="description" content="{{ $project->description }}"/>
 @endsection
 
