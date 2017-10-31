@@ -130,77 +130,10 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/151">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/151.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/151">멈춰 선 우리의 이야기,연극&lt;기대&gt;</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">그대로도 충분했던 그 때,우리들의 이야기</h6>
-                                    </div>
-                                    <div class="project-progress-wrapper">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width:46%;">
-                                                <span class="sr-only">46</span>
-                                            </div>
-                                        </div>
-                                        <span class="project-progress-number"><strong>46</strong>%</span><span class="project-progress-dday">18일 남았어요!</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/151">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/151.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/151">멈춰 선 우리의 이야기,연극&lt;기대&gt;</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">그대로도 충분했던 그 때,우리들의 이야기</h6>
-                                    </div>
-                                    <div class="project-progress-wrapper">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width:46%;">
-                                                <span class="sr-only">46</span>
-                                            </div>
-                                        </div>
-                                        <span class="project-progress-number"><strong>46</strong>%</span><span class="project-progress-dday">18일 남았어요!</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-4 project-grid">
-                                <div class="project-grid-wrapper">
-                                    <div>
-                                        <a href="https://crowdticket.kr/projects/151">
-                                        <div class="bg-base project-thumbnail" style="background-image:url('https://s3-ap-northeast-1.amazonaws.com/crowdticket0/test/posters/151.jpg')">
-                                            <div class="white-mask">
-                                            </div>
-                                        </div>
-                                        </a>
-                                        <h4 class="text-ellipsize project-title"><a href="https://crowdticket.kr/projects/151">멈춰 선 우리의 이야기,연극&lt;기대&gt;</a></h4>
-                                        <h6 class="text-ellipsize-2 project-description">그대로도 충분했던 그 때,우리들의 이야기</h6>
-                                    </div>
-                                    <div class="project-progress-wrapper">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" aria-valuenow="46" aria-valuemin="0" aria-valuemax="100" style="width:46%;">
-                                                <span class="sr-only">46</span>
-                                            </div>
-                                        </div>
-                                        <span class="project-progress-number"><strong>46</strong>%</span><span class="project-progress-dday">18일 남았어요!</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
+                    <!-- <div class="item active"> -->
+                        @include('template.carousel_project', ['projects' => $projects ])
+                    <!-- </div> -->
+                    <!-- <div class="item">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-md-4 project-grid">
                                 <div class="project-grid-wrapper">
@@ -263,7 +196,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
