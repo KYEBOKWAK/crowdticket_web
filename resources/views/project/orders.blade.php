@@ -74,7 +74,8 @@
                                 <td>결제일</td>
                                 <td>이메일</td>
                                 <td>전화번호</td>
-                                <td>주소</td>
+                                @if ( $ticket->require_shipping ) <td>주소</td> @endif
+                                @if ( !empty($ticket->question) ) <td>추가질문 답변</td> @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -88,7 +89,10 @@
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->email }}</td>
                                     <td>{{ $order->contact }}</td>
-                                    <td>{{ $order->postcode }} {{ $order->address_main }} {{ $order->address_detail }}</td>
+                                    @if ( $ticket->require_shipping ) 
+                                        <td>{{ $order->postcode }} {{ $order->address_main }} {{ $order->address_detail }}</td>
+                                    @endif
+                                    @if ( !empty($ticket->question) ) <td>{{ $order->answer }}</td> @endif
                                 </tr>
                             @endforeach
                             </tbody>

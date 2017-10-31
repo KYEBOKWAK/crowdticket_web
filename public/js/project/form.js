@@ -115,7 +115,6 @@ $(document).ready(function() {
 			realTicketCount = $('#ticket_real_count').val();
 			requireShipping = $('#ticket_require_shipping').is(':checked') ? 1 : 0;
 			question = $('#ticket_question').val();
-			requireQuestion = $('#ticket_require_question').is(':checked') ? 1 : 0;
 			deliveryDate = $('#ticket_delivery_date').val() + " 00:00:00";
 		} else if (projectType === 'sale') {
 			realTicketCount = 1;
@@ -150,7 +149,6 @@ $(document).ready(function() {
 		$('#ticket_reward').val('');
 		$('#ticket_question').val('');
 		$('#ticket_require_shipping').removeAttr('checked');
-		$('#ticket_require_question').removeAttr('checked');
 		$('#ticket_audiences_limit').val('0');
 		$('#ticket_delivery_date').val(getDateFormatted(new Date()));
 	};
@@ -202,8 +200,7 @@ $(document).ready(function() {
 		$('#ticket_delivery_hour').val(deliveryDate.getHours());
 		$('#ticket_delivery_min').val(deliveryDate.getMinutes());
 		$('#ticket_require_shipping').prop('checked', ""+ticketData.require_shipping === '1');
-		$('#ticket_require_question').prop('checked', ""+ticketData.require_question === '1');
-		
+				
 		$('#update_ticket').attr('data-ticket-id', ticket.attr('data-ticket-id'));
 	};
 	

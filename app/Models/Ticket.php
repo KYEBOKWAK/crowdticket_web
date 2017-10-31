@@ -7,13 +7,15 @@ class Ticket extends Model
     protected $fillable = [
         'price', 'real_ticket_count', 'reward',
         'require_shipping', 'audiences_limit',
-        'delivery_date', 'shipping_charge'
+        'delivery_date', 'shipping_charge',
+        'question'
     ];
 
     protected static $typeRules = [
         'price' => 'integer|min:0',
         'real_ticket_count' => 'integer|min:0',
         'reward' => 'string|min:1',
+        'question' => 'string|max:30',
         'audiences_limit' => 'integer|min:0',
         'delivery_date' => 'date_format:Y-m-d H:i:s',
         'shipping_charge' => 'integer'

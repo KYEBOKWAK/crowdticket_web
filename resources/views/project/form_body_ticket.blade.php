@@ -104,11 +104,8 @@
         <div class="form-group" @if ($project->type !== 'funding') style="display:none;" @endif>
                 <label for="ticket_" class="col-sm-2 control-label">추가질문</label>
             <div class="col-sm-8">
-                <textarea id="ticket_question" name="question" class="form-control"></textarea>
-                <p class="help-block">후원자에게 공연관람 일정, 보상 사이즈 등 추가사항을 문의할 수 있습니다</p>
-                <label class="help-block">
-                    <input id="ticket_require_question" name="require_question" type="checkbox" value=""/>질문이 필요 없습니다.
-                </label>
+                <textarea id="ticket_question" name="question" class="form-control" maxlength='30'></textarea>
+                <p class="help-block">후원자에게 공연관람 일정, 보상 사이즈 등 추가사항을 문의할 수 있습니다.(30자내)</p>
             </div>
         </div>
         <div class="form-group">

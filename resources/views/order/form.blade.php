@@ -172,12 +172,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="form-group answer" @if( !$ticket->require_question) style="display:none;" @endif> -->
-                        <div class="form-group answer">
+                        <div class="form-group answer" @if( empty($ticket->question) ) style="display:none;" @endif>
                             <label class="col-sm-2 control-label">추가질문</label>
                             <label class="col-sm-9">{{ $ticket->question }}</label>
                             <div class="col-sm-offset-2 col-sm-9">
-                                <textarea id="order-answer" name="answer" class="form-control"></textarea>
+                                <textarea id="order-answer" name="answer" class="form-control" maxlength='20'></textarea>
+                                <p class="help-block">답변은 20자 내로 작성해주세요.</p>
                             </div>
                         </div>
                     </div>
