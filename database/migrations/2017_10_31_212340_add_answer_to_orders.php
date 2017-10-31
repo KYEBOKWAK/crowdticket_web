@@ -24,8 +24,8 @@ class AddAnswerToOrders extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('tickets', function($table) {
-	        $table->string('answer');
+		Schema::table('orders', function($table) {
+	        $table->dropColumn('answer');
 	    });
 	}
 
