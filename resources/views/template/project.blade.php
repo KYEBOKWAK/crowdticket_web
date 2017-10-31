@@ -48,8 +48,14 @@ $i = 0;
                                     <span class="project-progress-dday">CLOSED</span>
                                 @endif
                             @else
-                                <span class="project-progress-dday">{{ $project->dayUntilFundingClosed() }}
-                                    일 남았어요!</span>
+                                <span class="project-progress-dday">
+                                    @if($project->dayUntilFundingClosed()>0)
+                                        {{ $project->dayUntilFundingClosed() }}
+                                        일 남았어요!
+                                    @else($project->dayUntilFundingClosed()===0)
+                                        오늘마감!
+                                    @endif
+                                </span>
                             @endif
                         </div>
                     @else
