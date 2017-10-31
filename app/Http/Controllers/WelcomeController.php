@@ -27,14 +27,14 @@ class WelcomeController extends Controller
             $projects = $projects->merge($additional);
         }
 
-        $total_suppoter = \App\Models\Project::sum('supporters_count');
-        $total_view = \App\Models\Project::sum('view_count');
-        $total_amount = \App\Models\Project::sum('funded_amount');
+        $total_suppoter = \App\Models\Project::where('supporters_count', '<>', 0)->sum('supporters_count');
+        $total_view = \App\Models\Project::where('view_count', '<>', 0)->sum('view_count');
+        $total_amount = \App\Models\Project::where('funded_amount', '<>', 0)->sum('funded_amount');
 
         return view('welcome', [
             'projects' => $projects,
-            'total_suppoter' = $total_suppoter,
-            'total_view' = $total_view,
+            'total_suppoter' => $total_suppoter,
+            'total_view' => $total_view,
             'total_amount' => $total_amount
         ]);
     }

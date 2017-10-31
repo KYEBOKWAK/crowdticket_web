@@ -147,7 +147,7 @@
 <script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('/js/additional-methods.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
-<script src="{{ asset('/js/app.2.js?version=2') }}"></script>
+<script src="{{ asset('/js/app.2.js?version=3') }}"></script>
 <script src="{{ asset('/js/loader.js') }}"></script>
 
 @yield('js')
