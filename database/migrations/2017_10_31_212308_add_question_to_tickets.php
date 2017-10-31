@@ -14,7 +14,6 @@ class AddQuestionToTickets extends Migration {
 	{
 		Schema::table('tickets', function($table) {
 	        $table->string('question')->after('shipping_charge');
-	        $table->boolean('require_question')->default(true)->after('question');
 	    });
 	}
 
@@ -26,8 +25,7 @@ class AddQuestionToTickets extends Migration {
 	public function down()
 	{
 		Schema::table('tickets', function($table) {
-	        $table->dropColumn('paid');
-	        $table->dropColumn('require_question');
+	        $table->dropColumn('question');
 	    });
 	}
 
