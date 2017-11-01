@@ -258,7 +258,7 @@ class OrderController extends Controller
         $inputs = Input::only(
             [
                 'name', 'contact', 'email',
-                'postcode', 'address_main', 'address_detail', 'requirement'
+                'postcode', 'address_main', 'address_detail', 'requirement', 'answer'
             ]
         );
         $inputs['price'] = $this->getOrderUnitPrice();
@@ -277,6 +277,9 @@ class OrderController extends Controller
         }
         if ($inputs['requirement'] === null) {
             $inputs['requirement'] = '';
+        }
+        if ($inputs['answer'] === null) {
+            $inputs['answer'] = '';
         }
         return $inputs;
     }
