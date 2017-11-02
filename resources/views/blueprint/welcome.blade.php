@@ -41,7 +41,7 @@
                     후원해 주신 분들께<br>멋진 공연으로 보답하세요!<br>
                      티켓 오픈 전<br>공연홍보기회는 덤으로!</h1>
                     <h3>크라우드티켓은 초기 공연기획비용 없이도 음악 콘서트, 토크 콘서트, 강연, 전시회, 파티, 각종 모임 등 모든 종류의 공연을 자유롭게 기획하게 티켓을 판매할 수 있는 열린 공간입니다.</h3>
-                    <a href="#apply" class="ct-btn ct-btn-default">공연 개설 신청하기</a>
+                    <button id="moveApply" type="button" class="ct-btn ct-btn-default">공연 개설 신청하기</button>
                 </div>
             </div>
             <div class="img-bg hidden-xs hidden-sm">
@@ -156,4 +156,20 @@
         </div>
     </div>
     <!-- fourth section 끝 -->
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('#moveApply').on("click",function(event){
+                // 1. pre태그의 위치를 가지고 있는 객체를 얻어온다. => offset 객체
+                var scrollPosition = $("#apply").offset().top;
+                     
+                // offset은 절대 위치를 가져온다. offset.top을 통해 상단의 좌표를 가져온다.
+                // position은 부모를 기준으로한 상대위치를 가져온다.
+                $('html, body').animate({scrollTop : scrollPosition}, 1000);
+     
+            });
+        });
+    </script>
 @endsection
