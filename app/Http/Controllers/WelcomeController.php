@@ -33,9 +33,9 @@ class WelcomeController extends Controller
 
         return view('welcome', [
             'projects' => $projects,
-            'total_suppoter' => $total_suppoter,
-            'total_view' => $total_view,
-            'total_amount' => $total_amount
+            'total_suppoter' => number_format($total_suppoter),
+            'total_view' => number_format($total_view),
+            'total_amount' => number_format($total_amount)
         ]);
     }
 

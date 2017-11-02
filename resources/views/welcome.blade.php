@@ -168,43 +168,32 @@
                 <h2>누적 공연 후원자수</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="{{ $total_suppoter }}">0<span>&nbsp;명</span></h1>
+                <h1 class="counting"><span class="count-ani"> {{ $total_suppoter }} </span><span>&nbsp;명</span></h1>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <h2>공연 조회수</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="{{ $total_view }}">0<span>&nbsp;명</span></h1>
+                <h1 class="counting"><span class="count-ani"> {{ $total_view }} </span><span>&nbsp;명</span></h1>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-4">
                 <h2>누적 펀딩 금액</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting" data-count="{{ $total_amount }}">0<span>&nbsp;</span></h1>
+                <h1 class="counting"><span class="count-ani"> {{ $total_amount }} </span><span>&nbsp;</span></h1>
             </div>
         </div>
     </div>
 @endsection
 
 @section('js')
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> 
+    <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('.counting').each(function() {
-                var $this = $(this), countTo = $this.attr('data-count');
-                $({ countNum: $this.text()}).animate(
-                  {
-                    countNum: countTo
-                  },{
-                    duration: 500,
-                    easing:'linear',
-                    step: function() {
-                      $this.text(Math.floor(this.countNum));
-                    },
-                    complete: function() {
-                      $this.text(this.countNum);
-                    }
-                  }
-                );
+            $('.count-ani').counterUp({
+                delay: 10,
+                time: 1000
             });
         });
     </script>
