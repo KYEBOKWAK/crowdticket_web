@@ -1,12 +1,9 @@
 @extends('app')
-
+@section('meta')
+   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+@endsection
 @section('css')
     <style>
-        #main {
-            background-image: url('{{ asset("/img/app/process_bg.jpg") }}');
-            background-position: center;
-            background-size: cover;
-        }
 
         .box-container h4 {
             padding-left: 2em;
@@ -41,8 +38,8 @@
             <div class="col-xs-12 col-sm-12 col-md-8 offset-md-4">
                 <div class="row">
                     <h1>공연기획비용을 투자 받고,<br>
-                    후원해 주신 분들께 멋진 공연으로 보답하세요!<br>
-                     티켓 오픈 전 공연홍보기회는 덤으로!</h1>
+                    후원해 주신 분들께<br>멋진 공연으로 보답하세요!<br>
+                     티켓 오픈 전<br>공연홍보기회는 덤으로!</h1>
                     <h3>크라우드티켓은 초기 공연기획비용 없이도 음악 콘서트, 토크 콘서트, 강연, 전시회, 파티, 각종 모임 등 모든 종류의 공연을 자유롭게 기획하게 티켓을 판매할 수 있는 열린 공간입니다.</h3>
                     <a href="#apply" class="ct-btn ct-btn-default">공연 개설 신청하기</a>
                 </div>
@@ -87,37 +84,37 @@
             <div id="text-carousel" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="row">
-                    <div class="col-xs-offset-2 col-xs-8">
+                    <div class="col-xs-offset-1 col-xs-10">
                         <div class="carousel-inner">
                             <div class="item active">
                                 <div class="carousel-content">
                                     <div>
-                                        <h2>“공연 펀딩이 성공 할 수 있도록 크라우드티켓팀에서 SNS 마케팅을 도와줬고, 큰 도움을 받았습니다. 그리고 그 덕분에 여러 번의 공연을 성공적으로 진행할 수 있었던 것 같습니다.＂</h2>
-                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>힙합공연 "디어택＂ 대표 홍*민</h3>
+                                        <h2>크라우드티켓팀에서 SNS 마케팅에 큰 도움을 줬고, 그 덕분에 여러 번의 공연을 성공적으로 진행할 수 있었던 것 같습니다.</h2>
+                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>힙합공연<br>밝히는 것들 기획 홍*민</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="carousel-content">
                                     <div>
-                                        <h2>홍보에도 많이 도움을 받았는데, 공연에 감성적으로 접근해서 홍보 콘텐츠를 만들어 주신 것이 좋았습니다.</h2>
-                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>직장인 뮤지컬 극단, “러뷰지컬“ 배우 홍*나 </h3>
+                                        <h2>단순히 플랫폼을 이용한 것이 아니라 펀딩 홍보에도 많이 도움을 받았습니다.</h2>
+                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>직장인 뮤지컬 극단<br>러뷰지컬 배우 홍*나</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="carousel-content">
                                     <div>
-                                        <h2>공연 홍보에 큰 도움이 될 수 있을 것 같았고, 이전 과는 다른 티켓팅이 가능할 것 같아서 크라우드티켓을 이용했습니다. 크라우드티켓팀에서 친절하게 공연 펀딩진행을 도와주시고, 쉽게 설명해 주셔서 큰 무리없이 공연 펀딩에 성공할 수 있었습니다.</h2>
-                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>프로젝트 극단 “일리가있어” 박*찬</h3>
+                                        <h2>이전 과는 다른 티켓팅이 가능할 것 같아서 크라우드티켓을 이용했습니다. 친절하게 공연 펀딩진행을 도와주셔서 큰 무리없이 공연 펀딩에 성공했습니다.</h2>
+                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>프로젝트 극단<br>일리가있어 대표 박*찬</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="item">
                                 <div class="carousel-content">
                                     <div>
-                                        <h2>크라우드티켓은 공연전문 펀딩사이트라는 것이 가장 좋았습니다. 또한 크라우드티켓팀과의 소통이 원활히, 기분 좋게 이어져 사람 대 사람으로 이야기하는 것 같아 더 좋았습니다.</h2>
-                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>백석대학교 연기예술학과 졸업 공연 "코뿔소" 기획팀</h3>
+                                        <h2>공연전문 펀딩사이트라는 것이 가장 좋았습니다. 또한 펀딩 과정에서 크라우드티켓팀과의 소통이 매우 원활했습니다.</h2>
+                                        <h3><i class="fa fa-user" aria-hidden="true">&nbsp;&nbsp;</i>백석대학교 연기예술학과 졸업 공연<br>코뿔소 기획팀</h3>
                                     </div>
                                 </div>
                             </div>
@@ -125,10 +122,10 @@
                     </div>
                 </div>
                 <!-- Controls -->
-                <a class="left carousel-control" href="#text-carousel" data-slide="prev" style="margin-top:50px;">
+                <a class="left carousel-control" href="#text-carousel" data-slide="prev" style="margin-top:50px; padding-right:30px;">
                 <i class="fa fa-chevron-left" aria-hidden="true" "></i>
                 </a>
-                <a class="right carousel-control" href="#text-carousel" data-slide="next" style="margin-top:50px;">
+                <a class="right carousel-control" href="#text-carousel" data-slide="next" style="margin-top:50px; padding-left:30px;">
                 <i class="fa fa-chevron-right" aria-hidden="true" "></i>
                 </a>
             </div>

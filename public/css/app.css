@@ -1,10 +1,13 @@
 @charset "utf-8";
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
 #main {
 	min-height:100%;
 	padding-bottom:292px;
 	/* footer height */
 }
-@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+
 body {
 	font-family:'Noto Sans KR',sans-serif;
 }
@@ -157,8 +160,10 @@ body {
 	color:#666;
 }
 .box-creator-profile {
-	background-color:#eee;
-	padding:15px;
+	background-color: #eee;
+    padding: 15px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 .box-creator-profile h6 {
 	margin-left:8px;

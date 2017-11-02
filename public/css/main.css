@@ -770,7 +770,7 @@
 }
 @media (max-width:768px) {
   .header-content h1 {
-    font-size:5rem;
+    font-size:3.5rem;
     font-weight:800;
     letter-spacing:3px;
   }
@@ -919,7 +919,7 @@ video {
   }
 }
 [data-slide="prev"] {
-  margin-right: 25px;
+  margin-right: 20px;
 }
 /* 공연기획 */
 .apply-header {
@@ -991,7 +991,7 @@ video {
   background:#ececec;
 }
 .goapply .col-md-6 {
-  padding:0px 30px;
+  padding:30px 25px;
 }
 @media (max-width:768px) {
   .goapply {
@@ -1045,11 +1045,11 @@ video {
   background-repeat:repeat-x;
 }
 .ct-recommend .carousel-inner {
-  height:160px;
+  height:200px;
 }
 @media (max-width:768px) {
   .ct-recommend .carousel-inner {
-    height:250px;
+    height:200px;
   }
 }
 .apply-2 {

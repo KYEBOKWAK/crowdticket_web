@@ -24,11 +24,6 @@
             font-size: 1.2em;
         }
 
-        .ps-detail-left-page {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
         .project-video,
         .project-thumbnail {
             width: 100%;
@@ -83,11 +78,11 @@
         .ps-detail-tabs .active {
             font-weight: bold;
         }
-
+		
         .ps-detail-right-section {
             padding: 0px 10px 0px 10px;
         }
-
+		
         .tab-pane {
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
@@ -116,6 +111,8 @@
 
         #ticket_list {
             margin-top: 30px;
+			margin-right: 0px;
+			margin-left: 0px;
         }
 
         .ticket {
@@ -126,9 +123,6 @@
             margin-top: 30px;
         }
 
-        .project-detail {
-            padding: 0px;
-        }
     </style>
 @endsection
 

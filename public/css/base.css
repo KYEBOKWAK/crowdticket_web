@@ -890,6 +890,7 @@ body {
   line-height: 1.42857143;
   color: #333333;
   background-color: #f9f8f6;
+  position:relative;
 }
 input,
 button,
