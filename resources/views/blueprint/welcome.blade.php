@@ -28,11 +28,15 @@
             width: 200px;
             margin: 0 auto 50px auto;
         }
+		#main{
+			padding-bottom:0px;
+		}
     </style>
 @endsection
 
 @section('content')
     <!-- first section 시작 -->
+
     <div class="apply-header ct-res-text">
         <div class="container">
             <div class="col-xs-12 col-sm-12 col-md-8 offset-md-4">
@@ -155,6 +159,7 @@
             </div>
         </div>
     </div>
+
     <!-- fourth section 끝 -->
 @endsection
 

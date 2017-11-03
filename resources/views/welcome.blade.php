@@ -180,7 +180,7 @@
                 <h2>누적 펀딩 금액</h2>
                 <div class="short-separator">
                 </div>
-                <h1 class="counting"><span class="count-ani"> {{ $total_amount }} </span><span>&nbsp;</span></h1>
+                <h1 class="counting"><span class="count-ani"> {{ $total_amount }} </span><span>&nbsp;원</span></h1>
             </div>
         </div>
     </div>

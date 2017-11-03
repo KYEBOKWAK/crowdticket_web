@@ -700,7 +700,7 @@ footer {
 	color:#888;
 }
 .footer-top h2 {
-	margin-top:0px;
+	margin-top:0px !important;
 }
 .footer-top i {
 	color:#888;

@@ -52,7 +52,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                        data-target="#ctNavBar">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -63,7 +63,7 @@
                 </a>
             </div>
 
-            <div class="collapse navbar-collapse">
+            <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/projects') }}">전체 공연 보기</a></li>
                     <li><a href="{{ url('/blueprints/welcome') }}">공연 개설 신청</a></li>
@@ -98,10 +98,10 @@
 
 <footer>
     <div class="container ct-res-text footer-top">
-        <div class="col-xs-12 col-sm-12 col-md-3">
+	    <div class="col-md-3">
             <img src="{{ asset('/img/app/logo-color.png') }}" class="footer-logo">
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-md-3">
             <h2>social media</h2>
             <h2 class="footer-social">
             <li>
@@ -110,12 +110,12 @@
             <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
             </h2>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-md-3">
             <h2>address</h2>
             <h4>서울시 동대문구 회기로 85<br>
              카이스트 경영대학원 7415</h4>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="col-md-3">
             <h2>contact</h2>
             <h4>KAKAOTALK: @크라우드티켓<br>
              TEL: 070-8819-4308<br>
@@ -123,7 +123,7 @@
         </div>
         <div class="col-md-12 ct-info">
             <p>
-                 나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 859 12 00216&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="https://crowdticket.kr/terms">이용약관</a> / <a href="https://crowdticket.kr/privacy">개인정보취급방침</a>
+                 나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 859 12 00216&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a>
             </p>
         </div>
     </div>
