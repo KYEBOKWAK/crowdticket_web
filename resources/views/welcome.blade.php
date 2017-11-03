@@ -187,7 +187,7 @@
 @endsection
 
 @section('js')
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> 
     <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
     <script>
         $(document).ready(function () {
