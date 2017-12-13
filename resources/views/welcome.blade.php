@@ -1,6 +1,12 @@
 @extends('app')
 @section('meta')
-   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="description" content="공연 전문 크라우드펀딩 플랫폼. 연극, 뮤지컬, 콘서트, 파티, 페스티벌, 강연 등 펀딩 및 티켓팅.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="크라우드티켓">
+    <meta property="og:description" content="공연예술가를 위한 크라우드펀딩 및 티켓팅 플랫폼.">
+    <meta property="og:image" content="{{ asset('/img/app/og_image.png') }}">
+    <meta property="og:url" content="https://crowdticket.kr/">
 @endsection
 @section('css')
     <style>
