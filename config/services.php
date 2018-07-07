@@ -13,11 +13,11 @@ return [
 	| to have a conventional place to find your various credentials.
 	|
 	*/
-	
+
 	'facebook' => [
-	    'client_id' => '965413480199226',
-	    'client_secret' => '9dcd16c610e5c2e46b1f94cbce151a9f',
-	    'redirect' => 'http://crowdticket.kr/facebook/callback',
+	    'client_id' => '210373536286579',
+	    'client_secret' => '3c6882ee278c1af66724328b3b31b26c',
+	    'redirect' => 'http://localhost:8000/facebook/callback',
 	],
 
 	'mailgun' => [
