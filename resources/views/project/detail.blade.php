@@ -31,7 +31,7 @@
         }
 
         .ps-detail-description p,
-        .ps-detail-share-facebook a {
+        .ps-detail-share-facebook span {
             width: 100%;
             height: 50px;
         }
@@ -53,7 +53,7 @@
             padding-left: 0;
         }
 
-        .ps-detail-share-facebook a {
+        .ps-detail-share-facebook span {
             border: none;
             border-radius: 0;
             color: white;
@@ -62,7 +62,7 @@
             padding-top: 15px;
         }
 
-        .ps-detail-share-facebook a:hover {
+        .ps-detail-share-facebook span:hover {
             color: #eee;
         }
 
@@ -78,11 +78,11 @@
         .ps-detail-tabs .active {
             font-weight: bold;
         }
-		
+
         .ps-detail-right-section {
             padding: 0px 10px 0px 10px;
         }
-		
+
         .tab-pane {
             border-bottom-left-radius: 4px;
             border-bottom-right-radius: 4px;
@@ -111,8 +111,8 @@
 
         #ticket_list {
             margin-top: 30px;
-			margin-right: 0px;
-			margin-left: 0px;
+			      margin-right: 0px;
+			      margin-left: 0px;
         }
 
         .ticket {
@@ -158,9 +158,8 @@
                     <div class="col-md-9 ps-detail-description">
                         <p class="text-ellipsize">{{ $project->description }}</p>
                     </div>
-                    <div class="col-md-3 ps-detail-share-facebook">
-                        <a href="https://www.facebook.com/dialog/share?app_id=965413480199226&display=popup&href={{ url('/projects/') }}/{{ $project->id }}&redirect_uri={{ url('/facebook/callback') }}"
-                           class="btn">페이스북 공유하기</a>
+                    <div class="col-md-3 ps-detail-share-facebook" id="BtnFBshare">
+                        <span class="btn">페이스북 공유하기</span>
                     </div>
                     <div class="col-md-12 ps-detail-tabs">
                         @if ($project->type === 'funding')
@@ -338,6 +337,15 @@
     @include('template.news')
     @include('template.supporter')
     @include('template.ticket')
+    @include('template.fbForm', ['project' => $project])
     <script src="{{ asset('/js/project/detail.js') }}"></script>
-@endsection
 
+    <!-- facebook js -->
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.0&appId=210373536286579&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+@endsection
