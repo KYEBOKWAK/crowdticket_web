@@ -207,7 +207,8 @@
                                     0 => [
                                         'id' => 'tab-story',
                                         'class' => 'active',
-                                        'title' => '공연소개'
+                                        'title' => '공연소개',
+                                        'isNew' => ''
                                     ],
 
                                     1 => [
