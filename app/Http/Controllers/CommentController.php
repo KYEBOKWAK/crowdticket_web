@@ -27,5 +27,4 @@ class CommentController extends Controller
 
         return \Redirect::back();
     }
-
 }

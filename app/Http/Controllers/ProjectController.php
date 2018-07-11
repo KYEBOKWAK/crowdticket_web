@@ -244,22 +244,106 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $project = $this->getApprovedProject($project);
-        return $this->getProjectDetailView($project);
+
+        //NEW 체크
+        $isArrayNew = $this->isArrayNew($project);
+
+        return $this->getProjectDetailView($project, $isArrayNew);
     }
 
     public function getProjectByAlias($alias)
     {
         $project = Project::where('alias', '=', $alias)->firstOrFail();
         $project = $this->getApprovedProject($project);
-        return $this->getProjectDetailView($project);
+
+        //NEW 체크
+        $isArrayNew = $this->isArrayNew($project);
+
+        return $this->getProjectDetailView($project, $isArrayNew);
     }
 
-    private function getProjectDetailView($project)
+    //new 인지 아닌지 boolean array 로 return 키 : news, comment, support
+    public function isArrayNew($project)
+    {
+      $tempArray = NULL; //업데이트, 코멘트, 서포트 카운트값 저장할 임시 array
+      $isNewArray = NULL;  //최종 결정된 new 값 데이터
+      if($project->type === 'funding')
+      {
+        $tempArray['news'] = $project->news_count;
+        $tempArray['comment'] = $project->comments_count;
+        $tempArray['support'] = $project->supporters_count;
+      }
+      else
+      {
+        $tempArray['news'] = $project->news_count;
+        $tempArray['comment'] = $project->comments_count;
+        $tempArray['support'] = $project->supporters_count;
+      }
+
+      foreach ($tempArray as $key => $value) {
+
+        //기본 Default 로 false 셋팅
+        $isNewArray[$key] = FALSE;
+
+        if($value <= 0)
+        {
+          continue;
+        }
+
+        $dataDB = NULL;
+        $tableID = NULL;
+        switch($key)
+        {
+          case 'news':
+          {
+            $dataDB = $project->news();
+            $tableID = 'project_id';  //ID가 다 다''
+          } break;
+          case 'comment':
+          {
+            $dataDB = $project->comments();
+            $tableID = 'commentable_id';  //ID가 다 다''
+          } break;
+          case 'support':
+          {
+            $dataDB = $project->supporters();
+            $tableID = 'project_id';  //ID가 다 다''
+          } break;
+        }
+
+        if(is_null($dataDB) || is_null($tableID))
+        {
+          continue;
+        }
+
+        $data = $dataDB->get();
+        //null 체크
+        if($data == '[]') {
+          continue;
+        }
+
+        //데이터가 있으면 필요한 필드 데이터만 가져온다.
+        $targetDate = $dataDB->where($tableID, '=', $project->id)->firstOrFail()->created_at;
+
+        $dateVar = (strtotime(date("Ymd",strtotime ("+7 days", strtotime($targetDate)))) - strtotime(date("Ymd")))/60/60/24;
+        if($dateVar >= 0)
+        {
+          //값이 0보다 크면 NEW 기한이 남았다.\
+          $isNewArray[$key] = TRUE;
+        }
+      }
+
+      //var_dump($isNewArray);
+      return $isNewArray;
+    }
+
+    private function getProjectDetailView($project, $isArrayNew)
     {
         $project->load(['category', 'city', 'tickets']);
         $project->countSessionDependentViewNum();
         return view('project.detail', [
             'project' => $project,
+            'isArrayNew' => $isArrayNew,
             'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
         ]);
     }

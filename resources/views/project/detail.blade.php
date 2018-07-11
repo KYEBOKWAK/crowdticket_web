@@ -123,6 +123,14 @@
             margin-top: 30px;
         }
 
+        .newIcon{
+          font-size: 10px;
+          font-style: normal;
+          font-weight: bold;
+          position: relative;
+          top: -6px;
+          color: #7EC52A
+        }
     </style>
 @endsection
 
@@ -169,22 +177,26 @@
                                     0 => [
                                         'id' => 'tab-story',
                                         'class' => 'active',
-                                        'title' => '공연소개'
+                                        'title' => '공연소개',
+                                        'isNew' => ''
                                     ],
 
                                     1 => [
                                         'id' => 'tab-news',
-                                        'title' => '업데이트 (' . $project->news_count . ')'
+                                        'title' => '업데이트 (' . $project->news_count . ')',
+                                        'isNew' => $isArrayNew['news']
                                     ],
 
                                     2 => [
                                         'id' => 'tab-comments',
-                                        'title' => '응원&후기 (' . $project->comments_count . ')'
+                                        'title' => '응원&후기 (' . $project->comments_count . ')',
+                                        'isNew' => $isArrayNew['comment']
                                     ],
 
                                     3 => [
                                         'id' => 'tab-supporters',
-                                        'title' => '후원자 (' . $project->supporters_count . ')'
+                                        'title' => '후원자 (' . $project->supporters_count . ')',
+                                        'isNew' => $isArrayNew['support']
                                     ]
                                 ]
                             ])
@@ -200,12 +212,14 @@
 
                                     1 => [
                                         'id' => 'tab-news',
-                                        'title' => '업데이트 (' . $project->news_count . ')'
+                                        'title' => '업데이트 (' . $project->news_count . ')',
+                                        'isNew' => $isArrayNew['news']
                                     ],
 
                                     2 => [
                                         'id' => 'tab-comments',
-                                        'title' => '응원&후기 (' . $project->comments_count . ')'
+                                        'title' => '응원&후기 (' . $project->comments_count . ')',
+                                        'isNew' => $isArrayNew['comment']
                                     ]
                                 ]
                             ])
