@@ -4,7 +4,7 @@ Route::pattern('id', '[0-9]+');
 Route::pattern('code', '[a-zA-Z0-9]+');
 Route::pattern('alias', '[a-zA-Z0-9-_]+');
 Route::pattern('name', '[a-zA-Z]+');
-Route::pattern('entity', 'projects|comments');
+Route::pattern('entity', 'projects|comments|tickets');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('news/{id}', 'NewsController@deleteNews');
 
     Route::post('tickets/{id}/orders', 'OrderController@createOrder');
-    Route::get('tickets/{id}/orders', 'OrderController@getTicketOrders');
+    Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
     Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
     Route::get('projects/{id}/tickets', 'OrderController@getTickets');
     Route::get('orders/{id}', 'OrderController@getOrder');

@@ -82,7 +82,8 @@ class OrderController extends Controller
 
             return view('order.complete', [
                 'project' => $project,
-                'order' => $order
+                'order' => $order,
+                'isComment' => FALSE
             ]);
         } catch (PaymentFailedException $e) {
             return view('order.error', [
@@ -92,6 +93,15 @@ class OrderController extends Controller
                 'ticket_count' => $this->getOrderCount()
             ]);
         }
+    }
+
+    public function completecomment($projectId){
+      $project = Project::findOrFail($projectId);
+      return view('order.complete', [
+          'project' => $project,
+          'order' => '',
+          'isComment' => TRUE
+      ]);
     }
 
     private function isPaymentProcess() {

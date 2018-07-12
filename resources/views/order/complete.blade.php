@@ -7,7 +7,7 @@
             border: 1px #dad8cc solid;
             border-radius: 5px;
             padding: 25px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .ps-text-detail {
@@ -16,10 +16,33 @@
         .ps-text-detail strong {
             font-size: 1.2em;
         }
+
+        .ps-detail-comment-wrapper {
+            padding-bottom: 0px;
+        }
+
+        .ps-detail-comment-wrapper button {
+            margin-top: 10px;
+        }
+
+        .btn-facebook-Shar{
+          color: white;
+          background-color: #3a5795;
+          margin-left:15px;
+        }
+
+        .btn-facebook-Shar span:hover{
+          color: #eee;
+        }
     </style>
 @endsection
 
 @section('content')
+    @if($isComment == TRUE)
+    <script>
+      swal("등록 성공!", "프로젝트 응원&후기 에서 확인 할 수 있습니다.", "success");
+    </script>
+    @endif
     <div class="container first-container">
         @include ('order.header', ['project' => $project, 'step' => 3])
         <div class="row ps-box">
@@ -45,10 +68,27 @@
                 @endif
             </div>
         </div>
+        <!-- 응원하기 -->
+        <div class="row ps-box">
+          <p class="text-left"><strong>프로젝트 개설자에게 큰 힘이 되는 메시지를 남겨주세요.</strong></p>
+            <form action="{{ url('/tickets') }}/{{ $project->id }}/comments" method="post"
+                  data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
+                <textarea id="input_comment" name="contents" class="form-control" rows="3"
+                          placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                <button class="btn btn-success pull-right">등록하기</button>
+                <div class="clear"></div>
+                @include('csrf_field')
+            </form>
+        </div>
         <div class="row">
             <div class="col-md-12 text-center">
                 <a href="{{ url('/projects') }}" class="btn btn-success ">더 둘러보기</a>
+                <span class="btn btn-facebook-Shar" id="BtnFBshare">페이스북 공유</span>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+@include('template.fbForm', ['project' => $project])
 @endsection
