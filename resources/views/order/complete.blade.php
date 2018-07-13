@@ -34,6 +34,11 @@
         .btn-facebook-Shar span:hover{
           color: #eee;
         }
+
+        .commentTitle{
+          font-size: 25px;
+          padding-bottom: 11px;
+        }
     </style>
 @endsection
 
@@ -70,7 +75,7 @@
         </div>
         <!-- 응원하기 -->
         <div class="row ps-box">
-          <p class="text-left"><strong>프로젝트 개설자에게 큰 힘이 되는 메시지를 남겨주세요.</strong></p>
+          <p class="text-left commentTitle"><strong>잠깐! 후원자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!</strong></p>
             <form action="{{ url('/tickets') }}/{{ $project->id }}/comments" method="post"
                   data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
                 <textarea id="input_comment" name="contents" class="form-control" rows="3"
