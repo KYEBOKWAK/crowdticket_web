@@ -20,15 +20,23 @@ class SocialAuthController extends Controller
     public function callback($facebookid, $facebookName, $facebookEmail, $previousURL)
     {
       $facebookUser['id'] = $facebookid;
-      $facebookUser['name'] = urldecode($facebookName);
-      $facebookUser['email'] = urldecode($facebookEmail);
+      $facebookUser['name'] = $facebookName;
+      $facebookUser['email'] = $facebookEmail;
       $facebookUser['avatar'] = "https://graph.facebook.com/{$facebookid}/picture?type=normal";
 
+      $previousURLTemp = $previousURL;
 
+      if(url() === 'http://localhost:8000')
+      {
+        //로걸일 경우에만 decode 해준다. 아파치는 자동 decode 해줌.
+        $facebookUser['name'] = urldecode($facebookName);
+        $facebookUser['email'] = urldecode($facebookEmail);
+        $previousURLTemp = urldecode($previousURL);
+      }
       $user = $this->findOrCreateUser($facebookUser);
       \Auth::login($user, true);
 
-      return \Redirect::to(urldecode($previousURL));
+      return \Redirect::to($previousURLTemp);
     }
 
     private function findOrCreateUser($facebookUser)
