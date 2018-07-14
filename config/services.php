@@ -15,9 +15,9 @@ return [
 	*/
 
 	'facebook' => [
-	    'client_id' => '965413480199226',
-	    'client_secret' => '9dcd16c610e5c2e46b1f94cbce151a9f',
-	    'redirect' => 'https://crowdticket.kr/facebook/callback',
+		'client_id' => env('FACEBOOK_ID'),
+		'client_secret' => env('FACEBOOK_SECRET'),
+		'redirect' => env('FACEBOOK_REDIRECT'),
 	],
 
 	'mailgun' => [

@@ -56,11 +56,21 @@
                         <button type="submit" class="btn btn-default center-block">로그인</button>
                     </div>
                 </form>
+                <!--
+                <div class="text-center ps-facebook-wrapper">
+                                    <p>또는</p>
+                                    <a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 로그인</a>
+                                </div>
+                -->
                 <div class="text-center ps-facebook-wrapper">
                     <p>또는</p>
-                    <a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 로그인</a>
+                    <div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script src="{{ asset('/js/fblogin.js') }}"></script>
 @endsection

@@ -12,6 +12,7 @@ Route::controllers([
 ]);
 Route::get('/facebook', 'Auth\SocialAuthController@redirect');
 Route::get('/facebook/callback', 'Auth\SocialAuthController@callback');
+Route::get('/facebook/callback/{facebookid}/{facebookName}/{facebookEmail}/{previousURL}', 'Auth\SocialAuthController@callback')->where('previousURL', '.*');
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/home', 'WelcomeController@index');

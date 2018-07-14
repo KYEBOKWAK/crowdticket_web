@@ -53,6 +53,19 @@
 
     <!-- sweetAlert JS -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- facebook js -->
+    <script>
+    var fbAppID = '{{env('FACEBOOK_ID')}}';
+    var fbVer = '{{env('FACEBOOK_VER')}}';
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version='+fbVer+'&appId='+fbAppID+'&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -98,7 +111,8 @@
                                 <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
                                 <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
                                 <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
-                                <li><a href="{{ url('/auth/logout') }}">로그아웃</a></li>
+                                <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
+                                <!-- <li><a href="{{ url('/auth/logout') }}">로그아웃</a></li> -->
                             </ul>
                         </li>
                     @endif
@@ -165,6 +179,26 @@
 <script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
 <script src="{{ asset('/js/app.2.js?version=3') }}"></script>
 <script src="{{ asset('/js/loader.js') }}"></script>
+
+<script>
+function logout(){
+      FB.getLoginStatus(function(response) {
+        console.log(JSON.stringify(response));
+        if (response.status === 'connected') {
+          //페이스북이 연동된 상태에서 로그아웃 들어오면, 페북 로그 아웃 후 페이지 로그아웃 진행
+          FB.logout(function(response) {
+              var baseUrl = $('#base_url').val();
+              window.location.assign(baseUrl+'/auth/logout');
+          });
+        }
+        else {
+          //페이스북 연동 안된 상태에서 로그아웃시
+          var baseUrl = $('#base_url').val();
+          window.location.assign(baseUrl+'/auth/logout');
+        }
+      });
+}
+</script>
 
 @yield('js')
 
