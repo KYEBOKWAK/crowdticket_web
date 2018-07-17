@@ -71,6 +71,10 @@
 @endsection
 
 @section('content')
+//set cookie Submit Refresh 방지
+    <?php
+    setcookie("isOrderFinal","true", time()+604800);
+    ?>
     <div class="container first-container">
         @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
 

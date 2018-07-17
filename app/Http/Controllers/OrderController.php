@@ -14,85 +14,101 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Cookie;
 
 class OrderController extends Controller
 {
-
     public function createOrder($ticketId)
     {
-        $user = Auth::user();
-        $ticket = $this->getOrderableTicket($ticketId);
-        $project = $ticket->project()->first();
+      $isOrderFinal = $_COOKIE["isOrderFinal"];
 
-        try {
-            $payment = null;
-            if ($this->isPaymentProcess()) {
-                $info = $this->buildPaymentInfo($user, $project, $ticket);
-                $paymentService = new PaymentService();
-                if ($project->type === 'funding') {
-                    $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-                } else {
-                    $payment = $paymentService->rightNow($info);
-                }
-            }
+      if($isOrderFinal == "false")
+      {
+        $ticketTemp = Ticket::findOrFail($ticketId);
+        $project = Project::findOrFail($ticketTemp->project_id);
 
-            DB::beginTransaction();
+        return view('order.complete', [
+            'project' => $project,
+            'order' => '',
+            'isComment' => FALSE
+        ]);
+      }
 
-            $order = new Order($this->getFilteredInput($ticket, $payment));
-            $order->project()->associate($project);
-            $order->ticket()->associate($ticket);
-            $order->user()->associate($user);
-            $order->save();
+      setcookie("isOrderFinal","false", time()+604800);
 
-            $project->increment('funded_amount', $this->getOrderPrice());
-            $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
-            $ticket->increment('audiences_count', $this->getOrderCount());
-            $user->increment('tickets_count');
+      $user = Auth::user();
+      $ticket = $this->getOrderableTicket($ticketId);
+      $project = $ticket->project()->first();
 
-            $supporter = new Supporter;
-            $supporter->project()->associate($project);
-            $supporter->ticket()->associate($ticket);
-            $supporter->user()->associate($user);
-            $supporter->save();
+      try {
+          $payment = null;
+          if ($this->isPaymentProcess()) {
+              $info = $this->buildPaymentInfo($user, $project, $ticket);
+              $paymentService = new PaymentService();
+              if ($project->type === 'funding') {
+                  $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+              } else {
+                  $payment = $paymentService->rightNow($info);
+              }
+          }
 
-            $project->increment('supporters_count');
-            $user->increment('supports_count');
+          DB::beginTransaction();
 
-            DB::commit();
+          $order = new Order($this->getFilteredInput($ticket, $payment));
+          $order->project()->associate($project);
+          $order->ticket()->associate($ticket);
+          $order->user()->associate($user);
+          $order->save();
 
-            $sms = new SmsService();
-            $contact = $order->contact;
-            $limit = $project->type === 'funding' ? 10 : 14;
-            $titleLimit = str_limit($project->title, $limit, $end = '..');
-            $priceFormatted = number_format($order->getFundedAmount());
-            $totalRealTicket = $ticket->real_ticket_count * $order->count;
-            $ticketFormatted = $totalRealTicket > 0 ? sprintf('(티켓 %d매 포함)', $totalRealTicket) : '';
-            $datetime = date('Y/m/d H:i', strtotime($ticket->delivery_date));
-            $msg = $project->type === 'funding'
-                ? sprintf('%s %s원%s 후원완료', $titleLimit, $priceFormatted, $ticketFormatted)
-                : sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
-            $sms->send([$contact], $msg);
+          $project->increment('funded_amount', $this->getOrderPrice());
+          $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+          $ticket->increment('audiences_count', $this->getOrderCount());
+          $user->increment('tickets_count');
 
-            $emailTo = $order->email;
-            if ($project->type === 'funding') {
-                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
-            } else {
-                $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
-            }
+          $supporter = new Supporter;
+          $supporter->project()->associate($project);
+          $supporter->ticket()->associate($ticket);
+          $supporter->user()->associate($user);
+          $supporter->save();
 
-            return view('order.complete', [
-                'project' => $project,
-                'order' => $order,
-                'isComment' => FALSE
-            ]);
-        } catch (PaymentFailedException $e) {
-            return view('order.error', [
-                'message' => $e->getMessage(),
-                'ticket_id' => $ticket->id,
-                'request_price' => $this->getOrderUnitPrice(),
-                'ticket_count' => $this->getOrderCount()
-            ]);
-        }
+          $project->increment('supporters_count');
+          $user->increment('supports_count');
+
+          DB::commit();
+
+          $sms = new SmsService();
+          $contact = $order->contact;
+          $limit = $project->type === 'funding' ? 10 : 14;
+          $titleLimit = str_limit($project->title, $limit, $end = '..');
+          $priceFormatted = number_format($order->getFundedAmount());
+          $totalRealTicket = $ticket->real_ticket_count * $order->count;
+          $ticketFormatted = $totalRealTicket > 0 ? sprintf('(티켓 %d매 포함)', $totalRealTicket) : '';
+          $datetime = date('Y/m/d H:i', strtotime($ticket->delivery_date));
+          $msg = $project->type === 'funding'
+              ? sprintf('%s %s원%s 후원완료', $titleLimit, $priceFormatted, $ticketFormatted)
+              : sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
+          $sms->send([$contact], $msg);
+
+          $emailTo = $order->email;
+          if ($project->type === 'funding') {
+              $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
+          } else {
+              $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
+          }
+
+          return view('order.complete', [
+              'project' => $project,
+              'order' => $order,
+              'isComment' => FALSE
+          ]);
+      } catch (PaymentFailedException $e) {
+          return view('order.error', [
+              'message' => $e->getMessage(),
+              'ticket_id' => $ticket->id,
+              'request_price' => $this->getOrderUnitPrice(),
+              'ticket_count' => $this->getOrderCount()
+          ]);
+      }
     }
 
     public function completecomment($projectId){
