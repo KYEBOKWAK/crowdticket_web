@@ -26,6 +26,21 @@ Route::get('help/', function () {
     return view('customer.help');
 });
 
+//CREATOR Landing PAGE
+Route::get('landing/', function () {
+    return view('landing/landing_creator');
+});
+
+//CREATOR LANDING EMAIL form
+Route::get('landing/form', function () {
+    return view('landing/landing_creator_form');
+});
+
+Route::post('landing/sendmail', function () {
+    return view('landing/landing_creator_form_sendmail');
+});
+//
+
 Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 
 Route::get('projects', 'ProjectController@getProjects');

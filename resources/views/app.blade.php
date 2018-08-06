@@ -94,8 +94,9 @@
 
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/projects') }}">전체 공연 보기</a></li>
-                    <li><a href="{{ url('/blueprints/welcome') }}">공연 개설 신청</a></li>
+                    <li><a href="{{ url('/projects') }}">ARTISTS</a></li>
+                    <li><a href="{{ url('/landing') }}">CREATORS<i class="newNavIcon">N</i></a></li>
+                    <li><a href="{{ url('/blueprints/welcome') }}">개설 신청</a></li>
                     <!-- <li><a href="{{ url('/help') }}">도움말</a></li> -->
                 </ul>
 
