@@ -110,7 +110,7 @@ body{
   white-space: nowrap;
   top: 0;
   left: 0;
-  animation: move 35s;
+  animation: move 20s;
   animation-iteration-count: infinite;
   animation-delay: 1s;
 }
