@@ -89,6 +89,7 @@
       .contact_form label{
         color: white;
         margin-top: 20px;
+        font-weight: bold;
       }
 
       .contact_form form{
