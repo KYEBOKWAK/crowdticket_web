@@ -115,8 +115,8 @@
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/projects') }}">ARTISTS</a></li>
-                    <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">N</i></a></li>
                     <li><a href="{{ url('/blueprints/welcome') }}">개설 신청</a></li>
+                    <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">beta</i></a></li>
                     <!-- <li><a href="{{ url('/help') }}">도움말</a></li> -->
                 </ul>
 
