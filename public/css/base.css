@@ -6249,3 +6249,13 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+
+.newNavIcon{
+    font-size: 10px;
+    font-style: normal;
+    font-weight: bold;
+    position: relative;
+    top: -7px;
+		left: 2px;
+    color: #ea535a;
+}
