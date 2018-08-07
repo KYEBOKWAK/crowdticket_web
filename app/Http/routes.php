@@ -36,10 +36,9 @@ Route::get('landing/form', function () {
     return view('landing/landing_creator_form');
 });
 
-Route::post('landing/sendmail', function () {
-    return view('landing/landing_creator_form_sendmail');
-});
+Route::post('landing/sendmail', 'MailSendController@sendEmail');
 //
+
 
 Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 
