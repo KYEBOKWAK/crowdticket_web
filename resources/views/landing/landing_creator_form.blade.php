@@ -147,7 +147,7 @@
    <h5>2018년 9월, 오직 크리에이터/인플루언서들을 위한 티켓팅 서비스, 크라우드티켓 크리에이터스가 오픈됩니다.</h5>
    <h5>여러분의 오프라인 이벤트 페이지 개설을 위한 기본적인 정보만 알려주세요!</h5>
    <h5>벌써 100건이 넘는 공연을 진행해 온 크라우드티켓팀이, 여러분의 팬들과 직접 만날, 재밌는 이벤트 기획에 함께합니다.</h5>
-   <form action="{{ url('/landing/sendmail') }}" method="post">
+   <form action="{{ url('/landing/sendmail') }}" method="post" onsubmit="return submitCheck()">
      <label for="name">크리에이터/인플루언서 활동 이름 (필수)</label>
      <textarea id="name" name="name" placeholder="유투브 00채널 크리에이터 000 / 페이스북 000페이지 운영자 / 인스타그램 피트니스 인플루언서 000 / 게임 스트리머 000 등 자신을 자유롭게 표현 해 주세요. " required></textarea>
 
@@ -179,4 +179,20 @@
 @endsection
 
 @section('js')
+<script>
+function submitCheck(){
+  var email = $('#email').val();
+  if(emailValiedCheck(email) == false){
+    alert("올바른 이메일 주소를 입력하세요 "+email);
+    return false;
+  }
+
+  return true;
+}
+
+function emailValiedCheck(email){
+  var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  return re.test(email);
+}
+</script>
 @endsection

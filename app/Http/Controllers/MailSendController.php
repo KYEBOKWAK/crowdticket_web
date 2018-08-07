@@ -12,7 +12,6 @@ class MailSendController extends Controller {
 		$isCreatorSubmitFinal = $_COOKIE["isCreatorSubmitFinal"];
 		if($isCreatorSubmitFinal == "true")
 		{
-		  setcookie("isCreatorSubmitFinal","false", time()+604800);
 		  // 빈 필드가 있는지 확인하는 구문
 		  if(empty($_POST['name'])  		|| // post로 넘어온 name값이 비었는지 확인
 		      empty($_POST['messageChannel']) 		|| // 유투브 채널 값이 비었는지 확인
@@ -29,6 +28,8 @@ class MailSendController extends Controller {
 		  // htmlspecialchars() -> 특수 문자를 HTML 엔터티로 변환
 		  // 악의적인 특수문자 삽입에 대비하기 위함
 
+			setcookie("isCreatorSubmitFinal","false", time()+604800);
+
 		  $name = strip_tags(htmlspecialchars($_POST['name']));
 		  $messageChannel = strip_tags(htmlspecialchars($_POST['messageChannel']));
 		  $messageExplain = strip_tags(htmlspecialchars($_POST['messageExplain']));
@@ -40,6 +41,7 @@ class MailSendController extends Controller {
 		  $to = 'contact@crowdticket.kr'; // 받는 측의 이메일 주소를 기입하는 부분
 		  $email_subject = "FROM: 크리에이터 신청자 [$name]"; // 메일 제목에 해당하는 부분
 		  $email_body = ['content' => "\n\n크리에이터/인플루언서 활동 이름:\n\n $name\n\n주 콘텐츠 채널 주소:\n\n $messageChannel\n\n간단한 설명:\n\n $messageExplain\n\n오프라인 콘텐츠 아이디어:\n\n $messageIdea\n\nEmail:\n\n $email_address\n\nPhone:\n\n $phone\n\n"];
+
 
 			Mail::send('landing.landing_email_form', $email_body, function ($m) use ($email_subject, $to) {
 								$m->from('contact@crowdticket.kr', '크리에이터신청자');
