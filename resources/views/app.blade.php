@@ -36,6 +36,19 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
 
+    <style>
+    /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
+    .newNavIcon{
+      font-size: 10px;
+      font-style: normal;
+      font-weight: bold;
+      position: relative;
+      top: -7px;
+      left: 2px;
+      color: #ea535a;
+    }
+    </style>
+
 <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
     <script async="" src="https://www.google-analytics.com/analytics.js"></script>
