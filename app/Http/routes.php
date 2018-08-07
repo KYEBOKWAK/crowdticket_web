@@ -27,7 +27,7 @@ Route::get('help/', function () {
 });
 
 //CREATOR Landing PAGE
-Route::get('landing/', function () {
+Route::get('creators/', function () {
     return view('landing/landing_creator');
 });
 
