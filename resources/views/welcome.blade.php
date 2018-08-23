@@ -120,7 +120,7 @@
         <div class="row mainthumb">
             <div class="row">
                 <div class="col-md-9">
-                    <h4>개설중인 공연</h4>
+                    <h4>크라우드티켓 추천</h4>
                 </div>
                 <div class="col-md-3">
                     <!-- Controls -->
