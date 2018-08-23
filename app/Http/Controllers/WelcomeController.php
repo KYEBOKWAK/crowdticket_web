@@ -10,11 +10,16 @@ class WelcomeController extends Controller
         $total_suppoter = 0;
         $total_view = 0;
         $total_amount = 0;
-
+//whereNotIn('order_number', [0])->orderBy('order_number')->get()
         $minExposedNum = 6;
+        /*
         $projects = \App\Models\Project::where('state', 4)
             ->where('funding_closing_at', '>', $now)
             ->orderBy('id', 'desc')
+            ->take($minExposedNum)->get();
+        */
+        $projects = \App\Models\Project::whereNotIn('project_order_number', [0])
+            ->orderBy('project_order_number')
             ->take($minExposedNum)->get();
 
         $lack = $minExposedNum - count($projects);
