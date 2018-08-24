@@ -6,14 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
     <!-- <meta name="description" content="오직 공연 예술인을 위한 크라우드 펀딩"/> -->
-    <meta name="description" content="공연 전문 크라우드펀딩 플랫폼. 연극, 뮤지컬, 콘서트, 파티, 페스티벌, 강연 등 펀딩 및 티켓팅.">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="크라우드티켓">
-    <meta property="og:description" content="아티스트와 크리에이터를 위한 티켓팅 플랫폼">
-    <meta property="og:image" content="{{ asset('/img/app/og_image_1.png') }}">
-    <meta property="og:url" content="https://crowdticket.kr/">
-
+    
     @section('meta')
+      <meta name="description" content="공연 전문 크라우드펀딩 플랫폼. 연극, 뮤지컬, 콘서트, 파티, 페스티벌, 강연 등 펀딩 및 티켓팅."/>
     @show
 
     <!-- Google Tag Manager -->
