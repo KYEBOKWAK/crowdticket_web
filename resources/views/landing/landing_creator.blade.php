@@ -20,8 +20,8 @@
 <link rel="shortcut icon" href="favicon.ico">
 
 <!-- Animate.css -->
-<link rel="stylesheet" href="{{ asset('/landingcreator/css/animate.css') }}">
-<link rel="stylesheet" href="{{ asset('/landingcreator/css/main.css') }}">
+<link rel="stylesheet" href="{{ asset('/landingcreator/css/animate.css?version=2') }}">
+<link rel="stylesheet" href="{{ asset('/landingcreator/css/main.css?version=2') }}">
 
 @endsection
 
