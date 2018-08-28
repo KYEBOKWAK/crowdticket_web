@@ -188,7 +188,8 @@ body{
   background-color: #ea535a;
   color: white;
   overflow: hidden;
-  height:800px;
+  /*height:800px;*/
+  height: 1120px;
   text-align: center;
   padding-top: 260px;
 }
@@ -204,6 +205,10 @@ body{
   font-size: 1.8rem;
   font-weight: 400;
   line-height: 0.9;
+}
+
+.landing-apply-contain img{
+  width: 45%;
 }
 
 .animate-box{
@@ -317,7 +322,8 @@ body{
   .landing-apply-contain{
     padding-top: 150px;
     margin-top: 80px;
-    height: 570px;
+    /*height: 570px;*/
+    height: 800px;
   }
 
   .landing-apply-contain h2{
@@ -344,6 +350,10 @@ body{
 
   .ct-btn-default{
     margin-top: 38px;
+  }
+
+  .landing-apply-contain img{
+    width: 80%;
   }
 }
 /*
