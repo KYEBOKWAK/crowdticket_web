@@ -13,6 +13,7 @@ abstract class Model extends BaseModel
     const S3_STORY_DIRECTORY = "stories/";
     const S3_NEWS_DIRECTORY = "news/";
     const S3_USER_DIRECTORY = "users/";
+    const S3_GOODS_DIRECTORY = "goods/";
 
     protected static $typeRules = array();
 
@@ -22,9 +23,12 @@ abstract class Model extends BaseModel
 
     public static function getS3Directory($dir) {
         if (Config::get('app.debug')) {
-            return 'test/' . $dir;
+            return 'newtest/' . $dir;
         }
-        return $dir;
+        //return $dir;
+
+        //기존에 debug 모드에서 풀지 않아서 해당 폴더 사용
+        return 'test/' . $dir;
     }
 
     public function __construct(array $attributes = array())

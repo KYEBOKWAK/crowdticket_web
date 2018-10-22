@@ -1,0 +1,226 @@
+/* 프로젝트 썸네일 영역 관련 */
+.project-grid-wrapper h4 {
+    margin:0px;
+    font-size:15px !important;
+    font-weight:700;
+    letter-spacing:-0.5px;
+}
+
+.welcome_main_container_width{
+  height: 520px;
+}
+
+.welcome_main_thumb_container{
+  margin-left: auto;
+  margin-right: auto;
+  width: 970px;
+  height: 100%;
+
+  padding: 70px 0px;
+
+}
+
+.welcome_main_thumb_title_container{
+  height: 16px;
+}
+
+.welcome_main_thumb_title_container h4{
+  margin:0px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-0.5px;
+}
+
+.welcome_main_carousel_container{
+  width: 100%;
+  height: 100%;
+}
+
+.welcome_main_carousel_content_container{
+  position:relative;
+  max-width:970px;
+  margin:0 auto;
+  height:100%;
+}
+
+.welcome_main_carousel_content_caption{
+  position:absolute;
+  /*left:0%;*/
+  /*left:230px;*/
+  left:0px;
+  right:0%;
+  bottom:90px;
+  color:#ffffff;
+  text-align:left;
+  text-shadow: none;
+}
+
+.welcome_main_carousel_content_caption>h6 {
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+.welcome_main_carousel_content_caption>h5 {
+    font-size: 15px;
+}
+
+.welcome_main_carousel_content_caption>h2 {
+    margin-top:5px;
+    margin-bottom:15px;
+    font-size: 41px;
+}
+
+.welcome_main_carousel_content_caption>h4 {
+    font-size: 18px;
+}
+
+@media (max-width:1200px) {
+    .welcome_main_carousel_content_caption {
+        /*bottom:155px;*/
+    }
+
+  .welcome_main_thumb_container{
+      width: 90%;
+    }
+}
+
+@media (max-width:768px) {
+    .welcome_main_carousel_content_container {
+        max-width:700px;
+    }
+}
+@media (max-width:576px) {
+    .welcome_main_carousel_content_container {
+        max-width:300px;
+        margin-left: 620px;
+        /*margin-left: 400px;*/
+        /*margin-right: 300px;*/
+    }
+}
+
+.project-thumbnail {
+    position:relative;
+    padding-top:75%;
+    overflow:hidden;
+}
+
+.project-img {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    max-width:100%;
+    height:auto;
+}
+
+.project-grid-wrapper .project-thumbnail {
+    height:163px;
+}
+
+.project-grid-wrapper .poster-title {
+    margin:18px 0 13px 0;
+    padding:0 12px 0 12px;
+    font-weight:bold;
+}
+.project-grid-wrapper .poster-thumbnail .white-mask {
+    display:none;
+}
+.project-grid-wrapper .poster-thumbnail:hover .white-mask {
+    display:block;
+}
+
+.project-grid-wrapper .poster-info {
+    margin:13px 0 13px 0;
+    padding:0 12px 0 12px;
+    color:#656969;
+}
+
+.project-grid-wrapper .project-category {
+    margin:15px 0 10px 0;
+    padding:0 12px 0 12px;
+    font-weight:bold;
+}
+.project-category-c {
+    background-color:#e15998;
+    color:#ffffff;
+    padding:3px 7px;
+    font-size:10px;
+    border-radius:4px;
+    font-weight:400;
+}
+.project-category-a {
+    background-color:#7c76b6;
+    color:#ffffff;
+    padding:3px 7px;
+    font-size:10px;
+    border-radius:4px;
+    font-weight:400;
+}
+.ct-percent {
+    float:right;
+    font-weight:600;
+    color:#EF4D5D;
+}
+
+.project-grid-wrapper .project-description{
+  color:#656969;
+}
+
+.project-grid-wrapper .project-info {
+    margin:19px 0 13px 0;
+    padding:0 12px 0 12px;
+    color:#222;
+}
+
+.project-info h6 {
+    font-size: 11px;
+}
+
+/* 크라우드 티켓 브랜딩 영역 관련 */
+.main-leftimgbox {
+    background:url('/img/app/ct-background.jpg') center center no-repeat;
+    background-size:cover;
+    height:auto;
+    padding:100px 30px;
+    color:white;
+    text-align:center;
+    position:relative;
+    z-index:100;
+}
+@media (max-width:768px) {
+    .main-leftimgbox {
+        background:url('/img/app/ct-m-background.jpg') center center no-repeat;
+        background-size:cover;
+    }
+}
+.ct-btn {
+    font-size:15px;
+    font-weight:500;
+    padding:15px 40px;
+}
+@media (max-width:768px) {
+    .img-responsive,.thumbnail>img,.thumbnail a>img,.carousel-inner>.item>img,.carousel-inner>.item>a>img {
+        display:block;
+        max-width:none;
+        height:250px;
+        overflow:hidden;
+        margin:0 auto;
+        left:50%;
+        position:relative;
+        transform:translateX(-50%);
+        -webkit-transform: translateX(-50%);
+    }
+}
+
+@media (max-width:690px) {
+  .welcome_main_carousel_content_caption>h5{
+    font-size: 25px;
+  }
+  .welcome_main_carousel_content_caption>h2{
+    font-size: 51px;
+  }
+  .welcome_main_carousel_content_caption>h4{
+    font-size: 28px;
+  }
+}

@@ -5,12 +5,12 @@ html {
   -webkit-text-size-adjust: 100%;
   height: 100%;
   overflow-y: scroll;
-  min-width: 1030px;
+  /*min-width: 1030px;*/
 }
 body {
   margin: 0;
   height: 100%;
-  min-width: 1030px;
+  /*min-width: 1030px;*/
 }
 article,
 aside,

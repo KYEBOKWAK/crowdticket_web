@@ -1,0 +1,70 @@
+/*ticket START*/
+
+#ticket_list{
+  margin: 0;
+}
+
+.project-form-ticket-date-container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.project-form-ticket-price-container-grid{
+  display: grid;
+  grid-template-columns: 120px 35px;
+  height: 34px;
+}
+
+.project-form-ticket-limite-container-grid{
+  display: grid;
+  grid-template-columns: 100px 120px 100px;
+}
+
+.project-form-input{
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.project-form-ticket-limite-container-grid .project-form-input{
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.project-form-ticket-notice-content-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-form-ticket-category-container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-form-ticket-list-container-grid{
+  display: grid;
+  grid-template-columns: 150px 100px 100px 100px 70px 70px;;
+}
+
+.project-form-discount-list-container-grid{
+  display: grid;
+  grid-template-columns: 100px 100px 300px 100px 100px 100px;
+}
+/*ticket END*/
+
+/*Goods START*/
+
+.project-form-goods-img-preview-container{
+  width: 100%;
+}
+#goods_img_preview{
+  width: 274px;
+  height: 164px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.test{
+  border: 1px solid red;
+}
+/*Goods END*/

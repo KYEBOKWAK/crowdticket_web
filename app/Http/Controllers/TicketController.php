@@ -2,6 +2,7 @@
 
 use App\Models\Project as Project;
 use App\Models\Ticket as Ticket;
+use App\Models\Categories_ticket as Categories_ticket;
 
 class TicketController extends Controller
 {
@@ -16,9 +17,9 @@ class TicketController extends Controller
         $ticket->project()->associate($project);
         $ticket->save();
 
-        if ($project->type === 'sale') {
-            $this->updateProjectPerformanceDate($project, $ticket);
-        }
+        //if ($project->type === 'sale') {
+            //$this->updateProjectPerformanceDate($project, $ticket);
+        //}
 
         return $ticket;
     }
@@ -47,7 +48,7 @@ class TicketController extends Controller
         $ticket->save();
 
         if ($project->type === 'sale') {
-            $this->updateProjectPerformanceDate($project, $ticket);
+            //$this->updateProjectPerformanceDate($project, $ticket);
         }
 
         return $ticket;

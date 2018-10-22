@@ -34,7 +34,8 @@ class PaymentInfo
 
     public function withCardNumber($cardNumber)
     {
-        $this->validateOrFail('card_number', $cardNumber, 'digits_between:15,16');
+        //$this->validateOrFail('card_number', $cardNumber, 'digits_between:15,16');
+        $this->validateOrFail('card_number', $cardNumber, 'integer');
         $this->cardNumber = $this->formatCardNumber($cardNumber);
     }
 
@@ -50,7 +51,8 @@ class PaymentInfo
 
     public function withBirth($birth)
     {
-        $this->validateOrFail('birth', $birth, 'digits:6');
+        //$this->validateOrFail('birth', $birth, 'digits:6');
+        $this->validateOrFail('birth', $birth, 'integer');
         $this->birth = $birth;
     }
 
@@ -62,9 +64,15 @@ class PaymentInfo
 
     public function withAmount($amount)
     {
+      $rule = sprintf('integer|min:%d|max:%d', self::MIN_AMOUNT, self::MAX_AMOUNT);
+      $this->validateOrFail('amount', $amount, $rule);
+      $this->amount = $amount;
+
+      /*
         $rule = sprintf('integer|min:%d|max:%d', self::MIN_AMOUNT, self::MAX_AMOUNT);
         $this->validateOrFail('amount', $amount, $rule);
         $this->amount = $amount;
+        */
     }
 
     private function formatCardNumber($cardNumber)

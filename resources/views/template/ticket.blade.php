@@ -1,84 +1,41 @@
 <script type="text/template" id="template_ticket">
-    <div data-ticket-id="<%= ticket.id %>" class="ticket col-md-12">
-		<% if (style === 'normal' && buyable) { %>
-		<a href="{{ url('/projects/') }}/<%= projectId %>/tickets?selected_ticket=<%= ticket.id %>">
-		<% } %>
-		
-		<div class="ticket-wrapper <% if (style === 'modifyable') { %> col-md-11 <% } %>">
-			<div class="ticket-body">
-				<% if (type === 'funding') { %>
-					<span class="text-primary">
-						<span class="ticket-price"><%= ticket.price.format() %></span>원 이상 후원
-					</span>
-					<% if (ticket.real_ticket_count > 0) { %>
-						<span class="pull-right">
-							<img src="{{ asset('/img/app/ico_ticket2.png') }}" />
-							티켓
-							<span class="ticket-real-count"><%= ticket.real_ticket_count.format() %></span>매 포함
-						</span>
-					<% } %>
-				<% } else if (type === 'sale') { %>
-					<%
-						var rawDate = ticket.delivery_date.split(" ");
-						var d = rawDate[0].split("-");
-						var t = rawDate[1].split(":");
-						var date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
-						var yyyy = date.getFullYear();
-	    				var mm = date.getMonth() + 1;
-						var dd = date.getDate();
-	    				var H = date.getHours();
-	    				var min = date.getMinutes();
-	    				if (min < 10) {
-	    					min = "0" + min;
-	    				}
-	    				var formatted = yyyy + "년 " + mm + "월 " + dd + "일 " + H + ":" + min;  
-					%>
-					<span class="text-primary ticket-delivery-date"><%= formatted %></span>
-					<span class="pull-right">
-						<span class="ticket-price"><%= ticket.price %></span>원
-					</span>
-				<% } %>
-				<p class="ticket-reward"><%= ticket.reward.split("\n").join("<br />") %></p>
-			</div>
-			<div class="ticket-footer">
-			    <% if (type === 'funding') { %>
-				<span>
-					<span class="text-primary"><%= ticket.audiences_count.format() %></span>명이 선택 중 /
-				</span>
-				<% } %>
-				<% if (ticket.audiences_limit > 0) { %>
-					<span>
-						<span class="ticket-audiences-limit"><%= ticket.audiences_limit.format() %></span>개 제한
-					</span>
-				<% } else { %>
-					<span>제한 없음</span>
-				<% } %>
-				<% if (type === 'funding') { %>
-					<%
-						var rawDate = ticket.delivery_date.split(" ");
-						var d = rawDate[0].split("-");
-						var t = rawDate[1].split(":");
-						var date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
-	    				var mm = date.getMonth() + 1;
-						var dd = date.getDate();
-	    				var formatted = mm + "월 " + dd + "일";
-					%>
-					<span class="pull-right">예상 실행일 : <span class="ticket-delivery-date"><%= formatted %></span></span>
-				<% } %>
-			</div>
-		</div>
-		
-		<% if (style === 'normal' && buyable) { %>
-		</a>
-		<% } %>
-		
-		<% if (style === 'modifyable' && parseInt(ticket.audiences_count) === 0) { %>
-		<div class="col-md-1">
-			<p>
-				<button class="btn btn-primary modify-ticket">수정</button>
-				<button class="btn btn-primary delete-ticket">삭제</button>
-			</p>
-		</div>
-		<% } %>
+  <div data-ticket-id="<%= ticket.id %>" class="ticket project-form-ticket-list-container-grid">
+      <%
+  					var rawDate = ticket.show_date.split(" ");
+  					var d = rawDate[0].split("-");
+  					var t = rawDate[1].split(":");
+  					var date = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+  					var yyyy = date.getFullYear();
+      			var mm = date.getMonth() + 1;
+  					var dd = date.getDate();
+      			var H = date.getHours();
+      			var min = date.getMinutes();
+            if(mm < 10){
+              mm = "0" + mm;
+            }
+            if(dd < 10){
+              dd = "0" + dd;
+            }
+            if(H < 10){
+              H = "0" + H;
+            }
+      			if (min < 10) {
+      				min = "0" + min;
+      			}
+            var week = ['일', '월', '화', '수', '목', '금', '토'];
+            var dayOfWeek = week[date.getDay()];
+
+    				var formatted = yyyy + "년 " + mm + "월 " + dd + "일("+dayOfWeek+") " + H + ":" + min;
+
+				%>
+    <p class="text-primary ticket-delivery-date"><%= formatted %> | </p>
+    <p class="text-primary ticket-delivery-date"><%= addComma(ticket.price) %> 원</p>
+    <p class="text-primary ticket-delivery-date"><%= addComma(ticket.audiences_limit) %> 매</p>
+    <p class="text-primary ticket-delivery-date"><%= ticketCategory %></p>
+    <button class="btn btn-primary modify-ticket">수정</button>
+    <button class="btn btn-primary delete-ticket">삭제</button>
 	</div>
+
+  <!-- <h5 class="ticket"><img src="ticket.png">2018.09.12 6PM <span>20,000</span>원 남은좌석 <span style="color:#EF4D5D;">41</span>개<button class="ticket-btn">티켓구매</button></h5> -->
+
 </script>

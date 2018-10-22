@@ -5,10 +5,87 @@ use App\Models\Model as Model;
 use App\Models\User as User;
 use App\Models\Ticket as Ticket;
 use App\Models\Project as Project;
+use App\Models\Channel as Channel;
+use App\Models\Categories_channel as Categories_channel;
 use Illuminate\Http\Request as Request;
 
 class UserController extends Controller
 {
+  public function updateUserInfo(Request $request, $id)
+  {
+    $user = $this->ensureLoginUser($id);
+
+    if ($request->file('photo')) {
+      $photoUrl = $this->uploadPosterImage($request, $user);
+      $user->setAttribute('profile_photo_url', $photoUrl);
+    }
+
+    if ($request->has('name')) {
+      $user->setAttribute('name', \Input::get('name'));
+    }
+
+    if ($request->has('contact')) {
+      $user->setAttribute('contact', \Input::get('contact'));
+    }
+
+    if ($request->has('email')) {
+      $user->setAttribute('email', \Input::get('email'));
+    }
+
+    if ($request->has('bank')) {
+      $user->setAttribute('bank', \Input::get('bank'));
+    }
+
+    if ($request->has('account')) {
+      $user->setAttribute('account', \Input::get('account'));
+    }
+
+    if ($request->has('account_holder')) {
+      $user->setAttribute('account_holder', \Input::get('account_holder'));
+    }
+
+    if ($request->has('introduce')) {
+      $introduce = \Input::get('introduce');
+      $user->setAttribute('introduce', $introduce);
+    }
+    //channel_category
+    //channel_category_url_input
+
+    $channelArray = '';
+    for($i = 0 ; $i < 6 ; $i++)
+    {
+      $channelCategory_Input = 'channel_category'.$i;
+      $channelCategoryURL_Input = 'channel_category_url_input'.$i;
+      $channelID_Input = 'channelId'.$i;
+
+      if ($request->has($channelCategory_Input) &&
+          $request->has($channelCategoryURL_Input)) {
+            $channelID = \Input::get($channelID_Input);
+            $channelCategoryID = \Input::get($channelCategory_Input);
+            $channelCategoryURL = \Input::get($channelCategoryURL_Input);
+            $channel = Channel::find($channelID);
+            $channelCategory = Categories_channel::findOrFail($channelCategoryID);
+
+            if($channelID == ''){
+              //빈값이면 새로 생성
+              $channel = new Channel();
+            }
+
+            $channel->categories_channel()->associate($channelCategory);
+            $channel->user()->associate($user);
+            $channel->setAttribute('url', $channelCategoryURL);
+            $channel->save();
+
+            $channelArray[$channelID_Input] = $channel->id;
+      }
+    }
+
+    $channelsJson = json_encode($channelArray);
+
+    $user->save();
+
+    return $channelsJson;
+  }
 
     public function getUser($id)
     {

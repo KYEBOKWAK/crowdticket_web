@@ -1,0 +1,44 @@
+.form-body-default-container{
+
+}
+
+.project-form-subtitle h5{
+  margin: 0px;
+}
+
+.project-form-input-newURL{
+  display: table-cell;
+  width: 130px;
+}
+
+.input-group{
+  display: inline-table;
+  vertical-align: middle;
+  width: 300px;
+}
+
+.form_body_default_tag_container_grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form_body_default_tag_input_container_grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form_body_default_city_container_grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form_body_default_no_city_container_grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.form_body_default_target_container_grid{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}

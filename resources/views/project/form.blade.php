@@ -163,94 +163,120 @@
             margin-top: 15px;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_default.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_poster.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_creator.css?version=1') }}"/>
+
 @endsection
 
 @section('content')
-    @include('helper.btn_admin', ['project' => $project])
-    <div class="first-container">
-        <div class="container">
-            <div class="row ps-update-tabs">
-                <?php
-                $tabs = [
-                        [
-                                'key' => 'base',
-                                'title' => '기본정보',
-                                'ico_url' => asset('/img/app/ico_tap01.png')
-                        ]
-                ];
-                if ($project->type === 'funding') {
-                    array_push($tabs, [
-                            'key' => 'reward',
-                            'title' => '보상',
-                            'ico_url' => asset('/img/app/ico_tap02.png')
-                    ]);
-                } else {
-                    array_push($tabs, [
-                            'key' => 'ticket',
-                            'title' => '티켓',
-                            'ico_url' => asset('/img/app/ico_tap02_01.png')
-                    ]);
-                }
-                array_push($tabs, [
-                        'key' => 'poster',
-                        'title' => '포스터',
-                        'ico_url' => asset('/img/app/ico_tap03.png')
-                ]);
-                array_push($tabs, [
-                        'key' => 'story',
-                        'title' => '스토리',
-                        'ico_url' => asset('/img/app/ico_tap04.png')
-                ]);
-                array_push($tabs, [
-                        'key' => 'creator',
-                        'title' => '개설자소개',
-                        'ico_url' => asset('/img/app/ico_tap05.png')
-                ]);
-                ?>
+@include('helper.btn_admin', ['project' => $project])
 
-                @foreach ($tabs as $tab)
-                    <div class="col-md-2">
-                        <a href="{{ url('/projects/form/') }}/{{ $project->id }}?tab={{ $tab['key'] }}">
-                            <div class="ps-update-tab @if ($tab['key'] === $selected_tab) ps-update-tab-selected @endif">
-                                <img src="{{ $tab['ico_url'] }}"/>
-                                <h5 class="ps-update-tab-title">{{ $tab['title'] }}</h5>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-                <div class="col-md-1">
-                    <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
-                       target="_blank">미리보기</a>
+<?php
+$tabs = [
+        [
+                'key' => 'required',
+                'title' => '분류',
+                'ico_url' => asset('/img/app/ico_tap01.png')
+        ]
+];
+
+array_push($tabs, [
+        'key' => 'base',
+        'title' => '기본정보',
+        'ico_url' => asset('/img/app/ico_tap01.png')
+]);
+
+array_push($tabs, [
+        'key' => 'ticket',
+        'title' => '티켓',
+        'ico_url' => asset('/img/app/ico_tap02_01.png')
+]);
+
+array_push($tabs, [
+        'key' => 'poster',
+        'title' => '포스터',
+        'ico_url' => asset('/img/app/ico_tap03.png')
+]);
+array_push($tabs, [
+        'key' => 'story',
+        'title' => '스토리',
+        'ico_url' => asset('/img/app/ico_tap04.png')
+]);
+array_push($tabs, [
+        'key' => 'creator',
+        'title' => '개설자소개',
+        'ico_url' => asset('/img/app/ico_tap05.png')
+]);
+
+//최종적으로 success가 떨어져야 다음 탭으로 넘어간다.
+  $isReqiredSuccess = "FALSE";
+  if($project->project_type != "" && $project->type != "")
+  {
+    //project type에 저장되어 있는게 있다면, 이미 분류쪽 선택은 끝난 상태
+    $isReqiredSuccess = "TRUE";
+  }
+?>
+<input type="hidden" id="project_type" value="{{ $project->project_type }}"/>
+<input type="hidden" id="project_id" value="{{ $project->id }}"/>
+<input type="hidden" id="isReqiredSuccess" value="{{$isReqiredSuccess}}">
+<input type="hidden" id="default_img" value="{{ url( $project->getDefaultImgUrl() ) }}"/>
+
+<div class="project-form-container">
+  <div class="project-form-tab-container @if ($project->isReady()) project-form-tab-container-ready @endif">
+    @foreach ($tabs as $tab)
+        <div class="project-form-tab-wrapper">
+            <a href="#" onclick="tabSelect('{{ $tab['key'] }}'); return false;">
+                <div class="project-form-tab @if ($tab['key'] === $selected_tab) project-form-tab-select @endif">
+                    <img src="{{ $tab['ico_url'] }}"/>
+                    <h5 class="ps-update-tab-title">{{ $tab['title'] }}</h5>
                 </div>
-                @if ($project->isReady())
-                    <div class="col-md-1">
-                        <button id="submit_project" class="btn btn-primary">제출하기</button>
-                    </div>
-                @endif
-            </div>
-            <div class="ps-update-body">
-                @if ($selected_tab === 'base')
-                    @include('project.form_body_default', [
-                        'categories' => $categories,
-                        'cities' => $cities,
-                        'project' => $project
-                    ])
-                @elseif ($selected_tab === 'reward' || $selected_tab === 'ticket')
-                    @include('project.form_body_ticket', ['project' => $project])
-                @elseif ($selected_tab === 'poster')
-                    @include('project.form_body_poster', ['project' => $project])
-                @elseif ($selected_tab === 'story')
-                    @include('project.form_body_story', ['project' => $project])
-                @elseif ($selected_tab === 'creator')
-                    @include('project.form_body_creator', ['project' => $project, 'user' => Auth::user()])
-                @endif
-            </div>
+            </a>
         </div>
-        <input type="hidden" id="project_id" value="{{ $project->id }}"/>
+    @endforeach
+    <div class="project-form-tab-preview-btn">
+        <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
+           target="_blank">미리보기</a>
     </div>
+    @if ($project->isReady())
+        <div class="project-form-tab-submit-btn">
+            <button id="submit_project" class="btn btn-primary">제출하기</button>
+        </div>
+    @endif
+  </div>
+
+  <div class="project-form-content-container">
+    @if ($selected_tab === 'required')
+        @include('project.form_body_required', ['project' => $project])
+    @elseif ($selected_tab === 'base')
+        @include('project.form_body_default', [
+            'categories' => $categories,
+            'cities' => $cities,
+            'project' => $project
+        ])
+    @elseif ($selected_tab === 'ticket')
+        @include('project.form_body_ticket', ['project' => $project])
+    @elseif ($selected_tab === 'poster')
+        @include('project.form_body_poster', ['project' => $project])
+    @elseif ($selected_tab === 'story')
+        @include('project.form_body_story', ['project' => $project])
+    @elseif ($selected_tab === 'creator')
+        @include('project.form_body_creator', ['project' => $project, 'user' => Auth::user()])
+    @endif
+  </div>
+</div>
+
 @endsection
 
 @section('js')
     @include('template.ticket')
+    @include('template.discount')
+    @include('template.goods', ['isForm' => 'true'])
+    @include('template.goods_container')
+    @include('template.channel_category_url')
     <script src="{{ asset('/js/project/form.js') }}"></script>
 @endsection

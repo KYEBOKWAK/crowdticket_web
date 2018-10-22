@@ -727,7 +727,7 @@
   user-select:none;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color:#fff;
+  background-color:#222222;
 }
 .navbar-default .navbar-toggle {
   border-color: transparent;
@@ -971,13 +971,13 @@ video {
   width:100%;
   max-width:35%;
   height:100%;
-  background-image:url('/img/app/apply-bg.jpg');
+  background-image:url('/img/app/apply-bg.png');
   background-size:cover;
   background-position:center center;
 }
 .img-m-bg {
   height:100px;
-  background-image:url('/img/app/apply-m-bg.jpg');
+  background-image:url('/img/app/apply-m-bg.png');
   background-size:cover;
   background-position:center center;
 }
@@ -1027,7 +1027,7 @@ video {
   color:#fff;
   text-align:center;
   padding:45px 0px;
-  background-image:url('/img/app/recommend-bg.jpg');
+  background-image:url('/img/app/recommend-bg.png');
   width:100%;
   background-size:cover;
   background-position:center center;

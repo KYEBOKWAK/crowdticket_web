@@ -1,0 +1,24 @@
+.project-form-poster-title-container-grid{
+  display: grid;
+  grid-template-rows: 40px 1fr;
+}
+
+.project-form-poster-title-img-container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.project-form-poster-img-wrapper{
+  height: 300px;
+  background-size: cover;
+}
+
+.delete-poster-title-img{
+  display: none;
+}
+
+#poster_img_preview{
+  height: 300px;
+  background-size: cover;
+}

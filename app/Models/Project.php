@@ -10,8 +10,8 @@ class Project extends Model
 
     protected static $fillableByState = [
         Project::STATE_READY => [
-            'title', 'alias', 'description', 'video_url', 'story',
-            'detailed_address', 'concert_hall', 'pledged_amount', 'audiences_limit',
+            'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
+            'detailed_address', 'concert_hall','hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
             'funding_closing_at'
         ],
 
@@ -30,13 +30,20 @@ class Project extends Model
     ];
 
     protected static $typeRules = [
+        'type'  => 'in:funding,sale',
+        'project_type' => 'in:artist,creator',
+        'project_target' => 'in:money,people',
         'title' => 'string|min:1|max:30',
         'alias' => 'regex:/^([a-zA-Z]{1}[a-zA-Z0-9-_]{3,63})?$/',
         'poster_url' => 'url',
+        'poster_renew_url' => 'url',
+        'poster_sub_renew_url' => 'url',
         'description' => 'string',
         'video_url' => 'url',
         'detailed_address' => 'string',
         'concert_hall' => 'string',
+        'hash_tag1' => 'string',
+        'hash_tag2' => 'string',
         'pledged_amount' => 'integer|min:0',
         'audiences_limit' => 'integer|min:0',
         'funding_closing_at' => 'date_format:Y-m-d H:i:s',
@@ -45,6 +52,7 @@ class Project extends Model
 
     public function update(array $attributes = array())
     {
+      //return static::$fillableByState[$this->state];
         $this->fillable = static::$fillableByState[$this->state];
         parent::update($attributes);
     }
@@ -101,11 +109,31 @@ class Project extends Model
 
     public function tickets()
     {
+      return $this->hasMany('App\Models\Ticket')->orderBy('show_date', 'asc');
+      /*
         if ($this->type === 'funding') {
             return $this->hasMany('App\Models\Ticket')->orderBy('price', 'asc');
         } else {
             return $this->hasMany('App\Models\Ticket')->orderBy('delivery_date', 'asc');
         }
+        */
+    }
+
+    public function discounts()
+    {
+      //return $this->hasMany('App\Models\Discount')->orderBy('show_date', 'asc');
+      return $this->hasMany('App\Models\Discount');
+    }
+
+    public function goods()
+    {
+      return $this->hasMany('App\Models\Goods');
+    }
+
+    public function posters()
+    {
+      return $this->hasMany('App\Models\Poster');
+      //return $this->belongsTo('App\Models\Poster');
     }
 
     public function orders()
@@ -150,9 +178,28 @@ class Project extends Model
 
     public function getPosterUrl()
     {
-        if ($this->poster_url) {
+        if($this->poster_url){
             return $this->poster_url;
         }
+
+        if($this->poster_renew_url){
+          return $this->poster_renew_url;
+        }
+
+        return asset('img/app/img_no_poster.png');
+    }
+
+    public function getSubPosterURL()
+    {
+      if($this->poster_sub_renew_url){
+        return $this->poster_sub_renew_url;
+      }
+
+      return asset('img/app/img_no_poster.png');
+    }
+
+    public function getDefaultImgUrl()
+    {
         return asset('img/app/img_no_poster.png');
     }
 
@@ -166,6 +213,40 @@ class Project extends Model
 
     public function getTicketDateFormatted()
     {
+      $open = new \DateTime('now');
+      $close = new \DateTime('now');
+      if ($this->performance_opening_at) {
+          $open = new \DateTime($this->performance_opening_at);
+      }
+      if ($this->performance_closing_at) {
+          $close = new \DateTime($this->performance_closing_at);
+      }
+
+      $openDay = $open->format('Y. m. d');
+      $closeDay = $close->format('Y. m. d');
+      if ($openDay === $closeDay) {
+          return $openDay;
+      }
+
+      $startY = $open->format('Y');
+      $endY = $close->format('Y');
+
+      $startM = $open->format('m');
+      $endM = $close->format('m');
+
+      if($startY === $endY &&
+          $startM === $endM)
+      {
+        //년 월이 같으면 day 만 표시한다.
+        $close = $close->format('d');
+      }
+      else if($startY === $endY)
+      {
+        $close = $close->format('m. d');
+      }
+
+      return $openDay . ' - ' . $close;
+      /*
         $open = new \DateTime('now');
         $close = new \DateTime('now');
         if ($this->performance_opening_at) {
@@ -180,6 +261,95 @@ class Project extends Model
             return $open;
         }
         return $open . ' ~ ' . $close;
+        */
+    }
+
+    //리뉴얼 시간 가져오는 함수
+    public function getConcertDateFormatted()
+    {
+      //if($this->poster_url)
+      if($this->isOldProject())
+      {
+        //우선 포스터 URL로 기존 프로젝트인지 판단한다.
+        return $this->getTicketDateFormatted();
+      }
+
+      $ticketCount = count($this->tickets);
+
+      if($ticketCount == 0)
+      {
+        return "";
+      }
+
+      $concertStartDayRow = $this->tickets[0]->show_date;
+      $concertEndDayRow = $this->tickets[$ticketCount - 1]->show_date;
+
+      $concertStartDayRow = new \DateTime($concertStartDayRow);
+      $concertEndDayRow = new \DateTime($concertEndDayRow);
+
+      //$concertStartDay = $concertStartDay->format('Y. m. d');
+      $startY = $concertStartDayRow->format('Y');
+      $endY = $concertEndDayRow->format('Y');
+
+      $startM = $concertStartDayRow->format('m');
+      $endM = $concertEndDayRow->format('m');
+
+      $concertStartDay = $concertStartDayRow->format('Y. m. d');
+      $concertEndDay = $concertEndDayRow->format('Y. m. d');
+
+      if($concertStartDay === $concertEndDay)
+      {
+        return $concertEndDay;
+      }
+
+      if($startY === $endY &&
+          $startM === $endM)
+      {
+        //년 월이 같으면 day 만 표시한다.
+        $concertEndDay = $concertEndDayRow->format('d');
+      }
+      else if($startY === $endY)
+      {
+        $concertEndDay = $concertEndDayRow->format('m. d');
+      }
+
+      return $concertStartDay . ' - ' . $concertEndDay;
+    }
+
+    public function getMainExplain()
+    {
+      //'type'  => 'in:funding,sale',
+      //'project_type' => 'in:artists,creators',
+      //'project_target' => 'in:money,people',
+
+      //$this->pledged_amount
+
+      $pledgedTarget = "명";
+      //인원, 금액 결정
+      if($this->project_target == "people")
+      {
+        $pledgedTarget = "원";
+      }
+
+      $fundingEndTime = strtotime($this->funding_closing_at);
+      $fundingEndTime = date('Y년 m월 d일', $fundingEndTime);
+      //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명)
+
+      return $fundingEndTime . ' 까지 최소 ' . number_format($this->pledged_amount).$pledgedTarget . "이 모여야 진행되는 이벤트입니다.";
+    }
+
+    public function getNowAmount()
+    {
+      //구매 인원 수
+      //현재 91명 신청 완료
+      $nowAmount = "현재 " . $this->funded_amount . "원 모임";
+
+      if($this->project_target == "people")
+      {
+        $nowAmount = "신청자 " . $this->funded_amount . "명";
+      }
+
+      return $nowAmount;
     }
 
     public function getFundingClosingAtOrNow()
@@ -246,4 +416,25 @@ class Project extends Model
         return $this->type === 'sale';
     }
 
+    public function isCreatorType()
+    {
+      return $this->project_type === 'creator';
+      /*
+      if($this->project_type === NULL){
+        return false;
+      }
+
+      return true;
+      */
+    }
+
+    public function isOldProject()
+    {
+      if($this->poster_url)
+      {
+        return "true";
+      }
+
+      return "";
+    }
 }

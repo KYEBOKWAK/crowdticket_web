@@ -36,6 +36,11 @@ class Order extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function discount()
+    {
+      return $this->belongsTo('App\Models\Discount');
+    }
+
     public function getAmountWithoutCommission()
     {
         /** @noinspection PhpUndefinedFieldInspection */
@@ -47,7 +52,42 @@ class Order extends Model
         if ($this->deleted_at) {
             return false;
         }
-        
+//poster_url
+        $project = $this->getProject();
+        $dday = 0;
+
+        if($project->poster_url)
+        {
+          //예전 코드
+          if ($project->isFundingType()) {
+              if ($project->funding_closing_at) {
+                  $dday = strtotime('-1 days', strtotime($project->funding_closing_at));
+              }
+          } else {
+              $ticket = $this->getTicket();
+              if ($ticket->delivery_date) {
+                  $before = strtotime('-1 days', strtotime($ticket->delivery_date));
+                  $dday = strtotime(date('Y-m-d', $before) . ' 23:59:59');
+              }
+          }
+        }
+        else
+        {
+          if ($project->funding_closing_at) {
+              $dday = strtotime('-1 days', strtotime($project->funding_closing_at));
+          }
+        }
+
+
+        return $dday - time() > 0;
+    }
+
+    public function canNewCancel()
+    {
+        if ($this->deleted_at) {
+            return false;
+        }
+
         $project = $this->getProject();
         $dday = 0;
         if ($project->isFundingType()) {

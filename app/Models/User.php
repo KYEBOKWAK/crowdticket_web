@@ -10,7 +10,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     use Authenticatable, CanResetPassword;
 
-    protected $fillable = ['email', 'name', 'password', 'profile_photo_url', 'contact', 'website'];
+    protected $fillable = ['email', 'name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder'];
 
     protected $hidden = ['password', 'remember_token', 'facebook_id'];
 
@@ -24,12 +24,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'name' => 'string',
         'profile_photo_url' => 'url',
         'contact' => 'numeric',
-        'website' => 'url'
+        'introduce' => 'string',
+        'website' => 'url',
+        'bank' => 'string',
+        'account' => 'numeric',
+        'account_holder' => 'string'
     ];
 
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function channels()
+    {
+      return $this->hasMany('App\Models\Channel');
     }
 
     public function projects()

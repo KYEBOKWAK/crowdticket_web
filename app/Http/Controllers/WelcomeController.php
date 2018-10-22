@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Maincarousel as Maincarousel;
+
 class WelcomeController extends Controller
 {
 
@@ -11,7 +13,7 @@ class WelcomeController extends Controller
         $total_view = 0;
         $total_amount = 0;
 //whereNotIn('order_number', [0])->orderBy('order_number')->get()
-        $minExposedNum = 6;
+        $minExposedNum = 8;
         /*
         $projects = \App\Models\Project::where('state', 4)
             ->where('funding_closing_at', '>', $now)
@@ -36,12 +38,26 @@ class WelcomeController extends Controller
         $total_view = \App\Models\Project::where('view_count', '<>', 0)->sum('view_count');
         $total_amount = \App\Models\Project::where('funded_amount', '<>', 0)->sum('funded_amount');
 
+        //maincarousel
+        $main_carousel = Maincarousel::orderby('id')->get();
+        //$main_carousel = Maincarousel::where('id', '=', 1)->get();
+
+        return view('welcome_new', [
+            'projects' => $projects,
+            'total_suppoter' => number_format($total_suppoter),
+            'total_view' => number_format($total_view),
+            'total_amount' => number_format($total_amount),
+            'main_carousels' => $main_carousel
+        ]);
+
+        /*
         return view('welcome', [
             'projects' => $projects,
             'total_suppoter' => number_format($total_suppoter),
             'total_view' => number_format($total_view),
             'total_amount' => number_format($total_amount)
         ]);
+        */
     }
 
 }

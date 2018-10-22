@@ -1,0 +1,76 @@
+.project-form-create-container{
+  width: 100%;
+}
+
+.project-form-create-wrapper{
+  width: 70%;
+  /*border: 2px solid red;*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-form-create-title-img-wrapper{
+
+}
+
+.project-form-create-title-wrapper{
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.project-form-create-title-wrapper h1{
+  font-size: 38px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.project-form-create-btn-submit-wrapper{
+  text-align: center;
+}
+
+.project-form-create-btn-submit{
+  background-color: #ea535a;
+  border-radius: 4px;
+  color: white;
+  width: 150px;
+  font-size: 14px;
+  padding: 6px;
+}
+
+/*기존 코드 START*/
+/*
+#main {
+    background-image: url('{{ asset("/img/app/process_bg.jpg") }}');
+    background-position: center;
+    background-size: cover;
+}
+*/
+
+.box-container h5 {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.box-container .btn[type="submit"] {
+    width: 150px;
+    display: block;
+    margin: 10px auto 0 auto;
+}
+
+#input-amount:-moz-placeholder {
+    direction: rtl;
+}
+
+#input-amount::-moz-placeholder {
+    direction: rtl;
+}
+
+#input-amount:-ms-input-placeholder {
+    direction: rtl;
+}
+
+#input-amount::-webkit-input-placeholder {
+    direction: rtl;
+}
+
+/*기존 코드 END*/

@@ -31,6 +31,72 @@
 		#main{
 			padding-bottom:0px;
 		}
+
+    .landing-icon-grid{
+      display: grid;
+      /*grid-template-columns: 1fr 1fr 1fr 1fr;*/
+      grid-template-columns: 1fr 1fr;
+
+      width:73%;
+      height: 100%;
+
+      /*margin-top: 80px;
+      margin-bottom: 80px;*/
+
+      margin-top: 120px;
+      margin-bottom: 120px;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .landing-icon-wrapping{
+      text-align: center;
+      width: 450px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .landing-icon-wrapping img{
+      width:40%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .landing-icon-wrapping h2{
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .landing-icon-wrapping p{
+      font-size: 1.8rem;
+      font-weight: 400;
+      line-height: 1.8;
+      letter-spacing: -1px;
+    }
+
+    .ct-btn-default{
+      background-color: #ea535a;
+      font-family: 'Noto Sans KR',sans-serif;
+    }
+
+    @media (max-width: 768px) {
+      .landing-icon-grid{
+        display: block;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+
+      .landing-icon-wrapping{
+        width: 100%;
+        margin-top: 90px;
+      }
+
+      .ct-btn-default{
+        margin-top: 38px;
+      }
+    }
     </style>
 @endsection
 
@@ -41,11 +107,11 @@
         <div class="container">
             <div class="col-xs-12 col-sm-12 col-md-8 offset-md-4">
                 <div class="row">
-                    <h1>공연기획비용을 투자 받고,<br>
-                    후원해 주신 분들께<br>멋진 공연으로 보답하세요!<br>
-                     티켓 오픈 전<br>공연홍보기회는 덤으로!</h1>
-                    <h3>크라우드티켓은 초기 공연기획비용 없이도 음악 콘서트, 토크 콘서트, 강연, 전시회, 파티, 각종 모임 등 모든 종류의 공연을 자유롭게 기획하게 티켓을 판매할 수 있는 열린 공간입니다.</h3>
-                    <button id="moveApply" type="button" class="ct-btn ct-btn-default">공연 개설 신청하기</button>
+                    <h1>여러분의 공연 또는 이벤트,<br>
+                    이제는 크라우드티켓에 올리세요!<br>
+                     </h1>
+                    <h3>크라우드티켓에서는 예술가부터 개인 방송인까지 누구나 공연과 이벤트를 기획, 홍보하고 판매할 수 있는 공간입니다.</h3>
+                    <button id="moveApply" type="button" class="ct-btn ct-btn-default">지금 시작하기</button>
                 </div>
             </div>
             <div class="img-bg hidden-xs hidden-sm">
@@ -56,33 +122,36 @@
     </div>
     <!-- first section 끝 -->
     <!-- second section 시작 -->
-    <div class="ct-effect ct-res-text">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-4">
-                    <img src="{{ asset('/img/app/money.png') }}">
-                    <h2>공연 수익을 올려보세요!</h2>
-                    <h3>싸인 CD, 로고가 들어간 텀블러 등으로 티켓 외 수익을 창출해 보세요! 약 30% 정도 공연 수익이 늘어날 수 있습니다.</h3>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-4">
-                    <img src="{{ asset('/img/app/people.png') }}">
-                    <h2>크라우드티켓 커뮤니티 속 여러분의 팬들과 더 가까워지세요!</h2>
-                    <h3>공연에 후원해준 팬들의 리스트를 얻을 수 있습니다. 우리나라 공연예술을 가장 아끼는 그들과 소통해보세요.</h3>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-4">
-                    <img src="{{ asset('/img/app/marketing.png') }}">
-                    <h2>새로운 공연 홍보 수단</h2>
-                    <h3>티켓 오픈 전 한달 정도의 기간으로 크라우드펀딩을 진행해보세요. 초기 자금도 얻을 수 있고 훨씬 더 많은 사람들이 SNS와 온라인에서 여러분의 공연을 접할 수 있게 됩니다.</h3>
-                </div>
-            </div>
-        </div>
+    <div class="landing-icon-grid">
+      <div class="landing-icon-wrapping animate-box">
+        <img src="{{ asset('/img/app/feature1.png') }}">
+        <h2>누구나 쉽게 티켓팅 개설</h2>
+        <p>공연, 팬미팅, 강의, 모임 등 관객이 필요하다면 누구나 손쉽게 지금 바로 이벤트 개설이 가능합니다!</p>
+      </div>
+      <div class="landing-icon-wrapping animate-box">
+        <img src="{{ asset('/img/app/feature2.png') }}">
+        <h2>크라우드펀딩 기능</h2>
+        <p>개성있는 공연/이벤트를 위한 최소 참가인원 또는 최소 준비 비용을 설정하고 기획을 해보세요! 아이디어만으로도 여러분의 무대를 만들 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="landing-icon-grid">
+      <div class="landing-icon-wrapping animate-box">
+        <img src="{{ asset('/img/app/feature3.png') }}">
+        <h2>상품 판매 가능</h2>
+        <p>티켓판매 뿐만 아니라 이벤트 관련 상품 판매와 후원까지 받을 수 있습니다! 여러분의 공연/이벤트 수익을 다양한 방법으로 높여보세요.</p>
+      </div>
+      <div class="landing-icon-wrapping animate-box">
+        <img src="{{ asset('/img/app/feature4.png') }}">
+        <h2>관객관리, 결제</h2>
+        <p>귀찮은 결제와 정산 관리는 크라우드티켓에 맡기고, 관객 관리는 모바일로 더 간편하게 진행해보세요!</p>
+      </div>
     </div>
     <!-- second section 끝 -->
     <!-- third section 시작 -->
     <div class="ct-recommend ct-res-text">
         <div class="container">
-            <h1>장르 불문, 아마추어부터 프로까지, 공연예술인이라면 누구나,<br>
-            공연 초기 기획 비용을 펀딩 받으세요!</h1>
+            <h1>장르불문, 아마추어부터 프로까지!<br>
+            이미 많은 분들이 무대를 만들고 팬을 만났습니다.</h1>
             <div class="short-separator">
             </div>
             <div id="text-carousel" class="carousel slide" data-ride="carousel">
@@ -140,20 +209,22 @@
     <div id="apply">
         <div class="goapply ct-res-text">
             <div class="container">
-                <h1>크라우드티켓에서<br>
-                공연 개설을 신청하세요!</h1>
+                <h1>지금 바로 <br>
+                프로젝트를 시작해보세요!</h1>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <img src="{{ asset('img/app/img_blueprint_funding.png') }}" class="img-blueprint">
-                        <h2>크라우드펀딩으로 공연기획, 도전!!</h2>
-                        <h3>대관 등 공연기획이 어느 정도 되어있는 상태라도 크라우드펀딩을 이용하면 효과적인 홍보와 프로모션을 진행할 수 있습니다. </h3>
-                        <a href="{{ url('blueprints/form?type=funding') }}" class="ct-btn ct-btn-default">펀딩 프로젝트 신청</a>
+                        <img src="{{ asset('img/app/img_blueprint_ticket.png') }}" class="img-blueprint">
+                        <h2>공연/이벤트 페이지 개설</h2>
+                        <h3>별도의 신청절차 없이 바로 페이지 제작을 시작할 수 있습니다. 크라우드티켓과 함께 공연/이벤트를 준비해보세요!</h3>
+                        <!-- <a href="{{ url('blueprints/form?type=funding') }}" class="ct-btn ct-btn-default">펀딩 프로젝트 신청</a> -->
+                        <a href="{{ url('blueprints/form?isProject=true') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <img src="{{ asset('img/app/img_blueprint_ticket.png') }}" class="img-blueprint">
-                        <h2>티켓 판매만 진행하고 싶습니다.</h2>
-                        <h3>크라우드티켓의 간편한 결제시스템과 관객관리 툴을 저렴한 수수료로 이용해 보세요!</h3>
-                        <a href="{{ url('blueprints/form?type=sale') }}" class="ct-btn ct-btn-default">티켓팅 프로젝트 신청</a>
+                        <img src="{{ asset('img/app/img_blueprint_funding.png') }}" class="img-blueprint">
+                        <h2>협업 및 서비스 이용 문의하기</h2>
+                        <h3>펀딩 기획 컨설팅, 홍보 콘텐츠 제작 등을 지원해드리고 있습니다. 이벤트 오픈 전 문의는 이쪽으로 해주세요! </h3>
+                        <!-- <a href="{{ url('blueprints/form?type=sale') }}" class="ct-btn ct-btn-default">티켓팅 프로젝트 신청</a> -->
+                        <a href="{{ url('blueprints/form?isProject=false') }}" class="ct-btn ct-btn-default">제휴 문의</a>
                     </div>
                 </div>
             </div>
@@ -169,11 +240,11 @@
             $('#moveApply').on("click",function(event){
                 // 1. pre태그의 위치를 가지고 있는 객체를 얻어온다. => offset 객체
                 var scrollPosition = $("#apply").offset().top;
-                     
+
                 // offset은 절대 위치를 가져온다. offset.top을 통해 상단의 좌표를 가져온다.
                 // position은 부모를 기준으로한 상대위치를 가져온다.
                 $('html, body').animate({scrollTop : scrollPosition}, 1000);
-     
+
             });
         });
     </script>

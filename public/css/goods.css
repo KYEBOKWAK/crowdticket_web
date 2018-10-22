@@ -1,0 +1,84 @@
+/*굿즈 아이템 전체 감싸는 container*/
+.project-form-goods-container-grid{
+  display: grid;
+  /*grid-template-rows: 164px 150px;*/
+  grid-template-rows: 164px 141px 45px;
+  margin-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.project-detail-goods-container-grid{
+  display: grid;
+  /*grid-template-rows: 164px 150px;*/
+  grid-template-rows: 164px 141px;
+  width: 295px;
+  margin-bottom: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.project-detail-goods-container-grid-no-img{
+  grid-template-rows: 141px;
+}
+
+.project-form-goods-item-btn-container{
+  margin-top: 5px;
+}
+
+.project_form_goods_container{
+  width: 100%;
+  height: 305px;
+  /*border: 1px solid #dddddd;*/
+}
+
+.project-form-goods-list-container-grid{
+  /*display: grid;*/
+  /*grid-template-columns: 1fr 1fr 1fr;*/
+}
+
+/*
+.project-form-goods-item-content-grid{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  border: 1px solid #dddddd;
+}
+*/
+
+.project-form-goods-item-content{
+  padding: 20px 15px;
+  border: 1px solid #dddddd;
+  text-align: left;
+}
+
+.project-form-goods-item-content>h4{
+  font-size: 15px;
+  font-weight: 400;
+  margin: 0px;
+}
+
+.project-form-goods-item-content>h3{
+  font-size: 20px;
+  margin-top: 8px;
+  margin-bottom: 13px;
+  font-weight: 500;
+}
+
+.project-form-goods-item-content>p{
+  line-height: 20px;
+  margin-bottom: 0px;
+}
+
+.project-form-goods-img-wrapper{
+  width: 100%;
+  height: 164px;
+}
+
+.detail_ticket_md_color_cover{
+  background-color: #f9f8f6;
+}
+
+@media (max-width:1030px)  {
+  .project-form-goods-list-container-grid{
+    display: block;
+  }
+}

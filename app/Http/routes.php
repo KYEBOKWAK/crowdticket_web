@@ -37,6 +37,7 @@ Route::get('landing/form', function () {
 });
 
 Route::post('landing/sendmail', 'MailSendController@sendEmail');
+Route::post('question/sendmail', 'MailSendController@sendQuestionEmail');
 //
 
 
@@ -82,9 +83,36 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/{id}/stats', 'ProjectController@getStats');
     Route::get('projects/{id}/orders', 'ProjectController@getOrders');
 
+    //Ticket
     Route::post('projects/{id}/tickets', 'TicketController@createTicket');
     Route::put('tickets/{id}', 'TicketController@updateTicket');
     Route::delete('tickets/{id}', 'TicketController@deleteTicket');
+
+    //Discount
+    Route::post('projects/{id}/discounts', 'DiscountController@createDiscount');
+    Route::put('discounts/{id}', 'DiscountController@updateDiscount');
+    Route::delete('discounts/{id}', 'DiscountController@deleteDiscount');
+
+    //goods(MD)
+    //Route::post('projects/{id}/goods', 'GoodsController@createGoods');
+    Route::put('projects/goods/{id}', 'GoodsController@createGoods');
+    Route::put('goods/{id}', 'GoodsController@updateGoods');
+    Route::delete('goods/{id}', 'GoodsController@deleteGoods');
+
+    //poster
+    Route::put('projects/posters/{id}', 'PosterController@createPoster');
+    Route::put('posters/{id}', 'PosterController@updatePoster');
+    Route::delete('posters/title/{id}/{imgnum}', 'PosterController@deleteTitlePoster');
+    Route::delete('posters/poster/{id}', 'PosterController@deletePoster');
+
+    //channel
+    //Route::post('projects/{id}/discounts', 'ChannelController@createDiscount');
+    Route::post('channels/{id}', 'ChannelController@createChannel');
+    //Route::put('discounts/{id}', 'ChannelController@updateDiscount');
+    Route::delete('channels/{id}', 'ChannelController@deleteChannel');
+
+    //creator profile
+    Route::put('users/upload/{id}', 'UserController@updateUserInfo');
 
     Route::post('projects/{id}/news', 'NewsController@createNews');
     Route::get('projects/{id}/news/form', 'NewsController@getCreateForm');
@@ -93,9 +121,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('news/{id}', 'NewsController@deleteNews');
 
     Route::post('tickets/{id}/orders', 'OrderController@createOrder');
+    Route::post('tickets/{id}/neworders', 'OrderController@createNewOrder');
     Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
-    Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
-    Route::get('projects/{id}/tickets', 'OrderController@getTickets');
+    //Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
+    Route::post('tickets/orders/form', 'OrderController@getOrderForm');
+    //Route::get('projects/{id}/tickets', 'OrderController@getTickets');
+    //이전 코드 getTickets
+    Route::get('projects/{id}/tickets/{ticketid}', 'OrderController@getRenewalTicketsWithTicketID');
+    Route::get('projects/{id}/tickets', 'OrderController@getRenewalTickets');
     Route::get('orders/{id}', 'OrderController@getOrder');
     Route::delete('orders/{id}', 'OrderController@deleteOrder');
 

@@ -8,7 +8,7 @@ class Ticket extends Model
         'price', 'real_ticket_count', 'reward',
         'require_shipping', 'audiences_limit',
         'delivery_date', 'shipping_charge',
-        'question'
+        'question', 'category', 'show_date'
     ];
 
     protected static $typeRules = [
@@ -18,9 +18,16 @@ class Ticket extends Model
         'question' => 'string|max:100',
         'audiences_limit' => 'integer|min:0',
         'delivery_date' => 'date_format:Y-m-d H:i:s',
-        'shipping_charge' => 'integer'
+        'shipping_charge' => 'integer',
+        'category' => 'string|min:0',
+        'show_date' => 'date_format:Y-m-d H:i:s'
     ];
 
+    protected static $creationRules = [
+        'price' => 'required',
+        'audiences_limit' => 'required',
+    ];
+/*
     protected static $creationRules = [
         'price' => 'required',
         'real_ticket_count' => 'required',
@@ -29,7 +36,7 @@ class Ticket extends Model
         'audiences_limit' => 'required',
         'delivery_date' => 'required'
     ];
-
+*/
     protected $casts = [
         'audiences_limit' => 'integer',
         'audiences_count' => 'integer',
@@ -66,6 +73,7 @@ class Ticket extends Model
 
     public function validateOrder($price, $count)
     {
+      /*
         if (!$this->project()->first()->canOrder()) {
             throw new InvalidTicketStateException("Project is not valid state.");
         }
@@ -82,6 +90,6 @@ class Ticket extends Model
                 throw new InvalidTicketStateException("No available tickets.");
             }
         }
+        */
     }
-
 }

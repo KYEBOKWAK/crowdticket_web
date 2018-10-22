@@ -36,9 +36,10 @@
     }
     </style>
     <script>
-      swal("신청 완료!", "", "success").then((value) => {
-        var win = window.open("about:blank", "_self");
-        win.close();
+      swal("문의 완료!", "", "success").then((value) => {
+        //var win = window.open("about:blank", "_self");
+        //win.close();
+        window.location = '/';  
       });
     </script>
   </body>

@@ -1,0 +1,17 @@
+.project-form-channel-category-container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.add-channel{
+  display: none;
+}
+
+.project-form-account-container-grid{
+  display: grid;
+  grid-template-columns: 50px 1fr;
+}
+
+.project-form-account-title{
+  text-align: right;
+}

@@ -5,7 +5,7 @@
     <title></title>
   </head>
   <body>
-    <h3>크라우드 티켓 크리에이터 사전신청서</h3>
+    <h3>크라우드 티켓 제휴 문의</h3>
     {{ print(nl2br($content)) }}
   </body>
 </html>

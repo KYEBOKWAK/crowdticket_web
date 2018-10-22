@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
     <!-- <meta name="description" content="오직 공연 예술인을 위한 크라우드 펀딩"/> -->
-    
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     @section('meta')
       <meta name="description" content="공연 전문 크라우드펀딩 플랫폼. 연극, 뮤지컬, 콘서트, 파티, 페스티벌, 강연 등 펀딩 및 티켓팅."/>
     @show
@@ -26,10 +27,12 @@
     <link href="{{ asset('/css/base.css?version=1') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=1') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=1') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
+    <link href="{{ asset('/css/flex.css?version=1') }}" rel="stylesheet">
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -41,6 +44,16 @@
       top: -7px;
       left: 2px;
       color: #ea535a;
+    }
+
+    #isMobile{
+      display: none;
+    }
+
+    @media (max-width:1030px){
+      #isMobile{
+        display: block;
+      }
     }
     </style>
 
@@ -103,7 +116,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/img/app/logo_text.png') }}"/>
+                    <img src="{{ asset('/img/app/logo-color.png') }}"/>
                 </a>
             </div>
 
@@ -111,7 +124,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/projects') }}">ARTISTS</a></li>
                     <li><a href="{{ url('/blueprints/welcome') }}">개설 신청</a></li>
-                    <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">beta</i></a></li>
+                    <!-- <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">beta</i></a></li> -->
                     <!-- <li><a href="{{ url('/help') }}">도움말</a></li> -->
                 </ul>
 
@@ -141,6 +154,8 @@
 <div id="main">
     @yield('content')
 </div>
+
+<div id="isMobile"></div>
 
 <footer>
     <div class="container ct-res-text footer-top">
@@ -186,6 +201,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="{{ asset('/js/util.js') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -193,7 +209,7 @@
 <script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('/js/additional-methods.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
-<script src="{{ asset('/js/app.2.js?version=3') }}"></script>
+<script src="{{ asset('/js/app.2.js?version=4') }}"></script>
 <script src="{{ asset('/js/loader.js') }}"></script>
 
 <script>

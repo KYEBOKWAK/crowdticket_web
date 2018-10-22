@@ -2,6 +2,8 @@
 
 use App\Models\Blueprint as Blueprint;
 use App\Models\Category as Category;
+use App\Models\Categories_ticket as Categories_ticket;
+use App\Models\Categories_channel as Categories_channel;
 use App\Models\City as City;
 use App\Models\Model as Model;
 use App\Models\Project as Project;
@@ -11,7 +13,6 @@ use Storage as Storage;
 
 class ProjectController extends Controller
 {
-
     public function updateProject(Request $request, $id)
     {
         $project = $this->getSecureProjectById($id);
@@ -44,11 +45,12 @@ class ProjectController extends Controller
         }
 
         if ($request->file('poster')) {
-            $posterUrl = $this->uploadPosterImage($request, $project);
-            $project->setAttribute('poster_url', $posterUrl);
+            //$posterUrl = $this->uploadPosterImage($request, $project);
+            //$project->setAttribute('poster_url', $posterUrl);
         }
 
         $project->save();
+
         return $project;
     }
 
@@ -143,19 +145,95 @@ class ProjectController extends Controller
         } else {
             $project->load('tickets');
             $tab = $this->getValidUpdateFormTab();
+            $posterJson = $this->getPosterUrl($project);
             return view('project.form', [
                 'selected_tab' => $tab,
                 'project' => $project,
-                'categories' => Category::orderBy('id')->get(),
+                //'categories' => Category::orderBy('id')->get(),
+                'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                //'categories_ticket_order_id' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('id')->get(),
+                'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'posters' => $posterJson,
                 'cities' => City::orderBy('id')->get()
             ]);
         }
+    }
+
+    private function getPosterUrl($project){
+
+      //$posters = $project->posters()->firstOrFail();
+      $posters = $project->posters()->first();
+      if(is_null($posters))
+      {
+        return '';
+      }
+
+      $postersArray['id'] = $posters->id;
+      $postersArray['poster_img_file'] = $this->makePosterURL($project, "poster_img_file", 0);
+      $postersArray['title_img_file_1'] = $this->makePosterURL($project, "title_img_file_1", 1);
+      $postersArray['title_img_file_2'] = $this->makePosterURL($project, "title_img_file_2", 2);
+      $postersArray['title_img_file_3'] = $this->makePosterURL($project, "title_img_file_3", 3);
+      $postersArray['title_img_file_4'] = $this->makePosterURL($project, "title_img_file_4", 4);
+
+      $project->poster_renew_url = $postersArray['title_img_file_1']['img_url'];
+      $project->poster_sub_renew_url = $postersArray['poster_img_file']['img_url'];
+      $project->save();
+
+      $postersJson = json_encode($postersArray);
+      //return $postersArray;
+      return $postersJson;
+    }
+
+    private function makePosterURL($project, $fileName, $cacheNameNum){
+      $img_url = '';
+      $isFile = true;
+
+      $data = json_decode($project->posters, true);
+      if(empty($data))
+      {
+        //return $project->getDefaultImgUrl();
+        $img_url = $project->getDefaultImgUrl();
+        $isFile = false;
+      }
+
+      $posters = $project->posters()->firstOrFail();
+
+      $cacheNum = '';
+
+      if($fileName == 'poster_img_file'){
+        $cacheNum = $posters->poster_img_cache;
+      }
+      else{
+        $cacheName = 'title_'.$cacheNameNum.'_img_cache';
+        $cacheNum = $posters[$cacheName];
+      }
+
+      $posterUrlPartial = Model::getS3Directory(Model::S3_POSTER_DIRECTORY) . $project->id . '/'. $fileName . '-' . $cacheNum . '.jpg';
+
+      if(Storage::disk('s3')->exists($posterUrlPartial) == false){
+        //만약 파일이 없으면 기본 디폴트 경로를 넣어준다.
+        //return $project->getDefaultImgUrl();
+        $img_url = $project->getDefaultImgUrl();
+        $isFile = false;
+      }
+      else{
+        $img_url = Model::S3_BASE_URL . $posterUrlPartial;
+        $isFile = true;
+      }
+
+      $arrayTemp['img_url'] = $img_url;
+      $arrayTemp['isFile'] = $isFile;
+
+      return $arrayTemp;
+      //return Model::S3_BASE_URL . $posterUrlPartial;
     }
 
     private function getValidUpdateFormTab()
     {
         $tab = \Input::get('tab');
         switch ($tab) {
+            case 'required':
             case 'base':
             case 'reward':
             case 'ticket':
@@ -164,7 +242,7 @@ class ProjectController extends Controller
             case 'creator':
                 return $tab;
             default:
-                return 'base';
+                return 'required';
         }
     }
 
@@ -341,9 +419,12 @@ class ProjectController extends Controller
     {
         $project->load(['category', 'city', 'tickets']);
         $project->countSessionDependentViewNum();
-        return view('project.detail', [
+        $posterJson = $this->getPosterUrl($project);
+        return view('project.detail_renew', [
             'project' => $project,
             'isArrayNew' => $isArrayNew,
+            'posters' =>$posterJson,
+            'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
             'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
         ]);
     }

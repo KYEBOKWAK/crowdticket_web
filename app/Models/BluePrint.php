@@ -9,7 +9,7 @@ class Blueprint extends Model
     ];
 
     protected static $typeRules = [
-        'type' => 'in:funding,sale',
+        'type' => 'in:funding,sale,none',
         'user_introduction' => 'string|min:1',
         'project_introduction' => 'string|min:1',
         'story' => 'string|min:1',

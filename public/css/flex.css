@@ -1,0 +1,29 @@
+.flex_layer{
+  display: flex;
+}
+
+.flex_layer_mobile{
+  display: flex;
+}
+
+.ms_flex_layer{
+  display: -ms-flexbox;
+}
+
+.flex_layer_diection_column{
+  flex-direction: column;
+}
+
+.flex_layer_diection_row{
+  flex-direction: row;
+}
+
+.flex_layer_1{
+  flex: 1;
+}
+
+@media (max-width:1030px){
+  .flex_layer_mobile{
+    display: block;
+  }
+}

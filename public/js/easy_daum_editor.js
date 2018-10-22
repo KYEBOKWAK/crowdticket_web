@@ -9,7 +9,7 @@
 	if (assetUrlElem) {
 		assetUrl = assetUrlElem.value;
 	}
-	
+
 	var config = {
 		txHost : baseUrl,
 		txPath : '/',
@@ -33,7 +33,7 @@
 			},
 			styles : {
 				color : "#123456", /* 기본 글자색 */
-				fontFamily : "굴림", /* 기본 글자체 */
+				fontFamily : "Noto Sans", /* 기본 글자체 */
 				fontSize : "10pt", /* 기본 글자크기 */
 				backgroundColor : "#fff", /*기본 배경색 */
 				lineHeight : "1.5", /*기본 줄간격 */
@@ -54,7 +54,7 @@
 			contentWidth : 700 /* 지정된 본문영역의 넓이가 있을 경우에 설정 */
 		}
 	};
-	
+
 	var EditorHelper = {
 		'getConfig': function() {
 			return config;
@@ -75,7 +75,7 @@
 				alert('내용을 입력하세요');
 				return false;
 			}
-			
+
 			EditorHelper.onSubmit(content);
 			return false;
 		},
@@ -88,7 +88,7 @@
 		        alert('잘못된 경로로 접근하셨습니다.');
 		        return;
 		    }
-		    
+
 		    var attacher = getAttacher('image', opener);
 		    registerAction(attacher);
 		},
@@ -97,7 +97,7 @@
 				console.log("execAttach is undefined");
 		        return;
 		    }
-		    
+
 			execAttach({
 				'width': image.image_width,
 				'height': image.image_height,
@@ -111,6 +111,6 @@
 			closeWindow();
 		}
 	};
-	
+
 	window.EasyDaumEditor = EditorHelper;
 })(document);

@@ -1,3 +1,27 @@
+
+<ul class="nav nav-pills nav-justified">
+  <li class="active">
+    <a data-toggle="pill" href="#menu_ticket">티켓 정보</a>
+  </li>
+  <li><a data-toggle="pill" href="#menu_discount">할인 정보</a></li>
+  <li><a data-toggle="pill" href="#menu_md">MD 정보</a></li>
+</ul>
+
+  <div class="tab-content">
+    <div id="menu_ticket" class="tab-pane fade in active">
+      @include('project.form_body_ticket_ticket', ['project' => $project])
+    </div>
+    <div id="menu_discount" class="tab-pane fade">
+      @include('project.form_body_ticket_discount', ['project' => $project])
+    </div>
+    <div id="menu_md" class="tab-pane fade">
+      @include('project.form_body_ticket_goods', ['project' => $project])
+    </div>
+  </div>
+
+
+
+<!--
 <div class="row">
     @if ($project->type === 'funding')
         <img src="{{ asset('/img/app/img_update_project_reward.png') }}" class="center-block"/>
@@ -22,7 +46,7 @@
         @endif
     </div>
 </div>
-<input type="hidden" id="project_type" value="{{ $project->type }}"/>
+<input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
 <input type="hidden" id="tickets_json" value="{{ $project->tickets }}"/>
 <div id="ticket_list" class="row"></div>
 <div class="row">
@@ -160,3 +184,4 @@
         </div>
     </div>
 </div>
+-->

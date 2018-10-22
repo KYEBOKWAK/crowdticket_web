@@ -27,6 +27,16 @@ $(document).ready(function() {
 
 	var loadContents = function(e) {
 		var href = $(e.target).attr('href');
+
+		if(href == "#tab-comments")
+		{
+			//$('#detail_ticket_md').hide();
+		}
+		else
+		{
+			//$('#detail_ticket_md').show();
+		}
+
 		var target = $(href);
 		if (target.hasClass('loadable')) {
 			var loader = target.data('loader');
@@ -35,19 +45,138 @@ $(document).ready(function() {
 			}
 			target.removeClass('loadable');
 		}
+
+		//listGoods();
 	};
 
-	var listTickets = function() {
-		var tickets = $('#ticket_list').data('tickets');
-		if (tickets.length > 0) {
-			for (var i = 0, l = tickets.length; i < l; i++) {
-				addTicketRow(tickets[i]);
+	var listGoods = function(){
+		var goodsJson = $('#goods_json').val();
+		if (goodsJson) {
+			var goods = $.parseJSON(goodsJson);
+			if (goods.length > 0) {
+				for (var i = 0, l = goods.length; i < l; i++) {
+					addGoodsRow(goods[i]);
+				}
 			}
 		}
 	};
 
-	var addTicketRow = function(ticket) {
-		var template = $('#template_ticket').html();
+	var addGoodsRow = function(goods){
+		var lineItemMax = 3;
+		var containerClassName = '.goodsListContainer';
+		var goodsList = $('#detail_goods_list');
+
+		var templateGoodsItem = $('#template_goods_list_item').html();
+		var compiledGoodsItem = _.template(templateGoodsItem);
+		var rowGoodsItem = compiledGoodsItem({ 'goods': goods });
+		var $rowGoodsItem = $($.parseHTML(rowGoodsItem));
+		$rowGoodsItem.data('goodsData', goods);
+
+		var listContainerCount = goodsList.children(containerClassName).size();
+		var lineImteCount = goodsList.children(containerClassName).children().size();
+		//아이템 개수가 한줄에 몇개 표현되는지 확인하는 계산식
+		var calCount = lineImteCount % lineItemMax;
+
+		if(calCount == 0)
+		{
+			var templateGoodsContainer = $('#template_goods_list_container').html();
+			var compiledGoodsContainer = _.template(templateGoodsContainer);
+			var rowGoodsContainer = compiledGoodsContainer({ 'listNumber': listContainerCount+1 });
+			var $rowGoodsContainer = $($.parseHTML(rowGoodsContainer));
+			goodsList.append($rowGoodsContainer);
+		}
+
+		var newListContainerCount = goodsList.children(containerClassName).size();
+		$('#goodsList_'+newListContainerCount).append($rowGoodsItem)
+	};
+
+	listGoods();
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', loadContents);
+
+	//$('[data-toggle="popover"]').popover();
+
+	$('[data-toggle="popover"]').popover({
+        placement : 'top',
+        html : true,
+        //content : '<ul style="text-align:left; padding-left:0px; margin-bottom:0px;"><li class="share-thumb"><a href=""><img src="{{ asset(\'/img/app/facebook_logo.png\') }}"></a></li><li class="share-thumb"><a href=""><img src="kakaotalk_logo.png"></a></li><li class="share-thumb" style="margin-right:0px;"><a href=""><img src="link_logo.png"></a></li></ul>'
+				content : $('#template_shareForm').html()
+    });
+  $(document).on("click", ".popover .close" , function(){
+      $(this).parents(".popover").popover('hide');
+  });
+
+	//var navpos = $('#sticky').offset();
+	var navpos = $('#stickoffset').offset();
+	var navBarCheck = function(){
+		if ($(window).scrollTop() > navpos.top) {
+     		$('#sticky').addClass('navbar-fixed-top');
+
+				if(isMobile()) {
+					$('.nav-ticketing-btn-mobile').show();
+					$('.nav-ticketing-btn-mobile').addClass('navbar-fixed-bottom');
+					$('.nav-ticketing-btn').hide();
+				}
+				else {
+					$('.nav-ticketing-btn').show();
+					$('.nav-ticketing-btn-mobile').hide();
+				}
+     }
+     else {
+       $('#sticky').removeClass('navbar-fixed-top');
+			 $('.nav-ticketing-btn').hide();
+			 $('.nav-ticketing-btn-mobile').hide();
+			 $('.nav-ticketing-btn-mobile').removeClass('navbar-fixed-bottom');
+     }
+	};
+
+	var tabTicketMDCheck = function(){
+		if(isMobile()) {
+			$('#tabTicketMD').show();
+		}
+		else {
+			$('#tabTicketMD').hide();
+
+			if($('.active').children().attr('href') == '#tab-md'){
+				//$('.active').removeClass('active');
+				$('a[href="#tab-story"]').click();
+			}
+		}
+	};
+
+	$(window).scroll(function() {
+		navBarCheck();
+  });
+
+	$(window).resize(function() {
+		navpos = $('#stickoffset').offset();
+		tabTicketMDCheck();
+		//navpos = $('#sticky').offset();
+  });
+
+/*
+  $(window).bind('scroll', function() {
+		navBarCheck();
+  });
+*/
+	navBarCheck();
+	tabTicketMDCheck();
+
+
+	var oldListTickets = function() {
+		var tickets = $('#old_ticket_list').data('tickets');
+		if(tickets)
+		{
+			if (tickets.length > 0) {
+				for (var i = 0, l = tickets.length; i < l; i++) {
+					addOldTicketRow(tickets[i]);
+				}
+			}
+		}
+	};
+
+	var addOldTicketRow = function(ticket) {
+		var template = $('#template_ticket_old').html();
 		var compiled = _.template(template);
 		var row = compiled({
 			'ticket': ticket,
@@ -95,10 +224,9 @@ $(document).ready(function() {
 				return false;
 			}
 		});
-		$('#ticket_list').append($row);
+		$('#old_ticket_list').append($row);
 	};
 
-	listTickets();
+	oldListTickets();
 
-	$('a[data-toggle="tab"]').on('shown.bs.tab', loadContents);
 });

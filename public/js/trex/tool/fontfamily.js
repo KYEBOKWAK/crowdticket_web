@@ -1,36 +1,27 @@
 /**
- * @fileoverview 
- * 설정에서 지정된 여러 글꼴들을 선택할 수 있는 메뉴를 포함하는 tool인 '글꼴' Icon을 위한 source로, 
- * 필요한 configuration과 Class Trex.Tool.FontFamily을/를 포함	
- * 
- *   
+ * @fileoverview
+ * 설정에서 지정된 여러 글꼴들을 선택할 수 있는 메뉴를 포함하는 tool인 '글꼴' Icon을 위한 source로,
+ * 필요한 configuration과 Class Trex.Tool.FontFamily을/를 포함
+ *
+ *
  */
 
 TrexMessage.addMsg({
-	'@fontfamily.gulim': '굴림',
-	'@fontfamily.batang': '바탕',
-	'@fontfamily.dotum': '돋움',
-	'@fontfamily.gungsuh': '궁서'
+	'@fontfamily.gulim': 'noteSans',
 });
 
 TrexConfig.addTool(
-	"fontfamily", 
+	"fontfamily",
 	{
 		sync: _TRUE,
 		status: _TRUE,
 		useFavorite: _TRUE,
 		options: [
-			{ label: TXMSG('@fontfamily.gulim')+' (<span class="tx-txt">가나다라</span>)', title: TXMSG('@fontfamily.gulim'), data: 'Gulim,굴림,AppleGothic,sans-serif', klass: 'tx-gulim' },
-			{ label: TXMSG('@fontfamily.batang')+' (<span class="tx-txt">가나다라</span>)', title: TXMSG('@fontfamily.batang'), data: 'Batang,바탕,serif', klass: 'tx-batang' },
-			{ label: TXMSG('@fontfamily.dotum')+' (<span class="tx-txt">가나다라</span>)', title: TXMSG('@fontfamily.dotum'), data: 'Dotum,돋움,sans-serif', klass: 'tx-dotum' },
-			{ label: TXMSG('@fontfamily.gungsuh')+' (<span class="tx-txt">가나다라</span>)', title: TXMSG('@fontfamily.gungsuh'), data: 'Gungsuh,궁서,serif', klass: 'tx-gungseo' },
-			{ label: 'Arial (<span class="tx-txt">abcde</span>)', title: 'Arial', data: 'Arial,sans-serif', klass: 'tx-arial' },
-			{ label: 'Verdana (<span class="tx-txt">abcde</span>)', title: 'Verdana', data: 'Verdana,sans-serif', klass: 'tx-verdana' },
-            { label: 'Courier New (<span class="tx-txt">abcde</span>)', title: 'Courier New', data: 'Courier New,monspace', klass: 'tx-courier-new' }
+			{ label: TXMSG('@fontfamily.gulim')+' (<span class="tx-txt">가나다라</span>)', title: TXMSG('@fontfamily.gulim'), data: 'Noto Sans KR,sans-serif', klass: 'tx-gulim' }
 		]
 	}
 );
-/* legacy fontfamily * 
+/* legacy fontfamily *
 { label: ' 굴림 (<span class="tx-txt">가나다라</span>)', title: '굴림', data: 'Gulim,굴림,AppleGothic,sans-serif', klass: 'tx-gulim' },
 { label: ' 바탕 (<span class="tx-txt">가나다라</span>)', title: '바탕', data: 'Batang,바탕', klass: 'tx-batang' },
 { label: ' 돋움 (<span class="tx-txt">가나다라</span>)', title: '돋움', data: 'Dotum,돋움', klass: 'tx-dotum' },
@@ -40,7 +31,7 @@ TrexConfig.addTool(
 { label: ' Arial Black (<span class="tx-txt">abcde</span>)', title: 'Arial Black', data: 'Arial Black', klass: 'tx-arial-black' },
 { label: ' Book Antiqua (<span class="tx-txt">abcde</span>)', title: 'Book Antiqua', data: 'Book Antiqua', klass: 'tx-book-antiqua' },
 { label: ' Comic Sans MS (<span class="tx-txt">abcde</span>)', title: 'Comic Sans MS', data: 'Comic Sans MS', klass: 'tx-comic-sans-ms' },
-{ label: ' Courier New (<span class="tx-txt">abcde</span>)', title: 'Courier New', data: 'Courier New', klass: 'tx-courier-new' }, 	
+{ label: ' Courier New (<span class="tx-txt">abcde</span>)', title: 'Courier New', data: 'Courier New', klass: 'tx-courier-new' },
 { label: ' Georgia (<span class="tx-txt">abcde</span>)', title: 'Georgia', data: 'Georgia', klass: 'tx-georgia' },
 { label: ' Helvetica (<span class="tx-txt">abcde</span>)', title: 'Helvetica', data: 'Helvetica', klass: 'tx-helvetica' },
 { label: ' Impact (<span class="tx-txt">abcde</span>)', title: 'Impact', data: 'Impact', klass: 'tx-impact' },
@@ -118,7 +109,7 @@ Trex.Tool.FontFamily = Trex.Class.create({
 				labalBackup = item.label;
 				item.label = item.label.replace(/<span class="tx\-txt">/, '<span class="tx-txt" style="font-family:' + item.data + ';">');
 				result.push(Trex.MarkupTemplate.get("menu.select.item").evaluate(item));
-				item.label = labalBackup;	
+				item.label = labalBackup;
 			}
 			return result.join("");
 		};

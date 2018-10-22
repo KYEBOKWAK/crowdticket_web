@@ -11,11 +11,15 @@ class BlueprintController extends Controller
         $inputs['user_introduction']
             = $inputs['user_introduction'] . ' (' . $inputs['tel'] . ')';
 
+        //기존 데이터가 있어서 임시값으로 셋팅한다.
         $blueprint = new Blueprint($inputs);
         $blueprint->user()->associate(\Auth::user());
         $blueprint->setAttribute('code', $this->generateUniqueCode());
+        //초반 동의 하는 화면이 없어졌기 때문에 수락하는 코드를 바로 넣어준다.
+        $blueprint->setAttribute('approved', true);
         $blueprint->save();
-        return view('blueprint.created');
+
+        return \Redirect::to(url("/projects/form/".$blueprint['code']));
     }
 
     private function generateUniqueCode()
@@ -36,7 +40,9 @@ class BlueprintController extends Controller
 
     public function getCreateForm()
     {
-        return view('blueprint.form');
+        //return view('blueprint.form');
+        $isProject = $_GET['isProject'];
+        return view('blueprint.form', ['isProject' => $isProject]);
     }
 
     public function getBlueprints()

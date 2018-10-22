@@ -1,0 +1,22 @@
+.project-form-content-grid-hide{
+  display: none;
+}
+
+.project-form-required-type-container-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-form-required-type-button{
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-form-required-type-button-select{
+  background-color: #ea535a;
+  color: white;
+}
