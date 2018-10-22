@@ -911,7 +911,7 @@ $(document).ready(function() {
 		if(ticketsCategory.length > 0){
 			var categoryNum = Number(ticket.category);
 			for (var i = 0; i < ticketsCategory.length; i++) {
-				if(ticketsCategory[i].id === categoryNum){
+				if(Number(ticketsCategory[i].id) === categoryNum){
 					ticketCategoryTemp = ticketsCategory[i].title;
 					break;
 				}
