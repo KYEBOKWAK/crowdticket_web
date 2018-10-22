@@ -58,5 +58,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('/js/project/news/form.js') }}"></script>
+    <script src="{{ asset('/js/project/news/form.js?version=2') }}"></script>
 @endsection

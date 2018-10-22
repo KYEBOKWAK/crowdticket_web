@@ -63,7 +63,6 @@
                       expectedHeight = Math.min(expectedHeight, originalHeight * maxScaleRatio);
                   }
 
-                  console.error("expectedWidth : " + expectedWidth + " / " + "expectedHeight" +expectedHeight);
                   //scale the slider to expected size
                   jssor_1_slider.$ScaleSize(expectedWidth, expectedHeight, MAX_BLEEDING);
 

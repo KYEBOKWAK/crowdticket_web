@@ -705,6 +705,10 @@ $(document).ready(function() {
 		var ticketsJson = $('#tickets_json').val();
 		if (ticketsJson) {
 			var tickets = $.parseJSON(ticketsJson);
+      if(!tickets)
+      {
+        return;
+      }
 			if (tickets.length > 0) {
         $('#timepicker-container-outer-container').show();
         $('#ticket_place_holder').hide();

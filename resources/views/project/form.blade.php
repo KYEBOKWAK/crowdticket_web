@@ -278,5 +278,5 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container')
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=2') }}"></script>
 @endsection

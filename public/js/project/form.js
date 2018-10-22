@@ -82,9 +82,12 @@ $(document).ready(function() {
 		var ticketsJson = $('#tickets_json').val();
 		if (ticketsJson) {
 			var tickets = $.parseJSON(ticketsJson);
-			if (tickets.length > 0) {
-				for (var i = 0, l = tickets.length; i < l; i++) {
-					addTicketRow(tickets[i]);
+			if(tickets)
+			{
+				if (tickets.length > 0) {
+					for (var i = 0, l = tickets.length; i < l; i++) {
+						addTicketRow(tickets[i]);
+					}
 				}
 			}
 		}
