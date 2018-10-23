@@ -122,7 +122,7 @@
 
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/projects') }}">ARTISTS</a></li>
+                    <li><a href="{{ url('/projects') }}">전체보기</a></li>
                     <li><a href="{{ url('/blueprints/welcome') }}">개설 신청</a></li>
                     <!-- <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">beta</i></a></li> -->
                     <!-- <li><a href="{{ url('/help') }}">도움말</a></li> -->
@@ -130,8 +130,8 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        <li><a href="{{ url('/auth/login') }}">LOGIN</a></li>
-                        <li><a href="{{ url('/auth/register') }}">JOIN</a></li>
+                        <li><a href="{{ url('/auth/login') }}">로그인</a></li>
+                        <li><a href="{{ url('/auth/register') }}">회원가입</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
