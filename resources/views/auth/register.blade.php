@@ -16,13 +16,21 @@
         .ps-facebook-wrapper {
             margin-top: 1em;
         }
+
+        @media (max-width: 768px){
+          .reset_wrapper{
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+          }
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="first-container container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3 box-container">
+            <div class="col-md-6 col-md-offset-3 box-container reset_wrapper">
                 <h1>회원가입</h1>
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
