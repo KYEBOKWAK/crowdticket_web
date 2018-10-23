@@ -131,7 +131,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=2') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=3') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -229,7 +229,7 @@
             $('#order_support_price_input').bind("change", setTotalPrice);
 
             $('#order_pay_next_btn').click(function(){
-              
+
               $('#ticketSubmitForm').submit();
             });
             //$('.ticket_goods_count_input').bind("click", setTotalPrice);
