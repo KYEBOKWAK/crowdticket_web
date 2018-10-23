@@ -764,12 +764,10 @@ class OrderController extends Controller
         $goodsSelectJson = $this->getSelectGoodsArray($project->goods);
         $goodsSelectJson = json_encode($goodsSelectJson);
 
-        //if ($request->has('discount_select_id')) {
-        //  $discountId = \Input::get('discount_select_id');
-        //  $discount = Discount::findOrFail($discountId);
-        //}
-
-        //return view('test', ['project' => $orderId]);
+        $supportPrice = '';
+        if ($request->has('order_support_price')) {
+          $supportPrice = \Input::get('order_support_price');
+        }
 
         return $this->responseWithNoCache(view('order.form', [
             'order' => $order,
@@ -780,6 +778,7 @@ class OrderController extends Controller
             //new form start
             'discount' => $discount,
             'goodsList' => $goodsSelectJson,
+            'supportPrice' => $supportPrice,
             'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
             //new form end
             'form_url' => url(sprintf('/orders/%d', $order->id))
