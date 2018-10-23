@@ -1001,7 +1001,7 @@ $(document).ready(function() {
     if($("#isFinished").val() == true)
     {
       alert("이미 끝난 프로젝트 입니다.");
-      return;  
+      return;
     }
     var baseUrl = $('#base_url').val();
     var ticketID = $('#ticket_select_id_input').val();
