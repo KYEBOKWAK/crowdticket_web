@@ -514,7 +514,17 @@ class OrderController extends Controller
 
           $commission = $count * 500;
 
-          $totalPrice = $orderPrice + $goodsTotalPrice - $goodsTotalDiscountPrice + $commission;
+          $totalPrice = $orderPrice + $goodsTotalPrice - $goodsTotalDiscountPrice;
+
+          //후원정보 추가
+          $supportPrice = Input::get('supportPrice');
+          if($supportPrice)
+          {
+            $totalPrice = $totalPrice + $supportPrice;
+          }
+
+          //최종 마지막에 커미션 정보 붙는다.
+          $totalPrice = $totalPrice + $commission;
 
           if($totalPrice < 0)
           {
