@@ -864,23 +864,14 @@ $(document).ready(function() {
     //매수 선택
     $("#ticket_count_input_wrapper").show();
     $("#ticket_select_price").val(ticketData.price);
-    //alert($('#ticketing-btn-calendar').attr('data-ticket-year'));
 
-    //test
-    /*
-    var ticketSelectInfo = new Object();
-    ticketSelectInfo.id = ticketData.id;
-    ticketSelectInfo.price = ticketData.price;
-
-    var ticketSelectArray = new Array();
-    ticketSelectArray.push(ticketSelectInfo);
-
-    $("#select_ticket_info").val(ticketSelectArray);
-    */
-    //$("#select_ticket_info").serializeArray();
-    //alert(JSON.stringify(ticketSelectArray));
-
-    ////test//////
+    //새로운 코드
+    $("#ticket_count_input").val(1);
+    $("#ticket_count_input").attr("ticket-data-id", ticketData.id);
+    $("#ticket_count_input").attr("ticket-data-price", ticketData.price);
+    $("#ticket_count_input").attr("ticket-data-amount", getAmountTicket(ticketData));
+    $("#ticket_count_input").trigger('change');
+    $("#ticket_count_input").trigger('click');
   };
 
   //var addTicketTimeRow = function(time, tickets) {
@@ -918,43 +909,55 @@ $(document).ready(function() {
 			}
 		}
 
+    //티켓 남은 수량
+    var amountTicketCount = getAmountTicket(ticket);
+    var ticketBuyCountInfoList = $('#tickets_buy_count_info').val();
+    if(ticketBuyCountInfoList)
+    {
+      var ticketsInfoList = $.parseJSON(ticketBuyCountInfoList);
+
+      for(var i = 0 ; i < ticketsInfoList.length ; i++)
+      {
+        if(ticket.id == ticketsInfoList[i].id)
+        {
+          amountTicketCount = Number(ticket.audiences_limit) - Number(ticketsInfoList[i].buycount);
+        }
+      }
+    }
+
 		var template = $('#template_ticket_seat').html();
 		var compiled = _.template(template);
-    //var isMobile = isMobile();
-		var row = compiled({ 'ticket': ticket, 'type': $('#project_saleType').val(), 'style': 'modifyable',  'ticketCategory': ticketCategoryTemp, 'isMobile': isMobile(), 'isDetail': g_isDetail});
+		var row = compiled({ 'ticket': ticket, 'type': $('#project_saleType').val(), 'style': 'modifyable',  'ticketCategory': ticketCategoryTemp, 'isMobile': isMobile(), 'isDetail': g_isDetail, 'amountTicketCount':amountTicketCount});
 		var $row = $($.parseHTML(row));
 		$row.data('ticketData', ticket);
 		$('#seatTicketsList').append($row);
 
     var selectSeatId = "#ticket_seat_btn"+ticket.id;
-    $row.find(selectSeatId).bind('click', ticketSeatSelect);
+
+    if(amountTicketCount > 0){
+      $row.find(selectSeatId).bind('click', ticketSeatSelect);
+    }
   };
 
-/*
-  var addTicketTimeRow = function(ticket) {
-		if (!ticket.audiences_count) {
-			ticket.audiences_count = 0;
-		}
-		var ticketCategoryTemp = ticket.category;
-		if(ticketsCategory.length > 0){
-			var categoryNum = Number(ticket.category);
-			for (var i = 0; i < ticketsCategory.length; i++) {
-				if(ticketsCategory[i].id === categoryNum){
-					ticketCategoryTemp = ticketsCategory[i].title;
-					break;
-				}
-			}
-		}
+  var getAmountTicket = function(ticket)
+  {
+    var amountTicketCount = ticket.audiences_limit;
+    var ticketBuyCountInfoList = $('#tickets_buy_count_info').val();
+    if(ticketBuyCountInfoList)
+    {
+      var ticketsInfoList = $.parseJSON(ticketBuyCountInfoList);
 
-		var template = $('#template_ticket_time').html();
-		var compiled = _.template(template);
-		var row = compiled({ 'ticket': ticket, 'type': $('#project_saleType').val(), 'style': 'modifyable',  'ticketCategory': ticketCategoryTemp});
-		var $row = $($.parseHTML(row));
-		$row.data('ticketData', ticket);
-		$('#timeTicketsList').append($row);
+      for(var i = 0 ; i < ticketsInfoList.length ; i++)
+      {
+        if(ticket.id == ticketsInfoList[i].id)
+        {
+          amountTicketCount = Number(ticket.audiences_limit) - Number(ticketsInfoList[i].buycount);
+        }
+      }
+    }
 
-	};
-*/
+    return amountTicketCount;
+  }
 
   var moveForwardJS = function(){
     var year = $(this).attr('data-ticket-year');
@@ -1016,6 +1019,12 @@ $(document).ready(function() {
     $("#ticket_count_input_wrapper").hide();
     $("#ticket_count_input").val(1);
     $('#ticket_select_id_input').val('');
+
+    $("#ticket_count_input").val(0);
+    $("#ticket_count_input").attr("ticket-data-id", '');
+    $("#ticket_count_input").attr("ticket-data-price", '');
+    $("#ticket_count_input").attr("ticket-data-amount", '');
+    $("#ticket_count_input").trigger('click');
   };
 
   $('#goforward').bind('click', moveForwardJS);
@@ -1054,9 +1063,15 @@ $(document).ready(function() {
     $(selectTimeId).trigger('click');
     $(selectSeatId).trigger('click');
   }
-  /*
-  var isMobile = function(){
-    return $('#isMobile').is(":visible");
-  }
-  */
+
+  $( "#ticket_count_input" ).change(function() {
+    var ticketAmount = Number($(this).attr("ticket-data-amount"));
+    var ticketCount = Number($(this).val());
+
+    if( ticketCount > ticketAmount )
+    {
+      alert("티켓 수량을 초과하였습니다.")
+      $( "#ticket_count_input" ).val(ticketAmount);
+    }
+  });
 });

@@ -71,6 +71,11 @@ class Ticket extends Model
         return $this->hasMany('App\Models\Order');
     }
 
+    public function getTicketLimitCount()
+    {
+      return $this->audiences_limit;
+    }
+
     public function validateOrder($price, $count)
     {
       /*

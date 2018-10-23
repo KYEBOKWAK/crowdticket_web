@@ -58,7 +58,7 @@
 <div class="project-form-container">
   @include ('order.header', ['project' => $project, 'step' => 1])
 
-  <form action="{{ url('/tickets') }}/orders/form" method="post"
+  <form id='ticketSubmitForm' action="{{ url('/tickets') }}/orders/form" method="post"
                               class="ticket-body display-table">
 
     @include('template.calendar', ['isDetail' => 'FALSE'])
@@ -106,7 +106,7 @@
         </div>
         <div class="order_ticket_support_input_wrapper">
           <div class="flex_layer">
-            <input id="order_support_price_input" type="number" name="order_support_price_input" value=""/><span>원 을 후원할래요!</span>
+            <input id="order_support_price_input" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
     <div id="order_pay_next_offset"></div>
     <div id="order_pay_next_id" class="order_pay_next_wrapper">
        <button id="order_pay_next_btn" type="button" class="order_pay_next_btn">
-         <p class="order_pay_next_btn_price_text">결제 예정 금액: 0원</p>
+         <p class="order_pay_next_btn_price_text">결제 예정 금액: <span id="order_price_text">0</span>원</p>
          <p class="order_pay_next_btn_next_text">다음 단계로</p>
        </button>
      </div>
@@ -166,7 +166,7 @@
             var setTotalPrice = function(){
               //
               var ticketPrice = $('#ticket_select_price').val();
-              var ticketCount = $('#ticket_count').val();
+              var ticketCount = $('#ticket_count_input').val();
 
               var ticketTotalPrice = ticketPrice * ticketCount;
 
@@ -187,6 +187,7 @@
               var goodsArray = new Array();
               $(".ticket_goods_count_input").each(function () {
                 var goodsCount = $(this).val();
+
                 if(goodsCount == 0)
                 {
                   return true;//for문의 continue와 같음.
@@ -216,29 +217,36 @@
 
               ticketTotalPrice = ticketTotalPrice + mdTicketTotalPrice - mdTicketDiscountPrice
 
-              $('.totalPrice').text( addComma(ticketTotalPrice));
+              //추가 후원이 있는지 확인
+              var supportPrice = Number($('#order_support_price_input').val());
+              ticketTotalPrice = ticketTotalPrice + supportPrice;
+
+              $('#order_price_text').text( addComma(ticketTotalPrice));
             };
 
-            $('#ticket_count').bind("click", setTotalPrice);
-            $('.ticket_goods_count_input').bind("click", setTotalPrice);
+            $('#ticket_count_input').bind("click", setTotalPrice);
+            $('#order_support_price_input').bind("click", setTotalPrice);
+            $('#order_support_price_input').bind("change", setTotalPrice);
+
+            $('#order_pay_next_btn').click(function(){
+              
+              $('#ticketSubmitForm').submit();
+            });
+            //$('.ticket_goods_count_input').bind("click", setTotalPrice);
 
 
             //버튼 스크롤
-
-
             var navOffsetHeight = $('#order_pay_next_id').height();
             var mainHeight = $('#main').height();
 
             var setMainHeight = function(){
               if($('#main').height() < $('#order_pay_next_offset').offset().top + navOffsetHeight);
               {
-                console.error("isOver");
                 $('#main').height($('#order_pay_next_offset').offset().top + navOffsetHeight);
               }
             };
 
             var sizeHeightCheck = function(){
-                console.error("mainHeight" + mainHeight + "height : "+$('#main').height());
                 mainHeight = $('#main').height();
                 setMainHeight();
             };
@@ -246,6 +254,8 @@
             var nextBtnScrollCheck = function(){
               $('#order_pay_next_id').addClass('navbar-fixed-bottom');
             };
+
+            //var goodsCountUp =
 
             $(window).scroll(function() {
               sizeHeightCheck();
@@ -255,6 +265,39 @@
             $(window).resize(function() {
           		//navpos = $('#order_pay_next_offset').offset();
             });
+
+            var goodsCountUp = function(){
+              var goodsId = $(this).attr('goods-id');
+              var goodsInputInfo = $("#goods_count_input"+goodsId);
+
+              var goodsCount = goodsInputInfo.val();
+              goodsCount++;
+
+              setGoodsCount(goodsId, goodsCount);
+            };
+
+            var goodsCountDown = function(){
+              var goodsId = $(this).attr('goods-id');
+              var goodsInputInfo = $("#goods_count_input"+goodsId);
+
+              var goodsCount = goodsInputInfo.val();
+              goodsCount--;
+              if(goodsCount < 0)
+              {
+                goodsCount = 0;
+              }
+
+              setGoodsCount(goodsId, goodsCount);
+            };
+
+            var setGoodsCount = function(goodsId, goodsCount)
+            {
+              $(".goods_count_text"+goodsId).text(goodsCount+"개");
+              $("#goods_count_input"+goodsId).val(goodsCount);
+            }
+
+            $(".goods_count_up").bind('click', goodsCountUp);
+            $(".goods_count_down").bind('click', goodsCountDown);
 
             setMainHeight();
             nextBtnScrollCheck();

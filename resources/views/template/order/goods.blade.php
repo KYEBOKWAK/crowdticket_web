@@ -14,11 +14,14 @@
 
         <div class="order_ticket_goods_counter_container">
           <div class="flex_layer">
-            <button id="goods_count_up" type="button"></button>
-            <button id="goods_count_down" type="button"></button>
-            <span id="goods_count_text">0개</span>
-            <input id="goods_count_input" type="hidden" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"
+            <button class="goods_count_up" goods-id="{{ $goods->id }}" type="button"></button>
+            <button class="goods_count_down" goods-id="{{ $goods->id }}" type="button"></button>
+            <span class="goods_count_text goods_count_text{{ $goods->id }}">0개</span>
+            <input id="goods_count_input{{ $goods->id }}" type="hidden" goods-id="{{ $goods->id }}" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"
                                                            value="0" min="0"/>
+
+            <!-- <input id="goods_count_input" type="hidden" goods-id="{{ $goods->id }}" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"
+                                                           value="0" min="0"/> -->
          </div>
         </div>
       </div>

@@ -83,6 +83,8 @@
     <input id="goodsList" type="hidden" value="{{ $goodsList }}"/>
     <input id="tickets_json_category_info" type="hidden" value="{{ $categories_ticket }}"/>
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
+
+
     <div class="project-form-container">
         @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
 
@@ -93,6 +95,7 @@
         <input id="request_price" type="hidden" name="request_price" value="{{ $request_price }}"/>
         <input id="ticket_count" type="hidden" name="ticket_count" value="{{ $ticket_count }}"/>
         <input id="discountId" type="hidden" name="discountId" value=""/>
+        <input id="supportPrice" type="hidden" name="supportPrice" value="{{ $supportPrice }}"/>
         <div class='order_form_conform_title'>
           <h3>
           @if( $project->project_target == "people" )
@@ -125,6 +128,14 @@
             <div class="order_form_md_contant">
             </div>
             <div class="order_form_md_price">
+            </div>
+          </div>
+
+          <div class="order_form_conform_container_grid_columns">
+            <h4>추가후원</h4>
+            <div class="order_form_support_contant">
+            </div>
+            <div class="order_form_support_price">
             </div>
           </div>
 
@@ -337,6 +348,7 @@
           var g_discoutPrice = 0;
           var g_goodsArray = new Array();
           var g_commission = 0;
+          var g_supportPrice = 0;
 
           var ticketsCategoryJson = $('#tickets_json_category_info').val();
         	var ticketsCategory = '';
@@ -488,6 +500,22 @@
             $('.order_form_commission_price').text(fullCommission);
           };
 
+          var setSupportInfo = function(){
+            var supportPrice = $('#supportPrice').val();
+            var formSupportContant = $('.order_form_support_contant');
+            var formSupportPrice = $('.order_form_support_price');
+
+            if(supportPrice == 0)
+            {
+              formSupportContant.text("추가 후원 없음");
+            }
+            else
+            {
+              formSupportPrice.text(supportPrice+"원");
+              g_supportPrice = Number(supportPrice);
+            }
+          };
+
           var setTotalPrice = function(){
             var totalPrice = g_ticketPrice - g_discoutPrice;
 
@@ -504,6 +532,9 @@
 
             totalPrice = totalPrice + totalGoodsPrice - totalGoodsDiscount;
 
+            //후원추가
+            totalPrice = totalPrice + g_supportPrice;
+            //var supportPrice = $('#supportPrice').val();
             //총 가격에서 마지막 커미션을 넣어준다.
             totalPrice = totalPrice + g_commission;
             totalPrice = addComma(totalPrice) + "원";
@@ -526,6 +557,7 @@
           setDiscountInfo();
           setGoodsInfo();
           setCommissionInfo();
+          setSupportInfo();
           setTotalPrice();
           /*
             $("#postcodify_search_button").postcodifyPopUp();

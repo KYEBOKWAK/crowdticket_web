@@ -25,7 +25,11 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-            'description', 'video_url', 'story'
+            //진짜코드/*'description', 'video_url', 'story'*/
+            //테스트용
+            'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
+            'detailed_address', 'concert_hall','hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
+            'funding_closing_at'
         ]
     ];
 
@@ -205,10 +209,18 @@ class Project extends Model
 
     public function getProgress()
     {
-        if ($this->pledged_amount > 0) {
-            return (int)(($this->funded_amount / $this->pledged_amount) * 100);
-        }
-        return 0;
+      //티켓팅과 펀딩으로 구분.
+      if($this->type == 'sale')
+      {
+        return "";
+      }
+
+      //펀딩일때
+      if ($this->pledged_amount > 0) {
+          return (int)(($this->funded_amount / $this->pledged_amount) * 100);
+      }
+
+      return 0;
     }
 
     public function getTicketDateFormatted()
@@ -324,29 +336,54 @@ class Project extends Model
 
       //$this->pledged_amount
 
-      $pledgedTarget = "명";
+      $pledgedTarget = "원";
       //인원, 금액 결정
       if($this->project_target == "people")
       {
-        $pledgedTarget = "원";
+        $pledgedTarget = "명";
+      }
+
+      $pledgedTarget = number_format($this->pledged_amount) . $pledgedTarget;
+      if($this->type == "sale")
+      {
+        //즉시 결제면 무조건 명수로 나온다.
+        $pledgedTarget = $this->getTotalTicketLimitCount()."명";
+      }
+
+      $maxText = '';
+      $textEnd = '이 참여할 수 있는 이벤트 입니다.';
+      if($this->type == "funding")
+      {
+        $maxText = '최소';
+        $textEnd = '이 모여야 진행되는 이벤트입니다.';
       }
 
       $fundingEndTime = strtotime($this->funding_closing_at);
       $fundingEndTime = date('Y년 m월 d일', $fundingEndTime);
-      //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명)
 
-      return $fundingEndTime . ' 까지 최소 ' . number_format($this->pledged_amount).$pledgedTarget . "이 모여야 진행되는 이벤트입니다.";
+      //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명) //참여할 수 있는 이벤트 입니다.
+
+      return $fundingEndTime . ' 까지 ' . $maxText. $pledgedTarget . $textEnd;
     }
 
     public function getNowAmount()
     {
       //구매 인원 수
       //현재 91명 신청 완료
-      $nowAmount = "현재 " . $this->funded_amount . "원 모임";
+      $nowAmount = "";
 
-      if($this->project_target == "people")
+      if($this->type == 'sale')
       {
-        $nowAmount = "신청자 " . $this->funded_amount . "명";
+        $nowAmount = "현재 ". $this->getTotalTicketOrderCount() ."명 참여";
+      }
+      else
+      {
+        $nowAmount = "현재 " . $this->funded_amount . "원 모임";
+
+        if($this->project_target == "people")
+        {
+          $nowAmount = "신청자 " . $this->funded_amount . "명";
+        }
       }
 
       return $nowAmount;
@@ -437,4 +474,68 @@ class Project extends Model
 
       return "";
     }
+
+    //여기부터 새로운 코드
+    public function getTotalTicketLimitCount()
+    {
+      $tickets = $this->tickets;
+      $limitTicketCount = 0;
+      foreach($tickets as $ticket){
+        $limitTicketCount += $ticket->audiences_limit;
+      }
+
+      return $limitTicketCount;
+    }
+
+    public function getAmountTicketCount()
+    {
+      //총 티켓 수량 - 현재 수량
+      $totalLimit = $this->getTotalTicketLimitCount();
+
+      $totalBuyCount = $this->getTotalTicketOrderCount();
+
+      return $totalLimit-$totalBuyCount;
+    }
+
+    public function getTotalTicketOrderCount()
+    {
+      $orders = $this->orders;
+      $totalBuyCount = 0;
+      foreach($orders as $order){
+        $totalBuyCount += $order->count;
+      }
+
+      return $totalBuyCount;
+    }
+
+    public function getAmountTicketCountInfoList()
+    {
+      $orders = $this->orders;
+      $tickets = $this->tickets;
+
+      $ticketBuyInfoArray = [];
+
+      foreach ($tickets as $ticket) {
+        $ticketBuyTotalCount = 0;
+
+        foreach ($orders as $order) {
+          if($ticket->id == $order->ticket_id)
+          {
+            $ticketBuyTotalCount += $order->count;
+          }
+        }
+
+        if($ticketBuyTotalCount > 0)
+        {
+          $ticketInfoObject['id'] = $ticket->id;
+          $ticketInfoObject['buycount'] = $ticketBuyTotalCount;
+
+          array_push($ticketBuyInfoArray, $ticketInfoObject);
+        }
+      }
+
+      return json_encode($ticketBuyInfoArray);
+    }
+
+    //
 }

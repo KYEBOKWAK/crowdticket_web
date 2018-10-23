@@ -134,9 +134,9 @@ class OrderController extends Controller
         {
           $paymentService = new PaymentService();
           if ($project->type === 'funding') {
-              //$payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+              $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
           } else {
-              //$payment = $paymentService->rightNow($info);
+              $payment = $paymentService->rightNow($info);
           }
         }
       }
@@ -161,22 +161,21 @@ class OrderController extends Controller
       //$ticket->increment('audiences_count', $this->getOrderCount());
       //$user->increment('tickets_count');
 
-
-      $supporter = new Supporter;
-      $supporter->project()->associate($project);
-      $supporter->ticket()->associate($ticket);
-      $supporter->user()->associate($user);
-      $supporter->save();
-
-      //$project->increment('supporters_count');
-      //$user->increment('supports_count');
+      if($request->has('supportPrice'))
+      {
+        $supportPrice = Input::get('supportPrice');
+        if($supportPrice > 0)
+        {
+          $supporter = new Supporter;
+          $supporter->project()->associate($project);
+          $supporter->ticket()->associate($ticket);
+          $supporter->user()->associate($user);
+          $supporter->price = $supportPrice;
+          $supporter->save();
+        }
+      }
 
       DB::commit();
-
-      //return view('test', ['project' => $info->getAmount()]);
-      //$test = $this->getMakeGoodsMetaData($goodsSelectArray);
-      //$aaa = json_decode($test, true);
-      //return view('test', ['project' => $aaa[0]['id']]);
 
       $sms = new SmsService();
       $contact = $order->contact;
@@ -670,6 +669,11 @@ class OrderController extends Controller
         $discountId = \Input::get('discount_select_id');
         $discount = Discount::findOrFail($discountId);
       }
+
+      $supportPrice = '';
+      if ($request->has('order_support_price')) {
+        $supportPrice = \Input::get('order_support_price');
+      }
       //return view('test', ['project' => $goodsSelectJson]);
 
       return $this->responseWithNoCache(view('order.form', [
@@ -682,6 +686,7 @@ class OrderController extends Controller
           'request_price' => $this->getOrderUnitPrice(),
           'ticket_count' => $this->getOrderCount(),
           'goodsList' => $goodsSelectJson,
+          'supportPrice' => $supportPrice,
           'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
           //'form_url' => url(sprintf('/tickets/%d/orders', $ticket->id))
           'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
@@ -795,10 +800,13 @@ class OrderController extends Controller
                 $query->whereRaw('audiences_limit > audiences_count');
                 $query->where('delivery_date', '>', date('Y-m-d H:i:s', time()));
             }]);
+
+            $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
             return view('order.tickets', [
                 'project' => $project,
                 'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
                 'selectedTicket' => '',
+                'ticketsCountInfoJson' => $ticketsCountInfoListJson
             ]);
         }
         throw new InvalidTicketStateException();
@@ -810,10 +818,12 @@ class OrderController extends Controller
       $project = Project::findOrFail($projectId);
         if ($project->canOrder()) {
             $ticket = Ticket::findOrFail($ticketId);
+            $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
             return view('order.tickets', [
                 'project' => $project,
                 'selectedTicket' => $ticket,
                 'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'ticketsCountInfoJson' => $ticketsCountInfoListJson
             ]);
         }
         throw new InvalidTicketStateException();
@@ -823,10 +833,12 @@ class OrderController extends Controller
     {
       $project = Project::findOrFail($projectId);
         if ($project->canOrder()) {
+          $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
             return view('order.tickets', [
                 'project' => $project,
                 'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
                 'selectedTicket' => '',
+                'ticketsCountInfoJson' => $ticketsCountInfoListJson
             ]);
         }
         throw new InvalidTicketStateException();

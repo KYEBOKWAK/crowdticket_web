@@ -105,13 +105,9 @@
 @endsection
 
 @section('content')
-    <!-- https://s3-ap-northeast-1.amazonaws.com/crowdticket0/newtest/maincarousel/1.jpg -->
-    <!-- <div class="welcome_main_carousel_container"> -->
       @include('template.carousel_main')
-    <!-- </div> -->
     <!-- first section 끝 -->
     <!-- second section 시작 -->
-
       <div class="welcome_main_thumb_container">
         <div class="welcome_main_thumb_title_container">
           <h4 style="float:left">크라우드 티켓 추천</h4>
@@ -128,7 +124,6 @@
           </div>
         </div>
       </div>
-
 
     <!-- 크라우드 티켓 브랜딩 영역 시작 -->
     <div class="container-fluid ct-res-text">

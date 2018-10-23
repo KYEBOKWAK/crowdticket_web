@@ -146,15 +146,15 @@ class ProjectController extends Controller
             $project->load('tickets');
             $tab = $this->getValidUpdateFormTab();
             $posterJson = $this->getPosterUrl($project);
+            $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
             return view('project.form', [
                 'selected_tab' => $tab,
                 'project' => $project,
-                //'categories' => Category::orderBy('id')->get(),
                 'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
                 'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                //'categories_ticket_order_id' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('id')->get(),
                 'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
                 'posters' => $posterJson,
+                'ticketsCountInfoJson' => $ticketsCountInfoListJson,
                 'cities' => City::orderBy('id')->get()
             ]);
         }
@@ -411,7 +411,6 @@ class ProjectController extends Controller
         }
       }
 
-      //var_dump($isNewArray);
       return $isNewArray;
     }
 
@@ -420,14 +419,49 @@ class ProjectController extends Controller
         $project->load(['category', 'city', 'tickets']);
         $project->countSessionDependentViewNum();
         $posterJson = $this->getPosterUrl($project);
+        $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
         return view('project.detail_renew', [
             'project' => $project,
             'isArrayNew' => $isArrayNew,
             'posters' =>$posterJson,
+            //'ticketsCountInfoJson' => $ticketsCountInfoListJson,
+            'ticketsCountInfoJson' => $ticketsCountInfoListJson,
             'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
             'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
         ]);
     }
+
+    //티켓별로 남은 수량
+    /*
+    public function getAmountTicketCountInfoList($project)
+    {
+      $orders = $project->orders;
+      $tickets = $project->tickets;
+
+      $ticketBuyInfoArray = [];
+
+      foreach ($tickets as $ticket) {
+        $ticketBuyTotalCount = 0;
+
+        foreach ($orders as $order) {
+          if($ticket->id == $order->ticket_id)
+          {
+            $ticketBuyTotalCount += $order->count;
+          }
+        }
+
+        if($ticketBuyTotalCount > 0)
+        {
+          $ticketInfoObject['id'] = $ticket->id;
+          $ticketInfoObject['buycount'] = $ticketBuyTotalCount;
+
+          array_push($ticketBuyInfoArray, $ticketInfoObject);
+        }
+      }
+
+      return json_encode($ticketBuyInfoArray);
+    }
+    */
 
     public function checkProjectAlias($projectId, $alias)
     {

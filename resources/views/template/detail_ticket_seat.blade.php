@@ -3,7 +3,11 @@
     <button type="button" id="ticket_seat_btn<%=ticket.id%>" class="ticket_seat_btn <% if(isDetail == 'FALSE') { %> ticket_seat_btn_order <% } %>">
       <span class="ticket_time_text <% if(isDetail == 'FALSE') { %> ticket_time_text_order_category <% } %>"><%= ticketCategory %></span>
       <span class="ticket_time_text ticket_time_text_price <% if(isDetail == 'FALSE') { %> ticket_time_text_order_price <% } %>"><%= addComma(ticket.price) %> 원</span>
-      <!-- <span class="ticket_time_text"><%= addComma(ticket.audiences_limit) %> 매</span> -->
+      <% if(amountTicketCount == 0){ %>
+        <p> 매진 </p>
+      <% }else{ %>
+        <p> 구매 가능한 티켓 수량 <%= addComma(amountTicketCount) %> 매</p>
+      <% } %>
     </button>
 	</div>
 </script>

@@ -150,12 +150,14 @@
 @section('content')
 <?php
 $posters = json_decode($posters, true);
+//$ticketsInfoList = json_decode($ticketsCountInfoJson, true);
 //printf($posters['title_img_file_1']['img_url']);
 $channels = $project->user->channels()->get();
 $tickets = $project->tickets()->get();
 $discounts = $project->discounts()->get();
 $selectedTicket = "";
 ?>
+
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -206,7 +208,9 @@ $selectedTicket = "";
                 </div>
                 <h5 class="detail_main_guide_amount">
                   {{ $project->getNowAmount() }}
-                  <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                  @if($project->isFundingType())
+                    <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                  @endif
                 </h5>
               </div>
 

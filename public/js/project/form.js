@@ -1,7 +1,6 @@
 var ticket_category_etc = {"ticket_category_etc":7};
 
 $(document).ready(function() {
-
 	var ticketsCategoryJson = $('#tickets_json_category_info').val();
 	var ticketsCategory = '';
 	if (ticketsCategoryJson) {
@@ -58,6 +57,9 @@ $(document).ready(function() {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId;
 		var method = 'put';
+
+		//alert(JSON.stringify(data));
+		//return;
 		var success = function(e) {
 			$('#isReqiredSuccess').val('TRUE');
 

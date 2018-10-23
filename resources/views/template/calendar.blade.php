@@ -3,6 +3,7 @@
 <input type="hidden" id="ticket_select_price" value=""/>
 <input type="hidden" id="tickets_json_category_info" value="{{$categories_ticket}}"/>
 <input type="hidden" id="isDetail" value="{{ $isDetail }}">
+<input type="hidden" id="tickets_buy_count_info" value="{{ $ticketsCountInfoJson }}">
 <div class="app-container" ng-app="dateTimeApp" ng-controller="dateTimeCtrl as ctrl" ng-cloak>
 	<div date-picker
 		 datepicker-title="날짜 선택"
@@ -76,7 +77,7 @@
 					@if($isDetail == 'FALSE')
 					<div id="ticket_count_input_wrapper" class="ticket_count_input_wrapper flex_layer">
 						<span class="order_input_text">티켓 매수</span>
-						<input id="ticket_count" name="ticket_count" type="number" class="form-control ticket_count"
+						<input id="ticket_count_input" ticket-data-id="" ticket-data-price="" ticket-data-amount="" name="ticket_count" type="number" class="form-control ticket_count"
 																													 value="1" min="1"/>
 																													 <span class="order_input_text">매</span>
 					</div>
@@ -86,6 +87,7 @@
 		</div>
 	</div>
 	<input id="ticket_select_id_input" name="ticket_select_id" type="hidden" value=''/>
+	<!--<input id="ticket_amount_count_input" type="hidden" value=''/>-->
 	<input id="request_price" name="request_price" type="hidden"  value=''/>
 	@if($isDetail == 'TRUE')
 		<button type="button" id="ticketing-btn-calendar" class="btn btn-primary btn-block ticketing-btn-calendar">선택하기</button>
