@@ -218,7 +218,7 @@
                         <h3>별도의 신청절차 없이 바로 페이지 제작을 시작할 수 있습니다. 크라우드티켓과 함께 공연/이벤트를 준비해보세요!</h3>
                         <!--<a href="{{ url('blueprints/form?isProject=true') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>-->
                         @if($isMaster == "TRUE")
-                          <a href="{{ url('blueprints/form?isProject=true') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>-->
+                          <a href="{{ url('blueprints/form?isProject=true') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>
                         @else
                           <a href="{{ url('blueprints/form?isProject=false') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>
                         @endif
