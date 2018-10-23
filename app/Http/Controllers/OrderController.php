@@ -115,7 +115,6 @@ class OrderController extends Controller
   }
 
   public function createNewOrder(Request $request, $ticketId)
-  //public function createNewOrder($ticketId)
   {
     //쿠키가 동작 안함.... 재 수정 필요
     $user = Auth::user();
@@ -205,6 +204,7 @@ class OrderController extends Controller
       return view('order.error', [
           'message' => $e->getMessage(),
           'ticket_id' => $ticket->id,
+          'project_id' => $project->id,
           'request_price' => $this->getOrderUnitPrice(),
           'ticket_count' => $this->getOrderCount()
       ]);

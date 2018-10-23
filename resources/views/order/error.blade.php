@@ -23,11 +23,11 @@
 
         <div class="row">
             <div class="col-md-12 text-center">
-                <form action="{{ url('/tickets/') }}/{{ $ticket_id }}/orders/form" method="post">
+                <form action="{{ url('/projects/') }}/{{ $project_id }}" method="get">
                     @include('csrf_field')
                     <input type="hidden" name="request_price" value="{{ $request_price }}" />
                     <input type="hidden" name="ticket_count" value="{{ $ticket_count }}" />
-                    <button class="btn btn-success ">다시 입력하기</button>
+                    <button class="btn btn-success ">돌아가기</button>
                 </form>
             </div>
         </div>

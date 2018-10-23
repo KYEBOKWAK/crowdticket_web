@@ -51,6 +51,7 @@
             background-color: #384150;
         }
     </style>
+    <link href="{{ asset('/css/welcome.css?version=2') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -101,7 +102,11 @@
                     </div>
                 @endforeach
             </div>
-            @include('template.project', ['projects' => $projects ])
+            @include('template.carousel_main_project', ['projects' => $projects ])
         </div>
+    </div>
+
+    <div style="width: 100%;">
+
     </div>
 @endsection

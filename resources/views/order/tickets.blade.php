@@ -229,8 +229,12 @@
             $('#order_support_price_input').bind("change", setTotalPrice);
 
             $('#order_pay_next_btn').click(function(){
-
-              $('#ticketSubmitForm').submit();
+              if($('#ticket_select_id_input').val()){
+                $('#ticketSubmitForm').submit();
+              }
+              else{
+                alert("티켓을 선택해주세요.");  
+              }
             });
             //$('.ticket_goods_count_input').bind("click", setTotalPrice);
 

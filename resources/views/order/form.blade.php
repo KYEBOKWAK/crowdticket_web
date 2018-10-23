@@ -74,7 +74,6 @@
 
 @section('content')
     <?php
-    //set cookie Submit Refresh 방지
     setcookie("isOrderFinal","true", time()+604800);
     ?>
 
