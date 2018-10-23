@@ -144,7 +144,7 @@
         }
     </style>
 
-    <link href="{{ asset('/css/calendar.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=2') }}" rel="stylesheet">
 @endsection
 
 @section('content')

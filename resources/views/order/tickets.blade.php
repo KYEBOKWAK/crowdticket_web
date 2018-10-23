@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=1') }}" rel="stylesheet">
     <style>
         .order {
@@ -233,7 +233,7 @@
                 $('#ticketSubmitForm').submit();
               }
               else{
-                alert("티켓을 선택해주세요.");  
+                alert("티켓을 선택해주세요.");
               }
             });
             //$('.ticket_goods_count_input').bind("click", setTotalPrice);
