@@ -137,7 +137,7 @@
         </div>
     </div>
     <!-- 크라우드 티켓 브랜딩 영역 끝 -->
-
+<input type="hidden" id="isNotYet" value="{{ $isNotYet }}">
 @endsection
 
 @section('js')
@@ -165,6 +165,10 @@
                 delay: 10,
                 time: 1000
             });
+
+            if($("#isNotYet").val() == "TRUE"){
+              alert("준비중입니다.");
+            }
         });
     </script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>

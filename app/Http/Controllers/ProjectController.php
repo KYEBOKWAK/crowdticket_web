@@ -4,12 +4,16 @@ use App\Models\Blueprint as Blueprint;
 use App\Models\Category as Category;
 use App\Models\Categories_ticket as Categories_ticket;
 use App\Models\Categories_channel as Categories_channel;
+use App\Models\Maincarousel as Maincarousel;
 use App\Models\City as City;
 use App\Models\Model as Model;
 use App\Models\Project as Project;
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response;
 use Storage as Storage;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -140,24 +144,71 @@ class ProjectController extends Controller
 
     private function returnUpdateForm($project)
     {
-        if ($project->isUnderConstruction()) {
-            return view('project.form_not_permitted');
-        } else {
-            $project->load('tickets');
-            $tab = $this->getValidUpdateFormTab();
-            $posterJson = $this->getPosterUrl($project);
-            $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
-            return view('project.form', [
-                'selected_tab' => $tab,
-                'project' => $project,
-                'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                'posters' => $posterJson,
-                'ticketsCountInfoJson' => $ticketsCountInfoListJson,
-                'cities' => City::orderBy('id')->get()
-            ]);
+        $user = Auth::user();
+        if($user->id == 1 || $user->id == 2)
+        {
+          if ($project->isUnderConstruction()) {
+              return view('project.form_not_permitted');
+          } else {
+              $project->load('tickets');
+              $tab = $this->getValidUpdateFormTab();
+              $posterJson = $this->getPosterUrl($project);
+              $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
+              return view('project.form', [
+                  'selected_tab' => $tab,
+                  'project' => $project,
+                  'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                  'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                  'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                  'posters' => $posterJson,
+                  'ticketsCountInfoJson' => $ticketsCountInfoListJson,
+                  'cities' => City::orderBy('id')->get()
+              ]);
+          }
         }
+
+        //임시로 막아놈. start
+        $now = date('Y-m-d H:i:s');
+
+        $total_suppoter = 0;
+        $total_view = 0;
+        $total_amount = 0;
+
+        //$minExposedNum = 6;
+        $minExposedNum = 8;
+        
+        $projects = \App\Models\Project::whereNotIn('project_order_number', [0])
+            ->orderBy('project_order_number')
+            ->take($minExposedNum)->get();
+
+        $lack = $minExposedNum - count($projects);
+        if ($lack > 0) {
+            $additional = \App\Models\Project::where('state', 4)
+                ->where('funding_closing_at', '<', $now)
+                ->orderBy('id', 'desc')
+                ->take($lack)->get();
+
+            $projects = $projects->merge($additional);
+        }
+
+        $total_suppoter = \App\Models\Project::where('supporters_count', '<>', 0)->sum('supporters_count');
+        $total_view = \App\Models\Project::where('view_count', '<>', 0)->sum('view_count');
+        $total_amount = \App\Models\Project::where('funded_amount', '<>', 0)->sum('funded_amount');
+
+        //maincarousel
+        $main_carousel = Maincarousel::orderby('id')->get();
+        //$main_carousel = Maincarousel::where('id', '=', 1)->get();
+
+        return view('welcome_new', [
+            'projects' => $projects,
+            'total_suppoter' => number_format($total_suppoter),
+            'total_view' => number_format($total_view),
+            'total_amount' => number_format($total_amount),
+            'main_carousels' => $main_carousel,
+            'isNotYet' => 'TRUE'
+        ]);
+
+        ////////////
     }
 
     private function getPosterUrl($project){

@@ -47,7 +47,8 @@ class WelcomeController extends Controller
             'total_suppoter' => number_format($total_suppoter),
             'total_view' => number_format($total_view),
             'total_amount' => number_format($total_amount),
-            'main_carousels' => $main_carousel
+            'main_carousels' => $main_carousel,
+            'isNotYet' => 'FALSE'
         ]);
 
         /*
