@@ -2,6 +2,11 @@
 
 use App\Models\Blueprint as Blueprint;
 
+//임시코드
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+//임시코드 end
+
 class BlueprintController extends Controller
 {
 
@@ -35,7 +40,16 @@ class BlueprintController extends Controller
 
     public function getBlueprintWelcome()
     {
-        return view('blueprint.welcome');
+      if(\Auth::user())
+      {
+        //임시코드. 임시로 관리자일때는 개설이 가능하다.
+        if(Auth::user()->id == 2)
+        {
+          return view('blueprint.welcome', ["isMaster" => "TRUE"]);
+        }
+      }
+
+      return view('blueprint.welcome', ["isMaster" => "FALSE"]);
     }
 
     public function getCreateForm()
