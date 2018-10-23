@@ -384,7 +384,7 @@ class Project extends Model
 
         if($this->project_target == "people")
         {
-          $nowAmount = "신청자 " . $this->funded_amount . "명";
+          $nowAmount = "신청자 " . $this->getTotalTicketOrderCount() . "명";
         }
       }
 
