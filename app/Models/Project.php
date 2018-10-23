@@ -25,11 +25,13 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-            //진짜코드/*'description', 'video_url', 'story'*/
+          'description', 'video_url', 'story'
             //테스트용
+            /*
             'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall','hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
             'funding_closing_at'
+            */
         ]
     ];
 

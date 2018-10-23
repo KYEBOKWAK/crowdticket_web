@@ -406,7 +406,11 @@
               return;
             }
 
-            var ticketDate = new Date(ticket.show_date);
+            var rawDate = ticket.show_date.split(" ");
+            var d = rawDate[0].split("-");
+            var t = rawDate[1].split(":");
+
+            var ticketDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
 
             var yyyy = ticketDate.getFullYear();
             var mm = ticketDate.getMonth() + 1;
