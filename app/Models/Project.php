@@ -218,8 +218,17 @@ class Project extends Model
       }
 
       //펀딩일때
-      if ($this->pledged_amount > 0) {
-          return (int)(($this->funded_amount / $this->pledged_amount) * 100);
+      if($this->project_target == "people")
+      {
+        $ticketOrderCount = $this->getTotalTicketOrderCount();
+        return (int)(($ticketOrderCount / $this->pledged_amount) * 100);
+      }
+      else
+      {
+        if ($this->pledged_amount > 0)
+        {
+            return (int)(($this->funded_amount / $this->pledged_amount) * 100);
+        }
       }
 
       return 0;
@@ -538,6 +547,5 @@ class Project extends Model
 
       return json_encode($ticketBuyInfoArray);
     }
-
     //
 }
