@@ -79,7 +79,7 @@
           @endif
         </div>
         <!-- 기존 테이블로 인해서 코드 남겨둔다. 나중에 지워주기 -->
-        <input type="hidden" name="type" value="none"/>
+        <input type="hidden" name="type" value="sale"/>
         <input type="hidden" name="story" value="none"/>
         <input type="hidden" name="estimated_amount" value="none"/>
         @include('csrf_field')
