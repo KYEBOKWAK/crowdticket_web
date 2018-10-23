@@ -1,8 +1,8 @@
 @extends('app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=1') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=2') }}"/>
+    <link href="{{ asset('/css/order/ticket.css?version=2') }}" rel="stylesheet">
     <style>
         .ps-section-title {
             font-weight: bold;
@@ -83,215 +83,249 @@
     <input id="goodsList" type="hidden" value="{{ $goodsList }}"/>
     <input id="tickets_json_category_info" type="hidden" value="{{ $categories_ticket }}"/>
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
-
-
-    <div class="project-form-container">
-        @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
-
-      <form class="row form-horizontal" data-toggle="validator" role="form"
+<div class="form_main_container">
+  <div class="form_main_head_container">
+    @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
+  </div>
+  <div class="project-form-container">
+      <form id="ticketSubmitPayForm" class="row form-horizontal order_form_conform_container" data-toggle="validator" role="form"
             action="{{ $form_url }}/" method="post">
-
         @include('form_method_spoofing', ['method' => $order ? 'delete' : 'post'])
         <input id="request_price" type="hidden" name="request_price" value="{{ $request_price }}"/>
         <input id="ticket_count" type="hidden" name="ticket_count" value="{{ $ticket_count }}"/>
         <input id="discountId" type="hidden" name="discountId" value=""/>
         <input id="supportPrice" type="hidden" name="supportPrice" value="{{ $supportPrice }}"/>
-        <div class='order_form_conform_title'>
-          <h3>
-          @if( $project->project_target == "people" )
-          결제 내역 확인
-          @else
-          예약 내역 확인
-          @endif
-          </h3>
-        </div>
 
-        <div class="order_form_conform_container_grid_rows">
-          <div class="order_form_conform_container_grid_columns">
-            <h4>티켓</h4>
-            <div class="order_form_ticket_contant">
-            </div>
-            <div class="order_form_ticket_price">
-            </div>
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
+            선택 내역 확인
           </div>
 
-          <div class="order_form_conform_container_grid_columns">
-            <h4>할인내역</h4>
-            <div class="order_form_discount_contant">
+          <div class="order_form_conform_container_grid_rows">
+            <div class="order_form_conform_container_grid_columns">
+              <p class="order_form_title">티켓</p>
+              <div class="flex_layer">
+                <div class="order_form_ticket_contant order_form_text">
+                </div>
+                <div class="order_form_align_right order_form_ticket_price order_form_text">
+                </div>
+              </div>
             </div>
-            <div class="order_form_discount_price">
+
+            <div class="order_form_conform_container_grid_columns">
+              <p class="order_form_title">할인내역</p>
+              <div class="flex_layer">
+                <div class="order_form_discount_contant order_form_text">
+                </div>
+                <div class="order_form_discount_price order_form_text">
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="order_form_conform_container_grid_columns">
-            <h4>MD</h4>
-            <div class="order_form_md_contant">
+            <div class="order_form_conform_container_grid_columns">
+              <p class="order_form_title">MD</p>
+              <div class="flex_layer">
+                <div class="order_form_md_contant order_form_text">
+                </div>
+                <div class="order_form_md_price order_form_text">
+                </div>
+              </div>
             </div>
-            <div class="order_form_md_price">
+
+            <div class="order_form_conform_container_grid_columns">
+              <p class="order_form_title">추가후원</p>
+              <div class="flex_layer">
+                <div class="order_form_support_contant order_form_text">
+                </div>
+                <div class="order_form_support_price order_form_text">
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="order_form_conform_container_grid_columns">
-            <h4>추가후원</h4>
-            <div class="order_form_support_contant">
-            </div>
-            <div class="order_form_support_price">
-            </div>
-          </div>
-
-          <div class="order_form_conform_container_grid_columns">
-            <h4>티켓 수수료</h4>
-            <div class="order_form_commission_contant">
-              매당 500원
-            </div>
-            <div class="order_form_commission_price">
-            </div>
-          </div>
-        </div>
-
-        <div class='order_form_conform_title'>
-          <h3>
-          @if( $project->project_target == "people" )
-          총 결제 금액
-          @else
-          총 예약 금액
-          @endif
-          </h3>
-          <h4 class='order_form_total_price'></h4>
-        </div>
-
-        <div class='order_form_conform_title'>
-          <h3>
-          @if ($order)
-            @if( $project->project_target == "people" )
-            결제 정보
-            @else
-            예약 정보
-            @endif
-          @else
-            @if( $project->project_target == "people" )
-            결제 정보 입력
-            @else
-            예약 정보 입력
-            @endif
-          @endif
-          </h3>
-        </div>
-
-        @if($project->type == 'funding')
-          <?php
-          $funding_closing_date = new DateTime($project->funding_closing_at);
-          $funding_closing_date->modify('+1 day');
-          $funding_pay_day = $funding_closing_date->format('Y-m-d');
-          ?>
-
-          <div>
-            <h3>“결제 예약에 관하여: <u>자금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>!”</h3>
-            <p>1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
-            <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
-            <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
-            <h3><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h3>
-          </div>
-        @endif
-
-        <div class="order_form_user_container_grid_two_columns">
-          <h4>성명</h4>
-          @if ($order)
-            <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}" readonly="readonly"/>
-          @else
-            <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}"/>
-          @endif
-
-        </div>
-        <div class="order_form_user_container_grid_two_columns">
-          <h4>연락처</h4>
-          @if ($order)
-            <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
-          @else
-            <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
-          @endif
-
-        </div>
-        <div class="order_form_user_container_grid_two_columns">
-          <h4>이메일</h4>
-          @if ($order)
-            <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}" readonly="readonly"/>
-          @else
-            <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}"/>
-          @endif
-        </div>
-
-        @if (!$order)
-          <div class="order_form_user_container_grid_two_columns">
-            <h4>카드번호</h4>
-            <div>
-              <input id="order-card-number" name="card_number" type="text"
-                     class="form-control" autocomplete="off" required="required"
-                     placeholder="-없이 숫자만 입력"/>
-               <div class="col-sm-4">
-                   *체크카드, 신용카드, 법인카드 모두 가능합니다.
-               </div>
-            </div>
-          </div>
-
-          <div class="order_form_user_container_grid_two_columns">
-            <h4>유효기간</h4>
-            <div>
-              <select name="expiry_month" class="form-control" required="required">
-                <option selected disabled>mm</option>
-                @for ($i = 1; $i <= 12; $i++)
-                    <option value="{{ $i }}">{{ $i }}</option>
-                @endfor
-              </select>
-              <select name="expiry_year" class="form-control" required="required">
-                  <option selected disabled>yyyy</option>
-                  @for ($i = 2018; $i <= 2030; $i++)
-                      <option value="{{ $i }}">{{ $i }}</option>
-                  @endfor
-              </select>
-            </div>
-          </div>
-
-          <div class="order_form_user_container_grid_two_columns">
-            <h4>생년월일(법인등록번호)</h4>
-            <input id="order-birth" name="birth" type="text"
-               class="form-control" autocomplete="off" required="required"
-               placeholder="주민번호 앞6자리(법인등록번호 7자리)"/>
-          </div>
-
-          <div class="order_form_user_container_grid_two_columns">
-            <h4>카드비밀번호</h4>
-            <div>
-              <input id="order-card-password" name="card_password" type="password"
-                     class="form-control" autocomplete="off" required="required"
-                     maxlength="2"/>
-              <span class="input-group-addon">**</span>
-              <div>
-                크라우드티켓에서는 고객의 편의를 위해 비인증 카드결제를 이용하고 있습니다.
-                위 입력 정보는 암호화 되어 1회용으로만 쓰이며 저장되지 않습니다.
+            <div class="order_form_conform_container_grid_columns">
+              <p class="order_form_title">티켓 수수료</p>
+              <div class="flex_layer">
+                <div class="order_form_commission_contant order_form_text">
+                  매당 500원
+                </div>
+                <div class="order_form_align_right order_form_commission_price order_form_text">
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
+        <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <h3>
-              크라우드티켓 환불 정책
+            @if( $project->project_target == "people" )
+            총 결제 금액
+            @else
+            총 예약 금액
+            @endif
+            </h3>
+            <h4 class='order_form_total_price'></h4>
+          </div>
+        </div>
+
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
+            <h3>
+            @if ($order)
+              @if( $project->type == "sale" )
+              결제 정보
+              @else
+              예약 정보
+              @endif
+            @else
+              @if( $project->type == "sale" )
+              결제 정보 입력
+              @else
+              예약 정보 입력
+              @endif
+            @endif
             </h3>
           </div>
 
-          <div>
-              @if($project->type == 'funding')
-                <h4> <결제 예약> </h4>
-                <p>본 프로젝트는 목표에 도달하여야 성공하는 프로젝트로, 티켓팅 마감일 하루 전까지는 언제든지 결제 예약을 수수료 없이 취소할 수 있습니다. 다만 티켓팅 마감 24시간 전부터는 프로젝트 진행자의 기대이익에 따라 취소가 불가능합니다. </p>
+          @if($project->type == 'funding')
+            <?php
+            $funding_closing_date = new DateTime($project->funding_closing_at);
+            $funding_closing_date->modify('+1 day');
+            $funding_pay_day = $funding_closing_date->format('Y-m-d');
+            ?>
+
+            <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
+            <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
+              <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">자금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
+              <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
+              <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
+              <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
+              <h4><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+            </div>
+          @endif
+        </div>
+
+        <div class="order_user_info_container">
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">성명</p>
+              @if ($order)
+                <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}" readonly="readonly"/>
               @else
-                <h4> <일반 결제> </h4>
+                <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}"/>
+              @endif
+            </div>
+          </div>
+
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">연락처</p>
+              @if ($order)
+                <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
+              @else
+                <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
+              @endif
+            </div>
+          </div>
+
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">이메일</p>
+              @if ($order)
+                <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}" readonly="readonly"/>
+              @else
+                <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}"/>
+              @endif
+            </div>
+          </div>
+
+          @if (!$order)
+            <div class="order_form_user_container_grid_two_columns">
+              <div class="flex_layer">
+                <p class="order_form_title order_form_user_title">카드번호</p>
+                <div>
+                  <input id="order-card-number" name="card_number" type="text"
+                         class="form-control" autocomplete="off" required="required"
+                         placeholder="-없이 숫자만 입력"/>
+                   <div>
+                       *체크카드, 신용카드, 법인카드 모두 가능합니다.
+                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="order_form_user_container_grid_two_columns">
+              <div class="flex_layer">
+                <p class="order_form_title order_form_user_title">유효기간</p>
+                <div style="margin-top:8px;">
+                  <select name="expiry_month" class="form-control" required="required">
+                    <option selected disabled>mm</option>
+                    @for ($i = 1; $i <= 12; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                  </select>
+                  <select name="expiry_year" class="form-control" required="required">
+                      <option selected disabled>yyyy</option>
+                      @for ($i = 2018; $i <= 2030; $i++)
+                          <option value="{{ $i }}">{{ $i }}</option>
+                      @endfor
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="order_form_user_container_grid_two_columns">
+              <div class="flex_layer">
+                <div>
+                  <p class="order_form_title order_form_user_title">생년월일</p><p style="text-align:center;">(법인등록번호)</p>
+                </div>
+                <input style="width:280px;" id="order-birth" name="birth" type="text"
+                   class="form-control" autocomplete="off" required="required"
+                   placeholder="주민번호 앞6자리(법인등록번호 7자리)"/>
+              </div>
+            </div>
+
+            <div class="order_form_user_container_grid_two_columns">
+              <div class="flex_layer">
+                <p class="order_form_title order_form_user_title">카드비밀번호</p>
+                <div>
+                  <div class="flex_layer">
+                    <input id="order-card-password" name="card_password" type="password"
+                           class="form-control" autocomplete="off" required="required"
+                           maxlength="2"/>
+                    <span class="input-group-addon password_back">**</span>
+                  </div>
+                  <div>
+                    크라우드티켓에서는 고객의 편의를 위해 비인증 카드결제를 이용하고 있습니다.
+                    위 입력 정보는 암호화 되어 1회용으로만 쓰이며 저장되지 않습니다.
+                  </div>
+                </div>
+              </div>
+            </div>
+          @endif
+        </div>
+
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
+            <p class="order_form_title">
+              크라우드티켓 이용 정책 동의
+            </p>
+          </div>
+
+          <div>
+            <h4> 환불 정책 </h4>
+            <div class="order_form_conform_container_grid_rows">
+              @if($project->type == 'funding')
+                <p style="margin-bottom:0px;">본 프로젝트는 목표에 도달하여야 성공하는 프로젝트로, 티켓팅 마감일 하루 전까지는 언제든지 결제 예약을 수수료 없이 취소할 수 있습니다. 다만 티켓팅 마감 24시간 전부터는 프로젝트 진행자의 기대이익에 따라 취소가 불가능합니다. </p>
+              @else
                 <p>1. 관람일 9일전 ~ 1일전 환불 할 시 수수료를 제외한 결제금액의 10%가 취소 수수료로 부과됩니다.</p>
                 <p>2. 공연 당일 환불은 불가능합니다.</p>
                 <p>3. 관람일을 기준으로 10일 이상 남은 경우, 취소 수수료는 없습니다.</p>
                 <p>4. 티켓 환불은 오른쪽 상단 '결제확인' 탬에서 진행하시면 됩니다.</p>
               @endif
+              </div>
           </div>
-          <div>
+          <div style="text-align:right; margin-top:10px; margin-bottom:10px;">
             <div>
               환불 정책에 동의합니다. <input type="checkbox" required="required">
             </div>
@@ -299,7 +333,7 @@
               크라우드티켓 약관과 정보이용정책에 동의합니다. <input type="checkbox" required="required">
             </div>
           </div>
-        @endif
+        </div>
 
         @if ($order)
             @if ($order->deleted_at)
@@ -332,10 +366,13 @@
                 @endif
             @endif
         @else
-            <button type="submit" id="ticketing-btn-payment" class="btn btn-primary btn-block ticketing-btn-calendar"></button>
+          <div class="order_form_conform_container">
+            <button type="button" id="ticketing-btn-payment" class="btn btn-primary btn-block ticketing-btn-calendar ticketing-btn-payment"></button>
+          </div>
         @endif
       </form>
-    </div>
+  </div>
+</div>
 @endsection
 
 @section('js')
@@ -552,6 +589,10 @@
             $('#ticketing-btn-payment').text(submitBtn);
 
           };
+
+          $('#ticketing-btn-payment').click(function(){
+            $('#ticketSubmitPayForm').submit();
+          });
 
           setTicketInfo();//티켓정보를 먼저 입력해야 함. 티켓 가격을 설정해야 할인가가 나옴. 순서 바뀌면 안됨.
           setDiscountInfo();

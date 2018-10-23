@@ -1,3 +1,32 @@
+.form_main_container{
+  width: 100%;
+  background-color: #f9f8f6;
+}
+
+.form_main_head_container{
+  width: 100%;
+  background-color: white;
+}
+
+.order_form_conform_container{
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.order_form_conform_title{
+  font-size: 24px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.08;
+  letter-spacing: normal;
+  text-align: left;
+
+  border-bottom: 5px solid #ef4d5d;
+}
+
+
 .order_ticket_discount_md_title_container_grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -65,22 +94,45 @@
   font-size: 11px;
 }
 
-.order_form_conform_title{
-
+.order_form_align_right{
+  margin-left: auto;
 }
 
 .order_form_conform_container_grid_columns{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /*display: grid;
+  grid-template-columns: 1fr 1fr 1fr;*/
+  border-bottom: 1px solid #707070;
 }
 
 .order_form_conform_container_grid_rows{
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  width: 100%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px var(--white-two);
+  background-color: #ffffff;
 }
 
 .order_form_ticket_contant{
 
+}
+
+.order_form_title{
+  font-size: 15px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+  text-align: left;
+  margin: 0px;
+  height: 35px;
+}
+
+.order_form_text{
+  font-size: 12px;
 }
 
 .order_form_conform_container_grid_rows h4{
@@ -99,12 +151,29 @@
 }
 
 .order_form_commission_contant{
-  margin-top: 10px;
 }
 
 .order_form_user_container_grid_two_columns{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /*display: grid;
+  grid-template-columns: 1fr 1fr;*/
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.order_form_user_container_grid_two_columns input{
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #707070;
+  background-color: #ffffff;
+}
+
+.order_form_user_title{
+  text-align: right;
+  width: 130px;
+  padding-right: 50px;
 }
 
 .order_input_text{
@@ -293,9 +362,52 @@
   margin-top: 64px;
 }
 
+.order_user_info_container{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+}
+
+.ticketing-btn-payment{
+  background-color: #ef4d5d;
+}
+
+.ticketing-btn-payment:hover,.ticketing-btn-payment:focus,.ticketing-btn-payment:active{
+  background-color: #ef4d5d;
+}
+
+.order_ticket_discount_item_btn_on{
+  background-color: #ef4d5d;
+}
+
+#order-card-password{
+  width: 50px;
+}
+
+.password_back{
+  width: 50px;
+}
+
 @media (max-width:1030px) {
   .order_ticket_discount_md_container_flex{
     display: block;
+  }
+}
+
+@media (max-width:768px){
+  .order_form_conform_container{
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .order_user_info_container{
+    width: 100%;
+  }
+
+  .order_form_user_container_grid_two_columns{
+    width: 100%;
   }
 }
 /* ------------새로운 ui -------- end   */
