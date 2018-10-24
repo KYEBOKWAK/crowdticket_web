@@ -867,6 +867,10 @@ html, body {
   .timepicker-container-outer-container-flex{
     margin-top: 0px;
   }
+
+  .ticket_count_input_wrapper{
+    margin-top: 0px;
+  }
 }
 
 

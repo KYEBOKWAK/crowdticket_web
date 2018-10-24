@@ -172,8 +172,10 @@
 
 .order_form_user_title{
   text-align: right;
-  width: 130px;
+  /*width: 130px;*/
   padding-right: 50px;
+  flex-basis: 130px;
+  flex-shrink: 0;
 }
 
 .order_input_text{
@@ -382,7 +384,9 @@
 }
 
 #order-card-password{
-  width: 50px;
+  /*width: 50px;*/
+  flex-basis: 40px;
+  flex-shrink: 0;
 }
 
 .password_back{

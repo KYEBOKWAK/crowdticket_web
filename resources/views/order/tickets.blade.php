@@ -2,8 +2,8 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=2') }}" rel="stylesheet">
-    <link href="{{ asset('/css/order/ticket.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=3') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=3') }}" rel="stylesheet">
     <style>
         .order {
             cursor: pointer;

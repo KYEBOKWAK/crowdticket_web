@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=2') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=2') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=3') }}" rel="stylesheet">
     <style>
         .ps-section-title {
             font-weight: bold;
@@ -271,8 +271,8 @@
 
             <div class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
-                <div>
-                  <p class="order_form_title order_form_user_title">생년월일</p><p style="text-align:center;">(법인등록번호)</p>
+                <div style="flex-basis: 130px; flex-shrink: 0; padding-right: 50px;">
+                  <p class="order_form_title order_form_user_title" style="padding-right: 0px;">생년월일</p><p style="text-align:right;">(법인등록번호)</p>
                 </div>
                 <input style="width:280px;" id="order-birth" name="birth" type="text"
                    class="form-control" autocomplete="off" required="required"
