@@ -28,7 +28,8 @@ $i = 0;
                               @if($project->isFundingType())
                                 <span class="ct-percent">{{ $project->getProgress() }}%</span></h5>
                               @else
-                                <span class="ct-percent">{{ $project->getNowAmount() }}</span></h5>
+                                <!-- <span class="ct-percent">{{ $project->getNowAmount() }}</span></h5> -->
+                                <span class="ct-percent">판매중</span></h5>
                               @endif
                         </div>
 
