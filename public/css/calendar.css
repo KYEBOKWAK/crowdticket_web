@@ -772,12 +772,13 @@ html, body {
   /*width: 237px;*/
   /*width: 177px;*/
   width: 90%;
-  height: 39.9px;
+  /*height: 39.9px;*/
   background-color: #ffffff;
   -webkit-backdrop-filter: blur(9px);
   backdrop-filter: blur(9px);
 
   border: 0px;
+  padding-top: 5px;
 }
 
 .ticket_seat_btn:hover,.ticket_seat_btn:focus,.ticket_seat_btn:active{

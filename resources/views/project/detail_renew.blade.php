@@ -228,25 +228,27 @@ $selectedTicket = "";
 
       <div class="detail_creator_container">
         <div class="detail_width_wrapper">
-          <div class="detail_creator_container_grid">
+          <div class="flex_layer_mobile detail_creator_container_grid">
             <!-- creator 소개란  -->
             <div class="detail_creator_creator_grid">
-              <img src="{{ $project->user->getPhotoUrl() }}" class="detail_creator_creator_thumb">
-              <div class="detail_creator_info_container">
-                <h5 class="detail_creator_info_title">
-                  <span class="detail_creator_info_type">
-                    @if($project->isCreatorType())
-                      CREATOR
-                    @else
-                      ARTISTS
-                    @endif
+              <div class="flex_layer_mobile">
+                <img src="{{ $project->user->getPhotoUrl() }}" class="detail_creator_creator_thumb">
+                <div class="detail_creator_info_container">
+                  <h5 class="detail_creator_info_title">
+                    <span class="detail_creator_info_type">
+                      @if($project->isCreatorType())
+                        CREATOR
+                      @else
+                        ARTISTS
+                      @endif
 
-                  </span>&nbsp;|&nbsp;
-                  {{ $project->user->name }}
-                </h5>
-                    <h5 class="detail_creator_info_introduce">
-                      {{ $project->user->introduce }}
-                    </h5>
+                    </span>&nbsp;|&nbsp;
+                    {{ $project->user->name }}
+                  </h5>
+                      <h5 class="detail_creator_info_introduce">
+                        {{ $project->user->introduce }}
+                      </h5>
+                </div>
               </div>
             </div>
             <!-- 활동채널란 -->

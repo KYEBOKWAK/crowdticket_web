@@ -4,9 +4,9 @@
       <span class="ticket_time_text <% if(isDetail == 'FALSE') { %> ticket_time_text_order_category <% } %>"><%= ticketCategory %></span>
       <span class="ticket_time_text ticket_time_text_price <% if(isDetail == 'FALSE') { %> ticket_time_text_order_price <% } %>"><%= addComma(ticket.price) %> 원</span>
       <% if(amountTicketCount == 0){ %>
-        <p> 매진 </p>
+        <p style="margin: 0px;"> 매진 </p>
       <% }else{ %>
-        <p> 구매 가능한 티켓 수량 <%= addComma(amountTicketCount) %> 매</p>
+        <p style="margin: 0px;"> 구매 가능한 티켓 수량 <%= addComma(amountTicketCount) %> 매</p>
       <% } %>
     </button>
 	</div>

@@ -220,15 +220,19 @@
 }
 
 .detail_creator_container_grid{
-  display: grid;
-  grid-template-columns: 625px 375px;
+  /*display: grid;
+  grid-template-columns: 625px 375px;*/
   padding: 80px 15px;
 }
 
 .detail_creator_creator_grid{
+  flex-basis: 625px;
+  flex-shrink: 0;
+/*
   display: grid;
   grid-template-columns: 110px 1fr;
   padding-left: 15px;
+  */
 }
 
 .detail_creator_creator_thumb{
@@ -239,7 +243,8 @@
 }
 
 .detail_creator_info_container{
-  padding:5px;
+  padding:13px;
+  padding-left: 0px;
   text-align:left;
 }
 
@@ -527,13 +532,16 @@
 }
 
 .tab-content{
+  /*width: 620px;*/
+  flex-basis: 620px;
+  flex-shrink: 0;
   margin-bottom: 20px;
 }
 
 .detail_content_calendar_container_grid{
-  display: grid;
-  /*grid-template-columns: 620px 1fr;*/
-  grid-template-columns: 620px 410px;
+  display: flex;
+  /*display: grid;*/
+  /*grid-template-columns: 620px 410px;*/
 }
 
 #detail_goods_list{
@@ -545,7 +553,8 @@
   /*background-color: #f9f8f6;*/
   margin-left: 15px;
   display: inline-table;
-
+  flex-basis: 410px;
+  flex-shrink: 0;
 }
 
 #isMobile{
@@ -591,7 +600,22 @@
 
   .detail_creator_info_channel{
     padding-top: 20px;
-    padding-left: 25px;
+  }
+
+  .detail_creator_info_channel_title{
+    text-align: center;
+  }
+
+  .detail_creator_info_container{
+    text-align: center;
+  }
+
+  .detail_creator_info_channel_channels{
+    text-align: center;
+  }
+
+  .tab-content{
+    width: 100%;
   }
 
 /*
@@ -623,16 +647,17 @@
 
   .detail_content_calendar_container_grid{
     /*display: block;*/
-    display: grid;
-    grid-template-columns: unset;
+    /*display: grid;*/
+    /*grid-template-columns: unset;*/
 
     width: 620px;
+    display: block;
     margin: auto;
   }
 
   #detail_ticket_md{
     margin-left: 0px;
-    /*display: block;*/
+    width: 100%;
   }
 }
 
