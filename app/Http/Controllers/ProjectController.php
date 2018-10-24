@@ -176,7 +176,7 @@ class ProjectController extends Controller
 
         //$minExposedNum = 6;
         $minExposedNum = 8;
-        
+
         $projects = \App\Models\Project::whereNotIn('project_order_number', [0])
             ->orderBy('project_order_number')
             ->take($minExposedNum)->get();

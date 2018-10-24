@@ -21,11 +21,11 @@ use Illuminate\Http\Request as Request;
 
 class OrderController extends Controller
 {
-  public function createOrder($ticketId)
+  public function createNewOrder(Request $request, $ticketId)
   {
-    $isOrderFinal = $_COOKIE["isOrderFinal"];
+    $isNewOrderStart = $_COOKIE["isNewOrderStart"];
 
-    if($isOrderFinal == "false")
+    if($isNewOrderStart == "false")
     {
       $ticketTemp = Ticket::findOrFail($ticketId);
       $project = Project::findOrFail($ticketTemp->project_id);
@@ -37,85 +37,8 @@ class OrderController extends Controller
       ]);
     }
 
-    setcookie("isOrderFinal","false", time()+604800);
+    setcookie("isNewOrderStart","false", time()+604800, "/tickets");
 
-    $user = Auth::user();
-    $ticket = $this->getOrderableTicket($ticketId);
-    $project = $ticket->project()->first();
-
-    try {
-        $payment = null;
-        if ($this->isPaymentProcess()) {
-            $info = $this->buildPaymentInfo($user, $project, $ticket);
-            $paymentService = new PaymentService();
-            if ($project->type === 'funding') {
-                $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-            } else {
-                $payment = $paymentService->rightNow($info);
-            }
-        }
-
-        DB::beginTransaction();
-
-        $order = new Order($this->getFilteredInput($ticket, $payment));
-        $order->project()->associate($project);
-        $order->ticket()->associate($ticket);
-        $order->user()->associate($user);
-        $order->save();
-
-        $project->increment('funded_amount', $this->getOrderPrice());
-        $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
-        $ticket->increment('audiences_count', $this->getOrderCount());
-        $user->increment('tickets_count');
-
-        $supporter = new Supporter;
-        $supporter->project()->associate($project);
-        $supporter->ticket()->associate($ticket);
-        $supporter->user()->associate($user);
-        $supporter->save();
-
-        $project->increment('supporters_count');
-        $user->increment('supports_count');
-
-        DB::commit();
-
-        $sms = new SmsService();
-        $contact = $order->contact;
-        $limit = $project->type === 'funding' ? 10 : 14;
-        $titleLimit = str_limit($project->title, $limit, $end = '..');
-        $priceFormatted = number_format($order->getFundedAmount());
-        $totalRealTicket = $ticket->real_ticket_count * $order->count;
-        $ticketFormatted = $totalRealTicket > 0 ? sprintf('(티켓 %d매 포함)', $totalRealTicket) : '';
-        $datetime = date('Y/m/d H:i', strtotime($ticket->delivery_date));
-        $msg = $project->type === 'funding'
-            ? sprintf('%s %s원%s 후원완료', $titleLimit, $priceFormatted, $ticketFormatted)
-            : sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
-        $sms->send([$contact], $msg);
-
-        $emailTo = $order->email;
-        if ($project->type === 'funding') {
-            $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
-        } else {
-            $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
-        }
-
-        return view('order.complete', [
-            'project' => $project,
-            'order' => $order,
-            'isComment' => FALSE
-        ]);
-    } catch (PaymentFailedException $e) {
-        return view('order.error', [
-            'message' => $e->getMessage(),
-            'ticket_id' => $ticket->id,
-            'request_price' => $this->getOrderUnitPrice(),
-            'ticket_count' => $this->getOrderCount()
-        ]);
-    }
-  }
-
-  public function createNewOrder(Request $request, $ticketId)
-  {
     //쿠키가 동작 안함.... 재 수정 필요
     $user = Auth::user();
     $ticket = $this->getOrderableTicket($ticketId);
@@ -124,7 +47,6 @@ class OrderController extends Controller
 
     try {
       $payment = null;
-      $info = null;//이거 지워야함.
       if ($this->isPaymentProcess()) {
         //$info = $this->buildPaymentInfo($user, $project, $ticket);
         $info = $this->buildPaymentNewInfo($user, $project, $ticket, $goodsSelectArray);
@@ -209,103 +131,7 @@ class OrderController extends Controller
           'ticket_count' => $this->getOrderCount()
       ]);
     }
-
   }
-
-  /*
-    public function createOrder($ticketId)
-    {
-      $isOrderFinal = $_COOKIE["isOrderFinal"];
-
-      if($isOrderFinal == "false")
-      {
-        $ticketTemp = Ticket::findOrFail($ticketId);
-        $project = Project::findOrFail($ticketTemp->project_id);
-
-        return view('order.complete', [
-            'project' => $project,
-            'order' => '',
-            'isComment' => FALSE
-        ]);
-      }
-
-      setcookie("isOrderFinal","false", time()+604800);
-
-      $user = Auth::user();
-      $ticket = $this->getOrderableTicket($ticketId);
-      $project = $ticket->project()->first();
-
-      try {
-          $payment = null;
-          if ($this->isPaymentProcess()) {
-              $info = $this->buildPaymentInfo($user, $project, $ticket);
-              $paymentService = new PaymentService();
-              if ($project->type === 'funding') {
-                  $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-              } else {
-                  $payment = $paymentService->rightNow($info);
-              }
-          }
-
-          DB::beginTransaction();
-
-          $order = new Order($this->getFilteredInput($ticket, $payment));
-          $order->project()->associate($project);
-          $order->ticket()->associate($ticket);
-          $order->user()->associate($user);
-          $order->save();
-
-          $project->increment('funded_amount', $this->getOrderPrice());
-          $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
-          $ticket->increment('audiences_count', $this->getOrderCount());
-          $user->increment('tickets_count');
-
-          $supporter = new Supporter;
-          $supporter->project()->associate($project);
-          $supporter->ticket()->associate($ticket);
-          $supporter->user()->associate($user);
-          $supporter->save();
-
-          $project->increment('supporters_count');
-          $user->increment('supports_count');
-
-          DB::commit();
-
-          $sms = new SmsService();
-          $contact = $order->contact;
-          $limit = $project->type === 'funding' ? 10 : 14;
-          $titleLimit = str_limit($project->title, $limit, $end = '..');
-          $priceFormatted = number_format($order->getFundedAmount());
-          $totalRealTicket = $ticket->real_ticket_count * $order->count;
-          $ticketFormatted = $totalRealTicket > 0 ? sprintf('(티켓 %d매 포함)', $totalRealTicket) : '';
-          $datetime = date('Y/m/d H:i', strtotime($ticket->delivery_date));
-          $msg = $project->type === 'funding'
-              ? sprintf('%s %s원%s 후원완료', $titleLimit, $priceFormatted, $ticketFormatted)
-              : sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
-          $sms->send([$contact], $msg);
-
-          $emailTo = $order->email;
-          if ($project->type === 'funding') {
-              $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
-          } else {
-              $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
-          }
-
-          return view('order.complete', [
-              'project' => $project,
-              'order' => $order,
-              'isComment' => FALSE
-          ]);
-      } catch (PaymentFailedException $e) {
-          return view('order.error', [
-              'message' => $e->getMessage(),
-              'ticket_id' => $ticket->id,
-              'request_price' => $this->getOrderUnitPrice(),
-              'ticket_count' => $this->getOrderCount()
-          ]);
-      }
-    }
-    */
 
     public function completecomment($projectId){
       $project = Project::findOrFail($projectId);
@@ -656,6 +482,7 @@ class OrderController extends Controller
 
     public function getOrderForm(Request $request)
     {
+      setcookie("isNewOrderStart","true", time()+604800, "/tickets");
       //티켓ID Count
       $ticketId = 0;
 
@@ -698,7 +525,7 @@ class OrderController extends Controller
           'goodsList' => $goodsSelectJson,
           'supportPrice' => $supportPrice,
           'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-          //'form_url' => url(sprintf('/tickets/%d/orders', $ticket->id))
+          //'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
           'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
       ]));
     }

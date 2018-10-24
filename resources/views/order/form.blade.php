@@ -73,10 +73,6 @@
 @endsection
 
 @section('content')
-    <?php
-    setcookie("isOrderFinal","true", time()+604800);
-    ?>
-
     <input id="ticketJson" type="hidden" value="{{ $ticket }}"/>
     <input id="discount" type="hidden" value="{{ $discount }}"/>
     <input id="goodsList" type="hidden" value="{{ $goodsList }}"/>

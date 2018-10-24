@@ -106,7 +106,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('posters/poster/{id}', 'PosterController@deletePoster');
 
     //channel
-    //Route::post('projects/{id}/discounts', 'ChannelController@createDiscount');
     Route::post('channels/{id}', 'ChannelController@createChannel');
     //Route::put('discounts/{id}', 'ChannelController@updateDiscount');
     Route::delete('channels/{id}', 'ChannelController@deleteChannel');
