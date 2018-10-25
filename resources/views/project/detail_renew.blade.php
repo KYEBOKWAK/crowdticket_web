@@ -371,7 +371,7 @@ test : projectID {{ $project }}
     @include('template.goods_container')
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=2') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=3') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=7') }}"></script>
