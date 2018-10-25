@@ -253,13 +253,13 @@
               <div class="flex_layer">
                 <p class="order_form_title order_form_user_title">유효기간</p>
                 <div style="margin-top:8px;">
-                  <select name="expiry_month" class="form-control" required="required">
+                  <select id="expiry_month" name="expiry_month" class="form-control" required="required">
                     <option selected disabled>mm</option>
                     @for ($i = 1; $i <= 12; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
                   </select>
-                  <select name="expiry_year" class="form-control" required="required">
+                  <select id="expiry_year" name="expiry_year" class="form-control" required="required">
                       <option selected disabled>yyyy</option>
                       @for ($i = 2018; $i <= 2030; $i++)
                           <option value="{{ $i }}">{{ $i }}</option>
@@ -322,10 +322,10 @@
           </div>
           <div style="text-align:right; margin-top:10px; margin-bottom:10px;">
             <div>
-              환불 정책에 동의합니다. <input type="checkbox" required="required">
+              환불 정책에 동의합니다. <input id="refund_apply" type="checkbox" required="required">
             </div>
             <div>
-              크라우드티켓 약관과 정보이용정책에 동의합니다. <input type="checkbox" required="required">
+              크라우드티켓 약관과 정보이용정책에 동의합니다. <input id="policy_apply" type="checkbox" required="required">
             </div>
           </div>
         </div>
@@ -590,6 +590,73 @@
           };
 
           $('#ticketing-btn-payment').click(function(){
+
+            if(!$('#name').val())
+            {
+              alert("이름을 입력해주세요.");
+              return;
+            }
+
+            if(!$('#phone').val())
+            {
+              alert("연락처를 입력해주세요.");
+              return;
+            }
+
+            if(!$('#email').val())
+            {
+              alert("이메일을 입력해주세요.");
+              return;
+            }
+
+            if(!$('#order-card-number').val())
+            {
+              alert("카드 번호를 입력해주세요.");
+              return;
+            }
+
+            if(!$('#expiry_month').val())
+            {
+              alert("유효 기간을 선택해주세요");
+              return;
+            }
+
+            if(!$('#expiry_year').val())
+            {
+              alert("유효 기간을 선택해주세요");
+              return;
+            }
+
+            if(!$('#order-birth').val())
+            {
+              alert("생년월일(법인등록번호)를 입력해주세요.");
+              return;
+            }
+
+            if(!$('#order-card-password').val())
+            {
+              alert("카드 비밀번호 앞2자리를 입력해주세요.");
+              return;
+            }
+            else{
+              if(isNaN( $('#order-card-password').val() ) == true) {
+				            alert("비밀번호는 숫자만 입력 가능합니다.");
+                    return;
+			        }
+            }
+
+            if(!$('#refund_apply').is(":checked"))
+            {
+              alert("환불 정책에 동의 해주세요.");
+              return;
+            }
+
+            if(!$('#policy_apply').is(":checked"))
+            {
+              alert("이용 약관에 동의 해주세요.");
+              return;
+            }
+
             $('#ticketSubmitPayForm').submit();
           });
 
@@ -599,41 +666,7 @@
           setCommissionInfo();
           setSupportInfo();
           setTotalPrice();
-          /*
-            $("#postcodify_search_button").postcodifyPopUp();
-            $('#postcodify_search_button_fake').bind('click', function () {
-                $('#postcodify_search_button').trigger('click');
-                return false;
-            });
-            $('.btn-muted').each(function () {
-                $(this).bind('click', function () {
-                    return false;
-                });
-            });
-            $('.btn-danger').each(function () {
-                $(this).bind('click', function () {
-                    var form = $(this).closest('form');
-                    return confirm('정말 취소하시겠습니까?');
-                });
-            });
 
-            $('form').preventDoubleSubmission();
-            $('form').validate({
-                rules: {
-                    "contact": {
-                        minlength: 10,
-                        digits: true
-                    }
-                },
-                messages: {
-                    "contact": {
-                        minlength: "올바른 휴대폰 번호를 입력해주세요",
-                        digits: "-를 제외한 숫자만 입력해주세요",
-                        required: "휴대폰 번호를 입력해주세요"
-                    }
-                }
-            });
-            */
         });
     </script>
 @endsection
