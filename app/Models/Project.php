@@ -385,7 +385,8 @@ class Project extends Model
 
       if($this->type == 'sale')
       {
-        $nowAmount = "현재 ". $this->getTotalTicketOrderCount() ."명 참여";
+        //$nowAmount = "현재 ". $this->getTotalTicketOrderCount() ."명 참여";
+        $nowAmount = "현재 ". $this->getAmountTicketCount() ."명 참여 가능";
       }
       else
       {
