@@ -25,12 +25,22 @@ $i = 0;
                                 <span class="project-category-a">artist</span>
                               @endif
 
+                              <span class="ct-percent">
                               @if($project->isFundingType())
-                                <span class="ct-percent">{{ $project->getProgress() }}%</span></h5>
+                                @if($project->isFinished())
+                                  {{ $project->getProgress() }}% 펀딩종료
+                                @else
+                                  {{ $project->getProgress() }}% 펀딩중
+                                @endif
                               @else
-                                <!-- <span class="ct-percent">{{ $project->getNowAmount() }}</span></h5> -->
-                                <span class="ct-percent">판매중</span></h5>
+                                  @if($project->isFinished())
+                                    판매종료
+                                  @else
+                                    판매중
+                                  @endif
                               @endif
+                              </span>
+                            </h5>
                         </div>
 
                         <div>
