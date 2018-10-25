@@ -1005,7 +1005,8 @@ $(document).ready(function() {
     var ticketID = $('#ticket_select_id_input').val();
     var projectId = $('#project_id').val();
 
-    alert("bug TEST : " + projectId);
+    var projecttest = $('#projecttest').val();
+    alert("bug TEST : " + JSON.stringify(projecttest));
     var url = baseUrl + '/projects/' + projectId + '/tickets';
     if(ticketID){
       url = baseUrl + '/projects/' + projectId + '/tickets/' + ticketID;

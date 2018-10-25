@@ -158,7 +158,7 @@ $discounts = $project->discounts()->get();
 $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
-test : projectID {{ $project->id }}
+test : projectID {{ $project }}
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -341,9 +341,8 @@ test : projectID {{ $project->id }}
         </div>
       </div>
 
-
       <div class="nav-ticketing-btn-mobile">
-         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드 티켓팅</button>
+         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드 티켓팅 projectid:{{ $project->id }}</button>
        </div>
 
       <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>
@@ -351,6 +350,8 @@ test : projectID {{ $project->id }}
       <input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
       <input type="hidden" id="project_id" value="{{ $project->id }}"/>
       <input type="hidden" id="goods_json" value="{{ $project->goods }}">
+      <!-- test -->
+      <input type="hidden" id="projecttest" value="{{ $project }}">
       <!--baseContainer end-->
     </div>
 
@@ -373,5 +374,5 @@ test : projectID {{ $project->id }}
     <script src="{{ asset('/js/project/detail.js?version=2') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=5') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=6') }}"></script>
 @endsection
