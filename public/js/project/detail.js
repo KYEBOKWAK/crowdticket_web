@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	if(!!window.performance && window.performance.navigation.type === 2)
+	{
+		alert("RELOAD!");
+    window.location.reload();
+	}
+
 	var projectId = $('#project_id').val();
 
 	var commentsLoader = new Loader('/projects/' + projectId + '/comments', 20);
