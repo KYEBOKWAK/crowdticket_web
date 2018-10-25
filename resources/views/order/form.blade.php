@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=2') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=3') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=4') }}" rel="stylesheet">
     <style>
         .ps-section-title {
             font-weight: bold;
