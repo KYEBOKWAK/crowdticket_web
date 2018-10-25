@@ -668,7 +668,6 @@ $(document).ready(function() {
     var ticketMonth = $(this).attr('data-ticket-month');
     var ticketday = $(this).attr('data-ticket-day');
 
-    //alert(ticketYear + "-" + ticketMonth + "-" + ticketday);
     setTicketDateSelectBind();
     listTimeTickets(ticketYear, ticketMonth, ticketday);
   };
@@ -824,7 +823,6 @@ $(document).ready(function() {
 
   var ticketTimeSelect = function(){
     var ticketTimeItem = $(this).closest('.ticket_time_item');
-    //alert(ticketTimeItem.attr('id'));
 		var ticketData = ticketTimeItem.data('ticketsData');
 
     var ticketTimeBtn = ticketTimeItem.children('.ticket_time_btn');
@@ -1006,6 +1004,8 @@ $(document).ready(function() {
     var baseUrl = $('#base_url').val();
     var ticketID = $('#ticket_select_id_input').val();
     var projectId = $('#project_id').val();
+
+    alert("bug TEST : " + projectId);
     var url = baseUrl + '/projects/' + projectId + '/tickets';
     if(ticketID){
       url = baseUrl + '/projects/' + projectId + '/tickets/' + ticketID;
@@ -1075,4 +1075,9 @@ $(document).ready(function() {
       $( "#ticket_count_input" ).val(ticketAmount);
     }
   });
+
+  //날짜 선택시 젤 하단에 있을경우 자동 스크롤 할지 체크 해주는 함수
+  var scrollBottomCheck = function(){
+
+  };
 });
