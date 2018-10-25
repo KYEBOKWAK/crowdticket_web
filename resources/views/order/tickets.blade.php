@@ -131,7 +131,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=7') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=8') }}"></script>
 
     <script>
         $(document).ready(function () {

@@ -1,7 +1,6 @@
 $(document).ready(function() {
 	if(!!window.performance && window.performance.navigation.type === 2)
 	{
-		alert("RELOAD!");
     window.location.reload();
 	}
 
