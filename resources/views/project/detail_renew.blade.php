@@ -158,6 +158,7 @@ $discounts = $project->discounts()->get();
 $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
+test : projectID {{ $project->id }}
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
