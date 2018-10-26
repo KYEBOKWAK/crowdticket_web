@@ -37,18 +37,24 @@ class OrderController extends Controller
       ]);
     }
 
-    setcookie("isNewOrderStart","false", time()+604800, "/tickets");
-
     //쿠키가 동작 안함.... 재 수정 필요
     $user = Auth::user();
     $ticket = $this->getOrderableTicket($ticketId);
+    //구매 가능한 수량이 있는지 체크
+
     $project = $ticket->project()->first();
     $goodsSelectArray = $this->getSelectGoodsArray($project->goods);
+
+    if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
+    {
+      return view('test', ['project' => '수량이 매진되었습니다.']);
+    }
+
+    setcookie("isNewOrderStart","false", time()+604800, "/tickets");
 
     try {
       $payment = null;
       if ($this->isPaymentProcess()) {
-        //$info = $this->buildPaymentInfo($user, $project, $ticket);
         $info = $this->buildPaymentNewInfo($user, $project, $ticket, $goodsSelectArray);
 
         if($info->getAmount() >  0)
@@ -131,6 +137,20 @@ class OrderController extends Controller
           'ticket_count' => $this->getOrderCount()
       ]);
     }
+  }
+
+  public function getAmountTicketWithTicketId($ticketID, $orders){
+    $ticket = Ticket::findOrFail($ticketID);
+
+    $totalBuyCount = 0;
+    foreach($orders as $order){
+      if($ticketID == $order->ticket_id)
+      {
+        $totalBuyCount += $order->count;
+      }
+    }
+
+    return $ticket->audiences_limit - $totalBuyCount;
   }
 
     public function completecomment($projectId){
