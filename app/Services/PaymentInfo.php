@@ -51,7 +51,7 @@ class PaymentInfo
 
     public function withBirth($birth)
     {
-        $this->validateOrFail('birth', $birth, 'digits:10');
+        $this->validateOrFail('birth', $birth, 'digits_between:1,10');
         $this->birth = $birth;
     }
 
