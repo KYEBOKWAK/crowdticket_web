@@ -585,8 +585,6 @@ class OrderController extends Controller
 */
     public function getOrder(Request $request, $orderId)
     {
-      //return view('test', ['project' => $orderId]);
-
         $order = Order::where('id', $orderId)->withTrashed()->first();
         \Auth::user()->checkOwnership($order);
 
