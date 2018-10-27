@@ -50,8 +50,6 @@ class OrderController extends Controller
       return view('test', ['project' => '수량이 매진되었습니다.']);
     }
 
-    setcookie("isNewOrderStart","false", time()+604800, "/tickets");
-
     try {
       $payment = null;
       if ($this->isPaymentProcess()) {
@@ -122,6 +120,8 @@ class OrderController extends Controller
       } else {
           $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
       }
+
+      setcookie("isNewOrderStart","false", time()+604800, "/tickets");
 
       return view('order.complete', [
           'project' => $project,
