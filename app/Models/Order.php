@@ -41,6 +41,11 @@ class Order extends Model
       return $this->belongsTo('App\Models\Discount');
     }
 
+    public function supporter()
+    {
+      return $this->belongsTo('App\Models\Supporter');
+    }
+
     public function getAmountWithoutCommission()
     {
         /** @noinspection PhpUndefinedFieldInspection */

@@ -49,8 +49,8 @@
                                 @else
                                     <div class="col-md-3 display-cell">
 						<span>
-							<span class="text-primary">공연일시</span><br/> 
-							<strong class="ps-strong-small">{{ date('Y.m.d H:i', strtotime($ticket->delivery_date)) }}</strong>
+							<span class="text-primary">공연일시</span><br/>
+							<strong class="ps-strong-small">{{ date('Y.m.d H:i', strtotime($ticket->show_date)) }}</strong>
 							<span class="pull-right">{{ $ticket->price }} 원</span>
 						</span>
                                     </div>
@@ -69,6 +69,7 @@
                                 <td>이름</td>
                                 <td>참여금액</td>
                                 <td>구매수량</td>
+                                <td>추가후원</td>
                                 <td>결제금액</td>
                                 <td>상태</td>
                                 <td>결제일</td>
@@ -84,12 +85,22 @@
                                     <td>{{ $order->name }}</td>
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->count }}</td>
-                                    <td>{{ $order->price * $order->count }}</td>
+                                    <td>
+                                      <?php
+                                      $supporterPrice = 0;
+                                      if($order->supporter)
+                                      {
+                                        $supporterPrice = $order->supporter->price;
+                                      }
+                                      ?>
+                                      {{ $supporterPrice }}
+                                    </td>
+                                    <td>{{ ($order->price * $order->count)+$supporterPrice }}</td>
                                     <td>{{ $order->state_string }}</td>
                                     <td>{{ $order->created_at }}</td>
                                     <td>{{ $order->email }}</td>
                                     <td>{{ $order->contact }}</td>
-                                    @if ( $ticket->require_shipping ) 
+                                    @if ( $ticket->require_shipping )
                                         <td>{{ $order->postcode }} {{ $order->address_main }} {{ $order->address_detail }}</td>
                                     @endif
                                     @if ( !empty($ticket->question) ) <td>{{ $order->answer }}</td> @endif
@@ -103,4 +114,3 @@
         @endforeach
     </div>
 @endsection
-

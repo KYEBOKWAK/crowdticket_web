@@ -97,6 +97,9 @@ class OrderController extends Controller
           $supporter->user()->associate($user);
           $supporter->price = $supportPrice;
           $supporter->save();
+
+          $order->supporter()->associate($supporter);
+          $order->save();
         }
       }
 
@@ -619,9 +622,11 @@ class OrderController extends Controller
         $goodsSelectJson = $this->getSelectGoodsArray($project->goods);
         $goodsSelectJson = json_encode($goodsSelectJson);
 
-        $supportPrice = '';
-        if ($request->has('order_support_price')) {
-          $supportPrice = \Input::get('order_support_price');
+
+        $supportPrice = 0;
+        if($order->supporter)
+        {
+          $supportPrice = $order->supporter->price;
         }
 
         return $this->responseWithNoCache(view('order.form', [
@@ -738,13 +743,15 @@ class OrderController extends Controller
                 if ($user->tickets_count > 0) {
                     $user->decrement('tickets_count');
                 }
+                /*
                 $supporter = Supporter::where('project_id', $project->id)
                     ->where('user_id', $user->id)
-                    ->where('ticket_id', $ticket->id)
+                    //->where('ticket_id', $ticket->id)
                     ->first();
                 if ($supporter) {
                     $supporter->delete();
                 }
+                */
                 $funded = $order->getFundedAmount();
                 if ($project->funded_amount - $funded >= 0) {
                     $project->decrement('funded_amount', $funded);
