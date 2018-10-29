@@ -110,7 +110,7 @@
                     <h1>여러분의 공연 또는 이벤트,<br>
                     이제는 크라우드티켓에 올리세요!<br>
                      </h1>
-                    <h3>크라우드티켓에서는 예술가부터 개인 방송인까지 누구나 공연과 이벤트를 기획, 홍보하고 판매할 수 있는 공간입니다.</h3>
+                    <h3>크라우드티켓은 예술가부터 크리에이터까지 누구나 공연과 이벤트를 기획, 홍보하고 판매할 수 있는 공간입니다.</h3>
                     <button id="moveApply" type="button" class="ct-btn ct-btn-default">지금 시작하기</button>
                 </div>
             </div>
@@ -214,7 +214,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <img src="{{ asset('img/app/img_blueprint_ticket.png') }}" class="img-blueprint">
-                        <h2>공연/이벤트 페이지 개설</h2>
+                        <h2>공연/이벤트 페이지 개설(준비중)</h2>
                         <h3>별도의 신청절차 없이 바로 페이지 제작을 시작할 수 있습니다. 크라우드티켓과 함께 공연/이벤트를 준비해보세요!</h3>
                         <!--<a href="{{ url('blueprints/form?isProject=true') }}" class="ct-btn ct-btn-default">프로젝트 시작하기</a>-->
                         @if($isMaster == "TRUE")
