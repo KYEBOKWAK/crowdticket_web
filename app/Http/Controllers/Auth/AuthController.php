@@ -47,8 +47,8 @@ class AuthController extends Controller
       if($this->socialIdCheck() == 'isFacebook')
       {
         $message = [];
-        array_push($message, '해당 이메일은 페이스북 계정으로 가입되어 있습니다. ');
-        array_push($message, '로그인을 원하시면 비밀번호 찾기로 새로운 비밀번호를 등록 후 사용해주세요.');
+        array_push($message, '해당 이메일은 페이스북 계정으로 가입되어 있습니다.');
+        array_push($message, '페이스북 계정으로 계속 하시거나, 비밀번호 찾기로 비밀번호를 등록 후 사용해주세요.');
       }
 
   		$this->validate($request, [
