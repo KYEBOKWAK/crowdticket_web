@@ -41,6 +41,30 @@ class SocialAuthController extends Controller
 
     private function findOrCreateUser($facebookUser)
     {
+      //페이스북 아이디가 있으면 해당 계정을 넘겨준다.
+      if ($user = User::where('facebook_id', $facebookUser['id'])->first()) {
+          return $user;
+      }
+
+      //이메일을 찾았는데, 이메일이 있으면 페이스북 id를 등록해준다.
+      $email = $facebookUser['email'];
+      if ($user = User::where('email', $email)->first()) {
+          $user->facebook_id = $facebookUser['id'];
+          $user->profile_photo_url = $facebookUser['avatar'];
+          $user->save();
+          return $user;
+      }
+
+      //위의 둘다 없으면 아이디를 새로 가입해준다.
+      $user = User::create([
+          'email' => $this->getFacebookEmail($facebookUser),
+          'name' => $facebookUser['name'],
+          'profile_photo_url' => $facebookUser['avatar'],
+          'password' => $facebookUser['id']
+      ]);
+      $user->facebook_id = $facebookUser['id'];
+      return $user;
+      /*
         if ($user = User::where('facebook_id', $facebookUser['id'])->first()) {
             return $user;
         }
@@ -53,6 +77,7 @@ class SocialAuthController extends Controller
         ]);
         $user->facebook_id = $facebookUser['id'];
         return $user;
+        */
     }
 
     private function getFacebookEmail($facebookUser) {
