@@ -327,7 +327,7 @@
           </div>
 
           @if (!$order)
-            <div class="order_form_user_container_grid_two_columns">
+            <div id="order_card_number_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <p class="order_form_title order_form_user_title">카드번호</p>
                 <div>
@@ -341,7 +341,7 @@
               </div>
             </div>
 
-            <div class="order_form_user_container_grid_two_columns">
+            <div id="expiry_month_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <p class="order_form_title order_form_user_title">유효기간</p>
                 <div style="margin-top:8px;">
@@ -361,7 +361,7 @@
               </div>
             </div>
 
-            <div class="order_form_user_container_grid_two_columns">
+            <div id="order-birth_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <div style="flex-basis: 130px; flex-shrink: 0; padding-right: 50px;">
                   <p class="order_form_title order_form_user_title" style="padding-right: 0px;">생년월일</p><p style="text-align:right;">(법인등록번호)</p>
@@ -372,7 +372,7 @@
               </div>
             </div>
 
-            <div class="order_form_user_container_grid_two_columns">
+            <div id="card_password_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <p class="order_form_title order_form_user_title">카드비밀번호</p>
                 <div>
@@ -677,6 +677,24 @@
           };
 
           var setTotalPrice = function(){
+            var totalPrice = getTitalPrice();
+            totalPrice = addComma(totalPrice) + "원";
+
+            $('.order_form_total_price').text(totalPrice);
+
+            //버튼에 가격
+            var submitBtn = "총 금액: "+totalPrice + " 결제 하기";
+
+            if( $('#project_type').val() == "funding")
+            {
+              submitBtn = "총 금액: "+totalPrice + " 예약 하기";
+            }
+
+            $('#ticketing-btn-payment').text(submitBtn);
+
+          };
+
+          var getTitalPrice = function(){
             var totalPrice = g_ticketPrice - g_discoutPrice;
             //굿즈 가격 측정
             //alert(g_goodsArray.length);
@@ -699,20 +717,8 @@
             //var supportPrice = $('#supportPrice').val();
             //총 가격에서 마지막 커미션을 넣어준다.
             totalPrice = totalPrice + g_commission;
-            totalPrice = addComma(totalPrice) + "원";
 
-            $('.order_form_total_price').text(totalPrice);
-
-            //버튼에 가격
-            var submitBtn = "총 금액: "+totalPrice + " 결제 하기";
-
-            if( $('#project_type').val() == "funding")
-            {
-              submitBtn = "총 금액: "+totalPrice + " 예약 하기";
-            }
-
-            $('#ticketing-btn-payment').text(submitBtn);
-
+            return totalPrice;
           };
 
           $('#ticketing-btn-payment').click(function(){
@@ -735,40 +741,44 @@
               return;
             }
 
-            if(!$('#order-card-number').val())
+            if(getTitalPrice() > 0)
             {
-              alert("카드 번호를 입력해주세요.");
-              return;
-            }
+              //구매 가격이 있을때만 체크한다.
+              if(!$('#order-card-number').val())
+              {
+                alert("카드 번호를 입력해주세요.");
+                return;
+              }
 
-            if(!$('#expiry_month').val())
-            {
-              alert("유효 기간을 선택해주세요");
-              return;
-            }
+              if(!$('#expiry_month').val())
+              {
+                alert("유효 기간을 선택해주세요");
+                return;
+              }
 
-            if(!$('#expiry_year').val())
-            {
-              alert("유효 기간을 선택해주세요");
-              return;
-            }
+              if(!$('#expiry_year').val())
+              {
+                alert("유효 기간을 선택해주세요");
+                return;
+              }
 
-            if(!$('#order-birth').val())
-            {
-              alert("생년월일(법인등록번호)를 입력해주세요.");
-              return;
-            }
+              if(!$('#order-birth').val())
+              {
+                alert("생년월일(법인등록번호)를 입력해주세요.");
+                return;
+              }
 
-            if(!$('#order-card-password').val())
-            {
-              alert("카드 비밀번호 앞2자리를 입력해주세요.");
-              return;
-            }
-            else{
-              if(isNaN( $('#order-card-password').val() ) == true) {
-				            alert("비밀번호는 숫자만 입력 가능합니다.");
-                    return;
-			        }
+              if(!$('#order-card-password').val())
+              {
+                alert("카드 비밀번호 앞2자리를 입력해주세요.");
+                return;
+              }
+              else{
+                if(isNaN( $('#order-card-password').val() ) == true) {
+  				            alert("비밀번호는 숫자만 입력 가능합니다.");
+                      return;
+  			        }
+              }
             }
 
             if(!$('#refund_apply').is(":checked"))
@@ -806,12 +816,33 @@
 
           });
 
+          var setNoPrice = function(){
+            var isNoPrice = false;
+
+            if( getTitalPrice() == 0 )
+            {
+              isNoPrice = true;
+            }
+
+            if(isNoPrice == false)
+            {
+              return;
+            }
+
+            $('#order_card_number_container').hide();
+            $('#expiry_month_container').hide();
+            $('#order-birth_container').hide();
+            $('#card_password_container').hide();
+          };
+
           setTicketInfo();//티켓정보를 먼저 입력해야 함. 티켓 가격을 설정해야 할인가가 나옴. 순서 바뀌면 안됨.
           setDiscountInfo();
           setGoodsInfo();
           setCommissionInfo();
           setSupportInfo();
           setTotalPrice();
+
+          setNoPrice();
 
           if(g_isGetOrderForm)
           {
