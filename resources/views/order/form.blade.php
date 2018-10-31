@@ -425,9 +425,9 @@
         @if ($order)
             @if ($order->deleted_at)
                 @if ($project->type === 'funding')
-                    <button class="btn btn-muted">취소됨</button>
+                    <button class="btn btn-muted" disabled="disabled">취소됨</button>
                 @else
-                    <button class="btn btn-muted">환불됨</button>
+                    <button class="btn btn-muted" disabled="disabled">환불됨</button>
                 @endif
             @else
                 @if ($order->canCancel())
