@@ -12,7 +12,7 @@
       <% if(amountTicketCount == 0){ %>
         <p style="margin: 0px;"> 매진 </p>
       <% }else{ %>
-        <p style="margin: 0px;"> 구매 가능한 티켓 수량 <%= addComma(amountTicketCount) %> 매</p>
+        <p style="margin: 0px;"> 구매 가능한 수량 <%= addComma(amountTicketCount) %> 매</p>
       <% } %>
 
       <% if(ticket.buy_limit > 0){ %>
