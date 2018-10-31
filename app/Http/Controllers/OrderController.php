@@ -21,8 +21,179 @@ use Illuminate\Http\Request as Request;
 
 class OrderController extends Controller
 {
-  public function createNewOrder(Request $request, $ticketId)
+  //public function createNewOrder(Request $request, $ticketId)
+  public function createNewOrder(Request $request)
   {
+
+    $isNewOrderStart = $_COOKIE["isNewOrderStart"];
+
+    $projectId = '';
+    $ticketId = '';
+    $ticket = '';
+    if($request->has('project_id'))
+    {
+      $projectId = \Input::get('project_id');
+    }
+
+    if($request->has('ticket_id'))
+    {
+      $ticketId = \Input::get('ticket_id');
+    }
+
+    if(!$projectId)
+    {
+      //프로젝트 정보는 반드시 있어야 함.
+      return view('test', ['project' => '프로젝트 에러']);
+    }
+
+    $project = Project::findOrFail($projectId);
+
+    if($isNewOrderStart == "false")
+    {
+      return view('order.complete', [
+          'project' => $project,
+          'order' => '',
+          'isComment' => FALSE
+      ]);
+    }
+
+    $user = Auth::user();
+
+    if($ticketId)
+    {
+      //티켓 정보가 있을때 저장한다.
+      $ticket = $this->getOrderableTicket($ticketId);
+
+      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
+      {
+        return view('test', ['project' => '수량이 매진되었습니다.']);
+      }
+    }
+    //구매 가능한 수량이 있는지 체크
+
+    $goodsSelectArray = $this->getSelectGoodsArray($project->goods);
+
+    $discount = '';
+    if($request->has('discountId'))
+    {
+      $discount = Discount::findOrFail(\Input::get('discountId'));
+      if($discount)
+      {
+        if($project->getAmountDiscount($discount->id) <= 0)
+        {
+          return view('test', ['project' => '할인 수량이 매진되었습니다.']);
+        }
+      }
+    }
+
+    try {
+      $payment = null;
+      if ($this->isPaymentProcess()) {
+        $info = $this->buildPaymentNewInfo($user, $project);
+
+        if($info->getAmount() >  0)
+        {
+          $paymentService = new PaymentService();
+          if ($project->type === 'funding') {
+              $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+          } else {
+              $payment = $paymentService->rightNow($info);
+          }
+        }
+      }
+
+      DB::beginTransaction();
+
+      $order = new Order($this->getNewFilteredInput($goodsSelectArray, $payment));
+      $order->project()->associate($project);
+      if($ticket)
+      {
+        $order->ticket()->associate($ticket);
+      }
+
+      $order->user()->associate($user);
+
+      //if($request->has('discountId'))
+      if($discount)
+      {
+        //$discount = Discount::findOrFail(\Input::get('discountId'));
+        $order->discount()->associate($discount);
+      }
+
+      $order->save();
+
+      $project->increment('funded_amount', $this->getOrderPrice());
+      //$project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+      //$ticket->increment('audiences_count', $this->getOrderCount());
+      //$user->increment('tickets_count');
+
+      if($request->has('supportPrice'))
+      {
+        $supportPrice = Input::get('supportPrice');
+        if($supportPrice > 0)
+        {
+          $supporter = new Supporter;
+          $supporter->project()->associate($project);
+          if($ticket)
+          {
+            $supporter->ticket()->associate($ticket);
+          }
+          $supporter->user()->associate($user);
+          $supporter->price = $supportPrice;
+          $supporter->save();
+
+          $order->supporter()->associate($supporter);
+          $order->save();
+        }
+      }
+
+      DB::commit();
+
+      $sms = new SmsService();
+      $contact = $order->contact;
+      $limit = $project->type === 'funding' ? 10 : 14;
+      $titleLimit = str_limit($project->title, $limit, $end = '..');
+      $priceFormatted = number_format($order->getFundedAmount());
+      //$totalRealTicket = $ticket->real_ticket_count * $order->count;
+      $totalRealTicket = $this->getOrderCount();
+
+      if($ticket)
+      {
+        $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
+        $msg = sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
+      }
+      else
+      {
+        $msg = sprintf('%s %d매 예매완료', $titleLimit, $totalRealTicket);
+      }
+
+      $sms->send([$contact], $msg);
+
+      $emailTo = $order->email;
+      if ($project->type === 'funding') {
+          //$this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
+      } else {
+          //$this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
+      }
+
+      setcookie("isNewOrderStart","false", time()+604800, "/tickets");
+
+      return view('order.complete', [
+          'project' => $project,
+          'order' => $order,
+          'isComment' => FALSE
+      ]);
+    } catch (PaymentFailedException $e) {
+      return view('order.error', [
+          'message' => $e->getMessage(),
+          //'ticket_id' => $ticket->id,
+          'project_id' => $project->id,
+          'request_price' => $this->getOrderUnitPrice(),
+          'ticket_count' => $this->getOrderCount()
+      ]);
+    }
+
+    /*
     $isNewOrderStart = $_COOKIE["isNewOrderStart"];
 
     if($isNewOrderStart == "false")
@@ -50,6 +221,20 @@ class OrderController extends Controller
       return view('test', ['project' => '수량이 매진되었습니다.']);
     }
 
+    $discount = '';
+    if($request->has('discountId'))
+    {
+      $discount = Discount::findOrFail(\Input::get('discountId'));
+      if($discount)
+      {
+        if($project->getAmountDiscount($discount->id) <= 0)
+        {
+          return view('test', ['project' => '할인 수량이 매진되었습니다.']);
+        }
+      }
+
+    }
+
     try {
       $payment = null;
       if ($this->isPaymentProcess()) {
@@ -59,9 +244,9 @@ class OrderController extends Controller
         {
           $paymentService = new PaymentService();
           if ($project->type === 'funding') {
-              $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+              //$payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
           } else {
-              $payment = $paymentService->rightNow($info);
+              //$payment = $paymentService->rightNow($info);
           }
         }
       }
@@ -73,9 +258,10 @@ class OrderController extends Controller
       $order->ticket()->associate($ticket);
       $order->user()->associate($user);
 
-      if($request->has('discountId'))
+      //if($request->has('discountId'))
+      if($discount)
       {
-        $discount = Discount::findOrFail(\Input::get('discountId'));
+        //$discount = Discount::findOrFail(\Input::get('discountId'));
         $order->discount()->associate($discount);
       }
 
@@ -140,6 +326,7 @@ class OrderController extends Controller
           'ticket_count' => $this->getOrderCount()
       ]);
     }
+    */
   }
 
   public function getAmountTicketWithTicketId($ticketID, $orders){
@@ -180,10 +367,11 @@ class OrderController extends Controller
         return $info;
     }
 
-    private function buildPaymentNewInfo($user, $project, $ticket, $goodsSelectArray) {
+    private function buildPaymentNewInfo($user, $project) {
         $info = new PaymentInfo();
         $info->withSignature($user->id, $project->id);
-        $info->withAmount($this->getNewTotalPrice($ticket, $goodsSelectArray));
+        //$info->withAmount($this->getNewTotalPrice($ticket, $goodsSelectArray));
+        $info->withAmount($this->getNewTotalPrice());
         $info->withCardNumber(Input::get('card_number'));
         $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
         $info->withBirth(Input::get('birth'));
@@ -213,26 +401,42 @@ class OrderController extends Controller
 
     private function mailDataOnFunding(Project $project, Ticket $ticket, Order $order)
     {
-        $closingAt = date('Y.m.d', strtotime($project->funding_closing_at));
+      $closingAt = date('Y.m.d', strtotime($project->funding_closing_at));
+
+      $row = [
+          0 => [
+              'col1' => '후원금',
+              'col2' => $order->getFundedAmount() . '원'
+          ],
+          1 => [
+              'col1' => '결제예정일',
+              'col2' => '목표금액을 달성할 경우 ' . $closingAt . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
+          ]
+      ];
+
+      if($ticket)
+      {
+        $row = [
+            0 => [
+                'col1' => '후원금',
+                'col2' => $order->getFundedAmount() . '원'
+            ],
+            1 => [
+                'col1' => '구매한 티켓',
+                'col2' => $this->getTicketOrderCount($ticket) . '매'
+            ],
+            2 => [
+                'col1' => '결제예정일',
+                'col2' => '목표금액을 달성할 경우 ' . $closingAt . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
+            ]
+        ];
+      }
 
         return [
             'title' => '아래의 내역으로 결제예약이 완료되었습니다.',
             'thead1' => '후원한 프로젝트',
             'thead2' => $project->title,
-            'rows' => [
-                0 => [
-                    'col1' => '후원금',
-                    'col2' => $order->getFundedAmount() . '원'
-                ],
-                1 => [
-                    'col1' => '구매한 티켓',
-                    'col2' => $this->getTicketOrderCount($ticket) . '매'
-                ],
-                2 => [
-                    'col1' => '결제예정일',
-                    'col2' => '목표금액을 달성할 경우 ' . $closingAt . ' (펀딩 완료일 익일)에 결제될 예정입니다.'
-                ]
-            ]
+            'rows' => $row
         ];
     }
 
@@ -257,24 +461,36 @@ class OrderController extends Controller
 
     private function mailDataOnTicketing(Project $project, Ticket $ticket)
     {
-        //$deliveryDate = date('Y.m.d H:i', strtotime($ticket->delivery_date));
+      $row = [
+          0 => [
+              'col1' => '예매완료',
+              'col2' => ''
+          ]
+        ];
+
+      if($ticket)
+      {
         $showDate = date('Y.m.d H:i', strtotime($ticket->show_date));
 
-        return [
-            'title' => '구매하신 내역은 다음과 같습니다.',
-            'thead1' => '구매한 공연',
-            'thead2' => $project->title,
-            'rows' => [
-                0 => [
-                    'col1' => '공연 일시',
-                    'col2' => $showDate
-                ],
-                1 => [
-                    'col1' => '매수',
-                    'col2' => $this->getOrderCount() . '매'
-                ]
+        $row = [
+            0 => [
+                'col1' => '공연 일시',
+                'col2' => $showDate
+            ],
+            1 => [
+                'col1' => '매수',
+                'col2' => $this->getOrderCount() . '매'
             ]
-        ];
+          ];
+      }
+
+
+      return [
+          'title' => '구매하신 내역은 다음과 같습니다.',
+          'thead1' => '구매한 공연',
+          'thead2' => $project->title,
+          'rows' => $row
+      ];
     }
 
     private function mailDataOnTicketRefund(Project $project, Ticket $ticket, Order $order)
@@ -320,15 +536,120 @@ class OrderController extends Controller
         return (int)Input::get('ticket_count');
     }
 
+    private function getDiscountValue()
+    {
+      $discountValue = 0;
+      $discountId = Input::get('discountId');
+      if($discountId)
+      {
+        $discount = Discount::findOrFail($discountId);
+        if($discount)
+        {
+          $discountValue = $discount->percent_value;
+        }
+      }
+
+      return $discountValue;
+    }
+
     private function getTicketOrderCount($ticket)
     {
-        return $ticket->real_ticket_count * $this->getOrderCount();
+      if(!$ticket)
+      {
+        return 0;
+      }
+
+      return $ticket->real_ticket_count * $this->getOrderCount();
     }
 
     private function getOrderPrice()
     {
+      $projectId = \Input::get('project_id');
+      $project = Project::findOrFail($projectId);
+
+      $totalOrderPrice = 0;
+      $ticketPrice = $this->getOrderUnitPrice() * $this->getOrderCount();
+      //할인적용
+      $percent_value = $this->getDiscountValue();
+
+      //굿즈 총 가격
+      $goodsTotalPrice = $this->getGoodsTotalPrice($project->goods);
+      //궂즈에 붙은 티켓 할인 가격
+      $goodsTotalTicketDiscountPrice = $this->getGoodsTotalTicketDiscountPrice($project->goods);
+
+      $discountValue = $ticketPrice * ($percent_value/100);
+
+      //티켓 가격 - 할인이 적용된 가격
+      $ticketTotalPrice = $ticketPrice - $discountValue;
+
+      //티켓 가격 - 굿즈 티켓 할인 가격
+      $ticketTotalPrice = $ticketTotalPrice - $goodsTotalTicketDiscountPrice;
+
+      //최종 가격에서 후원가를 더한다.
+      //후원정보 추가
+      $supportPrice = Input::get('supportPrice');
+      if(!$supportPrice)
+      {
+        $supportPrice = 0;
+      }
+
+      //최종적으로 티켓 가격이 0보다 작으면 0(할인 다 되서)
+      if($ticketTotalPrice < 0)
+      {
+        $ticketTotalPrice = 0;
+      }
+
+      $totalOrderPrice = $ticketTotalPrice + $goodsTotalPrice + $supportPrice;
+
+      if($totalOrderPrice < 0)
+      {
+        $totalOrderPrice = 0;
+      }
+
+      return (int)$totalOrderPrice;
+    }
+
+    private function getGoodsTotalPrice($goodsList)
+    {
+      $goodsTotalPrice = 0;
+      foreach($goodsList as $goods)
+      {
+        $goodsCountName = 'goods_count'.$goods->id;
+
+        $goodsCount = \Input::get($goodsCountName);
+
+        if($goodsCount > 0)
+        {
+          $goodsTotalPrice += ($goods->price * $goodsCount);
+        }
+      }
+
+      return $goodsTotalPrice;
+    }
+
+    private function getGoodsTotalTicketDiscountPrice($goodsList)
+    {
+      $goodsTotalTicketDiscountPrice = 0;
+      foreach($goodsList as $goods)
+      {
+        $goodsCountName = 'goods_count'.$goods->id;
+
+        $goodsCount = \Input::get($goodsCountName);
+
+        if($goodsCount > 0)
+        {
+          $goodsTotalTicketDiscountPrice += ($goods->ticket_discount * $goodsCount);
+        }
+      }
+
+      return $goodsTotalTicketDiscountPrice;
+    }
+    /*
+    private function getOrderPrice()
+    {
         return $this->getOrderUnitPrice() * $this->getOrderCount();
     }
+    */
 
     private function getTotalPrice($ticket)
     {
@@ -341,45 +662,16 @@ class OrderController extends Controller
         return 0;
     }
 
-    private function getNewTotalPrice($ticket, $goodsSelectArray)
+    private function getNewTotalPrice()
     {
       if ($this->isPaymentProcess()) {
           $orderPrice = $this->getOrderPrice();
           $count = $this->getOrderCount();
 
-
-          //$test = 0;
-          $goodsTotalPrice = 0;
-          $goodsTotalDiscountPrice = 0;
-          $goodsArrayCount = count($goodsSelectArray);
-          for($i = 0 ; $i < $goodsArrayCount ; ++$i)
-          {
-            $goodsInfo = $goodsSelectArray[$i]['info'];
-            $goodsCount = $goodsSelectArray[$i]['count'];
-            //$test += $goodsSelectArray[$i]['count'];
-            $goodsTotalPrice += $goodsInfo->price * $goodsCount;
-            $goodsTotalDiscountPrice += $goodsInfo->ticket_discount * $goodsCount;
-          }
-
           $commission = $count * 500;
 
-          $totalPrice = $orderPrice + $goodsTotalPrice - $goodsTotalDiscountPrice;
+          $totalPrice = $orderPrice + $commission;
 
-          //후원정보 추가
-          $supportPrice = Input::get('supportPrice');
-          if($supportPrice)
-          {
-            $totalPrice = $totalPrice + $supportPrice;
-          }
-
-          //최종 마지막에 커미션 정보 붙는다.
-          $totalPrice = $totalPrice + $commission;
-
-          if($totalPrice < 0)
-          {
-            $totalPrice = 0;
-          }
-          //return $orderPrice + $commission;
           return $totalPrice;
       }
       return 0;
@@ -437,7 +729,7 @@ class OrderController extends Controller
         return $inputs;
     }
 
-    private function getNewFilteredInput(Ticket $ticket, $goodsSelectArray, Payment $payment = null)
+    private function getNewFilteredInput($goodsSelectArray, Payment $payment = null)
     {
         $inputs = Input::only(
             [
@@ -448,7 +740,8 @@ class OrderController extends Controller
         $inputs['price'] = $this->getOrderUnitPrice();
         $inputs['count'] = $this->getOrderCount();
         //$inputs['total_price'] = $this->getTotalPrice($ticket);
-        $inputs['total_price'] = $this->getNewTotalPrice($ticket, $goodsSelectArray);
+        //$inputs['total_price'] = $this->getNewTotalPrice($ticket, $goodsSelectArray);
+        $inputs['total_price'] = $this->getNewTotalPrice();
         //getNewTotalPrice
         $inputs['imp_meta'] = $payment ? $payment->toJson() : '{}';
 
@@ -505,6 +798,62 @@ class OrderController extends Controller
 
     public function getOrderForm(Request $request)
     {
+      //return view('test', ['project'=>\Input::get('project_id')]);
+
+      setcookie("isNewOrderStart","true", time()+604800, "/tickets");
+
+      $ticketId = 0;
+      $ticket = '';
+      $project = '';
+      $discount = '';
+      if ($request->has('project_id')) {
+        $projectId = \Input::get('project_id');
+        $project = Project::findOrFail($projectId);
+      }
+
+      if(!$project)
+      {
+        return view('test', ['project'=>'프로젝트를 불러올 수 없습니다.']);
+      }
+
+      if ($request->has('ticket_select_id')) {
+        $ticketId = \Input::get('ticket_select_id');
+        if($ticketId > 0)
+        {
+          $ticket = $this->getOrderableTicket($ticketId);
+          //티켓 정보가 있을때만 할인정보를 가져온다.
+          if ($request->has('discount_select_id')) {
+            $discountId = \Input::get('discount_select_id');
+            $discount = Discount::findOrFail($discountId);
+          }
+        }
+      }
+
+      $goodsSelectJson = $this->getSelectGoodsArray($project->goods);
+      $goodsSelectJson = json_encode($goodsSelectJson);
+
+      $supportPrice = '';
+      if ($request->has('order_support_price')) {
+        $supportPrice = \Input::get('order_support_price');
+      }
+
+      return $this->responseWithNoCache(view('order.form', [
+          'order' => null,
+          'project' => $project,
+          'ticket' => $ticket,
+          'ticket_count' => \Input::get('ticket_count'),
+          'discount' => $discount,
+          'request_price' => $this->getOrderUnitPrice(),
+          'ticket_count' => $this->getOrderCount(),
+          'goodsList' => $goodsSelectJson,
+          'supportPrice' => $supportPrice,
+          'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+          //'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
+          'form_url' => url(sprintf('/tickets/neworders'))
+      ]));
+
+
+      /*
       setcookie("isNewOrderStart","true", time()+604800, "/tickets");
       //티켓ID Count
       $ticketId = 0;
@@ -534,7 +883,6 @@ class OrderController extends Controller
       if ($request->has('order_support_price')) {
         $supportPrice = \Input::get('order_support_price');
       }
-      //return view('test', ['project' => $goodsSelectJson]);
 
       return $this->responseWithNoCache(view('order.form', [
           'order' => null,
@@ -542,15 +890,14 @@ class OrderController extends Controller
           'ticket' => $ticket,
           'ticket_count' => \Input::get('ticket_count'),
           'discount' => $discount,
-          //'discount' => \Input::get('ticket_count'),
           'request_price' => $this->getOrderUnitPrice(),
           'ticket_count' => $this->getOrderCount(),
           'goodsList' => $goodsSelectJson,
           'supportPrice' => $supportPrice,
           'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-          //'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
           'form_url' => url(sprintf('/tickets/%d/neworders', $ticket->id))
       ]));
+      */
     }
 
     public function getSelectGoodsArray($goodsList){
@@ -571,41 +918,32 @@ class OrderController extends Controller
         }
       }
 
-      //$goodsJson = json_encode($goodsArray);
-
-      //$goodsJson = $goodsArray['info'];
-      //return $goodsJson;
       return $goodsArray;
     }
 
-/*
-    public function getSelectGoods($goodsList){
+    public function getOrderGoodsArray($goodsList, $orderGoodsList){
       $goodsArray = [];
       //$goodsArray = '';
-      foreach($goodsList as $goods)
+
+      $goodsOrders = json_decode($orderGoodsList, true);
+      foreach($goodsOrders as $goodsOrder)
       {
-        $goodsCountName = 'goods_count'.$goods->id;
-
-        $goodsCount = \Input::get($goodsCountName);
-
-        if($goodsCount > 0)
+        foreach($goodsList as $goods)
         {
+          if($goodsOrder['id'] == $goods->id)
+          {
+            $goodsInfo['info'] = $goods;
+            $goodsInfo['count'] = $goodsOrder['count'];
 
-          array_push($goodsArray, ['info' => $goods,
-                                  'count' => $goodsCount]);
-
-          //$goodsArray['info'] = $goods;
-          //$goodsArray['count'] = $goodsCount;
+            array_push($goodsArray, $goodsInfo);
+            break;
+          }
         }
       }
 
-      $goodsJson = json_encode($goodsArray);
-
-      //$goodsJson = $goodsArray['info'];
-      return $goodsJson;
-      //return $goodsArray;
+      return $goodsArray;
     }
-*/
+
     public function getOrder(Request $request, $orderId)
     {
         $order = Order::where('id', $orderId)->withTrashed()->first();
@@ -619,7 +957,7 @@ class OrderController extends Controller
           $discount = Discount::findOrFail($order->discount_id);
         }
 
-        $goodsSelectJson = $this->getSelectGoodsArray($project->goods);
+        $goodsSelectJson = $this->getOrderGoodsArray($project->goods, $order->goods_meta);
         $goodsSelectJson = json_encode($goodsSelectJson);
 
 
@@ -781,9 +1119,9 @@ class OrderController extends Controller
 
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                $this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
+                //$this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
             } else {
-                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
+                //$this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
             }
 
             return redirect()->action('UserController@getUserOrders', [$user->id]);

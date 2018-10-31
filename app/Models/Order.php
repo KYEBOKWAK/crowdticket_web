@@ -152,7 +152,12 @@ class Order extends Model
         }
         return '결제완료';
     }
+/*
+    public function getDiscountCount($discountId)
+    {
 
+    }
+*/
     /**
      * @return Project
      */

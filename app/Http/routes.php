@@ -10,6 +10,7 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
 Route::get('/facebook', 'Auth\SocialAuthController@redirect');
 Route::get('/facebook/callback', 'Auth\SocialAuthController@callback');
 Route::get('/facebook/callback/{facebookid}/{facebookName}/{facebookEmail}/{previousURL}', 'Auth\SocialAuthController@callback')->where('previousURL', '.*');
@@ -120,7 +121,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('news/{id}', 'NewsController@deleteNews');
 
     Route::post('tickets/{id}/orders', 'OrderController@createOrder');
-    Route::post('tickets/{id}/neworders', 'OrderController@createNewOrder');
+    //Route::post('tickets/{id}/neworders', 'OrderController@createNewOrder');
+    Route::post('tickets/neworders', 'OrderController@createNewOrder');
     Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
     //Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
     Route::post('tickets/orders/form', 'OrderController@getOrderForm');

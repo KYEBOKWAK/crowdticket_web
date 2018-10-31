@@ -5,9 +5,10 @@ class Goods extends Model
 
     protected $table = 'goods';
 
-    protected $fillable = ['price','img_cache', 'title', 'content', 'img_url'];
+    protected $fillable = ['limit_count', 'price','img_cache', 'title', 'content', 'img_url'];
 
     protected static $typeRules = [
+        'limit_count' => 'integer|min:0',
         'price' => 'integer|min:0',
         'img_cache' => 'integer|min:0',
         'title' => 'string|min:0',
@@ -24,6 +25,7 @@ class Goods extends Model
     ];
 
     protected $casts = [
+        'limit_count' => 'integer',
         'price' => 'integer',
         'img_cache' => 'integer'
         //'audiences_count' => 'integer',
@@ -41,4 +43,53 @@ class Goods extends Model
         return $this->belongsTo('App\Models\Project');
     }
 
+    //굿즈의 구매 수량
+    public function getOrderGoodsCount()
+    {
+      $orders = $this->project->orders;
+
+      $orderCount = 0;
+      foreach($orders as $order)
+      {
+        $goodsOrders = json_decode($order->goods_meta, true);
+        foreach($goodsOrders as $goodsOrder)
+        {
+          if($this->id == $goodsOrder['id'])
+          {
+            $orderCount += $goodsOrder['count'];
+          }
+        }
+      }
+
+      return $orderCount;
+    }
+
+    //굿즈 남은 수량
+    public function getAmountGoodsCount()
+    {
+      $amountGoodsCount = $this->limit_count - $this->getOrderGoodsCount();
+
+      if($amountGoodsCount < 0)
+      {
+        $amountGoodsCount = "굿즈 수량 오류";
+      }
+
+      if($this->isUnLimited())
+      {
+        //무한일때 수량 빈값
+        $amountGoodsCount = '';
+      }
+
+      return $amountGoodsCount;
+    }
+
+    public function isUnLimited()
+    {
+      if($this->limit_count == 0)
+      {
+        return true;
+      }
+
+      return false;
+    }
 }

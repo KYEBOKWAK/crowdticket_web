@@ -3,7 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
     <link href="{{ asset('/css/calendar.css?version=3') }}" rel="stylesheet">
-    <link href="{{ asset('/css/order/ticket.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=5') }}" rel="stylesheet">
     <style>
         .order {
             cursor: pointer;
@@ -66,7 +66,7 @@
     <div class="order_ticket_discount_md_container_flex">
       <div class="order_ticket_discount_container">
         <div class="order_ticket_discount_md_title">
-          <p>할인선택</p>
+          <p>티켓할인선택</p>
         </div>
         <div class="order_ticket_content_container">
           @if(count($project->discounts) == 0)
@@ -120,6 +120,7 @@
        </button>
      </div>
 
+    <input type='hidden' id='project_id' name='project_id' value='{{ $project->id }}'/>
     <input type='hidden' id='discount_select_id' name='discount_select_id' value=''/>
     <input type='hidden' id='discount_select_value' name='discount_select_value' value=''/>
 
@@ -131,12 +132,26 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=8') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=9') }}"></script>
 
     <script>
         $(document).ready(function () {
           $(".order_ticket_discount_item_btn").each(function () {
               $(this).bind('click', function () {
+                //할인 선택은 티켓 먼저 선택 해야 한다.
+
+                if(!$('#ticket_select_id_input').val()){
+                  alert("티켓을 선택 해주세요");
+                  return;
+                }
+
+                //수량이 0개이면 선택 안됨.
+                if( Number($(this).attr('discount-amount')) <= 0 )
+                {
+                  alert("할인 매수가 없습니다.");
+                  return;
+                }
+
                 var discountIdInput = $('#discount_select_id');//필요할지 모르겠음
                 var discountValue = $('#discount_select_value');
                 var isSameSelect = false;
@@ -169,6 +184,7 @@
               var ticketCount = $('#ticket_count_input').val();
 
               var ticketTotalPrice = ticketPrice * ticketCount;
+              var goodsTotalPrice = 0;
 
               $('#request_price').val(ticketPrice);
               $('#ticket_count').val(ticketCount);
@@ -207,21 +223,34 @@
 
               //ticketTotalPrice
               //실제 MD 계산
-              var mdTicketTotalPrice = 0;
-              var mdTicketDiscountPrice = 0;
+              var goodsTotalPrice = 0;
+              var goodsTicketDiscountPrice = 0;
               for(var i = 0 ; i < goodsArray.length ; i++)
               {
-                mdTicketTotalPrice = mdTicketTotalPrice + goodsArray[i].totalPrice;
-                mdTicketDiscountPrice = mdTicketDiscountPrice + goodsArray[i].ticketDiscount
+                goodsTotalPrice = goodsTotalPrice + goodsArray[i].totalPrice;
+                goodsTicketDiscountPrice = goodsTicketDiscountPrice + goodsArray[i].ticketDiscount
               }
 
-              ticketTotalPrice = ticketTotalPrice + mdTicketTotalPrice - mdTicketDiscountPrice
+              ticketTotalPrice = ticketTotalPrice - goodsTicketDiscountPrice;
+              if(ticketTotalPrice < 0)
+              {
+                ticketTotalPrice = 0;
+              }
+
+              //ticketTotalPrice = ticketTotalPrice + mdTicketTotalPrice - mdTicketDiscountPrice
 
               //추가 후원이 있는지 확인
               var supportPrice = Number($('#order_support_price_input').val());
-              ticketTotalPrice = ticketTotalPrice + supportPrice;
 
-              $('#order_price_text').text( addComma(ticketTotalPrice));
+              var totalPrice = ticketTotalPrice + goodsTotalPrice + supportPrice;
+
+              //최종 구매 금액
+              if(totalPrice < 0)
+              {
+                totalPrice = 0;
+              }
+
+              $('#order_price_text').text( addComma(totalPrice));
             };
 
             $('#ticket_count_input').bind("click", setTotalPrice);
@@ -229,15 +258,47 @@
             $('#order_support_price_input').bind("change", setTotalPrice);
 
             $('#order_pay_next_btn').click(function(){
-              if($('#ticket_select_id_input').val()){
+              if(!$('#project_id').val())
+              {
+                //프로젝트 id 는 무조건 있어야 함. 결제시 필요
+                alert("프로젝트 ID 오류");
+                return;
+              }
+
+
+              if(!$('#ticket_select_id_input').val()) {
+                //티켓이 없다면, 최종확인시 카운트 값을 0으로 정해준다.
+                $("#ticket_count_input").val(0);
+              }
+
+              var ticketCountDom = $( "#ticket_count_input" );
+              var ticketCount = ticketCountDom.val();
+              if(ticketCount > 0)
+              {
+                var ticketAmount = Number(ticketCountDom.attr("ticket-data-amount"));
+                if(ticketCount > ticketAmount)
+                {
+                  alert("티켓 수량을 초과하였습니다.");
+                  return;
+                }
+
+                var limitBuyCount = Number(ticketCountDom.attr("ticket-buy-limit"));
+                if(limitBuyCount > 0 && ticketCount > limitBuyCount)
+                {
+                  alert("1회 구매 수량을 초과하였습니다.");
+                  return;
+                }
+              }
+
+              if(isValidSubmit() == true)
+              {
                 $('#ticketSubmitForm').submit();
               }
-              else{
-                alert("티켓을 선택해주세요.");
+              else
+              {
+                alert("구매 가능한 상품을 선택해주세요");
               }
             });
-            //$('.ticket_goods_count_input').bind("click", setTotalPrice);
-
 
             //버튼 스크롤
             var navOffsetHeight = $('#order_pay_next_id').height();
@@ -272,12 +333,26 @@
 
             var goodsCountUp = function(){
               var goodsId = $(this).attr('goods-id');
+              var goodsAmount = $(this).attr('goods-amount');
               var goodsInputInfo = $("#goods_count_input"+goodsId);
 
               var goodsCount = goodsInputInfo.val();
+
               goodsCount++;
+              if(goodsAmount)
+              {
+                if(goodsAmount < goodsCount)
+                {
+                  alert("보유 수량을 초과했습니다.");
+                  goodsCount = goodsAmount;
+                }
+              }
+
+              goodsInputInfo.val(goodsCount);
 
               setGoodsCount(goodsId, goodsCount);
+
+              setTotalPrice();
             };
 
             var goodsCountDown = function(){
@@ -290,15 +365,64 @@
               {
                 goodsCount = 0;
               }
+              goodsInputInfo.val(goodsCount);
 
               setGoodsCount(goodsId, goodsCount);
+
+              setTotalPrice();
             };
 
             var setGoodsCount = function(goodsId, goodsCount)
             {
               $(".goods_count_text"+goodsId).text(goodsCount+"개");
               $("#goods_count_input"+goodsId).val(goodsCount);
-            }
+            };
+
+            var isValidSubmit = function()
+            {
+              //티켓 확인
+              var isTickets = false;
+              if($('#ticket_select_id_input').val())
+              {
+                isTickets = true;
+              }
+
+              //굿즈 확인
+              var isGoods = false;
+              $(".ticket_goods_count_input").each(function () {
+                var goodsCount = $(this).val();
+
+                if(goodsCount == 0)
+                {
+                  return true;//for문의 continue와 같음.
+                }
+
+                isGoods = true;
+
+              });
+
+              //굿즈가 있으면 티켓 상관없이 결제 진행
+              if(isGoods)
+              {
+                return true;
+              }
+
+              //후원만 있어도 결제 가능
+              var supportPrice = Number($('#order_support_price_input').val());
+              if(supportPrice > 0)
+              {
+                return true;
+              }
+
+              //굿즈 체크 후 티켓 체크
+              if(isTickets)
+              {
+                return true;
+              }
+
+              //후원 확인
+              return false;
+            };
 
             $(".goods_count_up").bind('click', goodsCountUp);
             $(".goods_count_down").bind('click', goodsCountDown);

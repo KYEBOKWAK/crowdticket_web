@@ -548,5 +548,40 @@ class Project extends Model
 
       return json_encode($ticketBuyInfoArray);
     }
-    //
+
+    //현재 할인 수량
+    public function getDiscountCount($discountId)
+    {
+      $orders = $this->orders;
+      $discountCount = 0;
+
+      foreach($orders as $order){
+        if($order->discount_id == $discountId)
+        {
+          $discountCount++;
+        }
+      }
+
+      return $discountCount;
+    }
+
+    //할인 남은 수량
+    public function getAmountDiscount($discountId)
+    {
+      $discounts = $this->discounts;
+
+      $discountAmount = 0;
+
+      foreach($discounts as $discount)
+      {
+        if($discount->id == $discountId)
+        {
+          $discountAmount = $discount->limite_count - $this->getDiscountCount($discountId);
+          break;
+        }
+      }
+
+
+      return $discountAmount;
+    }
 }

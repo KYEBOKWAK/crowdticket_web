@@ -831,12 +831,6 @@ $(document).ready(function() {
     ticketTimeBtn.addClass("ticket_time_btn_on");
 
     resetCalendar();
-    /*
-    $('#seatTicketsList').children().remove();
-    $('#ticketing-btn-calendar').hide();
-    $("#ticket_count_input_wrapper").hide();
-    $("#ticket_count_input").val(1);
-    */
 
     for (var i = 0; i < ticketData.length; i++) {
       addTicketSeatRow(ticketData[i].ticket);
@@ -868,6 +862,7 @@ $(document).ready(function() {
     $("#ticket_count_input").attr("ticket-data-id", ticketData.id);
     $("#ticket_count_input").attr("ticket-data-price", ticketData.price);
     $("#ticket_count_input").attr("ticket-data-amount", getAmountTicket(ticketData));
+    $("#ticket_count_input").attr("ticket-buy-limit", ticketData.buy_limit);
     $("#ticket_count_input").trigger('change');
     $("#ticket_count_input").trigger('click');
   };
@@ -1025,6 +1020,7 @@ $(document).ready(function() {
     $("#ticket_count_input").attr("ticket-data-id", '');
     $("#ticket_count_input").attr("ticket-data-price", '');
     $("#ticket_count_input").attr("ticket-data-amount", '');
+    $("#ticket_count_input").attr("ticket-buy-limit", '');
     $("#ticket_count_input").trigger('click');
   };
 
@@ -1067,12 +1063,19 @@ $(document).ready(function() {
 
   $( "#ticket_count_input" ).change(function() {
     var ticketAmount = Number($(this).attr("ticket-data-amount"));
+    var limitBuyCount = Number($(this).attr("ticket-buy-limit"));
     var ticketCount = Number($(this).val());
 
     if( ticketCount > ticketAmount )
     {
-      alert("티켓 수량을 초과하였습니다.")
+      alert("티켓 수량을 초과하였습니다.");
       $( "#ticket_count_input" ).val(ticketAmount);
+    }
+
+    if(limitBuyCount > 0 && ticketCount > limitBuyCount)
+    {
+      alert("1회 구매 수량을 초과하였습니다.");
+      $( "#ticket_count_input" ).val(limitBuyCount);
     }
   });
 

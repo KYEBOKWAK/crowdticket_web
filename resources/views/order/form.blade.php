@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=2') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=5') }}" rel="stylesheet">
     <style>
         .ps-section-title {
             font-weight: bold;
@@ -78,6 +78,7 @@
     <input id="goodsList" type="hidden" value="{{ $goodsList }}"/>
     <input id="tickets_json_category_info" type="hidden" value="{{ $categories_ticket }}"/>
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
+    <input id="orderInfo" type="hidden" value="{{ $order }}"/>
 <div class="form_main_container">
   <div class="form_main_head_container">
     @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
@@ -90,6 +91,8 @@
         <input id="ticket_count" type="hidden" name="ticket_count" value="{{ $ticket_count }}"/>
         <input id="discountId" type="hidden" name="discountId" value=""/>
         <input id="supportPrice" type="hidden" name="supportPrice" value="{{ $supportPrice }}"/>
+        <input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
+        <input id="ticket_id" type="hidden" name="ticket_id" value="@if($ticket){{ $ticket->id }}@endif">
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -119,12 +122,15 @@
 
             <div class="order_form_conform_container_grid_columns">
               <p class="order_form_title">MD</p>
+              <div class="order_form_goods_list"></div>
+              <!--
               <div class="flex_layer">
                 <div class="order_form_md_contant order_form_text">
                 </div>
-                <div class="order_form_md_price order_form_text">
+                <div class="order_form_md_price order_form_text order_form_align_right">
                 </div>
               </div>
+              -->
             </div>
 
             <div class="order_form_conform_container_grid_columns">
@@ -132,7 +138,7 @@
               <div class="flex_layer">
                 <div class="order_form_support_contant order_form_text">
                 </div>
-                <div class="order_form_support_price order_form_text">
+                <div class="order_form_support_price order_form_text order_form_align_right">
                 </div>
               </div>
             </div>
@@ -141,7 +147,6 @@
               <p class="order_form_title">티켓 수수료</p>
               <div class="flex_layer">
                 <div class="order_form_commission_contant order_form_text">
-                  매당 500원
                 </div>
                 <div class="order_form_align_right order_form_commission_price order_form_text">
                 </div>
@@ -162,6 +167,93 @@
             <h4 class='order_form_total_price'></h4>
           </div>
         </div>
+
+        @if($project->isDelivery == "TRUE")
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
+            @if($order)
+              굿즈 배송 정보
+              <input id="placeReceive" type="checkbox" disabled="disabled"/><span class="order_form_title">현장 수령</span>
+            @else
+              굿즈 배송 정보 입력
+              <input id="placeReceive" type="checkbox"/><span class="order_form_title">현장 수령</span>
+            @endif
+          </div>
+          <div class="order_form_goods_address_container" style="margin: 20px 0px;">
+            <div class="col-md-12">
+                <div class="ps-box">
+                    <div class="form-group">
+                        <label for="order-address" class="col-sm-2 control-label">주소</label>
+                        <div class="col-sm-2">
+                            @if ($order)
+                                <input id="order-address" name="postcode" type="text"
+                                       class="form-control postcodify_postcode5" readonly="readonly"
+                                       placeholder="우편번호" value="{{ $order->postcode }}"/>
+                            @else
+                                <input id="order-address" name="postcode" type="text"
+                                       class="form-control postcodify_postcode5" required="required"
+                                       readonly="readonly" placeholder="우편번호"/>
+                            @endif
+                        </div>
+                        <div class="col-sm-2">
+                            @if (!$order)
+                                <a href="#" id="postcodify_search_button" style="display: none;">검색</a>
+                                <a href="#" class="btn btn-default" id="postcodify_search_button_fake">검색</a>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-2">
+                            @if ($order)
+                                <input type="text" name="address_main"
+                                       class="form-control postcodify_address" readonly="readonly"
+                                       value="{{ $order->address_main }}"/>
+                            @else
+                                <input type="text" name="address_main"
+                                       class="form-control postcodify_address" required="required"
+                                       readonly="readonly" placeholder="주소를 검색해주세요"/>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-2">
+                            @if ($order)
+                                <input type="text" name="address_detail"
+                                       class="form-control postcodify_details" readonly="readonly"
+                                       value="{{ $order->address_detail }}"/>
+                            @else
+                                <input type="text" name="address_detail"
+                                       class="form-control postcodify_details" required="required"
+                                       placeholder="상세주소를 입력해주세요"/>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="order-comment" class="col-sm-2 control-label">비고</label>
+                        <div class="col-sm-8">
+                            @if ($order)
+                                <input id="order-comment" name="requirement" type="text"
+                                       class="form-control" readonly="readonly"
+                                       value="{{ $order->requirement }}"/>
+                            @else
+                                <input id="order-comment" name="requirement" type="text"
+                                       class="form-control" placeholder="보상품 세부사항 및 기타 요청 사항"/>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-8">
+                            <p class="ps-form-control-like text-danger">
+                                입력하신 개인 정보는 결제 확인 알림 및 현재 참여하고 있는 공연 정보 발송 외의 용도로는 절대 사용하지 않으니 걱정하지 마세요!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        @endif <!-- isDelivery -->
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -372,7 +464,6 @@
 
 @section('js')
     @include('template.order.form_goods_price')
-    @include('template.order.form_goods_content')
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -389,6 +480,18 @@
         		 ticketsCategory = $.parseJSON(ticketsCategoryJson);
         	}
 
+          var g_isGetOrderForm = false;
+          if($('#orderInfo').val())
+          {
+            g_isGetOrderForm = true;
+          }
+
+          $("#postcodify_search_button").postcodifyPopUp();
+            $('#postcodify_search_button_fake').bind('click', function () {
+                $('#postcodify_search_button').trigger('click');
+                return false;
+            });
+
           var setTicketInfo = function(){
             var ticketJson = $('#ticketJson').val();
             var ticket = '';
@@ -398,6 +501,7 @@
 
             if(!ticket)
             {
+              $('.order_form_ticket_contant').text("티켓 없음");
               return;
             }
 
@@ -471,18 +575,24 @@
             var goods = $('#goodsList').val();
             goods = $.parseJSON(goods);
 
-            var formMDContant = $('.order_form_md_contant');
-            var formMDPrice = $('.order_form_md_price');
+            var formMDList = $('.order_form_goods_list');
             var goodsCount = goods.length;
             if(goodsCount == 0){
-              formMDContant.text("MD 없음")
+              formMDList.text("MD 없음")
             }
             else {
               for(var i = 0 ; i < goodsCount ; ++i){
+                var isLast = false;
+
+                if(i == goodsCount - 1)
+                {
+                  isLast = true;
+                }
+
                 var goodsItem = goods[i];
 
                 var isTicketDiscount = "false";
-                if( Number(goodsItem.info.ticket_discount) > 0 )
+                if(g_ticketPrice > 0 && Number(goodsItem.info.ticket_discount) > 0 )
                 {
                   //alert(goodsItem.info.ticket_discount);
                   isTicketDiscount = "true";
@@ -491,17 +601,19 @@
                 var goodsTotalPrice = goodsItem.info.price * goodsItem.count;
                 var goodsTotalDiscount = goodsItem.info.ticket_discount * goodsItem.count;
 
+                /*
                 var templateGoodsContainer = $('#template_order_goods_content_list_item').html();
           			var compiledGoodsContainer = _.template(templateGoodsContainer);
           			var rowGoodsContainer = compiledGoodsContainer({ 'goods': goodsItem.info, 'goodsCount': goodsItem.count, 'isTicketDiscount':isTicketDiscount });
           			var $rowGoodsContainer = $($.parseHTML(rowGoodsContainer));
           			formMDContant.append($rowGoodsContainer);
+                */
 
                 var templateGoodsPriceContainer = $('#template_order_goods_price_list_item').html();
           			var compiledGoodsPriceContainer = _.template(templateGoodsPriceContainer);
-          			var rowGoodsPriceContainer = compiledGoodsPriceContainer({ 'goodsTotalPrice': goodsTotalPrice, 'goodsTotalDiscount': goodsTotalDiscount, 'isTicketDiscount':isTicketDiscount });
+          			var rowGoodsPriceContainer = compiledGoodsPriceContainer({ 'goods': goodsItem.info, 'goodsTotalPrice': goodsTotalPrice, 'goodsPrice':goodsItem.info.price, 'goodsCount': goodsItem.count, 'goodsTotalDiscount': goodsTotalDiscount, 'isTicketDiscount':isTicketDiscount, 'isLast': isLast });
           			var $rowGoodsPriceContainer = $($.parseHTML(rowGoodsPriceContainer));
-          			formMDPrice.append($rowGoodsPriceContainer);
+          			formMDList.append($rowGoodsPriceContainer);
 
                 var goodsObject = new Object();
                 goodsObject.price = goodsTotalPrice;
@@ -528,12 +640,24 @@
 
           var setCommissionInfo = function(){
             var ticketCount = $('#ticket_count').val();
-
-            //var commission = 500 * ticketCount;
-            g_commission = 500 * ticketCount;
-
-            var fullCommission = addComma(g_commission)+"원";
-            $('.order_form_commission_price').text(fullCommission);
+            if(ticketCount > 0 && g_ticketPrice > 0)
+            {
+              g_commission = 500 * ticketCount;
+              var fullCommission = addComma(g_commission)+"원";
+              $('.order_form_commission_price').text(fullCommission);
+              $('.order_form_commission_contant').text("매당 500원");
+            }
+            else
+            {
+              if(g_ticketPrice == 0 && ticketCount > 0)
+              {
+                $('.order_form_commission_contant').text("수수료 없음");
+              }
+              else
+              {
+                $('.order_form_commission_contant').text("티켓 없음");
+              }
+            }
           };
 
           var setSupportInfo = function(){
@@ -547,14 +671,13 @@
             }
             else
             {
-              formSupportPrice.text(supportPrice+"원");
+              formSupportPrice.text(addComma(supportPrice)+"원");
               g_supportPrice = Number(supportPrice);
             }
           };
 
           var setTotalPrice = function(){
             var totalPrice = g_ticketPrice - g_discoutPrice;
-
             //굿즈 가격 측정
             //alert(g_goodsArray.length);
             var totalGoodsPrice = 0;
@@ -563,7 +686,10 @@
             {
               //totalPrice = totalPrice + g_goodsArray[i].price;
               totalGoodsPrice += g_goodsArray[i].price;
-              totalGoodsDiscount += g_goodsArray[i].ticketDiscount;
+              if(g_ticketPrice > 0)
+              {
+                totalGoodsDiscount += g_goodsArray[i].ticketDiscount;
+              }
             }
 
             totalPrice = totalPrice + totalGoodsPrice - totalGoodsDiscount;
@@ -660,12 +786,42 @@
             $('#ticketSubmitPayForm').submit();
           });
 
+
+
+          $('#placeReceive').bind('click', function () {
+            if($('#placeReceive').is(":checked"))
+            {
+              $('.order_form_goods_address_container').hide();
+
+              $('#order-address').val('');
+              $('.postcodify_address').val('');
+              $('.postcodify_details').val('');
+              $('#order-comment').val('');
+              //$''('.order_form_goods_address_container').children('input').val('aa');
+            }
+            else
+            {
+              $('.order_form_goods_address_container').show();
+            }
+
+          });
+
           setTicketInfo();//티켓정보를 먼저 입력해야 함. 티켓 가격을 설정해야 할인가가 나옴. 순서 바뀌면 안됨.
           setDiscountInfo();
           setGoodsInfo();
           setCommissionInfo();
           setSupportInfo();
           setTotalPrice();
+
+          if(g_isGetOrderForm)
+          {
+            //오더일 경우
+            if(!$('.postcodify_postcode5').val())
+            {
+              $('.order_form_goods_address_container').hide();
+              $('#placeReceive').prop("checked", true);
+            }
+          }
 
         });
     </script>

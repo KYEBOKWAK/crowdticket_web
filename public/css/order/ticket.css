@@ -101,7 +101,7 @@
 .order_form_conform_container_grid_columns{
   /*display: grid;
   grid-template-columns: 1fr 1fr 1fr;*/
-  border-bottom: 1px solid #707070;
+  border-bottom: 2px solid #707070;
 }
 
 .order_form_conform_container_grid_rows{
@@ -147,7 +147,7 @@
 }
 
 .order_md_container{
-  border-bottom: 1px solid black;
+  /*border-bottom: 1px solid black;*/
 }
 
 .order_form_commission_contant{
@@ -274,9 +274,11 @@
   background-repeat: no-repeat;
   background-size: 35px;
   background-color: white;
-  width: 35px;
+  /*width: 35px;*/
   height: 35px;
   border: none;
+  flex-basis: 35px;
+  flex-shrink: 0;
 }
 
 .goods_count_down{
@@ -292,13 +294,21 @@
 .goods_count_text{
   font-size: 16px;
   font-weight: bold;
-  padding-left: 20px;
+  padding-left: 10px;
   padding-top: 10px;
+}
+
+.goods_amount_text{
+  flex-basis: 75px;
+  flex-shrink: 0;
+  margin: 0px;
+  padding-top: 10px;
+  text-align: right;
 }
 
 .order_ticket_goods_counter_container{
   margin-left: auto;
-  width: 120px;
+  width: 186px;
 }
 
 .order_ticket_support_content{
@@ -380,7 +390,8 @@
 }
 
 .order_ticket_discount_item_btn_on{
-  background-color: #ef4d5d;
+  /*background-color: #ef4d5d;*/
+
 }
 
 #order-card-password{
