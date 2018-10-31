@@ -283,7 +283,7 @@
 
             <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
             <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
-              <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">자금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
+              <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
               <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
               <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
               <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
@@ -297,7 +297,7 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">성명</p>
               @if ($order)
-                <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}" readonly="readonly"/>
+                <input id="name" type="text" name="name" value="{{ $order->name }}" readonly="readonly"/>
               @else
                 <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}"/>
               @endif
@@ -308,7 +308,7 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">연락처</p>
               @if ($order)
-                <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
+                <input id="phone" type="text" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
               @else
                 <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
               @endif
@@ -319,7 +319,7 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">이메일</p>
               @if ($order)
-                <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}" readonly="readonly"/>
+                <input id="email" type="email" name="email" value="{{ $order->email }}" readonly="readonly"/>
               @else
                 <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}"/>
               @endif
