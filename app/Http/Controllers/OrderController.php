@@ -171,9 +171,15 @@ class OrderController extends Controller
 
       $emailTo = $order->email;
       if ($project->type === 'funding') {
-          //$this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
+        if($ticket)
+        {
+          $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
+        }
       } else {
-          //$this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
+        if($ticket)
+        {
+          $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
+        }
       }
 
       setcookie("isNewOrderStart","false", time()+604800, "/tickets");
@@ -668,7 +674,12 @@ class OrderController extends Controller
           $orderPrice = $this->getOrderPrice();
           $count = $this->getOrderCount();
 
-          $commission = $count * 500;
+          $commission = 0;
+
+          if($this->getOrderUnitPrice() > 0)
+          {
+            $commission = $count * 500;
+          }
 
           $totalPrice = $orderPrice + $commission;
 
