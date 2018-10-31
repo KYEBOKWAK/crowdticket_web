@@ -16,7 +16,7 @@
       <% } %>
 
       <% if(ticket.buy_limit > 0){ %>
-        <p style="margin: 0px; color: #EF4D5D;"> 1회 구매 제한 <%= ticket.buy_limit %> 매</p>
+        <!-- <p style="margin: 0px; color: #EF4D5D;"> 1회 구매 제한 <%= ticket.buy_limit %> 매</p> -->
       <% } %>
     </button>
 	</div>
