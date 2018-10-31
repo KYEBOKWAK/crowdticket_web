@@ -721,6 +721,8 @@
             return totalPrice;
           };
 
+          var isSubmit = false;
+
           $('#ticketing-btn-payment').click(function(){
 
             if(!$('#name').val())
@@ -793,7 +795,11 @@
               return;
             }
 
-            $('#ticketSubmitPayForm').submit();
+            if(isSubmit == false)
+            {
+              isSubmit = true;
+              $('#ticketSubmitPayForm').submit();
+            }
           });
 
 
