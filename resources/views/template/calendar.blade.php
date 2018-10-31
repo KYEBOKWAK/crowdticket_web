@@ -2,8 +2,9 @@
 <input type="hidden" id="ticket_old_selected_day_json" value="{{ $selectedTicket }}"/>
 <input type="hidden" id="ticket_select_price" value=""/>
 <input type="hidden" id="tickets_json_category_info" value="{{$categories_ticket}}"/>
-<input type="hidden" id="isDetail" value="{{ $isDetail }}">
-<input type="hidden" id="tickets_buy_count_info" value="{{ $ticketsCountInfoJson }}">
+<input type="hidden" id="isDetail" value="{{ $isDetail }}"/>
+<input type="hidden" id="tickets_buy_count_info" value="{{ $ticketsCountInfoJson }}"/>
+<input type="hidden" id="ticket_notice" value="{{ $project->ticket_notice }}"/>
 <div class="app-container" ng-app="dateTimeApp" ng-controller="dateTimeCtrl as ctrl" ng-cloak>
 	<div date-picker
 		 datepicker-title="날짜 선택"
@@ -59,30 +60,36 @@
 					</div>
 				</div>
 
-				@if($isDetail == 'FALSE')
-				<div id="ticket_place_holder"><h4>날짜와 티켓을 선택해주세요.</h4></div>
-				@endif
-				<div id="timepicker-container-outer-container">
-					<div class="timepicker-container-outer-container-flex">
-						<div class="flex_layer" style="width:100%;">
-							<div class="timepicker-time-container-inner @if($isDetail == 'FALSE') timepicker-time-container-inner-order @endif">
-								<div id="timeTicketsList"></div>
-							</div>
-							<div class="timepicker-seat-container-inner @if($isDetail == 'FALSE') timepicker-seat-container-inner-order @endif">
-								<div id="seatTicketsList"></div>
+				<div class="calendar_contant_wrapper"style="width: 100%">
+					@if($project->ticket_notice)
+						<div id="ticket_notice_container">
+						</div>
+					@endif
+					@if($isDetail == 'FALSE')
+					<div id="ticket_place_holder"><h4>날짜와 티켓을 선택해주세요.</h4></div>
+					@endif
+					<div id="timepicker-container-outer-container">
+						<div class="timepicker-container-outer-container-flex">
+							<div class="flex_layer" style="width:100%;">
+								<div class="timepicker-time-container-inner @if($isDetail == 'FALSE') timepicker-time-container-inner-order @endif">
+									<div id="timeTicketsList"></div>
+								</div>
+								<div class="timepicker-seat-container-inner @if($isDetail == 'FALSE') timepicker-seat-container-inner-order @endif">
+									<div id="seatTicketsList"></div>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					@if($isDetail == 'FALSE')
-					<div id="ticket_count_input_wrapper" class="ticket_count_input_wrapper flex_layer">
-						<span class="order_input_text">티켓 매수</span>
-						<input id="ticket_count_input" ticket-data-id="" ticket-data-price="" ticket-buy-limit="" ticket-data-amount="" name="ticket_count" type="number" class="form-control ticket_count"
-																													 value="1" min="0"/>
-																													 <span class="order_input_text">매</span>
+						@if($isDetail == 'FALSE')
+						<div id="ticket_count_input_wrapper" class="ticket_count_input_wrapper flex_layer">
+							<span class="order_input_text">티켓 매수</span>
+							<input id="ticket_count_input" ticket-data-id="" ticket-data-price="" ticket-buy-limit="" ticket-data-amount="" name="ticket_count" type="number" class="form-control ticket_count"
+																														 value="1" min="0"/>
+																														 <span class="order_input_text">매</span>
+						</div>
+						@endif
 					</div>
-					@endif
-				</div>
+				</div> <!-- calendar_contant_wrapper -->
 			</div>
 		</div>
 	</div>

@@ -144,7 +144,7 @@
         }
     </style>
 
-    <link href="{{ asset('/css/calendar.css?version=3') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=4') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -371,5 +371,5 @@ $selectedTicket = "";
     <script src="{{ asset('/js/project/detail.js?version=4') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=9') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=10') }}"></script>
 @endsection

@@ -25,7 +25,7 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-          'description', 'video_url', 'story'
+          'description', 'video_url', 'story', 'ticket_notice'
             //테스트용
             /*
             'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',

@@ -1079,6 +1079,14 @@ $(document).ready(function() {
     }
   });
 
+  var setTicketNotice = function(){
+    var ticketNotice = $('#ticket_notice').val();
+    ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
+    $('#ticket_notice_container').append(ticketNotice);
+  };
+
+  setTicketNotice();
+
   //날짜 선택시 젤 하단에 있을경우 자동 스크롤 할지 체크 해주는 함수
   var scrollBottomCheck = function(){
 

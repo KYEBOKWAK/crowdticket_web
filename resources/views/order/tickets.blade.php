@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=3') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=4') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=5') }}" rel="stylesheet">
     <style>
         .order {
@@ -132,7 +132,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=9') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=10') }}"></script>
 
     <script>
         $(document).ready(function () {

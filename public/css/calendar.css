@@ -511,7 +511,8 @@ html, body {
 .timepicker-container-outer-container-flex{
   flex-basis: 100%;
   flex-shrink: 1;
-  margin-top: 35px;
+  /*margin-top: 35px;*/
+  margin-top: 0px;
 }
 
 /*
@@ -836,8 +837,19 @@ html, body {
   width: 100%;
   text-align: center;
   margin: auto;
-  margin-top: 137px;
+  margin-top: 100px;
   color: #e7e7e7;
+}
+
+#ticket_notice_container{
+  width: 100%;
+  border: 1px solid #f9f8f6;
+  background-color: #f9f8f6;
+  padding: 10px;
+  border-radius: 4px;
+  word-break: break-all;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 @media (max-width:1030px) {
@@ -854,6 +866,7 @@ html, body {
 
   .datepicker-calendar {
       width: 100%;
+      float: none;
   }
 
   .timepicker-time-container-inner{
