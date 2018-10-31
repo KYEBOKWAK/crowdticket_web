@@ -429,7 +429,7 @@ class OrderController extends Controller
             ],
             1 => [
                 'col1' => '구매한 티켓',
-                'col2' => $this->getTicketOrderCount($ticket) . '매'
+                'col2' => $this->getOrderCount() . '매'
             ],
             2 => [
                 'col1' => '결제예정일',
