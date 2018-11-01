@@ -222,7 +222,7 @@ class Project extends Model
       {
         if ($this->pledged_amount > 0)
         {
-            return (int)(($this->funded_amount / $this->pledged_amount) * 100);
+            return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
         }
       }
 
@@ -365,7 +365,7 @@ class Project extends Model
       $textEnd = '이 참여할 수 있는 이벤트 입니다.';
       if($this->type == "funding")
       {
-        $maxText = '최소';
+        $maxText = '최소 ';
         $textEnd = '이 모여야 진행되는 이벤트입니다.';
       }
 
@@ -374,7 +374,7 @@ class Project extends Model
 
       //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명) //참여할 수 있는 이벤트 입니다.
 
-      return $fundingEndTime . ' 까지 ' . $maxText. $pledgedTarget . $textEnd;
+      return $fundingEndTime . '까지 ' . $maxText. $pledgedTarget . $textEnd;
     }
 
     public function getNowAmount()
@@ -386,15 +386,15 @@ class Project extends Model
       if($this->type == 'sale')
       {
         //$nowAmount = "현재 ". $this->getTotalTicketOrderCount() ."명 참여";
-        $nowAmount = "현재 ". $this->getAmountTicketCount() ."명 참여 가능";
+        $nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";
       }
       else
       {
-        $nowAmount = "현재 " . $this->funded_amount . "원 모임";
+        $nowAmount = "현재 " . number_format($this->getTotalFundingAmount()) . "원 모임";
 
         if($this->project_target == "people")
         {
-          $nowAmount = "신청자 " . $this->getTotalTicketOrderCount() . "명";
+          $nowAmount = "신청자 " . number_format($this->getTotalTicketOrderCount()) . "명";
         }
       }
 
@@ -598,4 +598,21 @@ class Project extends Model
 
       return "FALSE";
     }
+
+    public function getTotalFundingAmount()
+    {
+      $orders = $this->orders;
+      $totalFundingAmount = 0;
+
+      foreach($orders as $order)
+      {
+        $totalPrice = $order->total_price;
+        $commission = $order->count * 500;
+
+        $totalFundingAmount += $totalPrice - $commission;
+      }
+
+      return (int)$totalFundingAmount;
+    }
+
 }

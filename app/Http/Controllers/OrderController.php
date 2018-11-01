@@ -1054,7 +1054,6 @@ class OrderController extends Controller
 
     public function deleteOrder($orderId, $bypass = false)
     {
-      //return view('test', ['project' => $orderId]);
 
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
@@ -1069,9 +1068,7 @@ class OrderController extends Controller
         $ticket = $order->ticket()->first();
         $project = $order->project()->first();
 
-        //$meta = json_decode($order->imp_meta, true);
 
-        //return view('test', ['project' => count($meta)]);
         try {
             if ((int)$order->total_price > 0) {
               $meta = json_decode($order->imp_meta, true);
@@ -1101,10 +1098,16 @@ class OrderController extends Controller
                     $supporter->delete();
                 }
                 */
+
+                /*
                 $funded = $order->getFundedAmount();
                 if ($project->funded_amount - $funded >= 0) {
                     $project->decrement('funded_amount', $funded);
                 }
+                */
+
+                $project->funded_amount = $project->getTotalFundingAmount();
+                $project->save();
 
                 if($ticket)
                 {
