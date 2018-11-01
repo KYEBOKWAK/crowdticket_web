@@ -1105,15 +1105,24 @@ class OrderController extends Controller
                 if ($project->funded_amount - $funded >= 0) {
                     $project->decrement('funded_amount', $funded);
                 }
-                $ticketCount = $ticket->real_ticket_count * $order->count;
-                if ($project->tickets_count - $ticketCount >= 0) {
-                    $project->decrement('tickets_count', $ticketCount);
+
+                if($ticket)
+                {
+                  $ticketCount = $ticket->real_ticket_count * $order->count;
+                  if ($project->tickets_count - $ticketCount >= 0) {
+                      $project->decrement('tickets_count', $ticketCount);
+                  }
                 }
+
                 if ($project->supporters_count > 0) {
                     $project->decrement('supporters_count');
                 }
-                if ($ticket->audiences_count - $order->count >= 0) {
-                    $ticket->decrement('audiences_count', $order->count);
+
+                if($ticket)
+                {
+                  if ($ticket->audiences_count - $order->count >= 0) {
+                      $ticket->decrement('audiences_count', $order->count);
+                  }
                 }
             }
 
@@ -1130,9 +1139,15 @@ class OrderController extends Controller
 
             $emailTo = $order->email;
             if ($project->type === 'funding') {
-                //$this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
+              if($ticket)
+              {
+                $this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
+              }
             } else {
-                //$this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
+              if($ticket)
+              {
+                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
+              }
             }
 
             return redirect()->action('UserController@getUserOrders', [$user->id]);
