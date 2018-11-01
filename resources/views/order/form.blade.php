@@ -541,6 +541,11 @@
             var ticketCount = $('#ticket_count').val();
 
             var fullTicketInfo = yyyy+'.'+mm+'.'+dd+' '+H+':'+min + ' ' + ticketCategory + ' ' + ticketCount + '매';
+
+            if(d[0] == 0000){
+              fullTicketInfo = ticketCategory + ' ' + ticketCount + '매';
+            }
+
             $('.order_form_ticket_contant').text(fullTicketInfo);
 
             g_ticketPrice = ticket.price * ticketCount;
