@@ -25,5 +25,5 @@ body{
 }
 
 .display_none{
-  display: none;
+  display: none !important;
 }

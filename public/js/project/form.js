@@ -418,14 +418,13 @@ $(document).ready(function() {
 	var updateRequired = function(){
 		//유효성 체크
 		if(requiredVaildCheck() == true){
-			var isPlace = $('#isPlace').val();
-			if(isPlace === "FALSE")
+			var temporary_date = $('#temporary_date').val();
+			if(temporary_date == "FALSE")
 			{
-				isPlace = "none";
+				temporary_date = '';
 			}
-			else {
-				isPlace = "";
-			}
+
+			alert(temporary_date);
 
 			//프로젝트 타입이 티켓 판매라면 타겟이 어떤값이든 초기화 시켜준다.
 			var saleType = $('#saleType').val();
@@ -438,7 +437,7 @@ $(document).ready(function() {
 			updateProject({
 				'type': saleType,
 				'project_type': $('#projectType').val(),
-				'concert_hall': isPlace,
+				'temporary_date': temporary_date,
 				'project_target': projectTarget
 			});
 		}
@@ -1414,7 +1413,7 @@ function setSaleType(type){
 
 		isPlaceButton.css('background-color', "white");
 		isPlaceButton.css('color', "black");
-		$('#isPlace').val("TRUE");
+		$('#temporary_date').val("FALSE");
 
 		placeContainer.css('display', "none");
 	}
@@ -1429,20 +1428,38 @@ function setSaleType(type){
 }
 
 function setIsPlace(){
-	var isPlace = $('#isPlace').val();
+	var temporary_date = $('#temporary_date').val();
+	//var isPlaceButton = $('#isPlaceButton');
+
+	if(temporary_date === "FALSE"){
+		//isPlaceButton.css('background-color', "#ea535a");
+		//isPlaceButton.css('color', "white");
+		$('#temporary_date').val("TRUE");
+	}
+	else{
+		//isPlaceButton.css('background-color', "white");
+		//isPlaceButton.css('color', "black");
+		$('#temporary_date').val("FALSE");
+	}
+
+	setPlaceButton();
+}
+
+function setPlaceButton(){
+	var temporary_date = $('#temporary_date').val();
 	var isPlaceButton = $('#isPlaceButton');
 
-	if(isPlace === "TRUE"){
+	if(temporary_date === "TRUE"){
 		isPlaceButton.css('background-color', "#ea535a");
 		isPlaceButton.css('color', "white");
-		$('#isPlace').val("FALSE");
 	}
 	else{
 		isPlaceButton.css('background-color', "white");
 		isPlaceButton.css('color', "black");
-		$('#isPlace').val("TRUE");
 	}
 }
+
+setPlaceButton();
 
 //meony, people
 function setTargetType(type){

@@ -286,6 +286,10 @@ html, body {
   margin: 0 auto;
 }
 
+.timepicker-seat-container-inner-fullwidth{
+  width: 100%;
+}
+
 .timepicker-time-container-inner-order{
   /*width: 323px;*/
   width: 80%;
@@ -294,7 +298,8 @@ html, body {
 
 .timepicker-seat-container-inner-order{
   width: 80%;
-  height: 160px;
+  /*height: 160px;*/
+  max-height: 160px;
 }
 
 .timeline-container {

@@ -28,25 +28,24 @@
   <div id="isPlaceContainer" class="project-form-content-grid @if($project->type === 'sale' || $project->type === '') project-form-content-grid-hide @endif">
     <p class="project-form-content-title">이벤트 장소가 없으신가요?</p>
     <div class="project-form-required-type-container-grid">
-      <button id="isPlaceButton" class="project-form-required-type-button @if($project->concert_hall === 'none') project-form-required-type-button-select @endif" onClick="setIsPlace(); return false;">장소 미정</button>
+      <button id="isPlaceButton" class="project-form-required-type-button @if($project->temporary_date) project-form-required-type-button-select @endif" onClick="setIsPlace(); return false;">장소 미정</button>
     </div>
   </div>
   <button id="update_required" class="btn btn-success center-block">저장하기</button>
 </div>
-
-<!--<button id="aaaaaaa" class="btn btn-success center-block">abc</button>-->
-
-<!-- <input id="project_id" type="hidden" value="{{ $project->id }}"/> -->
 
 <input id="projectType" type="hidden" name="projectType" value="{{ $project->project_type }}"/>
 <input id="saleType" type="hidden" name="saleType" value="{{ $project->type }}"/>
 <input id="projectTarget" type="hidden" name="projectTarget" value="{{ $project->project_target }}">
 
 <?php
-  $isPlace = "TRUE";
-  if($project->concert_hall === 'none')
+  $temporary_date = "FALSE";
+  if($project->temporary_date)
   {
-    $isPlace = "FALSE";
+    $temporary_date = "TRUE";
   }
 ?>
-<input id="isPlace" type="hidden" name="isPlace" value="{{$isPlace}}"/>
+{{$temporary_date}} <br>
+{{$project->state}}
+
+<input id="temporary_date" type="hidden" name="temporary_date" value="{{ $temporary_date }}"/>

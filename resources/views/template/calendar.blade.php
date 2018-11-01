@@ -5,6 +5,7 @@
 <input type="hidden" id="isDetail" value="{{ $isDetail }}"/>
 <input type="hidden" id="tickets_buy_count_info" value="{{ $ticketsCountInfoJson }}"/>
 <input type="hidden" id="ticket_notice" value="{{ $project->ticket_notice }}"/>
+<input type="hidden" id="isPlace" value="{{ $project->isPlace() }}"/>
 <div class="app-container" ng-app="dateTimeApp" ng-controller="dateTimeCtrl as ctrl" ng-cloak>
 	<div date-picker
 		 datepicker-title="날짜 선택"
@@ -23,10 +24,26 @@
 				'compact': compact
 			}">
 			<div class="datepicker-header">
-				<div class="datepicker-title" ng-if="datepicker_title">날짜 선택 @if($isDetail == "FALSE")<span style="font-size:11px;"> | 티켓팅 가능날짜: {{ $project->getConcertDateFormatted() }} </span> @endif</div>
+				<div class="datepicker-title" ng-if="datepicker_title">
+					@if($project->isPlace() == "TRUE")
+						날짜 선택
+					@else
+						예상 날짜
+					@endif
+
+					@if($isDetail == "FALSE")
+					<span style="font-size:11px;"> |
+						@if($project->isPlace() == "TRUE")
+							티켓팅 가능날짜: {{ $project->getConcertDateFormatted() }}
+						@else
+							{{ $project->getConcertDateFormatted() }}
+						@endif
+					</span>
+					@endif
+				</div>
 			</div>
 			<div class="datepicker_calendar_container @if($isDetail == 'FALSE') flex_layer_mobile @endif">
-				<div class="datepicker-calendar @if($isDetail == 'FALSE') detail_calendar_flex @endif">
+				<div class="datepicker-calendar @if($isDetail == 'FALSE') detail_calendar_flex @endif @if($project->isPlace() == 'FALSE') display_none @endif">
 					<div class="calendar-header">
 						<div id="goback" class="goback" ng-click="moveBack()" ng-if="pickdate" data-ticket-year="@{{ currentViewDate.getFullYear() }}" data-ticket-month="@{{ day.month }}">
 							<svg width="30" height="30">
@@ -71,10 +88,10 @@
 					<div id="timepicker-container-outer-container">
 						<div class="timepicker-container-outer-container-flex">
 							<div class="flex_layer" style="width:100%;">
-								<div class="timepicker-time-container-inner @if($isDetail == 'FALSE') timepicker-time-container-inner-order @endif">
+								<div class="timepicker-time-container-inner @if($isDetail == 'FALSE') timepicker-time-container-inner-order @endif @if($project->isPlace() == 'FALSE') display_none @endif">
 									<div id="timeTicketsList"></div>
 								</div>
-								<div class="timepicker-seat-container-inner @if($isDetail == 'FALSE') timepicker-seat-container-inner-order @endif">
+								<div class="timepicker-seat-container-inner @if($isDetail == 'FALSE') timepicker-seat-container-inner-order @endif @if($project->isPlace() == 'FALSE') timepicker-seat-container-inner-fullwidth @endif">
 									<div id="seatTicketsList"></div>
 								</div>
 							</div>

@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=5') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
     <style>
@@ -144,7 +144,7 @@
         }
     </style>
 
-    <link href="{{ asset('/css/calendar.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=5') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -193,7 +193,11 @@ $selectedTicket = "";
 
               <h5 class="detail_main_sub_title">장소</h5>
               <p class="detail_main_sub_contant detail_margin_bottom_10">{{ $project->concert_hall }}</p>
-              <p class="detail_main_place_detail detail_margin_bottom_30">{{ $project->detailed_address }}</p>
+              <p class="detail_main_place_detail detail_margin_bottom_30">
+                @if($project->isPlace() == "TRUE")
+                  {{ $project->detailed_address }}
+                @endif
+              </p>
 
               <div class="detail_main_guide_container">
                 <div class="detail_main_guide_funding_title">
@@ -371,5 +375,5 @@ $selectedTicket = "";
     <script src="{{ asset('/js/project/detail.js?version=4') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=10') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=11') }}"></script>
 @endsection

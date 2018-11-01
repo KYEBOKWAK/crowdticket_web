@@ -27,6 +27,11 @@
 
     				var formatted = yyyy + "년 " + mm + "월 " + dd + "일("+dayOfWeek+") " + H + ":" + min;
 
+            if(d[0] == 0000)
+            {
+              formatted = "장소/시간 미정";
+            }
+
 				%>
     <p class="text-primary ticket-delivery-date"><%= formatted %> | </p>
     <p class="text-primary ticket-delivery-date"><%= addComma(ticket.price) %> 원</p>

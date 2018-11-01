@@ -49,9 +49,9 @@
 
   <div class="project-form-content-grid">
     <p class="project-form-content-title">지역</p>
-    @if($project->concert_hall === 'none')
+    @if($project->temporary_date)
     <div class="form_body_default_no_city_container_grid">
-      <input id="title" name="title" type="text" class="project-form-input"
+      <input id="concert_hall" name="concert_hall" type="text" class="project-form-input"
           value="" placeholder="대략적으로 계획 중인 장소를 적어 주세요." @if ($project->isPublic()) readonly="readonly" @endif />
     </div>
     @else

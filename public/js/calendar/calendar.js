@@ -10,6 +10,17 @@ if(ticketSelectDayJson){
   ticketSelectDay = $.parseJSON(ticketSelectDayJson);
 }
 
+var isPlace = $('#isPlace').val();
+if(isPlace == "FALSE")
+{
+  //장소 미정일 경우에는 좌석 종류만 나온다.
+  //좌석 미정인데, 티켓 정보가 있다면 시간에 상관없이 모든 티켓이 다 나와야 한다
+  //if(tickets)
+  //{
+  //  alert(tickets)
+  //}
+}
+
 var app = angular.module('dateTimeApp', []);
 
 app.controller('dateTimeCtrl', function ($scope) {
@@ -723,7 +734,14 @@ $(document).ready(function() {
           var yyyy = date.getFullYear();
           var mm = date.getMonth() + 1;
           var dd = date.getDate();
-          //alert(yyyy + '-' + mm + '-' + dd);
+
+          if(d[0] == 0000)
+          {
+            //0000년도면 티켓이 미정이다.
+            yyyy = 0000;
+            mm = 00;
+            dd = 00;
+          }
 
           if(year == yyyy &&
             month == mm &&
@@ -815,6 +833,7 @@ $(document).ready(function() {
           //var time = H + ":" + min;
 
           //addTicketTimeRow(time, tickets);
+          //alert(H + " | " + min);
           addTicketTimeRow(H, min, tickets);
         }
 			}
@@ -881,6 +900,7 @@ $(document).ready(function() {
 
     var selectTimeId = "#ticket_time_btn"+hour+"_"+min;
     //$row.find('.ticket_time_btn').bind('click', ticketTimeSelect);
+    //alert(selectTimeId);
     $row.find(selectTimeId).bind('click', ticketTimeSelect);
 
     //console.error(isMobile());
@@ -1034,12 +1054,33 @@ $(document).ready(function() {
 
   setTicketDateSelectBind();
 
-  //선택된 날이 있다면 해당 날로 select 해준다.
-  if(ticketSelectDay)
+  //장소가 미정이면, 모든 티켓에 대한 정보가 다 나온다.
+  if(isPlace == "FALSE")
   {
-    //alert(ticket.id);
-    //alert(ticketSelectDay.show_date);
-    var showDate = new Date(ticketSelectDay.show_date);
+    if(tickets.length > 0)
+    {
+      listTimeTickets(0000, 00, 00);
+
+      var selectTimeId = '#ticket_time_btn00_00';
+      $(selectTimeId).trigger('click');
+
+      if(ticketSelectDay)
+      {
+        var selectSeatId = '#ticket_seat_btn'+ticketSelectDay.id;
+        $(selectSeatId).trigger('click');
+      }
+    }
+  }
+
+  //선택된 날이 있다면 해당 날로 select 해준다.
+  if(isPlace == "TRUE" && ticketSelectDay)
+  {
+    var rawDate = ticketSelectDay.show_date.split(" ");
+    var d = rawDate[0].split("-");
+    var t = rawDate[1].split(":");
+
+    var showDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+    //var showDate = new Date(ticketSelectDay.show_date);
     var hour = showDate.getHours();
     var min = showDate.getMinutes()
     if(hour < 10)

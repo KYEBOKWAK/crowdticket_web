@@ -11,7 +11,7 @@ class Project extends Model
     protected static $fillableByState = [
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
-            'detailed_address', 'concert_hall','hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
+            'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
             'funding_closing_at'
         ],
 
@@ -26,12 +26,6 @@ class Project extends Model
 
         Project::STATE_APPROVED => [
           'description', 'video_url', 'story', 'ticket_notice'
-            //테스트용
-            /*
-            'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
-            'detailed_address', 'concert_hall','hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'funding_closing_at'
-            */
         ]
     ];
 
@@ -48,6 +42,7 @@ class Project extends Model
         'video_url' => 'url',
         'detailed_address' => 'string',
         'concert_hall' => 'string',
+        'temporary_date' => 'string',
         'hash_tag1' => 'string',
         'hash_tag2' => 'string',
         'pledged_amount' => 'integer|min:0',
@@ -297,6 +292,11 @@ class Project extends Model
         return $this->getTicketDateFormatted();
       }
 
+      if($this->isPlace() == "FALSE")
+      {
+        return $this->temporary_date;
+      }
+
       $ticketCount = count($this->tickets);
 
       if($ticketCount == 0)
@@ -423,6 +423,7 @@ class Project extends Model
     public function isPublic()
     {
         return (int)$this->state === Project::STATE_APPROVED;
+        //return false;
     }
 
     public function isSuccess()
@@ -583,5 +584,15 @@ class Project extends Model
 
 
       return $discountAmount;
+    }
+
+    public function isPlace()
+    {
+      if($this->isPlace == 'TRUE')
+      {
+        return "TRUE";
+      }
+
+      return "FALSE";
     }
 }

@@ -27,7 +27,7 @@
     <link href="{{ asset('/css/base.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=2') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=2') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=3') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>

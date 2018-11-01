@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=5') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=5') }}" rel="stylesheet">
     <style>
         .order {
@@ -132,7 +132,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=10') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=11') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -292,6 +292,12 @@
 
               if(isValidSubmit() == true)
               {
+                //구매 가능한 상태가 되었는데, 티켓 수량이 0이면 티켓 초기화
+                if($("#ticket_count_input").val() == 0)
+                {
+                  $('#ticket_select_id_input').val('');
+                }
+
                 $('#ticketSubmitForm').submit();
               }
               else
@@ -385,6 +391,12 @@
               if($('#ticket_select_id_input').val())
               {
                 isTickets = true;
+                //$('#ticket_select_id_input').val('');
+                //티켓을 선택했는데, 스량이 0이라면 선택 안함.
+                if($("#ticket_count_input").val() == 0)
+                {
+                  isTickets = false;
+                }
               }
 
               //굿즈 확인
