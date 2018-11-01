@@ -61,7 +61,7 @@ class Order extends Model
         $project = $this->getProject();
         $dday = 0;
 
-        if($project->poster_url)
+        if($project->isOldProject())
         {
           //예전 코드
           if ($project->isFundingType()) {
@@ -78,34 +78,30 @@ class Order extends Model
         }
         else
         {
-          if ($project->funding_closing_at) {
-              $dday = strtotime('-1 days', strtotime($project->funding_closing_at));
-          }
-        }
-
-
-        return $dday - time() > 0;
-    }
-
-    public function canNewCancel()
-    {
-        if ($this->deleted_at) {
-            return false;
-        }
-
-        $project = $this->getProject();
-        $dday = 0;
-        if ($project->isFundingType()) {
+          $refundDay = 0;
+          if ($project->isFundingType())
+          {
             if ($project->funding_closing_at) {
-                $dday = strtotime('-1 days', strtotime($project->funding_closing_at));
+                $refundDay = $project->funding_closing_at;
             }
-        } else {
+          }
+          else
+          {
             $ticket = $this->getTicket();
-            if ($ticket->delivery_date) {
-                $before = strtotime('-1 days', strtotime($ticket->delivery_date));
-                $dday = strtotime(date('Y-m-d', $before) . ' 23:59:59');
+            if($ticket)
+            {
+              //티켓정보가 있다면, 공연 시작날 기준으로 환불
+              $refundDay = $ticket->getTicketReFundDate($project);
             }
+            else
+            {
+              $refundDay = $project->funding_closing_at;
+            }
+          }
+
+          $dday = strtotime('-1 days', strtotime($refundDay));
         }
+
         return $dday - time() > 0;
     }
 
@@ -114,9 +110,13 @@ class Order extends Model
         $project = $this->getProject();
         if ($project->isSaleType()) {
             $ticket = $this->getTicket();
-            if ($ticket->delivery_date) {
-                $before = strtotime('-9 days', strtotime($ticket->delivery_date));
-                return strtotime(date('Y-m-d', $before) . ' 00:00:00') - time() < 0;
+            if($ticket)
+            {
+              $refundDay = $ticket->getTicketReFundDate($project);
+              if ($refundDay) {
+                  $before = strtotime('-9 days', strtotime($refundDay));
+                  return strtotime(date('Y-m-d', $before) . ' 00:00:00') - time() < 0;
+              }
             }
         }
         return false;

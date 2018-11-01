@@ -528,22 +528,25 @@ class Project extends Model
 
       $ticketBuyInfoArray = [];
 
-      foreach ($tickets as $ticket) {
-        $ticketBuyTotalCount = 0;
+      if($tickets)
+      {
+        foreach ($tickets as $ticket) {
+          $ticketBuyTotalCount = 0;
 
-        foreach ($orders as $order) {
-          if($ticket->id == $order->ticket_id)
-          {
-            $ticketBuyTotalCount += $order->count;
+          foreach ($orders as $order) {
+            if($ticket->id == $order->ticket_id)
+            {
+              $ticketBuyTotalCount += $order->count;
+            }
           }
-        }
 
-        if($ticketBuyTotalCount > 0)
-        {
-          $ticketInfoObject['id'] = $ticket->id;
-          $ticketInfoObject['buycount'] = $ticketBuyTotalCount;
+          if($ticketBuyTotalCount > 0)
+          {
+            $ticketInfoObject['id'] = $ticket->id;
+            $ticketInfoObject['buycount'] = $ticketBuyTotalCount;
 
-          array_push($ticketBuyInfoArray, $ticketInfoObject);
+            array_push($ticketBuyInfoArray, $ticketInfoObject);
+          }
         }
       }
 

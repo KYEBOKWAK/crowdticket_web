@@ -76,6 +76,20 @@ class Ticket extends Model
       return $this->audiences_limit;
     }
 
+    public function getTicketReFundDate($project)
+    {
+      $refundDay = $this->show_date;
+
+      //티켓이 있다면 환불 가능 날짜 가져오기.
+      if((int)date('Y', strtotime($refundDay)) <= 0)
+      {
+        //공연 미정이라면 funding 날로 잡는다.
+        $refundDay = $project->funding_closing_at;
+      }
+
+      return $refundDay;
+    }
+
     public function validateOrder($price, $count)
     {
       /*

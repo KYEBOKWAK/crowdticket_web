@@ -92,7 +92,7 @@
         <input id="discountId" type="hidden" name="discountId" value=""/>
         <input id="supportPrice" type="hidden" name="supportPrice" value="{{ $supportPrice }}"/>
         <input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
-        <input id="ticket_id" type="hidden" name="ticket_id" value="@if($ticket){{ $ticket->id }}@endif">
+        <input id="ticket_id" type="hidden" name="ticket_id" value="@if($ticket){{ $ticket->id }}@endif"/>
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -423,6 +423,7 @@
         </div>
 
         @if ($order)
+        <div style="text-align: center">
             @if ($order->deleted_at)
                 @if ($project->type === 'funding')
                     <button class="btn btn-muted" disabled="disabled">취소됨</button>
@@ -437,21 +438,22 @@
                         <button class="btn btn-danger">환불하기</button>
                         @if ($order->hasCancellationFees())
                             <p class="ps-tooltip text-danger">
-                                환불 정책에 따라 취소 수수료 {{ $order->getCancellationFees() }}원이 차감된 {{ $order->getRefundAmount() }}원이 환불됩니다.<br/>
+                              환불 정책에 따라 취소 수수료 {{ $order->getCancellationFees() }}원이 차감된 {{ $order->getRefundAmount() }}원이 환불됩니다.<br/>
                                 환불은 2~3일 정도 소요될 수 있습니다.
                             </p>
                         @endif
                     @endif
                 @else
                     @if ($project->type === 'funding')
-                        <button class="btn btn-muted">취소불가</button>
+                        <button class="btn btn-muted" disabled="disabled">취소불가</button>
                         <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
                     @else
-                        <button class="btn btn-muted">환불불가</button>
+                        <button class="btn btn-muted" disabled="disabled">환불불가</button>
                         <p class="ps-tooltip text-danger">환불 가능 일자가 만료되었습니다.</p>
                     @endif
                 @endif
             @endif
+          </div>
         @else
           <div class="order_form_conform_container">
             <button type="button" id="ticketing-btn-payment" class="btn btn-primary btn-block ticketing-btn-calendar ticketing-btn-payment"></button>
