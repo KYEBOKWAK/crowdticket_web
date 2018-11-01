@@ -7,7 +7,7 @@
 
     <div class="order_md_container">
       <div class="order_md_content">
-        <%= goods.content %>
+        <%= goods.title %>
       </div>
       <div class="<% if (isTicketDiscount === 'false') { %> order_md_ticket_no_discount <% } %>">
         티켓 추가 할인
