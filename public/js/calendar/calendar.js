@@ -1064,11 +1064,15 @@ $(document).ready(function() {
       var selectTimeId = '#ticket_time_btn00_00';
       $(selectTimeId).trigger('click');
 
+      var selectSeatId = '#ticket_seat_btn'+tickets[0].id;
+      $(selectSeatId).trigger('click');
+      /*
       if(ticketSelectDay)
       {
         var selectSeatId = '#ticket_seat_btn'+ticketSelectDay.id;
         $(selectSeatId).trigger('click');
       }
+      */
     }
   }
 
