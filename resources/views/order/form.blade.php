@@ -115,7 +115,7 @@
               <div class="flex_layer">
                 <div class="order_form_discount_contant order_form_text">
                 </div>
-                <div class="order_form_discount_price order_form_text">
+                <div class="order_form_discount_price order_form_text order_form_align_right">
                 </div>
               </div>
             </div>
