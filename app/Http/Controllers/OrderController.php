@@ -160,6 +160,11 @@ class OrderController extends Controller
       if($ticket)
       {
         $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
+        if((int)date('Y', strtotime($ticket->show_date)) <= 0)
+        {
+          $datetime = "입장권";
+        }
+        //$datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
         $msg = sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
       }
       else
