@@ -571,7 +571,7 @@
               g_discoutPrice = g_ticketPrice * (discount.percent_value/100);
 
               fullDiscountInfo = discount.content + ' ' + discount.percent_value + '%';
-              var fullDiscountPriceInfo = "-"+g_discoutPrice+"원";
+              var fullDiscountPriceInfo = "-"+addComma(g_discoutPrice)+"원";
 
               $(".order_form_discount_price").text(fullDiscountPriceInfo);
 
