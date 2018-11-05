@@ -205,6 +205,13 @@ class Order extends Model
       }
     }
 
+    //실제 구매한 굿즈가 있는지
+    public function getIsGoodsCount()
+    {
+      $goodsOrders = json_decode($this->goods_meta, true);
+      return count($goodsOrders);
+    }
+
     public function getTotalPriceWithoutCommission()
     {
       $totalPrice = $this->total_price;

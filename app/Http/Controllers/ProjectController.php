@@ -588,11 +588,21 @@ class ProjectController extends Controller
     public function getOrders($id)
     {
         $project = $this->getSecureProjectById($id);
+        /*
         return view('project.orders', [
             'project' => $project,
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->withTrashed();
             }, 'orders.user'])->get()
+        ]);
+        */
+
+        return view('project.orders', [
+            'project' => $project,
+            'tickets' => $project->tickets()->with(['orders' => function ($query) {
+                $query->withTrashed();
+            }, 'orders.user'])->get(),
+            'orders' => $project->orders()->withTrashed()->get()
         ]);
     }
 

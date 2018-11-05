@@ -171,8 +171,8 @@
                           </tr>
                           </thead>
                           <tbody>
-                            @foreach ($project->orders as $order)
-                              @if(!$order->ticket)
+                            @foreach ($orders as $order)
+                              @if(!$order->ticket && $order->getIsGoodsCount() > 0)
                                 <tr>
                                   <td>{{ $order->name }}</td>
                                   <td>
@@ -204,6 +204,67 @@
                       </table>
                   </div>
           </div>
-
     </div>
+
+    <!-- 후원만 한사람 -->
+
+    <div class="container">
+      <div class="ticket order col-md-12">
+          <div class="ticket-wrapper">
+              <div class="ticket-body row display-table">
+                      <div class="col-md-3 display-cell text-right">
+                          <span><strong class="text-primary ticket-price">후원만 하신 분</strong></span>
+                      </div>
+                      <div class="col-md-9 display-cell">
+                          <span class="ticket-delivery-date">
+                            <!-- 티켓 미구매(굿즈만 구매한 리스트) -->
+                          </span>
+                      </div>
+              </div>
+          </div>
+      </div>
+
+          <div class="row ps-ticket-order">
+                  <div class="col-md-12">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                            <td>이름</td>
+                            <td>추가후원</td>
+                            <td>결제금액</td>
+                            <td>상태</td>
+                            <td>결제일</td>
+                            <td>이메일</td>
+                            <td>전화번호</td>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($orders as $order)
+                              @if(!$order->ticket && $order->getIsGoodsCount() == 0)
+                                <tr>
+                                  <td>{{ $order->name }}</td>
+                                  <td>
+                                    <?php
+                                    $supporterPrice = 0;
+                                    if($order->supporter)
+                                    {
+                                      $supporterPrice = $order->supporter->price;
+                                    }
+                                    ?>
+                                    {{ $supporterPrice }}
+                                  </td>
+                                  <td>{{ $order->getTotalPriceWithoutCommission() }}</td>
+                                  <td>{{ $order->state_string }}</td>
+                                  <td>{{ $order->created_at }}</td>
+                                  <td>{{ $order->email }}</td>
+                                  <td>{{ $order->contact }}</td>
+                                </tr>
+                              @endif
+                            @endforeach
+                          </tbody>
+                      </table>
+                  </div>
+          </div>
+    </div>
+
 @endsection
