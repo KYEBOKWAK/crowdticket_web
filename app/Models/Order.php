@@ -152,12 +152,67 @@ class Order extends Model
         }
         return '결제완료';
     }
-/*
-    public function getDiscountCount($discountId)
-    {
 
+    public function getDeliveryAddress()
+    {
+      if($this->isDeliveryOrder())
+      {
+        return $this->postcode."&ensp;".$this->address_main."&ensp;".$this->address_detail;
+      }
+
+      return "현장수령";
+    }
+
+    public function isDeliveryOrder()
+    {
+      if($this->postcode)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function getDiscountText()
+    {
+      if($this->discount)
+      {
+        return $this->discount->content;
+      }
+
+      return "할인없음";
+    }
+/*
+    public function getGoodsInfoList()
+    {
+      return $this->project->goods;
     }
 */
+    public function getGoodsTotalText()
+    {
+      //$goods = $this->project->goods;
+    }
+
+    public function isBuyGoodsCount($goodsId)
+    {
+      $goodsOrders = json_decode($this->goods_meta, true);
+      foreach($goodsOrders as $goodsOrder)
+      {
+        if($goodsId == $goodsOrder['id'])
+        {
+          return $goodsOrder['count'];
+        }
+      }
+    }
+
+    public function getTotalPriceWithoutCommission()
+    {
+      $totalPrice = $this->total_price;
+      $commission = $this->count * 500;
+
+      return $totalPrice - $commission;
+    }
+
     /**
      * @return Project
      */

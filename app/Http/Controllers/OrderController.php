@@ -113,10 +113,8 @@ class OrderController extends Controller
 
       $order->user()->associate($user);
 
-      //if($request->has('discountId'))
       if($discount)
       {
-        //$discount = Discount::findOrFail(\Input::get('discountId'));
         $order->discount()->associate($discount);
       }
 
@@ -160,7 +158,7 @@ class OrderController extends Controller
       if($ticket)
       {
         $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
-        if((int)date('Y', strtotime($ticket->show_date)) <= 0)
+        if($ticket->isPlaceTicket() == false)
         {
           $datetime = "입장권";
         }

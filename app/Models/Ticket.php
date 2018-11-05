@@ -81,7 +81,8 @@ class Ticket extends Model
       $refundDay = $this->show_date;
 
       //티켓이 있다면 환불 가능 날짜 가져오기.
-      if((int)date('Y', strtotime($refundDay)) <= 0)
+      //if((int)date('Y', strtotime($refundDay)) <= 0)
+      if($this->isPlaceTicket() == false)
       {
         //공연 미정이라면 funding 날로 잡는다.
         $refundDay = $project->funding_closing_at;
@@ -110,5 +111,18 @@ class Ticket extends Model
             }
         }
         */
+    }
+
+    //장소가 있는 티켓인지 확인한다.
+    public function isPlaceTicket()
+    {
+      //티켓이 있다면 환불 가능 날짜 가져오기.
+      if((int)date('Y', strtotime($this->show_date)) <= 0)
+      {
+        //공연 미정이라면 funding 날로 잡는다.
+        return false;
+      }
+
+      return true;
     }
 }
