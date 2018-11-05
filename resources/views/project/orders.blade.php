@@ -26,6 +26,7 @@
             <img src="{{ asset('/img/app/img_update_project_reward.png') }}" class="center-block"/>
             <h2 class="text-center text-important">주문 관리</h2>
             <p class="text-center">조회수 {{ $project->view_count }} (아직 테스트 중인 페이지 입니다. 보기 조금 불편할 수 있으니 양해 부탁드립니다^^ *엑셀 정리가 필요하신 경우 언제든지 연락 주세요.)</p>
+            <p class="text-center">** 아직까진 PC로만 봐주세요ㅠㅠ **</p>
         </div>
     </div>
     <div class="container">
@@ -71,7 +72,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <td>임시ID</td>
                                 <td>이름</td>
                                 <td>참여금액</td>
                                 <td>구매수량</td>
@@ -95,7 +95,6 @@
                             <tbody>
                             @foreach ($ticket->orders as $order)
                                 <tr>
-                                    <td>{{ $order->id }}</td>
                                     <td>{{ $order->name }}</td>
                                     <td>{{ $order->price }}</td>
                                     <td>{{ $order->count }}</td>
