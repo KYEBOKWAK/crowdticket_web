@@ -30,8 +30,8 @@
     </div>
     <div class="container">
         @foreach ($tickets as $ticket)
-            <div class="row ps-ticket-order">
                 @if (count($ticket->orders) > 0)
+                  <div class="row ps-ticket-order">
                     <div class="ticket order col-md-12">
                         <div class="ticket-wrapper">
                             <div class="ticket-body row display-table">
@@ -128,8 +128,8 @@
                             </tbody>
                         </table>
                     </div>
+                  </div>
                 @endif
-            </div>
         @endforeach
     </div>
 
