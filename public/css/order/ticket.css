@@ -308,7 +308,7 @@
 
 .order_ticket_goods_counter_container{
   margin-left: auto;
-  width: 186px;
+  width: 180px;
 }
 
 .order_ticket_support_content{
@@ -423,6 +423,10 @@
 
   .order_form_user_container_grid_two_columns{
     width: 100%;
+  }
+
+  .goods_amount_text{
+
   }
 }
 /* ------------새로운 ui -------- end   */

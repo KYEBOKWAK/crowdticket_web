@@ -11,22 +11,21 @@
             <p class="order_ticket_goods_content">티켓 {{ $goods->ticket_discount }}원 추가 할인</p>
           @endif
         </div>
-
-        <div class="order_ticket_goods_counter_container">
-          <div class="flex_layer">
-            <p class="goods_amount_text order_ticket_discount_limite_text">
-              @if($goods->getAmountGoodsCount())
-                남은수량 {{ $goods->getAmountGoodsCount() }} 개
-              @endif
-            </p>
-            <button class="goods_count_up" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
-            <button class="goods_count_down" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
-            <span class="goods_count_text goods_count_text{{ $goods->id }}">0개</span>
-            <input id="goods_count_input{{ $goods->id }}" type="hidden" goods-id="{{ $goods->id }}" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"
-                                                           value="0" min="0"/>
-         </div>
-        </div>
       </div>
+    </div>
+    <div class="order_ticket_goods_counter_container">
+      <div class="flex_layer">
+        <p class="goods_amount_text order_ticket_discount_limite_text">
+          @if($goods->getAmountGoodsCount())
+            남은수량 {{ $goods->getAmountGoodsCount() }} 개
+          @endif
+        </p>
+        <button class="goods_count_up" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
+        <button class="goods_count_down" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
+        <span class="goods_count_text goods_count_text{{ $goods->id }}">0개</span>
+        <input id="goods_count_input{{ $goods->id }}" type="hidden" goods-id="{{ $goods->id }}" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"
+                                                       value="0" min="0"/>
+     </div>
     </div>
   </div>
 </div>
