@@ -650,7 +650,9 @@
 
           var setCommissionInfo = function(){
             var ticketCount = $('#ticket_count').val();
-            if(ticketCount > 0 && g_ticketPrice > 0)
+
+            var discountTicketPrice = g_ticketPrice - g_discoutPrice;
+            if(ticketCount > 0 && g_ticketPrice > 0 && discountTicketPrice > 0)
             {
               g_commission = 500 * ticketCount;
               var fullCommission = addComma(g_commission)+"원";
@@ -660,6 +662,10 @@
             else
             {
               if(g_ticketPrice == 0 && ticketCount > 0)
+              {
+                $('.order_form_commission_contant').text("수수료 없음");
+              }
+              else if(discountTicketPrice <= 0)
               {
                 $('.order_form_commission_contant').text("수수료 없음");
               }

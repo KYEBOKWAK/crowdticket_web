@@ -215,7 +215,11 @@ class Order extends Model
     public function getTotalPriceWithoutCommission()
     {
       $totalPrice = $this->total_price;
-      $commission = $this->count * 500;
+      $commission = 0;
+      if($totalPrice >= 500)
+      {
+        $commission = $this->count * 500;
+      }
 
       return $totalPrice - $commission;
     }
