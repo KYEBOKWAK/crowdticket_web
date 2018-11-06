@@ -15,7 +15,7 @@
       <span class="delete-comment" data-comment-id="<%= data.id %>">삭제하기</span>
 			<% } %>
 
-			<p class="comment-content"><%= data.contents %></p>
+			<p class="comment-content"><%= data.contents.split("\n").join("<br />") %></p>
 		</div>
 		<div class="clear"></div>
 		<div class="reply-wrapper">

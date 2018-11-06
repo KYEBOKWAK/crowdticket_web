@@ -319,11 +319,11 @@ $selectedTicket = "";
               </div>
 
               <div id="tab-comments" role="tabpanel" class="tab-pane loadable">
-                <form action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
+                <form id="addComment" action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
                       data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
                     <textarea id="input_comment" name="contents" class="form-control" rows="3"
                               placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
-                    <button class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
+                    <button type="button" class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
                     <div class="clear"></div>
                     @include('csrf_field')
                 </form>
@@ -376,7 +376,7 @@ $selectedTicket = "";
     @include('template.goods_container')
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=5') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=6') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=12') }}"></script>

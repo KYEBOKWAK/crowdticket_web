@@ -89,6 +89,16 @@ $(document).ready(function() {
 		//listGoods();
 	};
 
+	$('.detail_comment_add_btn').click(function(){
+		if(isLogin() == false)
+		{
+			alert("로그인을 해야 댓글을 달 수 있습니다.");
+			return;
+		}
+
+		$('#addComment').submit();
+	});
+
 	var deleteComment = function(commentId) {
 		if(!commentId)
 		{
