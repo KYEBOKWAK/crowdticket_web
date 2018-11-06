@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=6') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
     <style>
@@ -281,7 +281,7 @@ $selectedTicket = "";
                 <a href="#tab-news" aria-controls="default" role="tab" data-toggle="tab">업데이트<span class="count">{{ $project->news_count }}</span></a>
                 </li>
                 <li role="presentation" class="">
-                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->comments_count }}</span></a>
+                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->getCommentCount() }}</span></a>
                 </li>
                 <li id="tabTicketMD" role="presentation" class="">
                 <a href="#tab-md" aria-controls="default" role="tab" data-toggle="tab">티켓&amp;MD정보</a>
@@ -353,6 +353,10 @@ $selectedTicket = "";
       <input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
       <input type="hidden" id="project_id" value="{{ $project->id }}"/>
       <input type="hidden" id="goods_json" value="{{ $project->goods }}">
+
+      <input type="hidden" id="myId" value="@if(Auth::user()) {{ Auth::user()->id }} @else 0 @endif ">
+      <input type="hidden" id="isMaster" value="{{ $is_master }}">
+
       <!--baseContainer end-->
     </div>
 
@@ -372,7 +376,7 @@ $selectedTicket = "";
     @include('template.goods_container')
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=4') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=5') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=12') }}"></script>

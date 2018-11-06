@@ -24,7 +24,7 @@
         <title>크라우드티켓</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
-    <link href="{{ asset('/css/base.css?version=2') }}" rel="stylesheet">
+    <link href="{{ asset('/css/base.css?version=3') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/global.css?version=3') }}" rel="stylesheet">
@@ -210,7 +210,7 @@
 <script src="{{ asset('/js/additional-methods.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
 <script src="{{ asset('/js/app.2.js?version=4') }}"></script>
-<script src="{{ asset('/js/loader.js') }}"></script>
+<script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <script>
 function logout(){

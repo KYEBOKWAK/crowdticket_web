@@ -7,13 +7,46 @@ $(document).ready(function() {
 	var projectId = $('#project_id').val();
 
 	var commentsLoader = new Loader('/projects/' + projectId + '/comments', 20);
+	//var commentsLoader = new Loader('/projects/' + projectId + '/comments', 100);
 	commentsLoader.setTemplate("#template-comments");
 	commentsLoader.setContainer("#comments-container");
 	commentsLoader.setCompleteListener(function() {
 		$(".toggle-reply").each(function() {
 			$(this).bind('click', function() {
+				if(isLogin() == false)
+				{
+					alert("로그인을 해야 댓글을 달 수 있습니다.");
+					return;
+				}
+
 				var list = $(this).closest('.comment-list');
 				list.find("form").toggle();
+			});
+		});
+
+		$(".delete-comment").each(function() {
+			$(this).bind('click', function() {
+				var commentId = $(this).attr('data-comment-id');
+
+				swal("댓글을 삭제 하시겠습니까?", {
+						  buttons: {
+						    cancel: "취소",
+						    catch: {
+						      text: "삭제",
+						      value: "delete",
+						    },
+
+						  },
+							icon: "warning",
+						})
+						.then((value) => {
+						  switch (value) {
+						    case "delete":
+						      deleteComment(commentId);
+						      break;
+						  }
+						});
+
 			});
 		});
 	});
@@ -29,6 +62,8 @@ $(document).ready(function() {
 	$('#tab-comments').data('loader', commentsLoader);
 	$('#tab-news').data('loader', newsLoader);
 	$('#tab-supporters').data('loader', supportersLoader);
+
+	//isMaster
 
 	var loadContents = function(e) {
 		var href = $(e.target).attr('href');
@@ -52,6 +87,32 @@ $(document).ready(function() {
 		}
 
 		//listGoods();
+	};
+
+	var deleteComment = function(commentId) {
+		if(!commentId)
+		{
+			alert("코멘트 삭제 에러");
+			return;
+		}
+
+		var url = '/comments/' + commentId;
+		var method = 'delete';
+
+		var success = function(result) {
+			swal("삭제 성공!", "", "success");
+			window.location.reload();
+		};
+		var error = function(request) {
+			alert('댓글 삭제에 실패하였습니다.');
+		};
+
+		$.ajax({
+			'url': url,
+			'method': method,
+			'success': success,
+			'error': error
+		});
 	};
 
 	var listGoods = function(){
@@ -235,3 +296,27 @@ $(document).ready(function() {
 	oldListTickets();
 
 });
+
+
+function isLogin(){
+	var myId = Number($('#myId').val());
+	if(myId == 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+
+function isMyOrMasterComment(commentId){
+	var myId = Number($('#myId').val());
+	var isMaster = $('#isMaster').val();
+
+	if(myId == commentId || isMaster)
+	{
+		return true;
+	}
+
+	return false;
+};

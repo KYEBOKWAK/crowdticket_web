@@ -562,6 +562,15 @@
   display: none;
 }
 
+.delete-comment{
+  cursor:pointer;
+}
+
+.toggle-reply{
+  color: #EF4D5D;
+  font-weight: bold;
+}
+
 @media (max-width:1030px){
   #isMobile{
     display: block;

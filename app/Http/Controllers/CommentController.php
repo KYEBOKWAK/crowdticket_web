@@ -39,4 +39,24 @@ class CommentController extends Controller
           return \Redirect::back();
         }
     }
+
+    public function deleteComment($commentId)
+    {
+      $comment = Comment::findOrFail($commentId);
+
+      $user = \Auth::user();
+
+      if(!$user->isOwnerOf($comment))
+      {
+        return false;
+      }
+
+      //코멘트의 코멘트가 있다면 전부 삭제해준다.
+      if($comment->comments())
+      {
+        $comment->comments()->delete();
+      }
+
+      $comment->delete();
+    }
 }

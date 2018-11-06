@@ -615,4 +615,20 @@ class Project extends Model
       return (int)$totalFundingAmount;
     }
 
+    public function getCommentCount()
+    {
+      $totalCommentCount = 0;
+      $comments = Comment::where('commentable_id', '=', $this->id)->where('commentable_type', '=', 'App\Models\Project')->get();
+
+      $totalCommentCount = count($comments);
+
+
+      foreach($comments as $comment)
+      {
+        $totalCommentCount += count($comment->comments);
+      }
+
+      return $totalCommentCount;
+    }
+
 }
