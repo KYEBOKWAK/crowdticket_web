@@ -571,6 +571,10 @@
   font-weight: bold;
 }
 
+.comment-content{
+  padding-left: 70px;
+}
+
 @media (max-width:1030px){
   #isMobile{
     display: block;
