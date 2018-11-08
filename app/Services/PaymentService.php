@@ -43,6 +43,11 @@ class PaymentService
         if ((int)$res->code === -1) {
             throw new PaymentFailedException($res->message);
         }
+
+        if ($res->response->status != "paid") {
+            throw new PaymentFailedException($res->response->fail_reason);
+        }
+
         $impId = $res->response->imp_uid;
         return new OneTimePayment(null, $impId, $info->getMerchantUid(), $info->getCustomerUid());
     }
