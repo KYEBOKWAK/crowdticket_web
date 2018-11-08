@@ -830,7 +830,8 @@ html, body {
 
 .ticket_count_input_wrapper{
   margin-left: auto;
-  width: 200px;
+  /*width: 200px;*/
+  width: 110px;
   margin-top: 63px;
 }
 
@@ -855,6 +856,35 @@ html, body {
   word-break: break-all;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.ticket_count_up{
+  background-image: url('/img/app/icons8-grey_96.png');
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-color: white;
+  /*width: 35px;*/
+  height: 35px;
+  border: none;
+  flex-basis: 35px;
+  flex-shrink: 0;
+}
+
+.ticket_count_down{
+  background-image: url('/img/app/icons8-reduce-90.png');
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-color: white;
+  width: 35px;
+  height: 35px;
+  border: none;
+}
+
+.ticket_count_text{
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 
 @media (max-width:1030px) {

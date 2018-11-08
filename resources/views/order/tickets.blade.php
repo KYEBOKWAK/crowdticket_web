@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=6') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
         .order {
@@ -132,7 +132,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=12') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=13') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -253,7 +253,6 @@
               $('#order_price_text').text( addComma(totalPrice));
             };
 
-            $('#ticket_count_input').bind("click", setTotalPrice);
             $('#order_support_price_input').bind("click", setTotalPrice);
             $('#order_support_price_input').bind("change", setTotalPrice);
 

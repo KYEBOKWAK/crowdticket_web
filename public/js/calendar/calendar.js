@@ -840,6 +840,79 @@ $(document).ready(function() {
 		}
 	};
 
+  var setTotalPrice = function(){
+    //
+    var ticketPrice = $('#ticket_select_price').val();
+    var ticketCount = $('#ticket_count_input').val();
+
+    var ticketTotalPrice = ticketPrice * ticketCount;
+    var goodsTotalPrice = 0;
+
+    $('#request_price').val(ticketPrice);
+    $('#ticket_count').val(ticketCount);
+
+    //할인율 적용
+    var discountValue = $('#discount_select_value').val();
+    if(discountValue)
+    {
+      //alert("discount value : " + discountValue);
+      var discoutPrice = ticketTotalPrice * (discountValue/100);
+      ticketTotalPrice = ticketTotalPrice - discoutPrice;
+    }
+
+    //추가된 md가 있는지 확인
+
+    var goodsArray = new Array();
+    $(".ticket_goods_count_input").each(function () {
+      var goodsCount = $(this).val();
+
+      if(goodsCount == 0)
+      {
+        return true;//for문의 continue와 같음.
+      }
+
+      var goodsPrice = $(this).attr('goods-price');
+      var goodsTicketDiscountPrice = $(this).attr('goods-ticket-discount-price');
+      goodsTicketDiscountPrice = goodsTicketDiscountPrice * goodsCount;
+      var goodsTotalPrice = goodsPrice * goodsCount;
+
+      var goodsInfo = new Object();
+      goodsInfo.totalPrice = goodsTotalPrice;
+      goodsInfo.ticketDiscount = goodsTicketDiscountPrice;
+
+      goodsArray.push(goodsInfo);
+    });
+
+    //ticketTotalPrice
+    //실제 MD 계산
+    var goodsTotalPrice = 0;
+    var goodsTicketDiscountPrice = 0;
+    for(var i = 0 ; i < goodsArray.length ; i++)
+    {
+      goodsTotalPrice = goodsTotalPrice + goodsArray[i].totalPrice;
+      goodsTicketDiscountPrice = goodsTicketDiscountPrice + goodsArray[i].ticketDiscount
+    }
+
+    ticketTotalPrice = ticketTotalPrice - goodsTicketDiscountPrice;
+    if(ticketTotalPrice < 0)
+    {
+      ticketTotalPrice = 0;
+    }
+
+    //추가 후원이 있는지 확인
+    var supportPrice = Number($('#order_support_price_input').val());
+
+    var totalPrice = ticketTotalPrice + goodsTotalPrice + supportPrice;
+
+    //최종 구매 금액
+    if(totalPrice < 0)
+    {
+      totalPrice = 0;
+    }
+
+    $('#order_price_text').text( addComma(totalPrice));
+  };
+
   var ticketTimeSelect = function(){
     var ticketTimeItem = $(this).closest('.ticket_time_item');
 		var ticketData = ticketTimeItem.data('ticketsData');
@@ -882,8 +955,64 @@ $(document).ready(function() {
     $("#ticket_count_input").attr("ticket-data-price", ticketData.price);
     $("#ticket_count_input").attr("ticket-data-amount", getAmountTicket(ticketData));
     $("#ticket_count_input").attr("ticket-buy-limit", ticketData.buy_limit);
-    $("#ticket_count_input").trigger('change');
-    $("#ticket_count_input").trigger('click');
+    //$("#ticket_count_input").trigger('change');
+    //$("#ticket_count_input").trigger('click');
+
+    setTicketCount();
+  };
+
+  $('.ticket_count_up').click(function(){
+    addTicketCount();
+    ticketLimitCheck();
+    setTicketCount();
+  });
+
+  $('.ticket_count_down').click(function(){
+    subTicketCount();
+    ticketLimitCheck();
+    setTicketCount();
+  });
+
+  var addTicketCount = function(){
+    var ticketCount = Number($("#ticket_count_input").val());
+    ticketCount++;
+    $("#ticket_count_input").val(ticketCount);
+  };
+
+  var subTicketCount = function(){
+    var ticketCount = Number($("#ticket_count_input").val());
+    ticketCount--;
+    if(ticketCount <= 0)
+    {
+      ticketCount = 0;
+    }
+
+    $("#ticket_count_input").val(ticketCount);
+  };
+
+  var ticketLimitCheck = function(){
+    var ticketAmount = Number($("#ticket_count_input").attr("ticket-data-amount"));
+    var limitBuyCount = Number($("#ticket_count_input").attr("ticket-buy-limit"));
+    var ticketCount = Number($("#ticket_count_input").val());
+
+    if( ticketCount > ticketAmount )
+    {
+      alert("티켓 수량을 초과하였습니다.");
+      $( "#ticket_count_input" ).val(ticketAmount);
+    }
+
+    if(limitBuyCount > 0 && ticketCount > limitBuyCount)
+    {
+      alert("1회 구매 수량을 초과하였습니다.");
+      $( "#ticket_count_input" ).val(limitBuyCount);
+    }
+  };
+
+  var setTicketCount = function(){
+    var ticketCount = $("#ticket_count_input").val();
+    $('.ticket_count_text').text(ticketCount+"매");
+
+    setTotalPrice();
   };
 
   //var addTicketTimeRow = function(time, tickets) {
@@ -1041,7 +1170,9 @@ $(document).ready(function() {
     $("#ticket_count_input").attr("ticket-data-price", '');
     $("#ticket_count_input").attr("ticket-data-amount", '');
     $("#ticket_count_input").attr("ticket-buy-limit", '');
-    $("#ticket_count_input").trigger('click');
+    //$("#ticket_count_input").trigger('click');
+
+    setTicketCount();
   };
 
   $('#goforward').bind('click', moveForwardJS);
@@ -1105,24 +1236,6 @@ $(document).ready(function() {
     $(selectTimeId).trigger('click');
     $(selectSeatId).trigger('click');
   }
-
-  $( "#ticket_count_input" ).change(function() {
-    var ticketAmount = Number($(this).attr("ticket-data-amount"));
-    var limitBuyCount = Number($(this).attr("ticket-buy-limit"));
-    var ticketCount = Number($(this).val());
-
-    if( ticketCount > ticketAmount )
-    {
-      alert("티켓 수량을 초과하였습니다.");
-      $( "#ticket_count_input" ).val(ticketAmount);
-    }
-
-    if(limitBuyCount > 0 && ticketCount > limitBuyCount)
-    {
-      alert("1회 구매 수량을 초과하였습니다.");
-      $( "#ticket_count_input" ).val(limitBuyCount);
-    }
-  });
 
   var setTicketNotice = function(){
     var ticketNotice = $('#ticket_notice').val();

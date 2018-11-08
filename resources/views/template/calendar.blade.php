@@ -98,11 +98,14 @@
 						</div>
 
 						@if($isDetail == 'FALSE')
-						<div id="ticket_count_input_wrapper" class="ticket_count_input_wrapper flex_layer">
-							<span class="order_input_text">티켓 매수</span>
-							<input id="ticket_count_input" ticket-data-id="" ticket-data-price="" ticket-buy-limit="" ticket-data-amount="" name="ticket_count" type="number" class="form-control ticket_count"
-																														 value="1" min="0"/>
-																														 <span class="order_input_text">매</span>
+						<div id="ticket_count_input_wrapper" class="ticket_count_input_wrapper">
+							<div class="flex_layer">
+								<button class="ticket_count_up" type="button"></button>
+				        <button class="ticket_count_down" type="button"></button>
+				        <span class="ticket_count_text">0매</span>
+								<input id="ticket_count_input" type="hidden" ticket-data-id="" ticket-data-price="" ticket-buy-limit="" ticket-data-amount="" name="ticket_count" type="number" class="form-control ticket_count"
+																															 value="1" min="0"/>
+							</div>
 						</div>
 						@endif
 					</div>
