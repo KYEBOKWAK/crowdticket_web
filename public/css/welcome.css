@@ -171,10 +171,41 @@
     margin:19px 0 13px 0;
     padding:0 12px 0 12px;
     color:#222;
+    width: 100%;
 }
 
 .project-info h6 {
     font-size: 11px;
+}
+
+.project_carousel_date{
+  display: inline-block;
+  width: 108px;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  overflow: hidden;
+}
+
+.project_carousel_conerthall{
+  display: inline-block;
+  width: 81px;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  overflow: hidden;
+  float:right;
+  text-align: right;
+}
+
+@media (max-width:1200px) {
+  .project_carousel_date{
+    width: 100%;
+    display: inline;
+  }
+
+  .project_carousel_conerthall{
+    width: 40%;
+    display: inline;
+  }
 }
 
 /* 크라우드 티켓 브랜딩 영역 관련 */

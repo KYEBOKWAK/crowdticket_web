@@ -49,7 +49,7 @@ $i = 0;
                         </div>
 
                         <div class="project-info">
-                            <h6>{{ $project->getConcertDateFormatted() }}<span style="float:right;">{{ $project->concert_hall }}</span></h6>
+                            <h6><span class="project_carousel_date">{{ $project->getConcertDateFormatted() }}</span><span class="project_carousel_conerthall">{{ $project->concert_hall }}</span></h6>
                         </div>
 
                         @if ($project->type === 'funding')

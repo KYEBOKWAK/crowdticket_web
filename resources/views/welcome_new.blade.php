@@ -101,7 +101,7 @@
             margin-bottom:70px;
         }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=2') }}" rel="stylesheet">
 @endsection
 
 @section('content')
