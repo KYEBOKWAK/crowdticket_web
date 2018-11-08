@@ -831,8 +831,8 @@ html, body {
 .ticket_count_input_wrapper{
   margin-left: auto;
   /*width: 200px;*/
-  width: 110px;
-  margin-top: 63px;
+  width: 135px;
+  margin-top: 96px;
 }
 
 #ticket_count_input{
