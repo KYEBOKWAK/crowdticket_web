@@ -106,7 +106,7 @@
         </div>
         <div class="order_ticket_support_input_wrapper">
           <div class="flex_layer">
-            <input id="order_support_price_input" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
+            <input id="order_support_price_input" onclick="return false;" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
           </div>
         </div>
       </div>

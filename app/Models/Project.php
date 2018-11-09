@@ -212,6 +212,14 @@ class Project extends Model
         return "";
       }
 
+
+      //펀딩일때
+      if ($this->pledged_amount > 0)
+      {
+          return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
+      }
+
+/*
       //펀딩일때
       if($this->project_target == "people")
       {
@@ -225,7 +233,7 @@ class Project extends Model
             return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
         }
       }
-
+*/
       return 0;
     }
 
@@ -390,11 +398,12 @@ class Project extends Model
       }
       else
       {
-        $nowAmount = "현재 " . number_format($this->getTotalFundingAmount()) . "원 모임";
+        $totalFundingAmount = number_format($this->getTotalFundingAmount());
+        $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
 
         if($this->project_target == "people")
         {
-          $nowAmount = "신청자 " . number_format($this->getTotalTicketOrderCount()) . "명";
+          $nowAmount = "신청자 " . $totalFundingAmount . "명";
         }
       }
 
@@ -604,12 +613,19 @@ class Project extends Model
       $orders = $this->orders;
       $totalFundingAmount = 0;
 
-      foreach($orders as $order)
+      if($this->project_target == "people")
       {
-        $totalPrice = $order->total_price;
-        $commission = $order->count * 500;
+        $totalFundingAmount = $this->getTotalTicketOrderCount();
+      }
+      else
+      {
+        foreach($orders as $order)
+        {
+          $totalPrice = $order->total_price;
+          $commission = $order->count * 500;
 
-        $totalFundingAmount += $totalPrice - $commission;
+          $totalFundingAmount += $totalPrice - $commission;
+        }
       }
 
       return (int)$totalFundingAmount;

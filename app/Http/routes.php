@@ -39,6 +39,7 @@ Route::get('landing/form', function () {
 
 Route::post('landing/sendmail', 'MailSendController@sendEmail');
 Route::post('question/sendmail', 'MailSendController@sendQuestionEmail');
+Route::get('register/sendmail', 'MailSendController@sendEmailRegister');
 //
 
 
@@ -148,4 +149,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('projects/{id}/cancel', 'AdminController@cancelFundingProjectOrders');
     Route::put('order/{id}/approval', 'AdminController@approveOrder');
 
+    //메일, 문자 보내기
+    Route::post('projects/{id}/funding/mail/success', 'AdminController@sendSuccessFundingEmail');
+    Route::post('projects/{id}/funding/mail/fail', 'AdminController@sendFailFundingEmail');
+    Route::post('projects/{id}/funding/sms/success', 'AdminController@sendSuccessFundingSms');
+    Route::post('projects/{id}/funding/sms/fail', 'AdminController@sendFailFundingSms');
 });

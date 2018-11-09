@@ -147,43 +147,10 @@ class OrderController extends Controller
 
       DB::commit();
 
-      $sms = new SmsService();
-      $contact = $order->contact;
-      $limit = $project->type === 'funding' ? 10 : 14;
-      $titleLimit = str_limit($project->title, $limit, $end = '..');
-      $priceFormatted = number_format($order->getFundedAmount());
-      //$totalRealTicket = $ticket->real_ticket_count * $order->count;
-      $totalRealTicket = $this->getOrderCount();
-
-      if($ticket)
-      {
-        $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
-        if($ticket->isPlaceTicket() == false)
-        {
-          $datetime = "입장권";
-        }
-        //$datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
-        $msg = sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
-      }
-      else
-      {
-        $msg = sprintf('%s %d매 예매완료', $titleLimit, $totalRealTicket);
-      }
-
-      $sms->send([$contact], $msg);
+      $this->sendSMS($project, $order);
 
       $emailTo = $order->email;
-      if ($project->type === 'funding') {
-        if($ticket)
-        {
-          $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
-        }
-      } else {
-        if($ticket)
-        {
-          $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
-        }
-      }
+      $this->sendMail($emailTo, $project, $order);
 
       setcookie("isNewOrderStart","false", time()+604800, "/tickets");
 
@@ -201,141 +168,51 @@ class OrderController extends Controller
           'ticket_count' => $this->getOrderCount()
       ]);
     }
+  }
 
-    /*
-    $isNewOrderStart = $_COOKIE["isNewOrderStart"];
+  public function sendSMS($project, $order)
+  {
+    $sms = new SmsService();
+    $contact = $order->contact;
+    $limit = $project->type === 'funding' ? 10 : 14;
+    $titleLimit = str_limit($project->title, $limit, $end = '..');
+    $totalPrice = number_format($order->total_price);
+    //$totalRealTicket = $ticket->real_ticket_count * $order->count;
+    $totalRealTicket = $this->getOrderCount();
 
-    if($isNewOrderStart == "false")
+    $ticket = $order->ticket;
+
+    //펀딩일 경우
+    if($ticket)
     {
-      $ticketTemp = Ticket::findOrFail($ticketId);
-      $project = Project::findOrFail($ticketTemp->project_id);
-
-      return view('order.complete', [
-          'project' => $project,
-          'order' => '',
-          'isComment' => FALSE
-      ]);
-    }
-
-    //쿠키가 동작 안함.... 재 수정 필요
-    $user = Auth::user();
-    $ticket = $this->getOrderableTicket($ticketId);
-    //구매 가능한 수량이 있는지 체크
-
-    $project = $ticket->project()->first();
-    $goodsSelectArray = $this->getSelectGoodsArray($project->goods);
-
-    if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
-    {
-      return view('test', ['project' => '수량이 매진되었습니다.']);
-    }
-
-    $discount = '';
-    if($request->has('discountId'))
-    {
-      $discount = Discount::findOrFail(\Input::get('discountId'));
-      if($discount)
-      {
-        if($project->getAmountDiscount($discount->id) <= 0)
-        {
-          return view('test', ['project' => '할인 수량이 매진되었습니다.']);
-        }
-      }
-
-    }
-
-    try {
-      $payment = null;
-      if ($this->isPaymentProcess()) {
-        $info = $this->buildPaymentNewInfo($user, $project, $ticket, $goodsSelectArray);
-
-        if($info->getAmount() >  0)
-        {
-          $paymentService = new PaymentService();
-          if ($project->type === 'funding') {
-              //$payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-          } else {
-              //$payment = $paymentService->rightNow($info);
-          }
-        }
-      }
-
-      DB::beginTransaction();
-
-      $order = new Order($this->getNewFilteredInput($ticket, $goodsSelectArray, $payment));
-      $order->project()->associate($project);
-      $order->ticket()->associate($ticket);
-      $order->user()->associate($user);
-
-      //if($request->has('discountId'))
-      if($discount)
-      {
-        //$discount = Discount::findOrFail(\Input::get('discountId'));
-        $order->discount()->associate($discount);
-      }
-
-      $order->save();
-
-      $project->increment('funded_amount', $this->getOrderPrice());
-      $project->increment('tickets_count', $this->getTicketOrderCount($ticket));
-      //$ticket->increment('audiences_count', $this->getOrderCount());
-      //$user->increment('tickets_count');
-
-      if($request->has('supportPrice'))
-      {
-        $supportPrice = Input::get('supportPrice');
-        if($supportPrice > 0)
-        {
-          $supporter = new Supporter;
-          $supporter->project()->associate($project);
-          $supporter->ticket()->associate($ticket);
-          $supporter->user()->associate($user);
-          $supporter->price = $supportPrice;
-          $supporter->save();
-
-          $order->supporter()->associate($supporter);
-          $order->save();
-        }
-      }
-
-      DB::commit();
-
-      $sms = new SmsService();
-      $contact = $order->contact;
-      $limit = $project->type === 'funding' ? 10 : 14;
-      $titleLimit = str_limit($project->title, $limit, $end = '..');
-      $priceFormatted = number_format($order->getFundedAmount());
-      //$totalRealTicket = $ticket->real_ticket_count * $order->count;
-      $totalRealTicket = $this->getOrderCount();
-
+      $seatName = str_limit($ticket->getSeatCategory(), 2, $end = '..');
       $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
-      $msg = sprintf('%s %s %d매 예매완료', $titleLimit, $datetime, $totalRealTicket);
-      $sms->send([$contact], $msg);
-
-      $emailTo = $order->email;
-      if ($project->type === 'funding') {
-          $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnFunding($project, $ticket, $order));
-      } else {
-          $this->sendMail($emailTo, '티켓 구매가 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketing($project, $ticket));
+      if($ticket->isPlaceTicket() == false)
+      {
+        $datetime = $ticket->getSeatCategory();
+        $msg = sprintf('%s %s %d매 결제 예약 완료', $titleLimit, $datetime, $totalRealTicket);
       }
+      else
+      {
+        $msg = sprintf('%s %s %s %d매 예매 완료', $titleLimit, $datetime, $seatName, $totalRealTicket);
 
-      setcookie("isNewOrderStart","false", time()+604800, "/tickets");
-
-      return view('order.complete', [
-          'project' => $project,
-          'order' => $order,
-          'isComment' => FALSE
-      ]);
-    } catch (PaymentFailedException $e) {
-      return view('order.error', [
-          'message' => $e->getMessage(),
-          'ticket_id' => $ticket->id,
-          'project_id' => $project->id,
-          'request_price' => $this->getOrderUnitPrice(),
-          'ticket_count' => $this->getOrderCount()
-      ]);
+        if($project->type == 'funding')
+        {
+          $msg = sprintf('%s %s %s %d매 결제 예약 완료', $titleLimit, $datetime, $seatName, $totalRealTicket);
+        }
+      }
     }
-    */
+    else
+    {
+      //[크라우드티켓] 사랑해 엄마 ‘결제 총액’원 결제 예약 완료
+      $msg = sprintf('%s %s원 결제 완료', $titleLimit, $totalPrice);
+      if($project->type == 'funding')
+      {
+        $msg = sprintf('%s %s원 결제 예약 완료', $titleLimit, $totalPrice);
+      }
+    }
+
+    $sms->send([$contact], $msg);
   }
 
   public function getAmountTicketWithTicketId($ticketID, $orders){
@@ -388,25 +265,101 @@ class OrderController extends Controller
         return $info;
     }
 
-/*
-    private function buildPaymentInfo($user, $project, $ticket) {
-        $info = new PaymentInfo();
-        $info->withSignature($user->id, $project->id);
-        $info->withAmount($this->getTotalPrice($ticket));
-        $info->withCardNumber(Input::get('card_number'));
-        $info->withExpiry(Input::get('expiry_year'), Input::get('expiry_month'));
-        $info->withBirth(Input::get('birth'));
-        $info->withPassword(Input::get('card_password'));
-        return $info;
-    }
-*/
-    private function sendMail($to, $title, $data)
+    private function sendMail($to, $project, $order)
     {
-        Mail::send('emails.test', $data, function ($m) use ($title, $to) {
-            $m->from('contact@crowdticket.kr', '크라우드티켓');
-            $m->to($to)->subject($title);
-        });
+      $mailForm = '';
+      $subject = '';
+      $data = [];
+      $ticketInfo = '티켓 없음';
+      $discount = $order->getDiscountText();
+      $goods = $order->getGoodsTotalTextInEmail();
+      $supportPrice = 0;
+      if($order->supporter)
+      {
+        $supportPrice = $order->supporter->price;
+      }
+      $commission = $order->getCommission();
+
+      //티켓 정보 셋팅
+      if($order->ticket)
+      {
+        $showDate = new \DateTime($order->ticket->show_date);
+        $date = $showDate->format('Y-m-d H:i');
+        $seat = $order->ticket->getSeatCategory();
+        if($order->ticket->isPlaceTicket() == false)
+        {
+          $date = '';
+        }
+
+        $ticketInfo = $date.' ['.$seat.'] '.number_format($order->count).'매';
+      }
+
+      if ($project->type === 'funding')
+      {
+        $mailForm = 'template.emailform.email_complite_schedule';
+        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+      }
+      else
+      {
+        $mailForm = 'template.emailform.email_complite_onetime';
+        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+      }
+
+      $data = [
+        'title' => $project->title,
+        'ticket' => $ticketInfo,
+        'discount' => $discount,
+        'goods' => $goods,
+        'supportPrice' => number_format($supportPrice),
+        'commission' => number_format($commission),
+        'totalPrice' => number_format($order->total_price),
+        'payDate' => $project->getFundingOrderConcludeAt(),
+        'gotoPayPageURL' => url('orders/'.$order->id)
+      ];
+
+      Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
+          $m->from('contact@crowdticket.kr', '크라우드티켓');
+          $m->to($to)->subject($subject);
+      });
     }
+
+    private function sendCancelMail($to, $project, $order)
+    {
+      $mailForm = '';
+      $subject = '';
+      $data = [];
+
+      $totalPrice = $order->total_price;
+      $refundAmount = $order->getRefundAmount();
+      $cancellationFees = $order->getCancellationFees();
+
+      if ($project->type === 'funding')
+      {
+        $mailForm = 'template.emailform.email_complite_schedule_cancel';
+        $subject = '(크라우드티켓) 프로젝트 참여를 취소했습니다.';
+      }
+      else
+      {
+        $mailForm = 'template.emailform.email_complite_onetime_cancel';
+        $subject = '(크라우드티켓) 프로젝트 참여를 취소했습니다.';
+      }
+
+      $data = [
+        'title' => $project->title,
+        'totalPrice' => number_format($totalPrice),
+        'refundAmount' => number_format($refundAmount),
+        'cancellationFees' => number_format($cancellationFees),
+
+        'gotoPayPageURL' => url('orders/'.$order->id)
+      ];
+
+      Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
+          $m->from('contact@crowdticket.kr', '크라우드티켓');
+          $m->to($to)->subject($subject);
+      });
+    }
+
+
 
     private function mailDataOnFunding(Project $project, Ticket $ticket, Order $order)
     {
@@ -1134,27 +1087,10 @@ class OrderController extends Controller
 
             DB::commit();
 
-            $sms = new SmsService();
-            $contact = $order->contact;
-            $titleLimit = str_limit($project->title, 18, $end = '..');
-            $msg = $project->type === 'funding'
-                ? sprintf('%s 후원취소', $titleLimit)
-                : sprintf('%s 환불완료', $titleLimit);
-
-            $sms->send([$contact], $msg);
+            $this->sendCencelSMS($project, $order);
 
             $emailTo = $order->email;
-            if ($project->type === 'funding') {
-              if($ticket)
-              {
-                $this->sendMail($emailTo, '결제예약이 취소 되었습니다 (크라우드티켓).', $this->mailDataOnFundingCancel($project, $ticket, $order));
-              }
-            } else {
-              if($ticket)
-              {
-                $this->sendMail($emailTo, '결제예약이 완료되었습니다 (크라우드티켓).', $this->mailDataOnTicketRefund($project, $ticket, $order));
-              }
-            }
+            $this->sendCancelMail($emailTo, $project, $order);
 
             return redirect()->action('UserController@getUserOrders', [$user->id]);
         } catch (PaymentFailedException $e) {
@@ -1162,6 +1098,25 @@ class OrderController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    public function sendCencelSMS($project, $order)
+    {
+      $sms = new SmsService();
+      $contact = $order->contact;
+      $titleLimit = str_limit($project->title, 18, $end = '..');
+
+      if($project->type == 'funding')
+      {
+        //[크라우드티켓] 사랑해 엄마 ‘결제 총액’원 결제 예약 취소
+        $msg = sprintf('%s %s원 결제 예약 취소 완료', $titleLimit, number_format($order->total_price));
+      }
+      else
+      {
+        $msg = sprintf('%s 수수료 %s원 총 %s원 취소 완료', $titleLimit, number_format($order->getCancellationFees()), number_format($order->getRefundAmount()));
+      }
+
+      $sms->send([$contact], $msg);
     }
 
 }

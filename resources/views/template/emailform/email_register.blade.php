@@ -5,7 +5,6 @@
     <title></title>
   </head>
   <body>
-
     <table class="m_2863416783805523223stb-container" cellpadding="0" cellspacing="0" align="center" style="margin:0px auto;width:94%;max-width:632px;background:rgb(255,255,255);border:1px solid rgb(239,77,93)">
       <tbody><tr style="margin:0;padding:0">
       <td style="width:100%;max-width:630px;margin:0 auto;border-spacing:0;clear:both;border-collapse:separate;padding:0;overflow:hidden">
@@ -28,15 +27,32 @@
       </td>
       </tr>
       </tbody></table>
-      <table class="m_-2939684631252506459stb-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none;border:0" width="100%;">
+      <table class="m_-2939684631252506459stb-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none;border:0" width="100%">
       <tbody><tr>
-      <td style="padding:15px 0 15px 0;line-height:1.8;border-width:0px">
+      <td style="padding:5px 0 5px 0;line-height:1.8;border-width:0px">
       <table class="m_-2939684631252506459stb-cell-wrap" border="0" cellpadding="0" cellspacing="0" style="padding:0px 5px;table-layout:fixed" width="100%">
       <tbody><tr>
       <td style="padding:0px 10px" width="100%">
       <div>
+      <p style="text-align:center;margin:0px;width:100%">
+      <img alt="" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/admin/mail/%EA%B0%80%EC%9E%85%ED%99%98%EC%98%81+%ED%83%80%EC%9D%B4%ED%8B%80.png" style="width:420px;display:inline;vertical-align:middle;max-width:100%;border-width:0px;border-color:initial;text-align:center" width="">
+      </p>
+      </div>
+      </td>
+      </tr>
+      </tbody></table>
+      </td>
+      </tr>
+      </tbody></table>
+      <table class="m_2863416783805523223stb-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none;border:0" width="100%;">
+      <tbody><tr>
+      <td style="padding:0px 0 15px 0;line-height:1.8;border-width:0px">
+      <table class="m_2863416783805523223stb-cell-wrap" border="0" cellpadding="0" cellspacing="0" style="padding:0px 5px;table-layout:fixed" width="100%">
+      <tbody><tr>
+      <td style="padding:0px 10px" width="100%">
+      <div>
       <p style="text-align:justify;margin:0px;width:100%">
-      <img alt="" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/admin/mail/password_img-02.png" style="width:100%;display:inline;vertical-align:middle;max-width:100%;border-width:0px;border-color:initial;text-align:justify" width="">
+      <img alt="" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/admin/mail/people-2608316_1920.jpg" style="width:100%;display:inline;vertical-align:middle;max-width:100%;border-width:0px;border-color:initial;text-align:justify" width="610">
       </p>
       </div>
       </td>
@@ -51,7 +67,7 @@
       <table class="m_2863416783805523223stb-cell-wrap" border="0" cellpadding="0" cellspacing="0" style="padding:0px 5px" width="100%">
       <tbody><tr>
       <td class="m_2863416783805523223stb-text-box" style="padding:0px 10px;line-height:1.8;word-break:break-word;font-size:14px;fon-weight:bold;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif!important" width="100%">
-      <div style="text-align:center"><span style="font-weight:900;font-size:20px">비밀번호 재설정 안내</span></div>
+      <div style="text-align:center"><span style="font-weight:900;font-size:20px">크라우드티켓 회원이 되신 것을 환영합니다!</span></div>
       </td>
       </tr>
       </tbody></table>
@@ -60,11 +76,24 @@
       </tbody></table>
       <table class="m_2863416783805523223stb-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none;border:0" width="100%">
       <tbody><tr>
-      <td style="padding:10px 0 5px 0;line-height:1.8;border-width:0px;font-size:14px">
+      <td style="padding:5px 0 5px 0;line-height:1.8;border-width:0px;font-size:14px">
       <table class="m_2863416783805523223stb-cell-wrap" border="0" cellpadding="0" cellspacing="0" style="padding:0px 5px" width="100%">
       <tbody><tr>
-      <td class="m_2863416783805523223stb-text-box" style="padding:10px 10px;line-height:1.8;word-break:break-word;font-size:14px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif!important" width="100%">
-      <span style="font-size:16px"><b>비밀번호를 재설정 하시려면 아래 버튼을 눌러주세요.</b><br>링크를 통해 비밀번호를 변경하실 수 있는 페이지로 이동되며, 입력하신 비밀번호는 암호화되어 저장되므로 크라우드티켓 운영진에게도 공개되지 않습니다.</span>
+      <td class="m_2863416783805523223stb-text-box" style="padding:0px 10px;line-height:1.8;word-break:break-word;font-size:14px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif!important" width="100%">
+      <span style="font-size:16px"><b>가입이 완료되었습니다.</b></span>
+      </td>
+      </tr>
+      </tbody></table>
+      </td>
+      </tr>
+      </tbody></table>
+      <table class="m_2863416783805523223stb-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none;border:0" width="100%">
+      <tbody><tr>
+      <td style="padding:5px 0 5px 0;line-height:1.8;border-width:0px;font-size:14px">
+      <table class="m_2863416783805523223stb-cell-wrap" border="0" cellpadding="0" cellspacing="0" style="padding:0px 5px" width="100%">
+      <tbody><tr>
+      <td class="m_2863416783805523223stb-text-box" style="padding:0px 10px;line-height:1.8;word-break:break-word;font-size:14px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif!important" width="100%">
+      <div style="text-align:left">크라우드티켓에서는 여러분이 가장 좋아하는 아티스트와 크리에이터들의 멋진 공연이나 이벤트를 가장 먼저 만나볼 수 있습니다. 어떤 이벤트들이 여러분의 참여를 기다리고 있는지 지금 바로 확인해보세요! </div>
       </td>
       </tr>
       </tbody></table>
@@ -76,10 +105,9 @@
       <td style="padding:15px 0 15px 0;text-align:center;line-height:1.8;border:0px" width="100%">
       <table class="m_2863416783805523223stb-cell-wrap-cta" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#ef4d5d;border-radius:50px;border:0;margin:0 auto;table-layout:fixed" align="center">
       <tbody><tr>
-        <p>비밀번호 변경 가능 기간은 60일 입니다.</p>
       <td style="padding:12px 20px 10px" align="center">
-      <a href="{{ url('password/reset/'.$token) }}" style="font-size:14px;display:block;color:#ffffff;background:#ef4d5d;border-radius:50px;text-decoration:none;outline:0px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif;text-align:center" target="_blank">
-      비밀번호 재설정하기
+      <a href="https://crowdticket.kr" style="font-size:14px;display:block;color:#ffffff;background:#ef4d5d;border-radius:50px;text-decoration:none;outline:0px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif;text-align:center" target="_blank">
+      지금 바로 구경가기
       </a>
       </td>
       </tr>
@@ -146,7 +174,6 @@
       </td>
       </tr>
       </tbody></table>
-
 
   </body>
 </html>

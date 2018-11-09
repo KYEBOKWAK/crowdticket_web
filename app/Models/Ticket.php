@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use App\Exceptions\InvalidTicketStateException;
+use App\Models\Categories_ticket as Categories_ticket;
 
 class Ticket extends Model
 {
@@ -124,5 +125,21 @@ class Ticket extends Model
       }
 
       return true;
+    }
+
+    public function getSeatCategory()
+    {
+      $ticketSeat = $this->category;
+      if(is_numeric($this->category))
+      {
+        //숫자. 카테고리에서 찾는다.
+        $ticketCategory = Categories_ticket::find($this->category);
+        if($ticketCategory)
+        {
+          $ticketSeat = $ticketCategory->title;
+        }
+      }
+
+      return $ticketSeat;
     }
 }

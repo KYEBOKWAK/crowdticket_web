@@ -188,9 +188,37 @@ class Order extends Model
       return $this->project->goods;
     }
 */
-    public function getGoodsTotalText()
+    public function getGoodsTotalTextInEmail()
     {
-      //$goods = $this->project->goods;
+      $goodsList = $this->project->goods;
+      if(count($goodsList) == 0)
+      {
+        return "굿즈 없음";
+      }
+
+      $goodsOrderText = "굿즈 선택 없음";
+
+      $orderCount = 0;
+
+      $goodsOrders = json_decode($this->goods_meta, true);
+      if(count($goodsOrders) > 0)
+      {
+        $goodsOrderText = '';
+      }
+
+      foreach($goodsOrders as $goodsOrder)
+      {
+        foreach($goodsList as $goods)
+        {
+          if($goodsOrder['id'] == $goods->id)
+          {
+            $goodsOrderText = $goodsOrderText.$goods->title.' '.$goodsOrder['count'].'개, ';
+          }
+        }
+      }
+
+
+      return $goodsOrderText;
     }
 
     public function isBuyGoodsCount($goodsId)
@@ -222,6 +250,18 @@ class Order extends Model
       }
 
       return $totalPrice - $commission;
+    }
+
+    public function getCommission()
+    {
+      $totalPrice = $this->total_price;
+      $commission = 0;
+      if($totalPrice >= 500)
+      {
+        $commission = $this->count * 500;
+      }
+
+      return $commission;
     }
 
     /**

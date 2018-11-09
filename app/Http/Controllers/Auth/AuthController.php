@@ -40,6 +40,19 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
+    public function postRegister(Request $request)
+    {
+      $email = \Input::get('email');
+
+      $validator = $this->registrar->validator($request->all());
+      if ($validator->fails()) {
+          $this->throwValidationException($request, $validator);
+      }
+      $this->auth->login($this->registrar->create($request->all()));
+
+      return \Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
+    }
+
     public function postLogin(Request $request)
   	{
       $message = $this->getFailedLoginMessage();
