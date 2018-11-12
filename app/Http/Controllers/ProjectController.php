@@ -602,7 +602,7 @@ class ProjectController extends Controller
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->withTrashed();
             }, 'orders.user'])->get(),
-            'orders' => $project->orders()->withTrashed()->get()
+            'orders' => $project->ordersAll()->withTrashed()->get()
         ]);
     }
 

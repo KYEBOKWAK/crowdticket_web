@@ -7,7 +7,7 @@
 		<div class="ticket-wrapper <% if (style === 'modifyable') { %> col-md-11 <% } %>">
 			<div class="ticket-body">
 				<% if (type === 'funding') { %>
-					<span class="text-primary">
+					<span class="text-primary" style="color: #EF4D5D;">
 						<span class="ticket-price"><%= ticket.price.format() %></span>원 이상 후원
 					</span>
 					<% if (ticket.real_ticket_count > 0) { %>
@@ -43,7 +43,7 @@
 			<div class="ticket-footer">
 			    <% if (type === 'funding') { %>
 				<span>
-					<span class="text-primary"><%= ticket.audiences_count.format() %></span>명이 선택 중 /
+					<span class="text-primary" style="color: #EF4D5D;"><%= ticket.audiences_count.format() %></span>명이 선택 중 /
 				</span>
 				<% } %>
 				<% if (ticket.audiences_limit > 0) { %>

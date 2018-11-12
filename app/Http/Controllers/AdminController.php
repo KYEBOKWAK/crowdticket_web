@@ -2,6 +2,9 @@
 
 use App\Models\Blueprint as Blueprint;
 use App\Models\Project as Project;
+
+use App\Models\Order as Order;
+
 use Illuminate\Support\Facades\Mail;
 use App\Services\SmsService;
 
@@ -64,7 +67,7 @@ class AdminController extends Controller
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->withTrashed();
             }, 'orders.user'])->get(),
-            'orders' => $project->orders()->withTrashed()->get()
+            'orders' => $project->ordersAll()->withTrashed()->get()
         ]);
     }
 
@@ -74,7 +77,7 @@ class AdminController extends Controller
         if ($project->type === 'funding') {
             $orders = $project->orders()->get();
             foreach ($orders as $order) {
-                app('App\Http\Controllers\OrderController')->deleteOrder($order->id, true);
+                app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_CANCEL,true);
             }
         }
     }
@@ -152,7 +155,8 @@ class AdminController extends Controller
       $subject = '(크라우드티켓) 참여하신 프로젝트가 무산되었습니다.';
       $project = Project::find($projectId);
       if ($project->type === 'funding') {
-          $orders = $project->orders()->get();
+          //$orders = $project->orders()->get();
+          $orders = $project->ordersWithoutUserCancel()->get();
 
           $sendedMails = [];
           foreach ($orders as $order) {

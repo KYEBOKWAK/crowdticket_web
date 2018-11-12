@@ -25,7 +25,7 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
     <link href="{{ asset('/css/base.css?version=3') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css?version=2') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css?version=3') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=2') }}" rel="stylesheet">
     <link href="{{ asset('/css/global.css?version=3') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">

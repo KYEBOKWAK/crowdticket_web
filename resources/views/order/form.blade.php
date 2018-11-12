@@ -427,7 +427,7 @@
 
         @if ($order)
         <div style="text-align: center">
-            @if ($order->deleted_at)
+            @if ($order->getIsCancel())
                 @if ($project->type === 'funding')
                     <button class="btn btn-muted" disabled="disabled">취소됨</button>
                 @else

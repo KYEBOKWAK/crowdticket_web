@@ -118,6 +118,7 @@ class OrderController extends Controller
         $order->discount()->associate($discount);
       }
 
+      $order->setState(Order::ORDER_STATE_PAY);
       $order->save();
 
       $project->increment('funded_amount', $this->getOrderPrice());
@@ -1008,7 +1009,7 @@ class OrderController extends Controller
         throw new InvalidTicketStateException();
     }
 
-    public function deleteOrder($orderId, $bypass = false)
+    public function deleteOrder($orderId, $stateCancel = Order::ORDER_STATE_CANCEL, $bypass = false)
     {
 
         $order = Order::where('id', $orderId)->withTrashed()->first();
@@ -1036,7 +1037,9 @@ class OrderController extends Controller
 
             DB::beginTransaction();
 
-            $order->delete();
+            $order->setState($stateCancel);
+            $order->save();
+            //$order->delete();
 
             if (!$bypass) {
                 if ($user->supports_count > 0) {

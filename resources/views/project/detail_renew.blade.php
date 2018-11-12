@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=7') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=8') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
     <style>

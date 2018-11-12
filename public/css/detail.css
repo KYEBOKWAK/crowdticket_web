@@ -456,7 +456,11 @@
     margin-right:10px;
 }
 .ticket span {
+  /*
     font-size:17px;
+    font-weight:600;
+    */
+    font-size:12px;
     font-weight:600;
 }
 .ticket-btn {

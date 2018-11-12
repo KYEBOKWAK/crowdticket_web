@@ -10,7 +10,12 @@ class Order extends Model
     // 10%
     const CANCELLATION_FEES_RATE = 0.1;
 
-    protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
+    const ORDER_STATE_PAY = 1;   //즉시결제
+    //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
+    const ORDER_STATE_CANCEL = 3;   //고객취소
+    const ORDER_STATE_PROJECT_CANCEL = 4;   //프로젝트 중도 취소
+
+    protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
 
     protected static $creationRules = [
@@ -54,7 +59,8 @@ class Order extends Model
 
     public function canCancel()
     {
-        if ($this->deleted_at) {
+        //if ($this->deleted_at) {
+        if ($this->getIsCancel()) {
             return false;
         }
 //poster_url
@@ -138,19 +144,6 @@ class Order extends Model
     public function getFundedAmount()
     {
         return $this->price * $this->count;
-    }
-
-    public function getStateStringAttribute()
-    {
-        if (isset($this->deleted_at) && $this->deleted_at) {
-            return '취소됨';
-        }
-
-        $project = $this->getProject();
-        if ($project->isFundingType() && !$project->isFinished()) {
-            return '결제예약';
-        }
-        return '결제완료';
     }
 
     public function getDeliveryAddress()
@@ -262,6 +255,67 @@ class Order extends Model
       }
 
       return $commission;
+    }
+
+    public function setState($state)
+    {
+      $this->state = (int)$state;
+    }
+
+    public function getState()
+    {
+      return $this->state;
+    }
+
+    public function getStateStringAttribute()
+    {
+      if (isset($this->deleted_at) && $this->deleted_at) {
+          return '취소됨';
+      }
+
+      if($this->getState() == self::ORDER_STATE_CANCEL)
+      {
+        return '취소됨';
+      }
+      else if($this->getState() == self::ORDER_STATE_PROJECT_CANCEL)
+      {
+        return '목표 도달 실패';
+      }
+
+
+      $project = $this->getProject();
+      if ($project->isFundingType() && !$project->isFinished()) {
+          return '결제예약';
+      }
+
+      return '결제완료';
+      /*
+        if (isset($this->deleted_at) && $this->deleted_at) {
+            return '취소됨';
+        }
+
+        $project = $this->getProject();
+        if ($project->isFundingType() && !$project->isFinished()) {
+            return '결제예약';
+        }
+        return '결제완료';
+        */
+    }
+
+    public function getIsCancel()
+    {
+      if ($this->deleted_at) {
+        return true;
+      }
+
+      if(
+        $this->state == self::ORDER_STATE_CANCEL ||
+        $this->state == self::ORDER_STATE_PROJECT_CANCEL)
+      {
+        return true;
+      }
+
+      return false;
     }
 
     /**

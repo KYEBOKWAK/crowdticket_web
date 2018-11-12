@@ -139,7 +139,18 @@ class Project extends Model
 
     public function orders()
     {
-        return $this->hasMany('App\Models\Order');
+        //return $this->hasMany('App\Models\Order');
+        return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY);
+    }
+
+    public function ordersAll()
+    {
+      return $this->hasMany('App\Models\Order');
+    }
+
+    public function ordersWithoutUserCancel()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '!=', Order::ORDER_STATE_CANCEL);
     }
 
     public function supporters()
@@ -216,24 +227,14 @@ class Project extends Model
       //펀딩일때
       if ($this->pledged_amount > 0)
       {
-          return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
+        if($this->isOldProject())
+        {
+          return (int)(($this->funded_amount / $this->pledged_amount) * 100);  
+        }
+
+        return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
       }
 
-/*
-      //펀딩일때
-      if($this->project_target == "people")
-      {
-        $ticketOrderCount = $this->getTotalTicketOrderCount();
-        return (int)(($ticketOrderCount / $this->pledged_amount) * 100);
-      }
-      else
-      {
-        if ($this->pledged_amount > 0)
-        {
-            return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);
-        }
-      }
-*/
       return 0;
     }
 
@@ -391,21 +392,38 @@ class Project extends Model
       //현재 91명 신청 완료
       $nowAmount = "";
 
-      if($this->type == 'sale')
+      if($this->isOldProject())
       {
-        //$nowAmount = "현재 ". $this->getTotalTicketOrderCount() ."명 참여";
-        $nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";
+        //예전 프로젝트
+        if($this->type == 'sale')
+        {
+          $nowAmount = "현재 ". number_format($this->funded_amount) ."명 참여 가능";
+        }
+        else
+        {
+          $totalFundingAmount = number_format($this->funded_amount);
+          $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
+        }
       }
       else
       {
-        $totalFundingAmount = number_format($this->getTotalFundingAmount());
-        $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
-
-        if($this->project_target == "people")
+        if($this->type == 'sale')
         {
-          $nowAmount = "신청자 " . $totalFundingAmount . "명";
+          $nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";
+        }
+        else
+        {
+          $totalFundingAmount = number_format($this->getTotalFundingAmount());
+          $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
+
+          if($this->project_target == "people")
+          {
+            $nowAmount = "신청자 " . $totalFundingAmount . "명";
+          }
         }
       }
+
+
 
       return $nowAmount;
     }
@@ -521,7 +539,8 @@ class Project extends Model
 
     public function getTotalTicketOrderCount()
     {
-      $orders = $this->orders;
+      //$orders = $this->orders;
+      $orders = $this->ordersWithoutUserCancel;
       $totalBuyCount = 0;
       foreach($orders as $order){
         $totalBuyCount += $order->count;
@@ -610,7 +629,9 @@ class Project extends Model
 
     public function getTotalFundingAmount()
     {
-      $orders = $this->orders;
+      //$orders = $this->orders;
+      //$orders = $this->ordersAll;
+      $orders = $this->ordersWithoutUserCancel;
       $totalFundingAmount = 0;
 
       if($this->project_target == "people")
