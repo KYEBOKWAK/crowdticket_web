@@ -1092,8 +1092,12 @@ class OrderController extends Controller
 
             $this->sendCencelSMS($project, $order);
 
-            $emailTo = $order->email;
-            $this->sendCancelMail($emailTo, $project, $order);
+            if($stateCancel != Order::ORDER_STATE_PROJECT_CANCEL)
+            {
+              //예약 취소 이메일은 고객이 직접 취소 했을때만 보내진다.
+              $emailTo = $order->email;
+              $this->sendCancelMail($emailTo, $project, $order);
+            }
 
             return redirect()->action('UserController@getUserOrders', [$user->id]);
         } catch (PaymentFailedException $e) {
