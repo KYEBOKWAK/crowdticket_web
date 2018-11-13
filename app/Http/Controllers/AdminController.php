@@ -248,7 +248,7 @@ class AdminController extends Controller
     {
       $subject = '(크라우드티켓) 초대권 이벤트에 응모해주셔서 감사합니다.';
       $project = Project::find($projectId);
-      if ($project->type === 'funding') {
+      //if ($project->type === 'funding') {
           $orders = $project->orders()->get();
 
           $sendedMails = [];
@@ -320,7 +320,7 @@ class AdminController extends Controller
 
             array_push($sendedMails, $to);
           }
-      }
+      //}
 
       return \Redirect::back();
     }
