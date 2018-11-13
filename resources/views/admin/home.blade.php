@@ -93,6 +93,8 @@
                   </li>
                   <li role="presentation"><a href="#email" aria-controls="email" role="tab" data-toggle="tab">메일/문자</a>
                   </li>
+                  <li role="presentation"><a href="#emailevent" aria-controls="emailevent" role="tab" data-toggle="tab">이벤트이메일(임시)</a>
+                  </li>
               </ul>
               <div class="tab-content">
                   <ul id="blueprint" role="tabpanel" class="tab-pane active list-group">
@@ -261,6 +263,17 @@
                           </li>
                       @endforeach
                   </ul>
+
+                  <ul id="emailevent" role="tabpanel" class="tab-pane">
+                          <li class="list-group-item">
+                              {{ $eventProject->title }} <br>
+                                <form id="form_send_mail_fail_event" action="{{ url(sprintf('/admin/projects/%d/event/mail/fail', $eventProject->id)) }}" method="post">
+                                    <button id="form_send_mail_fail_event_btn" type="button" class="btn btn-danger">당첨실패메일 보내기</button>
+                                    <input type="hidden" name="_method" value="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                </form>
+                          </li>
+                  </ul>
               </div>
           </div>
       </div>
@@ -284,6 +297,11 @@ $(document).ready(function() {
   $('#form_send_sms_success_btn').click(function(){
     showLoadPage();
     $('#form_send_sms_success').submit();
+  });
+
+  $('#form_send_mail_fail_event_btn').click(function(){
+    showLoadPage();
+    $('#form_send_mail_fail_event').submit();
   });
 
 

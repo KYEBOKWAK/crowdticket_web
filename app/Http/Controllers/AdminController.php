@@ -21,9 +21,16 @@ class AdminController extends Controller
 
             'funding_projects' => $this->getFailedFundingProjects(),
 
-            'funding_end_projects' => $this->getFundingEndProjects()
+            'funding_end_projects' => $this->getFundingEndProjects(),
+
+            'eventProject' => $this->getEventProject()
 
         ]);
+    }
+
+    public function getEventProject()
+    {
+      return Project::findOrFail(285);
     }
 
     public function approveBlueprint($id)
@@ -235,5 +242,86 @@ class AdminController extends Controller
     public function sendFailFundingSms($projectId)
     {
 
+    }
+
+    public function sendFailEventEmail($projectId)
+    {
+      $subject = '(크라우드티켓) 초대권 이벤트에 응모해주셔서 감사합니다.';
+      $project = Project::find($projectId);
+      if ($project->type === 'funding') {
+          $orders = $project->orders()->get();
+
+          $sendedMails = [];
+          foreach ($orders as $order) {
+            $to = $order->email;
+
+            //당첨자 제외
+            if($to == 'lje110833@naver.com' ||
+              $to == 'jiwun901@hanmail.net' ||
+              $to == 'kimm1904@naver.com' ||
+              $to == 'separk7447@naver.com' ||
+              $to == 'cxz970516@naver.com' ||
+              $to == 'jfla1004@naver.com' ||
+              $to == 'thdcldcld@naver.com' ||
+              $to == 'philipjrchoi@yahoo.com' ||
+              $to == 'bananabean1@naver.com' ||
+              $to == '0312alseud@naver.com' ||
+              $to == 'ym9988@naver.com' ||
+              $to == 'pp5353@naver.com' ||
+              $to == 'poopoo21c@naver.com' ||
+              $to == 'tjsdnaos603@hanmail.net' ||
+              $to == 'jooju05@naver.com' ||
+              $to == 'yubin463@hanmail.net' ||
+              $to == 'rpddl053@naver.com' ||
+              $to == 'sakura_mi@naver.com' ||
+              $to == 'biking119@naver.com' ||
+              $to == 'devilhi@naver.com' ||
+              $to == 'goals9923@naver.com' ||
+              $to == 's2y7715@gmail.com' ||
+              $to == 'sarahkim0707@naver.com' ||
+              $to == 'now950815@naver.com' ||
+              $to == 'koj3453@naver.com' ||
+              $to == 'anika33@hanmail.net' ||
+              $to == 'umjh9741@naver.com' ||
+              $to == 'rlaeodnjs921@naver.com' ||
+              $to == 'gpwjd5245@naver.com' ||
+              $to == 'jhl5201004@naver.com'
+              )
+            {
+              continue;
+            }
+
+            $isSended = false;
+            foreach($sendedMails as $sendedMail)
+            {
+              if($to == $sendedMail)
+              {
+                $isSended = true;
+              }
+            }
+
+            if($isSended)
+            {
+              continue;
+            }
+
+            $data = [
+              'title' => $project->title,
+              'name' => $order->name,
+              'payDate' => $project->getFundingOrderConcludeAt(),
+              'gotoPayPageURL' => url('orders/'.$order->id),
+              'gotoCelebrate' => url('projects/'.$project->id),
+            ];
+
+            Mail::send('template.emailform.email_event', $data, function ($m) use ($subject, $to) {
+                $m->from('contact@crowdticket.kr', '크라우드티켓');
+                $m->to($to)->subject($subject);
+            });
+
+            array_push($sendedMails, $to);
+          }
+      }
+
+      return \Redirect::back();
     }
 }

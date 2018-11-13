@@ -154,4 +154,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('projects/{id}/funding/mail/fail', 'AdminController@sendFailFundingEmail');
     Route::post('projects/{id}/funding/sms/success', 'AdminController@sendSuccessFundingSms');
     Route::post('projects/{id}/funding/sms/fail', 'AdminController@sendFailFundingSms');
+    //이벤트 미당첨 이메닝ㄹ
+    Route::post('projects/{id}/event/mail/fail', 'AdminController@sendFailEventEmail');
 });
