@@ -369,25 +369,30 @@ class AdminController extends Controller
 
       foreach($iamPortResList as $iamPortRes)
       {
-        $responseList = $iamPortRes->response->list;
+        $responseLists = $iamPortRes->response->list;
+        //$responseList = $iamPortRes['response']['list'];
         $orderInfo = '';
-        foreach($ordersWithoutUserCancel as $order)
+        $response = '';
+        foreach($responseLists as $responseList)
         {
-          $orderCustomer_uid = 'user_'.$order->user_id;
-
-          if($responseList->customer_uid == $orderCustomer_uid)
+          foreach($ordersWithoutUserCancel as $order)
           {
-            $orderInfo = $order;
+            $orderCustomer_uid = 'user_'.$order->user_id;
+
+            if($responseList->customer_uid == $orderCustomer_uid)
+            {
+              $orderInfo = $order;
+              $response = $responseList;
+            }
           }
         }
 
-        $result['iamport'] = $responseList;
+        $result['iamport'] = $response;
         $result['order'] = $orderInfo;
 
         array_push($resultList, $result);
       }
 
-      return view('template.ordercheck', ['resultOrders' => json_encode($resultList), 'project' => $project]);
-      //return view('test', ['project' => count($iamPortResList)]);
+      return view('template.ordercheck', ['resultOrderList' => json_encode($resultList), 'project' => $project]);
     }
 }

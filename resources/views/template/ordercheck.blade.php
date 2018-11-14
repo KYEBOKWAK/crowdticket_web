@@ -17,6 +17,9 @@
 @endsection
 
 @section('content')
+<?php
+$resultOrders = json_decode($resultOrderList, true);
+ ?>
     @include('helper.btn_admin', ['project' => $project])
     <div class="first-container container">
         <div class="row">
@@ -42,16 +45,16 @@
                 @foreach ($resultOrders as $resultOrder)
                     <tr>
                         @if($resultOrder['order'])
-                          <td>{{ $resultOrder['order']->name }}</td>
-                          <td>{{ $resultOrder['order']->user_id }}</td>
+                          <td>{{ $resultOrder['order']['name'] }}</td>
+                          <td>{{ $resultOrder['order']['user_id'] }}</td>
                         @else
                           <td>{{ 오더정보없음 }}</td>
                           <td>{{ 오더정보없음 }}</td>
                         @endif
-                        <td>{{ $resultOrder['iamport']->customer_uid }}</td>
-                        <td>{{ $resultOrder['iamport']->merchant_uid }}</td>
-                        <td>{{ $resultOrder['iamport']->schedule_status }}</td>
-                        <td>{{ $resultOrder['iamport']->amount }}</td>
+                        <td>{{ $resultOrder['iamport']['customer_uid'] }}</td>
+                        <td>{{ $resultOrder['iamport']['merchant_uid'] }}</td>
+                        <td>{{ $resultOrder['iamport']['schedule_status'] }}</td>
+                        <td>{{ $resultOrder['iamport']['amount'] }}</td>
                     </tr>
                 @endforeach
                 </tbody>
