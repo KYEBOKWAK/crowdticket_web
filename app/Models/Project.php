@@ -668,4 +668,20 @@ class Project extends Model
       return $totalCommentCount;
     }
 
+    public function getFundingOrderConcludeAtBeforeOneday()
+    {
+        $concludeAt = $this->getFundingOrderConcludeAt();
+        $beforeDay = strtotime("-1 day", strtotime($concludeAt));
+        $ymd = date("Y-m-d", $beforeDay);
+        return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
+    }
+
+    public function getFundingOrderConcludeAtAfterOneday()
+    {
+        $concludeAt = $this->getFundingOrderConcludeAt();
+        $nextDay = strtotime("+1 day", strtotime($concludeAt));
+        $ymd = date("Y-m-d", $nextDay);
+        return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
+    }
+
 }

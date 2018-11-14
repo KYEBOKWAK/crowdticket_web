@@ -282,9 +282,14 @@
                   <ul id="ordercheck" role="tabpanel" class="tab-pane">
                     @foreach($allprojects as $project)
                       <li class="list-group-item">
-                          {{ $project->title }} <br>
-                            <form id="form_admin_order_check" action="" method="post">
-                                <button id="form_admin_order_check_button" type="button" class="btn btn-danger">주문비교하기</button>
+                          <b>{{ $project->title }}</b> <br>
+                            <form id="form_admin_order_check{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/ordercheck', $project->id)) }}" method="get">
+                              <br>
+                              <p>유저 아이디 범위(시작)</p>
+                              <input type="number" name="startUID" />
+                              <p>유저 아이디 범위(끝)</p>
+                              <input type="number" name="endUID" />
+                                <button id="form_admin_order_check_button" class="form_admin_order_check_button" project_id="{{$project->id}}" type="button" class="btn btn-danger">주문비교하기(범위))</button>
                                 <input type="hidden" name="_method" value="GET">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             </form>
@@ -332,6 +337,15 @@ $(document).ready(function() {
 
     var projectId = $(this).attr('project_id');
     var formName = ".form_send_mail_fail_event_"+projectId;
+    $(formName).submit();
+    //$('.form_send_mail_fail_event').submit();
+  });
+
+  $('.form_admin_order_check_button').click(function(){
+    showLoadPage();
+
+    var projectId = $(this).attr('project_id');
+    var formName = "#form_admin_order_check"+projectId;
     $(formName).submit();
     //$('.form_send_mail_fail_event').submit();
   });

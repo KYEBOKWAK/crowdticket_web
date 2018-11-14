@@ -7,6 +7,9 @@ use App\Models\Order as Order;
 
 use Illuminate\Support\Facades\Mail;
 use App\Services\SmsService;
+use App\Services\IamPortApi;
+
+use App\Exceptions\PaymentFailedException;
 
 class AdminController extends Controller
 {
@@ -327,5 +330,64 @@ class AdminController extends Controller
       return \Redirect::back();
     }
 
-    //public function getIamPortSchedule
+    public function getOrderIamPortScheduleScope($projectId)
+    {
+      $startUID = \Input::get('startUID');
+      $endUID = \Input::get('endUID');
+
+      $project = Project::find($projectId);
+
+      if(!$project)
+      {
+        return \Redirect::back();
+      }
+
+      $from = strtotime($project->getFundingOrderConcludeAtBeforeOneday());
+      $to = strtotime($project->getFundingOrderConcludeAtAfterOneday());
+
+      $iamPortResList = [];
+
+      $iamPort = new IamPortApi();
+      for($i = $startUID ; $i <= $endUID ; $i++)
+      {//
+        $customer_uid = 'user_'.$i;
+        $res = $iamPort->get('/subscribe/payments/schedule/customers/'.$customer_uid.'?from='.$from.'&to='.$to);
+
+        if((int)$res->code == -1)
+        {
+          return view('test', ['project' => $rest->message]);
+        }
+
+        if($res->response->total > 0)
+        {
+          array_push($iamPortResList, $res);
+        }
+      }
+
+      $resultList = [];
+      $ordersWithoutUserCancel = $project->ordersWithoutUserCancel;
+
+      foreach($iamPortResList as $iamPortRes)
+      {
+        $responseList = $iamPortRes->response->list;
+        $orderInfo = '';
+        foreach($ordersWithoutUserCancel as $order)
+        {
+          $orderCustomer_uid = 'user_'.$order->user_id;
+
+          if($responseList->customer_uid == $orderCustomer_uid)
+          {
+            $orderInfo = $order;
+          }
+        }
+
+        $result['iamport'] = $responseList;
+        $result['order'] = $orderInfo;
+
+        array_push($resultList, $result);
+      }
+
+      return view('template.ordercheck', ['resultOrders' => $resultList, 'project' => $project]);
+      //return view('test', ['project' => count($iamPortResList)]);
+    }
 }

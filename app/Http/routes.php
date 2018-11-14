@@ -156,4 +156,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('projects/{id}/funding/sms/fail', 'AdminController@sendFailFundingSms');
     //이벤트 미당첨 이메닝ㄹ
     Route::post('projects/{id}/event/mail/fail', 'AdminController@sendFailEventEmail');
+
+    //iamport 주문 비교하기
+    Route::get('projects/{id}/ordercheck', 'AdminController@getOrderIamPortScheduleScope');
 });
