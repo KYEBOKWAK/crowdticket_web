@@ -95,6 +95,8 @@
                   </li>
                   <li role="presentation"><a href="#emailevent" aria-controls="emailevent" role="tab" data-toggle="tab">이벤트이메일(임시)</a>
                   </li>
+                  <li role="presentation"><a href="#ordercheck" aria-controls="ordercheck" role="tab" data-toggle="tab">주문자 정보 비교(iamport)</a>
+                  </li>
               </ul>
               <div class="tab-content">
                   <ul id="blueprint" role="tabpanel" class="tab-pane active list-group">
@@ -230,24 +232,24 @@
                               @endif
                               <br>
                               @if($project->getTotalFundingAmount() > $project->pledged_amount)
-                                <form id="form_send_mail_success" action="{{ url(sprintf('/admin/projects/%d/funding/mail/success', $project->id)) }}" method="post">
+                                <form id="form_send_mail_success" class="form_send_mail_success_{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/funding/mail/success', $project->id)) }}" method="post">
                                     <button type="button" disabled="disable" class="btn btn-danger">실패 메일 보내기</button>
-                                    <button id="form_send_mail_success_btn" type="button" class="btn btn-danger">성공 메일 보내기</button>
+                                    <button id="form_send_mail_success_btn" project_id="{{$project->id}}" type="button" class="form_send_mail_success_btn btn btn-danger">성공 메일 보내기</button>
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                                 <br>
-                                <form id="form_send_sms_success" action="{{ url(sprintf('/admin/projects/%d/funding/sms/success', $project->id)) }}" method="post">
+                                <form id="form_send_sms_success" class="form_send_sms_success_{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/funding/sms/success', $project->id)) }}" method="post">
                                     <button type="button" disabled="disable" class="btn btn-danger">실패 문자 보내기</button>
-                                    <button id="form_send_sms_success_btn" type="button" class="btn btn-danger">성공 문자 보내기</button>
+                                    <button id="form_send_sms_success_btn" project_id="{{$project->id}}" type="button" class="form_send_sms_success_btn btn btn-danger">성공 문자 보내기</button>
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                               @elseif($project->getTotalFundingAmount() == 0)
                                 <button type="button" disabled="disable" class="btn btn-danger">구매없음</button>
                               @else
-                                <form id="form_send_mail_fail" action="{{ url(sprintf('/admin/projects/%d/funding/mail/fail', $project->id)) }}" method="post">
-                                    <button id="form_send_mail_fail_btn" type="button" class="btn btn-danger">실패 메일 보내기</button>
+                                <form id="form_send_mail_fail" class="form_send_mail_fail_{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/funding/mail/fail', $project->id)) }}" method="post">
+                                    <button id="form_send_mail_fail_btn" project_id="{{$project->id}}" type="button" class="form_send_mail_fail_btn btn btn-danger">실패 메일 보내기</button>
                                     <button type="button" disabled="disable" class="btn btn-danger">성공 메일 보내기</button>
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -266,14 +268,30 @@
 
                   <ul id="emailevent" role="tabpanel" class="tab-pane">
                           <li class="list-group-item">
+                            @if($eventProject)
                               {{ $eventProject->title }} <br>
                                 <form id="form_send_mail_fail_event" action="{{ url(sprintf('/admin/projects/%d/event/mail/fail', $eventProject->id)) }}" method="post">
                                     <button id="form_send_mail_fail_event_btn" type="button" class="btn btn-danger">당첨실패메일 보내기</button>
                                     <input type="hidden" name="_method" value="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
+                            @endif
                           </li>
                   </ul>
+
+                  <ul id="ordercheck" role="tabpanel" class="tab-pane">
+                    @foreach($allprojects as $project)
+                      <li class="list-group-item">
+                          {{ $project->title }} <br>
+                            <form id="form_admin_order_check" action="" method="post">
+                                <button id="form_admin_order_check_button" type="button" class="btn btn-danger">주문비교하기</button>
+                                <input type="hidden" name="_method" value="GET">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </li>
+                    @endforeach
+                  </ul>
+
               </div>
           </div>
       </div>
@@ -284,26 +302,39 @@
 @section('js')
 <script>
 $(document).ready(function() {
-  $('#form_send_mail_fail_btn').click(function(){
+  $('.form_send_mail_fail_btn').click(function(){
     showLoadPage();
-    $('#form_send_mail_fail').submit();
+    var projectId = $(this).attr('project_id');
+    var formName = ".form_send_mail_fail_"+projectId;
+    $(formName).submit();
   });
 
-  $('#form_send_mail_success_btn').click(function(){
+  $('.form_send_mail_success_btn').click(function(){
     showLoadPage();
-    $('#form_send_mail_success').submit();
+
+    var projectId = $(this).attr('project_id');
+    var formName = ".form_send_mail_success_"+projectId;
+    $(formName).submit();
+    //$('.form_send_mail_success').submit();
   });
 
-  $('#form_send_sms_success_btn').click(function(){
+  $('.form_send_sms_success_btn').click(function(){
     showLoadPage();
-    $('#form_send_sms_success').submit();
+
+    var projectId = $(this).attr('project_id');
+    var formName = ".form_send_sms_success_"+projectId;
+    $(formName).submit();
+    //$('.form_send_sms_success').submit();
   });
 
-  $('#form_send_mail_fail_event_btn').click(function(){
+  $('.form_send_mail_fail_event_btn').click(function(){
     showLoadPage();
-    $('#form_send_mail_fail_event').submit();
-  });
 
+    var projectId = $(this).attr('project_id');
+    var formName = ".form_send_mail_fail_event_"+projectId;
+    $(formName).submit();
+    //$('.form_send_mail_fail_event').submit();
+  });
 
 
   var showLoadPage = function(){

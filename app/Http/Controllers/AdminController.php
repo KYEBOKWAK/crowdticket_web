@@ -23,14 +23,16 @@ class AdminController extends Controller
 
             'funding_end_projects' => $this->getFundingEndProjects(),
 
-            'eventProject' => $this->getEventProject()
+            'eventProject' => $this->getEventProject(),
+
+            'allprojects' => Project::where('state', '=', Project::STATE_APPROVED)->orderBy('id', 'desc')->get()
 
         ]);
     }
 
     public function getEventProject()
     {
-      return Project::findOrFail(285);
+      return Project::find(285);
     }
 
     public function approveBlueprint($id)
@@ -324,4 +326,6 @@ class AdminController extends Controller
 
       return \Redirect::back();
     }
+
+    //public function getIamPortSchedule
 }
