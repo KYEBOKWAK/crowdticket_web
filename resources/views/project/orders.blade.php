@@ -43,7 +43,7 @@
                                     <div class="col-md-9 display-cell">
                                         <span class="ticket-delivery-date">
                                           @if($ticket->isPlaceTicket())
-                                            시작일 : {{ date('Y년 m월 d일', strtotime($ticket->show_date)) }}
+                                            시작일 : {{ date('Y년 m월 d일 H:i', strtotime($ticket->show_date)) }}
                                           @else
                                             날짜미정
                                           @endif
