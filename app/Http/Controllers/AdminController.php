@@ -387,7 +387,7 @@ class AdminController extends Controller
         array_push($resultList, $result);
       }
 
-      return view('template.ordercheck', ['resultOrders' => $resultList, 'project' => $project]);
+      return view('template.ordercheck', ['resultOrders' => json_encode($resultList), 'project' => $project]);
       //return view('test', ['project' => count($iamPortResList)]);
     }
 }
