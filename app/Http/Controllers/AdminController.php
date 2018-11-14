@@ -375,6 +375,8 @@ class AdminController extends Controller
         $response = '';
         foreach($responseLists as $responseList)
         {
+          $response = $responseList;
+          
           foreach($ordersWithoutUserCancel as $order)
           {
             $orderCustomer_uid = 'user_'.$order->user_id;
@@ -382,7 +384,6 @@ class AdminController extends Controller
             if($responseList->customer_uid == $orderCustomer_uid)
             {
               $orderInfo = $order;
-              $response = $responseList;
             }
           }
         }
