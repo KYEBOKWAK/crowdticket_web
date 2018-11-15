@@ -171,7 +171,8 @@ html, body {
   max-height: 35px;
   line-height: 35px;
   margin: 0 auto;
-  color: #8A8A8A;
+  /*color: #8A8A8A;*/
+  color: black;
   position: relative;
   text-align: center;
   cursor: pointer;

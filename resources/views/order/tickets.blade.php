@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link href="{{ asset('/css/calendar.css?version=7') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=8') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
         .order {
