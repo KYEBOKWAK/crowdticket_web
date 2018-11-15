@@ -97,6 +97,8 @@
                   </li>
                   <li role="presentation"><a href="#ordercheck" aria-controls="ordercheck" role="tab" data-toggle="tab">주문자 정보 비교(iamport)</a>
                   </li>
+                  <li role="presentation"><a href="#orderfail" aria-controls="orderfail" role="tab" data-toggle="tab">오더 실패 정보(예약결제 진행 후 해야함)</a>
+                  </li>
               </ul>
               <div class="tab-content">
                   <ul id="blueprint" role="tabpanel" class="tab-pane active list-group">
@@ -297,6 +299,20 @@
                     @endforeach
                   </ul>
 
+                  <!-- 오더 실패 정보  -->
+                  <ul id="orderfail" role="tabpanel" class="tab-pane">
+                    @foreach($allprojects as $project)
+                      <li class="list-group-item">
+                          <b>{{ $project->title }}</b> <br>
+                            <form id="form_admin_order_fail_check{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/orderfailcheck', $project->id)) }}" method="get">
+                              <button id="form_admin_order_fail_check_button" class="form_admin_order_fail_check_button" project_id="{{$project->id}}" type="button" class="btn btn-danger">예약결제상태체크 및 셋팅</button>
+                              <input type="hidden" name="_method" value="GET">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </li>
+                    @endforeach
+                  </ul>
+
               </div>
           </div>
       </div>
@@ -346,6 +362,15 @@ $(document).ready(function() {
 
     var projectId = $(this).attr('project_id');
     var formName = "#form_admin_order_check"+projectId;
+    $(formName).submit();
+    //$('.form_send_mail_fail_event').submit();
+  });
+
+  $('.form_admin_order_fail_check_button').click(function(){
+    showLoadPage();
+
+    var projectId = $(this).attr('project_id');
+    var formName = "#form_admin_order_fail_check"+projectId;
     $(formName).submit();
     //$('.form_send_mail_fail_event').submit();
   });

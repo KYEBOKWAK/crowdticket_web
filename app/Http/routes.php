@@ -159,4 +159,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //iamport 주문 비교하기
     Route::get('projects/{id}/ordercheck', 'AdminController@getOrderIamPortScheduleScope');
+
+    //예약결제 결좌 처리하기
+    Route::get('projects/{id}/orderfailcheck', 'AdminController@getOrderIamPortScheduleFail');
 });

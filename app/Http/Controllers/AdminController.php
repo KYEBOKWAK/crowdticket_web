@@ -396,4 +396,81 @@ class AdminController extends Controller
 
       return view('template.ordercheck', ['resultOrderList' => json_encode($resultList), 'project' => $project]);
     }
+
+    public function getOrderIamPortScheduleFail($projectId)
+    {
+      $project = Project::find($projectId);
+
+      if(!$project)
+      {
+        return \Redirect::back();
+      }
+
+      $iamPortResList = [];
+
+      $iamPort = new IamPortApi();
+
+      $orders = $project->orders;
+
+      foreach($orders as $order)
+      {
+        $resultOrder['name'] = $order->name;
+        $resultOrder['user_id'] = $order->user_id;
+
+        $imp_meta = json_decode($order->imp_meta);
+
+        if(!isset($imp_meta->merchant_uid))
+        {
+          $resultOrder['orderstate'] = 'imp정보없음';
+          $resultOrder['failmessage'] = 'imp정보없음';
+
+          array_push($iamPortResList, $resultOrder);
+
+          continue;
+        }
+
+        $state = '';
+        $failmessage = '';
+        $res = '';
+        try{
+          $res = $iamPort->get('/payments/find/'.$imp_meta->merchant_uid.'/?sorting=-started');
+        }catch(\Exception $e){
+          //$failmessage = $e->getMessage();
+
+          $failmessage = 'iamport 결제 정보 없음';
+          $resultOrder['orderstate'] = $state;
+          $resultOrder['failmessage'] = $failmessage;
+
+          array_push($iamPortResList, $resultOrder);
+
+          continue;
+        }
+
+        if($res->response)
+        {
+          $state = $res->response->status;
+
+          if($state != "paid")
+          {
+            $failmessage = $res->response->fail_reason;
+            $order->setState(Order::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL);
+            $order->fail_message = $failmessage;
+          }
+          else
+          {
+            $order->setState(Order::ORDER_STATE_PAY);
+          }
+        }
+
+        $order->save();
+
+
+        $resultOrder['orderstate'] = $state;
+        $resultOrder['failmessage'] = $failmessage;
+
+        array_push($iamPortResList, $resultOrder);
+      }
+
+      return view('template.orderfail', ['resultOrderList' => json_encode($iamPortResList), 'project' => $project]);
+    }
 }

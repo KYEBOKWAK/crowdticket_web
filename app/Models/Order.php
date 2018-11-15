@@ -14,6 +14,7 @@ class Order extends Model
     const ORDER_STATE_PAY = 1;   //결제 혹은 결제대기
     const ORDER_STATE_PAY_NO_PAYMENT = 2;   //order 는 들어갔지만, 결제 프로세를 안탐
     const ORDER_STATE_PAY_SCHEDULE = 3;
+    const ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL = 4;
     const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
 
@@ -306,6 +307,10 @@ class Order extends Model
       else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE)
       {
         return '결제예약';
+      }
+      else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL)
+      {
+        return '결제실패(예약)';
       }
       else if($this->getState() == self::ORDER_STATE_ERROR_PAY)
       {
