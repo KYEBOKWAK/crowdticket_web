@@ -483,6 +483,12 @@ class Project extends Model
 
     public function getFundingOrderConcludeAt()
     {
+      //testcode 리얼에 등록시 지워야함.
+      $nextDay = $this->funding_closing_at;
+      //$ymd = date("Y-m-d", $nextDay);
+      return date('Y-m-d H:i:s', strtotime($nextDay));
+      /////////
+      
         $nextDay = strtotime("+1 day", strtotime($this->funding_closing_at));
         $ymd = date("Y-m-d", $nextDay);
         return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
