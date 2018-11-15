@@ -140,7 +140,7 @@ class Project extends Model
     public function orders()
     {
         //return $this->hasMany('App\Models\Order');
-        return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY);
+        return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END);
     }
 
     public function ordersAll()
@@ -148,9 +148,14 @@ class Project extends Model
       return $this->hasMany('App\Models\Order');
     }
 
+    public function ordersWithoutError()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '<', Order::ORDER_STATE_ERROR_START);
+    }
+
     public function ordersWithoutUserCancel()
     {
-      return $this->hasMany('App\Models\Order')->where('state', '!=', Order::ORDER_STATE_CANCEL);
+      return $this->hasMany('App\Models\Order')->where('state', '<', Order::ORDER_STATE_CANCEL);
     }
 
     public function supporters()
@@ -229,7 +234,7 @@ class Project extends Model
       {
         if($this->isOldProject())
         {
-          return (int)(($this->funded_amount / $this->pledged_amount) * 100);  
+          return (int)(($this->funded_amount / $this->pledged_amount) * 100);
         }
 
         return (int)(($this->getTotalFundingAmount() / $this->pledged_amount) * 100);

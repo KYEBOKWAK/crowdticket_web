@@ -24,7 +24,168 @@ class OrderController extends Controller
   //public function createNewOrder(Request $request, $ticketId)
   public function createNewOrder(Request $request)
   {
+    $isNewOrderStart = $_COOKIE["isNewOrderStart"];
 
+    $projectId = '';
+    $ticketId = '';
+    $ticket = '';
+    if($request->has('project_id'))
+    {
+      $projectId = \Input::get('project_id');
+    }
+
+    if($request->has('ticket_id'))
+    {
+      $ticketId = \Input::get('ticket_id');
+    }
+
+    if(!$projectId)
+    {
+      //프로젝트 정보는 반드시 있어야 함.
+      return view('test', ['project' => '프로젝트 에러']);
+    }
+
+    $project = Project::findOrFail($projectId);
+
+    if($isNewOrderStart == "false")
+    {
+      return view('order.complete', [
+          'project' => $project,
+          'order' => '',
+          'isComment' => FALSE
+      ]);
+    }
+
+    $user = Auth::user();
+
+    if($ticketId)
+    {
+      //티켓 정보가 있을때 저장한다.
+      $ticket = $this->getOrderableTicket($ticketId);
+
+      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
+      {
+        return view('test', ['project' => '수량이 매진되었습니다.']);
+      }
+    }
+    //구매 가능한 수량이 있는지 체크
+
+    $goodsSelectArray = $this->getSelectGoodsArray($project->goods);
+
+    $discount = '';
+    if($request->has('discountId'))
+    {
+      $discount = Discount::findOrFail(\Input::get('discountId'));
+      if($discount)
+      {
+        if($project->getAmountDiscount($discount->id) <= 0)
+        {
+          return view('test', ['project' => '할인 수량이 매진되었습니다.']);
+        }
+      }
+    }
+
+    $order = new Order($this->getNewFilteredInput($goodsSelectArray));
+    $order->project()->associate($project);
+    $order->user()->associate($user);
+    $order->save();
+
+    try {
+
+      DB::beginTransaction();
+
+      if($ticket)
+      {
+        $order->ticket()->associate($ticket);
+      }
+
+      if($discount)
+      {
+        $order->discount()->associate($discount);
+      }
+
+      $order->setState(Order::ORDER_STATE_STAY);
+      $order->save();
+
+      $project->increment('funded_amount', $this->getOrderPrice());
+      //$project->increment('tickets_count', $this->getTicketOrderCount($ticket));
+      //$ticket->increment('audiences_count', $this->getOrderCount());
+      //$user->increment('tickets_count');
+
+      if($request->has('supportPrice'))
+      {
+        $supportPrice = Input::get('supportPrice');
+        if($supportPrice > 0)
+        {
+          $supporter = new Supporter;
+          $supporter->project()->associate($project);
+          if($ticket)
+          {
+            $supporter->ticket()->associate($ticket);
+          }
+          $supporter->user()->associate($user);
+          $supporter->price = $supportPrice;
+          $supporter->save();
+
+          $order->supporter()->associate($supporter);
+          $order->save();
+        }
+      }
+
+      DB::commit();
+
+      $order->setState(Order::ORDER_STATE_PAY_NO_PAYMENT);
+
+      $payment = null;
+      if ($this->isPaymentProcess()) {
+        $info = $this->buildPaymentNewInfo($user, $project);
+
+        if($info->getAmount() >  0)
+        {
+          $paymentService = new PaymentService();
+          if ($project->type === 'funding') {
+              $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+              $order->setState(Order::ORDER_STATE_PAY_SCHEDULE);
+          } else {
+              $payment = $paymentService->rightNow($info);
+              $order->setState(Order::ORDER_STATE_PAY);
+          }
+
+          $order->imp_meta = $payment ? $payment->toJson() : '{}';
+
+        }
+      }
+
+      $order->save();
+
+      //하단에 정보 전송 전에 결제 진행한다.
+
+      $this->sendSMS($project, $order);
+
+      $emailTo = $order->email;
+      $this->sendMail($emailTo, $project, $order);
+
+      setcookie("isNewOrderStart","false", time()+604800, "/tickets");
+
+      return view('order.complete', [
+          'project' => $project,
+          'order' => $order,
+          'isComment' => FALSE
+      ]);
+    } catch (PaymentFailedException $e) {
+      $order->setState(Order::ORDER_STATE_ERROR_PAY);
+      $order->fail_message = $e->getMessage();
+      $order->save();
+
+      return view('order.error', [
+          'message' => $e->getMessage(),
+          'project_id' => $project->id,
+          'request_price' => $this->getOrderUnitPrice(),
+          'ticket_count' => $this->getOrderCount()
+      ]);
+    }
+
+    /*
     $isNewOrderStart = $_COOKIE["isNewOrderStart"];
 
     $projectId = '';
@@ -169,6 +330,7 @@ class OrderController extends Controller
           'ticket_count' => $this->getOrderCount()
       ]);
     }
+    */
   }
 
   public function sendSMS($project, $order)
@@ -1048,22 +1210,6 @@ class OrderController extends Controller
                 if ($user->tickets_count > 0) {
                     $user->decrement('tickets_count');
                 }
-                /*
-                $supporter = Supporter::where('project_id', $project->id)
-                    ->where('user_id', $user->id)
-                    //->where('ticket_id', $ticket->id)
-                    ->first();
-                if ($supporter) {
-                    $supporter->delete();
-                }
-                */
-
-                /*
-                $funded = $order->getFundedAmount();
-                if ($project->funded_amount - $funded >= 0) {
-                    $project->decrement('funded_amount', $funded);
-                }
-                */
 
                 $project->funded_amount = $project->getTotalFundingAmount();
                 $project->save();

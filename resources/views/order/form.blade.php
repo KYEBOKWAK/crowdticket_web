@@ -427,6 +427,9 @@
 
         @if ($order)
         <div style="text-align: center">
+          @if($order->isErrorOrder())
+            <button class="btn btn-muted" disabled="disabled">결제에러</button>
+          @else
             @if ($order->getIsCancel())
                 @if ($project->type === 'funding')
                     <button class="btn btn-muted" disabled="disabled">취소됨</button>
@@ -456,6 +459,7 @@
                     @endif
                 @endif
             @endif
+          @endif
           </div>
         @else
           <div class="order_form_conform_container">

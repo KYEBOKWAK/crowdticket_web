@@ -8,6 +8,7 @@ use App\Models\Maincarousel as Maincarousel;
 use App\Models\City as City;
 use App\Models\Model as Model;
 use App\Models\Project as Project;
+use App\Models\Order as Order;
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response;
 use Storage as Storage;
@@ -600,7 +601,7 @@ class ProjectController extends Controller
         return view('project.orders', [
             'project' => $project,
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
-                $query->withTrashed();
+                $query->where('state', '<', Order::ORDER_STATE_ERROR_START)->withTrashed();
             }, 'orders.user'])->get(),
             'orders' => $project->ordersAll()->withTrashed()->get()
         ]);

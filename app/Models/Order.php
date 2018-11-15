@@ -10,10 +10,22 @@ class Order extends Model
     // 10%
     const CANCELLATION_FEES_RATE = 0.1;
 
-    const ORDER_STATE_PAY = 1;   //즉시결제
+    const ORDER_STATE_STAY = 0; //결제 대기 상태
+    const ORDER_STATE_PAY = 1;   //결제 혹은 결제대기
+    const ORDER_STATE_PAY_NO_PAYMENT = 2;   //order 는 들어갔지만, 결제 프로세를 안탐
+    const ORDER_STATE_PAY_SCHEDULE = 3;
+    const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
-    const ORDER_STATE_CANCEL = 3;   //고객취소
-    const ORDER_STATE_PROJECT_CANCEL = 4;   //프로젝트 중도 취소
+
+    const ORDER_STATE_CANCEL_START = 100; //취소사유는 100~200
+    const ORDER_STATE_PROJECT_CANCEL = 102;   //프로젝트 중도 취소
+    const ORDER_STATE_CANCEL = 199;//고객취소는 맨 마지막
+
+    const ORDER_STATE_HOST_SHOW_ORDER_END = 200;
+
+    const ORDER_STATE_ERROR_START = 500;
+    const ORDER_STATE_ERROR_PAY = 501;
+    const ORDER_STATE_ERROR_END = 600;
 
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
@@ -55,6 +67,16 @@ class Order extends Model
     {
         /** @noinspection PhpUndefinedFieldInspection */
         return $this->price * $this->count;
+    }
+
+    public function isErrorOrder()
+    {
+      if($this->getState() >= self::ORDER_STATE_ERROR_START)
+      {
+        return true;
+      }
+
+      return false;
     }
 
     public function canCancel()
@@ -280,6 +302,14 @@ class Order extends Model
       else if($this->getState() == self::ORDER_STATE_PROJECT_CANCEL)
       {
         return '목표 도달 실패';
+      }
+      else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE)
+      {
+        return '결제예약';
+      }
+      else if($this->getState() == self::ORDER_STATE_ERROR_PAY)
+      {
+        return '결제 에러';
       }
 
 
