@@ -768,6 +768,13 @@
                return;
              }
 
+             var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+             if(!regExpEmail.test($('#email').val()))
+             {
+               alert("이메일이 잘못입력되었습니다.");
+               return;
+             }
+
             if(!$('#name').val())
             {
               alert("이름을 입력해주세요.");
