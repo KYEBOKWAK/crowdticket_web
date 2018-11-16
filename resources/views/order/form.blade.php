@@ -175,7 +175,11 @@
               주문 요청 사항
               </h3>
               <p class="help-block">{{ $project->question }}</p>
-              <textarea id="order-answer" name="answer" class="form-control" maxlength="20"></textarea>
+              @if($order)
+                <textarea id="order-answer" name="answer" class="form-control" readonly="readonly">{{ $order->answer }}</textarea>
+              @else
+                <textarea id="order-answer" name="answer" class="form-control" maxlength="20"></textarea>
+              @endif
               <p class="help-block">답변은 20자 내로 작성해주세요.</p>
             </div>
           </div>
