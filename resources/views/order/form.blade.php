@@ -178,9 +178,9 @@
               @if($order)
                 <textarea id="order-answer" name="answer" class="form-control" readonly="readonly">{{ $order->answer }}</textarea>
               @else
-                <textarea id="order-answer" name="answer" class="form-control" maxlength="20"></textarea>
+                <textarea id="order-answer" name="answer" class="form-control" maxlength="50"></textarea>
               @endif
-              <p class="help-block">답변은 20자 내로 작성해주세요.</p>
+              <p class="help-block">답변은 50자 내로 작성해주세요.</p>
             </div>
           </div>
         @endif
