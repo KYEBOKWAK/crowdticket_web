@@ -761,6 +761,12 @@
           var isSubmit = false;
 
           $('#ticketing-btn-payment').click(function(){
+            var regExp = /^[0-9]+$/;
+             if(!regExp.test($('#phone').val()))
+             {
+               alert("전화번호에 숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
+               return;
+             }
 
             if(!$('#name').val())
             {
@@ -896,7 +902,6 @@
               $('#placeReceive').prop("checked", true);
             }
           }
-
-        });
+      });
     </script>
 @endsection
