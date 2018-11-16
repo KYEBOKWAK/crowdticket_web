@@ -90,6 +90,10 @@
                                 @foreach($goodsList as $goods)
                                   <td>{{ $goods->title }}</td>
                                 @endforeach
+
+                                @if($project->question)
+                                  <td>추가질문답변</td>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -122,6 +126,10 @@
                                     @foreach($goodsList as $goods)
                                       <td>{{ $order->isBuyGoodsCount($goods->id) }}</td>
                                     @endforeach
+
+                                    @if($project->question)
+                                      <td>{{ $order->answer }}</td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
