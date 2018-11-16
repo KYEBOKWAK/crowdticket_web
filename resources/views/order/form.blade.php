@@ -168,6 +168,19 @@
           </div>
         </div>
 
+        @if($project->question)
+          <div class="order_form_conform_container">
+            <div class='order_form_conform_title'>
+              <h3>
+              주문 요청 사항
+              </h3>
+              <p class="help-block">{{ $project->question }}</p>
+              <textarea id="order-answer" name="answer" class="form-control" maxlength="20"></textarea>
+              <p class="help-block">답변은 20자 내로 작성해주세요.</p>
+            </div>
+          </div>
+        @endif
+
         @if($project->isDelivery == "TRUE")
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
