@@ -10,7 +10,7 @@ class Order extends Model
     // 10%
     const CANCELLATION_FEES_RATE = 0.1;
 
-    const ORDER_STATE_STAY = 0; //결제 대기 상태
+    const ORDER_STATE_STAY = 0; //결제 대기 상태 예전 주문정보고 있기 때문에 스탠바이 state를 별도 추가
     const ORDER_STATE_PAY = 1;   //결제 혹은 결제대기
     const ORDER_STATE_PAY_NO_PAYMENT = 2;   //order 는 들어갔지만, 결제 프로세를 안탐
     const ORDER_STATE_PAY_SCHEDULE = 3;
@@ -26,7 +26,10 @@ class Order extends Model
 
     const ORDER_STATE_ERROR_START = 500;
     const ORDER_STATE_ERROR_PAY = 501;
+    const ORDER_STATE_ERROR_NO_INFO_IAMPORT = 502;
     const ORDER_STATE_ERROR_END = 600;
+
+    const ORDER_STATE_STANDBY = 999;
 
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];

@@ -88,6 +88,7 @@ class OrderController extends Controller
     $order = new Order($this->getNewFilteredInput($goodsSelectArray));
     $order->project()->associate($project);
     $order->user()->associate($user);
+    $order->setState(Order::ORDER_STATE_STANDBY);
     $order->save();
 
     try {
@@ -104,7 +105,7 @@ class OrderController extends Controller
         $order->discount()->associate($discount);
       }
 
-      $order->setState(Order::ORDER_STATE_STAY);
+      //$order->setState(Order::ORDER_STATE_STAY);
       $order->save();
 
       $project->increment('funded_amount', $this->getOrderPrice());
