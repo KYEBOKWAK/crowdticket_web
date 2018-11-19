@@ -6,6 +6,7 @@ use App\Models\User as User;
 use App\Models\Ticket as Ticket;
 use App\Models\Project as Project;
 use App\Models\Channel as Channel;
+use App\Models\Order as Order;
 use App\Models\Categories_channel as Categories_channel;
 use Illuminate\Http\Request as Request;
 
@@ -169,7 +170,7 @@ class UserController extends Controller
 
     private function getFullOrders($user)
     {
-        return $user->orders()->withTrashed()->orderBy('created_at', 'desc')->get();
+        return $user->orders()->withTrashed()->where('state', '!=', Order::ORDER_STATE_STANDBY)->orderBy('created_at', 'desc')->get();
     }
 
     private function uploadPosterImage($request, $user)
