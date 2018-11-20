@@ -170,7 +170,7 @@ class UserController extends Controller
 
     private function getFullOrders($user)
     {
-        return $user->orders()->withTrashed()->where('state', '!=', Order::ORDER_STATE_STANDBY)->orderBy('created_at', 'desc')->get();
+        return $user->orders()->withTrashed()->where('state', '!=', Order::ORDER_STATE_STANDBY)->where('state', '<', Order::ORDER_STATE_ERROR_START)->orderBy('created_at', 'desc')->get();
     }
 
     private function uploadPosterImage($request, $user)

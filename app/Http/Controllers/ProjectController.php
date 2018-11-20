@@ -589,21 +589,13 @@ class ProjectController extends Controller
     public function getOrders($id)
     {
         $project = $this->getSecureProjectById($id);
-        /*
-        return view('project.orders', [
-            'project' => $project,
-            'tickets' => $project->tickets()->with(['orders' => function ($query) {
-                $query->withTrashed();
-            }, 'orders.user'])->get()
-        ]);
-        */
 
         return view('project.orders', [
             'project' => $project,
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->where('state', '<', Order::ORDER_STATE_ERROR_START)->withTrashed();
             }, 'orders.user'])->get(),
-            'orders' => $project->ordersAll()->withTrashed()->get()
+            'orders' => $project->ordersWithoutError()->withTrashed()->get()
         ]);
     }
 

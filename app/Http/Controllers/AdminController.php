@@ -65,14 +65,6 @@ class AdminController extends Controller
     public function getOrders($id)
     {
         $project = Project::find($id);
-        /*
-        return view('project.orders', [
-            'project' => $project,
-            'tickets' => $project->tickets()->with(['orders' => function ($query) {
-                $query->withTrashed();
-            }, 'orders.user'])->get()
-        ]);
-        */
 
         return view('project.orders', [
             'project' => $project,
