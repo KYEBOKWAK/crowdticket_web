@@ -266,6 +266,11 @@ class Order extends Model
       if($totalPrice >= 500)
       {
         $commission = $this->count * 500;
+        //티켓가격 자체가 없다면 커미션은 0
+        if($this->price == 0)
+        {
+          $commission = 0;
+        }
       }
 
       return $totalPrice - $commission;
