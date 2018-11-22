@@ -46,7 +46,7 @@
                     </div>
                 @endif
                 <div style="width:100%; text-align:center;">
-                <div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+                <div id="fb-login-button" class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
                 </div>
                 <div class="text-center ps-facebook-wrapper">
                     <p>또는</p>
