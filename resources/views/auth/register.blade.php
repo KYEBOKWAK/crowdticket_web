@@ -74,9 +74,9 @@
                 </form>
                 <div class="text-center ps-facebook-wrapper">
                     <p>또는</p>
-                    <div id="fb-login-button-wrapper" class="fb-login-button-wrapper">
+                    <button id="fb-login-button-wrapper" class="fb-login-button-wrapper">
                       <div id="fb-login-button" class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
-                    </div>
+                    </button>
                     <!-- <a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 가입</a> -->
                 </div>
             </div>
