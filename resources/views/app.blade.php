@@ -239,15 +239,18 @@ function logout(){
         if (response.status === 'connected') {
           //페이스북이 연동된 상태에서 로그아웃 들어오면, 페북 로그 아웃 후 페이지 로그아웃 진행
           FB.logout(function(response) {
-              var baseUrl = $('#base_url').val();
-              window.location.assign(baseUrl+'/auth/logout');
+              //var baseUrl = $('#base_url').val();
+              //window.location.assign(baseUrl+'/auth/logout');
           });
         }
         else {
           //페이스북 연동 안된 상태에서 로그아웃시
-          var baseUrl = $('#base_url').val();
-          window.location.assign(baseUrl+'/auth/logout');
+          //var baseUrl = $('#base_url').val();
+          //window.location.assign(baseUrl+'/auth/logout');
         }
+
+        var baseUrl = $('#base_url').val();
+        window.location.assign(baseUrl+'/auth/logout');
       });
 }
 </script>

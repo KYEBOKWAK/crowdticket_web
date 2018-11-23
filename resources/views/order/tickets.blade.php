@@ -106,7 +106,7 @@
         </div>
         <div class="order_ticket_support_input_wrapper">
           <div class="flex_layer">
-            <input id="order_support_price_input" onclick="return false;" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
+            <input id="order_support_price_input" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
           </div>
         </div>
       </div>
@@ -124,7 +124,8 @@
     <input type='hidden' id='discount_select_id' name='discount_select_id' value=''/>
     <input type='hidden' id='discount_select_value' name='discount_select_value' value=''/>
 
-    <!-- <button type="submit" id="ticketing-btn-calendar" class="btn btn-primary btn-block ticketing-btn-calendar">금액: <span class="totalPrice">0</span></button> -->
+    <input style="VISIBILITY: hidden; WIDTH: 0px">
+
     @include('csrf_field')
   </form>
 </div>
