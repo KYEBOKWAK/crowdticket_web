@@ -14,7 +14,7 @@
             <textarea id="tx_load_content" style="display: none">{{ $project->story }}</textarea>
             @include('editor_summernote')
         </div>
-        <button id="update_story" class="btn btn-success center-block">
+        <button id="update_story" type="button" style="display:none;" class="btn btn-success center-block">
             저장하기
         </button>
     </div>
