@@ -414,7 +414,8 @@ class Project extends Model
       {
         if($this->type == 'sale')
         {
-          $nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";
+          /*$nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";*/
+          $nowAmount = "현재 참여 가능";
         }
         else
         {
