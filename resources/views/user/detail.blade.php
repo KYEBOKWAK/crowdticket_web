@@ -28,6 +28,7 @@
             border-bottom: 1px #DEDEDE solid;
         }
     </style>
+    <link href="{{ asset('/css/welcome.css?version=4') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -41,17 +42,17 @@
     <div class="container">
         @if (sizeof($creating) > 0)
             <h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
-            @include('template.project', ['projects' => $creating])
+            @include('template.carousel_main_project', ['projects' => $creating])
         @endif
 
         @if (sizeof($created) > 0)
             <h3 class="ps-detail-title"><strong>개설한 공연</strong></h3>
-            @include('template.project', ['projects' => $created])
+            @include('template.carousel_main_project', ['projects' => $created])
         @endif
 
         @if (sizeof($orders) > 0)
             <h3 class="ps-detail-title"><strong>참여한 공연</strong></h3>
-            @include('template.project', ['projects' => $orders])
+            @include('template.carousel_main_project', ['projects' => $orders])
         @endif
     </div>
 @endsection

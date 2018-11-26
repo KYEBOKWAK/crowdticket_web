@@ -12,7 +12,7 @@
             <input type="hidden" id="tx_image_params"
                    value="url={{ url() }}/projects/{{ $project->id }}/story/images&csrf_token={{ csrf_token() }}"/>
             <textarea id="tx_load_content" style="display: none">{{ $project->story }}</textarea>
-            @include('editor')
+            @include('editor_summernote')
         </div>
         <button id="update_story" class="btn btn-success center-block">
             저장하기

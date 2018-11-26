@@ -7,7 +7,7 @@ $i = 0;
         <div class="item @if ($i === 0) active @endif">
             <div class="row">
     @endif
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 project-grid">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 project-grid @if (isset($colOnly)) carousel_resize_container @endif">
                     <div class="project-grid-wrapper">
                         <div>
                           <a href="{{ url('/projects') }}/{{ $project->id }}">

@@ -16,6 +16,11 @@ class UserController extends Controller
   {
     $user = $this->ensureLoginUser($id);
 
+    if ($request->has('isdeletephoto')) {
+      $defaultURL = Model::S3_BASE_URL.'admin/profile/noimage/default-user-image.png';
+      $user->setAttribute('profile_photo_url', $defaultURL);
+    }
+
     if ($request->file('photo')) {
       $photoUrl = $this->uploadPosterImage($request, $user);
       $user->setAttribute('profile_photo_url', $photoUrl);

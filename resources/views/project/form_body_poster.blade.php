@@ -1,4 +1,79 @@
 <input type="hidden" id="posters_json" value="{{ $posters }}"/>
+
+<div class="form-body-default-container">
+  <div class="project_form_title_wrapper project_form_title_poster_wrapper">
+    <h2 class="project_form_title"><span class="pointColor">대표</span> 이미지 & <span class="pointColor">포스터</span></h2>
+  </div>
+  <div class="project_form_content_container project_form_content_container_poster">
+    <div class="flex_layer">
+      <div class="project_form_poster_container">
+        <div class="flex_layer">
+          <p>대표 이미지</p>
+          <div class="project_form_poster_sub_title_container">
+            <p>크라우드티켓에서 프로젝트의 대표 이미지로 사용될 파일을 등록해주세요.</p>
+            <p>최대 4장까지 등록할 수 있습니다.</p>
+            <p>이미지 권장 사이즈는 800px X 600px 입니다.</p>
+          </div>
+        </div>
+
+        <form id="poster_form" action="{{ url('projects/posters') }}/{{ $project->id }}" method="post" role="form">
+          <!-- 포스터 이미지 4개 -->
+          <div class="flex_layer">
+            @include('template.title_img', ['img_num' => 1, 'project' => $project])
+            @include('template.title_img', ['img_num' => 2, 'project' => $project])
+          </div>
+          <div class="flex_layer">
+            @include('template.title_img', ['img_num' => 3, 'project' => $project])
+            @include('template.title_img', ['img_num' => 4, 'project' => $project])
+          </div>
+
+          <!-- 이미지 추가 -->
+          <div class="project_form_input_container" style="display: none;">
+            <div class="flex_layer_project">
+              <p class="project-form-content-title project_form_poster_title">포스터 이미지</p>
+              <div class="project-form-content" style="width: 100%">
+                  <a href="javascript:void(0);" id="poster_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
+                  <a href="javascript:void(0);" id="poster_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
+                  <p>이미지 권장 사이즈는 500px X 300px 입니다.</p>
+                  <p>포스터 미 등록시 메인페이지의 포스터란에 노출되지 않습니다.</p>
+                  <div id="poster_img_preview" style="display:none;">
+                  </div>
+                    <input id="poster_img_file" type="file" name="poster_img_file" style="height: 0; visibility: hidden"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="project_form_input_container" style="width: 100%">
+              <p class="project-form-content-title project_form_poster_title" style="margin-bottom: 0px; height: 37px;">프로젝트 한 줄 설명</p>
+              <div class="project-form-content" style="width: 100%; margin-left: 0px; padding-right: 90px;">
+                <input id="poster_description" name="description" type="text" class="project_form_input_base project_form_poster_input_description" value="{{ $project->description }}"/>
+                <p class="project_form_length_text" style="padding-top: 10px; margin-left: 0px;">한 문장으로 여러분의 프로젝트를 설명해야 한다면, 뭐라고 하시겠어요?</p>
+              </div>
+          </div>
+
+          <div class="project_form_button_wrapper" style="margin-right: 40px;">
+            <div class="flex_layer">
+              @include('form_method_spoofing', ['method' => 'put'])
+              <button id="update_poster" type="button" class="btn btn-success center-block project_form_button">저장</button>
+              <button id="update_and_next" type="button" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- 우측화면 -->
+      <div class="project_form_poster_sampleview_container">
+        <div style="text-align: left; margin-top: 70px;">
+          <img src="{{ asset('/img/app/img_sampleview.png') }}">
+        </div>
+
+        @include('template.carousel_main_project', ['projects' => [$project], 'colOnly' => true])
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
 <div class="form-body-default-container">
   <form id="poster_form" action="{{ url('projects/posters') }}/{{ $project->id }}" method="post" role="form">
     <div class="project-form-content-grid">
@@ -43,50 +118,5 @@
         저장하기
     </button>
   </form>
-</div>
-
-<!--
-<div class="row ps-update-poster">
-    <img src="{{ asset('/img/app/img_update_project_poster.png') }}" class="center-block"/>
-    <h2>포스터 설정</h2>
-    <div class="col-md-12">
-        <h5 class="bg-info">CROWDTICKET에 붙여 놓을 여러분의 공연포스터를 만들어보세요!
-            <br/>
-            멋진 이미지로 더 많은 사람들의 주목을 받을 수 있습니다.</h5>
-    </div>
-    <div class="col-md-8">
-        <form id="poster_form" action="{{ url('/projects/') }}/{{ $project->id }}" method="post" role="form">
-            <div class="form-group">
-                <label for="poster_file" class="control-label">대표 이미지</label>
-                <input id="poster_file" type="file" name="poster" style="height: 0; visibility: hidden"/>
-                <div id="poster_preview" style="background-image: url('{{ $project->getPosterUrl() }}');"
-                     class="bg-base">
-                    <div class="middle">
-                        <a href="#" id="poster_file_fake" class="btn btn-primary">찾아보기</a>
-                    </div>
-                </div>
-                <p class="help-block">
-                    여러분의 프로젝트를 가장 잘 나타낼 수 있는 이미지를 업로드 해주세요.<br/>
-                    (2MB 이하의 이미지를 올려주세요, 권장사이즈는 620x452px 입니다.)
-                </p>
-            </div>
-            <div class="form-group">
-                <label for="poster_description" class="control-label">포스터 설명</label>
-                <input id="poster_description" type="text" class="form-control" name="description" maxlength="60"
-                       value="{{ $project->description }}"/>
-                <p class="help-block">
-                    한 문장으로 여러분의 프로젝트를 설명해야 한다면, 뭐라고 하시겠어요?
-                </p>
-            </div>
-            @include('form_method_spoofing', ['method' => 'put'])
-            <button type="submit" class="btn btn-success center-block">
-                저장하기
-            </button>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <img src="{{ asset('/img/app/img_sampleview.png') }}" class="ps-update-sampleview-img"/>
-        @include('template.project', ['projects' => [$project], 'colOnly' => true])
-    </div>
 </div>
 -->

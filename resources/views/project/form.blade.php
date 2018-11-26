@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/editor.css') }}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
     <style>
         .ps-update-tabs {
             margin-top: 48px;
@@ -83,10 +84,6 @@
             height: 130px;
         }
 
-        #ticket_list {
-            margin-bottom: 3em;
-        }
-
         .ticket .ticket-footer,
         .ticket .ticket-wrapper {
             border-bottom-right-radius: 0;
@@ -162,14 +159,27 @@
         .ps-update-creator .box-creator-profile {
             margin-top: 15px;
         }
+
+        .note-frame{
+          background-color: white;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: left;
+        }
+
+        .note-editing-area{
+          width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
     </style>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_default.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_poster.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_creator.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=4') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/tooltip/tippy.css?version=1') }}"/>
 
 @endsection
 
@@ -220,34 +230,44 @@ array_push($tabs, [
     //project type에 저장되어 있는게 있다면, 이미 분류쪽 선택은 끝난 상태
     $isReqiredSuccess = "TRUE";
   }
+
+  $tabInfoJson = json_encode($tabs);
 ?>
 <input type="hidden" id="project_type" value="{{ $project->project_type }}"/>
 <input type="hidden" id="project_id" value="{{ $project->id }}"/>
 <input type="hidden" id="isReqiredSuccess" value="{{$isReqiredSuccess}}">
 <input type="hidden" id="default_img" value="{{ url( $project->getDefaultImgUrl() ) }}"/>
 
+<input type="hidden" id="selected_tab" value="{{$selected_tab}}"/>
+<input type="hidden" id="tabInfoJson" value="{{$tabInfoJson}}"/>
+
+<input id="project_target" type="hidden" name="project_target" value="{{ $project->project_target }}">
+
 <div class="project-form-container">
-  <div class="project-form-tab-container @if ($project->isReady()) project-form-tab-container-ready @endif">
-    @foreach ($tabs as $tab)
-        <div class="project-form-tab-wrapper">
-            <a href="#" onclick="tabSelect('{{ $tab['key'] }}'); return false;">
-                <div class="project-form-tab @if ($tab['key'] === $selected_tab) project-form-tab-select @endif">
-                    <img src="{{ $tab['ico_url'] }}"/>
-                    <h5 class="ps-update-tab-title">{{ $tab['title'] }}</h5>
-                </div>
-            </a>
-        </div>
-    @endforeach
-    <div class="project-form-tab-preview-btn">
-        <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
-           target="_blank">미리보기</a>
+  <div class="project-form-tab-container">
+    <div class="flex_layer_project">
+      @foreach ($tabs as $tab)
+          <div class="project-form-tab-wrapper">
+              <a href="#" tab-key-value="{{ $tab['key'] }}" onclick="tabSelect('{{ $tab['key'] }}'); return false;">
+                  <div class="project-form-tab @if ($tab['key'] === $selected_tab) project-form-tab-select @endif">
+                      <img src="{{ $tab['ico_url'] }}"/>
+                      <h5 class="ps-update-tab-title">{{ $tab['title'] }}</h5>
+                  </div>
+              </a>
+          </div>
+      @endforeach
+      <div class="project-form-tab-preview-btn">
+          <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
+             target="_blank">미리보기</a>
+      </div>
+      @if ($project->isReady())
+          <div class="project-form-tab-submit-btn">
+              <button id="submit_project" class="btn btn-primary">제출하기</button>
+          </div>
+      @endif
     </div>
-    @if ($project->isReady())
-        <div class="project-form-tab-submit-btn">
-            <button id="submit_project" class="btn btn-primary">제출하기</button>
-        </div>
-    @endif
   </div>
+</div>
 
   <div class="project-form-content-container">
     @if ($selected_tab === 'required')
@@ -268,7 +288,7 @@ array_push($tabs, [
         @include('project.form_body_creator', ['project' => $project, 'user' => Auth::user()])
     @endif
   </div>
-</div>
+
 
 @endsection
 
@@ -276,7 +296,10 @@ array_push($tabs, [
     @include('template.ticket')
     @include('template.discount')
     @include('template.goods', ['isForm' => 'true'])
-    @include('template.goods_container')
+    @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=3') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=4') }}"></script>
+    <script src="{{ asset('/js/tooltip/tippy.min.js?version=1') }}"></script>
+    <script src="{{ asset('/js/tooltip/tooltip.js?version=1') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
 @endsection

@@ -23,12 +23,16 @@
 
 .project-form-goods-item-btn-container{
   margin-top: 5px;
+  text-align: right;
 }
 
 .project_form_goods_container{
-  width: 100%;
-  height: 305px;
-  /*border: 1px solid #dddddd;*/
+  width: 295px;
+  height: 100%;
+
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-bottom: 30px;
 }
 
 .project-form-goods-list-container-grid{
@@ -48,6 +52,8 @@
   padding: 20px 15px;
   border: 1px solid #dddddd;
   text-align: left;
+  word-break: break-word;
+  background-color: white;
 }
 
 .project-form-goods-item-content>h4{

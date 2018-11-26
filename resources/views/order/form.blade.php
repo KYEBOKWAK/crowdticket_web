@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
         .ps-section-title {
@@ -325,9 +325,9 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">연락처</p>
               @if ($order)
-                <input id="phone" type="text" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
+                <input id="phone" type="tel" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
               @else
-                <input id="phone" type="text" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
+                <input id="phone" type="tel" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
               @endif
             </div>
           </div>
@@ -761,17 +761,17 @@
           var isSubmit = false;
 
           $('#ticketing-btn-payment').click(function(){
-            var regExp = /^[0-9]+$/;
-             if(!regExp.test($('#phone').val()))
+
+             if(isCheckPhoneNumber($('#phone').val()) == false)
              {
-               alert("전화번호에 숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
+               //alert("전화번호에 숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
                return;
              }
 
-             var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-             if(!regExpEmail.test($('#email').val()))
+
+             if(isCheckEmail($('#email').val()) == false)
              {
-               alert("이메일이 잘못입력되었습니다.");
+               //alert("이메일이 잘못입력되었습니다.");
                return;
              }
 

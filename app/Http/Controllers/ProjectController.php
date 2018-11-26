@@ -9,6 +9,7 @@ use App\Models\City as City;
 use App\Models\Model as Model;
 use App\Models\Project as Project;
 use App\Models\Order as Order;
+use App\Models\Poster as Poster;
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response;
 use Storage as Storage;
@@ -218,7 +219,18 @@ class ProjectController extends Controller
       $posters = $project->posters()->first();
       if(is_null($posters))
       {
-        return '';
+        //return '';
+        //프로젝트 정보가 없으면 poster DB 생성
+        $posters = new Poster(\Input::all());
+        $posters->project()->associate($project);
+
+        $posters->setAttribute('poster_img_cache', 0);
+        $posters->setAttribute('title_1_img_cache', 0);
+        $posters->setAttribute('title_2_img_cache', 0);
+        $posters->setAttribute('title_3_img_cache', 0);
+        $posters->setAttribute('title_4_img_cache', 0);
+
+        $posters->save();
       }
 
       $postersArray['id'] = $posters->id;
@@ -545,6 +557,19 @@ class ProjectController extends Controller
         $project->setAttribute('story', ' ');
         $project->setAttribute('type', $blueprint->type);
         $project->save();
+
+        //프로젝트 만들때 포스터 DB 생성
+        $poster = new Poster(\Input::all());
+        $poster->project()->associate($project);
+
+        $poster->setAttribute('poster_img_cache', 0);
+        $poster->setAttribute('title_1_img_cache', 0);
+        $poster->setAttribute('title_2_img_cache', 0);
+        $poster->setAttribute('title_3_img_cache', 0);
+        $poster->setAttribute('title_4_img_cache', 0);
+
+        $poster->save();
+
         return $project;
     }
 

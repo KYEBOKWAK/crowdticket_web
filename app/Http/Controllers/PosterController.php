@@ -17,6 +17,7 @@ class PosterController extends Controller
 
       $poster = '';
       $data = json_decode($project->posters, true);
+
       if(empty($data))
       {
         //데이터가 없으므로 새로 만들어준다.

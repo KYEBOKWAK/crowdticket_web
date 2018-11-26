@@ -6249,3 +6249,17 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+
+/* 체크박스 START*/
+@supports (zoom:2) {
+	input[type="radio"],  input[type=checkbox]{
+	zoom: 2;
+	}
+}
+@supports not (zoom:2) {
+	input[type="radio"],  input[type=checkbox]{
+		transform: scale(2);
+		margin: 15px;
+	}
+}
+/* 체크박스 END*/

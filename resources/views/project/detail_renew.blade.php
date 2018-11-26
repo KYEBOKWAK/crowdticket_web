@@ -11,8 +11,8 @@
 
 @section('css')
     <link href="{{ asset('/css/detail.css?version=8') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=2') }}"/>
     <style>
         .container h2 {
             margin-top: 60px;
@@ -373,7 +373,7 @@ $selectedTicket = "";
     @include('template.detail_ticket_seat')
     @include('template.shareForm')
     @include('template.fbForm', ['project' => $project])
-    @include('template.goods_container')
+    @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
     <script src="{{ asset('/js/project/detail.js?version=6') }}"></script>

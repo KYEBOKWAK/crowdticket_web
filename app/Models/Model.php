@@ -22,6 +22,17 @@ abstract class Model extends BaseModel
     protected static $updateRules = array();
 
     public static function getS3Directory($dir) {
+
+        if(env('APP_TYPE'))
+        {
+          return env('APP_TYPE'). '/' . $dir;
+        }
+        else
+        {
+          return 'newtest/' . $dir;
+        }
+
+        //예전코드
         if (Config::get('app.debug')) {
             return 'newtest/' . $dir;
         }

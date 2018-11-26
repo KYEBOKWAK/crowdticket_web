@@ -111,7 +111,8 @@
     right:0;
     bottom:0;
     max-width:100%;
-    height:auto;
+    /*height:auto;*/
+    height: 100%;
 }
 
 .project-grid-wrapper .project-thumbnail {

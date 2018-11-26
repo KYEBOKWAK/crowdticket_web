@@ -5,11 +5,12 @@ class Goods extends Model
 
     protected $table = 'goods';
 
-    protected $fillable = ['limit_count', 'price','img_cache', 'title', 'content', 'img_url'];
+    protected $fillable = ['limit_count', 'price', 'ticket_discount', 'img_cache', 'title', 'content', 'img_url'];
 
     protected static $typeRules = [
         'limit_count' => 'integer|min:0',
         'price' => 'integer|min:0',
+        'ticket_discount' => 'integer|min:0',
         'img_cache' => 'integer|min:0',
         'title' => 'string|min:0',
         'content' => 'string|min:0',

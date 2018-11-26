@@ -1,9 +1,5 @@
 /*ticket START*/
 
-#ticket_list{
-  margin: 0;
-}
-
 .project-form-ticket-date-container-grid{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

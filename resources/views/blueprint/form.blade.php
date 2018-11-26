@@ -1,18 +1,12 @@
 @extends('app')
 
 @section('css')
-    <link href="{{ asset('/css/blueprint/project-form-create.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/blueprint/project-form-create.css?version=2') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 <!-- 새로고침 코드 넣으려고 했으나 하나의 아이디로 여러 프로젝트가 있을 수 있기 때문에 바로바로 저장 하는 수 밖에 없음 -->
-
 <div class="project-form-create-container">
-  <div class="project-form-create-wrapper">
-    <div class="project-form-create-title-img-wrapper">
-        <img src="{{ asset('/img/app/img_blueprint_funding.png') }}" class="img-blueprint"/>
-    </div>
-
     <div class="project-form-create-title-wrapper">
       <h1>
         @if($isProject == 'true')
@@ -30,14 +24,15 @@
         @endif
       </h5>
     </div>
+  <div class="project-form-create-wrapper">
     @if($isProject == 'true')
       <form action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
     @else
       <form action="{{ url('/question/sendmail') }}" method="post" data-toggle="validator" role="form">
     @endif
         <div class="form-group">
-            <label for="input-user-intro">프로젝트 개설자</label>
-            <input id="input-user-intro" name="user_introduction" type="text" class="form-control"
+            <p class="project_form_create_title">프로젝트 개설자</p>
+            <input id="input-user-intro" name="user_introduction" type="text" class="project_form_create_input"
                    required/>
             <p class="help-block">
                 공연기획자 ‘000’, 뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’, 뷰티 콘텐츠크리에이터 ‘000’ 등
@@ -45,13 +40,13 @@
         </div>
         <div class="form-group">
           @if($isProject == 'true')
-            <label for="input-project-intro">기획중인 프로젝트</label>
+            <p class="project_form_create_title">기획중인 프로젝트</p>
           @else
-            <label for="input-project-intro">문의 내용</label>
+            <p class="project_form_create_title">문의 내용</p>
           @endif
 
           @if($isProject == 'true')
-            <input id="input-project-intro" name="project_introduction" type="text" class="form-control"
+            <input id="input-project-intro" name="project_introduction" type="text" class="project_form_create_input"
                    required/>
                    <p class="help-block">
                        인디밴드 ‘000’의 단독콘서트, 극단 ‘000’의 정기공연, 팬미팅, 팬들과 함께하는 먹방 투어 등
@@ -62,8 +57,8 @@
 
         </div>
         <div class="form-group">
-            <label for="input-contact">이메일</label>
-            <input id="input-contact" name="contact" type="email" class="form-control" required/>
+            <p class="project_form_create_title">이메일</p>
+            <input id="input-contact" name="contact" type="email" class="project_form_create_input" required/>
         </div>
         @include('helper.contact', [
             'label' => '전화번호',

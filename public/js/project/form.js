@@ -37,7 +37,7 @@ $(document).ready(function() {
 		});
 	};
 
-	var updateDefault = function() {
+	var updateDefault = function(isNext = false) {
 		updateProject({
 			'title': $('#title').val(),
 			'alias': $('#alias').val(),
@@ -49,26 +49,40 @@ $(document).ready(function() {
 			'funding_closing_at': $('#funding_closing_at').val(),
 			'detailed_address': $('#detailed_address').val(),
 			'concert_hall': $('#concert_hall').val(),
-			'project_target': $('#project_target').val()
-		});
+			'project_target': $('#project_target').val(),
+			'temporary_date': $('#temporary_date').val()
+		}, isNext);
 	};
 
-	var updateProject = function(data) {
+	var updateProject = function(data, isNext = false) {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId;
 		var method = 'put';
 
-		//alert(JSON.stringify(data));
-		//return;
 		var success = function(e) {
 			$('#isReqiredSuccess').val('TRUE');
 
-			alert('저장되었습니다.');
-			alert(JSON.stringify(e));
+			//swal("저장되었습니다.", "", "success");
+
+			swal("저장되었습니다", {
+							  buttons: {
+							    save: {
+							      text: "확인",
+							      value: "save",
+							    },
+							  },
+
+								icon: "success",
+							})
+							.then((value) => {
+								if(isNext == true)
+								{
+									nextTabSelect();
+								}
+							});
 		};
 		var error = function(e) {
-			alert('저장에 실패하였습니다.');
-			alert(JSON.stringify(e));
+			swal("저장에 실패하였습니다.", "", "error");
 		};
 
 		$.ajax({
@@ -87,13 +101,78 @@ $(document).ready(function() {
 			if(tickets)
 			{
 				if (tickets.length > 0) {
+					setHaveTicketText(true);
 					for (var i = 0, l = tickets.length; i < l; i++) {
 						addTicketRow(tickets[i]);
 					}
 				}
+				else
+				{
+					setHaveTicketText(false);
+				}
 			}
 		}
 	};
+
+	var setHaveTicketText = function(isTicket){
+		//$('#ticket_list').remove();
+		if(isTicket == true)
+		{
+			$('#ticket_no_ticket').hide();
+		}
+		else
+		{
+			$('#ticket_no_ticket').show();
+		}
+	};
+
+	var checkNoTicket = function()
+	{
+		var ticketCount = 0;
+		$('.ticket').each(function(){
+			ticketCount++;
+			return false;
+		});
+
+		if(ticketCount > 0)
+		{
+			setHaveTicketText(true);
+		}
+		else
+		{
+			setHaveTicketText(false);
+		}
+	}
+
+	var setHaveDiscountText = function(isTicket){
+		//$('#ticket_list').remove();
+		if(isTicket == true)
+		{
+			$('#discount_no_list').hide();
+		}
+		else
+		{
+			$('#discount_no_list').show();
+		}
+	};
+
+	var checkNoDiscount = function()
+	{
+		var ticketCount = 0;
+		$('.discount').each(function(){
+			ticketCount++;
+			return false;
+		});
+
+		if(ticketCount > 0)
+		{
+			setHaveDiscountText(true);
+		}
+		else
+		{
+			setHaveDiscountText(false);
+		}
+	}
 
 	var validateTicketData = function(ticket) {
 		return true;
@@ -113,16 +192,13 @@ $(document).ready(function() {
 		var method = 'post';
 		var data = getTicketFormData();
 
-		//alert(JSON.stringify(data));
-
 		if (validateTicketData(data)) {
 			var success = function(result) {
-				//clearTicketForm();
 				addTicketRow(result);
+				checkNoTicket();
 			};
 			var error = function(request) {
 				alert('보상 추가에 실패하였습니다.');
-				//alert(JSON.stringify(request));
 			};
 
 			$.ajax({
@@ -347,6 +423,7 @@ $(document).ready(function() {
 
 		var success = function(result) {
 			ticket.remove();
+			checkNoTicket();
 		};
 		var error = function(request) {
 			alert('삭제에 실패하였습니다.');
@@ -359,39 +436,66 @@ $(document).ready(function() {
 			'error': error
 		});
 	};
-/*
-	var posterAjaxOption = {
-		'beforeSerialize': function($form, options) {
-			$posterFile = $('#poster_file');
-			if ($posterFile.val() === '') {
-				$posterFile.prop("disabled", true);
-			} else {
-				$posterFile.prop("disabled", false);
-			}
-		},
-		'success': function(result) {
-			//alert(JSON.stringify(result.id));
-			//console.log(JSON.stringify(result));
-			alert('저장되었습니다.');
-		},
-		'error': function(data) {
-			alert("저장에 실패하였습니다.");
-		}
-	};
-*/
+
 	var onDescriptionChanged = function() {
 		var description = $('#poster_description').val();
 		$('.project-description').text(description);
 	};
 
 	var updateStory = function() {
+
+		var markupStr = $('#summernote').summernote('code');
+		updateProject({
+			'story': markupStr
+		});
+
+		/*
 		EasyDaumEditor.save(function(content) {
 			updateProject({
 				'video_url': $('#video_url').val(),
 				'story': content
 			});
 		});
+		*/
 	};
+
+	$('#summernote').summernote({
+    placeholder: 'Hello stand alone ui',
+    tabsize: 2,
+    height: 1000,
+    width: 790,
+		callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+		            for (var i = files.length - 1; i >= 0; i--) {
+		            	sendFile(files[i], this);
+		            }
+		        }
+			}
+  });
+
+	var sendFile = function(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: "POST",
+        	url: './profileImage.mpf',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});
+    }
+
+	if($('#tx_load_content').val())
+  {
+    var markupStr = $('#tx_load_content').val();
+
+    $('#summernote').summernote('code', markupStr);
+  }
 
 	var submitProject = function() {
 		if (window.confirm('정말 제출하시겠습니까?')) {
@@ -415,31 +519,16 @@ $(document).ready(function() {
 	};
 
 	//form_body_required
-	var updateRequired = function(){
+	var updateRequired = function(isNext = false){
 		//유효성 체크
 		if(requiredVaildCheck() == true){
-			var temporary_date = $('#temporary_date').val();
-			if(temporary_date == "FALSE")
-			{
-				temporary_date = '';
-			}
-
-			alert(temporary_date);
-
-			//프로젝트 타입이 티켓 판매라면 타겟이 어떤값이든 초기화 시켜준다.
-			var saleType = $('#saleType').val();
-			var projectTarget = $('#projectTarget').val();
-			if(saleType === "sale")
-			{
-				projectTarget = "";
-			}
-
 			updateProject({
-				'type': saleType,
+				'type': $('#saleType').val(),
 				'project_type': $('#projectType').val(),
-				'temporary_date': temporary_date,
-				'project_target': projectTarget
-			});
+				//'temporary_date': temporary_date,
+				'isPlace' : $('#isPlace').val(),
+				'project_target': $('#project_target').val()
+			}, isNext);
 		}
 	};
 
@@ -472,13 +561,11 @@ $(document).ready(function() {
 		//alert(JSON.stringify(data));
 		if (validateDiscountData(data)) {
 			var success = function(result) {
-				alert('할인 정보 추가 성공!');
-				//clearTicketForm();
 				addDiscountRow(result);
+				checkNoDiscount();
 			};
 			var error = function(request) {
 				alert('할인 정보 추가에 실패하였습니다.');
-				alert(JSON.stringify(request));
 			};
 
 			$.ajax({
@@ -496,7 +583,6 @@ $(document).ready(function() {
 			//'price': $('#discount_content_input').val()
 			'percent_value': $('#discount_percent_value_input').val(),
 			'content': $('#discount_content_input').val(),
-			'limite_count': $('#discount_limite_input').val(),
 			'submit_check': $('#discount_submit_input').val()
 		};
 	};
@@ -517,9 +603,14 @@ $(document).ready(function() {
 		if (discountsJson) {
 			var discounts = $.parseJSON(discountsJson);
 			if (discounts.length > 0) {
+				setHaveDiscountText(true);
 				for (var i = 0, l = discounts.length; i < l; i++) {
 					addDiscountRow(discounts[i]);
 				}
+			}
+			else
+			{
+				setHaveDiscountText(false);
 			}
 		}
 	};
@@ -567,9 +658,10 @@ $(document).ready(function() {
 		var discountId = discount.attr('data-discount-id');
 		var url = '/discounts/' + discountId;
 		var method = 'delete';
-		alert(url);
+
 		var success = function(result) {
 			discount.remove();
+			checkNoDiscount();
 		};
 		var error = function(request) {
 			alert('삭제에 실패하였습니다.');
@@ -626,54 +718,32 @@ $(document).ready(function() {
 
 	//goods START
 	var createGoods = function(){
+		var goodsPrice = $('#goods_price_input').val();
+		if(goodsPrice < 0)
+		{
+			swal("굿즈 가격 오류", "", "error");
 
-	};
-	/*
-	var createGoods = function(){
-		var projectId = $('#project_id').val();
-		var url = '/projects/' + projectId + '/goods';
-
-		var method = 'post';
-
-		var form = getGoodsFormData();
-		//var form = new FormData();
-		//form.append('price', $('#goods_price_input').val());
-		//form.append('title', $('#goods_title_input').val());
-		//form.append('content', $('#goods_content_input').val());
-		//form.append('img_url', $('#goods_img_file').val());
-		//var data = getGoodsFormData();
-		//'price': $('#goods_price_input').val(),
-		//'title': $('#goods_title_input').val(),
-		//'content': $('#goods_content_input').val(),
-		//'img_url': $('#goods_img_file').val()
-
-		//var formData = new FormData(document.getElementById('#goods_img_file'));
-		//alert(url);
-		//alert(JSON.stringify(form.get('img_url')));
-		if (validateGoodsData(form)) {
-			var success = function(result) {
-				alert(JSON.stringify(result));
-				//console.log(JSON.stringify(result));
-				//alert('MD 정보 추가 성공!');
-				//clearTicketForm();
-				//addTicketRow(result);
-			};
-			var error = function(request) {
-				alert('MD 정보 추가에 실패하였습니다.');
-				alert(JSON.stringify(request));
-			};
-
-			$.ajax({
-				'url': url,
-				'method': method,
-				'data': form,
-				'success': success,
-				'error': error
-			});
-
+			return false;
 		}
+
+		$('#updatebutton').val('');
+
+		$('#goods_form').submit();
 	};
-	*/
+
+	var updateGoods_btn = function(){
+		var goodsPrice = $('#goods_price_input').val();
+		if(goodsPrice < 0)
+		{
+			swal("굿즈 가격 오류", "", "error");
+
+			return false;
+		}
+
+		$('#updatebutton').val('TRUE');
+
+		$('#goods_form').submit();
+	};
 
 	var getGoodsFormData = function(){
 		return {
@@ -691,12 +761,10 @@ $(document).ready(function() {
 	};
 
 	var onGoodsImgChanged = function() {
-		alert("img change");
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$('#goods_img_preview').css('background-image', "url('" + e.target.result + "')");
-				//$('.project-thumbnail').css('background-image', "url('" + e.target.result + "')");
+				setGoodsImgPreview(e.target.result);
 			};
 			reader.readAsDataURL(this.files[0]);
 		}
@@ -709,21 +777,12 @@ $(document).ready(function() {
 	var goodsAjaxOption = {
 		'beforeSerialize': function($form, options) {
 			$goods_img_file = $('#goods_img_file');
-			if ($goods_img_file.val() === '') {
-				//$goods_img_file.prop("disabled", true);
-			} else {
-				//$goods_img_file.prop("disabled", false);
-			}
+
 		},
 		'success': function(result) {
-			//alert(JSON.stringify(result.img_url));
-			//console.log(JSON.stringify(result));
-			alert('성공! 저장되었습니다.');
-
 			if(result['goodsState'] === 'updategoods') {
-				updateGoods(result['goods']);
+				updateGoods(result['goods'], result['goodsList']);
 				clearGoodsForm();
-				//alert(JSON.stringify(result['goods']));
 			}
 			else {
 				addGoodsRow(result['goods']);
@@ -788,17 +847,24 @@ $(document).ready(function() {
 		$('#goods_price_input').val(goodsData.price);
 		$('#goods_content_input').val(goodsData.content);
 
-		$('#goods_img_preview').css('background-image', "url('" + goodsData.img_url + "')");
-		//$('#discount_submit_input').val(goodsData.submit_check);
+		setGoodsImgPreview(goodsData.img_url);
 		$('#goodsId').val(goodsData.id);
+
+		$('#ticket_discount_input').val(goodsData.ticket_discount);
 
 		$('#update_goods').attr('data-goods-id', goods.attr('data-goods-id'));
 	};
 
-	var updateGoods = function(goods) {
+	var updateGoods = function(goods, resultlist) {
 		var goodsItem = $('.goods-item[data-goods-id=' + goods.id + ']');
+
+		var goodsParents = goodsItem.parents();
+
 		goodsItem.remove();
-		addGoodsRow(goods);
+
+		goodsListRefresh(goodsParents, resultlist);
+		//goodsItem.remove();
+		//addGoodsRow(goods);
 		cancelModifyGoods();
 	};
 
@@ -829,6 +895,38 @@ $(document).ready(function() {
 			'error': error
 		});
 	};
+
+	var setGoodsImgPreview = function(url){
+		if(url)
+		{
+			$('#goods_file_sub').show();
+
+			$('#goods_img_preview').show();
+			$('#goods_img_preview').css('background-image', "url('" + url + "')");
+		}
+		else
+		{
+			$('#goods_file_sub').hide();
+
+			$('#goods_img_preview').hide();
+			$('#goods_img_preview').css('background-image', "");
+		}
+	};
+
+	$('#goods_file_sub').click(function(){
+		setGoodsImgPreview('');
+
+		if ($.browser.msie)
+		{
+	 		// ie 일때 input[type=file] init.
+			$("#goods_img_file").replaceWith( $("#goods_img_file").clone(true) );
+		}
+		else
+		{
+			// other browser 일때 input[type=file] init.
+			$("#goods_img_file").val("");
+		}
+	});
 
 	var goodsListRefresh =  function(goodsParents, goodsListJson) {
 		//다 지우고 다시 재정렬 한다.
@@ -863,10 +961,88 @@ $(document).ready(function() {
 		$('#goods_price_input').val('');
 		$('#goods_content_input').val('');
 		$('#goodsId').val('');
+		$('#ticket_discount_input').val(0);
 
-		$('#goods_img_preview').css('background-image', "url('" + $('#default_img').val() + "')");
+		//$('#goods_img_preview').css('background-image', "url('" + $('#default_img').val() + "')");
+		setGoodsImgPreview('');
 	};
 	//goods end
+
+	var updatePoster = function(){
+		$('#poster_form').submit();
+	};
+
+	var nextCheck = function(){
+		var selected_tab = $('#selected_tab').val();
+		swal("저장 후 다음으로 가시겠습니까?", {
+						  buttons: {
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
+								nosave: {
+						      text: "아니오",
+						      value: "notsave",
+						    },
+
+						  },
+						})
+						.then((value) => {
+						  switch (value) {
+						    case "save":
+								{
+									if(selected_tab == 'required')
+									{
+										updateRequired(true);
+									}
+									else if(selected_tab == 'base')
+									{
+										updateDefault(true);
+									}
+									else if(selected_tab == 'poster')
+									{
+
+									}
+								}
+						    break;
+
+								case "notsave":
+								{
+									nextTabSelect();
+								}
+								break;
+						  }
+						});
+	};
+
+	var nextTabSelect = function(){
+		var selectTab = $('#selected_tab').val();
+
+		var tabInfoJson = $('#tabInfoJson').val();
+		var tabInfoList = $.parseJSON(tabInfoJson);
+
+		var nextTabIndex = 0;
+		for(var i = 0 ; i < tabInfoList.length ; i++)
+		{
+			var index = i;
+			if(tabInfoList[i].key == selectTab)
+			{
+				index++;
+				if(index >= tabInfoList.length)
+				{
+					index = 0;
+				}
+
+				nextTabIndex = index;
+
+				break;
+			}
+		}
+
+		var nextTabKey = tabInfoList[nextTabIndex].key;
+
+		tabSelect(nextTabKey);
+	};
 
 
 	$('#check_alias').bind('click', checkAliasDuplicate);
@@ -876,15 +1052,16 @@ $(document).ready(function() {
 	$('#update_ticket').bind('click', updateTicket);
 	$('#cancel_modify_ticket').bind('click', cancelModifyTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
-	//$('#poster_form').ajaxForm(posterAjaxOption);
+
 	$('#update_story').bind('click', updateStory);
 	$('#submit_project').bind('click', submitProject);
-	//$('#poster_file_fake').bind('click', performPosterFileClick);
-	//$('#poster_file').change(onPosterChanged);
+
 	$('#poster_description').bind('input', onDescriptionChanged);
 
 	//분류 탭 저장 form_body_required
 	$('#update_required').bind('click', updateRequired);
+
+	$('#update_and_next').bind('click', nextCheck);
 	//티켓공지 저장
 	$('#ticket_notice_save').bind('click', ticketNoticeSave)
 
@@ -894,9 +1071,9 @@ $(document).ready(function() {
 	$('#update_discount').bind('click', updateDiscount);
 
 	//Goods
-	//$('#create_goods').bind('click', createGoods)
+	$('#create_goods').bind('click', createGoods)
 	$('#cancel_modify_goods').bind('click', cancelModifyGoods);
-	$('#update_goods').bind('click', createGoods);
+	$('#update_goods').bind('click', updateGoods_btn);
 
 	$('#goods_form').ajaxForm(goodsAjaxOption);
 
@@ -904,12 +1081,26 @@ $(document).ready(function() {
 	$('#goods_img_file').change(onGoodsImgChanged);
 
 	//poster
+	$('#update_poster').bind('click', updatePoster);
+
 	var performPosterTitleFileClick = function(){
 		var imgNumber = $(this).attr('data-img-number');
 		$('#title_img_file_'+imgNumber).trigger('click');
 	};
 
 	var onPosterTitleChanged = function(){
+		if (this.files && this.files[0]) {
+			var imgNumber = $(this).attr('data-img-number');
+			var posterId = $(this).attr('data-poster-id');
+
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				setPosterTitleImg(imgNumber, e.target.result, posterId, true);
+			};
+			reader.readAsDataURL(this.files[0]);
+		}
+
+		/*
 		if (this.files && this.files[0]) {
 			var imgNumber = $(this).attr('data-img-number');
 			var reader = new FileReader();
@@ -919,6 +1110,7 @@ $(document).ready(function() {
 			};
 			reader.readAsDataURL(this.files[0]);
 		}
+		*/
 	};
 
 	var performPosterFileClick = function() {
@@ -938,32 +1130,10 @@ $(document).ready(function() {
 
 	var posterAjaxOption = {
 		'beforeSerialize': function($form, options) {
-			/*
-			$goods_img_file = $('#goods_img_file');
-			if ($goods_img_file.val() === '') {
-				//$goods_img_file.prop("disabled", true);
-			} else {
-				//$goods_img_file.prop("disabled", false);
-			}
-			*/
 		},
 		'success': function(result) {
 			//var poster = JSON.stringify(result);
-			alert('성공! 저장되었습니다.');
-
-			//poster
-			setPosterIdDeleteBtn(result['id']);
-
-			//posterTitle
-			var titleFileName = '';
-			var titleImgDeleteBtnId = '';
-			var fileNumber = 0;
-			for (var i = 0, l = 4; i < l; i++) {
-				fileNumber = i+1;
-				titleFileName = 'title_img_file_'+fileNumber;
-
-				setPosterIdTitleDeleteBtn(fileNumber, result['id']);
-			}
+			swal('성공! 저장되었습니다.', '', 'success');
 		},
 		'error': function(data) {
 			alert("저장에 실패하였습니다.");
@@ -973,6 +1143,15 @@ $(document).ready(function() {
 	var listOldPosters = function(){
 		var postersJson = $('#posters_json').val();
 		if (postersJson) {
+			var posters = $.parseJSON(postersJson);
+
+			$('.title_img_preview').each(function(index, item){
+				var fileNumber = index + 1;
+				var titleFileName = 'title_img_file_'+fileNumber;
+
+				setPosterTitleImg(fileNumber, posters[titleFileName].img_url, posters['id'], posters[titleFileName].isFile);
+			});
+			/*
 			var posters = $.parseJSON(postersJson);
 			//alert(JSON.stringify(posters['title_img_file_1'].img_url));
 			var titleFileName = '';
@@ -995,25 +1174,37 @@ $(document).ready(function() {
 				//파일이 있으면 삭제 버튼 활성화
 				setPosterDeleteBtn(true);
 			}
+			*/
 		}
 	};
 
-	var setPosterTitleImg = function(titleFileNumber, imgUrl, posterId){
+	var setPosterTitleImg = function(titleFileNumber, imgUrl, posterId, isFile){
+		//alert(titleFileNumber + " / "+ posterId);
 		var posterTitleId = '#title_img_preview_'+titleFileNumber;
-		$(posterTitleId).css('background-image', "url('" + imgUrl + "')");
+		var posterAddBtn = '#title_img_file_fake_'+titleFileNumber;
 
-		setPosterIdTitleDeleteBtn(titleFileNumber, posterId);
+		if(isFile == true)
+		{
+			$(posterTitleId).show();
+			$(posterTitleId).attr('src', imgUrl);
+
+			$(posterAddBtn).hide();
+		}
+		else
+		{
+			$(posterTitleId).hide();
+			$(posterTitleId).attr('src', '');
+
+			$(posterAddBtn).show();
+		}
+
+		//setPosterIdTitleDeleteBtn(titleFileNumber, posterId);
+		setPosterTitleDeleteBtn(isFile, titleFileNumber);
 	};
 
-	var setPosterImg = function(imgUrl, posterId){
-		$('#poster_img_preview').css('background-image', "url('" + imgUrl + "')");
-
-		setPosterIdDeleteBtn(posterId);
-	}
-
 	var setPosterIdTitleDeleteBtn = function(titleFileNumber, posterId){
-		var deleteBtnId = '#delete-poster-title-img'+titleFileNumber;
-		$(deleteBtnId).attr('data-poster-id', posterId);
+		//var deleteBtnId = '#title_img_file_sub_'+titleFileNumber;
+		//$(deleteBtnId).attr('data-poster-id', posterId);
 	}
 
 	var setPosterIdDeleteBtn = function(posterId){
@@ -1022,7 +1213,7 @@ $(document).ready(function() {
 	}
 
 	var setPosterTitleDeleteBtn = function(isShow, btnNum){
-		var deleteBtnid = '#delete-poster-title-img'+btnNum;
+		var deleteBtnid = '#title_img_file_sub_'+btnNum;
 		if (isShow) {
 			$(deleteBtnid).show();
 		} else {
@@ -1046,11 +1237,11 @@ $(document).ready(function() {
 		var method = 'delete';
 
 		var success = function(result) {
-			alert("삭제 성공하였습니다." + JSON.stringify(result));
-			deleteTitlePosterImg(result);
+			deleteTitlePosterImg(result, posterId);
+			swal("삭제 성공!", "", "success");
 		};
 		var error = function(request) {
-			alert('삭제에 실패하였습니다.');
+			swal("삭제 실패", "", "error");
 		};
 
 		$.ajax({
@@ -1082,11 +1273,8 @@ $(document).ready(function() {
 		});
 	};
 
-	var deleteTitlePosterImg = function(imgNum){
-		$('#title_img_preview_'+imgNum).css('background-image', "url('" + $('#default_img').val() + "')");
-		$('#title_img_file_'+imgNum).val('');
-
-		setPosterTitleDeleteBtn(false, imgNum);
+	var deleteTitlePosterImg = function(imgNum, posterId){
+		setPosterTitleImg(imgNum, '', posterId, false);
 	}
 
 	var deletePosterImg = function(){
@@ -1096,21 +1284,17 @@ $(document).ready(function() {
 		setPosterDeleteBtn(false);
 	}
 
-	//반복되는 아이디 가져오는 방법을 몰라서 일단 1,2,3,4 추가해놈. 이미지가 늘어나면 이어서 bind 와 change만 추가하면 됨
-	$('#title_img_file_fake_1').bind('click', performPosterTitleFileClick);
-	$('#title_img_file_fake_2').bind('click', performPosterTitleFileClick);
-	$('#title_img_file_fake_3').bind('click', performPosterTitleFileClick);
-	$('#title_img_file_fake_4').bind('click', performPosterTitleFileClick);
+	$('.title_img_file_fake').each(function(){
+		$(this).bind('click', performPosterTitleFileClick);
+	});
 
-	$('#delete-poster-title-img1').bind('click', deletePosterTitle);
-	$('#delete-poster-title-img2').bind('click', deletePosterTitle);
-	$('#delete-poster-title-img3').bind('click', deletePosterTitle);
-	$('#delete-poster-title-img4').bind('click', deletePosterTitle);
+	$('.title_img_file').each(function(){
+		$(this).change(onPosterTitleChanged);
+	});
 
-	$('#title_img_file_1').change(onPosterTitleChanged);
-	$('#title_img_file_2').change(onPosterTitleChanged);
-	$('#title_img_file_3').change(onPosterTitleChanged);
-	$('#title_img_file_4').change(onPosterTitleChanged);
+	$('.project_form_poster_trash').each(function(){
+		$(this).bind('click', deletePosterTitle);
+	});
 
 	$('#poster_file_fake').bind('click', performPosterFileClick);
 	$('#poster_img_file').change(onPosterChanged);
@@ -1118,18 +1302,35 @@ $(document).ready(function() {
 
 	$('#poster_form').ajaxForm(posterAjaxOption);
 
-
-
 	//개설자 소개 start
 	var saveCreator = function(){
+		if(isCheckPhoneNumber($('#contact').val()) == false)
+		{
+			return;
+		}
 
+		if(isCheckEmail($('#email').val()) == false)
+		{
+			return;
+		}
+
+		var calcul_notice = $('#calcul_notice_check').is(':checked');
+		if(calcul_notice == false)
+		{
+			swal('유의사항을 읽고 체크 해주세요.', '', 'warning');
+			return;
+		}
+		//calcul_notice_check
+
+		$('#creator_form').submit();
 	};
 
 	var listOldChannel = function() {
+		var channelCount = 0;
 		var channelJson = $('#channels_json').val();
 		if (channelJson) {
 			var channels = $.parseJSON(channelJson);
-			//alert(JSON.stringify(channels));
+			channelCount = channels.length;
 			if (channels.length > 0) {
 				for (var i = 0, l = channels.length; i < l; i++) {
 					addChannelRow(channels, i);
@@ -1137,19 +1338,59 @@ $(document).ready(function() {
 			}
 		}
 
+		if(channelCount == 0)
+		{
+			addChannelRow('', 0);
+		}
+
+		setChannelAddBtn();
+	};
+
+	var reListChannel = function(){
+		//채널정보 재정렬
+		//기존 데이터 세이브
+		var channelTempArray = new Array();
+		//channelTempArray.push
+		$('.channel').each(function(){
+			var data = $(this).data('channelData');
+			//alert(JSON.stringify(data));
+
+			channelTempArray.push(data);
+		});
+
+		$('#channel_list').children().remove();
+
+		//var abc = $.parseJSON(channelTempArray);
+
+		for(var i = 0 ; i < channelTempArray.length ; i++)
+		{
+			addChannelRow(channelTempArray, i);
+		}
+
+		if(channelTempArray.length == 0)
+		{
+			addChannelRow('', 0);
+		}
+
 		setChannelAddBtn();
 	};
 
 	var addChannelRow = function(channels, index) {
-		var channelListSize = $('#channel_list').children().size();
-		if(channelListSize >= 6){
-			alert('최대 6개 입니다.');
+		//var channelListSize = $('#channel_list').children().size();
+		var channelCount = 1;
+		$('.channel').each(function(){
+			channelCount++;
+		});
+
+		if(channelCount > 6){
+			swal('최대 6개 입니다.', '', 'error');
 			return;
 		}
 
 		var channel = '';
 		var isFake = '';
-		if(channels == '') {
+		if(channels == '')
+		{
 			channel = {
 									"id" : "",
 									"isFake" : "true",
@@ -1162,7 +1403,6 @@ $(document).ready(function() {
 
 		channel['index'] = index;
 		channel['isFake'] = isFake;
-		//var channel = channels[index];
 
 		var templateChannel = $('#template_channel').html();
 		var compiled = _.template(templateChannel);
@@ -1173,7 +1413,7 @@ $(document).ready(function() {
 		$('#channel_list').append($row);
 
 		//카테고리 옵션 변경
-		$row.children('#channel_category').val(channel.categories_channel_id).prop("selected", true);
+		$('#channel_category'+index).val(channel.categories_channel_id).prop("selected", true);
 
 		$row.find('.add-channel').bind('click', addChannelFakeRow);
 		$row.find('.delete-channel').bind('click', deleteChannel);
@@ -1190,21 +1430,16 @@ $(document).ready(function() {
 		var channelListSize = $('#channel_list').children().size();
 		$( ".channel" ).each(function( index, element ) {
 
-			var addChannelBtn = $(element).children('.project-form-chaanel-button-container').children('.add-channel');
-
-			var urlInput = $(element).children('#channel_category_url_input');
-			var categoryInput = $(element).children('#channel_category');
-			var channelIdInput = $(element).children('#channelId');
-
-			categoryInput.attr('name', 'channel_category'+index);
-			urlInput.attr('name', 'channel_category_url_input'+index);
-			channelIdInput.attr('name', 'channelId'+index);
+			var addChannelBtn = $("#add-channel"+index);
+			var deleteChannelBtn = $("#delete-channel"+index);
 
 			if(index == channelListSize-1) {
 				addChannelBtn.show();
+				//deleteChannelBtn.hide();
 			}
 			else {
 				addChannelBtn.hide();
+				//deleteChannelBtn.show();
 			}
   	});
 	};
@@ -1213,23 +1448,10 @@ $(document).ready(function() {
 	var updateChannelID = function(channels){
 		$.each(channels,function(key,value) {
 			$("input[name="+key+"]").val(value);
+			//console.error('key : ' + key + 'value : ' + value);
 		});
 	};
 
-/*
-	var addChannelRow = function(channel) {
-
-		var templateChannel = $('#template_channel').html();
-		var compiled = _.template(templateChannel);
-		var row = compiled({ 'channel': channel });
-		var $row = $($.parseHTML(row));
-		$row.data('channelData', channel);
-		$('#channel_list').append($row);
-
-		//$row.find('.modify-discount').bind('click', modifyDiscount);
-		$row.find('.delete-channel').bind('click', deleteChannel);
-	};
-*/
 	var deleteChannel = function() {
 		var channel = $(this).closest('.channel');
 		var channelId = channel.attr('data-channel-id');
@@ -1237,7 +1459,8 @@ $(document).ready(function() {
 		{
 			//채널아이디가 없으면 서버에 저장되지 않은 페이크 정보
 			channel.remove();
-			setChannelAddBtn();
+			//setChannelAddBtn();
+			reListChannel();
 			return;
 		}
 
@@ -1245,8 +1468,11 @@ $(document).ready(function() {
 		var method = 'delete';
 
 		var success = function(result) {
-			alert("성공!" + JSON.stringify(result));
+			//alert("성공!" + JSON.stringify(result));
 			channel.remove();
+			//setChannelAddBtn();
+			reListChannel();
+			swal('채널 제거 성공!', '', 'success');
 		};
 		var error = function(request) {
 			alert('삭제에 실패하였습니다.');
@@ -1268,6 +1494,9 @@ $(document).ready(function() {
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
+				$('#user-photo').show();
+				$('#user-default-photo').hide();
+				$('#isdeletephoto').val('');
 				$('#user-photo').css('background-image', "url('" + e.target.result + "')");
 			};
 			reader.readAsDataURL(this.files[0]);
@@ -1279,19 +1508,39 @@ $(document).ready(function() {
 		},
 		'success': function(result) {
 			var resultJson = $.parseJSON(result);
-			//alert(JSON.stringify(resultJson.length));
 			updateChannelID(resultJson);
-			alert('저장되었습니다.' + JSON.stringify(resultJson));
+			//alert('저장되었습니다.' + JSON.stringify(result));
+			swal("저장되었습니다.! 상단의 제출하기를 눌러주세요!", '', 'success');
+
 		},
 		'error': function(data) {
 			alert("저장에 실패하였습니다.");
 		}
 	};
 
-	//$('#save_creator').bind('click', saveCreator);
+	var deleteProfileFile = function(){
+		if ($.browser.msie)
+		{
+	 		// ie 일때 input[type=file] init.
+			$("#input-user-photo").replaceWith( $("#input-user-photo").clone(true) );
+		}
+		else
+		{
+			// other browser 일때 input[type=file] init.
+			$("#input-user-photo").val("");
+		}
+
+		$('#isdeletephoto').val('TRUE');
+		$('#user-photo').hide();
+		$('#user-default-photo').show();
+	};
+
+	$('#save_creator').bind('click', saveCreator);
 	$('#profile-upload-photo-fake').bind('click', performProfileFileClick);
 	$('#input-user-photo').change(onProfileChanged);
 	$('#creator_form').ajaxForm(profileAjaxOption);
+
+	$('#profile-delete-photo').bind('click', deleteProfileFile);
 	//개설자 소개 end
 
 	setShowTicketCategoryETCInput(false);
@@ -1315,16 +1564,225 @@ $(document).ready(function() {
 	listOldPosters();
 	listOldChannel();
 
+	//test//
+	//reListChannel();
+
 	$(window).bind('beforeunload', function() {
 		// return '페이지를 나가기 전에 저장되지 않은 정보를 확인하세요';
 	});
 });
+
+//form_body_required START
+$(document).ready(function() {
+	var setProjectType = function(projectType){
+		$('#projectType').val(projectType);
+		setProjectTypeButton();
+	};
+
+	var setSaleType = function(saleType){
+		$('#saleType').val(saleType);
+		setSaleTypeButton();
+	};
+
+	var setIsPlace = function(isPlace){
+		$('#isPlace').val(isPlace);
+		setIsPlaceButton();
+	};
+
+	var setFundTarget = function(fundTarget){
+		$('#project_target').val(fundTarget);
+		setFundTargetButton();
+	};
+
+	var setProjectTypeButton = function(){
+		var projectType = $('#projectType').val();
+		if(projectType == 'artist'){
+			//버튼
+			$('#artistsButton').addClass('project-form-required-type-button-select');
+			$('#creatorsButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_artist" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_creator" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+		}
+		else if(projectType == 'creator'){
+			//버튼
+			$('#artistsButton').removeClass('project-form-required-type-button-select');
+			$('#creatorsButton').addClass('project-form-required-type-button-select');
+
+			//버튼텍스트
+			$( ".project_form_button_text_artist" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_creator" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+		}
+	};
+
+	var setSaleTypeButton = function(){
+		var saleType = $('#saleType').val();
+		if(saleType == 'sale'){
+			//버튼
+			$('#fundingTypeButton').removeClass('project-form-required-type-button-select');
+			$('#saleTypeButton').addClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_direct" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_schedule" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+		}
+		else if(saleType == 'funding'){
+			//버튼
+			$('#fundingTypeButton').addClass('project-form-required-type-button-select');
+			$('#saleTypeButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_direct" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_schedule" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+		}
+	};
+
+	var setIsPlaceButton = function(){
+		var isPlace = $('#isPlace').val();
+		if(isPlace == 'TRUE'){
+			//버튼
+			$('#placeDecideButton').addClass('project-form-required-type-button-select');
+			$('#placeUnDecidedButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_placeDecide" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_UnDecided" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+		}
+		else if(isPlace == 'FALSE'){
+			//버튼
+			$('#placeUnDecidedButton').addClass('project-form-required-type-button-select');
+			$('#placeDecideButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_placeDecide" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_UnDecided" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+		}
+	};
+
+	var setFundTargetButton = function(){
+		var fundTarget = $('#project_target').val();
+		if(fundTarget == 'money'){
+			//버튼
+			$('#targetMoneyButton').addClass('project-form-required-type-button-select');
+			$('#targetPeopleButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_money" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_people" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$('.project_form_fund_target_sub_title').text("원이 모이면 성공!");
+		}
+		else if(fundTarget == 'people'){
+			//버튼
+			$('#targetPeopleButton').addClass('project-form-required-type-button-select');
+			$('#targetMoneyButton').removeClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_money" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_people" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$('.project_form_fund_target_sub_title').text("명이 모이면 성공!");
+		}
+	};
+
+	$('#artistsButton').bind('click',function(){
+		setProjectType("artist");
+	});
+
+	$('#creatorsButton').bind('click',function(){
+		setProjectType("creator");
+	});
+
+	$('#fundingTypeButton').bind('click', function(){
+		setSaleType('funding');
+	});
+
+	$('#saleTypeButton').bind('click', function(){
+		setSaleType('sale');
+	});
+
+	$('#placeDecideButton').bind('click', function(){
+		setIsPlace('TRUE');
+	});
+
+	$('#placeUnDecidedButton').bind('click', function(){
+		setIsPlace('FALSE');
+	});
+
+	$('#targetMoneyButton').bind('click', function(){
+		setFundTarget('money');
+	});
+
+	$('#targetPeopleButton').bind('click', function(){
+		setFundTarget('people');
+	});
+
+
+	setProjectTypeButton();
+	setSaleTypeButton();
+	setIsPlaceButton();
+	setFundTargetButton();
+});
+//form_body_required END
 
 function posterTitleFakeClick(img_num){
 	alert(img_num);
 	return false;
 }
 //분류탭 form_body_required
+
+//form_body_ticket_ticket START
+$(document).ready(function(){
+	$('#discount_checkbox').click(function(){
+
+		var discountCheck = $(this).is(':checked');
+		if(discountCheck == true)
+		{
+			//할인율 적용 안됨
+			$('.project_form_discount_content_container').hide();
+		}
+		else
+		{
+			$('.project_form_discount_content_container').show();
+		}
+
+	});
+});
+//form_body_ticket_ticket END
 
 function tabSelect(tabKey){
 	if(tabKey != 'required'){
@@ -1365,123 +1823,4 @@ function requiredSavedCheck(){
 
 	swal("저장 후 다음을 눌러주세요!", "", "error");
 	return false;
-}
-
-function setProjectType(projectType){
-
-	//var buttonName = "#"+projectType+"Button";
-	var artistsButton = $('#artistsButton');
-	var creatorsButton = $('#creatorsButton');
-
-	artistsButton.css('background-color', "white");
-	artistsButton.css('color', "black");
-
-	creatorsButton.css('background-color', "white");
-	creatorsButton.css('color', "black");
-
-	if(projectType == 'artist'){
-		artistsButton.css('background-color', "#ea535a");
-		artistsButton.css('color', "white");
-		$('#projectType').val("artist");
-	}
-	else if(projectType == 'creator'){
-		creatorsButton.css('background-color', "#ea535a");
-		creatorsButton.css('color', "white");
-		$('#projectType').val("creator");
-	}
-
-	//innerHTML
-}
-
-function setSaleType(type){
-	var saleButton = $('#saleTypeButton');
-	var fundingButton = $('#fundingTypeButton');
-	var placeContainer = $('#isPlaceContainer');
-	var isPlaceButton = $('#isPlaceButton');
-
-	saleButton.css('background-color', "white");
-	saleButton.css('color', "black");
-
-	fundingButton.css('background-color', "white");
-	fundingButton.css('color', "black");
-
-	if(type == 'sale'){
-		saleButton.css('background-color', "#ea535a");
-		saleButton.css('color', "white");
-
-		$('#saleType').val("sale");
-
-		isPlaceButton.css('background-color', "white");
-		isPlaceButton.css('color', "black");
-		$('#temporary_date').val("FALSE");
-
-		placeContainer.css('display', "none");
-	}
-	else if(type == 'funding'){
-		fundingButton.css('background-color', "#ea535a");
-		fundingButton.css('color', "white");
-
-		$('#saleType').val("funding");
-
-		placeContainer.css('display', "grid");
-	}
-}
-
-function setIsPlace(){
-	var temporary_date = $('#temporary_date').val();
-	//var isPlaceButton = $('#isPlaceButton');
-
-	if(temporary_date === "FALSE"){
-		//isPlaceButton.css('background-color', "#ea535a");
-		//isPlaceButton.css('color', "white");
-		$('#temporary_date').val("TRUE");
-	}
-	else{
-		//isPlaceButton.css('background-color', "white");
-		//isPlaceButton.css('color', "black");
-		$('#temporary_date').val("FALSE");
-	}
-
-	setPlaceButton();
-}
-
-function setPlaceButton(){
-	var temporary_date = $('#temporary_date').val();
-	var isPlaceButton = $('#isPlaceButton');
-
-	if(temporary_date === "TRUE"){
-		isPlaceButton.css('background-color', "#ea535a");
-		isPlaceButton.css('color', "white");
-	}
-	else{
-		isPlaceButton.css('background-color', "white");
-		isPlaceButton.css('color', "black");
-	}
-}
-
-setPlaceButton();
-
-//meony, people
-function setTargetType(type){
-	var moneyButton = $('#targetMoneyButton');
-	var peopleButton = $('#targetPeopleButton');
-
-	moneyButton.css('background-color', "white");
-	moneyButton.css('color', "black");
-
-	peopleButton.css('background-color', "white");
-	peopleButton.css('color', "black");
-
-	if(type == 'money'){
-		moneyButton.css('background-color', "#ea535a");
-		moneyButton.css('color', "white");
-
-		$('#project_target').val("money");
-	}
-	else if(type == 'people'){
-		peopleButton.css('background-color', "#ea535a");
-		peopleButton.css('color', "white");
-
-		$('#project_target').val("people");
-	}
 }

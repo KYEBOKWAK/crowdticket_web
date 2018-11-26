@@ -1,51 +1,62 @@
 <div class="form-body-default-container">
-  <img src="{{ asset('/img/app/img_update_project_ticket.png') }}" class="center-block"/>
-  <h2>분류</h2>
-  <div class="project-form-subtitle">
-      <h5>
-        프로젝트의 종류와 결제 방식을 선택해주세요.<br>
-        선택 하셔야 다음으로 진행이 됩니다.
-      </h5>
+  <div class="project_form_title_wrapper">
+    <h2 class="project_form_title">프로젝트 <span class="pointColor">분류</span></h2>
   </div>
+  <div class="project_form_content_container">
+    <div class="project_form_required_button_container">
+      <div class="flex_layer_project">
+          <p class="project-form-content-title">프로젝트 종류 @include('template.tooltip', ['content' => '여기로 툴팁오나요'])</p>
+        <button id="artistsButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_artist project_form_button_title">아티스트 프로젝트</p>
+          <p class="project_form_button_text_artist project_form_button_subtitle">(뮤지션 / 극단 / 공연기획자 등)</p>
+          @include('template.tooltip', ['content' => '아티스트 프로젝트 설명입니다'])
+        </button>
+        <button id="creatorsButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_creator project_form_button_title">크리에이터 프로젝트</p>
+          <p class="project_form_button_text_creator project_form_button_subtitle">(유투버 / bj,스트리머 / 인플루언서 등)</p>
+          @include('template.tooltip', ['content' => '크리에이터 프로젝트 설명입니다'])
+        </button>
+      </div>
+    </div>
 
-  <div class="project-form-content-grid">
-    <p class="project-form-content-title">프로젝트 종류</p>
-    <div class="project-form-required-type-container-grid">
-      <button id="artistsButton" class="project-form-required-type-button @if($project->project_type === 'artist') project-form-required-type-button-select @endif" onClick="setProjectType('artist'); return false;">아티스트 프로젝트</button>
-      <button id="creatorsButton" class="project-form-required-type-button @if($project->project_type === 'creator') project-form-required-type-button-select @endif" onClick="setProjectType('creator'); return false;">크리에이터 프로젝트</button>
+    <div class="project_form_required_button_container">
+      <div class="flex_layer_project">
+        <p class="project-form-content-title">결제 방식</p>
+
+        <button id="fundingTypeButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_schedule project_form_button_title">목표가 있는 티켓팅</p>
+          <p class="project_form_button_text_schedule project_form_button_subtitle">(예약결제 / 크라우드펀딩형 티켓팅)</p>
+        </button>
+        <button id="saleTypeButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_direct project_form_button_title">일반 티켓팅(즉시 결제)</p>
+          <p class="project_form_button_text_direct project_form_button_subtitle">(즉시결제)</p>
+            @include('template.tooltip', ['content' => '날짜와 장소가 확정되어 있지는 않지만 프로젝트를 진행할 수 있습니다. <br> (추후에 프로젝트를 진행하며 기획안이 확정되는대로 구매자들에게 공지할 수 있습니다.)'])
+        </button>
+      </div>
+    </div>
+
+    <div class="project_form_required_button_container">
+      <div class="flex_layer_project">
+        <p class="project-form-content-title">장소/날짜 확정여부</p>
+
+        <button id="placeDecideButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_placeDecide project_form_button_title">장소와 날짜가 확정되어 있습니다.</p>
+        </button>
+        <button id="placeUnDecidedButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_UnDecided project_form_button_title">장소와 날짜가 확정되어 있지 않습니다.</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="project_form_button_wrapper">
+      <div class="flex_layer">
+        <button id="update_required" class="btn btn-success center-block project_form_button">저장</button>
+        <button id="update_and_next" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
+      </div>
     </div>
   </div>
-
-  <div class="project-form-content-grid">
-    <p class="project-form-content-title">결제 방식</p>
-    <div class="project-form-required-type-container-grid">
-      <button id="saleTypeButton" class="project-form-required-type-button @if($project->type === 'sale') project-form-required-type-button-select @endif" onClick="setSaleType('sale'); return false;">일반 티켓팅(즉시 결제)</button>
-      <button id="fundingTypeButton" class="project-form-required-type-button @if($project->type === 'funding') project-form-required-type-button-select @endif" onClick="setSaleType('funding'); return false;">목표가 있는 티켓팅(예약 결제)</button>
-      funding에서 sale 선택시 project_target 초기화 시켜줘야 함.
-    </div>
-  </div>
-
-  <div id="isPlaceContainer" class="project-form-content-grid @if($project->type === 'sale' || $project->type === '') project-form-content-grid-hide @endif">
-    <p class="project-form-content-title">이벤트 장소가 없으신가요?</p>
-    <div class="project-form-required-type-container-grid">
-      <button id="isPlaceButton" class="project-form-required-type-button @if($project->temporary_date) project-form-required-type-button-select @endif" onClick="setIsPlace(); return false;">장소 미정</button>
-    </div>
-  </div>
-  <button id="update_required" class="btn btn-success center-block">저장하기</button>
 </div>
 
 <input id="projectType" type="hidden" name="projectType" value="{{ $project->project_type }}"/>
 <input id="saleType" type="hidden" name="saleType" value="{{ $project->type }}"/>
-<input id="projectTarget" type="hidden" name="projectTarget" value="{{ $project->project_target }}">
-
-<?php
-  $temporary_date = "FALSE";
-  if($project->temporary_date)
-  {
-    $temporary_date = "TRUE";
-  }
-?>
-{{$temporary_date}} <br>
-{{$project->state}}
-
-<input id="temporary_date" type="hidden" name="temporary_date" value="{{ $temporary_date }}"/>
+<input id="isPlace" type="hidden" name="isPlace" value="{{ $project->isPlace }}"/>

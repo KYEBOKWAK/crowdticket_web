@@ -14,10 +14,12 @@ class GoodsController extends Controller
       if($request->has('updatebutton')) {
 
         $goods = $this->updateGoods($request, $projectId);
+        $project = $goods->project()->firstOrFail();
 
         $goodsArray = array(
           'goodsState' => 'updategoods',
-          'goods' => $goods
+          'goods' => $goods,
+          'goodsList' => $project->goods()->get()
         );
 
         return $goodsArray;
@@ -39,7 +41,8 @@ class GoodsController extends Controller
 
         $goodsArray = array(
           'goodsState' => 'creategoods',
-          'goods' => $goods
+          'goods' => $goods,
+          'goodsList' => ''
         );
 
 

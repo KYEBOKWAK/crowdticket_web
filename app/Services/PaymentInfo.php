@@ -26,10 +26,16 @@ class PaymentInfo
 
     public function withSignature($userId, $projectId)
     {
+        $appType = env('APP_TYPE');
+        if($appType)
+        {
+          $appType = '_'.$appType;
+        }
+
         $this->validateOrFail('user_id', $userId, 'integer');
         $this->validateOrFail('project_id', $projectId, 'integer');
-        $this->customerUid = sprintf('user_%d', $userId);
-        $this->merchantUid = sprintf('project_%d_user_%d_%d', $projectId, $userId, time());
+        $this->customerUid = sprintf('user_%d%s', $userId, $appType);
+        $this->merchantUid = sprintf('project_%d_user_%d_%d%s', $projectId, $userId, time(), $appType);
     }
 
     public function withCardNumber($cardNumber)

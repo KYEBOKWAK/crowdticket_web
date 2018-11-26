@@ -6,10 +6,10 @@
 
 @section('content')
 <?php
-//$project = json_decode($project);
+//$projects = json_decode($projecta, true);
 ?>
 {{ var_dump($project) }}
-<!-- <input type="hidden" id="test_json" value="{{ $project }}"/> -->
+
 @endsection
 
 @section('js')

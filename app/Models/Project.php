@@ -10,7 +10,7 @@ class Project extends Model
 
     protected static $fillableByState = [
         Project::STATE_READY => [
-            'type', 'project_type', 'project_target', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
+            'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
             'funding_closing_at'
         ],
@@ -33,6 +33,7 @@ class Project extends Model
         'type'  => 'in:funding,sale',
         'project_type' => 'in:artist,creator',
         'project_target' => 'in:money,people',
+        'isPlace' => 'string',
         'title' => 'string|min:1|max:30',
         'alias' => 'regex:/^([a-zA-Z]{1}[a-zA-Z0-9-_]{3,63})?$/',
         'poster_url' => 'url',

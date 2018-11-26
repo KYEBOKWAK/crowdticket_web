@@ -51,7 +51,7 @@
             background-color: #384150;
         }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=3') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=4') }}" rel="stylesheet">
 @endsection
 
 @section('content')

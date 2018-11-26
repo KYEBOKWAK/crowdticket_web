@@ -1,22 +1,570 @@
+.project-form-container{
+  /*test*/
+  /*display: none;*/
+}
+
 .project-form-content-grid-hide{
   display: none;
 }
 
 .project-form-required-type-container-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /*delete 이거 버튼 감싸던거. 지워야 할지 ?*/
+  /*display: grid;
+  grid-template-columns: 1fr 1fr;*/
+  margin-left: 70px;
+}
+
+.project_form_required_button_container{
+  margin-bottom: 62px;
 }
 
 .project-form-required-type-button{
-  background-color: white;
-  color: black;
-  border: 1px solid black;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 305px;
+  height: 75px;
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #707070;
+  background-color: #ffffff;
+
+  margin-left: 25px;
 }
 
 .project-form-required-type-button-select{
   background-color: #ea535a;
   color: white;
+}
+
+.project_form_content_container{
+  /*width: 80%;*/
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 70px;
+  margin-bottom: 150px;
+}
+
+.project-form-content-title{
+  text-align: right;
+  flex-basis: 200px;
+  flex-shrink: 0;
+
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.78;
+  letter-spacing: normal;
+  color: black;
+}
+
+.project_form_button_title{
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.project_form_button_subtitle{
+  font-size: 12px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  margin-bottom: 0px;
+  color: black;
+}
+
+.project_form_button{
+  width: 90px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #e7e7e7;
+  background-color: #eeeeee;
+  color: black;
+
+  font-size: 14px;
+  font-weight: bold;
+
+  margin: 0px 10px;
+}
+
+.project_form_button_wrapper{
+  width: 224px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-top: 22px;
+  padding-bottom: 62px;
+}
+
+.project_form_button:hover{
+  background-color: #eeeeee;
+  color: black;
+  border-color: #eeeeee;
+}
+
+.project_form_button_select{
+  color: white !important;
+}
+
+.project_form_input_base{
+  width: 100%;
+  /*width: 600px;*/
+  height: 38px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #707070;
+  background-color: #ffffff;
+  font-size: 16px;
+  padding-left: 10px;
+}
+
+.project_form_length_text{
+  height: 38px;
+  padding-top: 22px;
+  margin-bottom: 0px;
+  margin-left: 5px;
+  font-size: 13px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: #aaaaaa;
+}
+
+.project-form-content{
+  width: 700px;
+  padding: 16px 0px;
+  margin-left: 40px;
+  text-align: left;
+}
+
+.project-form-input-category{
+  width: 170px;
+  height: 38px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #707070;
+  background-color: #ffffff;
+  font-size: 16px;
+}
+
+.project_form_input_hash_tag{
+  width: 170px;
+  margin-right: 15px;
+}
+
+.project_form_sharp{
+  font-size: 27px;
+  margin-right: 5px;
+}
+
+.project_form_adress_wrapper{
+  margin-bottom: 10px;
+}
+
+.project_form_alias_url{
+  background-color: #eeeeee;
+  font-size: 20px;
+  text-align: center;
+  padding: 5px 0px;
+  color: black;
+  border-right: 0px;
+}
+
+.project-form-input-newURL{
+  margin-right: 10px;
+}
+
+.btn-alias{
+  border-radius: 10px;
+  border: solid 1px #e7e7e7;
+}
+
+.project_form_closing_at{
+  width: 180px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.project_form_funding_type_button_wrapper{
+  margin-left: 0px;
+  margin-right: 20px;
+  height: 45px;
+}
+
+.project_form_input_fund_target{
+  width: 215px;
+  text-align: right;
+}
+
+.project_form_fund_target_sub_title{
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: bottom;
+}
+
+.project_form_ticket_tab_container{
+  width: 100%;
+  margin-top: 120px;
+  background-color: white;
+}
+
+.project_form_ticket_tab_wrapper{
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project_form_ticket_tab_text{
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0px 20px;
+}
+
+.project_form_ticket_tab_text:hover{
+  background-color: #f9f8f6 !important;
+}
+
+.nav-pills > li.active > a,
+.nav-pills > li.active > a:hover,
+.nav-pills > li.active > a:focus{
+  background-color: #f9f8f6 !important;
+  color: #EF4D5D !important;
+}
+
+.project_form_ticket_notice_textarea_wrapper{
+  width: 512px;
+}
+
+#ticket_notice_textarea{
+  width: 100%;
+  height: 148px;
+}
+
+#ticket_notice_save{
+  height: 38px;
+  margin-left: 18px;
+  margin-top: 110px;
+}
+
+.project_form_no_ticket{
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 7px;
+}
+
+.project_form_delivery_date_wrapper{
+  width: 160px;
+}
+
+.project_form_delivery_time_wrapper{
+  width: 120px;
+  margin-left: 10px;
+}
+
+.project_form_ticket_price_wrapper{
+  width: 120px;
+  text-align: right;
+}
+
+.project_form_ticket_category_wrapper{
+  width: 160px;
+}
+
+.project_form_ticket_category_etc_wrapper{
+  display: none;
+  width: 200px;
+  margin-left: 10px;
+}
+
+.project_form_ticket_button_wrapper{
+  margin-left: auto;
+  margin-right: 93px;
+}
+
+.ticket_button_resize{
+  display: none;
+  height: 38px;
+  margin-left: 10px;
+}
+
+.goods_button_resize{
+  margin-right: 0px;
+}
+
+.project_form_content_container_ticket_resize{
+  margin-bottom: 65px;
+}
+
+.project_form_button_wrapper_ticket_resize{
+  width: 110px;
+}
+
+.project_form_ticket_image{
+  width: 41px;
+  height: 23px;
+}
+
+.ticket-delivery-date{
+  font-weight: bold;
+  font-size: 16px;
+  color: black;
+}
+
+.ticket_date_wrapper{
+  /*width: 203px;*/
+  margin-left: 10px;
+}
+
+.ticket_price_wrapper{
+  text-align: right;
+}
+
+.ticket_slash_wrapper{
+  margin-left: 3px;
+  margin-right: 5px;
+}
+
+.ticket_category_wrapper{
+
+}
+
+.ticket_limit_wrapper{
+  text-align: right;
+}
+
+.ticket_tickets_button_wrapper{
+  width: 23px;
+  height: 23px;
+  margin-left: 3px;
+}
+
+.project_form_checkbox{
+  /* Double-sized Checkboxes */
+  margin-top: 8px;
+}
+
+.project_form_discount_need_wrapper{
+  width: 300px;
+}
+
+.project_form_discount_value_wrapper{
+  width: 100px;
+  text-align: right;
+}
+
+.discount_submit_input_wrapper{
+  width: 430px;
+}
+
+.discount_input_wrapper{
+  margin-right: 5px;
+}
+
+.goods_title_input_wrapper{
+  width: 300px;
+}
+
+.ticket_discount_input{
+  width: 120px;
+  margin-left: 10px;
+  margin-right: 3px;
+  text-align: right;
+}
+
+.ticket_discount_explain{
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 9px;
+}
+
+#goods_img_preview{
+  width: 295px;
+  height: 164px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*poster*/
+
+.project_form_title_poster_wrapper{
+  border-bottom: 1px solid #dad8cc;
+}
+.project_form_content_container_poster{
+  margin-top: 0px;
+}
+
+.project_form_poster_container{
+  /*height: 300px;*/
+  flex-basis: 645px;
+  flex-shrink: 0;
+  padding-top: 70px;
+  border-right: 1px solid #dad8cc;
+}
+
+.project_form_poster_sub_title_container{
+  text-align: left;
+  margin-left: 38px;
+  margin-bottom: 21px;
+}
+
+.project_form_poster_img_bg{
+  width: 290px;
+  height: 217.5px;
+  background-color: #e7e7e7;
+  /*margin-right: 27px;*/
+  margin-bottom: 27px;
+}
+
+.title_img_preview{
+  width: 290px;
+  height: 217.5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.project_form_poster_trash{
+  width: 27px;
+  height: 27px;
+}
+
+.project_form_poster_trash_container{
+  width: 27px;
+}
+
+.project_form_poster_title{
+  text-align: left;
+  flex-basis: 105px;
+  margin-right: 0px;
+}
+
+.project_form_poster_input_description{
+
+}
+
+.project_form_poster_sampleview_container{
+  width: 100%;
+}
+
+.carousel_resize_container{
+  width: 260px;
+  text-align: left;
+  margin-left: -1px;
+  margin-top: 50px;
+}
+
+.project_form_calcul_notice{
+  border-radius: 8px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  padding: 20px 20px;
+  border: 1px solid black;
+}
+
+.project_form_calcul_notice_check_text{
+  text-align: right;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.order_form_conform_title{
+  font-size: 24px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.08;
+  letter-spacing: normal;
+  text-align: left;
+
+  border-bottom: 5px solid #ef4d5d;
+  margin-left: 118px;
+}
+
+.project_form_creator_channel_input{
+  width: 170px;
+}
+
+.project_form_creator_channel_url_input{
+  width: 391px;
+  margin-left: 22px;
+  margin-bottom: 10px;
+}
+
+.project_form_creator_name_input{
+  width: 160px;
+}
+
+.project_form_creator_contact_input{
+  width: 210px;
+}
+
+.project_form_creator_email_input{
+  width: 360px;
+}
+
+.project_form_creator_bank_input{
+  width: 120px;
+}
+
+.project_form_creator_account_input{
+  width: 230px;
+}
+
+.project_form_creator_account_holder_input{
+  width: 120px;
+}
+
+@media (max-width:960px){
+  .project_form_content_container{
+    width: 670px;
+  }
+
+  .project-form-required-type-button{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .project-form-content-title{
+    text-align: left;
+    padding-left: 20px;
+  }
+
+  .project_form_input_base{
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .project_form_length_text{
+    text-align: right;
+    margin-top: 5px;
+  }
+}
+
+@media (max-width:670px){
+  .project_form_content_container{
+    width: 100%;
+    /*width: 300px;*/
+  }
+
+  .project-form-required-type-button{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+  }
+
+  .project-form-content-title{
+    text-align: left;
+    padding-left: 20px;
+  }
 }

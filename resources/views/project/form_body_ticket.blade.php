@@ -1,11 +1,15 @@
 
-<ul class="nav nav-pills nav-justified">
-  <li class="active">
-    <a data-toggle="pill" href="#menu_ticket">티켓 정보</a>
-  </li>
-  <li><a data-toggle="pill" href="#menu_discount">할인 정보</a></li>
-  <li><a data-toggle="pill" href="#menu_md">MD 정보</a></li>
-</ul>
+<div class="project_form_ticket_tab_container">
+  <div class="project_form_ticket_tab_wrapper">
+    <ul class="nav nav-pills nav-justified">
+      <li class="active">
+        <a data-toggle="pill" href="#menu_ticket" class="project_form_ticket_tab_text">티켓 정보</a>
+      </li>
+      <li><a data-toggle="pill" href="#menu_discount" class="project_form_ticket_tab_text">할인 정보</a></li>
+      <li><a data-toggle="pill" href="#menu_md" class="project_form_ticket_tab_text">MD 정보</a></li>
+    </ul>
+  </div>
+</div>
 
   <div class="tab-content">
     <div id="menu_ticket" class="tab-pane fade in active">

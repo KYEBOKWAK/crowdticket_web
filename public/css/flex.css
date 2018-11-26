@@ -6,11 +6,16 @@
   display: flex;
 }
 
+.flex_layer_project{
+  display: flex;
+}
+
 .ms_flex_layer{
   display: -ms-flexbox;
 }
 
-.flex_layer_diection_column{
+.flex_layer_column{
+  display: flex;
   flex-direction: column;
 }
 
@@ -24,6 +29,12 @@
 
 @media (max-width:1030px){
   .flex_layer_mobile{
+    display: block;
+  }
+}
+
+@media (max-width:960px){
+  .flex_layer_project{
     display: block;
   }
 }

@@ -1,12 +1,14 @@
 .project-form-create-container{
   width: 100%;
+  background-color: #f9f8f6;
 }
 
 .project-form-create-wrapper{
-  width: 70%;
-  /*border: 2px solid red;*/
+  /*width: 70%;*/
+  width: 622px;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 60px;
 }
 
 .project-form-create-title-img-wrapper{
@@ -14,27 +16,56 @@
 }
 
 .project-form-create-title-wrapper{
+  width: 100%;
+  background-color: white;
   text-align: center;
-  padding-bottom: 30px;
+  padding: 100px 0px;
 }
 
 .project-form-create-title-wrapper h1{
+  padding-bottom: 10px;
+  margin-top: 0px;
+
   font-size: 38px;
   font-weight: bold;
-  padding-bottom: 10px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.32;
+  letter-spacing: normal;
+  color: black;
+}
+
+.project-form-create-title-wrapper h5{
+  font-size: 18px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.78;
+  letter-spacing: normal;
+  text-align: center;
+  color: black;
 }
 
 .project-form-create-btn-submit-wrapper{
   text-align: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .project-form-create-btn-submit{
   background-color: #ea535a;
-  border-radius: 4px;
-  color: white;
-  width: 150px;
+  width: 180px;
+
+  border-radius: 10px;
+  border: solid 1px #f5f5f5;
+
   font-size: 14px;
-  padding: 6px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 3.57;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
 }
 
 /*기존 코드 START*/
@@ -74,3 +105,65 @@
 }
 
 /*기존 코드 END*/
+
+.project_form_create_title{
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.13;
+  letter-spacing: normal;
+  text-align: left;
+  color: black;
+  margin: 0px;
+}
+
+.project_form_create_input{
+  width: 100%;
+  height: 38px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #707070;
+  background-color: #ffffff;
+}
+
+.project_form_phone_input_radius{
+  border-radius: 6px;
+  margin-left: 5px;
+}
+
+.project_form_phone_wrapper{
+  width: 50%;
+}
+
+.help-block{
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-align: left;
+  color: #aaaaaa
+}
+
+@media (max-width: 768px){
+  .project-form-create-wrapper{
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .project_form_phone_wrapper{
+    width: 100%;
+  }
+
+  .project_form_phone_input_radius{
+    border-radius: 0px;
+  }
+
+  .project-form-create-title-wrapper{
+    padding: 70px 0px;
+  }
+}
