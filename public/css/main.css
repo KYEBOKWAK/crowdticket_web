@@ -12,7 +12,8 @@
 }
 @media (min-width:769px) {
   .container {
-    width:1030px;
+    /*width:1030px;*/
+    width: 100%;
   }
 }
 @media (min-width:992px) {

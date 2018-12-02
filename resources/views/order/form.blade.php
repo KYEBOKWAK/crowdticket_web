@@ -480,7 +480,9 @@
           </div>
         @else
           <div class="order_form_conform_container">
-            <button type="button" id="ticketing-btn-payment" class="btn btn-primary btn-block ticketing-btn-calendar ticketing-btn-payment"></button>
+            <div style="text-align: center;">
+              <button type="button" id="ticketing-btn-payment" class="btn btn-primary btn-block ticketing-btn-calendar ticketing-btn-payment"></button>
+            </div>
           </div>
         @endif
       </form>
@@ -848,6 +850,7 @@
             if(isSubmit == false)
             {
               isSubmit = true;
+              loadingProcess($('#ticketing-btn-payment'));
               $('#ticketSubmitPayForm').submit();
             }
           });

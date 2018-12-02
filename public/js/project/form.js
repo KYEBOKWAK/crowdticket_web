@@ -15,6 +15,11 @@ $(document).ready(function() {
 			return;
 		}
 
+		if(isCheckKorean(alias) || isCheckEmptyValue(alias))
+		{
+			return;
+		}
+
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId + '/alias/' + alias;
 		var method = 'get';
@@ -37,7 +42,7 @@ $(document).ready(function() {
 		});
 	};
 
-	var updateDefault = function(isNext = false) {
+	var updateDefault = function(isNext) {
 		updateProject({
 			'title': $('#title').val(),
 			'alias': $('#alias').val(),
@@ -54,7 +59,7 @@ $(document).ready(function() {
 		}, isNext);
 	};
 
-	var updateProject = function(data, isNext = false) {
+	var updateProject = function(data, isNext) {
 		var projectId = $('#project_id').val();
 		var url = '/projects/' + projectId;
 		var method = 'put';
@@ -62,7 +67,7 @@ $(document).ready(function() {
 		var success = function(e) {
 			$('#isReqiredSuccess').val('TRUE');
 
-			//swal("저장되었습니다.", "", "success");
+			loadingProcessStop($('.project_form_button_wrapper'));
 
 			swal("저장되었습니다", {
 							  buttons: {
@@ -73,15 +78,32 @@ $(document).ready(function() {
 							  },
 
 								icon: "success",
-							})
-							.then((value) => {
+							}).then(function(value){
 								if(isNext == true)
 								{
 									nextTabSelect();
 								}
 							});
+			/*
+			swal("저장되었습니다", {
+							  buttons: {
+							    save: {
+							      text: "확인",
+							      value: "save",
+							    },
+							  },
+
+								icon: "success",
+							}).then((value) => {
+								if(isNext == true)
+								{
+									nextTabSelect();
+								}
+							});
+							*/
 		};
 		var error = function(e) {
+			loadingProcessStop($('.project_form_button_wrapper'));
 			swal("저장에 실패하였습니다.", "", "error");
 		};
 
@@ -198,7 +220,7 @@ $(document).ready(function() {
 				checkNoTicket();
 			};
 			var error = function(request) {
-				alert('보상 추가에 실패하였습니다.');
+				alert('티켓 추가에 실패하였습니다.');
 			};
 
 			$.ajax({
@@ -443,52 +465,109 @@ $(document).ready(function() {
 	};
 
 	var updateStory = function() {
+		loadingProcess($(".project_form_button_wrapper"));
 
 		var markupStr = $('#summernote').summernote('code');
 		updateProject({
 			'story': markupStr
-		});
+		}, false);
 
-		/*
+/*
 		EasyDaumEditor.save(function(content) {
 			updateProject({
 				'video_url': $('#video_url').val(),
 				'story': content
-			});
+			}, false);
 		});
-		*/
+*/
+
 	};
 
+	var editorAjaxOption = {
+		'beforeSerialize': function($form, options) {
+		},
+		'success': function(result) {
+			$('#editor_image').val('');
+			$("#editor_image_name").val('');
+
+			$('#summernote').summernote('insertImage', result, function ($image) {
+  			//$image.css('width', '100%');
+				//$image.css('height', '100%');
+			});
+		},
+		'error': function(data) {
+			alert("이미지 업로드에 실패하였습니다." + JSON.stringify(data));
+			$('#editor_image').val('');
+			$("#editor_image_name").val('');
+		}
+	};
+
+
+	var sendFile = function(file, editor, welEditable) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				//alert("onload: " + e.target.result);
+				//$('#summernote').summernote("insertNode", e.target.result);
+				$('#editor_image').val(e.target.result);
+				$("#editor_image_name").val(getRemoveExpWord(file.name));
+				$("#editor_image_set_form").submit();
+			};
+			reader.readAsDataURL(file);
+
+			//editorImageInputFile.val(file);
+  };
+
 	$('#summernote').summernote({
-    placeholder: 'Hello stand alone ui',
-    tabsize: 2,
+    tabsize: 4,
     height: 1000,
     width: 790,
+		disableDragAndDrop: false,
+		toolbar: [
+    // [groupName, [list of button]]
+		['fontname', ['fontname']],
+    ['style', ['bold', 'underline']],
+    ['font', []],
+		//['fontfamily', ['Noto Sans KR']],
+		['insert', ['link', 'picture', 'hr']],
+    ['fontsize', ['fontsize']],
+    //['color', ['color']],
+    ['para', ['paragraph']],
+		['mybutton', ['hello']],
+  	],
+
+		buttons: {
+    	hello: HelloButton
+  	},
+
+		fontNames: ['Noto Sans KR'],
+		fontSizes: ['8', '12', '24'],
+
 		callbacks: {
-				onImageUpload: function(files, editor, welEditable) {
-		            for (var i = files.length - 1; i >= 0; i--) {
-		            	sendFile(files[i], this);
-		            }
-		        }
+			onImageUpload: function(files, editor, welEditable){
+					for (var i = files.length - 1; i >= 0; i--) {
+						sendFile(files[i], editor, welEditable);
+					}
+				}
 			}
   });
 
-	var sendFile = function(file, el) {
-		var form_data = new FormData();
-      	form_data.append('file', file);
-      	$.ajax({
-        	data: form_data,
-        	type: "POST",
-        	url: './profileImage.mpf',
-        	cache: false,
-        	contentType: false,
-        	enctype: 'multipart/form-data',
-        	processData: false,
-        	success: function(img_name) {
-          		$(el).summernote('editor.insertImage', img_name);
-        	}
-      	});
-    }
+	var HelloButton = function (context) {
+  	var ui = $.summernote.ui;
+
+	  // create button
+	  var button = ui.button({
+	    contents: '<i class="note-icon-picture"/> Hello',
+	    tooltip: 'hello',
+	    click: function () {
+	      // invoke insertText method with 'hello' on editor module.
+	      context.invoke('editor.insertText', 'hello');
+	    }
+	  });
+
+	  return button.render();   // return button as jquery object
+	};
+
+	$('#editor_image_set_form').ajaxForm(editorAjaxOption);
 
 	if($('#tx_load_content').val())
   {
@@ -519,9 +598,10 @@ $(document).ready(function() {
 	};
 
 	//form_body_required
-	var updateRequired = function(isNext = false){
+	var updateRequired = function(isNext){
 		//유효성 체크
 		if(requiredVaildCheck() == true){
+			loadingProcess($('.project_form_button_wrapper'));
 			updateProject({
 				'type': $('#saleType').val(),
 				'project_type': $('#projectType').val(),
@@ -547,7 +627,7 @@ $(document).ready(function() {
 
 		updateProject({
 			'ticket_notice': ticketNotice
-		});
+		}, false);
 	};
 
 	//Discount start
@@ -813,6 +893,10 @@ $(document).ready(function() {
 
 		var templateGoodsItem = $('#template_goods_list_item').html();
 		var compiledGoodsItem = _.template(templateGoodsItem);
+
+		//goods설명 한줄띄우기 컨버터
+		goods.content = getConverterEnterString(goods.content);
+
 		var rowGoodsItem = compiledGoodsItem({ 'goods': goods });
 		var $rowGoodsItem = $($.parseHTML(rowGoodsItem));
 		$rowGoodsItem.data('goodsData', goods);
@@ -968,12 +1052,28 @@ $(document).ready(function() {
 	};
 	//goods end
 
-	var updatePoster = function(){
+	var updatePoster = function(isNext){
+		if(isNext)
+		{
+			$('#poster_form').attr('data-poster-form-next-save', "TRUE");
+		}
+		else {
+			$('#poster_form').attr('data-poster-form-next-save', "FALSE");
+		}
+
+		loadingProcess($('.project_form_button_wrapper'));
 		$('#poster_form').submit();
 	};
 
 	var nextCheck = function(){
 		var selected_tab = $('#selected_tab').val();
+
+		if(selected_tab == 'ticket'){
+				//티켓일땐 바로 넥스트. 굿즈 정보 갔을때 다음 누르면 여길 탄다
+				nextTabSelect();
+				return;
+		}
+
 		swal("저장 후 다음으로 가시겠습니까?", {
 						  buttons: {
 						    save: {
@@ -981,7 +1081,48 @@ $(document).ready(function() {
 						      value: "save",
 						    },
 								nosave: {
-						      text: "아니오",
+						      text: "저장하지 않음",
+						      value: "notsave",
+						    },
+
+						  },
+						})
+						.then(function(value){
+							switch (value) {
+						    case "save":
+								{
+									if(selected_tab == 'required')
+									{
+										updateRequired(true);
+									}
+									else if(selected_tab == 'base')
+									{
+										updateDefault(true);
+									}
+									else if(selected_tab == 'poster')
+									{
+										updatePoster(true);
+									}
+								}
+						    break;
+
+								case "notsave":
+								{
+									nextTabSelect();
+								}
+								break;
+						  }
+						});
+
+/*
+		swal("저장 후 다음으로 가시겠습니까?", {
+						  buttons: {
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
+								nosave: {
+						      text: "저장하지 않음",
 						      value: "notsave",
 						    },
 
@@ -1001,7 +1142,7 @@ $(document).ready(function() {
 									}
 									else if(selected_tab == 'poster')
 									{
-
+										updatePoster(true);
 									}
 								}
 						    break;
@@ -1013,9 +1154,12 @@ $(document).ready(function() {
 								break;
 						  }
 						});
+						*/
 	};
 
 	var nextTabSelect = function(){
+		loadingProcess($('.project_form_button_wrapper'));
+
 		var selectTab = $('#selected_tab').val();
 
 		var tabInfoJson = $('#tabInfoJson').val();
@@ -1044,6 +1188,25 @@ $(document).ready(function() {
 		tabSelect(nextTabKey);
 	};
 
+	var ticketNext = function(){
+		var nextIdx = 0;
+		$('.project_form_ticket_tab').each(function(index, element){
+			if($(element).hasClass("active") == true)
+			{
+				nextIdx = index + 1;
+			}
+		});
+
+
+		$('.project_form_ticket_tab').each(function(index, element){
+			if(nextIdx == index)
+			{
+				var tabhrefName = $(element).children().attr('href');
+				$('a[href='+ tabhrefName +']').click();
+			}
+		});
+	};
+
 
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
@@ -1059,7 +1222,10 @@ $(document).ready(function() {
 	$('#poster_description').bind('input', onDescriptionChanged);
 
 	//분류 탭 저장 form_body_required
-	$('#update_required').bind('click', updateRequired);
+	//$('#update_required').bind('click', updateRequired);
+	$('#update_required').click(function(){
+		updateRequired(false);
+	});
 
 	$('#update_and_next').bind('click', nextCheck);
 	//티켓공지 저장
@@ -1081,7 +1247,12 @@ $(document).ready(function() {
 	$('#goods_img_file').change(onGoodsImgChanged);
 
 	//poster
-	$('#update_poster').bind('click', updatePoster);
+	//$('#update_poster').bind('click', updatePoster);
+	$('#update_poster').click(function(){
+		updatePoster(false);
+	});
+
+	$('.ticket_go_next').bind('click', ticketNext);
 
 	var performPosterTitleFileClick = function(){
 		var imgNumber = $(this).attr('data-img-number');
@@ -1099,18 +1270,6 @@ $(document).ready(function() {
 			};
 			reader.readAsDataURL(this.files[0]);
 		}
-
-		/*
-		if (this.files && this.files[0]) {
-			var imgNumber = $(this).attr('data-img-number');
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#title_img_preview_'+imgNumber).css('background-image', "url('" + e.target.result + "')");
-				setPosterTitleDeleteBtn(true, imgNumber);
-			};
-			reader.readAsDataURL(this.files[0]);
-		}
-		*/
 	};
 
 	var performPosterFileClick = function() {
@@ -1132,11 +1291,51 @@ $(document).ready(function() {
 		'beforeSerialize': function($form, options) {
 		},
 		'success': function(result) {
-			//var poster = JSON.stringify(result);
-			swal('성공! 저장되었습니다.', '', 'success');
+
+			var isNext = $('#poster_form').attr('data-poster-form-next-save');
+
+			loadingProcessStop($('.project_form_button_wrapper'));
+
+			swal("저장되었습니다", {
+							  buttons: {
+							    save: {
+							      text: "확인",
+							      value: "save",
+							    },
+							  },
+
+								icon: "success",
+							})
+							.then(function(value){
+								if(isNext == "TRUE")
+								{
+									nextTabSelect();
+								}
+							});
+
+/*
+			swal("저장되었습니다", {
+							  buttons: {
+							    save: {
+							      text: "확인",
+							      value: "save",
+							    },
+							  },
+
+								icon: "success",
+							})
+							.then((value) => {
+								if(isNext == "TRUE")
+								{
+									nextTabSelect();
+								}
+							});
+							*/
 		},
 		'error': function(data) {
-			alert("저장에 실패하였습니다.");
+			loadingProcessStop($('.project_form_button_wrapper'));
+
+			swal("저장에 실패하였습니다.", '', 'error');
 		}
 	};
 
@@ -1151,30 +1350,6 @@ $(document).ready(function() {
 
 				setPosterTitleImg(fileNumber, posters[titleFileName].img_url, posters['id'], posters[titleFileName].isFile);
 			});
-			/*
-			var posters = $.parseJSON(postersJson);
-			//alert(JSON.stringify(posters['title_img_file_1'].img_url));
-			var titleFileName = '';
-			var fileNumber = 0;
-			for (var i = 0, l = 4; i < l; i++) {
-				fileNumber = i+1;
-				titleFileName = 'title_img_file_'+fileNumber;
-				if(posters[titleFileName].isFile == true){
-					setPosterTitleDeleteBtn(true, fileNumber);
-				}
-				else{
-					setPosterTitleDeleteBtn(false, fileNumber);
-				}
-
-				setPosterTitleImg(fileNumber, posters[titleFileName].img_url, posters['id']);
-			}
-
-			setPosterImg(posters['poster_img_file'].img_url, posters['id']);
-			if(posters['poster_img_file'].isFile == true){
-				//파일이 있으면 삭제 버튼 활성화
-				setPosterDeleteBtn(true);
-			}
-			*/
 		}
 	};
 
@@ -1189,6 +1364,16 @@ $(document).ready(function() {
 			$(posterTitleId).attr('src', imgUrl);
 
 			$(posterAddBtn).hide();
+
+			if(titleFileNumber == 1)
+			{
+				//첫번째 이미지면 미리보기에 바로 셋팅 해준다.
+				var viewer = $('.project-img').eq(0);
+				if(viewer)
+				{
+					viewer.attr('src', imgUrl);
+				}
+			}
 		}
 		else
 		{
@@ -1196,9 +1381,18 @@ $(document).ready(function() {
 			$(posterTitleId).attr('src', '');
 
 			$(posterAddBtn).show();
+
+			if(titleFileNumber == 1)
+			{
+				//첫번째 이미지면 미리보기에 바로 셋팅 해준다.
+				var viewer = $('.project-img').eq(0);
+				if(viewer)
+				{
+					viewer.attr('src', $("#viewerDefaultImgURL").val());
+				}
+			}
 		}
 
-		//setPosterIdTitleDeleteBtn(titleFileNumber, posterId);
 		setPosterTitleDeleteBtn(isFile, titleFileNumber);
 	};
 
@@ -1300,7 +1494,7 @@ $(document).ready(function() {
 	$('#poster_img_file').change(onPosterChanged);
 	$('#delete-poster-img').bind('click', deletePoster);
 
-	$('#poster_form').ajaxForm(posterAjaxOption);
+	//$('#poster_form').ajaxForm(posterAjaxOption);
 
 	//개설자 소개 start
 	var saveCreator = function(){
@@ -1311,6 +1505,21 @@ $(document).ready(function() {
 
 		if(isCheckEmail($('#email').val()) == false)
 		{
+			return;
+		}
+
+		if(!$('#bank').val()){
+			swal("은행 정보를 입력해주세요.(필수입력)", "", "warning");
+			return;
+		}
+
+		if(!$('#account').val()){
+			swal("계좌 정보를 입력해주세요.(필수입력)", "", "warning");
+			return;
+		}
+
+		if(!$('#account_holder').val()){
+			swal("예금주 정보를 입력해주세요.(필수입력)", "", "warning");
 			return;
 		}
 
@@ -1350,21 +1559,39 @@ $(document).ready(function() {
 		//채널정보 재정렬
 		//기존 데이터 세이브
 		var channelTempArray = new Array();
-		//channelTempArray.push
-		$('.channel').each(function(){
-			var data = $(this).data('channelData');
-			//alert(JSON.stringify(data));
 
-			channelTempArray.push(data);
+		$('.channel').each(function(index){
+			var data = $(this).data('channelData');
+			var channelURL = $(this).children().children('.channel_category_url_input').val();
+			var channelCategory = $(this).children().children('.channel_category').val();
+
+			if(data)
+			{
+				var channelObject = new Object();
+
+				channelObject.data = data;
+				channelObject.selectCategoryId = channelCategory;
+				channelObject.url = channelURL;
+
+				channelTempArray.push(channelObject);
+			}
 		});
+
 
 		$('#channel_list').children().remove();
 
-		//var abc = $.parseJSON(channelTempArray);
+		var channelDataTempArray = new Array();
+		for(var i = 0 ; i < channelTempArray.length ; i++)
+		{
+			channelDataTempArray.push(channelTempArray[i].data);
+		}
 
 		for(var i = 0 ; i < channelTempArray.length ; i++)
 		{
-			addChannelRow(channelTempArray, i);
+			addChannelRow(channelDataTempArray, i);
+
+			$('#channel_category'+i).val(channelTempArray[i].selectCategoryId);
+			$('#channel_category_url_input'+i).val(channelTempArray[i].url);
 		}
 
 		if(channelTempArray.length == 0)
@@ -1433,13 +1660,12 @@ $(document).ready(function() {
 			var addChannelBtn = $("#add-channel"+index);
 			var deleteChannelBtn = $("#delete-channel"+index);
 
+			addChannelBtn.hide();
+
 			if(index == channelListSize-1) {
 				addChannelBtn.show();
+				//alert('last' + index);
 				//deleteChannelBtn.hide();
-			}
-			else {
-				addChannelBtn.hide();
-				//deleteChannelBtn.show();
 			}
   	});
 	};
@@ -1459,7 +1685,7 @@ $(document).ready(function() {
 		{
 			//채널아이디가 없으면 서버에 저장되지 않은 페이크 정보
 			channel.remove();
-			//setChannelAddBtn();
+
 			reListChannel();
 			return;
 		}
@@ -1468,9 +1694,7 @@ $(document).ready(function() {
 		var method = 'delete';
 
 		var success = function(result) {
-			//alert("성공!" + JSON.stringify(result));
 			channel.remove();
-			//setChannelAddBtn();
 			reListChannel();
 			swal('채널 제거 성공!', '', 'success');
 		};
@@ -1570,6 +1794,299 @@ $(document).ready(function() {
 	$(window).bind('beforeunload', function() {
 		// return '페이지를 나가기 전에 저장되지 않은 정보를 확인하세요';
 	});
+
+	/////////////ticket_ticket/////////////
+	$('#discount_checkbox').click(function(){
+		if($('#discount_checkbox').is(':checked') == true)
+		{
+			$('#isDiscount').val("FALSE");
+		}
+		else
+		{
+			$('#isDiscount').val("TRUE");
+		}
+
+		if($('#isDiscount').val() == "TRUE")
+		{
+			sendNoDiscount();
+			return;
+		}
+
+		if($('#discount_list').children().size() > 0)
+		{
+			//discount개수가 0보다 크면 경고창을 띄운다.
+			swal("할인정보가 모두 지워집니다. 계속 하시겠습니까?", {
+								buttons: {
+									cancel: "취소",
+									catch: {
+										text: "계속",
+										value: "continue",
+									},
+								},
+
+								icon: "warning",
+							})
+							.then(function(value){
+								if(value == "continue")
+								{
+									sendNoDiscount();
+								}
+								else
+								{
+									$('#isDiscount').val("TRUE");
+									setDiscountValue();
+								}
+							});
+
+			/*
+			swal("할인정보가 모두 지워집니다. 계속 하시겠습니까?", {
+								buttons: {
+									cancel: "취소",
+									catch: {
+										text: "계속",
+										value: "continue",
+									},
+								},
+
+								icon: "warning",
+							})
+							.then((value) => {
+								if(value == "continue")
+								{
+									sendNoDiscount();
+								}
+								else
+								{
+									$('#isDiscount').val("TRUE");
+									setDiscountValue();
+								}
+							});
+							*/
+		}
+		else
+		{
+			sendNoDiscount();
+		}
+	});
+
+	var setDiscountValue = function(){
+		var isDiscount = $('#isDiscount').val();
+		var discountCheckBox = $('#discount_checkbox');
+
+		if(isDiscount == "TRUE")
+		{
+			discountCheckBox.attr("checked", false);
+		}
+		else
+		{
+			discountCheckBox.attr("checked", true);
+		}
+
+		setDiscountCheckBox();
+	};
+
+	var setDiscountCheckBox = function(){
+		var discountCheck = $('#discount_checkbox').is(':checked');
+		if(discountCheck == true)
+		{
+			//할인율 적용 안됨
+			$('.project_form_discount_content_container').hide();
+		}
+		else
+		{
+			$('.project_form_discount_content_container').show();
+		}
+	};
+
+	var sendNoDiscount = function(){
+		var projectId = $('#project_id').val();
+		var url = '/discounts/' + projectId + '/nodiscount';
+		var method = 'post';
+		var discountCheck = $('#isDiscount').val();
+
+		var data = {'discountcheck': discountCheck};
+
+		var success = function(e) {
+			removeAllDiscountList();
+			$('#isDiscount').val(e);
+			setDiscountValue();
+			//alert('저장되었습니다.');
+		};
+		var error = function(e) {
+			alert('저장에 실패하였습니다.');
+			setDiscountValue();
+		};
+
+		$.ajax({
+			'url': url,
+			'method': method,
+			'data': data,
+			'success': success,
+			'error': error
+		});
+	};
+
+	setDiscountValue();
+
+	var removeAllDiscountList = function(){
+		//var goodsList = $('#goods_list');
+		$(".delete-discount").each(function(){
+			$(this).trigger('click');
+		});
+	};
+	//////////////ticket_ticket end////////
+
+	//////////////ticket_goods////////////
+	$('#goods_checkbox').click(function(){
+		if($('#goods_checkbox').is(':checked') == true)
+		{
+			$('#isGoods').val("FALSE");
+		}
+		else
+		{
+			$('#isGoods').val("TRUE");
+		}
+
+		if($('#isGoods').val() == "TRUE")
+		{
+			sendNoGoods();
+			return;
+		}
+
+		if($('#goods_list').children().size() > 0)
+		{
+			//discount개수가 0보다 크면 경고창을 띄운다.
+			swal("굿즈정보가 모두 지워집니다. 계속 하시겠습니까?", {
+								buttons: {
+									cancel: "취소",
+									catch: {
+										text: "계속",
+										value: "continue",
+									},
+								},
+
+								icon: "warning",
+							})
+							.then(function(value){
+								if(value == "continue")
+								{
+									sendNoGoods();
+								}
+								else
+								{
+									$('#isGoods').val("TRUE");
+									setGoodsValue();
+								}
+							});
+
+			/*
+			swal("굿즈정보가 모두 지워집니다. 계속 하시겠습니까?", {
+								buttons: {
+									cancel: "취소",
+									catch: {
+										text: "계속",
+										value: "continue",
+									},
+								},
+
+								icon: "warning",
+							})
+							.then((value) => {
+								if(value == "continue")
+								{
+									sendNoGoods();
+								}
+								else
+								{
+									$('#isGoods').val("TRUE");
+									setGoodsValue();
+								}
+							});
+							*/
+		}
+		else
+		{
+			sendNoGoods();
+		}
+	});
+
+	var setGoodsValue = function(){
+		var isGoods = $('#isGoods').val();
+		var goodsCheckBox = $('#goods_checkbox');
+
+		if(isGoods == "TRUE")
+		{
+			goodsCheckBox.attr("checked", false);
+		}
+		else
+		{
+			goodsCheckBox.attr("checked", true);
+		}
+
+		setGoodsCheckBox();
+	};
+
+	var setGoodsCheckBox = function(){
+		var goodsCheck = $('#goods_checkbox').is(':checked');
+		if(goodsCheck == true)
+		{
+			//할인율 적용 안됨
+			$('.project_form_goods_content_container').hide();
+		}
+		else
+		{
+			$('.project_form_goods_content_container').show();
+		}
+	};
+
+	var sendNoGoods = function(){
+		var projectId = $('#project_id').val();
+		var url = '/goods/' + projectId + '/nogoods';
+		var method = 'post';
+		var goodsCheck = $('#isGoods').val();
+
+		var data = {'goodscheck': goodsCheck};
+
+		var success = function(e) {
+			removeAllGoodsList();
+
+			$('#isGoods').val(e);
+			setGoodsValue();
+		};
+		var error = function(e) {
+			alert('저장에 실패하였습니다.');
+			setGoodsValue();
+		};
+
+		$.ajax({
+			'url': url,
+			'method': method,
+			'data': data,
+			'success': success,
+			'error': error
+		});
+	};
+
+	setGoodsValue();
+
+	var removeAllGoodsList = function(){
+		//var goodsList = $('#goods_list');
+		$(".delete-goods").each(function(){
+			$(this).trigger('click');
+		});
+	};
+	///////////////ticket_goods end///////
+
+	//글자수제한걸기//
+	//프로젝트 제목
+	isWordLengthCheck($("#title"), $(".titleLength"));
+	isWordLengthCheck($("#goods_content_input"), $(".goods_contentLength"));
+	isWordLengthCheck($("#introduce"), $(".introduceLength"));
+	//$("#introduce") 글자수 제한으로 리프레시
+	$("#introduce").trigger('keyup');
+
+	isWordLengthCheck($("#alias"), $(".aliasLength"));
+	$("#alias").trigger('keyup');
 });
 
 //form_body_required START
@@ -1627,6 +2144,7 @@ $(document).ready(function() {
 
 	var setSaleTypeButton = function(){
 		var saleType = $('#saleType').val();
+
 		if(saleType == 'sale'){
 			//버튼
 			$('#fundingTypeButton').removeClass('project-form-required-type-button-select');
@@ -1639,6 +2157,11 @@ $(document).ready(function() {
 			$( ".project_form_button_text_schedule" ).each(function(){
 				$(this).removeClass('project_form_button_select');
 			});
+
+			//티켓팅일 경우 장소 확정 후 안보이게 한다.
+			setIsPlace('TRUE');
+			$('#project_form_required_place_container').hide();
+
 		}
 		else if(saleType == 'funding'){
 			//버튼
@@ -1652,6 +2175,9 @@ $(document).ready(function() {
 			$( ".project_form_button_text_schedule" ).each(function(){
 				$(this).addClass('project_form_button_select');
 			});
+
+			//티켓팅일 경우 장소 보이게 한다.
+			$('#project_form_required_place_container').show();
 		}
 	};
 
@@ -1765,29 +2291,11 @@ function posterTitleFakeClick(img_num){
 }
 //분류탭 form_body_required
 
-//form_body_ticket_ticket START
-$(document).ready(function(){
-	$('#discount_checkbox').click(function(){
-
-		var discountCheck = $(this).is(':checked');
-		if(discountCheck == true)
-		{
-			//할인율 적용 안됨
-			$('.project_form_discount_content_container').hide();
-		}
-		else
-		{
-			$('.project_form_discount_content_container').show();
-		}
-
-	});
-});
-//form_body_ticket_ticket END
-
 function tabSelect(tabKey){
 	if(tabKey != 'required'){
 		if(requiredSavedCheck() == false)
-		{//최종적으로 저장 안됐을때만 체크 한다.
+		{
+			//최종적으로 저장 안됐을때만 체크 한다.
 			requiredVaildCheck();
 
 			return false;
@@ -1824,3 +2332,55 @@ function requiredSavedCheck(){
 	swal("저장 후 다음을 눌러주세요!", "", "error");
 	return false;
 }
+
+/*
+// summernote 에디터에 이미지 업로드
+function sendFile(file,editor,welEditable) {
+	var projectId = $('#project_id').val();
+	var url = '/projects/'+projectId+'/story/images';
+	var method = 'post';
+
+	//data = new FormData();
+	//data.append("file", file);
+	data = '[]';
+	$.ajax( {
+		url: url, // image 저장 경로
+		data: data,
+    cache: false,
+    contentType: false,
+    //enctype: 'multipart/form-data',
+    processData: false,
+    //type: 'POST',
+		method: method,
+    success: function(data) {
+			var obj = JSON.parse(data);
+			if (obj.success) {
+				var image = $('<img>').attr('src', '' + obj.save_url);
+				// 에디터에 img 태그로 저장
+				//$('.summernote').summernote("insertNode", image[0]);
+				// summernote 에디터에 img 태그를 보여줌
+				// editor.insertImage(welEditable, data);
+			} else {
+				alert(obj.error);
+				switch(parseInt(obj.error)) {
+      case 1: alert('업로드 용량 제한에 걸렸습니다.'); break;
+      case 2: alert('MAX_FILE_SIZE 보다 큰 파일은 업로드할 수 없습니다.'); break;
+      case 3: alert('파일이 일부분만 전송되었습니다.'); break;
+      case 4: alert('파일이 전송되지 않았습니다.'); break;
+      case 6: alert('임시 폴더가 없습니다.'); break;
+      case 7: alert('파일 쓰기 실패'); break;
+      case 8: alert('알수 없는 오류입니다.'); break;
+      case 100: alert('허용된 파일이 아닙니다.'); break;
+      case 101: alert('0 byte 파일은 업로드할 수 없습니다.'); break;
+     }
+			}
+		}
+		,
+		  error: function(jqXHR, textStatus, errorThrown)
+			{
+				console.log(textStatus+" "+errorThrown);
+			}
+		}
+	);
+}
+*/

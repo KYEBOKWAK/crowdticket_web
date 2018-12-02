@@ -5,17 +5,24 @@ $i = 0;
 @foreach ($projects as $project)
     @if ($i % 4 === 0)
         <div class="item @if ($i === 0) active @endif">
-            <div class="row">
+            <div class="row @if (isset($colOnly)) carousel_resize_width @endif">
     @endif
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 project-grid @if (isset($colOnly)) carousel_resize_container @endif">
                     <div class="project-grid-wrapper">
                         <div>
-                          <a href="{{ url('/projects') }}/{{ $project->id }}">
-                              <div class="bg-base project-thumbnail">
-                                <img src="{{ $project->getPosterUrl() }}" class="project-img">
-                                  <div class="white-mask"></div>
-                              </div>
-                          </a>
+                          @if (isset($colOnly))
+                            <div class="bg-base project-thumbnail">
+                              <img src="{{ $project->getPosterUrl() }}" class="project-img">
+                                <div class="white-mask"></div>
+                            </div>
+                          @else
+                            <a href="{{ url('/projects') }}/{{ $project->id }}">
+                                <div class="bg-base project-thumbnail">
+                                  <img src="{{ $project->getPosterUrl() }}" class="project-img">
+                                    <div class="white-mask"></div>
+                                </div>
+                            </a>
+                          @endif
                         </div>
                         <div class="project-category">
                             <h5>
@@ -27,13 +34,15 @@ $i = 0;
 
                               <span class="ct-percent">
                               @if($project->isFundingType())
-                                @if($project->isFinished())
+                                @if($project->isReady())
+                                @elseif($project->isFinished())
                                   {{ $project->getProgress() }}% 펀딩종료
                                 @else
                                   {{ $project->getProgress() }}% 펀딩중
                                 @endif
                               @else
-                                  @if($project->isFinished())
+                                  @if($project->isReady())
+                                  @elseif($project->isFinished())
                                     판매종료
                                   @else
                                     판매중

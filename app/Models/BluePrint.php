@@ -2,7 +2,11 @@
 
 class Blueprint extends Model
 {
-
+  protected $fillable = [
+      'type', 'user_introduction', 'project_introduction',
+      'story', 'estimated_amount', 'contact'
+  ];
+  /*
     protected $fillable = [
         'type', 'user_introduction', 'project_introduction',
         'story', 'estimated_amount', 'contact'
@@ -25,6 +29,7 @@ class Blueprint extends Model
         'estimated_amount' => 'required',
         'contact' => 'required'
     ];
+    */
 
     public static function findByCode($code)
     {

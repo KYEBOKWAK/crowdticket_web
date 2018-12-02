@@ -175,7 +175,7 @@
     </style>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=2') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=4') }}"/>
 
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
@@ -289,7 +289,6 @@ array_push($tabs, [
     @endif
   </div>
 
-
 @endsection
 
 @section('js')
@@ -298,8 +297,8 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=4') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=5') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
-    <script src="{{ asset('/js/tooltip/tooltip.js?version=2') }}"></script>
+    <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
 @endsection

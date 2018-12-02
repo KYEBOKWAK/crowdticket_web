@@ -74,32 +74,25 @@ class ProjectController extends Controller
 
     public function uploadStoryImage(Request $request, $id)
     {
-        $project = $this->getSecureProjectById($id);
 
-        $file = $request->file('image');
-        $originalName = $file->getClientOriginalName();
-        $hashedName = md5($originalName);
-        $storyUrlPartial = Model::getS3Directory(Model::S3_STORY_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
+      $project = $this->getSecureProjectById($id);
 
-        Storage::put(
-            $storyUrlPartial,
-            file_get_contents($file->getRealPath())
-        );
+      $base64Img = \Input::get('image');
 
-        $imageSize = getimagesize($file);
-        $imageWidth = $imageSize[0];
-        $imageHeight = $imageSize[1];
-        if ($imageWidth > 560) {
-            $imageResizeRatio = 560 / $imageWidth;
-            $imageWidth = 560;
-            $imageHeight = (int)($imageHeight * $imageResizeRatio);
-        }
+      $base64Img = str_replace('data:image/jpeg;base64,', '', $base64Img);
+    	$base64Img = str_replace(' ', '+', $base64Img);
+    	$data = base64_decode($base64Img);
 
-        return [
-            'image_url' => Model::S3_BASE_URL . $storyUrlPartial,
-            'image_width' => $imageWidth,
-            'image_height' => $imageHeight
-        ];
+      $originalName = \Input::get('image_name');
+      $hashedName = md5($originalName);
+      $storyUrlPartial = Model::getS3Directory(Model::S3_STORY_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
+
+      Storage::put(
+          $storyUrlPartial,
+          $data
+      );
+
+      return Model::S3_BASE_URL . $storyUrlPartial;
     }
 
     public function uploadNewsImage(Request $request, $id)
@@ -555,7 +548,7 @@ class ProjectController extends Controller
         $project = new Project(\Input::all());
         $project->user()->associate($blueprint->user);
         $project->setAttribute('story', ' ');
-        $project->setAttribute('type', $blueprint->type);
+        //$project->setAttribute('type', $blueprint->type);
         $project->save();
 
         //프로젝트 만들때 포스터 DB 생성
@@ -589,7 +582,7 @@ class ProjectController extends Controller
             $project = $this->createProject($blueprint);
             $blueprint->project()->associate($project);
             $blueprint->save();
-            return $project;
+            return $blueprint->project()->first();;
         }
     }
 
@@ -622,6 +615,36 @@ class ProjectController extends Controller
             }, 'orders.user'])->get(),
             'orders' => $project->ordersWithoutError()->withTrashed()->get()
         ]);
+    }
+
+    public function setNoDiscount(Request $request, $id){
+      $project = $this->getSecureProjectById($id);
+
+      if ($request->has('discountcheck')) {
+          $discountCheck = \Input::get('discountcheck');
+          //$project->isDiscount = $discountCheck;
+          $project->setAttribute('isDiscount', $discountCheck);
+          $project->save();
+
+          return $discountCheck;
+      }
+
+      return "FALSE";
+    }
+
+    public function setNoGoods(Request $request, $id){
+      $project = $this->getSecureProjectById($id);
+
+      if ($request->has('goodscheck')) {
+          $goodsCheck = \Input::get('goodscheck');
+          //$project->isDiscount = $discountCheck;
+          $project->setAttribute('isGoods', $goodsCheck);
+          $project->save();
+
+          return $goodsCheck;
+      }
+
+      return "FALSE";
     }
 
 }

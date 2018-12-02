@@ -307,7 +307,7 @@ class Project extends Model
         return $this->getTicketDateFormatted();
       }
 
-      if($this->isPlace() == "FALSE")
+      if($this->isPlace == "FALSE")
       {
         return $this->temporary_date;
       }
@@ -623,7 +623,7 @@ class Project extends Model
 
       return $discountAmount;
     }
-
+/*
     public function isPlace()
     {
       if($this->isPlace == 'TRUE')
@@ -633,7 +633,7 @@ class Project extends Model
 
       return "FALSE";
     }
-
+*/
     public function getTotalFundingAmount()
     {
       //$orders = $this->orders;

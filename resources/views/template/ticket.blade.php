@@ -1,6 +1,7 @@
 <script type="text/template" id="template_ticket">
-  <div data-ticket-id="<%= ticket.id %>" class="ticket">
-    <div class="flex_layer">
+  <div data-ticket-id="<%= ticket.id %>" class="ticket ticket_mobile_align_right">
+    <!--<div class="flex_layer">-->
+    <div class="flex_layer_most_mobile">
       <img src="{{ asset('/img/app/ticket.png') }}" class="project_form_ticket_image"/>
         <%
     					var rawDate = ticket.show_date.split(" ");

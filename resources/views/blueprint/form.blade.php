@@ -26,9 +26,9 @@
     </div>
   <div class="project-form-create-wrapper">
     @if($isProject == 'true')
-      <form action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
+      <form id="isProjectForm" action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
     @else
-      <form action="{{ url('/question/sendmail') }}" method="post" data-toggle="validator" role="form">
+      <form id="isContactForm" action="{{ url('/question/sendmail') }}" method="post" data-toggle="validator" role="form">
     @endif
         <div class="form-group">
             <p class="project_form_create_title">프로젝트 개설자</p>
@@ -58,7 +58,7 @@
         </div>
         <div class="form-group">
             <p class="project_form_create_title">이메일</p>
-            <input id="input-contact" name="contact" type="email" class="project_form_create_input" required/>
+            <input id="input-email" name="contact" type="email" class="project_form_create_input" required/>
         </div>
         @include('helper.contact', [
             'label' => '전화번호',
@@ -68,9 +68,9 @@
         ])
         <div class="project-form-create-btn-submit-wrapper">
           @if($isProject == 'true')
-            <input type="submit" class="project-form-create-btn-submit" value="개설 시작 하기"/>
+            <input id="project_form_make_start" type="button" class="project-form-create-btn-submit" value="개설 시작 하기"/>
           @else
-            <input type="submit" class="project-form-create-btn-submit" value="문의 하기"/>
+            <input id="project_form_contact_us_start" type="button" class="project-form-create-btn-submit" value="문의 하기"/>
           @endif
         </div>
         <!-- 기존 테이블로 인해서 코드 남겨둔다. 나중에 지워주기 -->
@@ -84,5 +84,40 @@
 
 @endsection
 
-@section('script')
+@section('js')
+<script>
+    $(document).ready(function () {
+      $('#project_form_make_start').click(function(){
+        if(!isCheckEmail($('#input-email').val()))
+        {
+          return;
+        }
+
+        if(!isCheckPhoneNumber($('.concatable-target').val()))
+        {
+          return;
+        }
+
+        loadingProcess($(this));
+
+        $('#isProjectForm').submit();
+      });
+
+      $('#project_form_contact_us_start').click(function(){
+        if(!isCheckEmail($('#input-email').val()))
+        {
+          return;
+        }
+
+        if(!isCheckPhoneNumber($('.concatable-target').val()))
+        {
+          return;
+        }
+
+        loadingProcess($(this));
+
+        $('#isContactForm').submit();
+      });
+    });
+</script>
 @endsection

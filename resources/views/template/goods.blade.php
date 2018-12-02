@@ -13,7 +13,7 @@
           <h3> <%= addComma(goods.price) %>원</h3>
           <p><%= goods.content %></p>
 
-          <% if(goods.ticket_discount) { %>
+          <% if(goods.ticket_discount > 0) { %>
             <p style="text-align: right; font-weight: bold; margin-top:10px;"> 티켓 <%= addComma(goods.ticket_discount) %>원 추가 할인</p>
           <% } %>
         </div>

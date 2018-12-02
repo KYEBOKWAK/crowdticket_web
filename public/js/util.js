@@ -1,3 +1,22 @@
+function loadingProcess(thisElement){
+  thisElement.hide();
+
+  var elementParent = thisElement.parent();
+  var loadingDiv = document.createElement('div');
+  loadingDiv.className = 'loading';
+  elementParent.append(loadingDiv);
+}
+
+function loadingProcessStop(thisElement){
+  //var elementParents = thisElement.parents();
+  //elementParents.removeClass('loading');
+  $('.loading').each(function(){
+    $(this).remove();
+  });
+
+  thisElement.show();
+}
+
 function addComma(num) {
   var regexp = /\B(?=(\d{3})+(?!\d))/g;
    return num.toString().replace(regexp, ',');
@@ -53,4 +72,85 @@ function isCheckEmail(email){
   }
 
   return true;
+}
+
+function isCheckKorean(word){
+  var regExpEnglish = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  if(regExpEnglish.test(word))
+  {
+    alert("URL에 한글이 있습니다. 영문, 숫자, -, _만 입력이 가능합니다");
+    return true;
+  }
+
+  return false;
+}
+
+//공백만 있는지 체크
+function isCheckOnlyEmptyValue(word){
+  var blank_pattern = /^\s+|\s+$/g;
+  if( word.replace( blank_pattern, '' ) == "" ){
+      alert(' 공백만 입력되었습니다 ');
+      return true;
+  }
+
+  return false;
+}
+
+//글자에 공백이 들어가있는지 체크
+function isCheckEmptyValue(word){
+  if(word.search(/\s/) != -1)
+  {
+    alert(' 공백이 입력되었습니다 ');
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+function getRemoveExpWord(inputStr){
+    //함수를 호출하여 특수문자 검증 시작.
+    var str = inputStr;
+    var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    if(regExp.test(str)){
+        var t = str.replace(regExp, "");
+        //특수문자를 대체. ""
+        //alert("특수문자 제거. ==>" + t);
+        //특수문자 제거. ==>20171031
+        str = t;
+    }else{
+        //alert("특수문자 없음 "+str);
+    }
+
+    return str;
+}
+
+function isWordLengthCheck(inputNode, outputNode){
+  inputNode.keyup(function(){
+    var numChar = $(this).val().length;
+    var maxNum = $(this).attr('maxlength');
+    var charRemain = maxNum - numChar;
+
+    outputNode.text(numChar+'/'+maxNum);
+    if(charRemain < 0){
+
+      swal("아차! 글자 수 제한ㅠㅠ", "", "warning");
+    }
+
+  });
+}
+
+function getConverterEnterString(inputString){
+  return inputString.replace(/\r?\n/g, '<br />');
+}
+
+
+function getTextWidth(text, font) {
+    // re-use canvas object for better performance
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
 }

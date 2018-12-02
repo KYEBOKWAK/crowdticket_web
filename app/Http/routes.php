@@ -79,7 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/form/{id}', 'ProjectController@getUpdateFormById');
     Route::get('projects/form/{code}', 'ProjectController@getUpdateFormByCode');
     Route::put('projects/{id}', 'ProjectController@updateProject');
-    Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
+    //Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
+    Route::post('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
     Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
     Route::put('projects/{id}/submit', 'ProjectController@submitProject');
     Route::get('projects/{id}/stats', 'ProjectController@getStats');
@@ -136,6 +137,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('{entity}/{id}/comments', 'CommentController@createComment');
     Route::delete('comments/{id}', 'CommentController@deleteComment');
+
+    Route::post('discounts/{id}/nodiscount', 'ProjectController@setNoDiscount');
+    Route::post('goods/{id}/nogoods', 'ProjectController@setNoGoods');
 
 });
 

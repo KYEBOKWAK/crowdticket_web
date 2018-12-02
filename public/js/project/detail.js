@@ -39,6 +39,25 @@ $(document).ready(function() {
 						  },
 							icon: "warning",
 						})
+						.then(function(value){
+							switch (value) {
+						    case "delete":
+						      deleteComment(commentId);
+						      break;
+						  }
+						});
+				/*
+				swal("댓글을 삭제 하시겠습니까?", {
+						  buttons: {
+						    cancel: "취소",
+						    catch: {
+						      text: "삭제",
+						      value: "delete",
+						    },
+
+						  },
+							icon: "warning",
+						})
 						.then((value) => {
 						  switch (value) {
 						    case "delete":
@@ -46,6 +65,7 @@ $(document).ready(function() {
 						      break;
 						  }
 						});
+						*/
 
 			});
 		});
@@ -144,6 +164,10 @@ $(document).ready(function() {
 
 		var templateGoodsItem = $('#template_goods_list_item').html();
 		var compiledGoodsItem = _.template(templateGoodsItem);
+
+		//goods설명 한줄띄우기 컨버터
+		goods.content = getConverterEnterString(goods.content);
+
 		var rowGoodsItem = compiledGoodsItem({ 'goods': goods });
 		var $rowGoodsItem = $($.parseHTML(rowGoodsItem));
 		$rowGoodsItem.data('goodsData', goods);
@@ -304,6 +328,11 @@ $(document).ready(function() {
 	};
 
 	oldListTickets();
+
+//textContent
+	var introduceValue = $("#introduce_input_row").val();
+	introduceValue = getConverterEnterString(introduceValue);
+	$('.detail_creator_info_introduce').html(introduceValue);
 
 });
 

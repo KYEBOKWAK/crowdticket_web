@@ -120,11 +120,11 @@
   background-color: #ffffff;
   font-size: 16px;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .project_form_length_text{
-  height: 38px;
-  padding-top: 22px;
+  margin-top: auto;
   margin-bottom: 0px;
   margin-left: 5px;
   font-size: 13px;
@@ -169,11 +169,14 @@
 
 .project_form_alias_url{
   background-color: #eeeeee;
+  font-weight: bold;
   font-size: 20px;
   text-align: center;
   padding: 5px 0px;
   color: black;
   border-right: 0px;
+  flex-basis: 300px;
+  flex-shrink: 0;
 }
 
 .project-form-input-newURL{
@@ -204,9 +207,11 @@
 
 .project_form_fund_target_sub_title{
   display: inline-block;
+  width: 100%;
   font-size: 16px;
   font-weight: bold;
   vertical-align: bottom;
+  padding-top: 16px;
 }
 
 .project_form_ticket_tab_container{
@@ -216,7 +221,7 @@
 }
 
 .project_form_ticket_tab_wrapper{
-  width: 700px;
+  width: 770px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -419,8 +424,9 @@
   width: 290px;
   height: 217.5px;
   background-color: #e7e7e7;
-  /*margin-right: 27px;*/
+  margin-right: 27px;
   margin-bottom: 27px;
+  position: relative;
 }
 
 .title_img_preview{
@@ -428,15 +434,19 @@
   height: 217.5px;
   background-repeat: no-repeat;
   background-size: cover;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 
 .project_form_poster_trash{
   width: 27px;
   height: 27px;
+  margin-left: -27px;
 }
 
 .project_form_poster_trash_container{
-  width: 27px;
+  /*margin-left: 27px;*/
 }
 
 .project_form_poster_title{
@@ -524,19 +534,67 @@
   width: 120px;
 }
 
+.carousel_resize_width{
+  width: 100%;
+}
+
+.project_form_poster_origin_size_ratio{
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%;
+}
+
+.project_form_poster_origin_size{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.title_img_add_btn_wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.project-form-chaanel-button-container{
+  flex-basis: 92px;
+  flex-shrink: 0;
+}
+
+.project_form_account_subtitle{
+  margin-top: 22px;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
 @media (max-width:960px){
   .project_form_content_container{
     width: 670px;
   }
 
+  .project_form_ticket_tab_wrapper{
+    width: 100%;
+  }
+
   .project-form-required-type-button{
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 15px;
+  }
+
+  .project-form-content{
+    width: 100%;
+    margin-left: 0px;
+    padding: 0px 0px;
   }
 
   .project-form-content-title{
+    display: table;
     text-align: left;
-    padding-left: 20px;
+    padding-left: 0px;
   }
 
   .project_form_input_base{
@@ -544,27 +602,166 @@
     margin-left: 0px;
   }
 
-  .project_form_length_text{
+  .project_form_delivery_time_wrapper{
+    margin-left: 10px;
+  }
+
+  .project_form_ticket_price_wrapper{
+    width: 110px;
+  }
+
+  .project_form_ticket_category_wrapper{
+
+  }
+
+  .project_form_ticket_category_etc_wrapper{
+    margin-left: 10px;
+  }
+
+  .project_form_ticket_button_wrapper{
+    margin-right: auto;
+  }
+
+  .project_flex_discount_title_resize{
+    flex-basis: 130px;
+  }
+
+  .project_form_checkbox{
+    margin-top: 10px !important;
+  }
+
+  .discount_mobile_align_right{
     text-align: right;
-    margin-top: 5px;
+  }
+
+  .carousel_resize_container{
+    margin-top: 10px;
+  }
+
+  .project_form_poster_container{
+    border: 0px;
+  }
+
+  .project_form_creator_channel_input{
+    width: 170px;
+  }
+
+  .project_form_creator_channel_url_input{
+    width: 391px;
+    margin-left: 22px;
+  }
+
+  .order_form_conform_title{
+    margin-left: auto;
+  }
+}
+
+@media (max-width:768px){
+  .project_form_ticket_tab_text{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 @media (max-width:670px){
   .project_form_content_container{
     width: 100%;
+    margin-bottom: 0px;
     /*width: 300px;*/
   }
 
   .project-form-required-type-button{
-    width: 90%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 15px;
   }
 
+  .project-form-content{
+    padding: 0px 20px;
+  }
+
   .project-form-content-title{
     text-align: left;
     padding-left: 20px;
+  }
+
+  .btn-alias{
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .project_form_alias_url{
+    font-size: 10px;
+    flex-basis: 50%;
+    text-align: left;
+    padding: 10px 0px;
+  }
+
+  .ticket_slash_wrapper{
+    display: none;
+  }
+
+  .ticket_mobile_align_right{
+    text-align: right;
+  }
+
+  .project_form_ticket_tab_container{
+    margin-top: 60px;
+  }
+
+  .project_form_poster_img_bg{
+    width: 90%;
+    height: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .title_img_preview{
+    width: 100%;
+    height: 100%;
+  }
+
+  .poster_mobile_align_left{
+    text-align: left;
+    margin-left: 10px;
+  }
+
+  .project_form_poster_sub_title_container{
+    margin-left: 0px;
+  }
+
+  .carousel_resize_container{
+    width: 100%;
+  }
+
+  .carousel_resize_width{
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .project_form_creator_channel_input{
+    width: 95px;
+  }
+
+  .project_form_creator_channel_url_input{
+    min-width: 78px;
+    margin-left: 5px;
+  }
+
+  .order_form_conform_title{
+    margin: 0px 20px;
+  }
+
+  .project_form_account_title{
+    margin-bottom: 0px;
+  }
+
+  .project_form_account_subtitle{
+    margin-top: 5px;
+    margin-bottom: 0px;
+    font-size: 10px;
   }
 }

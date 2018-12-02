@@ -22,7 +22,7 @@
         <div class="flex_layer_project">
           <p class="project-form-content-title">대표전화</p>
           <div class="project-form-content">
-              <input id="contact" name="contact" type="number" class="project_form_input_base project_form_creator_contact_input" maxlength="31" value="{{ $user->contact }}"/>
+              <input id="contact" name="contact" type="number" class="project_form_input_base project_form_creator_contact_input" value="{{ $user->contact }}"/>
               <p style="margin-top: 5px; margin-bottom: 0px;"> '-' 없이 숫자만 입력</p>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <p class="project-form-content-title">대표 이메일</p>
           <div class="project-form-content">
             <div class="flex_layer">
-              <input id="email" name="email" type="email" class="project_form_input_base project_form_creator_email_input" maxlength="31" value="{{ $user->email }}"/>
+              <input id="email" name="email" type="email" class="project_form_input_base project_form_creator_email_input" value="{{ $user->email }}"/>
             </div>
           </div>
         </div>
@@ -49,12 +49,12 @@
               <div id="user-default-photo" class="user-photo-middle bg-base pull-left" style="display: none; background-image: url('{{ asset('/img/app/default-user-image.png') }}');">
               </div>
 
-              <div style="margin-top: 82px;">
+              <div style="width: 60px; margin-top: 82px;">
                 <a href="javascript:void(0);" style="cursor:pointer" id="profile-upload-photo-fake"><img src="https://img.icons8.com/windows/50/333333/pencil.png" class="ticket_tickets_button_wrapper"/></a>
                 <a href="javascript:void(0);" style="cursor:pointer" id="profile-delete-photo"><img src="https://img.icons8.com/windows/50/EF4D5D/trash.png" class="ticket_tickets_button_wrapper"/></a>
               </div>
 
-              <input id="input-user-photo" type="file" name="photo" style="height: 0; visibility: hidden"/>
+              <input id="input-user-photo" type="file" name="photo" style="width: 0px; height: 0px; visibility: hidden"/>
               <input id="isdeletephoto" type="hidden" name="isdeletephoto" value=""/>
             </div>
           </div>
@@ -66,7 +66,8 @@
           <p class="project-form-content-title">개설자 소개</p>
           <div class="project-form-content">
             <div class="flex_layer">
-              <input id="introduce" name="introduce" type="text" class="project_form_input_base" value="{{ $user->introduce }}"/>
+              <textarea id="introduce" name="introduce" type="text" maxlength="100" class="project_form_input_base" style="height: 84px;">{{ $user->introduce }}</textarea>
+              <p class="introduceLength project_form_length_text">0/100</p>
             </div>
           </div>
         </div>
@@ -77,6 +78,7 @@
           <p class="project-form-content-title">소셜미디어 채널</p>
           <div class="project-form-content">
             <div id="channel_list"></div>
+            <p style="color: #aaaaaa;">최대 6개까지 등록할 수 있습니다.</p>
           </div>
         </div>
       </div>
@@ -99,9 +101,12 @@
       </div>
 
       <div class='order_form_conform_title'>
-        <h3>
-          정산정보<span style="font-size: 12px; margin-left: 5px;"> | 입력하신 내용이 틀리지 않도록 반드시 확인해주세요!</span>
-        </h3>
+        <div class="flex_layer_most_mobile">
+          <h3 class="project_form_account_title">
+            정산정보
+          </h3>
+          <p class="project_form_account_subtitle"> | 입력하신 내용이 틀리지 않도록 반드시 확인해주세요!</p>
+        </div>
       </div>
 
       <div class="project_form_input_container">

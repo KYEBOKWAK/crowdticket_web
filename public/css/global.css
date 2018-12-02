@@ -82,10 +82,32 @@ body{
 
 .help_tooltip_img{
   position: absolute;
+  width: 20px;
+  height: 20px;
   top: 0px;
   left: 100%;
+  z-index: 999;
 }
 
 .help_tooltip_parent{
   position: relative;
+}
+
+.loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 30px;
+  border: 3px solid rgba(234,83,90,.3);
+  border-radius: 50%;
+  border-top-color: #ea535a;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  to { -webkit-transform: rotate(360deg); }
 }

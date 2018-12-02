@@ -21,7 +21,7 @@
 
 <!-- Animate.css -->
 <link rel="stylesheet" href="{{ asset('/landingcreator/css/animate.css?version=2') }}">
-<link rel="stylesheet" href="{{ asset('/landingcreator/css/main.css?version=3') }}">
+<link rel="stylesheet" href="{{ asset('/landingcreator/css/main.css?version=4') }}">
 
 @endsection
 

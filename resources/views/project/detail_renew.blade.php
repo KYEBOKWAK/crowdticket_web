@@ -194,7 +194,7 @@ $selectedTicket = "";
               <h5 class="detail_main_sub_title">장소</h5>
               <p class="detail_main_sub_contant detail_margin_bottom_10">{{ $project->concert_hall }}</p>
               <p class="detail_main_place_detail detail_margin_bottom_30">
-                @if($project->isPlace() == "TRUE")
+                @if($project->isPlace == "TRUE")
                   {{ $project->detailed_address }}
                 @endif
               </p>
@@ -352,10 +352,12 @@ $selectedTicket = "";
       <input type="hidden" id="project_type" value="{{ $project->type }}"/>
       <input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
       <input type="hidden" id="project_id" value="{{ $project->id }}"/>
-      <input type="hidden" id="goods_json" value="{{ $project->goods }}">
+      <input type="hidden" id="goods_json" value="{{ $project->goods }}"/>
 
-      <input type="hidden" id="myId" value="@if(Auth::user()) {{ Auth::user()->id }} @else 0 @endif ">
-      <input type="hidden" id="isMaster" value="{{ $is_master }}">
+      <input type="hidden" id="myId" value="@if(Auth::user()) {{ Auth::user()->id }} @else 0 @endif "/>
+      <input type="hidden" id="isMaster" value="{{ $is_master }}"/>
+
+      <input type="hidden" id="introduce_input_row" value="{{ $project->user->introduce }}">
 
       <!--baseContainer end-->
     </div>
@@ -376,8 +378,8 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=6') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=7') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=13') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=14') }}"></script>
 @endsection

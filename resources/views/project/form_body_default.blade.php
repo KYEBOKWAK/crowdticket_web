@@ -9,7 +9,7 @@
         <div class="project-form-content">
           <div class="flex_layer">
             <input id="title" name="title" type="text" class="project_form_input_base" maxlength="31" value="{{ $project->title }}" @if ($project->isPublic()) readonly="readonly" @endif/>
-            <p class="project_form_length_text">0/31</p>
+            <p class="titleLength project_form_length_text">0/31</p>
           </div>
         </div>
       </div>
@@ -47,12 +47,18 @@
 
     <div class="project_form_input_container">
       <div class="flex_layer_project">
-        <p class="project-form-content-title">지역</p>
+        <p class="project-form-content-title">
+          @if($project->isPlace == "TRUE")
+            지역
+          @else
+            예상지역
+          @endif
+        </p>
         <div class="project-form-content">
           <div class="flex_layer_column">
             <div class="project_form_adress_wrapper">
               <div class="flex_layer">
-                @if($project->isPlace() == "TRUE")
+                @if($project->isPlace == "TRUE")
                   <select id="city" name="city" class="project-form-input project-form-input-category"
                           @if ($project->isPublic()) readonly="readonly" @endif>
                       @foreach ($cities as $city)
@@ -64,11 +70,11 @@
                       @endforeach
                   </select>
                 @endif
-                <input id="concert_hall" name="concert_hall" @if($project->isPlace() == "TRUE") style="margin-left:10px;" @endif type="text" class="project_form_input_base"
-                    value="{{ $project->concert_hall }}" placeholder="@if($project->isPlace() == 'TRUE')공연장 / 장소 명 @else 대략적으로 계획 중인 장소를 적어주세요.@endif" @if ($project->isPublic()) readonly="readonly" @endif />
+                <input id="concert_hall" name="concert_hall" @if($project->isPlace == "TRUE") style="margin-left:10px;" @endif type="text" class="project_form_input_base"
+                    value="{{ $project->concert_hall }}" placeholder="@if($project->isPlace == 'TRUE')공연장 / 장소 명 @else 대략적으로 계획 중인 장소를 적어주세요.@endif" @if ($project->isPublic()) readonly="readonly" @endif />
               </div>
             </div>
-            @if($project->isPlace() == "TRUE")
+            @if($project->isPlace == "TRUE")
               <input id="detailed_address" name="detailed_address" type="text" class="project_form_input_base"
                   value="{{ $project->detailed_address }}" placeholder="상세 주소를 입력해주세요" @if ($project->isPublic()) readonly="readonly" @endif />
             @endif
@@ -77,7 +83,7 @@
       </div>
     </div>
 
-    @if($project->isPlace() == "FALSE")
+    @if($project->isPlace == "FALSE")
     <div class="project_form_input_container">
       <div class="flex_layer_project">
         <p class="project-form-content-title">예상 공연 날짜</p>
@@ -94,15 +100,21 @@
       <div class="flex_layer_project">
         <p class="project-form-content-title">페이지 주소</p>
         <div class="project-form-content">
-          <div class="flex_layer">
-            <div class="project_form_input_base project_form_alias_url">{{ url('/projects') }}/</div>
-            <input id="alias" name="alias" type="text" class="project_form_input_base project-form-input-newURL" value="{{ $project->alias }}"
-                   @if ($project->isPublic()) readonly="readonly" @endif />
-             <button id="check_alias" class="btn btn-default btn-alias pointBackgroundColor">
-                 중복확인
-             </button>
+          <div class="flex_layer_most_mobile">
+            <div class="flex_layer">
+              <div class="project_form_input_base project_form_alias_url">{{ url('/projects') }}/</div>
+              <input id="alias" name="alias" type="text" maxlength="32" class="project_form_input_base project-form-input-newURL" value="{{ $project->alias }}"
+                     @if ($project->isPublic()) readonly="readonly" @endif />
+            </div>
 
+            <div class="flex_layer">
+              <button id="check_alias" class="btn btn-default btn-alias pointBackgroundColor">
+                  중복확인
+              </button>
+              <p class="aliasLength project_form_length_text">0/32</p>
+            </div>
           </div>
+
           <p style="font-size: 12px; margin-top:10px; color:#aaaaaa">주변 사람들에게 펀딩을 홍보할 때 사용하게 될 URL을 직접 입력해보세요! <br>
               32자 이내 영문, 숫자, -, _만 입력이 가능합니다. 첫번째 글자는 영문으로 시작되어야 합니다.</p>
         </div>
@@ -122,14 +134,16 @@
             </button>
 
             <div style="width: 100%; margin-top:10px;">
-              <input id="pledged_amount" name="pledged_amount" type="number" class="project_form_input_base project_form_input_fund_target" value="{{ $project->pledged_amount }}" min="0" placeholder="목표금액/인원" @if ($project->isPublic()) readonly="readonly" @endif />
-                <span class="project_form_fund_target_sub_title">
-                  @if($project->project_target == 'money')
-                    원이 모이면 성공!
-                  @else
-                    명이 모이면 성공!
-                  @endif
-                </span>
+              <div class="flex_layer">
+                <input id="pledged_amount" name="pledged_amount" type="number" class="project_form_input_base project_form_input_fund_target" value="{{ $project->pledged_amount }}" min="0" placeholder="목표금액/인원" @if ($project->isPublic()) readonly="readonly" @endif />
+                  <span class="project_form_fund_target_sub_title">
+                    @if($project->project_target == 'money')
+                      원이 모이면 성공!
+                    @else
+                      명이 모이면 성공!
+                    @endif
+                  </span>
+              </div>
             </div>
           </div>
         </div>

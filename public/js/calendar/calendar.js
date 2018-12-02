@@ -1239,7 +1239,8 @@ $(document).ready(function() {
 
   var setTicketNotice = function(){
     var ticketNotice = $('#ticket_notice').val();
-    ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
+    //ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
+    ticketNotice = getConverterEnterString(ticketNotice);
     $('#ticket_notice_container').append(ticketNotice);
   };
 

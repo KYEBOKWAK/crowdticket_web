@@ -21,7 +21,7 @@ class Ticket extends Model
         'delivery_date' => 'date_format:Y-m-d H:i:s',
         'shipping_charge' => 'integer',
         'category' => 'string|min:0',
-        'show_date' => 'date_format:Y-m-d H:i:s'
+        //'show_date' => 'date_format:Y-m-d H:i:s'
     ];
 
     protected static $creationRules = [
