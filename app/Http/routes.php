@@ -81,7 +81,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('projects/{id}', 'ProjectController@updateProject');
     //Route::put('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
     Route::post('projects/{id}/story/images', 'ProjectController@uploadStoryImage');
-    Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
+    //Route::put('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
+    Route::post('projects/{id}/news/images', 'ProjectController@uploadNewsImage');
+
     Route::put('projects/{id}/submit', 'ProjectController@submitProject');
     Route::get('projects/{id}/stats', 'ProjectController@getStats');
     Route::get('projects/{id}/orders', 'ProjectController@getOrders');

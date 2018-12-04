@@ -1,8 +1,7 @@
 @extends('app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/editor.css') }}"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <style>
         .ps-update-tabs {
             margin-top: 48px;
@@ -159,27 +158,16 @@
         .ps-update-creator .box-creator-profile {
             margin-top: 15px;
         }
-
-        .note-frame{
-          background-color: white;
-          margin-left: auto;
-          margin-right: auto;
-          text-align: left;
-        }
-
-        .note-editing-area{
-          width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
     </style>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=2') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=4') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=4') }}"/>
 
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/tooltip/tippy.css?version=2') }}"/>
+
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=1') }}"/>
 
 @endsection
 
@@ -297,8 +285,9 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=5') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=6') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
+    <script src="{{ asset('/js/editor/summernote-lite.js?version=1') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=1') }}"></script>
 @endsection

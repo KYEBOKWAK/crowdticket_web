@@ -51,6 +51,7 @@
                 <p class="project_form_length_text" style="padding-top: 10px; margin-left: 0px;">한 문장으로 여러분의 프로젝트를 설명해야 한다면, 뭐라고 하시겠어요?</p>
               </div>
           </div>
+          @include('form_method_spoofing', ['method' => 'put'])
         </form>
       </div>
 
@@ -62,10 +63,9 @@
         @include('template.carousel_main_project', ['projects' => [$project], 'colOnly' => false])
       </div>
     </div>
-    
+
     <div class="project_form_button_wrapper" style="margin-right: 40px;">
       <div class="flex_layer">
-        @include('form_method_spoofing', ['method' => 'put'])
         <button id="update_poster" type="button" class="btn btn-success center-block project_form_button">저장</button>
         <button id="update_and_next" type="button" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
       </div>

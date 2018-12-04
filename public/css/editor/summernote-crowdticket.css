@@ -1,0 +1,34 @@
+.note-frame{
+  background-color: white;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.note-editing-area{
+  /*width: 600px;*/
+  width: 584px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.note-video-clip{
+  width: 100%;
+}
+/*
+u{
+  border-bottom-color: blue;
+}
+*/
+@media (max-width:960px){
+  .note-editor.note-frame{
+    width: 100% !important;
+  }
+}
+
+@media (max-width:584px){
+  /*editor 사이즈에 맞게 특별히 수정 위의 max사이즈와 area사이즈가 일치해야함. 에디터만 쓴다*/
+  .note-editing-area{
+    width: 100%;
+  }
+}

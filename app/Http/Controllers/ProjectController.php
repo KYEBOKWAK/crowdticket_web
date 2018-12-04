@@ -79,7 +79,10 @@ class ProjectController extends Controller
 
       $base64Img = \Input::get('image');
 
-      $base64Img = str_replace('data:image/jpeg;base64,', '', $base64Img);
+      $base64ImgPos  = strpos($base64Img, ';');
+      $base64Imgtype = explode(':', substr($base64Img, 0, $base64ImgPos))[1];
+
+      $base64Img = str_replace('data:'.$base64Imgtype.';base64,', '', $base64Img);
     	$base64Img = str_replace(' ', '+', $base64Img);
     	$data = base64_decode($base64Img);
 
@@ -97,6 +100,30 @@ class ProjectController extends Controller
 
     public function uploadNewsImage(Request $request, $id)
     {
+      //S3_NEWS_DIRECTORY
+      $project = $this->getSecureProjectById($id);
+
+      $base64Img = \Input::get('image');
+
+      $base64ImgPos  = strpos($base64Img, ';');
+      $base64Imgtype = explode(':', substr($base64Img, 0, $base64ImgPos))[1];
+
+      $base64Img = str_replace('data:'.$base64Imgtype.';base64,', '', $base64Img);
+      $base64Img = str_replace(' ', '+', $base64Img);
+      $data = base64_decode($base64Img);
+
+      $originalName = \Input::get('image_name');
+      $hashedName = md5($originalName);
+      $storyUrlPartial = Model::getS3Directory(Model::S3_NEWS_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
+
+      Storage::put(
+          $storyUrlPartial,
+          $data
+      );
+
+      return Model::S3_BASE_URL . $storyUrlPartial;
+
+      /*
         $project = $this->getSecureProjectById($id);
 
         $file = $request->file('image');
@@ -123,6 +150,7 @@ class ProjectController extends Controller
             'image_width' => $imageWidth,
             'image_height' => $imageHeight
         ];
+        */
     }
 
     public function getUpdateFormById($id)

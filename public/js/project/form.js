@@ -340,7 +340,7 @@ $(document).ready(function() {
 		if(ticketsCategory.length > 0){
 			var categoryNum = Number(ticket.category);
 			for (var i = 0; i < ticketsCategory.length; i++) {
-				if(ticketsCategory[i].id === categoryNum){
+				if(Number(ticketsCategory[i].id) === categoryNum){
 					ticketCategoryTemp = ticketsCategory[i].title;
 					break;
 				}
@@ -471,18 +471,8 @@ $(document).ready(function() {
 		updateProject({
 			'story': markupStr
 		}, false);
-
-/*
-		EasyDaumEditor.save(function(content) {
-			updateProject({
-				'video_url': $('#video_url').val(),
-				'story': content
-			}, false);
-		});
-*/
-
 	};
-
+/*
 	var editorAjaxOption = {
 		'beforeSerialize': function($form, options) {
 		},
@@ -528,7 +518,7 @@ $(document).ready(function() {
     ['style', ['bold', 'underline']],
     ['font', []],
 		//['fontfamily', ['Noto Sans KR']],
-		['insert', ['link', 'picture', 'hr']],
+		['insert', ['link', 'picture', 'video']],
     ['fontsize', ['fontsize']],
     //['color', ['color']],
     ['para', ['paragraph']],
@@ -575,6 +565,7 @@ $(document).ready(function() {
 
     $('#summernote').summernote('code', markupStr);
   }
+	*/
 
 	var submitProject = function() {
 		if (window.confirm('정말 제출하시겠습니까?')) {
@@ -1494,7 +1485,7 @@ $(document).ready(function() {
 	$('#poster_img_file').change(onPosterChanged);
 	$('#delete-poster-img').bind('click', deletePoster);
 
-	//$('#poster_form').ajaxForm(posterAjaxOption);
+	$('#poster_form').ajaxForm(posterAjaxOption);
 
 	//개설자 소개 start
 	var saveCreator = function(){

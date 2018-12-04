@@ -130,6 +130,7 @@ function isWordLengthCheck(inputNode, outputNode){
   inputNode.keyup(function(){
     var numChar = $(this).val().length;
     var maxNum = $(this).attr('maxlength');
+    maxNum = maxNum-1;
     var charRemain = maxNum - numChar;
 
     outputNode.text(numChar+'/'+maxNum);
