@@ -7,10 +7,25 @@ function loadingProcess(thisElement){
   elementParent.append(loadingDiv);
 }
 
+function loadingProcessWithSize(thisElement){
+  thisElement.hide();
+
+  var elementParent = thisElement.parent();
+  var loadingDiv = document.createElement('div');
+  loadingDiv.className = 'loading_size_20';
+  elementParent.append(loadingDiv);
+}
+
 function loadingProcessStop(thisElement){
-  //var elementParents = thisElement.parents();
-  //elementParents.removeClass('loading');
   $('.loading').each(function(){
+    $(this).remove();
+  });
+
+  thisElement.show();
+}
+
+function loadingProcessStopWithSize(thisElement){
+  $('.loading_size_20').each(function(){
     $(this).remove();
   });
 
@@ -154,4 +169,75 @@ function getTextWidth(text, font) {
     context.font = font;
     var metrics = context.measureText(text);
     return metrics.width;
+}
+
+/* 업로드 체크 */
+function isFileCheck( file )
+{
+  // 사이즈체크
+  var maxSize  = 1048576;    //30MB
+  var fileSize = 0;
+
+	// 브라우저 확인
+	var browser=navigator.appName;
+
+	// 익스플로러일 경우
+	if (browser=="Microsoft Internet Explorer")
+	{
+		var oas = new ActiveXObject("Scripting.FileSystemObject");
+		fileSize = oas.getFile( file.value ).size;
+	}
+	// 익스플로러가 아닐경우
+	else
+	{
+		fileSize = file.files[0].size;
+	}
+
+
+	//alert("파일사이즈 : "+ fileSize +", 최대파일사이즈 : 1MB");
+
+  if(fileSize > maxSize)
+  {
+      swal("이미지 용량은 1MB 이내로 등록 가능합니다.", "", "warning");
+      return false;
+  }
+
+  //alert("file Size : " + fileSize);
+
+  return true;
+}
+
+function isFileCheckFromEditor( file )
+{
+  // 사이즈체크
+  var maxSize  = 1048576;    //30MB
+  var fileSize = 0;
+
+	// 브라우저 확인
+	var browser=navigator.appName;
+
+	// 익스플로러일 경우
+	if (browser=="Microsoft Internet Explorer")
+	{
+		var oas = new ActiveXObject("Scripting.FileSystemObject");
+		fileSize = oas.getFile( file.value ).size;
+	}
+	// 익스플로러가 아닐경우
+	else
+	{
+		fileSize = file.size;
+	}
+
+
+	//alert("파일사이즈 : "+ fileSize +", 최대파일사이즈 : 1MB");
+
+  if(fileSize > maxSize)
+  {
+      swal("이미지 용량은 1MB 이내로 등록 가능합니다.", "", "warning");
+      return false;
+  }
+
+  //alert("file Size : " + fileSize);
+
+  return true;
 }

@@ -146,7 +146,7 @@
 
     <link href="{{ asset('/css/calendar.css?version=8') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
 @endsection
 
 @section('content')

@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=4') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
     <style>
@@ -77,7 +77,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('/js/editor/summernote-lite.js?version=2') }}"></script>
-    <script src="{{ asset('/js/project/news/form.js?version=7') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=2') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite.js?version=3') }}"></script>
+    <script src="{{ asset('/js/project/news/form.js?version=8') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=3') }}"></script>
 @endsection

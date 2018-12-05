@@ -621,7 +621,7 @@
           (options.title
               ? '    <div class="note-modal-header">' +
                   '      <button type="button" class="close" aria-label="Close" aria-hidden="true"><i class="note-icon-close"></i></button>' +
-                  '      <h4 class="note-modal-title">' + options.title + '</h4>' +
+                  '      <h4 class="note-modal-title">' + options.title + '</h4><h5> 이미지는 1MB 이하의 파일을 올려주세요.</5>' +
                   '    </div>' : ''),
           '    <div class="note-modal-body">' + options.body + '</div>',
           (options.footer
@@ -3234,7 +3234,10 @@
           }).css({
               display: 'none'
           }).appendTo(document.body).attr('src', url);
-      }).promise();
+      }).promise().done(function(){
+        //alert("done!");
+        loadingProcessStopWithSize($('.editor_button_loading'));
+      });
   }
 
   var History = /** @class */ (function () {
@@ -5785,8 +5788,10 @@
                           var $button = $$1(e.currentTarget);
                           if (backColor && foreColor) {
                               _this.context.invoke('editor.color', {
-                                  backColor: $button.attr('data-backColor'),
-                                  foreColor: $button.attr('data-foreColor')
+                                  //backColor: $button.attr('data-backColor'),
+                                  //foreColor: $button.attr('data-foreColor')
+                                  backColor: "#EF4D5D",
+                                  foreColor: "#ffffff"
                               });
                           }
                           else if (backColor) {
@@ -5801,20 +5806,24 @@
                           }
                       },
                       callback: function ($button) {
+                        var $recentColor = $button.find('.note-recent-color');
+                        if (backColor) {
+                            $recentColor.css('background-color', '#EF4D5D');
+                            $button.attr('data-backColor', '#EF4D5D');
+                        }
+                        if (foreColor) {
+                            $recentColor.css('color', 'white');
+                        }
+                        /*
                           var $recentColor = $button.find('.note-recent-color');
                           if (backColor) {
                               $recentColor.css('background-color', '#EF4D5D');
                               $button.attr('data-backColor', '#EF4D5D');
                           }
-
-                          if (foreColor) {
-                              $recentColor.css('color', 'white');
-                              $button.attr('data-foreColor', '#FFFFFF');
-                          }
-
                           if (!foreColor) {
                               $recentColor.css('color', 'transparent');
                           }
+                          */
                       }
                   }),
                   this.button({
@@ -5835,6 +5844,13 @@
                           '    </button>',
                           '  </div>',
                           '  <div class="note-holder" data-event="backColor"/>',
+                          '  <div>',
+                          '    <button type="button" class="note-color-select btn" data-event="openPalette" data-value="backColorPicker">',
+                          this.lang.color.cpSelect,
+                          '    </button>',
+                          '    <input type="color" id="backColorPicker" class="note-btn note-color-select-btn" value="#FFFF00" data-event="backColorPalette">',
+                          '  </div>',
+                          '  <div class="note-holder-custom" id="backColorPalette" data-event="backColor"/>',
                           '</div>'
                       ].join('') : '') +
                           (foreColor ? [
@@ -5846,7 +5862,12 @@
                               '    </button>',
                               '  </div>',
                               '  <div class="note-holder" data-event="foreColor"/>',
-                              '  </div>',
+                              '  <div>',
+                              '    <button type="button" class="note-color-select btn" data-event="openPalette" data-value="foreColorPicker">',
+                              this.lang.color.cpSelect,
+                              '    </button>',
+                              '    <input type="color" id="foreColorPicker" class="note-btn note-color-select-btn" value="#000000" data-event="foreColorPalette">',
+                              '  <div class="note-holder-custom" id="foreColorPalette" data-event="foreColor"/>',
                               '</div>'
                           ].join('') : ''),
                       callback: function ($dropdown) {
@@ -5910,7 +5931,7 @@
                               var key = eventName === 'backColor' ? 'background-color' : 'color';
                               var $color = $button.closest('.note-color').find('.note-recent-color');
                               var $currentButton = $button.closest('.note-color').find('.note-current-color-button');
-                              $color.css(key, value);
+                              //$color.css(key, value);
                               $currentButton.attr('data-' + eventName, value);
                               _this.context.invoke('editor.' + eventName, value);
                           }
@@ -7974,7 +7995,7 @@
           // http://chir.ag/projects/name-that-color/
           colorsName: [
               ['Black', 'Tundora', 'Dove Gray', 'Star Dust', 'Pale Slate', 'Gallery', 'Alabaster', 'White'],
-              ['Red', 'Orange Peel', 'Yellow', 'Green', 'Cyan', 'Blue', 'Electric Violet', 'Magenta'],
+              ['PointColor', 'Orange Peel', 'Yellow', 'Green', 'Cyan', 'Blue', 'Electric Violet', 'Magenta'],
               ['Azalea', 'Karry', 'Egg White', 'Zanah', 'Botticelli', 'Tropical Blue', 'Mischka', 'Twilight'],
               ['Tonys Pink', 'Peach Orange', 'Cream Brulee', 'Sprout', 'Casper', 'Perano', 'Cold Purple', 'Careys Pink'],
               ['Mandy', 'Rajah', 'Dandelion', 'Olivine', 'Gulf Stream', 'Viking', 'Blue Marguerite', 'Puce'],

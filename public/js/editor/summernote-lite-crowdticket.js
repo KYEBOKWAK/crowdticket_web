@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  var isColorChange = true;
   var editorAjaxOption = {
     'beforeSerialize': function($form, options) {
     },
@@ -33,49 +34,7 @@ $(document).ready(function() {
   var ui = context.ui;
   // create button
   var button = ui.button({
-      contents: '<i class="note-icon-font note-recent-color" style="background-color: #EF4D5D; color: white;"/> 강조하기',
-      tooltip: 'hellobb',
-      click: function () {
-        // invoke insertText method with 'hello' on editor module.
-        //context.invoke('backColor', '#EF4D5D');
-        //context.invoke('foreColor', 'white');
-        //$('#summernote').summernote('editor.removeFormat');
-        //$("#summernote").code().replace(/<\/?[^>]+(>|$)/g, "");
-        //var selectedOri = window.getSelection().getRangeAt(0);
-
-        //var selectedParentNode = getSelectedNode();
-        //selectedParentNode.style.background="";
-
-        //var selected = getSelectedNode();
-        //var selectedHtml = getSelectionHtml();
-        //var parentNode = selected.parentElement();
-        //alert(selected.style.background);
-        //if(selected.search("linear-gradient") >= 0)
-        //{
-          //alert(selected.search("linear-gradient"));
-        //}
-        //var repselected = selected.replace("background: linear-gradient(0deg, rgb(239, 77, 93) 30%, white 0%);", "");
-
-        //var node = document.createElement('span');
-        //node.innerHTML = repselected;
-
-        //selectedOri.deleteContents();
-        //selectedOri.insertNode(node);
-        //alert(selected);
-
-      }
-    });
-
-    return button.render();   // return button as jquery object
-  };
-
-  //customUnderLine
-  var customUnderLine = function (context) {
-  var ui = context.ui;
-  // create button
-  var button = ui.button({
-      contents: '<i class="note-icon-font note-recent-color" style="background-color: white; color: black; border-bottom: 2px solid #EF4D5D;"/> 밑줄긋기',
-      tooltip: '',
+      contents: '<i class="editor_button_loading"/>',
       click: function () {
       }
     });
@@ -85,9 +44,10 @@ $(document).ready(function() {
 
   $('#summernote').summernote({
     tabsize: 4,
-    height: 1000,
     width: 790,
+    height: 500,
     disableDragAndDrop: false,
+
     toolbar: [
     // [groupName, [list of button]]
     ['fontname', ['fontname']],
@@ -98,7 +58,7 @@ $(document).ready(function() {
     ['fontsize', ['fontsize']],
     ['color', ['color']],
     ['para', ['paragraph']],
-    //['customHighlight', ['customHighlight']],
+    ['customHighlight', ['customHighlight']],
     //['customUnderLine', ['customUnderLine']],
   ],
 
@@ -111,24 +71,32 @@ $(document).ready(function() {
 
     colorsName: [
               ['Black', 'Tundora', 'Dove Gray', 'Star Dust', 'Pale Slate', 'Gallery', 'Alabaster', 'White'],
-              ['Red', 'Orange Peel', 'Yellow', 'Green', 'Cyan', 'Blue', 'Electric Violet', 'Magenta'],
-              ['Azalea', 'Karry', 'Egg White', 'Zanah', 'Botticelli', 'Tropical Blue', 'Mischka', 'Twilight'],
-              ['Tonys Pink', 'Peach Orange', 'Cream Brulee', 'Sprout', 'Casper', 'Perano', 'Cold Purple', 'Careys Pink'],
-              ['Mandy', 'Rajah', 'Dandelion', 'Olivine', 'Gulf Stream', 'Viking', 'Blue Marguerite', 'Puce'],
-              ['Guardsman Red', 'Fire Bush', 'Golden Dream', 'Chelsea Cucumber', 'Smalt Blue', 'Boston Blue', 'Butterfly Bush', 'Cadillac'],
-              ['Sangria', 'Mai Tai', 'Buddha Gold', 'Forest Green', 'Eden', 'Venice Blue', 'Meteorite', 'Claret'],
-              ['Rosewood', 'Cinnamon', 'Olive', 'Parsley', 'Tiber', 'Midnight Blue', 'Valentino', 'Loulou']
+              ['PointColor'],
           ],
 
     buttons: {
       customHighlight: customHighlight,
-      customUnderLine: customUnderLine
+    //  customUnderLine: customUnderLine
     },
 
     callbacks: {
       onImageUpload: function(files, editor, welEditable){
+        loadingProcessWithSize($('.editor_button_loading'), 20, 20);
           for (var i = files.length - 1; i >= 0; i--) {
-            sendFile(files[i], editor, welEditable);
+            if(isFileCheckFromEditor(files[i]) == true){
+              sendFile(files[i], editor, welEditable);
+            }
+            else
+            {
+              loadingProcessStopWithSize($('.editor_button_loading'));
+            }
+          }
+        },
+        onChange: function(contents, $editable) {
+          if(isColorChange)
+          {
+            font_to_span();
+            isColorChange = false;
           }
         }
       }
@@ -145,27 +113,15 @@ $(document).ready(function() {
 
   $('#summernote').summernote('fontSize', 16);
   //$('#summernote').summernote('backColor', "#EF4D5D");
+
+  $('.note-current-color-button').click(function(){
+    isColorChange = true;
+  });
+
+  $('.note-color-btn').click(function(){
+    isColorChange = true;
+  });
 });
-/*
-function getSelectionHtml() {
-    var html = "";
-    if (typeof window.getSelection != "undefined") {
-        var sel = window.getSelection();
-        if (sel.rangeCount) {
-            var container = document.createElement("div");
-            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
-                container.appendChild(sel.getRangeAt(i).cloneContents());
-            }
-            html = container.innerHTML;
-        }
-    } else if (typeof document.selection != "undefined") {
-        if (document.selection.type == "Text") {
-            html = document.selection.createRange().htmlText;
-        }
-    }
-    return html;
-}
-*/
 
 function getSelectedNode()
 {
@@ -201,4 +157,17 @@ function getSelectionHtml() {
 
 
     return htmlContent;
+}
+
+function font_to_span() {
+  $container = $('.note-editable');
+  $font = $container.find('font');
+  font_Color = $font.attr('color');
+  font_bgColor = $font.css('background-color');
+  $font.replaceWith(function() {
+    return $("<span />", {
+      html: $(this).html(),
+      style: 'color:' + font_Color + ';'+'background-color: '+font_bgColor+';'
+    });
+  });
 }

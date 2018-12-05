@@ -167,7 +167,7 @@
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/tooltip/tippy.css?version=2') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=2') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
 
 @endsection
 
@@ -290,9 +290,9 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=7') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=8') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite.js?version=2') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=2') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite.js?version=3') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=3') }}"></script>
 @endsection

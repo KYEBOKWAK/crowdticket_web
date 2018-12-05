@@ -14,6 +14,7 @@
             <p style="font-size: 16px;">크라우드티켓에서 프로젝트의 대표 이미지로 사용될 파일을 등록해주세요.</p>
             <p style="font-size: 16px;">최대 4장까지 등록할 수 있습니다.</p>
             <p style="font-size: 12px; color: #aaaaaa;">이미지 권장 사이즈는 800px X 600px 입니다.</p>
+            <p style="font-size: 12px; color: #aaaaaa;">이미지는 1MB 이하의 파일을 올려주세요.</p>
           </div>
         </div>
 

@@ -472,100 +472,6 @@ $(document).ready(function() {
 			'story': markupStr
 		}, isNext);
 	};
-/*
-	var editorAjaxOption = {
-		'beforeSerialize': function($form, options) {
-		},
-		'success': function(result) {
-			$('#editor_image').val('');
-			$("#editor_image_name").val('');
-
-			$('#summernote').summernote('insertImage', result, function ($image) {
-  			//$image.css('width', '100%');
-				//$image.css('height', '100%');
-			});
-		},
-		'error': function(data) {
-			alert("이미지 업로드에 실패하였습니다." + JSON.stringify(data));
-			$('#editor_image').val('');
-			$("#editor_image_name").val('');
-		}
-	};
-
-
-	var sendFile = function(file, editor, welEditable) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				//alert("onload: " + e.target.result);
-				//$('#summernote').summernote("insertNode", e.target.result);
-				$('#editor_image').val(e.target.result);
-				$("#editor_image_name").val(getRemoveExpWord(file.name));
-				$("#editor_image_set_form").submit();
-			};
-			reader.readAsDataURL(file);
-
-			//editorImageInputFile.val(file);
-  };
-
-	$('#summernote').summernote({
-    tabsize: 4,
-    height: 1000,
-    width: 790,
-		disableDragAndDrop: false,
-		toolbar: [
-    // [groupName, [list of button]]
-		['fontname', ['fontname']],
-    ['style', ['bold', 'underline']],
-    ['font', []],
-		//['fontfamily', ['Noto Sans KR']],
-		['insert', ['link', 'picture', 'video']],
-    ['fontsize', ['fontsize']],
-    //['color', ['color']],
-    ['para', ['paragraph']],
-		['mybutton', ['hello']],
-  	],
-
-		buttons: {
-    	hello: HelloButton
-  	},
-
-		fontNames: ['Noto Sans KR'],
-		fontSizes: ['8', '12', '24'],
-
-		callbacks: {
-			onImageUpload: function(files, editor, welEditable){
-					for (var i = files.length - 1; i >= 0; i--) {
-						sendFile(files[i], editor, welEditable);
-					}
-				}
-			}
-  });
-
-	var HelloButton = function (context) {
-  	var ui = $.summernote.ui;
-
-	  // create button
-	  var button = ui.button({
-	    contents: '<i class="note-icon-picture"/> Hello',
-	    tooltip: 'hello',
-	    click: function () {
-	      // invoke insertText method with 'hello' on editor module.
-	      context.invoke('editor.insertText', 'hello');
-	    }
-	  });
-
-	  return button.render();   // return button as jquery object
-	};
-
-	$('#editor_image_set_form').ajaxForm(editorAjaxOption);
-
-	if($('#tx_load_content').val())
-  {
-    var markupStr = $('#tx_load_content').val();
-
-    $('#summernote').summernote('code', markupStr);
-  }
-	*/
 
 	var submitProject = function() {
 		swal("제출하시겠습니까?", "제출후에는 프로젝트 수정이 불가능합니다.", "info", {
@@ -1147,15 +1053,14 @@ $(document).ready(function() {
 
 		swal("저장 후 다음으로 가시겠습니까?", {
 						  buttons: {
-						    save: {
-						      text: "예",
-						      value: "save",
-						    },
 								nosave: {
 						      text: "저장하지 않음",
 						      value: "notsave",
 						    },
-
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
 						  },
 						})
 						.then(function(value){
@@ -1188,48 +1093,6 @@ $(document).ready(function() {
 								break;
 						  }
 						});
-
-/*
-		swal("저장 후 다음으로 가시겠습니까?", {
-						  buttons: {
-						    save: {
-						      text: "예",
-						      value: "save",
-						    },
-								nosave: {
-						      text: "저장하지 않음",
-						      value: "notsave",
-						    },
-
-						  },
-						})
-						.then((value) => {
-						  switch (value) {
-						    case "save":
-								{
-									if(selected_tab == 'required')
-									{
-										updateRequired(true);
-									}
-									else if(selected_tab == 'base')
-									{
-										updateDefault(true);
-									}
-									else if(selected_tab == 'poster')
-									{
-										updatePoster(true);
-									}
-								}
-						    break;
-
-								case "notsave":
-								{
-									nextTabSelect();
-								}
-								break;
-						  }
-						});
-						*/
 	};
 
 	var nextTabSelect = function(){
@@ -1334,15 +1197,14 @@ $(document).ready(function() {
 	$('.ticket_go_next').bind('click', function(){
 		swal("다음으로 가시겠습니까?", {
 						  buttons: {
-						    save: {
-						      text: "예",
-						      value: "save",
-						    },
 								nosave: {
 						      text: "아니오",
 						      value: "notsave",
 						    },
-
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
 						  },
 						})
 						.then(function(value){
@@ -1362,15 +1224,23 @@ $(document).ready(function() {
 	};
 
 	var onPosterTitleChanged = function(){
+
 		if (this.files && this.files[0]) {
 			var imgNumber = $(this).attr('data-img-number');
 			var posterId = $(this).attr('data-poster-id');
-
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				setPosterTitleImg(imgNumber, e.target.result, posterId, true);
-			};
-			reader.readAsDataURL(this.files[0]);
+			if(isFileCheck(this) == true)
+			{
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					setPosterTitleImg(imgNumber, e.target.result, posterId, true);
+				};
+				reader.readAsDataURL(this.files[0]);
+			}
+			else
+			{
+				//용량 초과시 이미지 지우()
+				deleteTitlePosterImg(imgNumber, posterId);
+			}
 		}
 	};
 
@@ -1571,6 +1441,18 @@ $(document).ready(function() {
 
 	var deleteTitlePosterImg = function(imgNum, posterId){
 		setPosterTitleImg(imgNum, '', posterId, false);
+
+		var title_img_file_name = '#title_img_file_'+imgNum;
+		if ($.browser.msie)
+		{
+	 		// ie 일때 input[type=file] init.
+			$(title_img_file_name).replaceWith( $("#goods_img_file").clone(true) );
+		}
+		else
+		{
+			// other browser 일때 input[type=file] init.
+			$(title_img_file_name).val("");
+		}
 	}
 
 	var deletePosterImg = function(){
