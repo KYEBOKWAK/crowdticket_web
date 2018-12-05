@@ -20,7 +20,7 @@
         <p class="project-form-content-title">분류</p>
         <div class="project-form-content">
           <select id="category" name="category" class="project-form-input project-form-input-category"
-                  @if ($project->isPublic()) readonly="readonly" @endif>
+                  @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif>
               @foreach ($categories as $category)
                   @if ($category->id === $project->category_id)
                       <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
@@ -60,7 +60,7 @@
               <div class="flex_layer">
                 @if($project->isPlace == "TRUE")
                   <select id="city" name="city" class="project-form-input project-form-input-category"
-                          @if ($project->isPublic()) readonly="readonly" @endif>
+                          @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif>
                       @foreach ($cities as $city)
                           @if ($city->id === $project->city_id)
                               <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
@@ -107,12 +107,14 @@
                      @if ($project->isPublic()) readonly="readonly" @endif />
             </div>
 
+            @if (!$project->isPublic())
             <div class="flex_layer">
               <button id="check_alias" class="btn btn-default btn-alias pointBackgroundColor">
                   중복확인
               </button>
               <p class="aliasLength project_form_length_text">0/32</p>
             </div>
+            @endif
           </div>
 
           <p style="font-size: 12px; margin-top:10px; color:#aaaaaa">주변 사람들에게 펀딩을 홍보할 때 사용하게 될 URL을 직접 입력해보세요! <br>
@@ -163,17 +165,21 @@
           <div class="flex_layer">
             <input id="funding_closing_at" name="funding_closing_at" type="text" class="project_form_input_base project_form_closing_at"
                    value="{{ $project->getFundingClosingAtOrNow() }}"
-                   @if ($project->isPublic()) readonly="readonly" @endif />
+                   @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif />
           </div>
         </div>
       </div>
     </div>
 
     <div class="project_form_button_wrapper">
-      <div class="flex_layer">
-        <button id="update_default" class="btn btn-success center-block project_form_button">저장</button>
-        <button id="update_and_next" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
-      </div>
+      @if(!$project->isPublic())
+        <div class="flex_layer">
+          <button id="update_default" class="btn btn-success center-block project_form_button">저장</button>
+          <button id="update_and_next" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
+        </div>
+      @else
+        프로젝트 진행중에는 수정할 수 없습니다.
+      @endif
     </div>
   </div>
 </div>

@@ -7,7 +7,6 @@
       <div class="order_ticket_discount_content_wrapper">
         <p class="order_ticket_discount_percent_text"> 할인율:{{ $discount->percent_value }}%</p>
         <p class="order_ticket_discount_submit_text" >{{ $discount->submit_check }}</p>
-        <p class="order_ticket_discount_limite_text" >{{ $project->getDiscountCount($discount->id) }} 명 선택중 / {{ $discount->limite_count }}매 제한</p>
       </div>
     </div>
   </button>

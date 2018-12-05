@@ -146,12 +146,14 @@
                   return;
                 }
 
+                /*
                 //수량이 0개이면 선택 안됨.
                 if( Number($(this).attr('discount-amount')) <= 0 )
                 {
                   alert("할인 매수가 없습니다.");
                   return;
                 }
+                */
 
                 var discountIdInput = $('#discount_select_id');//필요할지 모르겠음
                 var discountValue = $('#discount_select_value');

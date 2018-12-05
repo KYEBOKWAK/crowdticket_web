@@ -78,10 +78,12 @@ class OrderController extends Controller
       $discount = Discount::findOrFail(\Input::get('discountId'));
       if($discount)
       {
+        /*
         if($project->getAmountDiscount($discount->id) <= 0)
         {
           return view('test', ['project' => '할인 수량이 매진되었습니다.']);
         }
+        */
       }
     }
 

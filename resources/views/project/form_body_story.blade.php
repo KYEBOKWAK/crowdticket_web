@@ -15,9 +15,10 @@
             @include('editor_summernote')
         </div>
         <div class="project_form_button_wrapper">
-          <button id="update_story" type="button" class="btn btn-success center-block">
-              저장하기
-            </button>
+          <div class="flex_layer">
+            <button id="update_story" class="btn btn-success center-block project_form_button">저장</button>
+            <button id="update_and_next" class="btn btn-success center-block project_form_button pointBackgroundColor">다음</button>
+          </div>
         </div>
     </div>
   </div>

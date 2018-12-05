@@ -77,6 +77,7 @@ class Project extends Model
 
     public function reject()
     {
+      /*
         if ($this->type === 'funding') {
             $this->setAttribute('state', Project::STATE_READY);
         } else if ($this->type === 'sale') {
@@ -86,6 +87,10 @@ class Project extends Model
                 $this->setAttribute('state', Project::STATE_READY);
             }
         }
+        */
+        
+        $this->setAttribute('state', Project::STATE_READY);
+
         $this->save();
     }
 

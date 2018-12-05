@@ -103,7 +103,7 @@ $(document).ready(function() {
   ],
 
     fontNames: ['Noto Sans KR'],
-    fontSizes: ['10', '16', '18'],
+    fontSizes: ['12', '16', '20', '28'],
     colors: [
               ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
               ['#EF4D5D'],

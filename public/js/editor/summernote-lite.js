@@ -7229,8 +7229,17 @@
               // this is not a known video link. Now what, Cat? Now what?
               return false;
           }
+          //$video.attr('width', '100%');
+
+
           $video.addClass('note-video-clip');
-          return $video[0];
+
+          var videoParent = document.createElement('div');
+          videoParent.className = 'note-video-clip-wrap';
+
+          appendChildNodes(videoParent, $video);
+          //return $video[0];
+          return videoParent;
       };
       VideoDialog.prototype.show = function () {
           var _this = this;

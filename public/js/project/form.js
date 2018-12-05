@@ -464,13 +464,13 @@ $(document).ready(function() {
 		$('.project-description').text(description);
 	};
 
-	var updateStory = function() {
+	var updateStory = function(isNext) {
 		loadingProcess($(".project_form_button_wrapper"));
 
 		var markupStr = $('#summernote').summernote('code');
 		updateProject({
 			'story': markupStr
-		}, false);
+		}, isNext);
 	};
 /*
 	var editorAjaxOption = {
@@ -568,6 +568,62 @@ $(document).ready(function() {
 	*/
 
 	var submitProject = function() {
+		swal("제출하시겠습니까?", "제출후에는 프로젝트 수정이 불가능합니다.", "info", {
+						  buttons: {
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
+								nosave: {
+						      text: "아니오",
+						      value: "notsave",
+						    },
+
+						  },
+						})
+						.then(function(value){
+							switch (value) {
+						    case "save":
+								{
+									var projectId = $('#project_id').val();
+									var url = '/projects/' + projectId + '/submit';
+									var method = 'put';
+									var success = function(result) {
+										//alert('제출 성공');
+										swal("제출 성공!", {
+										  buttons: {
+										    save: {
+										      text: "확인",
+										      value: "save",
+										    },
+										  },
+
+											icon: "success",
+										}).then(function(value){
+											location.reload();
+										});
+
+									};
+									var error = function(request, status) {
+										//alert('제출에 실패하였습니다.');
+										loadingProcessStop($("#submit_project"));
+										swal("제출에 실패하였습니다.", "", "error");
+									};
+
+									//submit_project
+									loadingProcess($("#submit_project"));
+
+									$.ajax({
+										'url': url,
+										'method': method,
+										'success': success,
+										'error': error
+									});
+								}
+						    break;
+						  }
+						});
+		/*
 		if (window.confirm('정말 제출하시겠습니까?')) {
 			var projectId = $('#project_id').val();
 			var url = '/projects/' + projectId + '/submit';
@@ -586,6 +642,7 @@ $(document).ready(function() {
 				'error': error
 			});
 		}
+		*/
 	};
 
 	//form_body_required
@@ -1061,7 +1118,30 @@ $(document).ready(function() {
 
 		if(selected_tab == 'ticket'){
 				//티켓일땐 바로 넥스트. 굿즈 정보 갔을때 다음 누르면 여길 탄다
-				nextTabSelect();
+				//nextTabSelect();
+				swal("다음으로 가시겠습니까?", {
+								  buttons: {
+								    save: {
+								      text: "예",
+								      value: "save",
+								    },
+										nosave: {
+								      text: "아니오",
+								      value: "notsave",
+								    },
+
+								  },
+								})
+								.then(function(value){
+									switch (value) {
+								    case "save":
+										{
+											nextTabSelect();
+										}
+								    break;
+								  }
+								});
+
 				return;
 		}
 
@@ -1093,6 +1173,10 @@ $(document).ready(function() {
 									else if(selected_tab == 'poster')
 									{
 										updatePoster(true);
+									}
+									else if(selected_tab == 'story')
+									{
+										updateStory(true);
 									}
 								}
 						    break;
@@ -1207,7 +1291,10 @@ $(document).ready(function() {
 	$('#cancel_modify_ticket').bind('click', cancelModifyTicket);
 	$('#ticket_delivery_date').datepicker({'dateFormat': 'yy-mm-dd'});
 
-	$('#update_story').bind('click', updateStory);
+	//$('#update_story').bind('click', updateStory);
+	$('#update_story').bind('click', function(){
+		updateStory(false);
+	});
 	$('#submit_project').bind('click', submitProject);
 
 	$('#poster_description').bind('input', onDescriptionChanged);
@@ -1243,7 +1330,31 @@ $(document).ready(function() {
 		updatePoster(false);
 	});
 
-	$('.ticket_go_next').bind('click', ticketNext);
+	//$('.ticket_go_next').bind('click', ticketNext);
+	$('.ticket_go_next').bind('click', function(){
+		swal("다음으로 가시겠습니까?", {
+						  buttons: {
+						    save: {
+						      text: "예",
+						      value: "save",
+						    },
+								nosave: {
+						      text: "아니오",
+						      value: "notsave",
+						    },
+
+						  },
+						})
+						.then(function(value){
+							switch (value) {
+						    case "save":
+								{
+									ticketNext();
+								}
+						    break;
+						  }
+						});
+	});
 
 	var performPosterTitleFileClick = function(){
 		var imgNumber = $(this).attr('data-img-number');
@@ -1612,7 +1723,8 @@ $(document).ready(function() {
 			channel = {
 									"id" : "",
 									"isFake" : "true",
-									"categories_channel_id" : "1"
+									"categories_channel_id" : "1",
+									"url" : "http://"
 								};
 		}
 		else{
@@ -2273,6 +2385,23 @@ $(document).ready(function() {
 	setSaleTypeButton();
 	setIsPlaceButton();
 	setFundTargetButton();
+
+	//수량 체크
+	$("#discount_percent_value_input").change(function(){
+		var value = $(this).val();
+
+		if(value < 0)
+		{
+			swal("할인율은 0보다 작을 수 없습니다.", "", "warning");
+			$(this).val(0);
+		}
+
+		if(value > 100)
+		{
+			swal("할인율은 100보다 클 수 없습니다.", "", "warning");
+			$(this).val(100);
+		}
+	});
 });
 //form_body_required END
 
@@ -2308,6 +2437,7 @@ function requiredVaildCheck(){
 	if(projectType === "" || saleType === "")
 	{
 		swal("프로젝트 종류와 결제 방식을 선택해주세요. ", "", "error");
+		loadingProcessStop($(".project_form_button_wrapper"));
 		return false;
 	}
 

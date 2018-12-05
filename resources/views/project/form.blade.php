@@ -167,12 +167,11 @@
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/tooltip/tippy.css?version=2') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=1') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=2') }}"/>
 
 @endsection
 
 @section('content')
-@include('helper.btn_admin', ['project' => $project])
 
 <?php
 $tabs = [
@@ -246,7 +245,13 @@ array_push($tabs, [
       @endforeach
       <div class="project-form-tab-preview-btn">
           <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
-             target="_blank">미리보기</a>
+             target="_blank">
+             @if($project->isPublic())
+              페이지 보기
+             @else
+              미리보기
+             @endif
+           </a>
       </div>
       @if ($project->isReady())
           <div class="project-form-tab-submit-btn">
@@ -285,9 +290,9 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=6') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=7') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite.js?version=1') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=1') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite.js?version=2') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=2') }}"></script>
 @endsection

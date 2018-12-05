@@ -111,3 +111,13 @@ body{
 @-webkit-keyframes spin {
   to { -webkit-transform: rotate(360deg); }
 }
+
+.project_form_input_base[disabled],
+.project_form_input_base[readonly],
+.project-form-input-category[readonly],
+.project-form-input-category[disabled]
+fieldset[disabled] .form-control {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}

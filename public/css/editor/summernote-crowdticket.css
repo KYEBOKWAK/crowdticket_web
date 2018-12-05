@@ -12,8 +12,16 @@
   margin-right: auto;
 }
 
-.note-video-clip{
+.note-video-clip-wrap{
+  position: relative;
   width: 100%;
+  padding-bottom: 56.25%;
+}
+
+.note-video-clip{
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 /*
 u{
