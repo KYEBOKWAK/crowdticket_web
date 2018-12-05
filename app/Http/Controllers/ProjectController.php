@@ -167,29 +167,26 @@ class ProjectController extends Controller
 
     private function returnUpdateForm($project)
     {
-        $user = Auth::user();
-        if($user->id == 1 || $user->id == 2)
-        {
-          if ($project->isUnderConstruction()) {
-              return view('project.form_not_permitted');
-          } else {
-              $project->load('tickets');
-              $tab = $this->getValidUpdateFormTab();
-              $posterJson = $this->getPosterUrl($project);
-              $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
-              return view('project.form', [
-                  'selected_tab' => $tab,
-                  'project' => $project,
-                  'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                  'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                  'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-                  'posters' => $posterJson,
-                  'ticketsCountInfoJson' => $ticketsCountInfoListJson,
-                  'cities' => City::orderBy('id')->get()
-              ]);
-          }
+        if ($project->isUnderConstruction()) {
+            return view('project.form_not_permitted');
+        } else {
+            $project->load('tickets');
+            $tab = $this->getValidUpdateFormTab();
+            $posterJson = $this->getPosterUrl($project);
+            $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
+            return view('project.form', [
+                'selected_tab' => $tab,
+                'project' => $project,
+                'categories' => Category::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'categories_channel' => Categories_channel::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+                'posters' => $posterJson,
+                'ticketsCountInfoJson' => $ticketsCountInfoListJson,
+                'cities' => City::orderBy('id')->get()
+            ]);
         }
-
+        
+        /*
         //임시로 막아놈. start
         $now = date('Y-m-d H:i:s');
 
@@ -230,6 +227,7 @@ class ProjectController extends Controller
             'main_carousels' => $main_carousel,
             'isNotYet' => 'TRUE'
         ]);
+        */
 
         ////////////
     }
