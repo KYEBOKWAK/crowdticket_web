@@ -169,12 +169,12 @@
 
 .project_form_alias_url{
   background-color: #eeeeee;
-  font-size: 20px;
+  font-size: 15px;
   text-align: center;
-  padding: 5px 0px;
+  padding: 8px 0px;
   color: black;
   border-right: 0px;
-  flex-basis: 300px;
+  flex-basis: 230px;
   flex-shrink: 0;
 }
 
