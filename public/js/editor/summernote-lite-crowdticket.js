@@ -7,7 +7,9 @@ $(document).ready(function() {
       $('#editor_image').val('');
       $("#editor_image_name").val('');
 
-      $('#summernote').summernote('insertImage', result);
+      $('#summernote').summernote('insertImage', result, function ($image){
+        $image.css('width', "100%");
+      });
     },
     'error': function(data) {
       alert("이미지 업로드에 실패하였습니다." + JSON.stringify(data));
@@ -98,6 +100,22 @@ $(document).ready(function() {
             font_to_span();
             isColorChange = false;
           }
+        },
+        onPaste: function(e) {
+          //console.error('Called event paste : ' + e.context);
+          var thisNote = $(this);
+            var updatePastedText = function(){
+                var original = $('#summernote').summernote('code');
+                var cleaned = CleanPastedHTML(original); //this is where to call whatever clean function you want. I have mine in a different file, called CleanPastedHTML.
+                //$('#summernote').summernote('insertText').html(cleaned); //this sets the displayed content editor to the cleaned pasted code.
+                $('#summernote').summernote('code', cleaned); //this sets the displayed content editor to the cleaned pasted code.
+            };
+            setTimeout(function () {
+                //this kinda sucks, but if you don't do a setTimeout,
+                //the function is called before the text is really pasted.
+                updatePastedText();
+            }, 5);
+
         }
       }
   });
@@ -112,6 +130,7 @@ $(document).ready(function() {
   }
 
   $('#summernote').summernote('fontSize', 16);
+  $('#summernote').summernote('lineHeight', 2.1);
   //$('#summernote').summernote('backColor', "#EF4D5D");
 
   $('.note-current-color-button').click(function(){
@@ -170,4 +189,37 @@ function font_to_span() {
       style: 'color:' + font_Color + ';'+'background-color: '+font_bgColor+';'
     });
   });
+}
+
+function CleanPastedHTML(input) {
+  // 1. remove line breaks / Mso classes
+  var stringStripper = /(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
+  var output = input.replace(stringStripper, ' ');
+  // 2. strip Word generated HTML comments
+  var commentSripper = new RegExp('<!--(.*?)-->','g');
+  var output = output.replace(commentSripper, '');
+  var tagStripper = new RegExp('<(/)*(meta|link|span|i|u|b|\\?xml:|st1:|o:|font)(.*?)>','gi');
+  // 3. remove tags leave content if any
+  output = output.replace(tagStripper, '');
+  // 4. Remove everything in between and including tags '<style(.)style(.)>'
+  var badTags = ['style', 'script','applet','embed','noframes','noscript'];
+
+  for (var i=0; i< badTags.length; i++) {
+    tagStripper = new RegExp('<'+badTags[i]+'.*?'+badTags[i]+'(.*?)>', 'gi');
+    output = output.replace(tagStripper, '');
+  }
+  // 5. remove attributes ' style="..."'
+  var badAttributes = ['style', 'start'];
+  for (var i=0; i< badAttributes.length; i++) {
+    var attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+    //if(badAttributes[i] == 'style')
+    {
+      output = output.replace(attributeStripper, " style='font-size:16px;line-height: 2.1;'");
+    }
+    //else
+    {
+    //  output = output.replace(attributeStripper, '');
+    }
+  }
+  return output;
 }
