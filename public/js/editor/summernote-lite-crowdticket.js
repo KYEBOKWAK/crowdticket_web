@@ -60,6 +60,7 @@ $(document).ready(function() {
     ['fontsize', ['fontsize']],
     ['color', ['color']],
     ['para', ['paragraph']],
+    ['height', ['height']],
     ['customHighlight', ['customHighlight']],
     //['customUnderLine', ['customUnderLine']],
   ],
@@ -75,6 +76,8 @@ $(document).ready(function() {
               ['Black', 'Tundora', 'Dove Gray', 'Star Dust', 'Pale Slate', 'Gallery', 'Alabaster', 'White'],
               ['PointColor'],
           ],
+
+    lineHeights: ['2.0'],
 
     buttons: {
       customHighlight: customHighlight,
@@ -130,7 +133,7 @@ $(document).ready(function() {
   }
 
   $('#summernote').summernote('fontSize', 16);
-  $('#summernote').summernote('lineHeight', 2.1);
+  $('#summernote').summernote('lineHeight', 2.0);
   //$('#summernote').summernote('backColor', "#EF4D5D");
 
   $('.note-current-color-button').click(function(){
@@ -214,7 +217,7 @@ function CleanPastedHTML(input) {
     var attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
     //if(badAttributes[i] == 'style')
     {
-      output = output.replace(attributeStripper, " style='font-size:16px;line-height: 2.1;'");
+      output = output.replace(attributeStripper, " style='font-size:16px;line-height: 2.0;'");
     }
     //else
     {
