@@ -1,6 +1,8 @@
 <div class="form-body-default-container">
   <div class="project_form_title_wrapper">
-    <h2 class="project_form_title">프로젝트 <span class="pointColor">분류</span></h2>
+    <h2 class="project_form_title">프로젝트 <span class="pointColor">분류</span>
+      <p style="font-size:14px; font-weight: normal; margin-top: 8px;">개설 절차는 크롬에 최적화 되어 있습니다.</p>
+    </h2>
   </div>
   <div class="project_form_content_container">
     <div class="project_form_required_button_container">
@@ -9,14 +11,19 @@
           프로젝트 종류
         </p>
 
-        <button id="artistsButton" class="project-form-required-type-button">
-          <p class="project_form_button_text_artist project_form_button_title">아티스트 프로젝트</p>
-          <p class="project_form_button_text_artist project_form_button_subtitle">(뮤지션 / 극단 / 공연기획자 등)</p>
+        <button id="artistsButton" class="project-form-required-type-button project_form_required_type_button_resize">
+          <p class="project_form_button_text_artist project_form_button_title">ARTISTS</p>
+          <p class="project_form_button_text_artist project_form_button_subtitle">(공연 / 전시 / 쇼케이스 등)</p>
         </button>
 
-        <button id="creatorsButton" class="project-form-required-type-button">
-          <p class="project_form_button_text_creator project_form_button_title">크리에이터 프로젝트</p>
-          <p class="project_form_button_text_creator project_form_button_subtitle">(유투버 / bj,스트리머 / 인플루언서 등)</p>
+        <button id="creatorsButton" class="project-form-required-type-button project_form_required_type_button_resize">
+          <p class="project_form_button_text_creator project_form_button_title">CREATORS</p>
+          <p class="project_form_button_text_creator project_form_button_subtitle">(유투버 / 스트리머 / 인플루언서 등)</p>
+        </button>
+
+        <button id="cultureButton" class="project-form-required-type-button project_form_required_type_button_resize">
+          <p class="project_form_button_text_culture project_form_button_title">CULTURE</p>
+          <p class="project_form_button_text_culture project_form_button_subtitle">(문화기획 / 파티 / 이벤트 등)</p>
         </button>
       </div>
     </div>

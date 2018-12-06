@@ -24,13 +24,13 @@ $(document).ready(function() {
 		var url = '/projects/' + projectId + '/alias/' + alias;
 		var method = 'get';
 		var success = function() {
-			alert('사용가능한 주소입니다.');
+			swal('사용가능한 주소입니다.', "", "success");
 		};
 		var error = function(request) {
 			if (request.status === 409) {
-				alert('이미 존재하는 주소입니다. 다른 이름을 사용해주세요.');
+				swal('이미 존재하는 주소입니다. 다른 이름을 사용해주세요.', "", "error");
 			} else if (request.status === 422) {
-				alert('잘못된 형식의 주소입니다.');
+				swal('잘못된 형식의 주소입니다.', "", "error");
 			}
 		};
 
@@ -84,23 +84,6 @@ $(document).ready(function() {
 									nextTabSelect();
 								}
 							});
-			/*
-			swal("저장되었습니다", {
-							  buttons: {
-							    save: {
-							      text: "확인",
-							      value: "save",
-							    },
-							  },
-
-								icon: "success",
-							}).then((value) => {
-								if(isNext == true)
-								{
-									nextTabSelect();
-								}
-							});
-							*/
 		};
 		var error = function(e) {
 			loadingProcessStop($('.project_form_button_wrapper'));
@@ -1027,15 +1010,14 @@ $(document).ready(function() {
 				//nextTabSelect();
 				swal("다음으로 가시겠습니까?", {
 								  buttons: {
-								    save: {
-								      text: "예",
-								      value: "save",
-								    },
 										nosave: {
 								      text: "아니오",
 								      value: "notsave",
 								    },
-
+										save: {
+								      text: "예",
+								      value: "save",
+								    },
 								  },
 								})
 								.then(function(value){
@@ -2102,6 +2084,7 @@ $(document).ready(function() {
 			//버튼
 			$('#artistsButton').addClass('project-form-required-type-button-select');
 			$('#creatorsButton').removeClass('project-form-required-type-button-select');
+			$('#cultureButton').removeClass('project-form-required-type-button-select');
 			//버튼텍스트
 			$( ".project_form_button_text_artist" ).each(function(){
 				$(this).addClass('project_form_button_select');
@@ -2110,11 +2093,16 @@ $(document).ready(function() {
 			$( ".project_form_button_text_creator" ).each(function(){
 				$(this).removeClass('project_form_button_select');
 			});
+
+			$( ".project_form_button_text_culture" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
 		}
 		else if(projectType == 'creator'){
 			//버튼
 			$('#artistsButton').removeClass('project-form-required-type-button-select');
 			$('#creatorsButton').addClass('project-form-required-type-button-select');
+			$('#cultureButton').removeClass('project-form-required-type-button-select');
 
 			//버튼텍스트
 			$( ".project_form_button_text_artist" ).each(function(){
@@ -2122,6 +2110,29 @@ $(document).ready(function() {
 			});
 
 			$( ".project_form_button_text_creator" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_culture" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+		}
+		else if(projectType == 'culture'){
+			//버튼
+			$('#artistsButton').removeClass('project-form-required-type-button-select');
+			$('#creatorsButton').removeClass('project-form-required-type-button-select');
+			$('#cultureButton').addClass('project-form-required-type-button-select');
+
+			//버튼텍스트
+			$( ".project_form_button_text_artist" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_creator" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_culture" ).each(function(){
 				$(this).addClass('project_form_button_select');
 			});
 		}
@@ -2236,6 +2247,10 @@ $(document).ready(function() {
 
 	$('#creatorsButton').bind('click',function(){
 		setProjectType("creator");
+	});
+
+	$('#cultureButton').bind('click',function(){
+		setProjectType("culture");
 	});
 
 	$('#fundingTypeButton').bind('click', function(){

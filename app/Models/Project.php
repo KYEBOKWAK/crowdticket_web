@@ -31,7 +31,7 @@ class Project extends Model
 
     protected static $typeRules = [
         'type'  => 'in:funding,sale',
-        'project_type' => 'in:artist,creator',
+        'project_type' => 'in:artist,creator,culture',
         'project_target' => 'in:money,people',
         'isPlace' => 'string',
         'title' => 'string|min:1|max:30',
@@ -88,7 +88,7 @@ class Project extends Model
             }
         }
         */
-        
+
         $this->setAttribute('state', Project::STATE_READY);
 
         $this->save();
@@ -361,11 +361,6 @@ class Project extends Model
 
     public function getMainExplain()
     {
-      //'type'  => 'in:funding,sale',
-      //'project_type' => 'in:artists,creators',
-      //'project_target' => 'in:money,people',
-
-      //$this->pledged_amount
 
       $pledgedTarget = "원";
       //인원, 금액 결정
@@ -503,18 +498,6 @@ class Project extends Model
     public function isSaleType()
     {
         return $this->type === 'sale';
-    }
-
-    public function isCreatorType()
-    {
-      return $this->project_type === 'creator';
-      /*
-      if($this->project_type === NULL){
-        return false;
-      }
-
-      return true;
-      */
     }
 
     public function isOldProject()

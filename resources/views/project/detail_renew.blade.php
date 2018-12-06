@@ -221,7 +221,7 @@ $selectedTicket = "";
               </div>
 
               <div class="detail_main_guide_ticketing_btn_wrapper">
-                <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">크라우드 티켓팅</button></a>
+                <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">크라우드티켓팅</button></a>
               </div>
               <div class="detail_main_guide_share_btn_wrapper">
                 <!-- <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-toggle="popover"><i class="fa fa-share"></i></button> -->
@@ -242,8 +242,10 @@ $selectedTicket = "";
                 <div class="detail_creator_info_container">
                   <h5 class="detail_creator_info_title">
                     <span class="detail_creator_info_type">
-                      @if($project->isCreatorType())
+                      @if($project->project_type == 'creator')
                         CREATOR
+                      @elseif($project->project_type == 'culture')
+                        CULTURE
                       @else
                         ARTISTS
                       @endif
@@ -293,7 +295,7 @@ $selectedTicket = "";
 
           <!-- 중간 네비게이션에 스크롤링에 의해 노출되는 크라우드 티켓팅 버튼 -->
           <div class="nav-ticketing-btn">
-             <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드 티켓팅</button>
+             <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
            </div>
         </div>
       </div>
@@ -347,7 +349,7 @@ $selectedTicket = "";
       </div>
 
       <div class="nav-ticketing-btn-mobile">
-         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드 티켓팅</button>
+         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
        </div>
 
       <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>

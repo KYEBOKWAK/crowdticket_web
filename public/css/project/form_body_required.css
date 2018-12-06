@@ -66,7 +66,7 @@
 }
 
 .project_form_button_subtitle{
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 300;
   font-style: normal;
   font-stretch: normal;
@@ -566,6 +566,10 @@
   margin-top: 22px;
   font-size: 12px;
   margin-left: 5px;
+}
+
+.project_form_required_type_button_resize{
+  width: 194px;
 }
 
 @media (max-width:960px){

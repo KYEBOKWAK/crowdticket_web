@@ -28,6 +28,10 @@ $i = 0;
                             <h5>
                               @if ($project->project_type === 'creator')
                                 <span class="project-category-c">creator</span>
+                              @elseif($project->project_type === 'artist')
+                                <span class="project-category-a">artist</span>
+                              @elseif($project->project_type === 'culture')
+                                <span class="project-category-culture">culture</span>
                               @else
                                 <span class="project-category-a">artist</span>
                               @endif

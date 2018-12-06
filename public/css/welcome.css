@@ -158,6 +158,15 @@
     border-radius:4px;
     font-weight:400;
 }
+
+.project-category-culture {
+    background-color:#89cdce;
+    color:#ffffff;
+    padding:3px 7px;
+    font-size:10px;
+    border-radius:4px;
+    font-weight:400;
+}
 .ct-percent {
     float:right;
     font-weight:600;
