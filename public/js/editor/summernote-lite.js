@@ -5838,36 +5838,19 @@
                       items: (backColor ? [
                           '<div class="note-palette">',
                           '  <div class="note-palette-title">' + this.lang.color.background + '</div>',
-                          '  <div>',
-                          '    <button type="button" class="note-color-reset btn btn-light" data-event="backColor" data-value="inherit">',
-                          this.lang.color.transparent,
-                          '    </button>',
-                          '  </div>',
                           '  <div class="note-holder" data-event="backColor"/>',
                           '  <div>',
-                          '    <button type="button" class="note-color-select btn" data-event="openPalette" data-value="backColorPicker">',
-                          this.lang.color.cpSelect,
-                          '    </button>',
                           '    <input type="color" id="backColorPicker" class="note-btn note-color-select-btn" value="#FFFF00" data-event="backColorPalette">',
                           '  </div>',
-                          '  <div class="note-holder-custom" id="backColorPalette" data-event="backColor"/>',
                           '</div>'
                       ].join('') : '') +
                           (foreColor ? [
                               '<div class="note-palette">',
                               '  <div class="note-palette-title">' + this.lang.color.foreground + '</div>',
-                              '  <div>',
-                              '    <button type="button" class="note-color-reset btn btn-light" data-event="removeFormat" data-value="foreColor">',
-                              this.lang.color.resetToDefault,
-                              '    </button>',
-                              '  </div>',
                               '  <div class="note-holder" data-event="foreColor"/>',
                               '  <div>',
-                              '    <button type="button" class="note-color-select btn" data-event="openPalette" data-value="foreColorPicker">',
-                              this.lang.color.cpSelect,
-                              '    </button>',
                               '    <input type="color" id="foreColorPicker" class="note-btn note-color-select-btn" value="#000000" data-event="foreColorPalette">',
-                              '  <div class="note-holder-custom" id="foreColorPalette" data-event="foreColor"/>',
+                              '  </div>',
                               '</div>'
                           ].join('') : ''),
                       callback: function ($dropdown) {
