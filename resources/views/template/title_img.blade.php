@@ -8,7 +8,7 @@
           <p style="position: absolute; color: #aaaaaa; margin-left: 5px; margin-top: 2px;">{{ $img_num }}번 이미지</p>
         @endif
 
-        <img id="title_img_preview_{{ $img_num }}" class="title_img_preview" style="display:none;">
+        <img id="title_img_preview_{{ $img_num }}" class="title_img_preview" style="display:none;" onload="imageResize($('.project_form_poster_origin_size')[0], this);">
 
         <a href="javascript:void(0);" id="title_img_file_fake_{{ $img_num }}" data-poster-id="{{ $project->posters()->firstOrFail()->id }}" data-img-number="{{ $img_num }}" class="title_img_file_fake">
           <div class="title_img_add_btn_wrapper">

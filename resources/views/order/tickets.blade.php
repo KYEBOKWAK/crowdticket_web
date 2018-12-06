@@ -446,6 +446,7 @@
 
             setTotalPrice();
         });
+
     </script>
     @include('template.detail_ticket_time')
     @include('template.detail_ticket_seat')

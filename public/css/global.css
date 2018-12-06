@@ -138,3 +138,20 @@ fieldset[disabled] .form-control {
   background-color: #eeeeee !important;
   color: black;
 }
+
+.img_base_css{
+  max-width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  margin: auto;
+}
+
+.img_wrapper_base_css{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}

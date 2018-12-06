@@ -2,7 +2,9 @@
   <div id="goodsItem" class="order_ticket_goods_item_info_wrapper">
     <div class="flex_layer">
       @if($goods->img_url)
-      <img class="order_ticket_goods_img_wrapper" src="{{ $goods->img_url }}"/>
+      <div class="order_ticket_goods_img_wrapper">
+        <img class="order_ticket_goods_img_wrapper" src="{{ $goods->img_url }}">
+      </div>
       @endif
       <div class="order_ticket_goods_info_container">
         <div class="order_ticket_goods_info">

@@ -5,7 +5,11 @@
       <div class="flex_layer_column">
         <!-- 1단 -->
         <% if(goods.img_url) { %>
-        <img class="project-form-goods-img-wrapper" src="<%= goods.img_url %>"/>
+          <div style="height: 164px;">
+            <div class="img_wrapper_base_css project-form-goods-img-wrapper">
+              <img class="img_base_css project-form-goods-img" src="<%= goods.img_url %>" onload="imageResize($('.project-form-goods-img-wrapper')[0], this)"/>
+            </div>
+          </div>
         <% } %>
         <!-- 2단 -->
         <div class="project-form-goods-item-content">

@@ -1334,8 +1334,11 @@ $(document).ready(function() {
 				if(viewer)
 				{
 					viewer.attr('src', imgUrl);
+					//imageResize($(".project-thumbnail"), $('.project-img'));
 				}
 			}
+
+			//imageResize($(".project_form_poster_origin_size"), $(posterTitleId));
 		}
 		else
 		{
