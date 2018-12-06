@@ -351,7 +351,15 @@ $(document).ready(function() {
 		var rawDate = ticketData.show_date.split(" ");
 		var d = rawDate[0].split("-");
 		var t = rawDate[1].split(":");
+
 		var showDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+
+		var isPlace = $('#isPlace').val();
+		if(isPlace == 'FALSE'){
+			showDate.setFullYear(0000);
+		}
+
+		//alert(showDate);
 
 		$('#ticket_price').val(ticketData.price);
 		$('#ticket_count').val(ticketData.audiences_limit);
@@ -365,7 +373,7 @@ $(document).ready(function() {
 		if(ticketsCategory.length > 0){
 			var categoryNum = Number(ticketData.category);
 			for (var i = 0; i < ticketsCategory.length; i++) {
-				if(ticketsCategory[i].id === categoryNum){
+				if(Number(ticketsCategory[i].id) === categoryNum){
 					ticketCategoryTemp = categoryNum;
 					setShowTicketCategoryETCInput(false);
 					break;

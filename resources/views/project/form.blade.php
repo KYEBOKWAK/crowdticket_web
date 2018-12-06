@@ -229,6 +229,7 @@ array_push($tabs, [
 <input type="hidden" id="tabInfoJson" value="{{$tabInfoJson}}"/>
 
 <input id="project_target" type="hidden" name="project_target" value="{{ $project->project_target }}">
+<input id="isPlace" type="hidden" name="isPlace" value="{{ $project->isPlace }}"/>
 
 <div class="project-form-container">
   <div class="project-form-tab-container">
@@ -290,7 +291,7 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=10') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=11') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>

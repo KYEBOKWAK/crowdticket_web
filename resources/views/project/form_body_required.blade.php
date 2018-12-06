@@ -75,4 +75,3 @@
 
 <input id="projectType" type="hidden" name="projectType" value="{{ $project->project_type }}"/>
 <input id="saleType" type="hidden" name="saleType" value="{{ $project->type }}"/>
-<input id="isPlace" type="hidden" name="isPlace" value="{{ $project->isPlace }}"/>
