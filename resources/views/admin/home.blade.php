@@ -317,25 +317,6 @@
 
                   <!-- 이벤트타입 설정 -->
                   <ul id="eventtype" role="tabpanel" class="tab-pane">
-                    <!--
-                    @foreach($allprojects as $project)
-                      <li class="list-group-item">
-                          <b>{{ $project->title }}</b> <br>
-                            <form id="form_admin_order_check{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/ordercheck', $project->id)) }}" method="get">
-                              <select id="category" name="category" class="project-form-input project-form-input-category">
-                                @foreach ($categories as $category)
-                                    @if ($category->id === $project->category_id)
-                                        <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
-                                    @else
-                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
-                                    @endif
-                                @endforeach
-                                </select>
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            </form>
-                      </li>
-                    @endforeach
-                    -->
                   </ul>
 
               </div>
