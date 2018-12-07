@@ -1238,6 +1238,11 @@ $(document).ready(function() {
   }
 
   var setTicketNotice = function(){
+    if($('#isEventTypeCrawlingEvent').val())
+		{
+			return;
+		}
+
     var ticketNotice = $('#ticket_notice').val();
     //ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
     ticketNotice = getConverterEnterString(ticketNotice);

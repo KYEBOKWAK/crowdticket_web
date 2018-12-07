@@ -160,6 +160,7 @@ $discounts = $project->discounts()->get();
 $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
+<input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -406,8 +407,8 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=8') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=9') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=14') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
 @endsection
