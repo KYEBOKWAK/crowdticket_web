@@ -295,5 +295,5 @@ array_push($tabs, [
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=5') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=6') }}"></script>
 @endsection

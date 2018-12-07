@@ -104,6 +104,7 @@ $(document).ready(function() {
             isColorChange = false;
           }
         },
+        /*
         onPaste: function(e) {
           //console.error('Called event paste : ' + e.context);
           var thisNote = $(this);
@@ -120,6 +121,7 @@ $(document).ready(function() {
             }, 5);
 
         }
+        */
       }
   });
 
