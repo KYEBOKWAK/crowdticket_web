@@ -37,20 +37,26 @@ $i = 0;
                               @endif
 
                               <span class="ct-percent">
-                              @if($project->isFundingType())
-                                @if($project->isReady())
-                                @elseif($project->isFinished())
-                                  {{ $project->getProgress() }}% 펀딩종료
-                                @else
-                                  {{ $project->getProgress() }}% 펀딩중
-                                @endif
+                              @if($project->isEventTypeCrawlingEvent())
+                                진행중
                               @else
+                                @if($project->isFundingType())
                                   @if($project->isReady())
                                   @elseif($project->isFinished())
-                                    판매종료
+                                    {{ $project->getProgress() }}% 펀딩종료
                                   @else
-                                    판매중
+                                    {{ $project->getProgress() }}% 펀딩중
                                   @endif
+                                @else
+                                    @if($project->isEventTypeInvitationEvent())
+                                      초대권 이벤트중
+                                    @elseif($project->isReady())
+                                    @elseif($project->isFinished())
+                                      판매종료
+                                    @else
+                                      판매중
+                                    @endif
+                                @endif
                               @endif
                               </span>
                             </h5>

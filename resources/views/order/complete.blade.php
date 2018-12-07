@@ -66,16 +66,34 @@
                         단, 펀딩이 완료되기 24시간 전부터는 취소할 수 없습니다.
                     </p>
                 @else
-                    <h3 class="text-center"><strong>결제가 완료되었습니다.</strong></h3>
+                    <h3 class="text-center">
+                      <strong>
+                        @if($project->isEventTypeDefault())
+                          결제가 완료되었습니다.
+                        @elseif($project->isEventTypeInvitationEvent())
+                          초대권 신청이 완료되었습니다.
+                        @endif
+                      </strong>
+                    </h3>
                     <p class="text-center ps-text-detail">
-                        <strong>오른쪽 상단 '결제확인' 탭에서 확인해보세요!</strong>
+                        <strong>
+                            오른쪽 상단 '결제확인' 탭에서 확인해보세요!
+                        </strong>
                     </p>
                 @endif
             </div>
         </div>
         <!-- 응원하기 -->
         <div class="row ps-box">
-          <p class="text-left commentTitle"><strong>잠깐! 후원자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!</strong></p>
+          <p class="text-left commentTitle">
+            <strong>
+              @if($project->isEventTypeDefault())
+                잠깐! 후원자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!
+              @elseif($project->isEventTypeInvitationEvent())
+                잠깐! 여러분의 기대평이 프로젝트 진행자에게 큰 힘이 됩니다!
+              @endif
+            </strong>
+          </p>
             <form action="{{ url('/tickets') }}/{{ $project->id }}/comments" method="post"
                   data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
                 <textarea id="input_comment" name="contents" class="form-control" rows="3"

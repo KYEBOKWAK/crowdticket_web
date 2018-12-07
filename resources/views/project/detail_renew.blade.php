@@ -203,25 +203,40 @@ $selectedTicket = "";
 
               <div class="detail_main_guide_container">
                 <div class="detail_main_guide_funding_title">
-                  @if($project->isFinished())
-                  종료됨
+                  @if($project->isEventTypeCrawlingEvent())
+                    진행중
                   @else
-                  진행중
+                    @if($project->isFinished())
+                    종료됨
+                    @else
+                    진행중
+                    @endif
                   @endif
                 </div>
                 <div class="detail_main_guide_funding_explain">
-                  {{ $project->getMainExplain() }}
+                  @if($project->isEventTypeCrawlingEvent())
+                    본 이벤트는 크라우드티켓이 아닌 외부에서 진행 중인 이벤트 입니다.
+                  @else
+                    {{ $project->getMainExplain() }}
+                  @endif
                 </div>
                 <h5 class="detail_main_guide_amount">
-                  {{ $project->getNowAmount() }}
-                  @if($project->isFundingType())
-                    <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                  @if(!$project->isEventTypeCrawlingEvent())
+                    {{ $project->getNowAmount() }}
+                    @if($project->isFundingType())
+                      <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                    @endif
                   @endif
                 </h5>
               </div>
 
               <div class="detail_main_guide_ticketing_btn_wrapper">
-                <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">크라우드티켓팅</button></a>
+
+                  @if($project->isEventTypeCrawlingEvent())
+                    <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">외부페이지로 이동</button></a>
+                  @else
+                    <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">크라우드티켓팅</button>
+                  @endif
               </div>
               <div class="detail_main_guide_share_btn_wrapper">
                 <!-- <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-toggle="popover"><i class="fa fa-share"></i></button> -->
@@ -295,7 +310,12 @@ $selectedTicket = "";
 
           <!-- 중간 네비게이션에 스크롤링에 의해 노출되는 크라우드 티켓팅 버튼 -->
           <div class="nav-ticketing-btn">
-             <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
+
+               @if($project->isEventTypeCrawlingEvent())
+                <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+               @else
+                <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
+               @endif
            </div>
         </div>
       </div>
@@ -349,7 +369,11 @@ $selectedTicket = "";
       </div>
 
       <div class="nav-ticketing-btn-mobile">
+        @if($project->isEventTypeCrawlingEvent())
+          <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+        @else
          <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
+        @endif
        </div>
 
       <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>
@@ -382,7 +406,7 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=7') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=8') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=14') }}"></script>

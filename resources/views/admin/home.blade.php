@@ -99,6 +99,8 @@
                   </li>
                   <li role="presentation"><a href="#orderfail" aria-controls="orderfail" role="tab" data-toggle="tab">오더 실패 정보(예약결제 진행 후 해야함)</a>
                   </li>
+                  <li role="presentation"><a href="#eventtype" aria-controls="eventtype" role="tab" data-toggle="tab">이벤트타입 설정</a>
+                  </li>
               </ul>
               <div class="tab-content">
                   <ul id="blueprint" role="tabpanel" class="tab-pane active list-group">
@@ -311,6 +313,29 @@
                             </form>
                       </li>
                     @endforeach
+                  </ul>
+
+                  <!-- 이벤트타입 설정 -->
+                  <ul id="eventtype" role="tabpanel" class="tab-pane">
+                    <!--
+                    @foreach($allprojects as $project)
+                      <li class="list-group-item">
+                          <b>{{ $project->title }}</b> <br>
+                            <form id="form_admin_order_check{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/ordercheck', $project->id)) }}" method="get">
+                              <select id="category" name="category" class="project-form-input project-form-input-category">
+                                @foreach ($categories as $category)
+                                    @if ($category->id === $project->category_id)
+                                        <option value="{{ $category->id }}" selected>{{ $category->title }}</option>
+                                    @else
+                                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                    @endif
+                                @endforeach
+                                </select>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </li>
+                    @endforeach
+                    -->
                   </ul>
 
               </div>

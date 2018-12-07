@@ -8,11 +8,15 @@ class Project extends Model
     const STATE_UNDER_INVESTIGATION = 3;
     const STATE_APPROVED = 4;
 
+    const EVENT_TYPE_DEFAULT = 0; //기본 타입
+    const EVENT_TYPE_INVITATION_EVENT = 1;   //이벤트 타입(초대권)
+    const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
+
     protected static $fillableByState = [
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'funding_closing_at'
+            'funding_closing_at', 'event_type'
         ],
 
         Project::STATE_READY_AFTER_FUNDING => [
@@ -25,7 +29,7 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-          'description', 'video_url', 'story', 'ticket_notice'
+          'description', 'video_url', 'story', 'ticket_notice', 'event_type'
         ]
     ];
 
@@ -48,6 +52,7 @@ class Project extends Model
         'hash_tag2' => 'string',
         'pledged_amount' => 'integer|min:0',
         'audiences_limit' => 'integer|min:0',
+        'event_type' => 'integer|min:0',
         'funding_closing_at' => 'date_format:Y-m-d H:i:s',
         'performance_opening_at' => 'date_format:Y-m-d'
     ];
@@ -177,6 +182,11 @@ class Project extends Model
     public function news()
     {
         return $this->hasMany('App\Models\News')->orderBy('created_at', 'desc');
+    }
+
+    public function url_crawlings()
+    {
+      return $this->hasMany('App\Models\Url_crawling')->first();
     }
 
     public function isFinished()
@@ -312,7 +322,7 @@ class Project extends Model
         return $this->getTicketDateFormatted();
       }
 
-      if($this->isPlace == "FALSE")
+      if($this->isPlace == "FALSE" || $this->isEventTypeCrawlingEvent())
       {
         return $this->temporary_date;
       }
@@ -458,6 +468,18 @@ class Project extends Model
     {
         return (int)$this->state === Project::STATE_APPROVED;
         //return false;
+    }
+
+    public function isEventTypeDefault(){
+      return (int)$this->event_type === Project::EVENT_TYPE_DEFAULT;
+    }
+
+    public function isEventTypeInvitationEvent(){
+      return (int)$this->event_type === Project::EVENT_TYPE_INVITATION_EVENT;
+    }
+
+    public function isEventTypeCrawlingEvent(){
+      return (int)$this->event_type === Project::EVENT_TYPE_CRAWLING;
     }
 
     public function isSuccess()

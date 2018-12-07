@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=4') }}"/>
     <link href="{{ asset('/css/calendar.css?version=8') }}" rel="stylesheet">
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
@@ -63,59 +63,67 @@
 
     @include('template.calendar', ['isDetail' => 'FALSE'])
 
-    <div class="order_ticket_discount_md_container_flex">
-      <div class="order_ticket_discount_container">
-        <div class="order_ticket_discount_md_title">
-          <p>티켓할인선택</p>
-        </div>
-        <div class="order_ticket_content_container">
-          @if(count($project->discounts) == 0)
-            <div class="order_no_discount_goods"><p>선택 가능한 할인이 없습니다.</p></div>
-          @else
-          @foreach ($project->discounts as $discount)
-            @include('template.order.discount', ['discount' => $discount])
-          @endforeach
-          @endif
-
-        </div>
-      </div>
-      <div class="order_ticket_md_container">
-        <div class="order_ticket_discount_md_title">
-          <p>굿즈선택</p>
-        </div>
-        <div class="order_ticket_content_container">
-          @if(count($project->goods) == 0)
-            <div class="order_no_discount_goods"><p>선택 가능한 굿즈가 없습니다.</p></div>
-          @else
-            @foreach ($project->goods as $goods)
-              @include('template.order.goods', ['goods' => $goods])
+    @if($project->isEventTypeDefault())
+      <div class="order_ticket_discount_md_container_flex">
+        <div class="order_ticket_discount_container">
+          <div class="order_ticket_discount_md_title">
+            <p>티켓할인선택</p>
+          </div>
+          <div class="order_ticket_content_container">
+            @if(count($project->discounts) == 0)
+              <div class="order_no_discount_goods"><p>선택 가능한 할인이 없습니다.</p></div>
+            @else
+            @foreach ($project->discounts as $discount)
+              @include('template.order.discount', ['discount' => $discount])
             @endforeach
-          @endif
-        </div>
-      </div>
-    </div>
+            @endif
 
-    <div class="order_ticket_md_container" style="background-color:white;">
-      <div class="order_ticket_discount_md_title">
-        <p>추가 후원금 입력(선택)</p>
-      </div>
-      <div class="order_ticket_content_container">
-        <div class="order_ticket_support_content">
-          공연/이벤트가 성공적으로 진행될 수 있도록
-          프로젝트 개설자를 위해 추가 후원을 하실 수 있습니다.
+          </div>
         </div>
-        <div class="order_ticket_support_input_wrapper">
-          <div class="flex_layer">
-            <input id="order_support_price_input" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
+        <div class="order_ticket_md_container">
+          <div class="order_ticket_discount_md_title">
+            <p>굿즈선택</p>
+          </div>
+          <div class="order_ticket_content_container">
+            @if(count($project->goods) == 0)
+              <div class="order_no_discount_goods"><p>선택 가능한 굿즈가 없습니다.</p></div>
+            @else
+              @foreach ($project->goods as $goods)
+                @include('template.order.goods', ['goods' => $goods])
+              @endforeach
+            @endif
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="order_ticket_md_container" style="background-color:white;">
+        <div class="order_ticket_discount_md_title">
+          <p>추가 후원금 입력(선택)</p>
+        </div>
+        <div class="order_ticket_content_container">
+          <div class="order_ticket_support_content">
+            공연/이벤트가 성공적으로 진행될 수 있도록
+            프로젝트 개설자를 위해 추가 후원을 하실 수 있습니다.
+          </div>
+          <div class="order_ticket_support_input_wrapper">
+            <div class="flex_layer">
+              <input id="order_support_price_input" type="number" name="order_support_price" value="" min="0"/><span>원 을 후원할래요!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endif
 
     <div id="order_pay_next_offset"></div>
     <div id="order_pay_next_id" class="order_pay_next_wrapper">
        <button id="order_pay_next_btn" type="button" class="order_pay_next_btn">
-         <p class="order_pay_next_btn_price_text">결제 예정 금액: <span id="order_price_text">0</span>원</p>
+         <p class="order_pay_next_btn_price_text">
+          @if($project->isEventTypeDefault())
+            결제 예정 금액: <span id="order_price_text">0</span>원
+          @elseif($project->isEventTypeInvitationEvent())
+            초대권 신청중
+          @endif
+         </p>
          <p class="order_pay_next_btn_next_text">다음 단계로</p>
        </button>
      </div>

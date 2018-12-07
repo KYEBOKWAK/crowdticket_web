@@ -331,18 +331,11 @@ class Order extends Model
           return '결제예약';
       }
 
-      return '결제완료';
-      /*
-        if (isset($this->deleted_at) && $this->deleted_at) {
-            return '취소됨';
-        }
+      if($project->isEventTypeInvitationEvent()){
+        return '응모완료';
+      }
 
-        $project = $this->getProject();
-        if ($project->isFundingType() && !$project->isFinished()) {
-            return '결제예약';
-        }
-        return '결제완료';
-        */
+      return '결제완료';
     }
 
     public function getIsCancel()

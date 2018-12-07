@@ -334,6 +334,15 @@ $(document).ready(function() {
 	introduceValue = getConverterEnterString(introduceValue);
 	$('.detail_creator_info_introduce').html(introduceValue);
 
+	var setTicketNotice = function(){
+    var ticketNotice = $('#ticket_notice').val();
+    //ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
+    ticketNotice = getConverterEnterString(ticketNotice);
+    $('#ticket_notice_container').append(ticketNotice);
+  };
+
+  setTicketNotice();
+
 });
 
 

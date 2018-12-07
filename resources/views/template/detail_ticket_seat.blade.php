@@ -3,16 +3,24 @@
     <button type="button" id="ticket_seat_btn<%=ticket.id%>" class="ticket_seat_btn <% if(isDetail == 'FALSE') { %> ticket_seat_btn_order <% } %>">
       <span class="ticket_time_text <% if(isDetail == 'FALSE') { %> ticket_time_text_order_category <% } %>"><%= ticketCategory %></span>
       <span class="ticket_time_text ticket_time_text_price <% if(isDetail == 'FALSE') { %> ticket_time_text_order_price <% } %>">
-        <% if(ticket.price == 0) { %>
-          무료
-        <% } else { %>
-          <%= addComma(ticket.price) %> 원
-        <% } %>
+        @if($project->isEventTypeDefault())
+          <% if(ticket.price == 0) { %>
+            무료
+          <% } else { %>
+            <%= addComma(ticket.price) %> 원
+          <% } %>
+        @endif
       </span>
       <% if(amountTicketCount == 0){ %>
         <p style="margin: 0px;"> 매진 </p>
       <% }else{ %>
-        <p style="margin: 0px;"> 구매 가능한 수량 <%= addComma(amountTicketCount) %> 매</p>
+        <p style="margin: 0px;">
+          @if($project->isEventTypeDefault())
+            구매 가능한 수량 <%= addComma(amountTicketCount) %> 매
+          @elseif($project->isEventTypeInvitationEvent())
+            신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
+          @endif
+        </p>
       <% } %>
 
       <% if(ticket.buy_limit > 0){ %>

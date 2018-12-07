@@ -159,7 +159,7 @@
             margin-top: 15px;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=4') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=7') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=6') }}"/>

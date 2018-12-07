@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=4') }}"/>
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
         .ps-section-title {
@@ -79,6 +79,7 @@
     <input id="tickets_json_category_info" type="hidden" value="{{ $categories_ticket }}"/>
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
     <input id="orderInfo" type="hidden" value="{{ $order }}"/>
+    <input id="isEventTypeInvitation" type="hidden" value="{{ $project->isEventTypeInvitationEvent() }}">
 <div class="form_main_container">
   <div class="form_main_head_container">
     @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
@@ -110,63 +111,59 @@
               </div>
             </div>
 
-            <div class="order_form_conform_container_grid_columns">
-              <p class="order_form_title">할인내역</p>
-              <div class="flex_layer">
-                <div class="order_form_discount_contant order_form_text">
-                </div>
-                <div class="order_form_discount_price order_form_text order_form_align_right">
-                </div>
-              </div>
-            </div>
-
-            <div class="order_form_conform_container_grid_columns">
-              <p class="order_form_title">MD</p>
-              <div class="order_form_goods_list"></div>
-              <!--
-              <div class="flex_layer">
-                <div class="order_form_md_contant order_form_text">
-                </div>
-                <div class="order_form_md_price order_form_text order_form_align_right">
+            @if($project->isEventTypeDefault())
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">할인내역</p>
+                <div class="flex_layer">
+                  <div class="order_form_discount_contant order_form_text">
+                  </div>
+                  <div class="order_form_discount_price order_form_text order_form_align_right">
+                  </div>
                 </div>
               </div>
-              -->
-            </div>
 
-            <div class="order_form_conform_container_grid_columns">
-              <p class="order_form_title">추가후원</p>
-              <div class="flex_layer">
-                <div class="order_form_support_contant order_form_text">
-                </div>
-                <div class="order_form_support_price order_form_text order_form_align_right">
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">굿즈</p>
+                <div class="order_form_goods_list"></div>
+              </div>
+
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">추가후원</p>
+                <div class="flex_layer">
+                  <div class="order_form_support_contant order_form_text">
+                  </div>
+                  <div class="order_form_support_price order_form_text order_form_align_right">
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="order_form_conform_container_grid_columns">
-              <p class="order_form_title">티켓 수수료</p>
-              <div class="flex_layer">
-                <div class="order_form_commission_contant order_form_text">
-                </div>
-                <div class="order_form_align_right order_form_commission_price order_form_text">
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">티켓 수수료</p>
+                <div class="flex_layer">
+                  <div class="order_form_commission_contant order_form_text">
+                  </div>
+                  <div class="order_form_align_right order_form_commission_price order_form_text">
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="order_form_conform_container">
-          <div class='order_form_conform_title'>
-            <h3>
-            @if( $project->project_target == "people" )
-            총 결제 금액
-            @else
-            총 예약 금액
             @endif
-            </h3>
-            <h4 class='order_form_total_price'></h4>
           </div>
         </div>
+
+        @if($project->isEventTypeDefault())
+          <div class="order_form_conform_container">
+            <div class='order_form_conform_title'>
+              <h3>
+              @if( $project->project_target == "people" )
+              총 결제 금액
+              @else
+              총 예약 금액
+              @endif
+              </h3>
+              <h4 class='order_form_total_price'></h4>
+            </div>
+          </div>
+        @endif
 
         @if($project->question)
           <div class="order_form_conform_container">
@@ -275,19 +272,23 @@
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <h3>
-            @if ($order)
-              @if( $project->type == "sale" )
-              결제 정보
-              @else
-              예약 정보
+              @if($project->isEventTypeDefault())
+                @if ($order)
+                  @if( $project->type == "sale" )
+                  결제 정보
+                  @else
+                  예약 정보
+                  @endif
+                @else
+                  @if( $project->type == "sale" )
+                  결제 정보 입력
+                  @else
+                  예약 정보 입력
+                  @endif
+                @endif
+              @elseif($project->isEventTypeInvitationEvent())
+                신청자 정보 입력
               @endif
-            @else
-              @if( $project->type == "sale" )
-              결제 정보 입력
-              @else
-              예약 정보 입력
-              @endif
-            @endif
             </h3>
           </div>
 
@@ -417,24 +418,41 @@
           </div>
 
           <div>
-            <h4> 환불 정책 </h4>
-            <div class="order_form_conform_container_grid_rows">
-              @if($project->type == 'funding')
-                <p style="margin-bottom:0px;">
-                  본 프로젝트는 목표에 도달하여야 성공하는 프로젝트로, 티켓팅 마감일 하루 전까지는 언제든지 결제 예약을 수수료 없이 취소할 수 있습니다. 다만 티켓팅 마감 24시간 전부터는 프로젝트 진행자의 기대이익에 따라 취소가 불가능합니다.
-                </p>
-              @else
-                <p>1. 관람일 9일전 ~ 1일전 티켓 환불 시 총 결제금액의 10%가 취소 수수료로 부과됩니다.</p>
-                <p>2. 티켓을 구매하지 않았을 시 환불 수수료가 붙지 않습니다.</p>
-                <p>3. 공연 당일 환불은 불가능합니다.</p>
-                <p>4. 관람일을 기준으로 10일 이상 남은 경우, 취소 수수료는 없습니다.</p>
-                <p>5. 티켓 환불은 오른쪽 상단 '결제확인' 탬에서 진행하시면 됩니다.</p>
+            <h4>
+              @if($project->isEventTypeDefault())
+                환불 정책
+              @elseif($project->isEventTypeInvitationEvent())
+                초대권 신청 정책
               @endif
-              </div>
+            </h4>
+            <div class="order_form_conform_container_grid_rows">
+              @if($project->isEventTypeDefault())
+                @if($project->type == 'funding')
+                  <p style="margin-bottom:0px;">
+                    본 프로젝트는 목표에 도달하여야 성공하는 프로젝트로, 티켓팅 마감일 하루 전까지는 언제든지 결제 예약을 수수료 없이 취소할 수 있습니다. 다만 티켓팅 마감 24시간 전부터는 프로젝트 진행자의 기대이익에 따라 취소가 불가능합니다.
+                  </p>
+                @else
+                  <p>1. 관람일 9일전 ~ 1일전 티켓 환불 시 총 결제금액의 10%가 취소 수수료로 부과됩니다.</p>
+                  <p>2. 티켓을 구매하지 않았을 시 환불 수수료가 붙지 않습니다.</p>
+                  <p>3. 공연 당일 환불은 불가능합니다.</p>
+                  <p>4. 관람일을 기준으로 10일 이상 남은 경우, 취소 수수료는 없습니다.</p>
+                  <p>5. 티켓 환불은 오른쪽 상단 '결제확인' 탬에서 진행하시면 됩니다.</p>
+                @endif
+              @elseif($project->isEventTypeInvitationEvent())
+                <p style="margin-top:10px;">1. 초대권 신청은 티켓 예매가 아닙니다. <b>신청 후 당첨이 되어야만 티켓을 받으실 수 있습니다.</b></p>
+                <p>2. 초대권 신청 내역 확인 및 취소는 오른쪽 상단 '결제확인' 탭에서 하실 수 있습니다.</p>
+                <p>3. 초대권의 판매, 양도, 및 교환은 금지되어 있으며 이를 위반하여 발생하는 불이익에 대하여 크라우드티켓에서는 책임을 지지 않습니다.</p>
+              @endif
+            </div>
           </div>
           <div style="text-align:right; margin-top:10px; margin-bottom:10px;">
             <div>
-              환불 정책에 동의합니다. <input id="refund_apply" type="checkbox" required="required">
+              @if($project->isEventTypeDefault())
+                환불
+              @elseif($project->isEventTypeInvitationEvent())
+                초대권 신청
+              @endif
+              정책에 동의합니다. <input id="refund_apply" type="checkbox" required="required">
             </div>
             <div>
               크라우드티켓 약관과 정보이용정책에 동의합니다. <input id="policy_apply" type="checkbox" required="required">
@@ -448,13 +466,18 @@
             <button class="btn btn-muted" disabled="disabled">결제에러</button>
           @else
             @if ($order->getIsCancel())
-                @if ($project->type === 'funding')
-                    <button class="btn btn-muted" disabled="disabled">취소됨</button>
-                @else
-                    <button class="btn btn-muted" disabled="disabled">환불됨</button>
+                @if($project->isEventTypeDefault())
+                  @if ($project->type === 'funding')
+                      <button class="btn btn-muted" disabled="disabled">취소됨</button>
+                  @else
+                      <button class="btn btn-muted" disabled="disabled">환불됨</button>
+                  @endif
+                @elseif($project->isEventTypeInvitationEvent())
+                  <button class="btn btn-muted" disabled="disabled">취소됨</button>
                 @endif
             @else
                 @if ($order->canCancel())
+                  @if($project->isEventTypeDefault())
                     @if ($project->type === 'funding')
                         <button class="btn btn-danger">취소하기</button>
                     @else
@@ -466,7 +489,11 @@
                             </p>
                         @endif
                     @endif
+                  @elseif($project->isEventTypeInvitationEvent())
+                    <button class="btn btn-danger">취소하기</button>
+                  @endif
                 @else
+                  @if($project->isEventTypeDefault())
                     @if ($project->type === 'funding')
                         <button class="btn btn-muted" disabled="disabled">취소불가</button>
                         <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
@@ -474,6 +501,10 @@
                         <button class="btn btn-muted" disabled="disabled">환불불가</button>
                         <p class="ps-tooltip text-danger">환불 가능 일자가 만료되었습니다.</p>
                     @endif
+                  @elseif($project->isEventTypeInvitationEvent())
+                    <button class="btn btn-muted" disabled="disabled">취소불가</button>
+                    <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
+                  @endif
                 @endif
             @endif
           @endif
@@ -578,6 +609,12 @@
             var fullTicketPrice = addComma(g_ticketPrice) + '원';
 
             $('.order_form_ticket_price').text(fullTicketPrice);
+
+            if($('#isEventTypeInvitation').val() == true)
+            {
+                //초대권 이벤트 중이면, 가격을 초대권으로 변경한다.
+                $('.order_form_ticket_price').text("");
+            }
           };
 
           var setDiscountInfo = function(){
@@ -611,7 +648,7 @@
             var formMDList = $('.order_form_goods_list');
             var goodsCount = goods.length;
             if(goodsCount == 0){
-              formMDList.text("MD 없음")
+              formMDList.text("굿즈 없음")
             }
             else {
               for(var i = 0 ; i < goodsCount ; ++i){
@@ -731,6 +768,10 @@
 
             $('#ticketing-btn-payment').text(submitBtn);
 
+            if($('#isEventTypeInvitation').val() == true){
+              $('#ticketing-btn-payment').text("초대권 신청하기");
+            }
+
           };
 
           var getTitalPrice = function(){
@@ -837,13 +878,13 @@
 
             if(!$('#refund_apply').is(":checked"))
             {
-              alert("환불 정책에 동의 해주세요.");
+              swal("이용 정책에 동의 해주세요.", "", "warning");
               return;
             }
 
             if(!$('#policy_apply').is(":checked"))
             {
-              alert("이용 약관에 동의 해주세요.");
+              swal("이용 약관에 동의 해주세요.", "", "warning");
               return;
             }
 
