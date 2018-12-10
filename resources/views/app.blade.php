@@ -248,11 +248,11 @@ function logout(){
           //var baseUrl = $('#base_url').val();
           //window.location.assign(baseUrl+'/auth/logout');
         }
-
-        var baseUrl = $('#base_url').val();
-        window.location.assign(baseUrl+'/auth/logout');
       });
-}
+      
+      var baseUrl = $('#base_url').val();
+      window.location.assign(baseUrl+'/auth/logout');
+    }
 </script>
 
 @yield('js')

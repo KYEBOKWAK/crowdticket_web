@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 //임시코드 end
 
+use Illuminate\Support\Facades\Mail;
+
 class BlueprintController extends Controller
 {
 
@@ -24,6 +26,37 @@ class BlueprintController extends Controller
         $blueprint->setAttribute('approved', true);
         $blueprint->save();
 
+        //host 가입 메일 보내기
+        $subject = "(크라우드티켓) 프로젝트 개설이 시작되었습니다!";
+        $to = \Input::get('contact');
+        $data = [
+          'name' => \Input::get('user_introduction'),
+          'goCreateProjectURL' => url("/projects/form/".$blueprint['code'])
+        ];
+
+        Mail::send('template.emailform.email_create_project', $data, function ($m) use ($subject, $to) {
+            $m->from('contact@crowdticket.kr', '크라우드티켓');
+            $m->to($to)->subject($subject);
+        });
+
+        //우리쪽에도 확인 메일 보내기
+        // 이메일을 생성하고 메일을 전송하는 부분
+        $name = strip_tags(htmlspecialchars($_POST['user_introduction']));
+  		  $messageExplain = strip_tags(htmlspecialchars($_POST['project_introduction']));
+  		  $email_address = strip_tags(htmlspecialchars($_POST['contact']));
+  		  $phone = strip_tags(htmlspecialchars($_POST['tel']));
+
+  		  $to = 'contact@crowdticket.kr'; // 받는 측의 이메일 주소를 기입하는 부분
+  		  $email_subject = "개설 신청 [$name]"; // 메일 제목에 해당하는 부분
+  		  $email_body = ['content' => "\n\n프로젝트 개설자:\n\n $name\n\n문의 내용:\n\n $messageExplain\n\nEmail:\n\n $email_address\n\nPhone:\n\n $phone\n\n"];
+
+
+  			Mail::send('landing.landing_email_form', $email_body, function ($m) use ($email_subject, $to) {
+  								$m->from('contact@crowdticket.kr', '제휴 문의');
+  								$m->to($to)->subject($email_subject);
+  						});
+
+
         return \Redirect::to(url("/projects/form/".$blueprint['code']));
     }
 
@@ -40,16 +73,7 @@ class BlueprintController extends Controller
 
     public function getBlueprintWelcome()
     {
-      if(\Auth::user())
-      {
-        //임시코드. 임시로 관리자일때는 개설이 가능하다.
-        if(Auth::user()->id == 2)
-        {
-          return view('blueprint.welcome', ["isMaster" => "TRUE"]);
-        }
-      }
-
-      return view('blueprint.welcome', ["isMaster" => "FALSE"]);
+      return view('blueprint.welcome');
     }
 
     public function getCreateForm()
