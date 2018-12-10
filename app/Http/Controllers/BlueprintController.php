@@ -52,7 +52,7 @@ class BlueprintController extends Controller
 
 
   			Mail::send('landing.landing_email_form', $email_body, function ($m) use ($email_subject, $to) {
-  								$m->from('contact@crowdticket.kr', '제휴 문의');
+  								$m->from('contact@crowdticket.kr', '개설 신청중');
   								$m->to($to)->subject($email_subject);
   						});
 
