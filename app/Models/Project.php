@@ -427,6 +427,10 @@ class Project extends Model
         {
           /*$nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";*/
           $nowAmount = "현재 참여 가능";
+          if($this->isFinished())
+          {
+            $nowAmount = "티켓팅이 마감되었습니다.";
+          }
         }
         else
         {
