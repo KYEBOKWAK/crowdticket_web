@@ -49,7 +49,11 @@ $i = 0;
                                   @endif
                                 @else
                                     @if($project->isEventTypeInvitationEvent())
-                                      초대권 이벤트중
+                                      @if($project->isFinished())
+                                        이벤트 종료
+                                      @else
+                                        초대권 이벤트중
+                                      @endif
                                     @elseif($project->isReady())
                                     @elseif($project->isFinished())
                                       판매종료
