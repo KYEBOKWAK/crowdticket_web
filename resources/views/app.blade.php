@@ -143,9 +143,7 @@
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/projects') }}">전체보기</a></li>
-                    <li><a href="{{ url('/blueprints/welcome') }}">개설 신청</a></li>
-                    <!-- <li><a href="{{ url('/creators') }}">CREATORS<i class="newNavIcon">beta</i></a></li> -->
-                    <!-- <li><a href="{{ url('/help') }}">도움말</a></li> -->
+                    <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -249,7 +247,7 @@ function logout(){
           //window.location.assign(baseUrl+'/auth/logout');
         }
       });
-      
+
       var baseUrl = $('#base_url').val();
       window.location.assign(baseUrl+'/auth/logout');
     }
