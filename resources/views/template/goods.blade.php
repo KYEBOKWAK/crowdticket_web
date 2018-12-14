@@ -5,9 +5,9 @@
       <div class="flex_layer_column">
         <!-- 1단 -->
         <% if(goods.img_url) { %>
-          <div style="height: 164px;">
+          <div style="height: 164px; overflow: hidden;">
             <div class="img_wrapper_base_css project-form-goods-img-wrapper">
-              <img class="img_base_css project-form-goods-img" src="<%= goods.img_url %>" onload="imageResize($('.project-form-goods-img-wrapper')[0], this)"/>
+              <img class="img_base_css project-form-goods-img" img-data-name="goodsThumbData" src="<%= goods.img_url %>"/>
             </div>
           </div>
         <% } %>

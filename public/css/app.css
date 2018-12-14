@@ -364,7 +364,7 @@ body {
 }
 .project-grid-wrapper .project-thumbnail {
 	width:100%;
-	height:230px;
+	/*height:230px;*/
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 		-moz-border-radius-topleft:5px;

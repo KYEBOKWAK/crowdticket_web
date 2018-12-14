@@ -2,11 +2,16 @@
 
 @section('css')
     <style>
+        #main{
+          min-height: unset;
+        }
         .ps-explore-tabs {
-            margin-top: 48px;
+            margin-top: 0px;
             margin-bottom: 35px;
-            margin-left: -4px;
-            margin-right: -4px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+
         }
 
         .ps-explore-tabs a {
@@ -37,7 +42,7 @@
 
         .ps-explore-tab-title {
             display: inline;
-            font-size: 15px;
+            font-size: 11px;
             font-weight: bold;
             vertical-align: middle;
             margin-left: 8px;
@@ -50,8 +55,22 @@
         .ps-explore-tab-selected:hover {
             background-color: #384150;
         }
+
+        .swiper-slide{
+          display: flex;
+        }
+
+        .project_form_poster_origin_size_ratio{
+          padding-bottom: 0px !important;
+        }
+
+        @media (max-width: 769px) {
+          .ps-explore-tab{
+            padding: 11px 0 11px 0;
+          }
+        }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -102,11 +121,25 @@
                     </div>
                 @endforeach
             </div>
-            @include('template.carousel_main_project', ['projects' => $projects ])
+            @include('template.carousel_new_main', ['projects' => $projects ])
         </div>
     </div>
 
     <div style="width: 100%;">
 
     </div>
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function () {
+        $('.project-img').each(function(){
+          if($(this).attr("img-data-name") == "welcomeThumbData")
+          {
+            imageResize($('.project-thumbnail')[0], $(this)[0]);
+          }
+        });
+    });
+
+</script>
 @endsection

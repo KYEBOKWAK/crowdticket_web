@@ -100,8 +100,78 @@
             margin-top:50px;
             margin-bottom:70px;
         }
+
+        /*메인 추천 슬라이드 css */
+        .carousel-inner{
+        }
+
+        .thumbnail-wrappper{
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+        }
+        /*
+        .swiper-container {
+          width: 300px;
+          height: auto;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        */
+
+        .swiper-container{
+          max-width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          bottom: 0px;
+          right: 0px;
+          margin: auto;
+        }
+
+        .swiper-slide {
+          text-align: center;
+          font-size: 18px;
+          background: #fff;
+          height: auto;
+          /* Center slide text vertically */
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          -webkit-justify-content: center;
+          justify-content: center;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          -webkit-align-items: center;
+          align-items: center;
+        }
+
+        .slider-item{
+          background-color: white;
+          /*width: 200px;*/
+          width: 100%;
+          height: 100%;
+          margin: 0px 10px;
+          border: 1px solid black;
+        }
+
+        .project_form_poster_origin_size_ratio{
+          position: relative;
+          width: 100%;
+          padding-bottom: 35%;
+        }
+
+        /*메인 추천 슬라이드 css  ---- end  */
     </style>
-    <link href="{{ asset('/css/welcome.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css">
+
 @endsection
 
 @section('content')
@@ -113,14 +183,16 @@
           <h4 style="float:left">크라우드 티켓 추천</h4>
           <!-- Controls -->
           <div class="controls pull-right">
-              <a href="#ct-recommend" data-slide="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><a href="#ct-recommend" data-slide="next"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <!-- Add Arrows -->
+            <i class="carousel-button-prev fa fa-chevron-left" aria-hidden="true" style="margin-right: 20px; cursor:pointer;"></i>
+            <i class="carousel-button-next fa fa-chevron-right" aria-hidden="true" style="cursor:pointer;"></i>
           </div>
         </div>
 
         <div id="ct-recommend" class="carousel slide">
                   <!-- Wrapper for slides -->
           <div class="carousel-inner">
-            @include('template.carousel_main_project', ['projects' => $projects ])
+            @include('template.carousel_new_main', ['projects' => $projects ])
           </div>
         </div>
       </div>
@@ -159,6 +231,8 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.js"></script>
     <script>
         $(document).ready(function () {
             $('.count-ani').counterUp({
@@ -169,7 +243,37 @@
             if($("#isNotYet").val() == "TRUE"){
               alert("준비중입니다.");
             }
+
+            var swiper = new Swiper('.swiper-container', {
+              //centerInsufficientSlides: true,
+              loop: true,
+              pagination: {
+                //el: '.swiper-pagination',
+                //clickable: true,
+              },
+              navigation: {
+                nextEl: '.carousel-button-next',
+                prevEl: '.carousel-button-prev',
+              },
+            });
+
+            /*
+
+            $('.slider-item').click(function(){
+              alert("aaa : ");
+              //alert(index);
+            });
+            */
+
+
+            $('.project-img').each(function(){
+              if($(this).attr("img-data-name") == "welcomeThumbData")
+              {
+                imageResize($('.project-thumbnail')[0], $(this)[0]);
+              }
+            });
         });
+
     </script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
 @endsection

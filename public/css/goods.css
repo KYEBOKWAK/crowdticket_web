@@ -75,14 +75,9 @@
 }
 
 .project-form-goods-img-wrapper{
-/*
-  width: 100%;
-  height: 164px;
-  */
-
-  width: 295px;
-  height: 164px;
-  overflow: hidden;
+  position: relative;
+  height: 0px;
+  padding-bottom: 75%;
 }
 
 .detail_ticket_md_color_cover{

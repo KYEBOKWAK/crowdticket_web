@@ -70,7 +70,9 @@
                   <a href="javascript:void(0);" id="goods_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
                   <a href="javascript:void(0);" id="goods_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
                   <p>이미지 권장 사이즈는 500px X 300px 입니다.</p>
-                  <div id="goods_img_preview" style="display:none;">
+                  <div class="goods_img_preview_wrapper">
+                    <div id="goods_img_preview" style="display:none;">
+                    </div>
                   </div>
                     <input id="goods_img_file" type="file" name="goods_img_file" style="height: 0; visibility: hidden"/>
               </div>

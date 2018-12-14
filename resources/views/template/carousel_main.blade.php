@@ -127,8 +127,7 @@
         .jssora053.jssora053ds {opacity:.3;pointer-events:none;}
     </style>
 
-<!-- <div id="jssor_1" style="position:relative;top:0px;left:0px;width:1366px;height:768px;overflow:hidden;visibility:hidden;"> -->
-    <!-- <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1366px;height:768px;overflow:hidden;"> -->
+
     <div id="jssor_1" style="position:relative;top:0px;left:0px;width:1980px;height:600px;overflow:hidden;visibility:hidden;">
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1980px;height:600px;overflow:hidden;">
         @foreach($main_carousels as $main_carousel)

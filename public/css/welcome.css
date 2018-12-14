@@ -1,3 +1,20 @@
+.project-grid-wrapper{
+  /*position: absolute;*/
+  position: unset;
+  top: 0;
+  left: 0;
+
+  width: 227.5px;
+  height: 331.13px;
+
+
+  border: 1px #dedede solid;
+  background-color: #fcfcfc;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* 프로젝트 썸네일 영역 관련 */
 .project-grid-wrapper h4 {
     margin:0px;
@@ -13,7 +30,8 @@
 .welcome_main_thumb_container{
   margin-left: auto;
   margin-right: auto;
-  width: 970px;
+  /*width: 970px;*/
+  width: 1050px;
   height: 100%;
 
   padding: 70px 0px;
@@ -21,7 +39,11 @@
 }
 
 .welcome_main_thumb_title_container{
+  width: 96.5%;
   height: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
 }
 
 .welcome_main_thumb_title_container h4{
@@ -74,13 +96,29 @@
     font-size: 18px;
 }
 
+.project-title{
+  text-align: left;
+}
+
+.project_carousel_container{
+  /*margin: 13px;
+  width: 100%;
+  */
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 69%;
+  margin: 5px;
+}
+
 @media (max-width:1200px) {
     .welcome_main_carousel_content_caption {
         /*bottom:155px;*/
     }
 
   .welcome_main_thumb_container{
-      width: 90%;
+      /*width: 90%;*/
     }
 }
 
@@ -89,6 +127,8 @@
         max-width:700px;
     }
 }
+
+/*모바일 사이즈*/
 @media (max-width:576px) {
     .welcome_main_carousel_content_container {
         max-width:300px;
@@ -102,6 +142,7 @@
     position:relative;
     padding-top:75%;
     overflow:hidden;
+    background-color: white;
 }
 
 .project-img {
@@ -126,7 +167,7 @@
 }
 
 .project-grid-wrapper .project-thumbnail {
-    height:163px;
+    /*height:163px;*/
 }
 
 .project-grid-wrapper .poster-title {
@@ -148,9 +189,10 @@
 }
 
 .project-grid-wrapper .project-category {
-    margin:15px 0 10px 0;
+    margin: 0px 0 10px 0;
     padding:0 12px 0 12px;
     font-weight:bold;
+    text-align: left;
 }
 .project-category-c {
     background-color:#e15998;
@@ -185,17 +227,25 @@
 
 .project-grid-wrapper .project-description{
   color:#656969;
+  min-height: 3em;
+  height: 3em;
 }
 
 .project-grid-wrapper .project-info {
-    margin:19px 0 13px 0;
-    padding:0 12px 0 12px;
+    /*margin:19px 0 13px 0;*/
+    margin:0px 0px 0px 0px;
+    padding:13px 12px 0 12px;
     color:#222;
     width: 100%;
+
+    text-align: left;
 }
 
 .project-info h6 {
+    height: 12px;
     font-size: 11px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .project_carousel_date{
@@ -216,15 +266,67 @@
   text-align: right;
 }
 
+.project_thumbnail_content_wrapper{
+  margin-bottom: 13px;
+  margin-top: 15px;
+}
+
+.project_thumb_title_wrapper{
+
+}
+
+.project_thumb_title_wrapper_wrapper{
+
+}
+
 @media (max-width:1200px) {
+  .project_carousel_conerthall{
+    width: 40%;
+    display: inline;
+  }
+}
+
+@media (max-width:1050px) {
+  .project-grid-wrapper{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
   .project_carousel_date{
     width: 100%;
     display: inline;
   }
+  .welcome_main_thumb_container{
+    width: 100%;
+    /*width: 500px;*/
+  }
+  .swiper-slide{
+    flex-direction: column;
+  }
 
-  .project_carousel_conerthall{
-    width: 40%;
-    display: inline;
+  .project_form_poster_origin_size_ratio{
+    /*padding-bottom: 675px;*/
+    padding-bottom: 112%;
+  }
+
+  .project_carousel_container{
+    padding-bottom: 60%;
+  }
+
+  .project_form_poster_origin_size_ratio{
+    padding-bottom: 130%;
+  }
+
+  .project_thumbnail_content_wrapper{
+    height: 38%;
+    margin-bottom: 0px;
+  }
+
+  .project-grid-wrapper .project-info{
+    margin-top: 0px;
+    padding-top: 0px;
+    position: absolute;
+    top: 95%;
   }
 }
 
@@ -274,4 +376,126 @@
   .welcome_main_carousel_content_caption>h4{
     font-size: 28px;
   }
+}
+
+/*모바일 사이즈*/
+@media (max-width:576px) {
+    .welcome_main_carousel_content_container {
+        max-width:300px;
+        margin-left: 620px;
+        /*margin-left: 400px;*/
+        /*margin-right: 300px;*/
+    }
+
+    .project-grid-wrapper .project-category{
+      padding: 0 5px 0 5px;
+      margin-bottom: 5px;
+    }
+
+    .ct-percent{
+      font-size: 10px;
+    }
+
+    .project-category-a{
+      padding: 1px 4px;
+    }
+
+    .project-category-c{
+      padding: 1px 4px;
+    }
+
+    .project-category-culture{
+      padding: 1px 4px;
+    }
+
+    .project-grid-wrapper .project-title{
+      padding: 5px 5px 0 5px;
+      margin: 0;
+    }
+
+    .project-grid-wrapper h4{
+      font-size: 11px !important;
+    }
+
+    .project-grid-wrapper .project-description{
+      padding: 0;
+      margin: 5px 5px 0 5px;
+      font-size: 10px;
+    }
+
+    .project_thumbnail_content_wrapper{
+      margin-top: 5px;
+    }
+
+    .project_carousel_date{
+      display: inline-block;
+      width: 75px;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+      overflow: hidden;
+    }
+
+    .project-grid-wrapper .project-info{
+      padding: 0 5px 0 5px;
+      margin: -7px 0px;
+    }
+}
+
+@media (max-width:440px) {
+  .text-ellipsize-2{
+    -webkit-line-clamp: 1;
+  }
+
+  .project-grid-wrapper .project-description{
+    min-height: 100%;
+    height: 100%;
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width:350px) {
+  .project-grid-wrapper .project-description{
+    min-height: 15px;
+    height: 15px;
+    margin-top: 3px;
+  }
+
+  .text-ellipsize-2{
+    -webkit-line-clamp: 1;
+  }
+
+  .project-grid-wrapper .project-info{
+    padding: 5px 5px 0 5px;
+    top: 91%;
+    margin: -3px 0px;
+  }
+
+  .project_carousel_date{
+    font-size: 10px;
+    word-spacing: -1.5px;
+  }
+  .project_carousel_conerthall{
+    font-size: 10px;
+  }
+
+  .project_carousel_date{
+    height: 13px;
+  }
+
+  .project_carousel_date{
+    width: 62px;
+  }
+
+  .project-grid-wrapper .project-title{
+    padding-top: 2px;
+  }
+}
+
+.project-grid-wrapper_temp{
+
+}
+
+.project_carousel_container_temp{
+  padding-bottom: 0px;
 }

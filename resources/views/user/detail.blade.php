@@ -28,7 +28,7 @@
             border-bottom: 1px #DEDEDE solid;
         }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
 @endsection
 
 @section('content')

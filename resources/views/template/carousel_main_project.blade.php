@@ -12,13 +12,13 @@ $i = 0;
                         <div>
                           @if (isset($colOnly))
                             <div class="bg-base project-thumbnail">
-                              <img src="{{ $project->getPosterUrl() }}" class="project-img">
+                              <img src="{{ $project->getPosterUrl() }}" class="project-img" img-data-name="welcomeThumbData">
                                 <div class="white-mask"></div>
                             </div>
                           @else
                             <a href="{{ url('/projects') }}/{{ $project->id }}">
                                 <div class="bg-base project-thumbnail">
-                                  <img src="{{ $project->getPosterUrl() }}" class="project-img">
+                                  <img src="{{ $project->getPosterUrl() }}" class="project-img" img-data-name="welcomeThumbData">
                                     <div class="white-mask"></div>
                                 </div>
                             </a>

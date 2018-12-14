@@ -261,3 +261,7 @@ function imageResize(imgWrapDiv, img){
       img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
   }
 }
+
+function utilcalltest(){
+  alert("isInUtilJS");
+}

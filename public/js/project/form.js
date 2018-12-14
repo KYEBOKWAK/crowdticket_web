@@ -811,6 +811,7 @@ $(document).ready(function() {
 			}
 			else {
 				addGoodsRow(result['goods']);
+				goodsImgResize();
 				clearGoodsForm();
 			}
 		},
@@ -827,6 +828,8 @@ $(document).ready(function() {
 				for (var i = 0, l = goods.length; i < l; i++) {
 					addGoodsRow(goods[i]);
 				}
+
+				goodsImgResize();
 			}
 		}
 	};
@@ -882,6 +885,15 @@ $(document).ready(function() {
 		$('#ticket_discount_input').val(goodsData.ticket_discount);
 
 		$('#update_goods').attr('data-goods-id', goods.attr('data-goods-id'));
+	};
+
+	var goodsImgResize = function(){
+		$('.project-form-goods-img').each(function(){
+			if($(this).attr("img-data-name") == "goodsThumbData")
+			{
+				imageResize($('.project-form-goods-img-wrapper')[0], $(this)[0]);
+			}
+		});
 	};
 
 	var updateGoods = function(goods, resultlist) {
@@ -967,6 +979,8 @@ $(document).ready(function() {
 			for (var i = 0, l = goodsListJson.length; i < l; i++) {
 				addGoodsRow(goodsListJson[i]);
 			}
+
+			goodsImgResize();
 		}
 	};
 
@@ -1335,6 +1349,7 @@ $(document).ready(function() {
 				{
 					viewer.attr('src', imgUrl);
 					//imageResize($(".project-thumbnail"), $('.project-img'));
+					imageResize($('.project-thumbnail')[0], viewer[0]);
 				}
 			}
 
@@ -2308,6 +2323,13 @@ $(document).ready(function() {
 		{
 			swal("할인율은 100보다 클 수 없습니다.", "", "warning");
 			$(this).val(100);
+		}
+	});
+
+	$('.project-img').each(function(){
+		if($(this).attr("img-data-name") == "welcomeThumbData")
+		{
+			imageResize($('.project-thumbnail')[0], $(this)[0]);
 		}
 	});
 });
