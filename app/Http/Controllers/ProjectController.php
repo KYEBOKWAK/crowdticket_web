@@ -16,6 +16,7 @@ use Storage as Storage;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectController extends Controller
 {
@@ -185,7 +186,7 @@ class ProjectController extends Controller
                 'cities' => City::orderBy('id')->get()
             ]);
         }
-        
+
         /*
         //임시로 막아놈. start
         $now = date('Y-m-d H:i:s');
@@ -566,6 +567,24 @@ class ProjectController extends Controller
     {
         $project = $this->getSecureProjectById($id);
         $project->submit();
+
+        //우리쪽에도 확인 메일 보내기
+        // 이메일을 생성하고 메일을 전송하는 부분
+        $projectId = strip_tags(htmlspecialchars($project->id));
+  		  $projectTitle = strip_tags(htmlspecialchars($project->title));
+        $userName = strip_tags(htmlspecialchars($project->user->name));
+        $userPhone = strip_tags(htmlspecialchars($project->user->contact));
+        $userEmail = strip_tags(htmlspecialchars($project->user->email));
+
+  		  $to = 'contact@crowdticket.kr'; // 받는 측의 이메일 주소를 기입하는 부분
+  		  $email_subject = "제출 완료! [$projectTitle]"; // 메일 제목에 해당하는 부분
+  		  $email_body = ['content' => "\n\n프로젝트 ID:\n\n $projectId\n\n프로젝트 타이틀:\n\n $projectTitle\n\n이름:\n\n $userName\n\n 연락처:\n\n $userPhone\n\nEmail:\n\n $userEmail\n\n"];
+
+  			Mail::send('landing.landing_email_form', $email_body, function ($m) use ($email_subject, $to) {
+  								$m->from('contact@crowdticket.kr', '제출 완료!');
+  								$m->to($to)->subject($email_subject);
+  						});
+
         return $project;
     }
 

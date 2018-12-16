@@ -27,6 +27,14 @@
             padding-bottom: 13px;
             border-bottom: 1px #DEDEDE solid;
         }
+
+        .swiper-slide{
+          display: flex;
+        }
+
+        .project_form_poster_origin_size_ratio{
+          padding-bottom: 0px !important;
+        }
     </style>
     <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
 @endsection
@@ -42,17 +50,31 @@
     <div class="container">
         @if (sizeof($creating) > 0)
             <h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
-            @include('template.carousel_main_project', ['projects' => $creating])
+            @include('template.carousel_new_main', ['projects' => $creating])
         @endif
 
         @if (sizeof($created) > 0)
             <h3 class="ps-detail-title"><strong>개설한 공연</strong></h3>
-            @include('template.carousel_main_project', ['projects' => $created])
+            @include('template.carousel_new_main', ['projects' => $created])
         @endif
 
         @if (sizeof($orders) > 0)
             <h3 class="ps-detail-title"><strong>참여한 공연</strong></h3>
-            @include('template.carousel_main_project', ['projects' => $orders])
+            @include('template.carousel_new_main', ['projects' => $orders])
         @endif
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('.project-img').each(function(){
+              if($(this).attr("img-data-name") == "welcomeThumbData")
+              {
+                imageResize($('.project-thumbnail')[0], $(this)[0]);
+              }
+            });
+        });
+
+    </script>
 @endsection
