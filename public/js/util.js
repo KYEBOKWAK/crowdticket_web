@@ -158,6 +158,9 @@ function isWordLengthCheck(inputNode, outputNode){
 }
 
 function getConverterEnterString(inputString){
+  if(!inputString){
+    return inputString;
+  }
   return inputString.replace(/\r?\n/g, '<br />');
 }
 
