@@ -558,7 +558,7 @@
 #detail_ticket_md{
   /*background-color: #f9f8f6;*/
   margin-left: 15px;
-  display: inline-table;
+  /*display: inline-table;*/
   flex-basis: 410px;
   flex-shrink: 0;
 }
