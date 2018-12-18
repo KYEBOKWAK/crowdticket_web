@@ -135,7 +135,7 @@
             @if($main_carousel->link)
             <a href="{{ $main_carousel->link }}">
             @endif
-              <img data-u="image" src="{{ $main_carousel->url }}">
+              <img data-u="image" src="{{ $main_carousel->url }}"/>
               <div class="carousel-container welcome_main_carousel_content_container">
                   <div class="carousel-caption welcome_main_carousel_content_caption">
                     @if($main_carousel->type)

@@ -36,7 +36,7 @@
           padding-bottom: 0px !important;
         }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=8') }}" rel="stylesheet">
 @endsection
 
 @section('content')

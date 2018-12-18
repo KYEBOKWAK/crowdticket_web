@@ -1,12 +1,11 @@
 .project-grid-wrapper{
   /*position: absolute;*/
-  position: unset;
+  position: static;
   top: 0;
   left: 0;
 
   width: 227.5px;
   height: 331.13px;
-
 
   border: 1px #dedede solid;
   background-color: #fcfcfc;
@@ -279,6 +278,55 @@
 
 }
 
+.project-grid-wrapper_pick{
+  width: 492.3px;
+  height: 147.7px;
+}
+
+.project_thumbnail_content_wrapper_pick{
+  width: 59%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.project_thumbnail_image_wrapper_pick{
+  /*width: 194.9px;*/
+  width: 40%;
+  /*height: 147.7px;*/
+}
+
+.project-title_pick{
+  margin-top: 15.6px !important;
+}
+
+.project-category_pick{
+  padding-top: 0px !important;
+  position: absolute !important;
+  top: 78%;
+  margin-left: 10px;
+  width: 58%;
+}
+
+.main_thumb_hash_wrapper{
+  width: 100%;
+  text-align: right;
+  font-size: 12px;
+  color: #656969;
+  margin-top: 2px;
+}
+
+.project_carousel_container_pick{
+  padding-bottom: 15%;
+}
+
+.thumbnail-wrappper_pick{
+  position: static;
+}
+
+.project_form_poster_origin_size_ratio_pick{
+  padding-bottom: 0;
+}
+
 @media (max-width:1200px) {
   .project_carousel_conerthall{
     width: 40%;
@@ -328,6 +376,26 @@
     position: absolute;
     top: 95%;
   }
+
+  .project_carousel_container_pick{
+    padding-bottom: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    width: 97%;
+  }
+
+  .project_form_poster_origin_size_ratio_pick{
+    padding-bottom: 0;
+  }
+
+  .project_thumbnail_image_wrapper_pick{
+    width: 41%;
+  }
+
+  .project-category_pick{
+    top: 90%;
+  }
 }
 
 /* 크라우드 티켓 브랜딩 영역 관련 */
@@ -335,7 +403,7 @@
     background:url('/img/app/ct-background.jpg') center center no-repeat;
     background-size:cover;
     height:auto;
-    padding:100px 30px;
+    padding:15px 30px;
     color:white;
     text-align:center;
     position:relative;
@@ -375,6 +443,10 @@
   }
   .welcome_main_carousel_content_caption>h4{
     font-size: 28px;
+  }
+
+  .project-category_pick{
+    top: 85%;
   }
 }
 
@@ -439,6 +511,14 @@
       padding: 0 5px 0 5px;
       margin: -7px 0px;
     }
+
+    .project-title_pick{
+      margin-top: 2.6px !important;
+    }
+
+    .main_thumb_hash_wrapper{
+      font-size: 10px;
+    }
 }
 
 @media (max-width:440px) {
@@ -451,6 +531,10 @@
     height: 100%;
     display: block;
     white-space: nowrap;
+  }
+
+  .project-category_pick{
+    top: 75%;
   }
 }
 

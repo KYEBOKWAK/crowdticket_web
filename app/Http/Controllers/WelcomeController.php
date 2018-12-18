@@ -1,64 +1,77 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Maincarousel as Maincarousel;
+use App\Models\Main_thumbnail as Main_thumbnail;
 
 class WelcomeController extends Controller
 {
 
     public function index()
     {
-        $now = date('Y-m-d H:i:s');
+        //$now = date('Y-m-d H:i:s');
 
-        $total_suppoter = 0;
-        $total_view = 0;
-        $total_amount = 0;
-//whereNotIn('order_number', [0])->orderBy('order_number')->get()
-        $minExposedNum = 12;
         /*
-        $projects = \App\Models\Project::where('state', 4)
-            ->where('funding_closing_at', '>', $now)
-            ->orderBy('id', 'desc')
-            ->take($minExposedNum)->get();
-        */
         $projects = \App\Models\Project::whereNotIn('project_order_number', [0])
             ->orderBy('project_order_number')
             ->take($minExposedNum)->get();
+        */
 
-        $lack = $minExposedNum - count($projects);
-        if ($lack > 0) {
-            $additional = \App\Models\Project::where('state', 4)
-                ->where('funding_closing_at', '<', $now)
-                ->orderBy('id', 'desc')
-                ->take($lack)->get();
-
-            $projects = $projects->merge($additional);
-        }
-
-        $total_suppoter = \App\Models\Project::where('supporters_count', '<>', 0)->sum('supporters_count');
-        $total_view = \App\Models\Project::where('view_count', '<>', 0)->sum('view_count');
-        $total_amount = \App\Models\Project::where('funded_amount', '<>', 0)->sum('funded_amount');
+        $thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
+        $thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
 
         //maincarousel
-        $main_carousel = Maincarousel::orderby('id')->get();
-        //$main_carousel = Maincarousel::where('id', '=', 1)->get();
+        $main_carousel = Maincarousel::where('order_number', '>', 0)->orderby('order_number')->get();
 
         return view('welcome_new', [
-            'projects' => $projects,
-            'total_suppoter' => number_format($total_suppoter),
-            'total_view' => number_format($total_view),
-            'total_amount' => number_format($total_amount),
+            'projects' => $thumbnailProjects,
+            'crowdticketPicProjects' => $thumbnailCrowdticketPicProject,
             'main_carousels' => $main_carousel,
             'isNotYet' => 'FALSE'
         ]);
+    }
 
-        /*
-        return view('welcome', [
-            'projects' => $projects,
-            'total_suppoter' => number_format($total_suppoter),
-            'total_view' => number_format($total_view),
-            'total_amount' => number_format($total_amount)
-        ]);
-        */
+    public function getThumbnailProject($thumbnailType)
+    {
+      $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderBy('order_number')->get();
+
+      $thumbnailProjectIds = [];
+      foreach($orderInfoList as $orderInfo)
+      {
+        array_push($thumbnailProjectIds, $orderInfo->project_id);
+      }
+
+      $projectsByOrderInfo = \App\Models\Project::whereIn('id', $thumbnailProjectIds)->get();
+
+      $projectSortInfo = $this->getArraySortByOrdernumber($projectsByOrderInfo, $orderInfoList);
+
+      return $projectSortInfo;
+    }
+
+
+    //orderArray 데이터 기준으로 projectArray 정렬
+    public function getArraySortByOrdernumber($projectArray, $orderArray)
+    {
+      $tempProjectArray = [];
+
+      foreach($orderArray as $orderInfo)
+      {
+        if(!$orderInfo->project_id || $orderInfo->project_id == 0)
+        {
+          continue;
+        }
+
+        foreach($projectArray as $projectInfo)
+        {
+          if($projectInfo->id == $orderInfo->project_id)
+          {
+            array_push($tempProjectArray, $projectInfo);
+            break;
+          }
+        }
+      }
+
+
+      return $tempProjectArray;
     }
 
 }

@@ -155,13 +155,21 @@
         .jssora053:hover {opacity:.8;}
         .jssora053.jssora053dn {opacity:.5;}
         .jssora053.jssora053ds {opacity:.3;pointer-events:none;}
+
+        .carousel_detail_main_title_img_wrapper{
+
+        }
+
+        .carousel_detail_main_title_img{
+          
+        }
     </style>
 <div style="width:100%;">
 <div id="jssor_1" class="detail_carousel_wrapper detail_carousel_size" style="position:relative;top:0px;left:0px;overflow:hidden;visibility:hidden;">
     <div data-u="slides" class="detail_carousel_size" style="cursor:default;position:relative;top:0px;left:0px;overflow:hidden;">
       @if($project->poster_url)
-        <div>
-          <img data-u="image" src="{{ $project->poster_url }}">
+        <div class="carousel_detail_main_title_img_wrapper">
+          <img class="carousel_detail_main_title_img" data-u="image" src="{{ $project->poster_url }}"/>
         </div>
       @else
         @for($i = 0 ; $i < 4 ; $i++)

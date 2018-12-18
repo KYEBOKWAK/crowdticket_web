@@ -10,6 +10,10 @@
   display: flex;
 }
 
+.flex_layer_most_mobile_main{
+  display: flex;
+}
+
 .flex_layer_project{
   display: flex;
 }
@@ -29,6 +33,12 @@
 
 .flex_layer_1{
   flex: 1;
+}
+
+@media (max-width:1050px){
+  .flex_layer_most_mobile_main{
+    display: block;
+  }
 }
 
 @media (max-width:1030px){

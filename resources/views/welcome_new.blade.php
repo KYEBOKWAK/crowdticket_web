@@ -168,9 +168,9 @@
 
         /*메인 추천 슬라이드 css  ---- end  */
     </style>
-    <link href="{{ asset('/css/welcome.css?version=7') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=8') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/css/swiper.min.css">
+    <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
 
 @endsection
 
@@ -180,7 +180,7 @@
     <!-- second section 시작 -->
       <div class="welcome_main_thumb_container">
         <div class="welcome_main_thumb_title_container">
-          <h4 style="float:left">크라우드 티켓 추천</h4>
+          <h4 style="float:left">크라우드티켓 추천</h4>
           <!-- Controls -->
           <div class="controls pull-right">
             <!-- Add Arrows -->
@@ -209,6 +209,23 @@
         </div>
     </div>
     <!-- 크라우드 티켓 브랜딩 영역 끝 -->
+
+    <!-- 크라우드티켓's PICK -->
+    @if(count($crowdticketPicProjects) > 0)
+    <div class="welcome_main_thumb_container">
+      <div class="welcome_main_thumb_title_container">
+        <h4 style="float:left">크라우드티켓's PICK</h4>
+      </div>
+
+      <div id="ct-recommend" class="carousel slide">
+                <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          @include('template.main_CR_pick', ['projects' => $crowdticketPicProjects ])
+        </div>
+      </div>
+    </div>
+    @endif
+
 <input type="hidden" id="isNotYet" value="{{ $isNotYet }}">
 @endsection
 
@@ -232,7 +249,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.2/js/swiper.js"></script>
+    <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script>
         $(document).ready(function () {
             $('.count-ani').counterUp({
