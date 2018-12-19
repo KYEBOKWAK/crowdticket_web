@@ -28,6 +28,7 @@
   font-size: 38px;
   font-weight: 600;
   color: #222;
+  word-break: keep-all;
 }
 
 .detail_hash_tag{
@@ -716,6 +717,14 @@
 
     .detail_story_wrapper iframe{
       width: 100%;
+    }
+
+    .detail_title{
+      font-size: 30px;
+    }
+
+    .detail_top_container{
+      padding: 44px 0;
     }
 }
 
