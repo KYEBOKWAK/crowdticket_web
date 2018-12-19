@@ -187,7 +187,15 @@ $(document).ready(function() {
 		}
 
 		var newListContainerCount = goodsList.children(containerClassName).size();
-		$('#goodsList_'+newListContainerCount).append($rowGoodsItem)
+		$('#goodsList_'+newListContainerCount).append($rowGoodsItem);
+
+		$('#project_form_goods_img'+goods.id).ready(function(){
+			var imgUrl = $('#project_form_goods_img'+goods.id).attr("src");
+			if(imgUrl)
+			{
+				imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goods.id)[0]);	
+			}
+		});
 	};
 
 	listGoods();
@@ -339,7 +347,7 @@ $(document).ready(function() {
 		{
 			return;
 		}
-		
+
     var ticketNotice = $('#ticket_notice').val();
     //ticketNotice = ticketNotice.replace(/\r?\n/g, '<br />');
     ticketNotice = getConverterEnterString(ticketNotice);

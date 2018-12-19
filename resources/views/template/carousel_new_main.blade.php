@@ -3,11 +3,17 @@ $startItemIndex = 0;
 $maxItemCountInLine = 4;  //한줄에 표시될 아이템 개수
 $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이템 개수
 $maxItemCount = count($projects);
+
+if(isset($colOnly))
+{
+  $maxItemCountInLine = 1;
+  $mobileOneLineItemCount = 1;
+}
 //$maxItemCount = 15;
 ?>
 <!-- Swiper -->
 @if($maxItemCount)
-<div class="project_form_poster_origin_size_ratio">
+<div class="project_form_poster_origin_size_ratio @if (isset($colOnly)) project_form_poster_origin_size_ratio_colOnly @endif">
   <div class="thumbnail-wrappper">
     <div class="swiper-container">
       <div class="swiper-wrapper">
@@ -38,13 +44,13 @@ $maxItemCount = count($projects);
                     //$project = $projects[$projectArrayIndex];
                     ?>
 
-                    <div class="project_carousel_container @if(!$project) project_carousel_container_temp @endif">
+                    <div class="project_carousel_container @if (isset($colOnly)) project_carousel_container_colOnly @endif @if(!$project) project_carousel_container_temp @endif">
                       <div class="project-grid-wrapper @if(!$project) project-grid-wrapper_temp @endif">
                         @if($project)
                           <div class="project_thumbnail_image_wrapper">
                             @if (isset($colOnly))
                               <div class="bg-base project-thumbnail">
-                                <img src="{{ $project->getPosterUrl() }}" class="project-img">
+                                <img src="{{ $project->getPosterUrl() }}" class="project-img" img-data-name="welcomeThumbData">
                                   <div class="white-mask"></div>
                               </div>
                             @else
@@ -98,7 +104,15 @@ $maxItemCount = count($projects);
                             <div style="text-align: left;">
                               <div class="project_thumb_title_wrapper_wrapper">
                                 <div class="project_thumb_title_wrapper">
-                                  <h4 class="text-ellipsize project-title"><a href="{{ url('/projects') }}/{{ $project->id }}">{{ $project->title }}</a></h4>
+                                  <h4 class="text-ellipsize project-title">
+                                    @if (isset($colOnly))
+                                      {{ $project->title }}
+                                    @else
+                                      <a href="{{ url('/projects') }}/{{ $project->id }}">
+                                        {{ $project->title }}
+                                      </a>
+                                    @endif
+                                  </h4>
                                 </div>
                               </div>
                                 <h6 class="text-ellipsize-2 project-description">{{ $project->description }}</h6>

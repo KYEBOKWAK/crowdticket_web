@@ -58,10 +58,10 @@
 
       <!-- 우측화면 -->
       <div class="project_form_poster_sampleview_container">
-        <div style="text-align: left; margin-top: 70px;">
+        <div class="project_form_poster_sampleview_tag_img">
           <img src="{{ asset('/img/app/img_sampleview.png') }}">
         </div>
-        @include('template.carousel_main_project', ['projects' => [$project], 'colOnly' => false])
+        @include('template.carousel_new_main', ['projects' => [$project], 'colOnly' => false])
       </div>
     </div>
 

@@ -867,6 +867,14 @@ $(document).ready(function() {
 
 		$rowGoodsItem.find('.modify-goods').bind('click', modifyGoods);
 		$rowGoodsItem.find('.delete-goods').bind('click', deleteGoods);
+
+		$('#project_form_goods_img'+goods.id).ready(function(){
+			var imgUrl = $('#project_form_goods_img'+goods.id).attr("src");
+			if(imgUrl)
+			{
+				imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goods.id)[0]);
+			}
+		});
 	};
 
 	var modifyGoods = function() {
@@ -942,15 +950,23 @@ $(document).ready(function() {
 		{
 			$('#goods_file_sub').show();
 
-			$('#goods_img_preview').show();
-			$('#goods_img_preview').css('background-image', "url('" + url + "')");
+			//$('#goods_img_preview').show();
+			$('.goods_img_preview_wrapper').show();
+			$('#goods_img_preview').attr("src", url);
+
+			$('#goods_img_preview').ready(function(){
+				imageResize($('.goods_img_preview_wrapper')[0], $('#goods_img_preview')[0]);
+			});
+			//$('#goods_img_preview').css('background-image', "url('" + url + "')");
 		}
 		else
 		{
 			$('#goods_file_sub').hide();
 
-			$('#goods_img_preview').hide();
-			$('#goods_img_preview').css('background-image', "");
+			$('.goods_img_preview_wrapper').hide();
+			$('#goods_img_preview').attr("src", "");
+			//$('#goods_img_preview').hide();
+			//$('#goods_img_preview').css('background-image', "");
 		}
 	};
 
@@ -1348,17 +1364,27 @@ $(document).ready(function() {
 				if(viewer)
 				{
 					viewer.attr('src', imgUrl);
-					//imageResize($(".project-thumbnail"), $('.project-img'));
-					imageResize($('.project-thumbnail')[0], viewer[0]);
+
+					viewer.ready(function(){
+						imageResize($('.project-thumbnail')[0], viewer[0]);
+					});
 				}
 			}
 
-			//imageResize($(".project_form_poster_origin_size"), $(posterTitleId));
+			$(posterTitleId).ready(function(){
+				var posterUrl = $(posterTitleId).attr("src");
+				if(posterUrl)
+				{
+					imageResize($('.project_form_poster_origin_size')[0], $(posterTitleId)[0]);
+				}
+			});
 		}
 		else
 		{
 			$(posterTitleId).hide();
 			$(posterTitleId).attr('src', '');
+			//$(posterTitleId)[0].width = 0;
+			//$(posterTitleId)[0].height = 0;
 
 			$(posterAddBtn).show();
 

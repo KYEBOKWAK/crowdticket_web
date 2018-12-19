@@ -32,6 +32,7 @@
 
   margin-left: 12px;
   margin-right: 12px;
+
   margin-bottom: 30px;
 }
 
@@ -80,6 +81,13 @@
   padding-bottom: 75%;
 }
 
+.project_form_goods_img_origin_size{
+  width: 295px;
+  height: 164px;
+  position: relative;
+  overflow: hidden;
+}
+
 .detail_ticket_md_color_cover{
   background-color: #f9f8f6;
 }
@@ -87,5 +95,12 @@
 @media (max-width:1030px)  {
   .project-form-goods-list-container-grid{
     display: block;
+  }
+}
+
+@media (max-width:960px)  {
+  .project_form_goods_container{
+    margin-left: auto;
+    margin-right: auto;
   }
 }

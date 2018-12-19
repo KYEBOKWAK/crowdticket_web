@@ -111,6 +111,10 @@
   margin: 5px;
 }
 
+.project_carousel_container_colOnly{
+  padding-bottom: 140%;
+}
+
 @media (max-width:1200px) {
     .welcome_main_carousel_content_caption {
         /*bottom:155px;*/
@@ -327,6 +331,16 @@
   padding-bottom: 0;
 }
 
+.project_form_poster_origin_size_ratio_colOnly{
+  padding-bottom: 0 !important;
+}
+
+.project_form_poster_sampleview_tag_img{
+  text-align: left;
+  margin-top: 70px;
+  margin-left: 8px;
+}
+
 @media (max-width:1200px) {
   .project_carousel_conerthall{
     width: 40%;
@@ -396,6 +410,14 @@
   .project-category_pick{
     top: 90%;
   }
+
+  .project_carousel_container_colOnly{
+    padding-bottom: 140%;
+  }
+
+  .project_form_poster_sampleview_tag_img{
+    margin-left: 6px;
+  }
 }
 
 /* 크라우드 티켓 브랜딩 영역 관련 */
@@ -409,6 +431,13 @@
     position:relative;
     z-index:100;
 }
+
+@media (max-width:960px) {
+  .project_carousel_container_colOnly{
+    padding-bottom: 108%;
+  }
+}
+
 @media (max-width:768px) {
     .main-leftimgbox {
         background:url('/img/app/ct-m-background.jpg') center center no-repeat;

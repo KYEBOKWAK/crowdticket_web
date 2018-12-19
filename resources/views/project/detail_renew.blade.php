@@ -11,7 +11,7 @@
 
 @section('css')
     <link href="{{ asset('/css/detail.css?version=10') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=4') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=3') }}"/>
     <style>
         .container h2 {
@@ -144,7 +144,7 @@
         }
     </style>
 
-    <link href="{{ asset('/css/calendar.css?version=8') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=9') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
 @endsection
@@ -407,7 +407,7 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=9') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=10') }}"></script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
