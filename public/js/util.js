@@ -253,7 +253,8 @@ function imageResize(imgWrapDiv, img){
   var imgAspect = img.height / img.width;
   if(img.height == 0 || img.width == 0)
   {
-    imgAspect = 0;
+    //imgAspect = 0;
+    return false;
   }
 
   if (imgAspect <= divAspect) {
@@ -268,6 +269,8 @@ function imageResize(imgWrapDiv, img){
       // 이미지가 div보다 길쭉한 경우 가로를 div에 맞추고 세로를 잘라낸다
       img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
   }
+
+  return true;
 }
 
 function utilcalltest(){
