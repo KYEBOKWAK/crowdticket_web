@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=9') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=5') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
     <style>
         .container h2 {
             font-weight: bold;

@@ -159,7 +159,7 @@
             margin-top: 15px;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=5') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=9') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=9') }}"/>
@@ -231,7 +231,7 @@ array_push($tabs, [
 <input id="project_target" type="hidden" name="project_target" value="{{ $project->project_target }}">
 <input id="isPlace" type="hidden" name="isPlace" value="{{ $project->isPlace }}"/>
 
-<div class="project-form-container">
+<div class="project-create-form-container">
   <div class="project-form-tab-container">
     <div class="flex_layer_project">
       @foreach ($tabs as $tab)
