@@ -8,7 +8,7 @@
           <div class="project_form_goods_img_origin_size">
             <div class="project-form-goods-img-wrapper">
               <div class="img_wrapper_base_css">
-                <img id="project_form_goods_img<%= goods.id %>" class="img_base_css project-form-goods-img" img-data-name="goodsThumbData" src="<%= goods.img_url %>"/>
+                <img id="project_form_goods_img<%= goods.id %>" onload="imageResize($('.project_form_goods_img_origin_size')[0], this);" class="img_base_css project-form-goods-img" img-data-name="goodsThumbData" src="<%= goods.img_url %>"/>
               </div>
             </div>
           </div>

@@ -45,7 +45,7 @@ $maxItemCount = count($projects);
                             <div class="project_thumbnail_image_wrapper project_thumbnail_image_wrapper_pick">
                               <a href="{{ url('/projects') }}/{{ $project->id }}">
                                   <div class="bg-base project-thumbnail">
-                                    <img src="{{ $project->getPosterUrl() }}" class="project-img" img-data-name="welcomeThumbData">
+                                    <img src="{{ $project->getPosterUrl() }}" onload="imageResize($('.project-thumbnail')[0], this);" class="project-img" img-data-name="welcomeThumbData"/>
                                       <div class="white-mask"></div>
                                   </div>
                               </a>

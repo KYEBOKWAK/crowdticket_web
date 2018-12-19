@@ -114,6 +114,9 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     </script>
+
+    <!-- crowdticket util before body -->
+    <script src="{{ asset('/js/util_header.js?version=1') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -219,7 +222,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=9') }}"></script>
+<script src="{{ asset('/js/util.js?version=10') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>

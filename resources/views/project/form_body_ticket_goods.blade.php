@@ -73,7 +73,7 @@
                   <div class="goods_img_preview_wrapper">
                     <div class="goods_img_preview_ratio_wrapper">
                       <div class="goods_img_preview_origin_size">
-                        <img id="goods_img_preview"/>
+                        <img id="goods_img_preview" onload="imageResize($('.goods_img_preview_wrapper')[0], this);"/>
                       </div>
                     </div>
                   </div>

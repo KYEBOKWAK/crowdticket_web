@@ -834,13 +834,6 @@ $(document).ready(function() {
 		}
 	};
 
-	var goodsImgResizeTest = function(goodsId){
-		if(false == imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goodsId)[0]))
-		{
-			setTimeout(goodsImgResize, 50);
-		}
-	};
-
 	var addGoodsRow = function(goods){
 		var lineItemMax = 3;
 		var containerClassName = '.goodsListContainer';
@@ -874,15 +867,6 @@ $(document).ready(function() {
 
 		$rowGoodsItem.find('.modify-goods').bind('click', modifyGoods);
 		$rowGoodsItem.find('.delete-goods').bind('click', deleteGoods);
-
-		$('#project_form_goods_img'+goods.id).ready(function(){
-			var imgUrl = $('#project_form_goods_img'+goods.id).attr("src");
-			if(imgUrl)
-			{
-				goodsImgResizeTest(goods.id);
-				//imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goods.id)[0]);
-			}
-		});
 	};
 
 	var modifyGoods = function() {
@@ -904,12 +888,7 @@ $(document).ready(function() {
 	};
 
 	var goodsImgResize = function(){
-		$('.project-form-goods-img').each(function(){
-			if($(this).attr("img-data-name") == "goodsThumbData")
-			{
-				imageResize($('.project-form-goods-img-wrapper')[0], $(this)[0]);
-			}
-		});
+
 	};
 
 	var updateGoods = function(goods, resultlist) {
@@ -953,13 +932,6 @@ $(document).ready(function() {
 		});
 	};
 
-	var setGoodsPreviewResize = function(){
-		if(false == imageResize($('.goods_img_preview_wrapper')[0], $('#goods_img_preview')[0]))
-		{
-			setTimeout(setGoodsPreviewResize, 50);
-		}
-	};
-
 	var setGoodsImgPreview = function(url){
 		if(url)
 		{
@@ -969,10 +941,6 @@ $(document).ready(function() {
 			$('.goods_img_preview_wrapper').show();
 			$('#goods_img_preview').attr("src", url);
 
-			$('#goods_img_preview').ready(function(){
-				//imageResize($('.goods_img_preview_wrapper')[0], $('#goods_img_preview')[0]);
-				setGoodsPreviewResize();
-			});
 			//$('#goods_img_preview').css('background-image', "url('" + url + "')");
 		}
 		else
@@ -1380,20 +1348,8 @@ $(document).ready(function() {
 				if(viewer)
 				{
 					viewer.attr('src', imgUrl);
-
-					viewer.ready(function(){
-						imageResize($('.project-thumbnail')[0], viewer[0]);
-					});
 				}
 			}
-
-			$(posterTitleId).ready(function(){
-				var posterUrl = $(posterTitleId).attr("src");
-				if(posterUrl)
-				{
-					imageResize($('.project_form_poster_origin_size')[0], $(posterTitleId)[0]);
-				}
-			});
 		}
 		else
 		{
@@ -2365,13 +2321,6 @@ $(document).ready(function() {
 		{
 			swal("할인율은 100보다 클 수 없습니다.", "", "warning");
 			$(this).val(100);
-		}
-	});
-
-	$('.project-img').each(function(){
-		if($(this).attr("img-data-name") == "welcomeThumbData")
-		{
-			imageResize($('.project-thumbnail')[0], $(this)[0]);
 		}
 	});
 });

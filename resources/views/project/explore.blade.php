@@ -131,15 +131,4 @@
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function () {
-        $('.project-img').each(function(){
-          if($(this).attr("img-data-name") == "welcomeThumbData")
-          {
-            imageResize($('.project-thumbnail')[0], $(this)[0]);
-          }
-        });
-    });
-
-</script>
 @endsection
