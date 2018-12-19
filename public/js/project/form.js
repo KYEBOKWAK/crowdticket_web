@@ -834,8 +834,8 @@ $(document).ready(function() {
 		}
 	};
 
-	var goodsImgResizeTest = function(){
-		if(false == imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goods.id)[0]))
+	var goodsImgResizeTest = function(goodsId){
+		if(false == imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goodsId)[0]))
 		{
 			setTimeout(goodsImgResize, 50);
 		}
@@ -879,7 +879,7 @@ $(document).ready(function() {
 			var imgUrl = $('#project_form_goods_img'+goods.id).attr("src");
 			if(imgUrl)
 			{
-				goodsImgResizeTest();
+				goodsImgResizeTest(goods.id);
 				//imageResize($('.project_form_goods_img_origin_size')[0], $('#project_form_goods_img'+goods.id)[0]);
 			}
 		});
