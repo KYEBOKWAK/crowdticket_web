@@ -4,6 +4,20 @@ $(document).ready(function() {
     window.location.reload();
 	}
 
+	var swiper = new Swiper('.swiper-container', {
+		 centeredSlides: true,
+		 loop: true,
+		 speed: 800,
+		 autoplay: {
+			 delay: 5000,
+			 disableOnInteraction: false,
+		 },
+		 pagination: {
+			 el: '.swiper-pagination',
+			 clickable: true,
+		 }
+	 });
+
 	var projectId = $('#project_id').val();
 
 	var commentsLoader = new Loader('/projects/' + projectId + '/comments', 20);

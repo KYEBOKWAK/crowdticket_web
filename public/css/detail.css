@@ -581,6 +581,43 @@
   padding-left: 70px;
 }
 
+.carousel_detail_main_title_img{
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.carousel_detail_main_title_img_origin_size{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel_detail_main_title_img_origin_ratio_size{
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%;
+}
+
+.carousel_detail_main_title_img_wrapper{
+  /*width: 584px;
+  height: 437px;*/
+}
+
+.swiper-pagination-bullet{
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.swiper-pagination-bullet-active{
+  background-color: #fff !important;
+}
+
 @media (max-width:1030px){
   #isMobile{
     display: block;
@@ -615,7 +652,11 @@
 
   .detail_main_img_container{
     padding-bottom: 10px;
-    width: 100%;
+    /*width: 100%;*/
+    width: 755px;
+    height: 565px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .detail_creator_info_channel{
@@ -678,6 +719,15 @@
   #detail_ticket_md{
     margin-left: 0px;
     width: 100%;
+  }
+}
+
+@media (max-width:789px) {
+  .detail_main_img_container{
+    width: 100%;
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 }
 

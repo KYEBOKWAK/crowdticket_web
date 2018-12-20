@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=11') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=12') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=3') }}"/>
     <style>
@@ -147,6 +147,7 @@
     <link href="{{ asset('/css/calendar.css?version=9') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
 @endsection
 
 @section('content')
@@ -188,7 +189,7 @@ $selectedTicket = "";
 
           <div class="detail_main_container_grid">
             <div class="detail_main_img_container">
-              @include('template.carousel_detail_main', ['project' => $project])
+              @include('template.carousel_detail_new_main', ['project' => $project])
             </div>
             <div class="detail_main_contant_container">
               <h5 class="detail_main_sub_title">날짜</h5>
@@ -407,8 +408,8 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
-    <script src="{{ asset('/js/project/detail.js?version=11') }}"></script>
-    <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
+    <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=12') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
 @endsection
