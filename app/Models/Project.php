@@ -131,6 +131,17 @@ class Project extends Model
         */
     }
 
+    //반드시 티켓 순서가 공연 시작순에서 젤 빠른순으로 정렬되어야 한다.
+    public function ticketsMustOrderShowDateASC()
+    {
+      return $this->hasMany('App\Models\Ticket')->orderBy('show_date', 'asc');
+    }
+
+    public function ticketsOrderShowDate($show_date)
+    {
+      return $this->hasMany('App\Models\Ticket')->where('show_date', '=', $show_date)->orderBy('show_date', 'asc');
+    }
+
     public function discounts()
     {
       //return $this->hasMany('App\Models\Discount')->orderBy('show_date', 'asc');

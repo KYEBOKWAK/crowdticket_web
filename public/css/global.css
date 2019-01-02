@@ -49,6 +49,18 @@ body{
   background-color: #ea535a !important;
 }
 
+.swal2-success-ring{
+  border: 4px solid hsla(358, 65%,69%,.2) !important;
+}
+
+.swal2-success-line-tip{
+  background-color: #ea535a !important;
+}
+
+.swal2-success-line-long{
+  background-color: #ea535a !important;
+}
+
 /* Tooltip container */
 .tooltip {
     position: relative;

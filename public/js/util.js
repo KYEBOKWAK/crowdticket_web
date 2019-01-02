@@ -245,6 +245,67 @@ function isFileCheckFromEditor( file )
   return true;
 }
 
+function getTicketCategory(orderTicketCategory, ticketsCategory)
+{
+  var ticketCategoryTemp = orderTicketCategory;
+	if(ticketsCategory.length > 0){
+		var categoryNum = Number(orderTicketCategory);
+		for (var i = 0; i < ticketsCategory.length; i++) {
+			if(Number(ticketsCategory[i].id) === categoryNum){
+				ticketCategoryTemp = ticketsCategory[i].title;
+				break;
+			}
+		}
+	}
+
+  return ticketCategoryTemp;
+}
+
+//yyyy.mm.dd H:M  category
+function getTicketDateFullInfo(ticketShowDate, orderTicketCategory, ticketsCategory, ticketCount)
+{
+  var rawDate = ticketShowDate.split(" ");
+  var d = rawDate[0].split("-");
+  var t = rawDate[1].split(":");
+
+  var ticketDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+
+  var yyyy = ticketDate.getFullYear();
+  var mm = ticketDate.getMonth() + 1;
+  var dd = ticketDate.getDate();
+  var H = ticketDate.getHours();
+  var min = ticketDate.getMinutes();
+
+  if(mm < 10)
+  {
+    mm = "0"+mm;
+  }
+
+  if(dd < 10)
+  {
+    dd = "0"+dd;
+  }
+
+  if(H < 10){
+    H = "0" + H;
+  }
+  if (min < 10) {
+    min = "0" + min;
+  }
+
+  var ticketCategory = getTicketCategory(orderTicketCategory, ticketsCategory);
+
+  //var ticketCount = $('#ticket_count').val();
+
+  var fullTicketInfo = yyyy+'.'+mm+'.'+dd+' '+H+':'+min + ' ' + ticketCategory;
+
+  if(d[0] == 0000){
+    fullTicketInfo = ticketCategory;
+  }
+
+  return fullTicketInfo;
+}
+
 function utilcalltest(){
   alert("isInUtilJS");
 }

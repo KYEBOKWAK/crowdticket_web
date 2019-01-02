@@ -143,6 +143,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('discounts/{id}/nodiscount', 'ProjectController@setNoDiscount');
     Route::post('goods/{id}/nogoods', 'ProjectController@setNoGoods');
 
+    Route::put('projects/{projectid}/order/{orderid}/attended', 'ProjectController@attendedOrder');
+    Route::put('projects/{projectid}/order/{orderid}/unattended', 'ProjectController@unAttendedOrder');
+    Route::get('projects/{projectid}/order/{orderid}/getgoodsinfo', 'OrderController@getGoodsInfo');
+
+    Route::get('projects/{id}/attend', 'ProjectController@getAttend');
+    Route::get('projects/{id}/attend/{timeunix}', 'ProjectController@getAttendedList');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

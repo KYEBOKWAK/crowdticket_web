@@ -1133,4 +1133,15 @@ class OrderController extends Controller
       $sms->send([$contact], $msg);
     }
 
+    public function getGoodsInfo($projectid, $orderid)
+    {
+      $project = Project::findOrFail($projectid);
+      $order = Order::findOrFail($orderid);
+
+      $goodsSelectJson = $this->getOrderGoodsArray($project->goods, $order->goods_meta);
+      $goodsSelectJson = json_encode($goodsSelectJson);
+
+      return $goodsSelectJson;
+    }
+
 }

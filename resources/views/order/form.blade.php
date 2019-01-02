@@ -593,7 +593,7 @@
               min = "0" + min;
             }
 
-            var ticketCategory = getTicketCategory(ticket);
+            var ticketCategory = getTicketCategory(ticket.category, ticketsCategory);
 
             var ticketCount = $('#ticket_count').val();
 
@@ -693,6 +693,7 @@
             }
           };
 
+          /*
           var getTicketCategory = function(ticket){
             var ticketCategoryTemp = ticket.category;
         		if(ticketsCategory.length > 0){
@@ -707,6 +708,7 @@
 
             return ticketCategoryTemp;
           };
+          */
 
           var setCommissionInfo = function(){
             var ticketCount = $('#ticket_count').val();

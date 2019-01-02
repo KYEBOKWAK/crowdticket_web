@@ -647,4 +647,160 @@ class ProjectController extends Controller
       return "FALSE";
     }
 
+    public function getAttend($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      //현재 시간 찾아서 맞는 시간이 있으면 해당 id 가져온다.
+      //$nowDateUnix = date(time());
+
+      $nowDateUnix = date(time());
+
+      $selectShowDateTicket = $project->ticketsMustOrderShowDateASC()->first()->show_date;
+      foreach($project->ticketsMustOrderShowDateASC as $ticket)
+      {
+        $showDateUnix = strtotime($ticket->show_date);
+
+        if($nowDateUnix <= $showDateUnix)
+        {
+          $selectShowDateTicket = $ticket->show_date;
+          break;
+        }
+      }
+
+      //
+      /*
+      //위에서 선택한 티켓을 찾으면, 중복된 타임이 있는지 확인한다.
+      $ticketSameDateList = $project->ticketsOrderShowDate($selectShowDateTicket)->get();
+      $ticketOrderIdArray = [];
+      foreach($ticketSameDateList as $ticketSameDate)
+      {
+        array_push($ticketOrderIdArray, $ticketSameDate->id);
+      }
+      */
+
+      //$orders = Order::whereIn('ticket_id', $ticketOrderIdArray)->orderBy('name')->get();
+
+      $ticketTimeList = [];
+
+      foreach($project->ticketsMustOrderShowDateASC as $ticket)
+      {
+        $isSameTime = false;
+        foreach($ticketTimeList as $ticketTime)
+        {
+          $orderShowTimeUnix = strtotime($ticket->show_date);
+          $ticketTimeUnix = strtotime($ticketTime['show_date']);
+          if($orderShowTimeUnix === $ticketTimeUnix)
+          {
+            $isSameTime = true;
+            break;
+          }
+        }
+
+        if($isSameTime)
+        {
+          continue;
+        }
+
+        $tempTicketInfo['show_date_unix'] = strtotime($ticket->show_date);
+        $tempTicketInfo['show_date'] = $ticket->show_date;
+
+        array_push($ticketTimeList, $tempTicketInfo);
+      }
+
+      return view('project.attend', [
+          'project' => $project,
+          //'orders' => $orders,
+          'ticketTimeList' => $ticketTimeList,
+          'selectShowUnixDateTicket' => strtotime($selectShowDateTicket),
+          'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get()
+      ]);
+    }
+
+    public function getAttendedList($projectId, $selectTimeUnix)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      //현재 시간 찾아서 맞는 시간이 있으면 해당 id 가져온다.
+      //$nowDateUnix = date(time());
+      $nowDateUnix = (int)$selectTimeUnix;
+
+      if($nowDateUnix === 0)
+      {
+        $nowDateUnix = date(time());
+      }
+
+      $selectShowDateTicket = $project->ticketsMustOrderShowDateASC()->first()->show_date;
+      foreach($project->ticketsMustOrderShowDateASC as $ticket)
+      {
+        $showDateUnix = strtotime($ticket->show_date);
+
+        if($nowDateUnix <= $showDateUnix)
+        {
+          $selectShowDateTicket = $ticket->show_date;
+          break;
+        }
+      }
+      //
+
+      //위에서 선택한 티켓을 찾으면, 중복된 타임이 있는지 확인한다.
+      $ticketSameDateList = $project->ticketsOrderShowDate($selectShowDateTicket)->get();
+      $ticketOrderIdArray = [];
+      foreach($ticketSameDateList as $ticketSameDate)
+      {
+        array_push($ticketOrderIdArray, $ticketSameDate->id);
+      }
+
+      $orders = Order::whereIn('ticket_id', $ticketOrderIdArray)->where('state', '<=', Order::ORDER_STATE_PAY_END)->orderBy('name')->get();
+
+      return $orders;
+    }
+
+    public function attendedOrder($projectId, $orderId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $order = Order::findOrFail($orderId);
+
+      $order->attended = "ATTENDED";
+      $order->save();
+
+      /*
+      $YYYY = date('Y');
+      $mm = date('m');
+      $dd = date('d');
+
+      $h = date('H');
+      $i = date('i');
+
+      $project = $this->getSecureProjectById($projectId);
+
+      $showDate = '';
+      foreach($project->tickets as $ticket)
+      {
+
+        $showDate = $ticket->show_date;
+        break;
+      }
+      */
+
+      //$showDateTime = date($order->show_date);
+      //$showDateYYYY = date('Y', strtotime($showDate));
+      //$showDateMM = date('m', strtotime($showDate));
+      //$showDateDD = date('d', strtotime($showDate));
+
+      //return $showDateYYYY.'/'.$showDateMM.'/'.$showDateDD.'//'.$showDate."";
+
+      //return $orderId;
+    }
+
+    public function unAttendedOrder($projectId, $orderId)
+    {
+      $order = Order::findOrFail($orderId);
+
+      $order->attended = "";
+      $order->save();
+
+      //return "unAttended";
+    }
 }
