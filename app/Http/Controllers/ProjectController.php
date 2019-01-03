@@ -753,7 +753,17 @@ class ProjectController extends Controller
 
       $orders = Order::whereIn('ticket_id', $ticketOrderIdArray)->where('state', '<=', Order::ORDER_STATE_PAY_END)->orderBy('name')->get();
 
-      return $orders;
+      //구한 오더정보에 티켓 정보까지 담는다
+      $ordersWithTicket = [];
+      foreach($orders as $order)
+      {
+        $order->ticket;
+        $orderTemp = $order;
+
+        array_push($ordersWithTicket, $orderTemp);
+      }
+
+      return $ordersWithTicket;
     }
 
     public function attendedOrder($projectId, $orderId)

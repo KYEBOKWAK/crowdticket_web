@@ -111,7 +111,6 @@
       <table id="user-table" class="table">
           <thead>
           <tr>
-              <td>id(test)</td>
               <td>이름</td>
               <td>전화번호</td>
               <td>출석체크</td>
@@ -197,10 +196,6 @@
               var elementPopup = document.createElement("div");
               elementPopup.innerHTML =
               "<div class='attend_popup_wrapper'>"+
-
-              "<div class='attend_popup_title'>id(test)</div>"+
-              "<div class='attend_popup_content'>"+orderId+"</div>"+
-              "<div class='attend_popup_dot_line'></div>"+
 
               "<div class='attend_popup_title'>이름</div>"+
               "<div class='attend_popup_content'>"+name+"</div>"+
@@ -364,7 +359,6 @@
 
               var elementPopup = document.createElement("tr");
               elementPopup.innerHTML =
-              "<td>"+order.id+"</td>" +
               "<td>"+order.name+"</td>" +
               "<td>"+order.contact+"</td>" +
               "<td>"+ attendButtonElement +"</td>";
