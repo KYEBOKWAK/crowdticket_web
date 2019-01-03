@@ -31,6 +31,7 @@
 
       .attend_popup_count{
         margin-left: auto;
+        font-size: 15px;
       }
 
       .isAttendedButton{
@@ -47,12 +48,13 @@
       }
 
       .attend_popup_title{
-          font-size: 20px;
+          font-size: 15px;
           font-weight: 900;
+          margin-bottom: 5px;
       }
 
       .attend_popup_content{
-        font-size: 18px;
+        font-size: 15px;
       }
 
       .attend_popup_dot_line{
