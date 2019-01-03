@@ -13,7 +13,12 @@
 
       #container #input-form {text-align: center;}
       #user-table {margin: 0 auto; text-align: center;}
-      #input-form {margin-top: 10px; margin-bottom: 10px;}
+      #input-form {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-right: auto;
+        margin-left: auto;
+      }
 
       #user-table {border-collapse: collapse;}
       #user-table > thead > tr { background-color: #333; color:#fff; }
@@ -70,18 +75,25 @@
       }
 
       #keyword{
+        width: 157px;
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
         border: solid 1px #707070;
+        border-radius: 6px;
+        height: 38px;
+        text-align: center;
       }
 
       .attend_ticket_category{
+        width: 157px;
         margin-top: 10px;
         margin-bottom: 10px;
         margin-left: auto;
+        margin-right: auto;
 
         box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
         border: solid 1px #707070;
         background-color: white;
+        border-radius: 6px;
       }
 
       @media (max-width: 440px) {
@@ -99,7 +111,7 @@
 <div class="attend_container">
   <div class="flex_layer">
     <div id="input-form">
-          이름/번호 : <input type="text" id="keyword" />
+      <input type="text" id="keyword" placeholder="이름/번호 찾기" />
     </div>
     <select id="attend_ticket_category" name="attend_ticket_category" class="attend_ticket_category" project-id="{{$project->id}}">
         @foreach ($ticketTimeList as $ticketTime)
