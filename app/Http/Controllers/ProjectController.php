@@ -758,6 +758,7 @@ class ProjectController extends Controller
       foreach($orders as $order)
       {
         $order->ticket;
+        $order->discount;
         $orderTemp = $order;
 
         array_push($ordersWithTicket, $orderTemp);

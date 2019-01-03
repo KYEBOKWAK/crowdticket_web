@@ -398,7 +398,10 @@
               attendButton.attr("order-email", order.email);
               attendButton.attr("order-phone", order.contact);
               attendButton.attr("order-suppoert", order.suppoert);
-              attendButton.attr("order-discount", order.discount);
+              if(order.discount)
+              {
+                attendButton.attr("order-discount", order.discount.content);  
+              }
               if(order.ticket)
               {
                 attendButton.attr("order-ticket-show-date", order.ticket.show_date);
