@@ -343,8 +343,13 @@
               var attendElement = $(this);
 
               var goodsListJson = attendElement.attr("order-goods");
-              var goodsList = $.parseJSON(goodsListJson);
-              if(goodsList.length > 0)
+              var goodsList = '';
+              if(goodsListJson)
+              {
+                goodsList = $.parseJSON(goodsListJson);
+              }
+
+              if(goodsList && goodsList.length > 0)
               {
                 createAttendPopupWithGoodsInfo(attendElement);
               }
@@ -400,7 +405,7 @@
               attendButton.attr("order-suppoert", order.suppoert);
               if(order.discount)
               {
-                attendButton.attr("order-discount", order.discount.content);  
+                attendButton.attr("order-discount", order.discount.content);
               }
               if(order.ticket)
               {

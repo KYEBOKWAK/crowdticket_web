@@ -306,6 +306,58 @@ function getTicketDateFullInfo(ticketShowDate, orderTicketCategory, ticketsCateg
   return fullTicketInfo;
 }
 
+//yyyy.mm.dd H:M  category
+function getTicketDateFullInfoWithCategoryText(ticketShowDate, ticketsCategoryText)
+{
+  var rawDate = ticketShowDate.split(" ");
+  var d = rawDate[0].split("-");
+  var t = rawDate[1].split(":");
+
+  var ticketDate = new Date(d[0],(d[1]-1),d[2],t[0],t[1],t[2]);
+
+  var yyyy = ticketDate.getFullYear();
+  var mm = ticketDate.getMonth() + 1;
+  var dd = ticketDate.getDate();
+  var H = ticketDate.getHours();
+  var min = ticketDate.getMinutes();
+
+  if(mm < 10)
+  {
+    mm = "0"+mm;
+  }
+
+  if(dd < 10)
+  {
+    dd = "0"+dd;
+  }
+
+  if(H < 10){
+    H = "0" + H;
+  }
+  if (min < 10) {
+    min = "0" + min;
+  }
+
+  var ticketCategory = ticketsCategoryText;
+
+  //var ticketCount = $('#ticket_count').val();
+
+  var fullTicketInfo = yyyy+'.'+mm+'.'+dd+' '+H+':'+min + ' ' + ticketCategory;
+
+  if(d[0] == 0000){
+    fullTicketInfo = ticketCategory;
+  }
+
+  return fullTicketInfo;
+}
+
 function utilcalltest(){
   alert("isInUtilJS");
+}
+
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
 }

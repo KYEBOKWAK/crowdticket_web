@@ -606,15 +606,209 @@ class ProjectController extends Controller
 
     public function getOrders($id)
     {
+      
         $project = $this->getSecureProjectById($id);
+        $orders = $project->ordersWithoutError()->withTrashed()->get();
+
+
+        //주문자 정보 START
+        $ordersWithTime = [];
+        //최종 정리된 타임을 기준으로 주문자를 정렬한다.
+        foreach($orders as $order)
+        {
+          $ticket = $order->ticket;
+          if(!$ticket)
+          {
+            continue;
+          }
+
+          $ticketTimeUnix = strtotime($ticket->show_date);
+
+          $isSameTicket = false;
+
+          foreach($ordersWithTime as $key => $value)
+          {
+            //같은 티켓이면 order 데이터에 쌓아준다.
+            if($ticketTimeUnix === $value['show_date_unix'] && $ticket->id === $value['ticketId'])
+            {
+              $isSameTicket = true;
+              //중복된 값 셋팅
+              array_push($ordersWithTime[$key]['orders'], $this->getSuperviseOrderList($order, $project));
+              break;
+            }
+          }
+
+          if($isSameTicket)
+          {
+            continue;
+          }
+
+          //셋팅되지 않은 티켓 정보 최초 셋팅
+          $tempTicket['show_date_unix'] = $ticketTimeUnix;
+          $tempTicket['show_date'] = $ticket->show_date;
+          $tempTicket['ticketId'] = $ticket->id;
+          $tempTicket['isPlaceTicket'] = $ticket->isPlaceTicket();
+
+          $tempTicket['ticket_category'] = $ticket->getSeatCategory();
+
+          //티켓 셋팅
+          $tempTicket['orders'] = [];
+          array_push($tempTicket['orders'], $this->getSuperviseOrderList($order, $project));
+
+          array_push($ordersWithTime, $tempTicket);
+        }
+
+        $ordersWithTimeJson = json_encode($ordersWithTime);
+
+        //주문자 정보 END
+
+        //티켓 미구매 리스트
+        $ordersNoBuyTicket = [];
+        $tempNoTicket['orders'] = [];
+
+        foreach($orders as $order)
+        {
+          $ticket = $order->ticket;
+          if($ticket)
+          {
+            continue;
+          }
+
+          array_push($tempNoTicket['orders'], $this->getSuperviseOrderList($order, $project));
+        }
+
+        array_push($ordersNoBuyTicket, $tempNoTicket);
+
+        $ordersNoBuyTicketJson = json_encode($ordersNoBuyTicket);
+
+        //전체리스트
+        $ordersAllTicket = [];
+        $tempAllTicket['orders'] = [];
+
+        foreach($orders as $order)
+        {
+          /*
+          $ticket = $order->ticket;
+          if(!$ticket)
+          {
+            continue;
+          }
+          */
+
+          /*
+          $tempAllTicket['show_date_unix'] = 9999999999;
+          if($order->ticket)
+          {
+            $tempAllTicket['show_date_unix'] = strtotime($order->ticket->show_date);
+          }
+          */
+
+
+          //$tempAllTicket['orders']['show_date'] = $ticket->show_date;
+
+          array_push($tempAllTicket['orders'], $this->getSuperviseOrderList($order, $project));
+        }
+
+        array_push($ordersAllTicket, $tempAllTicket);
+
+        $ordersAllWithTimeJson = json_encode($ordersAllTicket);
 
         return view('project.orders', [
             'project' => $project,
+            'ordersWithTimeJson' => $ordersWithTimeJson,
+            'ordersNoTicketJson' => $ordersNoBuyTicketJson,
+            'ordersAllWithTimeJson' => $ordersAllWithTimeJson,
+
             'tickets' => $project->tickets()->with(['orders' => function ($query) {
                 $query->where('state', '<', Order::ORDER_STATE_ERROR_START)->withTrashed();
             }, 'orders.user'])->get(),
-            'orders' => $project->ordersWithoutError()->withTrashed()->get()
+            'orders' => $project->ordersWithoutError()->withTrashed()->get(),
         ]);
+    }
+
+    public function getSuperviseOrderList($order, $project)
+    {
+      //관리 리스트 키 값에 맞게 변환한다. 기존 php에서 하던걸 javascript로 옴겼기 때문에 프론트 함수 처리 됐던걸 백단에서 처리한다.
+      $order['supporterPrice'] = 0;
+      if($order->supporter)
+      {
+        //$order['supporterPrice'] = number_format($order->supporter->price);
+        $order['supporterPrice'] = $order->supporter->price;
+      }
+
+      if($order['attended'] === 'ATTENDED')
+      {
+        $order['attended'] = true;
+      }
+      else
+      {
+        $order['attended'] = false;
+      }
+
+      //$totalPriceWithoutCommission = number_format($order->getTotalPriceWithoutCommission());
+      $totalPriceWithoutCommission = $order->getTotalPriceWithoutCommission();
+
+      $order['totalPriceWithoutCommission'] = $totalPriceWithoutCommission;
+      $order['discountText'] = $order->getDiscountText();
+      $order['state_string'] = $order->state_string;
+      $order['deliveryAddress'] = $order->getDeliveryAddress();
+
+      $order['ticket_category'] = '';
+      $order['show_date'] = '티켓 미구매(후원자 또는 굿즈 구매자)';
+      $order['show_date_unix'] = 9999999999;
+      if($order->ticket)
+      {
+        $order['ticket_category'] = $order->ticket->getSeatCategory();
+        $order['show_date'] = $order->ticket->show_date;
+        $order['show_date_unix'] = strtotime($order->ticket->show_date);
+      }
+
+      if($order->goods_meta)
+      {
+        foreach($project->goods as $goods)
+        {
+          $goodsKey = 'goods'.$goods->id;
+          $order[$goodsKey] = '';
+
+          //실제 구매했는지 찾는다.
+          $goodsOrders = json_decode($order->goods_meta, true);
+          foreach($goodsOrders as $goodsOrder)
+          {
+            $goodsOrderId = intval($goodsOrder['id']);
+            if($goodsOrderId === $goods->id)
+            {
+              //$isSetGoodsOrder = true;
+              $order[$goodsKey] = $goodsOrder['count'];
+              break;
+            }
+          }
+        }
+      }
+
+      return $order;
+    }
+
+    public function getOrderGoodsArray($goodsList, $orderGoodsList){
+      $goodsArray = [];
+      //$goodsArray = '';
+
+      $goodsOrders = json_decode($orderGoodsList, true);
+      foreach($goodsOrders as $goodsOrder)
+      {
+        foreach($goodsList as $goods)
+        {
+          if($goodsOrder['id'] == $goods->id)
+          {
+            $goodsInfo['info'] = $goods;
+            $goodsInfo['count'] = $goodsOrder['count'];
+
+            array_push($goodsArray, $goodsInfo);
+            break;
+          }
+        }
+      }
+
+      return $goodsArray;
     }
 
     public function setNoDiscount(Request $request, $id){
@@ -814,4 +1008,41 @@ class ProjectController extends Controller
 
       //return "unAttended";
     }
+
+/*
+    function array_sort($array, $on, $order=SORT_ASC)
+    {
+        $new_array = array();
+        $sortable_array = array();
+
+        if (count($array) > 0) {
+            foreach ($array as $k => $v) {
+                if (is_array($v)) {
+                    foreach ($v as $k2 => $v2) {
+                        if ($k2 == $on) {
+                            $sortable_array[$k] = $v2;
+                        }
+                    }
+                } else {
+                    $sortable_array[$k] = $v;
+                }
+            }
+
+            switch ($order) {
+                case SORT_ASC:
+                    asort($sortable_array);
+                break;
+                case SORT_DESC:
+                    arsort($sortable_array);
+                break;
+            }
+
+            foreach ($sortable_array as $k => $v) {
+                $new_array[$k] = $array[$k];
+            }
+        }
+
+        return $new_array;
+    }
+*/
 }

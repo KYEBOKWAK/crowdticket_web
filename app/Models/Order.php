@@ -179,6 +179,11 @@ class Order extends Model
         return $this->postcode."&ensp;".$this->address_main."&ensp;".$this->address_detail;
       }
 
+      if($this->getIsGoodsCount() === 0)
+      {
+        return "";
+      }
+
       return "현장수령";
     }
 
@@ -326,7 +331,14 @@ class Order extends Model
       }
 
 
-      $project = $this->getProject();
+      //Lazy Eager 로딩 관련해서
+      //$project = $this->getProject();
+      $project = Project::find($this->project_id);
+      if(!$project)
+      {
+        return "프로젝트 에러";
+      }
+
       if ($project->isFundingType() && !$project->isFinished()) {
           return '결제예약';
       }
