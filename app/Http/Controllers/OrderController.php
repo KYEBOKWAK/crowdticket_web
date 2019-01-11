@@ -97,20 +97,26 @@ class OrderController extends Controller
       $order = new Order($this->getNewFilteredInput($goodsSelectArray));
       $order->project()->associate($project);
       $order->user()->associate($user);
-      $order->setState(Order::ORDER_STATE_STANDBY);
+      if($ticket)
+      {
+        $order->ticket()->associate($ticket);
+      }
+
+      if($discount)
+      {
+        $order->discount()->associate($discount);
+      }
+      $order->setState(Order::ORDER_STATE_STANDBY_START);
       $order->save();
 
       $g_order = $order;
 
-      $project = "";
-      $project = $order->project;
-
       //최종구매 수량체크로 프로젝트 정보를 다시 가져온다.
-      if($ticketId)
+      if($ticket)
       {
         //티켓 정보가 있을때 저장한다.
-        //$ticket = $this->getOrderableTicket($ticketId);
-        if($this->getAmountTicketWithTicketId($ticketId, $project->orders) < 0)
+        $totalBuyCount = Order::where('ticket_id', '=', $ticketId)->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('count');
+        if($ticket->audiences_limit - $totalBuyCount < 0)
         {
           $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
           $order->save();
@@ -121,20 +127,10 @@ class OrderController extends Controller
         }
       }
 
-      if($ticket)
-      {
-        $order->ticket()->associate($ticket);
-      }
-
-      if($discount)
-      {
-        $order->discount()->associate($discount);
-      }
-
       //$order->setState(Order::ORDER_STATE_STAY);
-      $order->save();
+      //$order->save();
 
-      $project->increment('funded_amount', $this->getOrderPrice());
+      //$project->increment('funded_amount', $this->getOrderPrice());
       //$project->increment('tickets_count', $this->getTicketOrderCount($ticket));
       //$ticket->increment('audiences_count', $this->getOrderCount());
       //$user->increment('tickets_count');
@@ -262,20 +258,6 @@ class OrderController extends Controller
     }
 
     $sms->send([$contact], $msg);
-  }
-
-  public function getAmountTicketWithTicketId($ticketID, $orders){
-    $ticket = Ticket::findOrFail($ticketID);
-
-    $totalBuyCount = 0;
-    foreach($orders as $order){
-      if($ticketID == $order->ticket_id)
-      {
-        $totalBuyCount += $order->count;
-      }
-    }
-
-    return $ticket->audiences_limit - $totalBuyCount;
   }
 
     public function completecomment($projectId){
@@ -747,6 +729,7 @@ class OrderController extends Controller
 
     private function getNewFilteredInput($goodsSelectArray, Payment $payment = null)
     {
+
         $inputs = Input::only(
             [
                 'name', 'contact', 'email',
@@ -755,8 +738,7 @@ class OrderController extends Controller
         );
         $inputs['price'] = $this->getOrderUnitPrice();
         $inputs['count'] = $this->getOrderCount();
-        //$inputs['total_price'] = $this->getTotalPrice($ticket);
-        //$inputs['total_price'] = $this->getNewTotalPrice($ticket, $goodsSelectArray);
+
         $inputs['total_price'] = $this->getNewTotalPrice();
         //getNewTotalPrice
         $inputs['imp_meta'] = $payment ? $payment->toJson() : '{}';
@@ -780,6 +762,7 @@ class OrderController extends Controller
             $inputs['answer'] = '';
         }
         return $inputs;
+
     }
 
     public function getMakeGoodsMetaData($goodsSelectArray){
