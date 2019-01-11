@@ -555,7 +555,11 @@
       {
         var order = supervise_orders[i]['orders'][j];
 
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         //alert(order['id']);
         var orderObject = new Object();
@@ -689,7 +693,11 @@
       for(var j = 0 ; j < supervise_orders_no_ticket[i]['orders'].length ; j++)
       {
         var order = supervise_orders_no_ticket[i]['orders'][j];
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         var orderGoodsCount = Object.keys(orderGoodsList).length;
 
@@ -722,7 +730,11 @@
       {
         var order = supervise_orders_no_ticket[i]['orders'][j];
 
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         var orderGoodsCount = Object.keys(orderGoodsList).length;
         if(orderGoodsCount > 0)
@@ -834,7 +846,11 @@
       for(var j = 0 ; j < supervise_orders_no_ticket[i]['orders'].length ; j++)
       {
         var order = supervise_orders_no_ticket[i]['orders'][j];
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         var orderGoodsCount = Object.keys(orderGoodsList).length;
 
@@ -866,7 +882,12 @@
       for(var j = 0 ; j < supervise_orders_no_ticket[i]['orders'].length ; j++)
       {
         var order = supervise_orders_no_ticket[i]['orders'][j];
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
+
         var orderGoodsCount = Object.keys(orderGoodsList).length;
 
         if(order.supporterPrice != 0 && orderGoodsCount === 0)
@@ -1012,14 +1033,32 @@
       {
         var order = supervise_orders_all_ticket[i]['orders'][j];
 
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         var orderObject = new Object();
         for(var k = 0 ; k < columnsAllArray.length ; k++)
         {
           var fieldName = columnsAllArray[k].field;
           var orderValue = order[fieldName];
+
           orderObject[fieldName] = orderValue;
+
+          //날짜 미정인지 체크
+          if(fieldName === "show_date")
+          {
+            var rawDate = orderValue.split(" ");
+            var d = rawDate[0].split("-");
+            var t = rawDate[1].split(":");
+
+            if(d[0] == 0000){
+              //날짜 미정
+              orderObject[fieldName] = "날짜 미정";
+            }
+          }
         }
 
         tableAllDataArray.push(orderObject);
@@ -1074,7 +1113,11 @@
       {
         var order = supervise_orders_all_ticket[i]['orders'][j];
 
-        var orderGoodsList = $.parseJSON(order.goods_meta);
+        var orderGoodsList = '';
+        if(order.goods_meta)
+        {
+          orderGoodsList = $.parseJSON(order.goods_meta);
+        }
 
         var orderTableElement = document.createElement("tr");
 

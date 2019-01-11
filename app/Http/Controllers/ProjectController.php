@@ -606,7 +606,7 @@ class ProjectController extends Controller
 
     public function getOrders($id)
     {
-      
+
         $project = $this->getSecureProjectById($id);
         $orders = $project->ordersWithoutError()->withTrashed()->get();
 
@@ -760,6 +760,7 @@ class ProjectController extends Controller
       {
         $order['ticket_category'] = $order->ticket->getSeatCategory();
         $order['show_date'] = $order->ticket->show_date;
+
         $order['show_date_unix'] = strtotime($order->ticket->show_date);
       }
 
