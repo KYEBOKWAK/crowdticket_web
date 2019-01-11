@@ -56,7 +56,7 @@ $i = 0;
                                       @endif
                                     @elseif($project->isReady())
                                     @elseif($project->isFinished())
-                                      @if($project->id === 339)
+                                      @if($project->id === '339')
                                         오픈 예정
                                       @else
                                         판매종료

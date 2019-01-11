@@ -446,7 +446,7 @@ class Project extends Model
           if($this->isFinished())
           {
             $nowAmount = "티켓팅이 마감되었습니다.";
-            if($this->id === 339)
+            if($this->id === '339')
             {
               $nowAmount = "1월 14일 오후6시 오픈예정";
             }
