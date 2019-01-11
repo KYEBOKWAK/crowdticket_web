@@ -94,11 +94,14 @@ class OrderController extends Controller
     $order->setState(Order::ORDER_STATE_STANDBY);
     $order->save();
 
+    //최종구매 수량체크로 프로젝트 정보를 다시 가져온다.
+    $project = '';
+    $project = $order->project;
+
     if($ticketId)
     {
       //티켓 정보가 있을때 저장한다.
       //$ticket = $this->getOrderableTicket($ticketId);
-
       if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
       {
         $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
