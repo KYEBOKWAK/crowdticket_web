@@ -67,6 +67,13 @@ Route::get('{entity}/{id}/comments', 'CommentController@getComments');
 
 Route::get('users/{id}', 'UserController@getUser');
 
+/*
+Route::get('order/error/overticketcount', function(){
+  return view('errors.overcounter_ticket');
+});
+*/
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');

@@ -62,11 +62,12 @@ class OrderController extends Controller
     {
       //티켓 정보가 있을때 저장한다.
       $ticket = $this->getOrderableTicket($ticketId);
-
+      /*
       if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
       {
         return view('test', ['project' => '수량이 매진되었습니다.']);
       }
+      */
     }
     //구매 가능한 수량이 있는지 체크
 
@@ -92,6 +93,20 @@ class OrderController extends Controller
     $order->user()->associate($user);
     $order->setState(Order::ORDER_STATE_STANDBY);
     $order->save();
+
+    if($ticketId)
+    {
+      //티켓 정보가 있을때 저장한다.
+      //$ticket = $this->getOrderableTicket($ticketId);
+
+      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
+      {
+        $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
+        $order->save();
+
+        return view('errors.overcounter_ticket');
+      }
+    }
 
     try {
 
