@@ -102,7 +102,7 @@ class OrderController extends Controller
     {
       //티켓 정보가 있을때 저장한다.
       //$ticket = $this->getOrderableTicket($ticketId);
-      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
+      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) < 0)
       {
         $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
         $order->save();
