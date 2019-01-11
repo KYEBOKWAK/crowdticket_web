@@ -764,6 +764,13 @@ class ProjectController extends Controller
         $order['show_date_unix'] = strtotime($order->ticket->show_date);
       }
 
+      $orderState = intval($order['state']);
+      $isCancel = false;
+      if($orderState > Order::ORDER_STATE_PAY_END)
+      {
+        $isCancel = true;
+      }
+
       if($order->goods_meta)
       {
         foreach($project->goods as $goods)
@@ -780,10 +787,22 @@ class ProjectController extends Controller
             {
               //$isSetGoodsOrder = true;
               $order[$goodsKey] = $goodsOrder['count'];
+
+              if($isCancel)
+              {
+                $order[$goodsKey] = 0;
+              }
               break;
             }
           }
         }
+      }
+
+      if($isCancel)
+      {
+        $order['count'] = 0;
+        $order['supporterPrice'] = 0;
+        $order['totalPriceWithoutCommission'] = 0;
       }
 
       return $order;

@@ -106,255 +106,6 @@
         </tbody>
     </table>
 
-
-
-<!-- 비교용 테스트 기존 코드 -->
-<div class="container">
-    @foreach ($tickets as $ticket)
-            @if (count($ticket->orders) > 0)
-              <div class="row ps-ticket-order">
-                <div class="ticket order col-md-12">
-                    <div class="ticket-wrapper">
-                        <div class="ticket-body row display-table">
-                            @if ($project->type === 'funding')
-                                <div class="col-md-3 display-cell text-right">
-                                    <span><strong class="text-primary ticket-price">{{ $ticket->price }}</strong> 원 티켓</span>
-                                </div>
-                                <div class="col-md-9 display-cell">
-                                    <span class="ticket-delivery-date">
-                                      @if($ticket->isPlaceTicket())
-                                        시작일 : {{ date('Y년 m월 d일 H:i', strtotime($ticket->show_date)) }}
-                                      @else
-                                        날짜미정
-                                      @endif
-                                    </span>
-                                </div>
-                            @else
-                                <div class="col-md-3 display-cell">
-                                  <span>
-                                    <span class="text-primary">공연일시</span><br/>
-                                    <strong class="ps-strong-small">
-                                      @if($ticket->isPlaceTicket())
-                                        {{ date('Y.m.d H:i', strtotime($ticket->show_date)) }}
-                                      @else
-                                        날짜미정
-                                      @endif
-                                    </strong>
-                                    <span class="pull-right">{{ $ticket->price }} 원</span>
-                                  </span>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <td>이름</td>
-                            <td>참여금액</td>
-                            <td>구매수량</td>
-                            <td>추가후원</td>
-                            <td>결제금액</td>
-                            <td>할인권</td>
-                            <td>상태</td>
-                            <td>결제일</td>
-                            <td>이메일</td>
-                            <td>전화번호</td>
-                            @if ( $project->isDelivery == "TRUE" )
-                            <td>굿즈 수령 주소</td>
-                            <td>기타 문의</td>
-                            @endif
-
-                            @foreach($goodsList as $goods)
-                              <td>{{ $goods->title }}</td>
-                            @endforeach
-
-                            @if($project->question)
-                              <td>추가질문답변</td>
-                            @endif
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($ticket->orders as $order)
-                            <tr>
-                                <td>{{ $order->id }}</td>
-                                <td>{{ $order->price }}</td>
-                                <td>{{ $order->count }}</td>
-                                <td>
-                                  <?php
-                                  $supporterPrice = 0;
-                                  if($order->supporter)
-                                  {
-                                    $supporterPrice = $order->supporter->price;
-                                  }
-                                  ?>
-                                  {{ $supporterPrice }}
-                                </td>
-                                <!-- <td>{{ ($order->price * $order->count)+$supporterPrice }}</td> -->
-                                <td>{{ $order->getTotalPriceWithoutCommission() }}</td>
-                                <td>{{ $order->getDiscountText() }}</td>
-                                <td>{{ $order->state_string }}</td>
-                                <td>{{ $order->created_at }}</td>
-                                <td>{{ $order->email }}</td>
-                                <td>{{ $order->contact }}</td>
-                                @if ( $project->isDelivery == "TRUE" )
-                                  <td>{{ $order->getDeliveryAddress() }}</td>
-                                  <td>{{ $order->requirement }}</td>
-                                @endif
-                                @foreach($goodsList as $goods)
-                                  <td>{{ $order->isBuyGoodsCount($goods->id) }}</td>
-                                @endforeach
-
-                                @if($project->question)
-                                  <td>{{ $order->answer }}</td>
-                                @endif
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-              </div>
-            @endif
-    @endforeach
-</div>
-
-<!-- 티켓 미구매 리스트 -->
-<div class="container">
-  <div class="ticket order col-md-12">
-      <div class="ticket-wrapper">
-          <div class="ticket-body row display-table">
-                  <div class="col-md-3 display-cell text-right">
-                      <span><strong class="text-primary ticket-price">티켓 미구매(굿즈만 구매한 리스트)</strong></span>
-                  </div>
-                  <div class="col-md-9 display-cell">
-                      <span class="ticket-delivery-date">
-                        티켓 미구매(굿즈만 구매한 리스트)
-                      </span>
-                  </div>
-          </div>
-      </div>
-  </div>
-
-      <div class="row ps-ticket-order">
-              <div class="col-md-12">
-                  <table class="table">
-                      <thead>
-                      <tr>
-                        <td>이름</td>
-                        <td>추가후원</td>
-                        <td>결제금액</td>
-                        <td>상태</td>
-                        <td>결제일</td>
-                        <td>이메일</td>
-                        <td>전화번호</td>
-                        @if ( $project->isDelivery == "TRUE" )
-                        <td>굿즈 수령 주소</td>
-                        <td>기타 문의</td>
-                        @endif
-                          @foreach($goodsList as $goods)
-                            <td>{{ $goods->title }}</td>
-                          @endforeach
-                      </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($orders as $order)
-                          @if(!$order->ticket && $order->getIsGoodsCount() > 0)
-                            <tr>
-                              <td>{{ $order->id }}</td>
-                              <td>
-                                <?php
-                                $supporterPrice = 0;
-                                if($order->supporter)
-                                {
-                                  $supporterPrice = $order->supporter->price;
-                                }
-                                ?>
-                                {{ $supporterPrice }}
-                              </td>
-                              <td>{{ $order->getTotalPriceWithoutCommission() }}</td>
-                              <td>{{ $order->state_string }}</td>
-                              <td>{{ $order->created_at }}</td>
-                              <td>{{ $order->email }}</td>
-                              <td>{{ $order->contact }}</td>
-                              @if ( $project->isDelivery == "TRUE" )
-                                <td>{{ $order->getDeliveryAddress() }}</td>
-                                <td>{{ $order->requirement }}</td>
-                              @endif
-                                @foreach($goodsList as $goods)
-                                  <td>{{ $order->isBuyGoodsCount($goods->id) }}</td>
-                                @endforeach
-                            </tr>
-                          @endif
-                        @endforeach
-                      </tbody>
-                  </table>
-              </div>
-      </div>
-</div>
-
-<!-- 후원만 한사람 -->
-
-<div class="container">
-  <div class="ticket order col-md-12">
-      <div class="ticket-wrapper">
-          <div class="ticket-body row display-table">
-                  <div class="col-md-3 display-cell text-right">
-                      <span><strong class="text-primary ticket-price">후원만 하신 분</strong></span>
-                  </div>
-                  <div class="col-md-9 display-cell">
-                      <span class="ticket-delivery-date">
-                        <!-- 티켓 미구매(굿즈만 구매한 리스트) -->
-                      </span>
-                  </div>
-          </div>
-      </div>
-  </div>
-
-      <div class="row ps-ticket-order">
-              <div class="col-md-12">
-                  <table class="table">
-                      <thead>
-                      <tr>
-                        <td>이름</td>
-                        <td>추가후원</td>
-                        <td>결제금액</td>
-                        <td>상태</td>
-                        <td>결제일</td>
-                        <td>이메일</td>
-                        <td>전화번호</td>
-                      </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($orders as $order)
-                          @if(!$order->ticket && $order->getIsGoodsCount() == 0)
-                            <tr>
-                              <td>{{ $order->id }}</td>
-                              <td>
-                                <?php
-                                $supporterPrice = 0;
-                                if($order->supporter)
-                                {
-                                  $supporterPrice = $order->supporter->price;
-                                }
-                                ?>
-                                {{ $supporterPrice }}
-                              </td>
-                              <td>{{ $order->getTotalPriceWithoutCommission() }}</td>
-                              <td>{{ $order->state_string }}</td>
-                              <td>{{ $order->created_at }}</td>
-                              <td>{{ $order->email }}</td>
-                              <td>{{ $order->contact }}</td>
-                            </tr>
-                          @endif
-                        @endforeach
-                      </tbody>
-                  </table>
-              </div>
-      </div>
-</div>
-
 @endsection
 
 @section('js')
@@ -366,7 +117,7 @@
     //var columnsInfo = [{"이름", "bbb"}, "티켓수량", "추가후원", "GOODSOBJECT", "할인내용", "결제금액", "상태", "결제일", "이메일", "전화번호", "굿즈수령주소", "기타사항"];
     var columnsInfo = [
         //{title:"아이디(test)", field:"id", align:"center", width:103},
-        {title:"이름", field:"id", align:"center", width:103},
+        {title:"이름", field:"name", align:"center", width:103},
         {title:"티켓종류", field:"ticket_category", align:"center"},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number", bottomCalc: "sum"},
         {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc: "sum"},
@@ -385,7 +136,7 @@
 
     var columnsNoTicketInfo = [
         //{title:"아이디(test)", field:"id", align:"center", width:103},
-        {title:"이름", field:"id", align:"center", width:103},
+        {title:"이름", field:"name", align:"center", width:103},
         {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc: "sum"},
         {title:"상태", field:"state_string", align:"center"},
         {title:"이메일", field:"email", align:"center", width:221},
@@ -401,7 +152,7 @@
 
     var columnsOnlySupportInfo = [
         //{title:"아이디(test)", field:"id", align:"center", width:103},
-        {title:"이름", field:"id", align:"center", width:103},
+        {title:"이름", field:"name", align:"center", width:103},
         {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc: "sum"},
         {title:"상태", field:"state_string", align:"center"},
         {title:"이메일", field:"email", align:"center", width:221},
@@ -411,8 +162,8 @@
     ];
 
     var columnsAllInfo = [
-        //{title:"아이디(test)", field:"id", align:"center", width:103},
-        {title:"이름", field:"id", align:"center", width:103, headerFilter:true},
+        //{title:"아이디(test)", field:"name", align:"center", width:103},
+        {title:"이름", field:"name", align:"center", width:103, headerFilter:true},
         {title:"일시", field:"show_date", align:"center", width: 150},
         {title:"티켓종류", field:"ticket_category", align:"center"},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number", bottomCalc:"sum"},
