@@ -88,32 +88,38 @@ class OrderController extends Controller
       }
     }
 
-    $order = new Order($this->getNewFilteredInput($goodsSelectArray));
-    $order->project()->associate($project);
-    $order->user()->associate($user);
-    $order->setState(Order::ORDER_STATE_STANDBY);
-    $order->save();
-
-    //최종구매 수량체크로 프로젝트 정보를 다시 가져온다.
-    $project = '';
-    $project = $order->project;
-
-    if($ticketId)
-    {
-      //티켓 정보가 있을때 저장한다.
-      //$ticket = $this->getOrderableTicket($ticketId);
-      if($this->getAmountTicketWithTicketId($ticketId, $project->orders) < 0)
-      {
-        $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
-        $order->save();
-
-        return view('errors.overcounter_ticket');
-      }
-    }
+    $g_order = '';
 
     try {
 
       DB::beginTransaction();
+
+      $order = new Order($this->getNewFilteredInput($goodsSelectArray));
+      $order->project()->associate($project);
+      $order->user()->associate($user);
+      $order->setState(Order::ORDER_STATE_STANDBY);
+      $order->save();
+
+      $g_order = $order;
+
+      $project = "";
+      $project = $order->project;
+
+      //최종구매 수량체크로 프로젝트 정보를 다시 가져온다.
+      if($ticketId)
+      {
+        //티켓 정보가 있을때 저장한다.
+        //$ticket = $this->getOrderableTicket($ticketId);
+        if($this->getAmountTicketWithTicketId($ticketId, $project->orders) < 0)
+        {
+          $order->setState(Order::ORDER_STATE_ERROR_TICKET_OVER_COUNT);
+          $order->save();
+
+          DB::commit();
+
+          return view('errors.overcounter_ticket');
+        }
+      }
 
       if($ticket)
       {
@@ -197,9 +203,12 @@ class OrderController extends Controller
           'isComment' => FALSE
       ]);
     } catch (PaymentFailedException $e) {
-      $order->setState(Order::ORDER_STATE_ERROR_PAY);
-      $order->fail_message = $e->getMessage();
-      $order->save();
+      if($g_order)
+      {
+        $g_order->setState(Order::ORDER_STATE_ERROR_PAY);
+        $g_order->fail_message = $e->getMessage();
+        $g_order->save();
+      }
 
       return view('order.error', [
           'message' => $e->getMessage(),
