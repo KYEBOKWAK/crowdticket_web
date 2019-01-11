@@ -180,7 +180,7 @@
     <!-- second section 시작 -->
       <div class="welcome_main_thumb_container">
         <div class="welcome_main_thumb_title_container">
-          <h4 style="float:left">크라우드티켓 추천 |</h4>
+          <h4 style="float:left">크라우드티켓 추천</h4>
           <!-- Controls -->
           <div class="controls pull-right">
             <!-- Add Arrows -->
