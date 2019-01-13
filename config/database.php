@@ -54,7 +54,13 @@ return [
 
 		'mysql' => [
 			'driver'    => 'mysql',
-			'host'      => env('DB_HOST'),
+			//'host'      => env('DB_HOST'),
+			'read' => [
+						        'host' => env('DB_HOST_READ'),
+						    ],
+	    'write' => [
+					        	'host' => env('DB_HOST_WRITE'),
+				  				],
 			'database'  => env('DB_DATABASE'),
 			'username'  => env('DB_USERNAME'),
 			'password'  => env('DB_PASSWORD'),
