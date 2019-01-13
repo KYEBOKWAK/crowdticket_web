@@ -34,7 +34,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">크라우드 티켓 서버 점검중.<br> 금일 새벽5시 종료 예정입니다. <br> 조금만 기다려주세요.^^</div>
+        <div class="title">크라우드 티켓 서버 개선중..<br> 약 15분뒤 정상화 됩니다. <br> 조금만 기다려주세요.^^</div>
     </div>
 </div>
 </body>
