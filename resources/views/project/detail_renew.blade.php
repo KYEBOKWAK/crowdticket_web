@@ -209,11 +209,7 @@ $selectedTicket = "";
                     진행중
                   @else
                     @if($project->isFinished())
-                      @if($project->id === '339')
-                        오픈예정
-                      @else
                         종료됨
-                      @endif
                     @else
                     진행중
                     @endif

@@ -91,11 +91,7 @@ if(isset($colOnly))
                                           초대권 이벤트중
                                         @elseif($project->isReady())
                                         @elseif($project->isFinished())
-                                          @if($project->id === '339')
-                                            오픈예정
-                                          @else
                                             판매종료
-                                          @endif
                                         @else
                                           판매중
                                         @endif
