@@ -100,7 +100,10 @@
     </script>
 
     <!-- sweetAlert JS -->
-    <script src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
+
+    <!-- toast alert -->
+    <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js') }}"></script>
 
     <!-- facebook js -->
     <script>
@@ -116,7 +119,7 @@
     </script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ asset('/js/util_header.js?version=1') }}"></script>
+    <script src="{{ asset('/js/util_header.js?version=2') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->

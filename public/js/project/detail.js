@@ -362,6 +362,17 @@ $(document).ready(function() {
 
   setTicketNoticeDetail();
 
+	//주소복사하기
+	$('.detail_main_guide_share_btn').click(function(){
+		//copy_to_clipboard('project_detail_copy_url');
+		//alert($("#project_detail_copy_url").val());
+
+		copyToClipboard($("#project_detail_copy_url").val());
+
+		var toast = new iqwerty.toast.Toast();
+		toast.setText('주소가 복사 되었습니다.').show();
+	});
+
 });
 
 

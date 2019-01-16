@@ -24,3 +24,12 @@ function imageResize(imgWrapDiv, img){
       img.style.cssText = 'width: 100%; height: auto; margin-left: 0;';
   }
 }
+
+function copyToClipboard(val) {
+  var t = document.createElement("textarea");
+  document.body.appendChild(t);
+  t.value = val;
+  t.select();
+  document.execCommand('copy');
+  document.body.removeChild(t);
+}
