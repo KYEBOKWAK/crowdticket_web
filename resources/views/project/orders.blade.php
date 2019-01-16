@@ -957,7 +957,7 @@
     //합계
     var export_table = new Tabulator("#export_table", {});
     $("#download_excel").click(function(){
-        export_table.download("xlsx", project_title + "_주문관리.xlsx", {sheetName:project_title+"_주문관리"});
+        export_table.download("xlsx", project_title + "_주문관리.xlsx", {sheetName:"주문관리"});
     });
 
   });
