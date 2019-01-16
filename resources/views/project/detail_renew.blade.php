@@ -162,7 +162,7 @@ $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
-<input id="project_detail_copy_url" type="hidden" value="{{ $project->getProjectURLWithIdOrAlias() }}">
+<div id="project_detail_copy_url" style="display: none;">{{ $project->getProjectURLWithIdOrAlias() }}</div>
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -410,7 +410,7 @@ $selectedTicket = "";
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-    <script src="{{ asset('/js/project/detail.js?version=15') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=16') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
 @endsection
