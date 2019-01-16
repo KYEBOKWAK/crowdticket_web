@@ -369,8 +369,13 @@ $(document).ready(function() {
 
 		copyToClipboard($("#project_detail_copy_url").val());
 
-		var toast = new iqwerty.toast.Toast();
-		toast.setText('주소가 복사 되었습니다.').show();
+		toastr.options = {                
+                positionClass: 'toast-bottom-center',
+                onclick: null
+            };
+		toastr.options.showMethod = 'slideDown';
+
+		toastr.success("주소가 복사 되었습니다.");
 	});
 
 });

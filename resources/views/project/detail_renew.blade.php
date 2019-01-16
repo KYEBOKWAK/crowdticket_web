@@ -410,7 +410,7 @@ $selectedTicket = "";
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-    <script src="{{ asset('/js/project/detail.js?version=13') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=14') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
 @endsection

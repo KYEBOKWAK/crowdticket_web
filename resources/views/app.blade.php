@@ -44,10 +44,11 @@
         <title>크라우드티켓</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
+    <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/base.css?version=4') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=4') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=9') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=10') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -103,7 +104,7 @@
     <script type="text/javascript" src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- toast alert -->
-    <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js?version=2') }}"></script>
 
     <!-- facebook js -->
     <script>
