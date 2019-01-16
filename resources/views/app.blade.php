@@ -100,7 +100,7 @@
     </script>
 
     <!-- sweetAlert JS -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- facebook js -->
     <script>
