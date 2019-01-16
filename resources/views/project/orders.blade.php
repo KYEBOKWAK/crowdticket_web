@@ -109,7 +109,7 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+<script type="text/javascript" src="{{ asset('/js/lib/table/xlsx.full.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/js/lib/table/tabulator.min.js') }}"></script>
 
 <script>
