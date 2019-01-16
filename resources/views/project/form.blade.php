@@ -245,7 +245,7 @@ array_push($tabs, [
           </div>
       @endforeach
       <div class="project-form-tab-preview-btn">
-          <a href="{{ url('/projects/') }}/{{ $project->id }}" class="btn btn-success"
+          <a href="{{ $project->getProjectURLWithIdOrAlias() }}" class="btn btn-success"
              target="_blank">
              @if($project->isPublic())
               페이지 보기

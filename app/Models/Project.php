@@ -721,4 +721,18 @@ class Project extends Model
         return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
     }
 
+    public function getProjectURLWithIdOrAlias()
+    {
+      $url = url('/projects').'/';
+
+      if($this->alias)
+      {
+        return $url.$this->alias;
+      }
+      else
+      {
+        return $url.$this->id;
+      }
+    }
+
 }

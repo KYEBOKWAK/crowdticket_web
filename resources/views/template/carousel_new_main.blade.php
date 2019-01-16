@@ -54,7 +54,7 @@ if(isset($colOnly))
                                   <div class="white-mask"></div>
                               </div>
                             @else
-                              <a href="{{ url('/projects') }}/{{ $project->id }}">
+                              <a href="{{ $project->getProjectURLWithIdOrAlias() }}">
                                   <div class="bg-base project-thumbnail">
                                     <img src="{{ $project->getPosterUrl() }}" onload="imageResize($('.project-thumbnail')[0], this);" class="project-img" img-data-name="welcomeThumbData"/>
                                       <div class="white-mask"></div>
