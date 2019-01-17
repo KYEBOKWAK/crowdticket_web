@@ -362,18 +362,10 @@ $(document).ready(function() {
 
   setTicketNoticeDetail();
 
+
 	//주소복사하기
+	new ClipboardJS('.detail_main_guide_share_btn');
 	$('.detail_main_guide_share_btn').click(function(){
-		//copy_to_clipboard('project_detail_copy_url');
-		//alert($("#project_detail_copy_url").val());
-
-		//copyToClipboard($("#project_detail_copy_url").val());
-		//select_all_and_copy($("#project_detail_copy_url").val());
-		$("#project_detail_copy_url").show();
-		select_all_and_copy($("#project_detail_copy_url")[0]);
-		$("#project_detail_copy_url").hide();
-
-
 		toastr.options = {
                 positionClass: 'toast-bottom-center',
                 onclick: null
@@ -381,7 +373,6 @@ $(document).ready(function() {
 		toastr.options.showMethod = 'slideDown';
 
 		toastr.success("주소가 복사 되었습니다.");
-		
 	});
 
 });

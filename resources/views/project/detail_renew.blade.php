@@ -162,7 +162,6 @@ $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
-<div id="project_detail_copy_url" style="display: none;">{{ $project->getProjectURLWithIdOrAlias() }}</div>
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -243,7 +242,7 @@ $selectedTicket = "";
               </div>
               <div class="detail_main_guide_share_btn_wrapper">
                 <!-- <a tabindex="0" role="button" data-trigger="focus" type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-toggle="popover"><i class="fa fa-share"></i></a> -->
-                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn"><i class="fa fa-share"></i></button>
+                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-clipboard-text="{{ $project->getProjectURLWithIdOrAlias() }}"><i class="fa fa-share"></i></button>
               </div>
             </div>
           </div>
@@ -409,8 +408,9 @@ $selectedTicket = "";
     @include('template.goods_container', ['isForm' => 'false'])
     @include('template.goods', ['isForm' => 'false'])
     @include('template.ticket_old')
+    <script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-    <script src="{{ asset('/js/project/detail.js?version=16') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=17') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
 @endsection
