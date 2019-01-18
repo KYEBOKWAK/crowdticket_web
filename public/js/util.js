@@ -89,6 +89,16 @@ function isCheckEmail(email){
   return true;
 }
 
+function isCheckEmailWithoutAlert(email){
+  var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+  if(!regExpEmail.test(email))
+  {
+    return false;
+  }
+
+  return true;
+}
+
 function isCheckKorean(word){
   var regExpEnglish = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
   if(regExpEnglish.test(word))
@@ -104,7 +114,7 @@ function isCheckKorean(word){
 function isCheckOnlyEmptyValue(word){
   var blank_pattern = /^\s+|\s+$/g;
   if( word.replace( blank_pattern, '' ) == "" ){
-      alert(' 공백만 입력되었습니다 ');
+      //alert(' 공백만 입력되었습니다 ');
       return true;
   }
 
@@ -360,4 +370,27 @@ function sortByKey(array, key) {
         var x = a[key]; var y = b[key];
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
+}
+
+function showToast(level, message){
+  toastr.options = {
+              positionClass: 'toast-bottom-center',
+              onclick: null
+          };
+  toastr.options.showMethod = 'slideDown';
+
+  switch (level) {
+      default:
+      case 'i':
+          toastr.info(message);
+          break;
+      case 's':
+          toastr.success(message);
+          break;
+      case 'e':
+          toastr.error(message);
+          break;
+  }
+
+
 }

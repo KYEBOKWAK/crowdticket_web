@@ -130,6 +130,29 @@ class UserController extends Controller
 
     public function updateUser(Request $request, $id)
     {
+      $user = $this->ensureLoginUser($id);
+      if ($this->isTryChangePassword()) {
+          if ($this->validateUserCredential($user)) {
+              $user->password = bcrypt(\Input::get('new_password'));
+          } else {
+              return $this->getUpdateView($user, $this->messageError('잘못된 비밀번호입니다.'));
+          }
+      }
+      if ($request->file('photo')) {
+          $photoUrl = $this->uploadPosterImage($request, $user);
+          $user->setAttribute('profile_photo_url', $photoUrl);
+      }
+
+      if ($request->has('isdeletephoto')) {
+        $defaultURL = Model::S3_BASE_URL.'admin/profile/noimage/default-user-image.png';
+        $user->setAttribute('profile_photo_url', $defaultURL);
+      }
+      
+      $user->update(\Input::all());
+      $user->save();
+
+      return $this->getUpdateView($user, $this->messageSuccess('변경되었습니다.'));
+      /*
         $user = $this->ensureLoginUser($id);
         if ($this->isTryChangePassword()) {
             if ($this->validateUserCredential($user)) {
@@ -146,6 +169,7 @@ class UserController extends Controller
         $user->save();
 
         return $this->getUpdateView($user, $this->messageSuccess('변경되었습니다.'));
+        */
     }
 
     public function getUserOrders($id)

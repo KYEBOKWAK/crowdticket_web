@@ -10,18 +10,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     use Authenticatable, CanResetPassword;
 
-    protected $fillable = ['email', 'name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder'];
+    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder'];
 
     protected $hidden = ['password', 'remember_token', 'facebook_id'];
 
     protected static $creationRules = [
         'email' => 'required|email|unique:users',
         'name' => 'required|string',
+        'nick_name' => 'string',
         'profile_photo_url' => 'url'
     ];
 
     protected static $updateRules = [
         'name' => 'string',
+        'nick_name' => 'string',
         'profile_photo_url' => 'url',
         'contact' => 'numeric',
         'introduce' => 'string',
@@ -79,6 +81,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             return $this->profile_photo_url;
         }
         return asset('/img/app/default-user-image.png');
+    }
+
+    public function getUserNickName()
+    {
+      if($this->nick_name)
+      {
+        return $this->nick_name;
+      }
+
+      return $this->name;
     }
 
 }
