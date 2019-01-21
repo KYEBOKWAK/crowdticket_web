@@ -8,7 +8,18 @@
 			<% } %>
 		</a>
 		<div class="comment-section-right">
-			<a href="{{ url('/users') }}/<%= data.user.id %>" target="_blank"><span class="comment-username"><strong><%= data.user.name %></strong></span></a>
+			<a href="{{ url('/users') }}/<%= data.user.id %>" target="_blank">
+        <span class="comment-username">
+          <strong>
+            <% if(data.user.nick_name) { %>
+              <%= data.user.nick_name %>
+            <% } else { %>
+              <%= data.user.name %>
+            <% } %>
+
+          </strong>
+        </span>
+      </a>
 			<span class="comment-created-at"><%= data.created_at %></span>
 			<span class="toggle-reply">답글달기</span>
       <% if(isMyOrMasterComment(data.user.id)) { %>
@@ -49,7 +60,18 @@
 						<% } %>
 					</a>
 					<div class="comment-section-right">
-						<a href="{{ url('/users') }}/<%= reply.user.id %>" target="_blank"><span class="comment-username"><strong><%= reply.user.name %></strong></span></a>
+						<a href="{{ url('/users') }}/<%= reply.user.id %>" target="_blank">
+              <span class="comment-username">
+                <strong>
+                  <% if(reply.user.nick_name) { %>
+                    <%= reply.user.nick_name %>
+                  <% } else { %>
+                    <%= reply.user.name %>
+                  <% } %>
+
+                </strong>
+              </span>
+            </a>
 						<span class="comment-created-at"><%= reply.created_at %></span>
             <% if(isMyOrMasterComment(reply.user.id)) { %>
             <span class="delete-comment" data-comment-id="<%= reply.id %>">삭제하기</span>
