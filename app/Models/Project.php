@@ -16,7 +16,7 @@ class Project extends Model
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'funding_closing_at', 'event_type'
+            'sale_start_at', 'funding_closing_at', 'event_type'
         ],
 
         Project::STATE_READY_AFTER_FUNDING => [
@@ -61,6 +61,15 @@ class Project extends Model
     {
       //return static::$fillableByState[$this->state];
         $this->fillable = static::$fillableByState[$this->state];
+
+        if(isset($attributes['sale_start_at']))
+        {
+          if(!$attributes['sale_start_at'])
+          {
+            $attributes['sale_start_at'] = null;
+          }  
+        }
+
         parent::update($attributes);
     }
 
@@ -439,23 +448,30 @@ class Project extends Model
       }
       else
       {
-        if($this->type == 'sale')
+        if($this->isWaitSaling())
         {
-          /*$nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";*/
-          $nowAmount = "현재 참여 가능";
-          if($this->isFinished())
-          {
-            $nowAmount = "티켓팅이 마감되었습니다.";
-          }
+          $nowAmount = "오픈 예정일: ".$this->getStartSaleTime();
         }
         else
         {
-          $totalFundingAmount = number_format($this->getTotalFundingAmount());
-          $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
-
-          if($this->project_target == "people")
+          if($this->type == 'sale')
           {
-            $nowAmount = "신청자 " . $totalFundingAmount . "명";
+            /*$nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";*/
+            $nowAmount = "현재 참여 가능";
+            if($this->isFinished())
+            {
+              $nowAmount = "티켓팅이 마감되었습니다.";
+            }
+          }
+          else
+          {
+            $totalFundingAmount = number_format($this->getTotalFundingAmount());
+            $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
+
+            if($this->project_target == "people")
+            {
+              $nowAmount = "신청자 " . $totalFundingAmount . "명";
+            }
           }
         }
       }
@@ -463,6 +479,27 @@ class Project extends Model
 
 
       return $nowAmount;
+    }
+
+    public function getSaleStartTimeDay()
+    {
+      $time = '';
+      if ($this->sale_start_at) {
+          $time = strtotime($this->sale_start_at);
+          $time = date('Y-m-d', $time);
+      }
+      return $time;
+    }
+
+    public function getSaleStartTimeHour()
+    {
+      $time = '';
+      if ($this->sale_start_at) {
+          $time = strtotime($this->sale_start_at);
+          $time = date('H', $time);
+      }
+
+      return $time;
     }
 
     public function getFundingClosingAtOrNow()
@@ -733,6 +770,36 @@ class Project extends Model
       {
         return $url.$this->id;
       }
+    }
+
+
+    //판매를 기다리는지 확인한다
+    public function isWaitSaling()
+    {
+      if($this->sale_start_at)
+      {//strtotime
+        $nowDate = date(time());
+        $sale_start_at_Unix = strtotime($this->sale_start_at);
+        if($sale_start_at_Unix > $nowDate)
+        {
+          return true;
+        }
+
+        return false;
+      }
+
+      return false;
+    }
+
+    public function getStartSaleTime()
+    {
+        $time = '';
+        if ($this->sale_start_at) {
+            $time = strtotime($this->sale_start_at);
+            $time = date('Y-m-d H:00', $time);
+        }
+
+        return $time;
     }
 
 }

@@ -1140,6 +1140,12 @@ $(document).ready(function() {
   };
 
   var selectCalendarTicket = function(){
+    if($("#isWaitSaleTime").val() == true)
+    {
+      var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";
+      swal(waitTimeWord, "", "info");
+      return;
+    }
     if($("#isFinished").val() == true)
     {
       alert("이미 끝난 프로젝트 입니다.");

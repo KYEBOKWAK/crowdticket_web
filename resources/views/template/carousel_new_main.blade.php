@@ -79,22 +79,26 @@ if(isset($colOnly))
                                   @if($project->isEventTypeCrawlingEvent())
                                     진행중
                                   @else
-                                    @if($project->isFundingType())
-                                      @if($project->isReady())
-                                      @elseif($project->isFinished())
-                                        {{ $project->getProgress() }}% 펀딩종료
-                                      @else
-                                        {{ $project->getProgress() }}% 펀딩중
-                                      @endif
+                                    @if($project->isWaitSaling())
+                                      오픈 예정
                                     @else
-                                        @if($project->isEventTypeInvitationEvent())
-                                          초대권 이벤트중
-                                        @elseif($project->isReady())
+                                      @if($project->isFundingType())
+                                        @if($project->isReady())
                                         @elseif($project->isFinished())
-                                            판매종료
+                                          {{ $project->getProgress() }}% 펀딩종료
                                         @else
-                                          판매중
+                                          {{ $project->getProgress() }}% 펀딩중
                                         @endif
+                                      @else
+                                          @if($project->isEventTypeInvitationEvent())
+                                            초대권 이벤트중
+                                          @elseif($project->isReady())
+                                          @elseif($project->isFinished())
+                                              판매종료
+                                          @else
+                                            판매중
+                                          @endif
+                                      @endif
                                     @endif
                                   @endif
                                   </span>

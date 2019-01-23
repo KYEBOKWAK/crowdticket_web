@@ -161,6 +161,7 @@ $discounts = $project->discounts()->get();
 $selectedTicket = "";
 ?>
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
+<input type="hidden" id="isWaitSaleTime" value="{{ $project->isWaitSaling() }}" time-value="{{ $project->getStartSaleTime() }}">
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
@@ -205,13 +206,17 @@ $selectedTicket = "";
 
               <div class="detail_main_guide_container">
                 <div class="detail_main_guide_funding_title">
-                  @if($project->isEventTypeCrawlingEvent())
-                    진행중
+                  @if($project->isWaitSaling())
+                    오픈 예정
                   @else
-                    @if($project->isFinished())
-                        종료됨
+                    @if($project->isEventTypeCrawlingEvent())
+                      진행중
                     @else
-                    진행중
+                      @if($project->isFinished())
+                          종료됨
+                      @else
+                      진행중
+                      @endif
                     @endif
                   @endif
                 </div>
@@ -412,5 +417,5 @@ $selectedTicket = "";
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script src="{{ asset('/js/project/detail.js?version=17') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=15') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=16') }}"></script>
 @endsection

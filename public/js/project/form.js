@@ -55,7 +55,8 @@ $(document).ready(function() {
 			'detailed_address': $('#detailed_address').val(),
 			'concert_hall': $('#concert_hall').val(),
 			'project_target': $('#project_target').val(),
-			'temporary_date': $('#temporary_date').val()
+			'temporary_date': $('#temporary_date').val(),
+			'sale_start_at': getSaleStartTime(),
 		}, isNext);
 	};
 
@@ -65,6 +66,7 @@ $(document).ready(function() {
 		var method = 'put';
 
 		var success = function(e) {
+
 			$('#isReqiredSuccess').val('TRUE');
 
 			loadingProcessStop($('.project_form_button_wrapper'));
@@ -1153,6 +1155,7 @@ $(document).ready(function() {
 	$('#check_alias').bind('click', checkAliasDuplicate);
 	$('#update_default').bind('click', updateDefault);
 	$('#funding_closing_at').datepicker({'dateFormat': 'yy-mm-dd'});
+	$('#sale_start_at').datepicker({'dateFormat': 'yy-mm-dd'});
 	$('#create_ticket').bind('click', createTicket);
 	$('#update_ticket').bind('click', updateTicket);
 	$('#cancel_modify_ticket').bind('click', cancelModifyTicket);
@@ -1221,6 +1224,62 @@ $(document).ready(function() {
 						  }
 						});
 	});
+
+	var setSaleStartTime = function(){
+		var saleTimeCheck = $('#sale_start_checkbox').is(':checked');
+		var saleStartTimeWrapperEle = $('#project_sale_select_time_wrapper');
+		if(saleTimeCheck == true)
+		{
+			saleStartTimeWrapperEle.hide();
+		}
+		else
+		{
+			saleStartTimeWrapperEle.show();
+		}
+	};
+
+	//판매 시작 시간 설정
+	var initSaleStartTime = function(){
+		var saleStartValue = $('#sale_start_at').val();
+		var saleCheckBox = $('#sale_start_checkbox');
+
+		if(saleStartValue)
+		{
+			//티켓팅 시작 시간이 있다.
+			saleCheckBox.attr("checked", false);
+		}
+		else
+		{
+			//즉시 오픈
+			saleCheckBox.attr("checked", true);
+		}
+
+		setSaleStartTime();
+	};
+
+	initSaleStartTime();
+
+	$('#sale_start_checkbox').click(function(){
+		setSaleStartTime();
+	});
+
+	var getSaleStartTime = function(){
+		var saleTimeCheck = $('#sale_start_checkbox').is(':checked');
+		if(saleTimeCheck)
+		{
+			return '';
+		}
+
+		var saleStartDay = $('#sale_start_at').val();
+		var saleStartHour = $('#sale_start_hour').val();
+		if (saleStartHour < 10) {
+			saleStartHour = "0" + saleStartHour;
+		}
+
+		var saleStartTime = saleStartDay + " " + saleStartHour + ":" + "00:00";
+
+		return saleStartTime;
+	};
 
 	var performPosterTitleFileClick = function(){
 		var imgNumber = $(this).attr('data-img-number');

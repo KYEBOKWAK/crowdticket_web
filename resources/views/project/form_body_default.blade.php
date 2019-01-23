@@ -152,6 +152,40 @@
       </div>
     @endif
 
+    <div class="project_form_input_container" style="display: none;">
+      <div class="flex_layer_project">
+        <p class="project-form-content-title">
+          @if($project->isFundingType())
+            펀딩 시작일
+          @else
+            티켓팅 시작일
+          @endif
+        </p>
+        <p>
+          시작일을 지정하면 '오픈예정'으로 표시 됩니다.
+        </p>
+        <div class="project-form-content">
+          <div class="project_form_now_open_option_wrapper">
+            <input id="sale_start_checkbox" class="project_form_checkbox" type="checkbox"/>
+            즉시 오픈
+          </div>
+          <div id="project_sale_select_time_wrapper" class="flex_layer">
+            <input id="sale_start_at" name="sale_start_at" type="text" class="project_form_input_base project_form_closing_at"
+                   value="{{ $project->getSaleStartTimeDay() }}"
+                   @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif />
+
+             <select id="sale_start_hour" class="project_form_input_base project_form_delivery_time_wrapper">
+                  @for ($i = 0; $i < 24; $i++)
+                  <option value="{{ $i }}" value-data="{{ $i }}" @if(intval($project->getSaleStartTimeHour()) === $i) selected @endif>
+                      {{ $i }} 시
+                  </option>
+                  @endfor
+              </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="project_form_input_container">
       <div class="flex_layer_project">
         <p class="project-form-content-title">
