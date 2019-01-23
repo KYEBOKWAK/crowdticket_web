@@ -336,7 +336,8 @@
             };
 
             $(".btn_user_info_update").click(function(){
-              if(!validCheck("name"))
+              if(!validCheck("name") || !validCheck("input-user-password") ||
+                !validCheck("input-user-password-new") || !validCheck("input-user-password-re"))
               {
                 swal("필수 입력 항목을 확인해주세요.", "", "error");
                 return;
