@@ -463,11 +463,10 @@ class Project extends Model
       }
 
       //오픈예정 임시코드
-
       if($this->isWaitSaling())
       {
-        //return "자세한 일정 및 티켓 오픈은 2월중으로 공개 됩니다.";
-        return "추첨을 통해 ".$this->getTotalTicketLimitCount()."명이 참여 할 수 있는 이벤트 입니다.";
+        return "자세한 일정 및 티켓 오픈은 2월중으로 공개 됩니다.";
+        //return "추첨을 통해 ".$this->getTotalTicketLimitCount()."명이 참여 할 수 있는 이벤트 입니다.";
       }
 
 
@@ -500,8 +499,8 @@ class Project extends Model
       {
         if($this->isWaitSaling())
         {
-          $nowAmount = "오픈 예정일: ".$this->getStartSaleTime();//오픈예정 진짜코드
-          //$nowAmount = "오픈 예정입니다.";//오픈예정 임시코드
+          //$nowAmount = "오픈 예정일: ".$this->getStartSaleTime();//오픈예정 진짜코드
+          $nowAmount = "오픈 예정입니다.";//오픈예정 임시코드
         }
         else
         {

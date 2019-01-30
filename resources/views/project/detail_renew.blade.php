@@ -429,5 +429,5 @@ $selectedTicket = "";
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script src="{{ asset('/js/project/detail.js?version=17') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=18') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=19') }}"></script>
 @endsection
