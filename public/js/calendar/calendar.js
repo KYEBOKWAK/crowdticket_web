@@ -1142,7 +1142,8 @@ $(document).ready(function() {
   var selectCalendarTicket = function(){
     if($("#isWaitSaleTime").val() == true)
     {
-      var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";
+      //var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";//오픈예정 진짜코드
+      var waitTimeWord = "COMING SOON";//오픈예정 임시
       swal(waitTimeWord, "", "info");
       return;
     }

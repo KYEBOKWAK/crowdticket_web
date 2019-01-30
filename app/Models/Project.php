@@ -462,6 +462,12 @@ class Project extends Model
         return $mainExplain;
       }
 
+      //오픈예정 임시코드
+      if($this->isWaitSaling())
+      {
+        return "";
+      }
+
       //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명) //참여할 수 있는 이벤트 입니다.
 
       return $fundingEndTime . '까지 ' . $maxText. $pledgedTarget . $textEnd;
@@ -490,7 +496,8 @@ class Project extends Model
       {
         if($this->isWaitSaling())
         {
-          $nowAmount = "오픈 예정일: ".$this->getStartSaleTime();
+          //$nowAmount = "오픈 예정일: ".$this->getStartSaleTime();//오픈예정 진짜코드
+          $nowAmount = "오픈 예정입니다.";//오픈예정 임시코드
         }
         else
         {
