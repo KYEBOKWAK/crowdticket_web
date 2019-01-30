@@ -463,12 +463,13 @@ class Project extends Model
       }
 
       //오픈예정 임시코드
-      /*
+
       if($this->isWaitSaling())
       {
-        return "자세한 일정 및 티켓 오픈은 2월중으로 공개 됩니다.";
+        //return "자세한 일정 및 티켓 오픈은 2월중으로 공개 됩니다.";
+        return "추첨을 통해 ".$this->getTotalTicketLimitCount()."명이 참여 할 수 있는 이벤트 입니다.";
       }
-      */
+
 
 
       //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명) //참여할 수 있는 이벤트 입니다.
