@@ -562,6 +562,7 @@
   /*display: inline-table;*/
   flex-basis: 410px;
   flex-shrink: 0;
+  height: 100%;
 }
 
 #isMobile{
