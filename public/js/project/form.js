@@ -57,6 +57,7 @@ $(document).ready(function() {
 			'project_target': $('#project_target').val(),
 			'temporary_date': $('#temporary_date').val(),
 			'sale_start_at': getSaleStartTime(),
+			'picking_closing_at': getPickClosingDay()
 		}, isNext);
 	};
 
@@ -1281,6 +1282,15 @@ $(document).ready(function() {
 		return saleStartTime;
 	};
 
+	var getPickClosingDay = function(){
+		if(!$("#isPickType").val())
+		{
+			return '';
+		}
+
+		return $("#pickday_select").attr("pick-closing-at");
+	};
+
 	var performPosterTitleFileClick = function(){
 		var imgNumber = $(this).attr('data-img-number');
 		$('#title_img_file_'+imgNumber).trigger('click');
@@ -2228,12 +2238,17 @@ $(document).ready(function() {
 			//버튼
 			$('#fundingTypeButton').removeClass('project-form-required-type-button-select');
 			$('#saleTypeButton').addClass('project-form-required-type-button-select');
+			$('#pickTypeButton').removeClass('project-form-required-type-button-select');
 			//버튼텍스트
 			$( ".project_form_button_text_direct" ).each(function(){
 				$(this).addClass('project_form_button_select');
 			});
 
 			$( ".project_form_button_text_schedule" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_pick" ).each(function(){
 				$(this).removeClass('project_form_button_select');
 			});
 
@@ -2246,6 +2261,7 @@ $(document).ready(function() {
 			//버튼
 			$('#fundingTypeButton').addClass('project-form-required-type-button-select');
 			$('#saleTypeButton').removeClass('project-form-required-type-button-select');
+			$('#pickTypeButton').removeClass('project-form-required-type-button-select');
 			//버튼텍스트
 			$( ".project_form_button_text_direct" ).each(function(){
 				$(this).removeClass('project_form_button_select');
@@ -2255,8 +2271,36 @@ $(document).ready(function() {
 				$(this).addClass('project_form_button_select');
 			});
 
+			$( ".project_form_button_text_pick" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
 			//티켓팅일 경우 장소 보이게 한다.
 			$('#project_form_required_place_container').show();
+		}
+		else if(saleType == 'pick'){
+			/*
+			//버튼
+			$('#fundingTypeButton').removeClass('project-form-required-type-button-select');
+			$('#saleTypeButton').removeClass('project-form-required-type-button-select');
+			$('#pickTypeButton').addClass('project-form-required-type-button-select');
+			//버튼텍스트
+			$( ".project_form_button_text_direct" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_schedule" ).each(function(){
+				$(this).removeClass('project_form_button_select');
+			});
+
+			$( ".project_form_button_text_pick" ).each(function(){
+				$(this).addClass('project_form_button_select');
+			});
+
+			//티켓팅일 경우 장소 확정 후 안보이게 한다.
+			setIsPlace('TRUE');
+			$('#project_form_required_place_container').hide();
+			*/
 		}
 	};
 
@@ -2344,6 +2388,10 @@ $(document).ready(function() {
 		setSaleType('sale');
 	});
 
+	$('#pickTypeButton').bind('click', function(){
+		setSaleType('pick');
+	});
+
 	$('#placeDecideButton').bind('click', function(){
 		setIsPlace('TRUE');
 	});
@@ -2382,6 +2430,98 @@ $(document).ready(function() {
 			$(this).val(100);
 		}
 	});
+
+	//추첨 타입일 경우
+	var initPickTypeElement = function(){
+		if(!$("#isPickType").val())
+		{
+			return;
+		}
+
+		var closing_at = $("#funding_closing_at").val();
+		var selectPickDay = $("#pickday_select").attr("pick-closing-at");
+		if(selectPickDay)
+		{
+			var pickDayValue = getSubStartDayEndDay(closing_at, selectPickDay);
+			$("#pickday_select").val(pickDayValue);
+		}
+		//마감일 셋팅 해야함.
+
+		setPickDayElement();
+	};
+
+	var setPickDayElement = function(){
+			if(!$("#isPickType").val())
+			{
+				return;
+			}
+
+			var closing_at = $("#funding_closing_at").val();
+			if(!closing_at)
+			{
+				return;
+			}
+			var selectPickDay = $("#pickday_select").val();
+
+			var rawDate = closing_at.split(" ");
+		  var d = rawDate[0].split("-");
+		  //var t = rawDate[1].split(":");
+
+			var closeDay = new Date(d[0],(d[1]-1),d[2]);
+		  var pickPeriodDay = new Date(d[0],(d[1]-1),d[2]);
+
+			pickPeriodDay.setDate(pickPeriodDay.getDate() + Number(selectPickDay));
+
+		  var yyyy_pick = pickPeriodDay.getFullYear();
+		  var mm_pick = pickPeriodDay.getMonth() + 1;
+		  var dd_pick = pickPeriodDay.getDate();
+
+			var yyyy_close = closeDay.getFullYear();
+		  var mm_close = closeDay.getMonth() + 1;
+		  var dd_close = closeDay.getDate();
+
+			var payDay = pickPeriodDay;
+			payDay.setDate(payDay.getDate() + 1);
+
+			var yyyy_pay = payDay.getFullYear();
+		  var mm_pay = payDay.getMonth() + 1;
+		  var dd_pay = payDay.getDate();
+
+			mm_pick = getTwoNumberToOneNumber(mm_pick);
+			dd_pick = getTwoNumberToOneNumber(dd_pick);
+
+			mm_close = getTwoNumberToOneNumber(mm_close);
+			dd_close = getTwoNumberToOneNumber(dd_close);
+
+			mm_pay = getTwoNumberToOneNumber(mm_pay);
+			dd_pay = getTwoNumberToOneNumber(dd_pay);
+
+			//getSubStartDayEndDay(closeDay, pickPeriodDay);
+
+			$("#pick_day_period").text("추첨기간 : " + yyyy_close+"-"+mm_close+"-"+dd_close+" ~ "+yyyy_pick+"-"+mm_pick+"-"+dd_pick);
+			$("#pay_day_after_pick").text("결제일 : " + yyyy_pay+"-"+mm_pay+"-"+dd_pay+" 오후 1시");
+
+			$("#pickday_select").attr("pick-closing-at", yyyy_pick+"-"+mm_pick+"-"+dd_pick);
+
+	};
+
+	var selected_tab = $('#selected_tab').val();
+	if(selected_tab == 'base'){
+		if($("#isPickType").val())
+		{
+
+			initPickTypeElement();
+
+			$("#funding_closing_at").change(function(){
+				setPickDayElement();
+			});
+		}
+
+		$("#pickday_select").change(function(){
+			setPickDayElement();
+		});
+	}
+
 });
 //form_body_required END
 

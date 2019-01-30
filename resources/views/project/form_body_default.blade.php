@@ -205,6 +205,35 @@
       </div>
     </div>
 
+
+    @if($project->isPickType())
+    <!-- pick 타임 설정 -->
+      <div class="project_form_input_container">
+        <div class="flex_layer_project">
+          <p class="project-form-content-title">
+            추첨 기간 설정
+          </p>
+          <div class="project-form-content">
+            <div class="flex_layer">
+              <select id="pickday_select" pick-closing-at="{{$project->picking_closing_at}}" class="project_form_input_base project_form_delivery_time_wrapper" @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif>
+                   @for ($i = 1; $i < 8; $i++)
+                   <option value="{{ $i }}" value-data="{{ $i }}" @if(intval($project->getSaleStartTimeHour()) === $i) selected @endif>
+                      마감일 + {{ $i }} 일
+                   </option>
+                   @endfor
+               </select>
+            </div>
+            결제는 추첨일 종료 후 다음날 오후 1시에 결제 됩니다.
+            <div id="pick_day_period">
+            </div>
+            <div id="pay_day_after_pick">
+            </div>
+            티켓값 0원(무료) 시 결제가 진행되지 않습니다.
+          </div>
+        </div>
+      </div>
+    @endif
+
     <div class="project_form_button_wrapper">
       @if(!$project->isPublic())
         <div class="flex_layer">

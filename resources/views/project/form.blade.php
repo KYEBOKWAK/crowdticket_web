@@ -228,8 +228,10 @@ array_push($tabs, [
 <input type="hidden" id="selected_tab" value="{{$selected_tab}}"/>
 <input type="hidden" id="tabInfoJson" value="{{$tabInfoJson}}"/>
 
-<input id="project_target" type="hidden" name="project_target" value="{{ $project->project_target }}">
+<input id="project_target" type="hidden" name="project_target" value="{{ $project->project_target }}"/>
 <input id="isPlace" type="hidden" name="isPlace" value="{{ $project->isPlace }}"/>
+
+<input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
 
 <div class="project-create-form-container">
   <div class="project-form-tab-container">
@@ -291,7 +293,7 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=19') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=20') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>

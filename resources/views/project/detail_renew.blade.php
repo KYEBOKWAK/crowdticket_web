@@ -163,6 +163,9 @@ $selectedTicket = "";
 <input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
 <input type="hidden" id="isWaitSaleTime" value="{{ $project->isWaitSaling() }}" time-value="{{ $project->getStartSaleTime() }}">
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
+<input type="hidden" id="isPickingFinished" value="{{ $project->isFinishedAndPickingFinished() }}">
+<input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
+
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
       <div class="detail_width_wrapper">
@@ -209,13 +212,22 @@ $selectedTicket = "";
                   @if($project->isWaitSaling())
                     오픈 예정
                   @else
-                    @if($project->isEventTypeCrawlingEvent())
+                    @if($project->isPickType())
+                      @if($project->isFinishedAndPickingFinished())
+                        신청종료(추첨확정)
+                      @elseif($project->isFinished())
+                        신청이 마감되었습니다.
+                      @else
+                        신청가능
+                      @endif
+
+                    @elseif($project->isEventTypeCrawlingEvent())
                       진행중
                     @else
                       @if($project->isFinished())
                           종료됨
                       @else
-                      진행중
+                          진행중
                       @endif
                     @endif
                   @endif
@@ -230,7 +242,7 @@ $selectedTicket = "";
                 <h5 class="detail_main_guide_amount">
                   @if(!$project->isEventTypeCrawlingEvent())
                     {{ $project->getNowAmount() }}
-                    @if($project->isFundingType())
+                    @if($project->isFundingType() && !$project->isPickType())
                       <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
                     @endif
                   @endif
@@ -417,5 +429,5 @@ $selectedTicket = "";
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script src="{{ asset('/js/project/detail.js?version=17') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=16') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=17') }}"></script>
 @endsection

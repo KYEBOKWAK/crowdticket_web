@@ -89,6 +89,12 @@ if(isset($colOnly))
                                         @else
                                           {{ $project->getProgress() }}% 펀딩중
                                         @endif
+                                      @elseif($project->isPickType())
+                                        @if($project->isFinished())
+                                          신청종료
+                                        @else
+                                          신청가능
+                                        @endif
                                       @else
                                           @if($project->isEventTypeInvitationEvent())
                                             초대권 이벤트중

@@ -37,6 +37,36 @@ class ProjectController extends Controller
             $input['funding_closing_at'] = $closingDate . ' 23:59:59';
         }
 
+        if (isset($input['picking_closing_at'])) {
+          if($input['picking_closing_at'])
+          {
+            $pickingClosingDate = $input['picking_closing_at'];
+            $input['picking_closing_at'] = $pickingClosingDate . ' 23:59:59';
+          }
+          else
+          {
+            $input['picking_closing_at'] = null;
+          }
+        }
+
+        if(isset($input['sale_start_at']))
+        {
+          if(!$input['sale_start_at'])
+          {
+            $input['sale_start_at'] = null;
+          }
+        }
+
+        //해당 코드는 임시로 넣는다. event type을 프로젝트에서 수정할 수 있을때 해당 이슈도 같이 수정한다.
+        if(!$project->isPickType())
+        {
+          $project->picking_closing_at = null;
+        }
+        else
+        {
+          $project->type = "funding";
+        }
+
         $project->update($input);
 
         if ($request->has('category_id')) {

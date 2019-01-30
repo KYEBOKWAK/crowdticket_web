@@ -11,12 +11,13 @@ class Project extends Model
     const EVENT_TYPE_DEFAULT = 0; //기본 타입
     const EVENT_TYPE_INVITATION_EVENT = 1;   //이벤트 타입(초대권)
     const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
+    const EVENT_TYPE_PICK_EVENT = 3;  //크롤링된 이벤트
 
     protected static $fillableByState = [
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'sale_start_at', 'funding_closing_at', 'event_type'
+            'sale_start_at', 'funding_closing_at', 'picking_closing_at', 'event_type'
         ],
 
         Project::STATE_READY_AFTER_FUNDING => [
@@ -61,15 +62,6 @@ class Project extends Model
     {
       //return static::$fillableByState[$this->state];
         $this->fillable = static::$fillableByState[$this->state];
-
-        if(isset($attributes['sale_start_at']))
-        {
-          if(!$attributes['sale_start_at'])
-          {
-            $attributes['sale_start_at'] = null;
-          }  
-        }
-
         parent::update($attributes);
     }
 
@@ -220,6 +212,31 @@ class Project extends Model
             return strtotime($this->funding_closing_at) - time() < 0;
         }
         return true;
+    }
+
+    //종료후 picking도 종료 되었다.
+    public function isFinishedAndPickingFinished()
+    {
+      if(!$this->isFinished())
+      {
+        return false;
+      }
+
+      if(!$this->picking_closing_at)
+      {
+        return false;
+      }
+
+      $nowTimeUnix = time();
+
+      $pickClosingTimeUnix = strtotime($this->picking_closing_at);
+
+      if($nowTimeUnix > $pickClosingTimeUnix)
+      {
+        return true;
+      }
+
+      return false;
     }
 
     public function canOrder()
@@ -422,6 +439,29 @@ class Project extends Model
       $fundingEndTime = strtotime($this->funding_closing_at);
       $fundingEndTime = date('Y년 m월 d일', $fundingEndTime);
 
+      //if($this->type == "pick")
+      if($this->isPickType())
+      {
+        $pickingEndTime = strtotime($this->picking_closing_at);
+        $pickingEndTime = date('Y년 m월 d일', $pickingEndTime);
+        $mainExplain = '';
+
+        if($this->isFinishedAndPickingFinished())
+        {
+          $mainExplain = "추첨이 완료되어 이벤트가 종료되었습니다.";
+        }
+        else if($this->isFinished())
+        {
+          $mainExplain = $pickingEndTime . "까지 추첨이 진행됩니다.";
+        }
+        else
+        {
+          $mainExplain = $fundingEndTime . '까지 신청 가능합니다.';
+        }
+
+        return $mainExplain;
+      }
+
       //2018년 8월 31일 까지 최소 100명이 모여야 진행되는 이벤트입니다.(최대 200명) //참여할 수 있는 이벤트 입니다.
 
       return $fundingEndTime . '까지 ' . $maxText. $pledgedTarget . $textEnd;
@@ -473,10 +513,22 @@ class Project extends Model
               $nowAmount = "신청자 " . $totalFundingAmount . "명";
             }
           }
+
+          if($this->isPickType())
+          {
+            $nowAmount = "현재 신청 가능";
+
+            if($this->isFinishedAndPickingFinished())
+            {
+              $nowAmount = "추첨이 끝났습니다.";
+            }
+            else if($this->isFinished())
+            {
+              $nowAmount = "추첨중 입니다.";
+            }
+          }
         }
       }
-
-
 
       return $nowAmount;
     }
@@ -537,6 +589,12 @@ class Project extends Model
 
     public function isEventTypeCrawlingEvent(){
       return (int)$this->event_type === Project::EVENT_TYPE_CRAWLING;
+    }
+
+    public function isPickType()
+    {
+        //return $this->type === 'pick';
+        return (int)$this->event_type === Project::EVENT_TYPE_PICK_EVENT;
     }
 
     public function isSuccess()
@@ -800,6 +858,18 @@ class Project extends Model
         }
 
         return $time;
+    }
+
+    public function getClosingAt()
+    {
+      $closingAt = $this->funding_closing_at;
+
+      if($this->isPickType())
+      {
+        $closingAt = $this->picking_closing_at;
+      }
+
+      return $closingAt;
     }
 
 }

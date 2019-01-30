@@ -41,6 +41,12 @@
           <p class="project_form_button_text_direct project_form_button_title">일반 티켓팅(즉시 결제)</p>
           <p class="project_form_button_text_direct project_form_button_subtitle">(즉시결제)</p>
         </button>
+<!--
+        <button id="pickTypeButton" class="project-form-required-type-button">
+          <p class="project_form_button_text_pick project_form_button_title">추첨형 티켓팅</p>
+          <p class="project_form_button_text_pick project_form_button_subtitle">(예약결제, 당첨자만 결제됨)</p>
+        </button>
+      -->
       </div>
     </div>
 

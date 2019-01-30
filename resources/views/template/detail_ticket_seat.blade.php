@@ -3,7 +3,7 @@
     <button type="button" id="ticket_seat_btn<%=ticket.id%>" class="ticket_seat_btn <% if(isDetail == 'FALSE') { %> ticket_seat_btn_order <% } %>">
       <span class="ticket_time_text <% if(isDetail == 'FALSE') { %> ticket_time_text_order_category <% } %>"><%= ticketCategory %></span>
       <span class="ticket_time_text ticket_time_text_price <% if(isDetail == 'FALSE') { %> ticket_time_text_order_price <% } %>">
-        @if($project->isEventTypeDefault())
+        @if($project->isEventTypeDefault() || $project->isPickType())
           <% if(ticket.price == 0) { %>
             무료
           <% } else { %>
@@ -18,6 +18,8 @@
           @if($project->isEventTypeDefault())
             구매 가능한 수량 <%= addComma(amountTicketCount) %> 매
           @elseif($project->isEventTypeInvitationEvent())
+            신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
+          @else
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
           @endif
         </p>

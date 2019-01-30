@@ -292,21 +292,32 @@
             </h3>
           </div>
 
-          @if($project->type == 'funding')
+          @if($project->isFundingType())
             <?php
-            $funding_closing_date = new DateTime($project->funding_closing_at);
+            $funding_closing_date = new DateTime($project->getClosingAt());
             $funding_closing_date->modify('+1 day');
             $funding_pay_day = $funding_closing_date->format('Y-m-d');
             ?>
 
-            <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
-            <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
-              <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
-              <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
-              <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
-              <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
-              <h4><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
-            </div>
+            @if($project->isPickType())
+              <p class="order_form_title" style="margin-top: 10px; height:30px;">추첨 프로젝트에 관하여</p>
+              <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
+                <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
+                <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
+                <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
+                <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
+                <h4><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+              </div>
+            @else
+              <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
+              <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
+                <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
+                <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
+                <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
+                <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
+                <h4><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+              </div>
+            @endif
           @endif
         </div>
 

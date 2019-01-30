@@ -391,6 +391,35 @@ function showToast(level, message){
           toastr.error(message);
           break;
   }
+}
 
+function getTwoNumberToOneNumber(number)
+{
+  number = Number(number);
+
+  if(number < 10)
+  {
+    number = "0"+number;
+  }
+
+  return number;
+}
+
+function getSubStartDayEndDay(sDay, eDay)
+{
+  var _SDate = sDay; //yyyy-MM-dd or mm/dd/yyyy
+
+  var _EDate = eDay; //yyyy-MM-dd or mm/dd/yyyy
+
+  var	sDate = new Date(_SDate);
+
+  var	eDate = new Date(_EDate);
+
+  var oneDay = 24 * 60 * 60 * 1000;
+
+  var diffDays = Math.round(Math.abs((sDate.getTime() - eDate.getTime()) / (oneDay)));
+
+  return diffDays - 1;
+  //console.error(diffDays);
 
 }
