@@ -251,6 +251,7 @@
 
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script>
+
         $(document).ready(function () {
             $('.count-ani').counterUp({
                 delay: 10,
@@ -273,8 +274,50 @@
                 prevEl: '.carousel-button-prev',
               },
             });
+
+            //alert("사용자가 창 닫음.");
+
+            //$(window).bind('beforeunload', function(){
+            //    alert("aaa");
+            //});​
+
+
         });
 
+        window.onbeforeunload = function(e) {
+          /*
+          var projectId = 237;
+      		var url = '/projects/' + projectId + '/admin/test';
+      		var method = 'put';
+      		var success = function(request) {
+            console.error(request);
+      			//swal('사용가능한 주소입니다.', "", "success");
+      		};
+      		var error = function(request) {
+            console.error("error");
+      		};
+
+      		$.ajax({
+      			'url': url,
+      			'method': method,
+      			'success': success,
+      			'error': error
+      		});
+          */
+          //console.error("aaaa");
+          /*
+          console.error("aaaa");
+          var e = e || window.event;
+
+          // For IE and Firefox prior to version 4
+          if (e) {
+              e.returnValue = 'Any string';
+          }
+
+          // For Safari
+          return 'Any string';
+          */
+        }
     </script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
 @endsection

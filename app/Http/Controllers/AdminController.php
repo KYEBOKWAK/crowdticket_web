@@ -465,4 +465,127 @@ class AdminController extends Controller
 
       return view('template.orderfail', ['resultOrderList' => json_encode($iamPortResList), 'project' => $project]);
     }
+
+    public function getOrderStateInitCheck($projectId)
+    {
+      /*
+      $project = Project::find($projectId);
+
+      if(!$project)
+      {
+        return \Redirect::back();
+      }
+
+      $iamPortResList = [];
+
+      $iamPort = new IamPortApi();
+
+      $orders = $project->orders;
+
+      foreach($orders as $order)
+      {
+        if($order->state != Order::ORDER_STATE_STANDBY_START)
+        {
+          continue;
+        }
+
+        $resultOrder['name'] = $order->name;
+        $resultOrder['user_id'] = $order->user_id;
+        $resultOrder['contact'] = $order->contact;
+
+        $imp_meta = json_decode($order->imp_meta);
+
+        if($order->total_price == 0)
+        {
+          $resultOrder['orderstate'] = '가격 0원';
+          $resultOrder['failmessage'] = '가격 0원';
+
+          $order->setState(Order::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT);
+
+          $order->save();
+
+          $resultOrder['state'] = $order->state;
+
+          array_push($iamPortResList, $resultOrder);
+
+          continue;
+        }
+
+        if(!isset($imp_meta->merchant_uid))
+        {
+          $resultOrder['orderstate'] = 'imp정보없음';
+          $resultOrder['failmessage'] = 'imp정보없음';
+
+          $order->setState(Order::ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT);
+          $order->save();
+
+          $resultOrder['state'] = $order->state;
+
+          array_push($iamPortResList, $resultOrder);
+
+          continue;
+        }
+
+        $state = '';
+        $failmessage = '';
+        $res = '';
+        try{
+          $res = $iamPort->get('/payments/find/'.$imp_meta->merchant_uid.'/?sorting=-started');
+        }catch(\Exception $e){
+          //$failmessage = $e->getMessage();
+
+          if($imp_meta->serializer_uid == "scheduled")
+          {
+            $failmessage = '아직 결제 안됨(예약결제)';
+
+            $order->setState(Order::ORDER_STATE_PAY_SCHEDULE);
+          }
+          else
+          {
+            $failmessage = 'iamport 결제 정보 없음';
+
+            $order->setState(Order::ORDER_STATE_ERROR_NO_PAY_NO_IMP_INFO_NINETY_EIGHT);
+          }
+
+          $resultOrder['orderstate'] = $state;
+          $resultOrder['failmessage'] = $failmessage;
+
+          $order->save();
+
+          $resultOrder['state'] = $order->state;
+
+          array_push($iamPortResList, $resultOrder);
+
+          continue;
+        }
+
+        if($res->response)
+        {
+          $state = $res->response->status;
+
+          if($state != "paid")
+          {
+            $failmessage = $res->response->fail_reason;
+            $order->setState(Order::ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT);
+            $order->fail_message = $failmessage;
+          }
+          else
+          {
+            $order->setState(Order::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT);
+
+          }
+        }
+
+        $order->save();
+
+        $resultOrder['orderstate'] = $state;
+        $resultOrder['failmessage'] = $failmessage;
+        $resultOrder['state'] = $order->state;
+
+        array_push($iamPortResList, $resultOrder);
+      }
+
+      return view('template.adminjsonresult', ['resultOrderList' => json_encode($iamPortResList), 'project' => $project, 'title' => "오더 STATE 98 리스트"]);
+      */
+    }
 }

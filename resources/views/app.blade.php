@@ -120,7 +120,7 @@
     </script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ asset('/js/util_header.js?version=4') }}"></script>
+    <script src="{{ asset('/js/util_header.js?version=5') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->

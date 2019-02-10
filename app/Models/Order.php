@@ -15,6 +15,8 @@ class Order extends Model
     const ORDER_STATE_PAY_NO_PAYMENT = 2;   //order 는 들어갔지만, 결제 프로세를 안탐
     const ORDER_STATE_PAY_SCHEDULE = 3;
     const ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL = 4;
+    const ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT = 5; //98번 오더인데 결제 떨어짐.
+    //const ORDER_STATE_PAY_SUCCESS_SCHEDULE_NINETY_EIGHT = 6;
     const ORDER_STATE_STANDBY_START = 98;
     const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
@@ -29,9 +31,14 @@ class Order extends Model
     const ORDER_STATE_ERROR_PAY = 501;
     const ORDER_STATE_ERROR_NO_INFO_IAMPORT = 502;
     const ORDER_STATE_ERROR_TICKET_OVER_COUNT = 503;
+    const ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT = 504;  //98번 오더값인데 결제 정보가 없음(결제 안됨)
+    const ORDER_STATE_ERROR_NO_PAY_NO_IMP_INFO_NINETY_EIGHT = 505;  //98번 오더값인데 결제 정보가 없음(결제 안됨)
     const ORDER_STATE_ERROR_END = 600;
 
     const ORDER_STATE_STANDBY = 999;
+
+    //const ORDER_PROCESS_STATE_INIT = 1;
+    //const ORDER_PROCESS_STATE_ = 2;
 
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
@@ -91,6 +98,8 @@ class Order extends Model
         if ($this->getIsCancel()) {
             return false;
         }
+
+        //return true;
 //poster_url
         $project = $this->getProject();
         $dday = 0;
@@ -315,6 +324,10 @@ class Order extends Model
       {
         return '취소됨';
       }
+      else if($this->getState() == self::ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT)
+      {
+        return '결제실패(결제에러)';
+      }
       else if($this->getState() == self::ORDER_STATE_PROJECT_CANCEL)
       {
         return '목표 도달 실패';
@@ -327,9 +340,17 @@ class Order extends Model
       {
         return '결제실패(예약)';
       }
+      else if($this->getState() == self::ORDER_STATE_STANDBY_START)
+      {
+        return '결제에러';
+      }
       else if($this->getState() == self::ORDER_STATE_ERROR_PAY)
       {
         return '결제 에러';
+      }
+      else if($this->getState() == self::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT)
+      {
+        return '결제완료';
       }
 
 
@@ -350,6 +371,11 @@ class Order extends Model
       }
 
       return '결제완료';
+    }
+
+    public function isOrderStateStandbyStart()
+    {
+      return (int)$this->getState() === self::ORDER_STATE_STANDBY_START;
     }
 
     public function getIsCancel()

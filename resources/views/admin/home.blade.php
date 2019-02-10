@@ -99,7 +99,7 @@
                   </li>
                   <li role="presentation"><a href="#orderfail" aria-controls="orderfail" role="tab" data-toggle="tab">오더 실패 정보(예약결제 진행 후 해야함)</a>
                   </li>
-                  <li role="presentation"><a href="#eventtype" aria-controls="eventtype" role="tab" data-toggle="tab">이벤트타입 설정</a>
+                  <li role="presentation"><a href="#ordersync" aria-controls="eventtype" role="tab" data-toggle="tab">오더 싱크(98 state 체크)</a>
                   </li>
               </ul>
               <div class="tab-content">
@@ -316,7 +316,17 @@
                   </ul>
 
                   <!-- 이벤트타입 설정 -->
-                  <ul id="eventtype" role="tabpanel" class="tab-pane">
+                  <ul id="ordersync" role="tabpanel" class="tab-pane">
+                    @foreach($allprojects as $project)
+                      <li class="list-group-item">
+                          <b>{{ $project->title }}</b> | {{$project->id}} <br>
+                            <form id="form_admin_order_init_check{{$project->id}}" action="{{ url(sprintf('/admin/projects/%d/orderinitstatecheck', $project->id)) }}" method="get">
+                              <button id="form_admin_order_init_check_button" class="form_admin_order_init_check_button" project_id="{{$project->id}}" type="button" class="btn btn-danger">오더state 98 체크</button>
+                              <input type="hidden" name="_method" value="GET">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            </form>
+                      </li>
+                    @endforeach
                   </ul>
 
               </div>
@@ -378,7 +388,14 @@ $(document).ready(function() {
     var projectId = $(this).attr('project_id');
     var formName = "#form_admin_order_fail_check"+projectId;
     $(formName).submit();
-    //$('.form_send_mail_fail_event').submit();
+  });
+
+  $('.form_admin_order_init_check_button').click(function(){
+    showLoadPage();
+
+    var projectId = $(this).attr('project_id');
+    var formName = "#form_admin_order_init_check"+projectId;
+    $(formName).submit();
   });
 
 

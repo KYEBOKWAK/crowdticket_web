@@ -82,19 +82,20 @@ if(isset($colOnly))
                                     @if($project->isWaitSaling())
                                       오픈 예정
                                     @else
-                                      @if($project->isFundingType())
+                                      @if($project->isPickType())
+                                        @if($project->isFinished())
+                                          신청종료
+                                        @else
+                                          신청가능
+                                        @endif
+                                      @elseif($project->isFundingType())
                                         @if($project->isReady())
                                         @elseif($project->isFinished())
                                           {{ $project->getProgress() }}% 펀딩종료
                                         @else
                                           {{ $project->getProgress() }}% 펀딩중
                                         @endif
-                                      @elseif($project->isPickType())
-                                        @if($project->isFinished())
-                                          신청종료
-                                        @else
-                                          신청가능
-                                        @endif
+
                                       @else
                                           @if($project->isEventTypeInvitationEvent())
                                             초대권 이벤트중

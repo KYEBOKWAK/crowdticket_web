@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
     <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
     <style>
+        body {
+          padding-right: 0 !important;
+        }
         .ps-section-title {
             font-weight: bold;
             font-size: 19px;
@@ -68,6 +71,10 @@
 
         .ps-tooltip {
             margin-top: 1em;
+        }
+        .swal2-icon.swal2-success {
+          border-color: #ef4d5d !important;
+          color: #ef4d5d !important;
         }
     </style>
 @endsection
@@ -382,7 +389,7 @@
                   </select>
                   <select id="expiry_year" name="expiry_year" class="form-control" required="required">
                       <option selected disabled>yyyy</option>
-                      @for ($i = 2018; $i <= 2030; $i++)
+                      @for ($i = 2018; $i <= 2031; $i++)
                           <option value="{{ $i }}">{{ $i }}</option>
                       @endfor
                   </select>
@@ -485,10 +492,15 @@
                   @endif
                 @elseif($project->isEventTypeInvitationEvent())
                   <button class="btn btn-muted" disabled="disabled">취소됨</button>
+                @else
+                  <button class="btn btn-muted" disabled="disabled">취소됨</button>
                 @endif
             @else
-                @if ($order->canCancel())
-                  @if($project->isEventTypeDefault())
+                @if($order->isOrderStateStandbyStart())
+                  <button class="btn btn-muted" disabled="disabled">결제 에러</button>
+                  <p>카드 결제가 진행된 경우 크라우드티켓으로 연락주세요.</p>
+                @elseif ($order->canCancel())
+                  @if($project->isEventTypeDefault() || $project->isPickType())
                     @if ($project->type === 'funding')
                         <button class="btn btn-danger">취소하기</button>
                     @else
@@ -504,7 +516,7 @@
                     <button class="btn btn-danger">취소하기</button>
                   @endif
                 @else
-                  @if($project->isEventTypeDefault())
+                  @if($project->isEventTypeDefault() || $project->isPickType())
                     @if ($project->type === 'funding')
                         <button class="btn btn-muted" disabled="disabled">취소불가</button>
                         <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
@@ -535,6 +547,7 @@
 @section('js')
     @include('template.order.form_goods_price')
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
         $(document).ready(function () {
           var g_ticketPrice = 0;
@@ -555,6 +568,8 @@
           {
             g_isGetOrderForm = true;
           }
+
+          var isSubmitWaiting = false;
 
           $("#postcodify_search_button").postcodifyPopUp();
             $('#postcodify_search_button_fake').bind('click', function () {
@@ -814,7 +829,149 @@
             return totalPrice;
           };
 
-          var isSubmit = false;
+          //var startPaying = false;
+
+          window.onbeforeunload = function(e) {
+            if(!isSubmitWaiting)
+            {
+              if(!g_isGetOrderForm)
+              {
+                return "해당 페이지를 벗어나면 결제가 실패할 수 있습니다.";
+              }
+            }
+          }
+
+          $('#ticketSubmitPayForm').ajaxForm({
+            beforeSerialize: function(){
+             // form을 직렬화하기전 엘레먼트의 속성을 수정할 수도 있다.
+            },
+            beforeSubmit : function() {
+            //action에 걸어주었던 링크로 가기전에 실행 ex)로딩중 표시를 넣을수도 있다.
+            },
+
+            success : function(data) {
+               //컨트롤러 실행 후 성공시 넘어옴
+               if(data.orderResultType == "orderResultSuccess")
+               {
+                //console.error("등록완료 ! " + data.isSuccess + "//"+ data.orderId);
+                var base_url = window.location.origin;
+
+              	var url = base_url+'/tickets/'+data.orderId+'/completeorder';
+
+                Swal.close();
+                Swal.fire({
+                  type: 'success',
+                  title: '결제 성공!',
+                  html: '결제가 정상적으로 처리되었습니다. <br> 잠시만 기다려주세요.',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  timer: 3000,
+                  onBeforeOpen: function(){
+                    Swal.showLoading();
+                  },
+                }).then(function(){
+                  window.location.href = url;
+                });
+               }
+               else if(data.orderResultType == "orderResultFailOverCount")
+               {
+                 var base_url = window.location.origin;
+
+               	var url = base_url+'/tickets/overcounterorder';
+
+               	window.location.href = url;
+               }
+               else if(data.orderResultType == "orderResultCancelSuccess")
+               {
+                 Swal.close();
+                 Swal.fire({
+                   title: '취소 성공',
+                   html: data.eMessage,
+                 }).then(function(){
+                   location.reload(true);
+                 });
+               }
+               else if(data.orderResultType == "orderResultNotCancel" ||
+                      data.orderResultType == "orderResultErrorCancel")
+               {
+                 Swal.close();
+                 Swal.fire({
+                   title: '취소 실패',
+                   html: data.eMessage,
+                 });
+               }
+               else
+               {
+                 //console.error("등록실패!! ! " + data.isSuccess + "//"+ data.orderId);
+                 Swal.close();
+                 Swal.fire({
+                   title: '결제 실패',
+                   html: data.eMessage,
+                 });
+               }
+            },
+
+            error : function(data) {
+                //console.error("에러 ! " + data);
+            },
+          });
+
+          var showPayingAlert = function(){
+            var timerInterval;
+            Swal.fire({
+              title: "결제 진행중",
+              html: '최대 30초 정도 소요 됩니다.<br>페이지를 닫거나 새로고침시 오류가 발생할 수 있습니다.<br><strong></strong>',
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+              width: '80%',
+              //timer: 5000,
+              //timer: 5000,
+              //timer 3초 정도가 slow 적용할때 테스트 함.
+              timer: 30000,
+              onBeforeOpen: function(){
+
+                isSubmitWaiting = true;
+
+                Swal.showLoading();
+                timerInterval = setInterval(() => {
+                  Swal.getContent().querySelector('strong')
+                    .textContent = Swal.getTimerLeft()
+                }, 100);
+
+
+                $('#ticketSubmitPayForm').submit();
+
+                console.error("onBeforeOpen");
+
+              },
+              onClose: function(){
+                console.error("onClose");
+                clearInterval(timerInterval)
+              },
+
+              onAfterClose: function(){
+                console.error("onAfterClose");
+              },
+            }).then(function(result){
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.error('I was closed by the timer');
+                //window.location.href = baseUrl + '/projects/' + projectId + '/admin/test';
+                Swal.close();
+                Swal.fire({
+                  title: '결제 시간 초과',
+                  html: '인터넷 오류로 인해 결제가 비정상적으로 처리되었습니다.<br> 결제 확인란에서 ',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                }).then(function(){
+                  //history.back();
+                });
+              }
+              else
+              {
+                console.error("after then");
+              }
+            });
+          };
 
           $('#ticketing-btn-payment').click(function(){
 
@@ -891,24 +1048,25 @@
 
             if(!$('#refund_apply').is(":checked"))
             {
-              swal("이용 정책에 동의 해주세요.", "", "warning");
+              Swal.fire("이용 정책에 동의 해주세요.", "", "warning");
               return;
             }
 
             if(!$('#policy_apply').is(":checked"))
             {
-              swal("이용 약관에 동의 해주세요.", "", "warning");
+              Swal.fire("이용 약관에 동의 해주세요.", "", "warning");
               return;
             }
 
-            if(isSubmit == false)
-            {
-              isSubmit = true;
-              loadingProcess($('#ticketing-btn-payment'));
-              $('#ticketSubmitPayForm').submit();
-            }
-          });
+            //if(isSubmit == false)
+            //{
+              //isSubmit = true;
 
+              showPayingAlert();
+              //loadingProcess($('#ticketing-btn-payment'));
+              //$('#ticketSubmitPayForm').submit();
+            //}
+          });
 
 
           $('#placeReceive').bind('click', function () {

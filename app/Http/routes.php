@@ -67,6 +67,9 @@ Route::get('{entity}/{id}/comments', 'CommentController@getComments');
 
 Route::get('users/{id}', 'UserController@getUser');
 
+//test URL
+Route::get('projects/{id}/admin/test', 'ProjectController@test');
+
 /*
 Route::get('order/error/overticketcount', function(){
   return view('errors.overcounter_ticket');
@@ -134,6 +137,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('tickets/{id}/orders', 'OrderController@createOrder');
     //Route::post('tickets/{id}/neworders', 'OrderController@createNewOrder');
     Route::post('tickets/neworders', 'OrderController@createNewOrder');
+
+    //티켓 구매 성공시
+    Route::get('tickets/{id}/completeorder', 'OrderController@completeOrder');
+
+    //티켓 매진시
+    Route::get('tickets/overcounterorder', 'OrderController@overCounterOrder');
+
     Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
     //Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
     Route::post('tickets/orders/form', 'OrderController@getOrderForm');
@@ -181,4 +191,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //예약결제 결좌 처리하기
     Route::get('projects/{id}/orderfailcheck', 'AdminController@getOrderIamPortScheduleFail');
+
+    //오더 98번 체크
+    Route::get('projects/{id}/orderinitstatecheck', 'AdminController@getOrderStateInitCheck');
 });
