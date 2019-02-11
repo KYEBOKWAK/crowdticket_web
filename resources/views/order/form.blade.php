@@ -324,16 +324,23 @@
             $funding_closing_date = new DateTime($project->getClosingAt());
             $funding_closing_date->modify('+1 day');
             $funding_pay_day = $funding_closing_date->format('Y-m-d');
+
+            $pickingEndTime = new DateTime($project->getClosingAt());
+            $pickingEndTime = $pickingEndTime->format('Y-m-d');
+
+            $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
+            $funding_closing_date_without_time = $funding_closing_date_without_time->format('Y-m-d');
             ?>
 
             @if($project->isPickType())
               <p class="order_form_title" style="margin-top: 10px; height:30px;">추첨 프로젝트에 관하여</p>
               <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
-                <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다</u>
-                <p style="margin-top:6px">1. {{ $project->title }}은 목표에 도달한 경우에 한하여 {{ $funding_pay_day }} 1PM 에 결제가 진행되는 프로젝트 입니다.</p>
-                <p>2. 목표에 달성하지 않을 경우 아무 일도 일어나지 않습니다.</p>
-                <p>3. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
-                <h4><u>프로젝트가 목표에 성공하면, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+                <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다.</u>
+                <p style="margin-top:6px">1. 당첨자는 {{$project->getPickStartTime()}} ~ {{$pickingEndTime}} 해당 기간에 확정 됩니다.</p>
+                <p>2. 당첨이 되지 않으면 결제가 진행되지 않습니다.</p>
+                <p>3. 당첨 여부는 [추첨확정일] 이후에 우측상단 결제내역을 확인 해주세요.</p>
+                <p>4. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
+                <h4><u>당첨자에 한하여, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
               </div>
             @else
               <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
@@ -461,6 +468,8 @@
                 환불 정책
               @elseif($project->isEventTypeInvitationEvent())
                 초대권 신청 정책
+              @else
+                환불 정책
               @endif
             </h4>
             <div class="order_form_conform_container_grid_rows">
@@ -480,6 +489,11 @@
                 <p style="margin-top:10px;">1. 초대권 신청은 티켓 예매가 아닙니다. <b>신청 후 당첨이 되어야만 티켓을 받으실 수 있습니다.</b></p>
                 <p>2. 초대권 신청 내역 확인 및 취소는 오른쪽 상단 '결제확인' 탭에서 하실 수 있습니다.</p>
                 <p>3. 초대권의 판매, 양도, 및 교환은 금지되어 있으며 이를 위반하여 발생하는 불이익에 대하여 크라우드티켓에서는 책임을 지지 않습니다.</p>
+              @elseif($project->isPickType())
+                <p style="margin-top:10px;">1. 본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
+                <p> * 참여 취소 및 환불 불가능 : {{$funding_closing_date_without_time}} 이후</p>
+                <!--<p><b>추첨일 이후에 당첨이 확정되면 환불이 불가능합니다.</b></p>-->
+                <p><b>추첨이 시작되면 취소 및 환불이 불가능합니다.</b></p>
               @endif
             </div>
           </div>
