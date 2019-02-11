@@ -1059,6 +1059,11 @@ class ProjectController extends Controller
       //return "unAttended";
     }
 
+    public function getPicking($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+    }
+
     public function test($projectId)
     {
       return view('test', [

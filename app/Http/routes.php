@@ -166,6 +166,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('projects/{id}/attend', 'ProjectController@getAttend');
     Route::get('projects/{id}/attend/{timeunix}', 'ProjectController@getAttendedList');
+
+    Route::get('projects/{id}/picking', 'ProjectController@getPicking');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

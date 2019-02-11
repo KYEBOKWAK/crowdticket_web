@@ -189,6 +189,26 @@
           </div>
         @endif
 
+        @if($project->isPickType())
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
+            <h3>
+            사연란
+            </h3>
+          </div>
+            <p class="help-block">사연을 써주세요.</p>
+
+            @if($order)
+              <textarea id="order_story" name="order_story" class="form-control" readonly="readonly">{{ $order->order_story }}</textarea>
+            @else
+              <textarea id="order_story" name="order_story" class="form-control" maxlength="200"></textarea>
+            @endif
+            <p>
+            <span >200자 내로 작성해주세요.  </span> <b><span class="order_storyLength project_form_length_text">0/200</span></b>
+          </p>
+        </div>
+        @endif
+
         @if($project->isDelivery == "TRUE")
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -1124,6 +1144,8 @@
               $('#placeReceive').prop("checked", true);
             }
           }
+
+          isWordLengthCheck($("#order_story"), $(".order_storyLength"));
       });
     </script>
 @endsection

@@ -11,7 +11,7 @@ class Project extends Model
     const EVENT_TYPE_DEFAULT = 0; //기본 타입
     const EVENT_TYPE_INVITATION_EVENT = 1;   //이벤트 타입(초대권)
     const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
-    const EVENT_TYPE_PICK_EVENT = 3;  //크롤링된 이벤트
+    const EVENT_TYPE_PICK_EVENT = 3;  //pick 이벤트
 
     protected static $fillableByState = [
         Project::STATE_READY => [
@@ -632,9 +632,20 @@ class Project extends Model
 
     public function getFundingOrderConcludeAt()
     {
-        $nextDay = strtotime("+1 day", strtotime($this->funding_closing_at));
-        $ymd = date("Y-m-d", $nextDay);
-        return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
+      $closing_at = $this->funding_closing_at;
+      if($this->isPickType())
+      {
+        //pick 타입 이여도 피킹 closing 타임이 없으면 펀딩 클로딩 at으로 값 사용
+        if($this->picking_closing_at)
+        {
+          $closing_at = $this->picking_closing_at;
+        }
+      }
+
+      //$nextDay = strtotime("+1 day", strtotime($this->funding_closing_at));
+      $nextDay = strtotime("+1 day", strtotime($closing_at));
+      $ymd = date("Y-m-d", $nextDay);
+      return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
     }
 
     public function isFundingType()

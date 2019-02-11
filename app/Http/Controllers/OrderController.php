@@ -1161,7 +1161,7 @@ class OrderController extends Controller
         $inputs = Input::only(
             [
                 'name', 'contact', 'email',
-                'postcode', 'address_main', 'address_detail', 'requirement', 'answer'
+                'postcode', 'address_main', 'address_detail', 'requirement', 'answer', 'order_story'
             ]
         );
         $inputs['price'] = $this->getOrderUnitPrice();
