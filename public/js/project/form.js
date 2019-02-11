@@ -2431,6 +2431,33 @@ $(document).ready(function() {
 		}
 	});
 
+	var getPickStartDay = function(){
+		if(!$("#isPickType").val())
+		{
+			return '';
+		}
+
+		var closing_at = $("#funding_closing_at").val();
+		if(!closing_at)
+		{
+			return '';
+		}
+
+		var rawDate = closing_at.split(" ");
+		var d = rawDate[0].split("-");
+
+		//var closeDay = new Date(d[0],(d[1]-1),d[2]);
+		var pickStartDay = new Date(d[0],(d[1]-1),d[2]);
+
+		pickStartDay.setDate(pickStartDay.getDate() + 1);
+
+		var yyyy_pick = pickStartDay.getFullYear();
+		var mm_pick = pickStartDay.getMonth() + 1;
+		var dd_pick = pickStartDay.getDate();
+
+		return yyyy_pick+"-"+mm_pick+"-"+dd_pick;
+	};
+
 	//추첨 타입일 경우
 	var initPickTypeElement = function(){
 		if(!$("#isPickType").val())
@@ -2438,7 +2465,8 @@ $(document).ready(function() {
 			return;
 		}
 
-		var closing_at = $("#funding_closing_at").val();
+		//var closing_at = $("#funding_closing_at").val();
+		var closing_at = getPickStartDay();
 		var selectPickDay = $("#pickday_select").attr("pick-closing-at");
 		if(selectPickDay)
 		{
@@ -2456,7 +2484,9 @@ $(document).ready(function() {
 				return;
 			}
 
-			var closing_at = $("#funding_closing_at").val();
+			//var closing_at = $("#funding_closing_at").val();
+			//var closing_at = getPickStartDay();
+			var closing_at = getPickStartDay();
 			if(!closing_at)
 			{
 				return;
@@ -2465,7 +2495,6 @@ $(document).ready(function() {
 
 			var rawDate = closing_at.split(" ");
 		  var d = rawDate[0].split("-");
-		  //var t = rawDate[1].split(":");
 
 			var closeDay = new Date(d[0],(d[1]-1),d[2]);
 		  var pickPeriodDay = new Date(d[0],(d[1]-1),d[2]);

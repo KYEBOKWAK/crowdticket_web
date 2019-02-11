@@ -893,4 +893,21 @@ class Project extends Model
       return $closingAt;
     }
 
+    public function getPickStartTime()
+    {
+      /*
+      if(!$this->isPickType())
+      {
+        return '';
+      }
+
+
+      $nextDay = strtotime("+1 day", strtotime($this->funding_closing_at));
+      $ymd = date("Y-m-d", $nextDay);
+
+      date('Y-m-d H:i:s', strtotime($ymd . ' 00:00:00'));
+      //return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
+      */
+    }
+
 }
