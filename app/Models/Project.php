@@ -806,7 +806,16 @@ class Project extends Model
         foreach($orders as $order)
         {
           $totalPrice = $order->total_price;
-          $commission = $order->count * 500;
+
+          $commission = 0;
+
+          if($order->ticket)
+          {
+            if($order->ticket->price > 0)
+            {
+              $commission = $order->count * 500;
+            }
+          }
 
           $totalFundingAmount += $totalPrice - $commission;
         }
