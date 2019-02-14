@@ -954,13 +954,10 @@
             //var timerInterval;
             Swal.fire({
               title: "결제 진행중",
-              html: '최대 30초 정도 소요 됩니다.<br>페이지를 닫거나 새로고침시 오류가 발생할 수 있습니다.<br><strong></strong>',
+              html: '최대 30초 정도 소요 됩니다.<br>페이지를 닫거나 새로고침시 오류가 발생할 수 있습니다.',
               allowOutsideClick: false,
               allowEscapeKey: false,
               width: '80%',
-              //timer: 5000,
-              //timer: 5000,
-              //timer 3초 정도가 slow 적용할때 테스트 함.
               timer: 30000,
               onBeforeOpen: function(){
 
