@@ -951,7 +951,7 @@
           });
 
           var showPayingAlert = function(){
-            var timerInterval;
+            //var timerInterval;
             Swal.fire({
               title: "결제 진행중",
               html: '최대 30초 정도 소요 됩니다.<br>페이지를 닫거나 새로고침시 오류가 발생할 수 있습니다.<br><strong></strong>',
@@ -967,10 +967,13 @@
                 isSubmitWaiting = true;
 
                 Swal.showLoading();
+
+                /*
                 timerInterval = setInterval(() => {
                   Swal.getContent().querySelector('strong')
                     .textContent = Swal.getTimerLeft()
                 }, 100);
+                */
 
 
                 $('#ticketSubmitPayForm').submit();
@@ -980,7 +983,7 @@
               },
               onClose: function(){
                 console.error("onClose");
-                clearInterval(timerInterval)
+                //clearInterval(timerInterval)
               },
 
               onAfterClose: function(){
@@ -993,7 +996,7 @@
                 Swal.close();
                 Swal.fire({
                   title: '결제 시간 초과',
-                  html: '인터넷 오류로 인해 결제가 비정상적으로 처리되었습니다.<br> 결제 확인란에서 ',
+                  html: '인터넷 오류로 인해 결제가 비정상적으로 처리되었습니다.<br> 결제 확인란에서 결제 상태를 확인해주세요.',
                   allowOutsideClick: false,
                   allowEscapeKey: false,
                 }).then(function(){
