@@ -1189,6 +1189,11 @@ class OrderController extends Controller
         if ($inputs['answer'] === null) {
             $inputs['answer'] = '';
         }
+
+        if ($inputs['order_story'] === null) {
+            $inputs['order_story'] = '';
+        }
+
         return $inputs;
 
     }
