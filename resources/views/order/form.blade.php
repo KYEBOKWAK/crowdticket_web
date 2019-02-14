@@ -1043,9 +1043,11 @@
             if(getTitalPrice() > 0)
             {
               //구매 가격이 있을때만 체크한다.
-              if(!$('#order-card-number').val())
+
+              if(!isCheckOnlyNumber($('#order-card-number').val()))
               {
-                alert("카드 번호를 입력해주세요.");
+                //alert("카드 번호를 입력해주세요.");
+                alert("카드 번호가 잘못 입력되었습니다.");
                 return;
               }
 
@@ -1061,9 +1063,9 @@
                 return;
               }
 
-              if(!$('#order-birth').val())
+              if(!isCheckOnlyNumber($('#order-birth').val()))
               {
-                alert("생년월일(법인등록번호)를 입력해주세요.");
+                alert("생년월일(법인등록번호)가 잘못 입력되었습니다.");
                 return;
               }
 

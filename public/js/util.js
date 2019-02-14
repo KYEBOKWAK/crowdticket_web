@@ -78,6 +78,17 @@ function isCheckPhoneNumber(phoneNumber){
   return true;
 }
 
+function isCheckOnlyNumber(phoneNumber){
+  var regExp = /^[0-9]+$/;
+  if(!regExp.test(phoneNumber))
+  {
+   //alert("숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
+   return false;
+  }
+
+  return true;
+}
+
 function isCheckEmail(email){
   var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   if(!regExpEmail.test(email))
