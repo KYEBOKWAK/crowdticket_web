@@ -1062,6 +1062,52 @@ class ProjectController extends Controller
     public function getPicking($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
+      $orders = $project->getOrdersWithoutPick();
+
+      //주문자 정보 START
+      $pickingArray = $project->getOrdersWithPick();
+      //최종 정리된 타임을 기준으로 주문자를 정렬한다.
+
+      $ordersJson = json_encode($orders);
+      $pickingJson = json_encode($pickingArray);
+
+      return view('project.picking', [
+          'project' => $project,
+          'orderList' => $ordersJson,
+          'pickingOldList' => $pickingJson
+      ]);
+    }
+
+    public function pickingComplete($projectId)
+    {
+      /*
+      $project = $this->getSecureProjectById($projectId);
+
+      if ($project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+          $pickingOrders = $project->getOrdersWithPick();
+          foreach ($pickingOrders as $order) {
+              app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_CANCEL,true);
+          }
+      }
+      */
+    }
+
+    public function addPicking($projectId, $orderId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+      $order = Order::findOrFail($orderId);
+
+      $order->is_pick = "PICK";
+      $order->save();
+    }
+
+    public function deletePicking($projectId, $orderId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+      $order = Order::findOrFail($orderId);
+
+      $order->is_pick = "";
+      $order->save();
     }
 
     public function test($projectId)

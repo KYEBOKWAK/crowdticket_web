@@ -168,6 +168,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/{id}/attend/{timeunix}', 'ProjectController@getAttendedList');
 
     Route::get('projects/{id}/picking', 'ProjectController@getPicking');
+    Route::get('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
+    Route::post('projects/{id}/addpicking/{orderid}', 'ProjectController@addPicking');
+    Route::delete('projects/{id}/deletepicking/{orderid}', 'ProjectController@deletePicking');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

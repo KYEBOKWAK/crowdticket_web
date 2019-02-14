@@ -171,6 +171,16 @@ class Project extends Model
         return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END);
     }
 
+    public function getOrdersWithoutPick()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->get();
+    }
+
+    public function getOrdersWithPick()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '!=', '')->get();
+    }
+
     public function ordersAll()
     {
       return $this->hasMany('App\Models\Order');

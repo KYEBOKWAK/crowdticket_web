@@ -1,0 +1,458 @@
+@extends('app')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('/css/lib/table/tabulator.css') }}">
+    <style>
+
+
+        #picking_container{
+          width: 605px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @media (max-width: 605px)
+        {
+          #picking_container{
+            width: 100%;
+          }
+          /*
+          body{
+            width: 900px;
+          }
+          */
+        }
+
+        #order_supervise_container{
+          width: 900px;
+          /*width: 100%;*/
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        #orders_container{
+          /*width: 80%;*/
+          /*width: 605px;*/
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        #pick_list_container{
+          /*width: 80%;*/
+          /*width: 605px;*/
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        #pick_list_counter{
+          text-align: right;
+        }
+
+        .first-container .row {
+            padding: 30px;
+        }
+
+        .ps-ticket-order {
+            margin-bottom: 60px;
+        }
+
+        .table thead {
+            font-weight: bold;
+        }
+
+        .order_supervise_list{
+          margin-bottom: 30px;
+          background-color: white;
+        }
+/*
+        .order_supervise_all_list{
+          max-height: 300px;
+        }
+  */
+
+        .order_collapse_rows{
+          width: 50%;
+          margin-bottom: 10px;
+          padding-bottom: 5px;
+          border-bottom: 1px dashed;
+        }
+
+        .order_collapse_value{
+          text-align: right;
+          margin-left: auto;
+        }
+
+        .order_supervise_list_event_start{
+          font-size: 15px;
+          font-weight: 900;
+          margin-bottom: 5px;
+        }
+
+        #download_excel{
+          height: 21px;
+          font-size: 12px;
+          background-color: white;
+        }
+
+        #export_table{
+          display: none;
+        }
+    </style>
+@endsection
+
+@section('content')
+
+    <?php
+    $goodsList = $project->goods;
+
+    //$testa = $test;
+    //$testa = json_decode($testa, false);
+    ?>
+<input id="orderList" type="hidden" value="{{$orderList}}"/>
+<input id="pickingOldList" type="hidden" value="{{$pickingOldList}}"/>
+
+    @include('helper.btn_admin', ['project' => $project])
+
+    <div class="first-container container">
+        <div class="row">
+            <h2 class="text-center text-important">추첨 하기</h2>
+        </div>
+
+    </div>
+
+    <div id="picking_container">
+      <p id="pick_list_counter">추첨된 인원수 : 0명</p>
+      <div id="pick_list_container">
+      </div>
+
+      <div id="orders_container">
+      </div>
+    </div>
+
+@endsection
+
+@section('js')
+
+<script type="text/javascript" src="{{ asset('/js/lib/table/tabulator.min.js') }}"></script>
+
+<script>
+  $(document).ready(function () {
+    var orders_json = $('#orderList').val();
+    var orders = null;
+    if(orders_json)
+    {
+      orders = $.parseJSON(orders_json);
+    }
+
+    var picking_old_json = $('#pickingOldList').val();
+    var picking_old_list = null;
+    if(picking_old_json)
+    {
+      picking_old_list = $.parseJSON(picking_old_json);
+    }
+
+    //console.error(picking_old_list);
+
+    var isWorkedCollapse = false;
+    var isWorkedCollapsePick = false;
+
+    var pickIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<button>추첨하기</button>";
+    };
+
+    var unpickIcon = function(cell, formatterParams, onRendered){ //plain text value
+        return "<button>추첨빼기</button>";
+    };
+
+    var columnsInfo = [
+        {formatter:"responsiveCollapse", field:"plus", width:30, minWidth:30, align:"center", resizable:false, headerSort:false, cellClick:function(e, cell){
+          isWorkedCollapse = true;
+        }},
+
+        {title:"추첨하기", field:"pick", align:"center",formatter:pickIcon, width:103},
+        {title:"이름", field:"name", align:"center", width:103},
+        {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
+        {title:"이메일", field:"email", align:"center", width:221},
+        {title:"전화번호", field:"contact", align:"center", width:151},
+        {title:"사연", field:"order_story", align:"center", width:151},
+    ];
+
+    var columnsPickInfo = [
+        {formatter:"responsiveCollapse", field:"plus", width:30, minWidth:30, align:"center", resizable:false, headerSort:false, cellClick:function(e, cell){
+          isWorkedCollapsePick = true;
+        }},
+
+        {title:"추첨빼기", field:"unpick", align:"center",formatter:unpickIcon, width:103},
+        {title:"이름", field:"name", align:"center", width:103},
+        {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
+        {title:"이메일", field:"email", align:"center", width:221},
+        {title:"전화번호", field:"contact", align:"center", width:151},
+        {title:"사연", field:"order_story", align:"center", width:151},
+    ];
+
+    ///////////table 값 셋팅
+    var tableDataArray = new Array();
+    var tablePickDataArray = new Array();
+
+    for(var i = 0 ; i < orders.length ; i++)
+    {
+      var order = orders[i];
+
+      var orderObject = new Object();
+      orderObject = order;
+
+      orderObject.order_id = order.id;
+      //orderObject.id = i + 1;
+
+      tableDataArray.push(orderObject);
+    }
+
+    for(var i = 0 ; i < picking_old_list.length ; i++)
+    {
+      var order = picking_old_list[i];
+
+      var orderObject = new Object();
+      orderObject = order;
+
+      orderObject.order_id = order.id;
+      //orderObject.id = i + 1;
+
+      tablePickDataArray.push(orderObject);
+    }
+
+    var orders_container = $('#orders_container');
+
+    var pick_list_container = $('#pick_list_container');
+
+    var parentElement = document.createElement("div");
+    parentElement.setAttribute('class', 'order_supervise_list');
+    orders_container.append(parentElement);
+
+    var pickListparentElement = document.createElement("div");
+    pickListparentElement.setAttribute('class', 'order_supervise_list');
+    pick_list_container.append(pickListparentElement);
+
+    var isPickClick = false;
+    var isUnPickClick = false;
+
+    var table = null;
+    var table_list = null;
+
+    //데이터 셋팅
+    var addPicker = function(orderTableData, orderTableIndex){
+      var projectId = orderTableData.project_id;
+      var orderId = orderTableData.order_id;
+
+  		var url = '/projects/' + projectId+ '/addpicking/' + orderId;
+  		var method = 'post';
+
+  		var success = function(result) {
+        if(table_list)
+        {
+          table_list.addRow(orderTableData);
+        }
+
+        if(table)
+        {
+          table.deleteRow(orderTableIndex);
+        }
+  		};
+  		var error = function(request) {
+  			swal("추첨 실패", "", "error");
+  		};
+
+  		$.ajax({
+  			'url': url,
+  			'method': method,
+  			'success': success,
+  			'error': error
+  		});
+    };
+
+    var deletePicker = function(pickerTableData, pickerTableIndex){
+      var projectId = pickerTableData.project_id;
+      var orderId = pickerTableData.order_id;
+
+  		var url = '/projects/' + projectId+ '/deletepicking/' + orderId;
+  		var method = 'delete';
+
+  		var success = function(result) {
+        if(table)
+        {
+          table.addRow(pickerTableData);
+        }
+
+        if(table_list)
+        {
+          table_list.deleteRow(pickerTableIndex);
+        }
+  		};
+  		var error = function(request) {
+  			swal("추첨 빼기 실패", "", "error");
+  		};
+
+  		$.ajax({
+  			'url': url,
+  			'method': method,
+  			'success': success,
+  			'error': error
+  		});
+    };
+
+    table = new Tabulator(parentElement, {
+        layout:"fitDataFill",
+        responsiveLayout:"collapse",
+        columns:columnsInfo,
+        data:tableDataArray,
+        responsiveLayoutCollapseStartOpen:false,
+        dataEdited:function(data){
+          //data - the updated table data
+          //console.error("order count : "+ Object.keys(data).length);
+        },
+
+        rowClick:function(e, row){
+
+          if(isPickClick)
+          {
+
+            addPicker(row.getData(), row.getIndex());
+            /*
+            if(table_list)
+            {
+              table_list.addRow(row.getData());
+            }
+
+            table.deleteRow(row.getIndex());
+            */
+
+            //console.error(tableDataArray.length);
+          }
+
+          if(!isWorkedCollapse)
+          {
+            var collapseNode = row._row.element.children[0].children[0];
+            $(collapseNode).trigger("click");
+          }
+
+          isWorkedCollapse = false;
+          isPickClick = false;
+
+        },
+        cellClick:function(e, cell){
+          if(cell._cell.column.field == 'pick')
+          {
+            isWorkedCollapse = true;
+            isPickClick = true;
+          }
+        },
+        responsiveLayoutCollapseFormatter:function(data){
+          //console.error(data);
+            var list = document.createElement("ul");
+
+            for(var key in data)
+            {
+              if(data[key] === 0 || data[key] === '')
+              {
+                continue;
+              }
+
+              let item = document.createElement("li");
+              item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
+              list.appendChild(item);
+            }
+
+            return Object.keys(data).length ? list : "";
+        }
+    });
+
+    var setPickCounter = function(data){
+      $("#pick_list_counter").text("추첨된 인원수 : " + Object.keys(data).length + "명");
+    };
+
+    //pick list table
+    table_list = new Tabulator(pickListparentElement, {
+        layout:"fitDataFill",
+        responsiveLayout:"collapse",
+        columns:columnsPickInfo,
+        data:tablePickDataArray,
+        responsiveLayoutCollapseStartOpen:false,
+        dataLoaded:function(data){
+          //data - all data loaded into the table
+          setPickCounter(data);
+        },
+        dataEdited:function(data){
+          //data - the updated table data
+          setPickCounter(data);
+        },
+
+        rowClick:function(e, row){
+
+          //console.error(row.getIndex());
+
+          if(isUnPickClick)
+          {
+            deletePicker(row.getData(), row.getIndex());
+            /*
+            if(table)
+            {
+              table.addRow(row.getData());
+            }
+
+            table_list.deleteRow(row.getIndex());
+            */
+          }
+
+          if(!isWorkedCollapsePick)
+          {
+            var collapseNode = row._row.element.children[0].children[0];
+            $(collapseNode).trigger("click");
+          }
+
+          isWorkedCollapsePick = false;
+          isUnPickClick = false;
+
+        },
+        cellClick:function(e, cell){
+          if(cell._cell.column.field == 'unpick')
+          {
+            isWorkedCollapsePick = true;
+            isUnPickClick = true;
+          }
+        },
+        responsiveLayoutCollapseFormatter:function(data){
+          //console.error(data);
+            var list = document.createElement("ul");
+
+            for(var key in data)
+            {
+              if(data[key] === 0 || data[key] === '')
+              {
+                continue;
+              }
+
+              let item = document.createElement("li");
+              item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
+              list.appendChild(item);
+            }
+
+            return Object.keys(data).length ? list : "";
+        }
+    });
+
+    window.addEventListener('resize', function(){
+      if(table_list)
+      {
+        table_list.redraw();
+      }
+
+      if(table)
+      {
+        table.redraw();
+      }
+    });
+  });
+
+</script>
+@endsection
