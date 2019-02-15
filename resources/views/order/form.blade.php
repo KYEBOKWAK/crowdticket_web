@@ -76,6 +76,10 @@
           border-color: #ef4d5d !important;
           color: #ef4d5d !important;
         }
+
+        .order_form_inputs{
+          width: 100%;
+        }
     </style>
 @endsection
 
@@ -360,9 +364,9 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">성명</p>
               @if ($order)
-                <input id="name" type="text" name="name" value="{{ $order->name }}" readonly="readonly"/>
+                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ $order->name }}" readonly="readonly"/>
               @else
-                <input id="name" type="text" name="name" value="{{ \Auth::user()->name }}"/>
+                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ \Auth::user()->name }}"/>
               @endif
             </div>
           </div>
@@ -371,9 +375,9 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">연락처</p>
               @if ($order)
-                <input id="phone" type="tel" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
+                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
               @else
-                <input id="phone" type="tel" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
+                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
               @endif
             </div>
           </div>
@@ -382,9 +386,9 @@
             <div class="flex_layer">
               <p class="order_form_title order_form_user_title">이메일</p>
               @if ($order)
-                <input id="email" type="email" name="email" value="{{ $order->email }}" readonly="readonly"/>
+                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ $order->email }}" readonly="readonly"/>
               @else
-                <input id="email" type="email" name="email" value="{{ \Auth::user()->email }}"/>
+                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ \Auth::user()->email }}"/>
               @endif
             </div>
           </div>
@@ -416,7 +420,7 @@
                   </select>
                   <select id="expiry_year" name="expiry_year" class="form-control" required="required">
                       <option selected disabled>yyyy</option>
-                      @for ($i = 2018; $i <= 2031; $i++)
+                      @for ($i = 2019; $i <= 2031; $i++)
                           <option value="{{ $i }}">{{ $i }}</option>
                       @endfor
                   </select>
@@ -429,8 +433,8 @@
                 <div style="flex-basis: 130px; flex-shrink: 0; padding-right: 50px;">
                   <p class="order_form_title order_form_user_title" style="padding-right: 0px;">생년월일</p><p style="text-align:right;">(법인등록번호)</p>
                 </div>
-                <input style="width:280px;" id="order-birth" name="birth" type="text"
-                   class="form-control" autocomplete="off" required="required"
+                <input id="order-birth" name="birth" type="text"
+                   class="form-control order_form_inputs" autocomplete="off" required="required"
                    placeholder="주민번호 앞6자리(법인등록번호 7자리)"/>
               </div>
             </div>
