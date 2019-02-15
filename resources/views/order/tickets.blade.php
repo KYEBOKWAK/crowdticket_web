@@ -305,10 +305,35 @@
                 //구매 가능한 상태가 되었는데, 티켓 수량이 0이면 티켓 초기화
                 if($("#ticket_count_input").val() == 0)
                 {
-                  $('#ticket_select_id_input').val('');
-                }
+                  swal("", "티켓을 선택하지 않으셨습니다. 계속하시겠습니까?", "info", {
+        						  buttons: {
+        						    save: {
+        						      text: "예",
+        						      value: "save",
+        						    },
+        								nosave: {
+        						      text: "아니오",
+        						      value: "notsave",
+        						    },
 
-                $('#ticketSubmitForm').submit();
+        						  },
+        						})
+        						.then(function(value){
+        							switch (value) {
+        						    case "save":
+        								{
+                          $('#ticket_select_id_input').val('');
+
+                          $('#ticketSubmitForm').submit();
+        								}
+        						    break;
+        						  }
+        						});
+                }
+                else
+                {
+                  $('#ticketSubmitForm').submit();
+                }
               }
               else
               {
