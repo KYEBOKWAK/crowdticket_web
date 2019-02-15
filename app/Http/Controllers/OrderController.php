@@ -126,7 +126,7 @@ class OrderController extends Controller
 
           //return view('errors.overcounter_ticket');
           //return ["isSuccess" => false, "orderId" => $orderId, "eMessage" => $e->getMessage()];
-          return ["orderResultType" => "orderResultFailOverCount", "orderId" => $order->id, "eMessage" => "해당 상품이 매진되었습니다."];
+          return ["orderResultType" => "orderResultFailOverCount", "orderId" => $order->id, "projectId" => $projectId, "eMessage" => "해당 상품이 매진되었습니다."];
         }
       }
 
@@ -248,9 +248,11 @@ class OrderController extends Controller
     ]);
   }
 
-  public function overCounterOrder()
+  public function overCounterOrder($projectId)
   {
-    return view('errors.overcounter_ticket');
+    $project = Project::findOrFail($projectId);
+
+    return view('errors.overcounter_ticket', ['project' => $project]);
   }
   /*
   public function createNewOrder(Request $request)

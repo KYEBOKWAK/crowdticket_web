@@ -4,7 +4,7 @@ Route::pattern('id', '[0-9]+');
 Route::pattern('code', '[a-zA-Z0-9]+');
 Route::pattern('alias', '[a-zA-Z0-9-_]+');
 Route::pattern('name', '[a-zA-Z]+');
-Route::pattern('entity', 'projects|comments|tickets');
+Route::pattern('entity', 'projects|comments|tickets|overcount');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -142,7 +142,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tickets/{id}/completeorder', 'OrderController@completeOrder');
 
     //티켓 매진시
-    Route::get('tickets/overcounterorder', 'OrderController@overCounterOrder');
+    Route::get('tickets/{id}/overcounterorder', 'OrderController@overCounterOrder');
 
     Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
     //Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');

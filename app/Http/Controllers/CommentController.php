@@ -17,6 +17,8 @@ class CommentController extends Controller
             $entity = Comment::findOrFail($entityId);
         } else if($entityName ==='tickets') {
             $entity = Project::findOrFail($entityId);
+        } else if($entityName ==='overcount') {
+            $entity = Project::findOrFail($entityId);
         }
         else {
             return;
@@ -27,12 +29,17 @@ class CommentController extends Controller
         $entity->comments()->save($comment);
 
         if ($entityName === 'projects' ||
-            $entityName === 'tickets') {
+            $entityName === 'tickets' ||
+            $entityName === 'overcount') {
             $entity->increment('comments_count');
         }
 
         if($entityName === 'tickets'){
           return \Redirect::action('OrderController@completecomment', ['id' => $entityId]);
+        }
+        else if($entityName === 'overcount'){
+          //return \Redirect::action('OrderController@completecomment', ['id' => $entityId]);
+          return 'success';
         }
         else {
           // code...

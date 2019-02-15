@@ -910,8 +910,9 @@
                else if(data.orderResultType == "orderResultFailOverCount")
                {
                  var base_url = window.location.origin;
+                 var projectId = data.projectId;
 
-               	var url = base_url+'/tickets/overcounterorder';
+               	var url = base_url+'/tickets/' + projectId + '/overcounterorder';
 
                	window.location.href = url;
                }
