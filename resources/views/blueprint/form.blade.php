@@ -88,9 +88,9 @@
 <script>
     $(document).ready(function () {
       $('#project_form_make_start').click(function(){
-        if(!isCheckEmail($('#input-email').val()))
+        //if(!isCheckEmail($('#input-email').val()))
         {
-          return;
+          //return;
         }
 
         if(!isCheckPhoneNumber($('.concatable-target').val()))
@@ -104,9 +104,9 @@
       });
 
       $('#project_form_contact_us_start').click(function(){
-        if(!isCheckEmail($('#input-email').val()))
+        //if(!isCheckEmail($('#input-email').val()))
         {
-          return;
+          //return;
         }
 
         if(!isCheckPhoneNumber($('.concatable-target').val()))
