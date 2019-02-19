@@ -23,6 +23,7 @@ class Order extends Model
 
     const ORDER_STATE_CANCEL_START = 100; //취소사유는 100~200
     const ORDER_STATE_PROJECT_CANCEL = 102;   //프로젝트 중도 취소
+    const ORDER_STATE_PROJECT_PICK_CANCEL = 103;  //추첨 안됨.
     const ORDER_STATE_CANCEL = 199;//고객취소는 맨 마지막
 
     const ORDER_STATE_HOST_SHOW_ORDER_END = 200;
@@ -351,6 +352,10 @@ class Order extends Model
       else if($this->getState() == self::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT)
       {
         return '결제완료';
+      }
+      else if($this->getState() == self::ORDER_STATE_PROJECT_PICK_CANCEL)
+      {
+        return '미당첨';
       }
 
 

@@ -1080,16 +1080,19 @@ class ProjectController extends Controller
 
     public function pickingComplete($projectId)
     {
-      /*
       $project = $this->getSecureProjectById($projectId);
 
       if ($project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
-          $pickingOrders = $project->getOrdersWithPick();
+          $pickingOrders = $project->getOrdersWithoutPick();
           foreach ($pickingOrders as $order) {
-              app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_CANCEL,true);
+              app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_PICK_CANCEL,true);
           }
       }
-      */
+
+      $project->pick_state = Project::PICK_STATE_PICKED;
+      $project->save();
+
+
     }
 
     public function addPicking($projectId, $orderId)
@@ -1108,6 +1111,76 @@ class ProjectController extends Controller
 
       $order->is_pick = "";
       $order->save();
+    }
+
+    public function sendMailPickSuccess($to, $project, $order)
+    {
+      /*
+      $mailForm = '';
+      $subject = '';
+      $data = [];
+      $ticketInfo = '티켓 없음';
+      $discount = $order->getDiscountText();
+      $goods = $order->getGoodsTotalTextInEmail();
+      $supportPrice = 0;
+      if($order->supporter)
+      {
+        $supportPrice = $order->supporter->price;
+      }
+      $commission = $order->getCommission();
+
+      //티켓 정보 셋팅
+      if($order->ticket)
+      {
+        $showDate = new \DateTime($order->ticket->show_date);
+        $date = $showDate->format('Y-m-d H:i');
+        $seat = $order->ticket->getSeatCategory();
+        if($order->ticket->isPlaceTicket() == false)
+        {
+          $date = '';
+        }
+
+        $ticketInfo = $date.' ['.$seat.'] '.number_format($order->count).'매';
+      }
+
+      if ($project->type === 'funding')
+      {
+        $mailForm = 'template.emailform.email_complite_schedule';
+        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+      }
+      else
+      {
+        $mailForm = 'template.emailform.email_complite_onetime';
+        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+      }
+
+      $data = [
+        'title' => $project->title,
+        'ticket' => $ticketInfo,
+        'discount' => $discount,
+        'goods' => $goods,
+        'supportPrice' => number_format($supportPrice),
+        'commission' => number_format($commission),
+        'totalPrice' => number_format($order->total_price),
+        'payDate' => $project->getFundingOrderConcludeAt(),
+        'gotoPayPageURL' => url('orders/'.$order->id)
+      ];
+
+      Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
+          $m->from('contact@crowdticket.kr', '크라우드티켓');
+          $m->to($to)->subject($subject);
+      });
+      */
+    }
+
+    public function sendMailPickFail()
+    {
+
+    }
+
+    public function sendSmsSuccess()
+    {
+
     }
 
     public function test($projectId)

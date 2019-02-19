@@ -197,18 +197,18 @@
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <h3>
-            사연란
+            추가질문
             </h3>
           </div>
-            <p class="help-block">사연을 써주세요.</p>
+            <p class="help-block">이벤트 참가를 위해 필요한 정보입니다.</p>
 
             @if($order)
-              <textarea id="order_story" name="order_story" class="form-control" readonly="readonly">{{ $order->order_story }}</textarea>
+              <textarea id="order_story" name="order_story" class="form-control" style="height:130px;" readonly="readonly">{{ $order->order_story }}</textarea>
             @else
-              <textarea id="order_story" name="order_story" class="form-control" maxlength="200"></textarea>
+              <textarea id="order_story" name="order_story" class="form-control" style="height:130px;" maxlength="500"></textarea>
             @endif
             <p>
-            <span >200자 내로 작성해주세요.  </span> <b><span class="order_storyLength project_form_length_text">0/200</span></b>
+            <span >500자 내로 작성해주세요.  </span> <b><span class="order_storyLength project_form_length_text">0/500</span></b>
           </p>
         </div>
         @endif
@@ -331,9 +331,6 @@
 
             $pickingEndTime = new DateTime($project->getClosingAt());
             $pickingEndTime = $pickingEndTime->format('Y-m-d');
-
-            $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
-            $funding_closing_date_without_time = $funding_closing_date_without_time->format('Y-m-d');
             ?>
 
             @if($project->isPickType())
@@ -494,6 +491,10 @@
                 <p>2. 초대권 신청 내역 확인 및 취소는 오른쪽 상단 '결제확인' 탭에서 하실 수 있습니다.</p>
                 <p>3. 초대권의 판매, 양도, 및 교환은 금지되어 있으며 이를 위반하여 발생하는 불이익에 대하여 크라우드티켓에서는 책임을 지지 않습니다.</p>
               @elseif($project->isPickType())
+              <?php
+              $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
+              $funding_closing_date_without_time = $funding_closing_date_without_time->format('Y-m-d');
+              ?>
                 <p style="margin-top:10px;">1. 본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
                 <p> * 참여 취소 및 환불 불가능 : {{$funding_closing_date_without_time}} 이후</p>
                 <!--<p><b>추첨일 이후에 당첨이 확정되면 환불이 불가능합니다.</b></p>-->
@@ -1167,6 +1168,30 @@
           }
 
           isWordLengthCheck($("#order_story"), $(".order_storyLength"));
+
+          var setOrderStory = function(){
+            if(!$("#order_story"))
+            {
+              return;
+            }
+
+            if(g_isGetOrderForm)
+            {
+              return;
+            }
+
+            var initOrderStoryWord = '나이:\n성별:\n내가 뽑혀야 하는 이유:';
+
+            //var convertString = getConverterEnterString($("#order_story").val());
+            //alert(convertString);
+
+            //$("#order_story").text(convertString);
+            $("#order_story").text(initOrderStoryWord);
+
+            //alert($("#order_story").val());
+          };
+
+          setOrderStory();
       });
     </script>
 @endsection

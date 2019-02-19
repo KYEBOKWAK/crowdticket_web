@@ -3,10 +3,10 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('/css/lib/table/tabulator.css') }}">
     <style>
-
-
         #picking_container{
           width: 605px;
+          padding-left: 5px;
+          padding-right: 5px;
           margin-left: auto;
           margin-right: auto;
         }
@@ -47,6 +47,7 @@
         }
 
         #pick_list_counter{
+          width: 100%;
           text-align: right;
         }
 
@@ -99,6 +100,15 @@
         #export_table{
           display: none;
         }
+
+        .pickButton{
+          border: 1px solid #EF4D5D;
+          width: 100%;
+          background-color: white;
+
+          box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 0.16);
+          border-radius: 10px;
+        }
     </style>
 @endsection
 
@@ -118,12 +128,15 @@
     <div class="first-container container">
         <div class="row">
             <h2 class="text-center text-important">추첨 하기</h2>
-        </div>
 
+        </div>
     </div>
 
     <div id="picking_container">
-      <p id="pick_list_counter">추첨된 인원수 : 0명</p>
+      <div class="flex_layer">
+        <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
+        <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
+      </div>
       <div id="pick_list_container">
       </div>
 
@@ -159,11 +172,11 @@
     var isWorkedCollapsePick = false;
 
     var pickIcon = function(cell, formatterParams, onRendered){ //plain text value
-        return "<button>추첨하기</button>";
+        return "<button class='pickButton'>추첨하기</button>";
     };
 
     var unpickIcon = function(cell, formatterParams, onRendered){ //plain text value
-        return "<button>추첨빼기</button>";
+        return "<button class='pickButton'>추첨빼기</button>";
     };
 
     var columnsInfo = [
@@ -358,6 +371,11 @@
                 continue;
               }
 
+              if(key == '사연')
+              {
+                data[key] = getConverterEnterString(data[key]);
+              }
+
               let item = document.createElement("li");
               item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
               list.appendChild(item);
@@ -369,6 +387,7 @@
 
     var setPickCounter = function(data){
       $("#pick_list_counter").text("추첨된 인원수 : " + Object.keys(data).length + "명");
+      $("#pick_list_counter").attr('pick-count', Object.keys(data).length);
     };
 
     //pick list table
@@ -432,6 +451,12 @@
                 continue;
               }
 
+              //console.error(data);
+              if(key == '사연')
+              {
+                data[key] = getConverterEnterString(data[key]);
+              }
+
               let item = document.createElement("li");
               item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
               list.appendChild(item);
@@ -439,6 +464,97 @@
 
             return Object.keys(data).length ? list : "";
         }
+    });
+
+    /*
+    var pickCompletePopup = function(){
+      var elementPopup = document.createElement("tr");
+      elementPopup.innerHTML =
+      "<td>"+order.name+"</td>" +
+      "<td>"+order.contact+"</td>" +
+      "<td>"+ attendButtonElement +"</td>";
+    }
+    */
+
+    var pickCompletePopup = function(){
+      var pickCounter = Number($("#pick_list_counter").attr('pick-count'));
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+      //alert(pickCounter);
+
+      var elementPopup = document.createElement("div");
+      elementPopup.innerHTML =
+      "<div class=''>확정 하시면 더 이상 추첨이 불가능 합니다.<br> - 추첨된 인원수 : " + pickCounter + "명"+
+
+      "</div>";
+
+      swal({
+          title: "추첨 확정 하시겠습니까?",
+          content: elementPopup,
+          confirmButtonText: "V redu",
+          allowOutsideClick: "true",
+
+          buttons: {
+            nosave: {
+              text: "아니오",
+              value: "notsave",
+            },
+            save: {
+              text: "예",
+              value: "save",
+            },
+          },
+
+      }).then(function(value){
+        switch (value) {
+          case "save":
+          {
+            var url = '/projects/' + projectId + '/pickingcomplete';
+            var method = 'get';
+
+            var success = function(result) {
+            };
+
+            var error = function(request, status) {
+              swal("추첨 완료 실패", "", "error");
+            };
+
+            $.ajax({
+              'url': url,
+              'method': method,
+              'success': success,
+              'error': error
+            });
+          }
+          break;
+        }
+      });
+    };
+
+    $("#pick_submit").click(function(){
+      pickCompletePopup();
+      /*
+      swal("추첨 확정 하시겠습니까?", "<b>확정 하시면 더 이상 추첨이 불가능 합니다.</b>",{
+  						  buttons: {
+  								nosave: {
+  						      text: "아니오",
+  						      value: "notsave",
+  						    },
+  						    save: {
+  						      text: "예",
+  						      value: "save",
+  						    },
+  						  },
+  						})
+  						.then(function(value){
+  							switch (value) {
+  						    case "save":
+  								{
+  									ticketNext();
+  								}
+  						    break;
+  						  }
+  						});
+              */
     });
 
     window.addEventListener('resize', function(){
