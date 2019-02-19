@@ -216,7 +216,7 @@
           <div class="project-form-content">
             <div class="flex_layer">
               <select id="pickday_select" pick-closing-at="{{$project->picking_closing_at}}" class="project_form_input_base project_form_delivery_time_wrapper" @if ($project->isPublic()) readonly="readonly" disabled="disabled" @endif>
-                   @for ($i = 1; $i < 8; $i++)
+                   @for ($i = 0; $i < 8; $i++)
                    <option value="{{ $i }}" value-data="{{ $i }}" @if(intval($project->getSaleStartTimeHour()) === $i) selected @endif>
                       마감일 + {{ $i }} 일
                    </option>
