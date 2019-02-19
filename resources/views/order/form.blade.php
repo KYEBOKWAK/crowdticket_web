@@ -1180,7 +1180,20 @@
               return;
             }
 
-            var initOrderStoryWord = '나이:\n성별:\n내가 뽑혀야 하는 이유:';
+            //임시코드
+            var projectId = $("#project_id").val();
+            var otherStory = "";
+            if(projectId == "362")
+            {
+              otherStory = "무비에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
+            }
+            else if(projectId == "361")
+            {
+              otherStory = "옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
+            }
+
+
+            var initOrderStoryWord = '나이:\n성별:\n내가 뽑혀야 하는 이유:\n'+otherStory;
 
             //var convertString = getConverterEnterString($("#order_story").val());
             //alert(convertString);
