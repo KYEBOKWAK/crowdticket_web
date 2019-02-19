@@ -495,8 +495,8 @@
               $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
               $funding_closing_date_without_time = $funding_closing_date_without_time->format('Y-m-d');
               ?>
-                <p style="margin-top:10px;">1. 본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
-                <p> * 참여 취소 및 환불 불가능 : {{$funding_closing_date_without_time}} 이후</p>
+                <p style="margin-top:10px;">본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
+                <p> * {{$funding_closing_date_without_time}} 이후 참여 취소 및 환불 불가능</p>
                 <!--<p><b>추첨일 이후에 당첨이 확정되면 환불이 불가능합니다.</b></p>-->
                 <p><b>추첨이 시작되면 취소 및 환불이 불가능합니다.</b></p>
               @endif

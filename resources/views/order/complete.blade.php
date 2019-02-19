@@ -54,6 +54,19 @@
             <div class="col-md-12">
                 <h2 class="text-center"><strong>THANK YOU!</strong></h2>
                 @if ($project->type === 'funding')
+                  @if($project->isPickType())
+                    <h3 class="text-center"><strong>결제가 성공적으로 예약되었습니다.</strong></h3>
+                    <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
+                    <p class="text-center ps-text-detail" style="margin-top:30px;">
+                        <strong>
+                            지금 결제가 진행된 것이 아닙니다!<br/>
+                            <br/>
+                        </strong>
+                        당첨되었을 경우에 한하여 결제가 진행됩니다. <br/>
+                        당첨 결과는 오른쪽 결제 확인 탭에서 확인 할 수 있습니다. <br/><br/>
+                        당첨되지 않으면 결제가 진행되지 않습니다.
+                    </p>
+                  @else
                     <h3 class="text-center"><strong>결제가 성공적으로 예약되었습니다.</strong></h3>
                     <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
                     <p class="text-center ps-text-detail">
@@ -65,6 +78,7 @@
                         취소하면 펀딩의 후원이 자동 취소됩니다.<br/>
                         단, 펀딩이 완료되기 24시간 전부터는 취소할 수 없습니다.
                     </p>
+                  @endif
                 @else
                     <h3 class="text-center">
                       <strong>
