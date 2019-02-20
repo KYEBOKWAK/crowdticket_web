@@ -114,7 +114,7 @@
 
         #comments-container {
             padding: 0;
-            word-break: keep-all;
+            /*word-break: keep-all;*/
         }
 
         #ticket_list {
