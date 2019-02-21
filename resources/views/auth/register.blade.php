@@ -101,7 +101,9 @@
           }
         }
 
-
+        .loading{
+          margin-top: 20px;
+        }
     </style>
 
 @endsection
@@ -165,8 +167,10 @@
         </div>
       </div>
 
-      <div class="btn_register_wrapper">
-        <button type="button" class="btn btn_register">가입</button>
+      <div style="width: 100%; text-align: center;">
+        <div class="btn_register_wrapper">
+          <button type="button" class="btn btn_register">가입</button>
+        </div>
       </div>
       <div class="text-center ps-facebook-wrapper">
           <p style="font-size:15px; font-weight:bold;">또는</p>
@@ -197,6 +201,7 @@ $(document).ready(function () {
     success : function(data) {
       //alert(data);
        //컨트롤러 실행 후 성공시 넘어옴
+       loadingProcessStop($(".btn_register_wrapper"));
        if(data.request == 'success')
        {
          //swal("회원가입 성공되었습니다.", "", "success");
@@ -368,6 +373,8 @@ $(document).ready(function () {
     }
 
     $("#form_user_register").submit();
+
+    loadingProcess($(".btn_register_wrapper"));
   });
 
 /*

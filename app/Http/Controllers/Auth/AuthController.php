@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request as Request;
 use App\Models\User as User;
 
@@ -50,7 +51,20 @@ class AuthController extends Controller
       }
       $this->auth->login($this->registrar->create($request->all()));
 
-      \Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
+      //\Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
+      //email send
+      $from = 'contact@crowdticket.kr';
+  		$fromName = '크라우드티켓';
+  		$to = $email;
+  		$email_subject = "크라우드티켓 회원이 되어 주셔서 감사합니다!"; // 메일 제목에 해당하는 부분
+  		$email_body = [];
+  		Mail::send('template.emailform.email_register', $email_body, function ($m) use ($email_subject, $to, $from, $fromName)
+  		{
+  							$m->from($from, $fromName);
+  							$m->to($to)->subject($email_subject);
+  		});
+
+      //end end
 
       return ['request' => 'success', 'email' => $email];
     }
