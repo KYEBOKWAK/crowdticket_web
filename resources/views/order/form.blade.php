@@ -1184,15 +1184,15 @@
             var otherStory = "";
             if(projectId == "362")
             {
-              otherStory = "무비에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
+              otherStory = "김무비 팬미팅에 꼭 오고 싶은 이유: \n김무비 영상중에 가장 좋았던 영상과 그 이유: \n김무비에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:\n";
             }
             else if(projectId == "361")
             {
-              otherStory = "옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
+              otherStory = "내가 뽑혀야 하는 이유:\n옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
             }
 
 
-            var initOrderStoryWord = '나이:\n성별:\n내가 뽑혀야 하는 이유:\n'+otherStory;
+            var initOrderStoryWord = '나이:\n성별:\n'+otherStory;
 
             //var convertString = getConverterEnterString($("#order_story").val());
             //alert(convertString);
