@@ -215,7 +215,7 @@ class OrderController extends Controller
         $g_order->save();
       }
 
-      //return ["isSuccess" => false, "orderId" => $orderId, "eMessage" => $e->getMessage()];
+
       return ["orderResultType" => "FALSE", "orderId" => $orderId, "eMessage" => $e->getMessage()];
 
       /*

@@ -952,7 +952,6 @@
             },
 
             error : function(data) {
-                //console.error("에러 ! " + data);
             },
           });
 

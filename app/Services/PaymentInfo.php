@@ -40,7 +40,6 @@ class PaymentInfo
 
     public function withCardNumber($cardNumber)
     {
-        //$this->validateOrFail('card_number', $cardNumber, 'digits_between:15,16');
         $this->validateOrFail('card_number', $cardNumber, 'integer');
         $this->cardNumber = $this->formatCardNumber($cardNumber);
     }
@@ -103,9 +102,12 @@ class PaymentInfo
         foreach ($errors->all() as $error) {
             $message .= $error;
         }
+
         if ($message) {
-            throw new \InvalidArgumentException($message);
+          //return ['state'=>"error"];
+            //throw new \PaymentFailedException($message);
         }
+
     }
 
     public function getCustomerUid()
