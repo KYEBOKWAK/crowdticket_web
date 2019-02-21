@@ -46,11 +46,13 @@ class AuthController extends Controller
 
       $validator = $this->registrar->validator($request->all());
       if ($validator->fails()) {
-          $this->throwValidationException($request, $validator);
+          return ['request' => 'error', 'message' => $validator->messages()];
       }
       $this->auth->login($this->registrar->create($request->all()));
 
-      return \Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
+      \Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
+
+      return ['request' => 'success', 'email' => $email];
     }
 
     public function postLogin(Request $request)

@@ -186,26 +186,53 @@
 <script>
 $(document).ready(function () {
 
-/*
-  $("#name").focusout(function(){
-    var value = $(this).val();
-    var errorName = $(this)[0].id + "-error";
-    var errorDiv = $("#" + errorName);
-    //alert($(this)[0].id);
-    if(isCheckOnlyEmptyValue(value))
-    {
-      errorDiv.show();
-      errorDiv.text("공백만 입력되었습니다.");
-    }
-  });
+  $('#form_user_register').ajaxForm({
+    beforeSerialize: function(){
+     // form을 직렬화하기전 엘레먼트의 속성을 수정할 수도 있다.
+    },
+    beforeSubmit : function() {
+    //action에 걸어주었던 링크로 가기전에 실행 ex)로딩중 표시를 넣을수도 있다.
+    },
 
-  $("#name").focus(function(){
-    var value = $(this).val();
-    var errorName = $(this)[0].id + "-error";
-    var errorDiv = $("#" + errorName);
-    errorDiv.hide();
+    success : function(data) {
+      //alert(data);
+       //컨트롤러 실행 후 성공시 넘어옴
+       if(data.request == 'success')
+       {
+         //swal("회원가입 성공되었습니다.", "", "success");
+         swal("회원가입 성공되었습니다.", {
+						  buttons: {
+						    save: {
+						      text: "확인",
+						    },
+						  },
+
+							icon: "success",
+						}).then(function(value){
+							location.reload();
+						});
+         //location.reload();
+       }
+       else
+       {
+         var message = "알 수 없는 에러로 회원가입이 실패하였습니다.";
+         if(data.message.email)
+         {
+           message = data.message.email[0];
+         }
+         else if(data.message.password)
+         {
+           message = data.message.password[0];
+         }
+
+         swal(message, "", "warning");
+       }
+    },
+
+    error : function(data) {
+        //console.error("에러 ! " + data);
+    },
   });
-  */
 
   //valid check
   var validCheck = function(id){

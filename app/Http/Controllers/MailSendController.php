@@ -109,7 +109,7 @@ class MailSendController extends Controller {
 		});
 
 
-		return redirect($redirectPath);
+		//return redirect($redirectPath);
 	}
 /*
 	public function sendEmailCompliteSchedule(Request $request)
