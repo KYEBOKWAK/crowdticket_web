@@ -35,7 +35,7 @@
 <div class="container">
     <div class="content">
         <div class="title" style="font-size: 50px;">크라우드티켓 서버 개선중..<br> 2월 23일 오전9시 오픈 예정 <br> 더 좋은 모습으로 찾아뵙겠습니다. :)</div>
-        {{app_path()}}
+
     </div>
 </div>
 </body>
