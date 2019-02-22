@@ -15,7 +15,7 @@ class WelcomeController extends Controller
             ->orderBy('project_order_number')
             ->take($minExposedNum)->get();
         */
-/*
+
         $thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
         $thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
 
@@ -28,7 +28,7 @@ class WelcomeController extends Controller
             'main_carousels' => $main_carousel,
             'isNotYet' => 'FALSE'
         ]);
-        */
+        
     }
 
     public function getThumbnailProject($thumbnailType)
