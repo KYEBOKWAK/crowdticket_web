@@ -11,9 +11,22 @@
           margin-right: auto;
         }
 
+        .order_collapse_ul{
+          padding-left: 5px;
+          padding-right: 5px;
+          width: 580px;
+
+          word-break: break-all;
+          white-space: normal;
+        }
+
         @media (max-width: 605px)
         {
           #picking_container{
+            width: 100%;
+          }
+
+          .order_collapse_ul{
             width: 100%;
           }
           /*
@@ -74,15 +87,19 @@
   */
 
         .order_collapse_rows{
-          width: 50%;
+          width: 100%;
           margin-bottom: 10px;
           padding-bottom: 5px;
           border-bottom: 1px dashed;
         }
 
         .order_collapse_value{
-          text-align: right;
-          margin-left: auto;
+          margin-bottom: 5px;
+
+        }
+
+        .order_collapse_title{
+          margin-bottom: 5px;
         }
 
         .order_supervise_list_event_start{
@@ -314,6 +331,33 @@
   		});
     };
 
+    var getTableOutElement = function(data){
+
+      var list = document.createElement("ul");
+      list.className = "order_collapse_ul";
+
+      for(var key in data)
+      {
+        if(data[key] === 0 || data[key] === '')
+        {
+          continue;
+        }
+
+        //console.error(data);
+        if(key == '사연')
+        {
+          data[key] = getConverterEnterString(data[key]);
+        }
+
+        let item = document.createElement("li");
+        //item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<p><strong>" + key + "</strong></p>" + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
+        item.innerHTML = "<div class='order_collapse_rows'>" + "<p class='order_collapse_title'><strong>" + key + "</strong></p>" + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
+        list.appendChild(item);
+      }
+
+      return list;
+    };
+
     table = new Tabulator(parentElement, {
         layout:"fitDataFill",
         responsiveLayout:"collapse",
@@ -362,6 +406,8 @@
         },
         responsiveLayoutCollapseFormatter:function(data){
           //console.error(data);
+          /*
+
             var list = document.createElement("ul");
 
             for(var key in data)
@@ -380,6 +426,10 @@
               item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
               list.appendChild(item);
             }
+            */
+
+            var list = getTableOutElement(data);
+
 
             return Object.keys(data).length ? list : "";
         }
@@ -442,6 +492,7 @@
         },
         responsiveLayoutCollapseFormatter:function(data){
           //console.error(data);
+          /*
             var list = document.createElement("ul");
 
             for(var key in data)
@@ -461,6 +512,9 @@
               item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
               list.appendChild(item);
             }
+            */
+
+            var list = getTableOutElement(data);
 
             return Object.keys(data).length ? list : "";
         }
