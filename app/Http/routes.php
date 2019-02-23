@@ -171,6 +171,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
     Route::post('projects/{id}/addpicking/{orderid}', 'ProjectController@addPicking');
     Route::delete('projects/{id}/deletepicking/{orderid}', 'ProjectController@deletePicking');
+
+    Route::put('orders/{id}/updateorderstory', 'OrderController@updateOrderStory');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

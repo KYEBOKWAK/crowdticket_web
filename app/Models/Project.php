@@ -932,4 +932,15 @@ class Project extends Model
       //return date('Y-m-d H:i:s', strtotime($ymd . ' 13:00:00'));
     }
 
+    public function isTemporarilyOrderStory()
+    {
+      //임시로 들어가는 추가질문 가능한 프로젝트 구분하기
+      if((int)$this->id === 359)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
 }

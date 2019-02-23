@@ -23,9 +23,6 @@ class OrderController extends Controller
 {
   public function createNewOrder(Request $request)
   {
-    //return ["isSuccess" => true, "orderId" => 33];
-    //$isNewOrderStart = $_COOKIE["isNewOrderStart"];
-
     $projectId = '';
     $ticketId = '';
     $ticket = '';
@@ -254,6 +251,27 @@ class OrderController extends Controller
 
     return view('errors.overcounter_ticket', ['project' => $project]);
   }
+
+  public function updateOrderStory(Request $request, $id)
+  {
+    $order = $this->getSecureOrderById($id);
+    if(!$order)
+    {
+      return false;
+    }
+
+    if($request->has('order_story'))
+    {
+      $order->order_story = \Input::get('order_story');
+      $order->save();
+    }
+    else
+    {
+      return false;
+    }
+    
+  }
+
   /*
   public function createNewOrder(Request $request)
   {
@@ -1548,4 +1566,10 @@ class OrderController extends Controller
       return $goodsSelectJson;
     }
 
+    private function getSecureOrderById($id)
+    {
+        $order = Order::findOrFail($id);
+        \Auth::user()->checkOwnership($order);
+        return $order;
+    }
 }

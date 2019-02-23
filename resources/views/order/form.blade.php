@@ -80,6 +80,24 @@
         .order_form_inputs{
           width: 100%;
         }
+
+        .btn_order_story_save{
+          padding: 5px 22px;
+          border-radius: 4px;
+          font-size: 15px;
+          background-color: #EF4D5D;
+          border: 1px solid #EF4D5D;
+          font-weight: 500;
+          color: white;
+        }
+
+        .btn_order_story_save:hover{
+          color: white;
+        }
+
+        .btn_order_story_save:focus{
+          color: white;
+        }
     </style>
 @endsection
 
@@ -89,7 +107,7 @@
     <input id="goodsList" type="hidden" value="{{ $goodsList }}"/>
     <input id="tickets_json_category_info" type="hidden" value="{{ $categories_ticket }}"/>
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
-    <input id="orderInfo" type="hidden" value="{{ $order }}"/>
+    <input id="orderId" type="hidden" value="@if($order){{ $order->id }}@endif"/>
     <input id="isEventTypeInvitation" type="hidden" value="{{ $project->isEventTypeInvitationEvent() }}">
 <div class="form_main_container">
   <div class="form_main_head_container">
@@ -193,23 +211,29 @@
           </div>
         @endif
 
-        @if($project->isPickType())
+        @if($project->isPickType() || $project->isTemporarilyOrderStory())
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <h3>
-            추가질문
+            추가질문<span style="font-size: 15px;">(신청 후에도 수정이 가능합니다.)</span>
             </h3>
           </div>
-            <p class="help-block">이벤트 참가를 위해 필요한 정보입니다.</p>
+            <p class="help-block" style="margin-bottom: 5px;">이벤트 참가를 위해 필요한 정보입니다.<br> 신청 후에는 우측 상단에 결제 확인란에서 수정해주세요. <br> 판매 종료 후에는 수정이 불가능합니다.</p>
 
-            @if($order)
+            @if($order && $project->isFinished())
               <textarea id="order_story" name="order_story" class="form-control" style="height:130px;" readonly="readonly">{{ $order->order_story }}</textarea>
             @else
-              <textarea id="order_story" name="order_story" class="form-control" style="height:130px;" maxlength="500"></textarea>
+              <textarea id="order_story" name="order_story" class="form-control" style="height:130px;" maxlength="500">@if($order){{ $order->order_story }}@endif</textarea>
             @endif
             <p>
-            <span >500자 내로 작성해주세요.  </span> <b><span class="order_storyLength project_form_length_text">0/500</span></b>
-          </p>
+              <span >500자 내로 작성해주세요.  </span> <b><span class="order_storyLength project_form_length_text">0/500</span></b>
+            </p>
+
+            @if($order && !$project->isFinished())
+            <div style="text-align: center;">
+              <button class="btn_order_story_save" type="button">수정하기</button>
+            </div>
+            @endif
         </div>
         @endif
 
@@ -603,7 +627,7 @@
         	}
 
           var g_isGetOrderForm = false;
-          if($('#orderInfo').val())
+          if($('#orderId').val())
           {
             g_isGetOrderForm = true;
           }
@@ -980,16 +1004,16 @@
 
                 $('#ticketSubmitPayForm').submit();
 
-                console.error("onBeforeOpen");
+                //console.error("onBeforeOpen");
 
               },
               onClose: function(){
-                console.error("onClose");
+                //console.error("onClose");
                 //clearInterval(timerInterval)
               },
 
               onAfterClose: function(){
-                console.error("onAfterClose");
+                //console.error("onAfterClose");
               },
             }).then(function(result){
               if (result.dismiss === Swal.DismissReason.timer) {
@@ -1184,11 +1208,15 @@
             var otherStory = "";
             if(projectId == "362")
             {
-              otherStory = "김무비 팬미팅에 꼭 오고 싶은 이유: \n김무비 영상중에 가장 좋았던 영상과 그 이유: \n김무비에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:\n";
+              otherStory = "김무비 팬미팅에 꼭 오고 싶은 이유: \n\n김무비 영상중에 가장 좋았던 영상과 그 이유: \n\n김무비에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:\n\n";
             }
             else if(projectId == "361")
             {
-              otherStory = "내가 뽑혀야 하는 이유:\n옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:";
+              otherStory = "내가 뽑혀야 하는 이유:\n\n옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:\n\n";
+            }
+            else if(projectId == "237")
+            {
+              otherStory = "형독님께 궁금한점^.^:\n";
             }
 
 
@@ -1204,6 +1232,56 @@
           };
 
           setOrderStory();
+
+          var updateOrderStory = function() {
+            if(!$('#order_story'))
+            {
+              return;
+            }
+            if(!$('#orderId').val())
+            {
+              return;
+            }
+
+            var orderId = $('#orderId').val();
+        		//var projectId = $('#project_id').val();
+        		var url = '/orders/' + orderId + '/updateorderstory';
+        		var method = 'put';
+            var data = {'order_story': $('#order_story').val()};
+
+        		var success = function(e) {
+              
+              Swal.fire({
+                type: 'success',
+                title: '수정 완료!',
+                confirmButtonText: '확인',
+              }).then(function(){
+
+              });
+
+        		};
+        		var error = function(e) {
+              Swal.fire({
+                type: 'success',
+                title: '수정 실패',
+                confirmButtonText: '확인',
+              }).then(function(){
+
+              });
+        		};
+
+        		$.ajax({
+        			'url': url,
+        			'method': method,
+        			'data': data,
+        			'success': success,
+        			'error': error
+        		});
+        	};
+
+          $('.btn_order_story_save').click(function(){
+            updateOrderStory();
+          });
       });
     </script>
 @endsection

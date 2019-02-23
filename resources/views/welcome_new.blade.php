@@ -175,6 +175,7 @@
 @endsection
 
 @section('content')
+
       @include('template.carousel_main')
     <!-- first section 끝 -->
     <!-- second section 시작 -->
