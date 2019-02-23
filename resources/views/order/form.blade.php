@@ -1214,7 +1214,7 @@
             {
               otherStory = "내가 뽑혀야 하는 이유:\n\n옐언니에게 궁금한점 이나 팬미팅에서 보고싶은 모습을 적어주세요:\n\n";
             }
-            else if(projectId == "237")
+            else if(projectId == "215")
             {
               otherStory = "형독님께 궁금한점^.^:\n";
             }
@@ -1250,7 +1250,7 @@
             var data = {'order_story': $('#order_story').val()};
 
         		var success = function(e) {
-              
+
               Swal.fire({
                 type: 'success',
                 title: '수정 완료!',
