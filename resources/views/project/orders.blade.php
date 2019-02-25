@@ -126,6 +126,7 @@
         {title:"전화번호", field:"contact", align:"center", width:151},
         {title:"출석", field:"attended", align:"center", formatter:"tickCross", sorter:"boolean"},
         {title:"GOODSOBJECT", field:"GOODSOBJECT", align:"center", width:80, bottomCalc: "sum"},//반드시 title과 filed 는 GOODSOBJECT 이어야 함.
+        {title:"주문요청", field:"answer", align:"center"},
         {title:"추가후원", field:"supporterPrice", align:"center"},
         {title:"할인내용", field:"discountText", align:"center"},
         {title:"굿즈수령주소", field:"deliveryAddress", align:"center"},
@@ -144,6 +145,7 @@
 
         {title:"결제일", field:"created_at", align:"center", width:240},
         {title:"GOODSOBJECT", field:"GOODSOBJECT", align:"center", width:80},//반드시 title과 filed 는 GOODSOBJECT 이어야 함.
+        {title:"주문요청", field:"answer", align:"center"},
         {title:"굿즈수령주소", field:"deliveryAddress", align:"center"},
         {title:"추가후원", field:"supporterPrice", align:"center"},
         {title:"기타사항", field:"requirement", align:"center"},
@@ -168,6 +170,7 @@
         {title:"티켓종류", field:"ticket_category", align:"center"},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number", bottomCalc:"sum"},
         {title:"GOODSOBJECT", field:"GOODSOBJECT", align:"center", width:80, bottomCalc:"sum"},//반드시 title과 filed 는 GOODSOBJECT 이어야 함.
+        {title:"주문요청", field:"answer", align:"center"},
         {title:"추가후원", field:"supporterPrice", align:"right", bottomCalc:"sum"},
         {title:"출석", field:"attended", align:"center", formatter:"tickCross", sorter:"boolean"},
         {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc:"sum"},
@@ -283,6 +286,12 @@
       if(columnsInfoRow.bottomCalc)
       {
         columnsObject.bottomCalc = columnsInfoRow.bottomCalc;
+      }
+
+      //answer
+      if(columnsInfoRow.answer)
+      {
+        columnsObject.answer = columnsInfoRow.answer;
       }
 
       columnsArray.push(columnsObject);
@@ -431,6 +440,11 @@
       if(columnsInfoRow.bottomCalc)
       {
         columnsObject.bottomCalc = columnsInfoRow.bottomCalc;
+      }
+
+      if(columnsInfoRow.answer)
+      {
+        columnsObject.answer = columnsInfoRow.answer;
       }
 
       columnsNoTicketArray.push(columnsObject);
@@ -758,6 +772,11 @@
       if(columnsInfoRow.bottomCalc)
       {
         columnsObject.bottomCalc = columnsInfoRow.bottomCalc;
+      }
+
+      if(columnsInfoRow.answer)
+      {
+        columnsObject.answer = columnsInfoRow.answer;
       }
 
       columnsAllArray.push(columnsObject);
