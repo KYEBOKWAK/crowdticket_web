@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=14') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=15') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=3') }}"/>
     <style>
@@ -154,8 +154,6 @@
 @section('content')
 <?php
 $posters = json_decode($posters, true);
-//$ticketsInfoList = json_decode($ticketsCountInfoJson, true);
-//printf($posters['title_img_file_1']['img_url']);
 $channels = $project->user->channels()->get();
 $tickets = $project->tickets()->get();
 $discounts = $project->discounts()->get();
@@ -339,11 +337,13 @@ $selectedTicket = "";
            </div>
         </div>
       </div>
+
       <div class="detail_contant_wrapper">
         <div class="detail_width_wrapper">
           <div class="detail_content_calendar_container_grid">
             <div class="tab-content">
               <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
+                @include('template.picking_list', ['project' => $project])
                 <div class="detail_story_wrapper">
                  {!! html_entity_decode($project->story) !!}
                 </div>

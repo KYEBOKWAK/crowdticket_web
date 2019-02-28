@@ -107,14 +107,5 @@ class MailSendController extends Controller {
 							$m->from($from, $fromName);
 							$m->to($to)->subject($email_subject);
 		});
-
-		//return "abc";
-		//return redirect($redirectPath);
 	}
-/*
-	public function sendEmailCompliteSchedule(Request $request)
-	{
-
-	}
-*/
 }

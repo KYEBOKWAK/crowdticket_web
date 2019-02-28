@@ -10,6 +10,8 @@ use App\Models\Model as Model;
 use App\Models\Project as Project;
 use App\Models\Order as Order;
 use App\Models\Poster as Poster;
+use App\Services\SmsService;
+
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response;
 use Storage as Storage;
@@ -1065,7 +1067,7 @@ class ProjectController extends Controller
       $orders = $project->getOrdersWithoutPick();
 
       //주문자 정보 START
-      $pickingArray = $project->getOrdersWithPick();
+      $pickingArray = $project->getOrdersOnlyPick();
       //최종 정리된 타임을 기준으로 주문자를 정렬한다.
 
       $ordersJson = json_encode($orders);
@@ -1082,22 +1084,46 @@ class ProjectController extends Controller
     {
       $project = $this->getSecureProjectById($projectId);
 
+      if($project->isPickedComplete())
+      {
+        return false;
+      }
+
       if ($project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
-          $pickingOrders = $project->getOrdersWithoutPick();
-          foreach ($pickingOrders as $order) {
+          foreach ($project->orders as $order) {
+            if($order->is_pick)
+            {
+              $this->sendMailPick("success", $project, $order);
+              $this->sendPickSuccessSMS($project, $order);
+            }
+            else
+            {
               app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_PICK_CANCEL,true);
+              $this->sendMailPick("fail", $project, $order);
+            }
           }
+
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
       }
 
       $project->pick_state = Project::PICK_STATE_PICKED;
       $project->save();
 
-
+      return ["state" => "success", "message" => ""];
     }
 
     public function addPicking($projectId, $orderId)
     {
       $project = $this->getSecureProjectById($projectId);
+
+      if($project->isPickedComplete())
+      {
+        return false;
+      }
+
       $order = Order::findOrFail($orderId);
 
       $order->is_pick = "PICK";
@@ -1107,80 +1133,73 @@ class ProjectController extends Controller
     public function deletePicking($projectId, $orderId)
     {
       $project = $this->getSecureProjectById($projectId);
+
+      if($project->isPickedComplete())
+      {
+        return false;
+      }
+
       $order = Order::findOrFail($orderId);
 
       $order->is_pick = "";
       $order->save();
     }
 
-    public function sendMailPickSuccess($to, $project, $order)
+    public function sendMailPick($state, $project, $order)
     {
-      /*
+      if(!$project)
+      {
+        return false;
+      }
+
+      if(!$order)
+      {
+        return false;
+      }
+
       $mailForm = '';
       $subject = '';
       $data = [];
-      $ticketInfo = '티켓 없음';
-      $discount = $order->getDiscountText();
-      $goods = $order->getGoodsTotalTextInEmail();
-      $supportPrice = 0;
-      if($order->supporter)
-      {
-        $supportPrice = $order->supporter->price;
-      }
-      $commission = $order->getCommission();
 
-      //티켓 정보 셋팅
-      if($order->ticket)
-      {
-        $showDate = new \DateTime($order->ticket->show_date);
-        $date = $showDate->format('Y-m-d H:i');
-        $seat = $order->ticket->getSeatCategory();
-        if($order->ticket->isPlaceTicket() == false)
-        {
-          $date = '';
-        }
+      $to = $order->email;
 
-        $ticketInfo = $date.' ['.$seat.'] '.number_format($order->count).'매';
-      }
-
-      if ($project->type === 'funding')
+      if ($state === 'success')
       {
-        $mailForm = 'template.emailform.email_complite_schedule';
-        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+        $mailForm = 'template.emailform.email_pick_success';
+        $subject = '(크라우드티켓) 축하드립니다! 이벤트에 당첨되셨습니다!';
       }
       else
       {
-        $mailForm = 'template.emailform.email_complite_onetime';
-        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+        $mailForm = 'template.emailform.email_pick_fail';
+        $subject = "(크라우드티켓) 죄송합니다. "."'".$project->title."'"."에 당첨되지 못하셨습니다.";
       }
 
       $data = [
         'title' => $project->title,
-        'ticket' => $ticketInfo,
-        'discount' => $discount,
-        'goods' => $goods,
-        'supportPrice' => number_format($supportPrice),
-        'commission' => number_format($commission),
-        'totalPrice' => number_format($order->total_price),
+        'name' => $order->name,
         'payDate' => $project->getFundingOrderConcludeAt(),
-        'gotoPayPageURL' => url('orders/'.$order->id)
+        'gotoPayPageURL' => url('orders/'.$order->id),
+        'gotoProjectURL' => url('projects/'.$project->id),
       ];
 
       Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
           $m->from('contact@crowdticket.kr', '크라우드티켓');
           $m->to($to)->subject($subject);
       });
-      */
     }
 
-    public function sendMailPickFail()
+    public function sendPickSuccessSMS($project, $order)
     {
+      $sms = new SmsService();
+      $contact = $order->contact;
+      $limit = $project->type === 'funding' ? 10 : 14;
+      $titleLimit = str_limit($project->title, $limit, $end = '..');
+      //$totalPrice = number_format($order->total_price);
 
-    }
+      //[크라우드티켓] 사랑해 엄마 ‘결제 총액’원 결제 예약 완료
+      $msg = sprintf('(당첨!) %s 당첨 되었습니다.', $titleLimit);
 
-    public function sendSmsSuccess()
-    {
-
+      $sms->send([$contact], $msg);
     }
 
     public function test($projectId)

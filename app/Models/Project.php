@@ -180,7 +180,7 @@ class Project extends Model
       return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->get();
     }
 
-    public function getOrdersWithPick()
+    public function getOrdersOnlyPick()
     {
       return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '!=', '')->get();
     }
@@ -936,6 +936,16 @@ class Project extends Model
     {
       //임시로 들어가는 추가질문 가능한 프로젝트 구분하기
       if((int)$this->id === 359)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function isPickedComplete()
+    {
+      if((int)$this->pick_state === self::PICK_STATE_PICKED)
       {
         return true;
       }

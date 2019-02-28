@@ -171,3 +171,11 @@ fieldset[disabled] .form-control {
 .toast-success{
   background-color: #EF4D5D;
 }
+
+.loadingcontent{
+  margin-bottom: 15px;
+}
+
+.loading_util{
+  margin-bottom: 0px;
+}

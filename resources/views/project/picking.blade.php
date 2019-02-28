@@ -139,26 +139,40 @@
     ?>
 <input id="orderList" type="hidden" value="{{$orderList}}"/>
 <input id="pickingOldList" type="hidden" value="{{$pickingOldList}}"/>
+<input id="isPickComplete" type="hidden" value="{{$project->isPickedComplete()}}">
 
     @include('helper.btn_admin', ['project' => $project])
 
     <div class="first-container container">
         <div class="row">
-            <h2 class="text-center text-important">추첨 하기</h2>
+            <h2 class="text-center text-important">
+              @if($project->isPickedComplete())
+                추첨 완료
+              @else
+                추첨 하기
+              @endif
+            </h2>
 
         </div>
     </div>
 
     <div id="picking_container">
       <div class="flex_layer">
-        <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
+        @if($project->isPickedComplete())
+          <div style="width: 50%; margin-bottom: 10px;">추첨이 완료되었습니다.</div>
+        @else
+          <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
+        @endif
+
         <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
       </div>
       <div id="pick_list_container">
       </div>
 
-      <div id="orders_container">
-      </div>
+      @if(!$project->isPickedComplete())
+        <div id="orders_container">
+        </div>
+      @endif
     </div>
 
 @endsection
@@ -169,6 +183,7 @@
 
 <script>
   $(document).ready(function () {
+    var g_isPickComplete = $('#isPickComplete').val();
     var orders_json = $('#orderList').val();
     var orders = null;
     if(orders_json)
@@ -193,7 +208,12 @@
     };
 
     var unpickIcon = function(cell, formatterParams, onRendered){ //plain text value
-        return "<button class='pickButton'>추첨빼기</button>";
+      if(g_isPickComplete)
+      {
+        return "<div>추첨완료</div>";
+      }
+
+      return "<button class='pickButton'>추첨빼기</button>";
     };
 
     var columnsInfo = [
@@ -202,20 +222,28 @@
         }},
 
         {title:"추첨하기", field:"pick", align:"center",formatter:pickIcon, width:103},
-        {title:"이름", field:"name", align:"center", width:103},
+        //{title:"이름", field:"name", align:"center", width:103},
+        {title:"이름", field:"id", align:"center", width:103},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
         {title:"이메일", field:"email", align:"center", width:221},
         {title:"전화번호", field:"contact", align:"center", width:151},
         {title:"사연", field:"order_story", align:"center", width:151},
     ];
 
+    var unpickTitle = "추첨빼기";
+    if(g_isPickComplete)
+    {
+      unpickTitle = "추첨완료";
+    }
+
     var columnsPickInfo = [
         {formatter:"responsiveCollapse", field:"plus", width:30, minWidth:30, align:"center", resizable:false, headerSort:false, cellClick:function(e, cell){
           isWorkedCollapsePick = true;
         }},
 
-        {title:"추첨빼기", field:"unpick", align:"center",formatter:unpickIcon, width:103},
-        {title:"이름", field:"name", align:"center", width:103},
+        {title:unpickTitle, field:"unpick", align:"center",formatter:unpickIcon, width:103},
+        //{title:"이름", field:"name", align:"center", width:103},
+        {title:"이름", field:"id", align:"center", width:103},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
         {title:"이메일", field:"email", align:"center", width:221},
         {title:"전화번호", field:"contact", align:"center", width:151},
@@ -364,6 +392,10 @@
         columns:columnsInfo,
         data:tableDataArray,
         responsiveLayoutCollapseStartOpen:false,
+        //pagination:"local",
+        //paginationSize:3,
+        //paginationSizeSelector:[3, 6, 8, 10],
+        //movableColumns:true,
         dataEdited:function(data){
           //data - the updated table data
           //console.error("order count : "+ Object.keys(data).length);
@@ -373,17 +405,7 @@
 
           if(isPickClick)
           {
-
             addPicker(row.getData(), row.getIndex());
-            /*
-            if(table_list)
-            {
-              table_list.addRow(row.getData());
-            }
-
-            table.deleteRow(row.getIndex());
-            */
-
             //console.error(tableDataArray.length);
           }
 
@@ -406,27 +428,6 @@
         },
         responsiveLayoutCollapseFormatter:function(data){
           //console.error(data);
-          /*
-
-            var list = document.createElement("ul");
-
-            for(var key in data)
-            {
-              if(data[key] === 0 || data[key] === '')
-              {
-                continue;
-              }
-
-              if(key == '사연')
-              {
-                data[key] = getConverterEnterString(data[key]);
-              }
-
-              let item = document.createElement("li");
-              item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
-              list.appendChild(item);
-            }
-            */
 
             var list = getTableOutElement(data);
 
@@ -457,20 +458,9 @@
         },
 
         rowClick:function(e, row){
-
-          //console.error(row.getIndex());
-
           if(isUnPickClick)
           {
             deletePicker(row.getData(), row.getIndex());
-            /*
-            if(table)
-            {
-              table.addRow(row.getData());
-            }
-
-            table_list.deleteRow(row.getIndex());
-            */
           }
 
           if(!isWorkedCollapsePick)
@@ -486,49 +476,20 @@
         cellClick:function(e, cell){
           if(cell._cell.column.field == 'unpick')
           {
-            isWorkedCollapsePick = true;
-            isUnPickClick = true;
+            if(!g_isPickComplete)
+            {
+              isWorkedCollapsePick = true;
+              isUnPickClick = true;
+            }
           }
         },
         responsiveLayoutCollapseFormatter:function(data){
-          //console.error(data);
-          /*
-            var list = document.createElement("ul");
-
-            for(var key in data)
-            {
-              if(data[key] === 0 || data[key] === '')
-              {
-                continue;
-              }
-
-              //console.error(data);
-              if(key == '사연')
-              {
-                data[key] = getConverterEnterString(data[key]);
-              }
-
-              let item = document.createElement("li");
-              item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<strong>" + key + "</strong> " + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
-              list.appendChild(item);
-            }
-            */
 
             var list = getTableOutElement(data);
 
             return Object.keys(data).length ? list : "";
         }
     });
-
-    /*
-    var pickCompletePopup = function(){
-      var elementPopup = document.createElement("tr");
-      elementPopup.innerHTML =
-      "<td>"+order.name+"</td>" +
-      "<td>"+order.contact+"</td>" +
-      "<td>"+ attendButtonElement +"</td>";
-    }
-    */
 
     var pickCompletePopup = function(){
       var pickCounter = Number($("#pick_list_counter").attr('pick-count'));
@@ -537,7 +498,8 @@
 
       var elementPopup = document.createElement("div");
       elementPopup.innerHTML =
-      "<div class=''>확정 하시면 더 이상 추첨이 불가능 합니다.<br> - 추첨된 인원수 : " + pickCounter + "명"+
+      "<div class=''>확정 하시면 더 이상 추첨이 불가능 합니다.<br> - 추첨된 인원수 : " + pickCounter + "명<br><br>"+
+      "추첨 확정시,<br>1. 당첨 문자, 메일 발송<br>2. 미당첨 메일 발송<br> 이 진행 됩니다."
 
       "</div>";
 
@@ -562,10 +524,23 @@
         switch (value) {
           case "save":
           {
+            showLoadingPopup('');
             var url = '/projects/' + projectId + '/pickingcomplete';
             var method = 'get';
 
             var success = function(result) {
+              stopLoadingPopup();
+              if(result.state == "error")
+              {
+                swal(result.message, "", "error");
+                return;
+              }
+              else
+              {
+                swal("추첨 성공!", "", "success").then(function(){
+                  window.location.reload();
+                });
+              }
             };
 
             var error = function(request, status) {
@@ -586,29 +561,6 @@
 
     $("#pick_submit").click(function(){
       pickCompletePopup();
-      /*
-      swal("추첨 확정 하시겠습니까?", "<b>확정 하시면 더 이상 추첨이 불가능 합니다.</b>",{
-  						  buttons: {
-  								nosave: {
-  						      text: "아니오",
-  						      value: "notsave",
-  						    },
-  						    save: {
-  						      text: "예",
-  						      value: "save",
-  						    },
-  						  },
-  						})
-  						.then(function(value){
-  							switch (value) {
-  						    case "save":
-  								{
-  									ticketNext();
-  								}
-  						    break;
-  						  }
-  						});
-              */
     });
 
     window.addEventListener('resize', function(){
