@@ -1080,6 +1080,35 @@ class ProjectController extends Controller
       ]);
     }
 
+    public function getPickingRandom($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+      $orders = $project->getOrdersWithoutPick();
+
+      //주문자 정보 START
+      $pickingArray = $project->getOrdersOnlyPick();
+      //최종 정리된 타임을 기준으로 주문자를 정렬한다.
+
+      $ordersJson = json_encode($orders);
+      $pickingJson = json_encode($pickingArray);
+
+      return view('project.picking_rand', [
+          'project' => $project,
+          'orderList' => $ordersJson,
+          'pickingOldList' => $pickingJson
+      ]);
+    }
+
+    public function requestPickingRandom($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $orders = $project->getOrdersWithPickY();
+
+      return sizeof($orders);
+
+    }
+
     public function pickingComplete($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
@@ -1089,7 +1118,7 @@ class ProjectController extends Controller
         return false;
       }
 
-      if ($project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
           foreach ($project->orders as $order) {
             if($order->is_pick)
             {
