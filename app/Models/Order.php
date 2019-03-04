@@ -321,6 +321,12 @@ class Order extends Model
           return '취소됨';
       }
 
+      $project = Project::find($this->project_id);
+      if(!$project)
+      {
+        return "프로젝트 에러";
+      }
+
       if($this->getState() == self::ORDER_STATE_CANCEL)
       {
         return '취소됨';
@@ -335,10 +341,26 @@ class Order extends Model
       }
       else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE)
       {
-        return '결제예약';
+        if($project->isPickedComplete())
+        {
+          return '당첨 - 결제예약';
+        }
+        else if($project->isFinished())
+        {
+          return '결제완료';
+        }
+        else
+        {
+          return '결제예약';
+        }
       }
       else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL)
       {
+        if($project->isPickedComplete())
+        {
+          return '당첨 - 결제실패';
+        }
+
         return '결제실패(예약)';
       }
       else if($this->getState() == self::ORDER_STATE_STANDBY_START)
@@ -361,18 +383,21 @@ class Order extends Model
 
       //Lazy Eager 로딩 관련해서
       //$project = $this->getProject();
-      $project = Project::find($this->project_id);
-      if(!$project)
+
+      if($project->isEventTypeInvitationEvent()){
+        return '응모완료';
+      }
+
+      if((int)$this->getState() == self::ORDER_STATE_PAY)
       {
-        return "프로젝트 에러";
+        if($project->isPickedComplete())
+        {
+          return '당첨 - 결제완료';
+        }
       }
 
       if ($project->isFundingType() && !$project->isFinished()) {
           return '결제예약';
-      }
-
-      if($project->isEventTypeInvitationEvent()){
-        return '응모완료';
       }
 
       return '결제완료';
@@ -381,6 +406,36 @@ class Order extends Model
     public function isOrderStateStandbyStart()
     {
       return (int)$this->getState() === self::ORDER_STATE_STANDBY_START;
+    }
+
+    public function isPaySuccess()
+    {
+      if((int)$this->getState() == self::ORDER_STATE_PAY)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function isFundingPayFail()
+    {
+      if((int)$this->getState() == self::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function isPick()
+    {
+      if((int)$this->getState() == self::ORDER_STATE_PROJECT_PICK_CANCEL)
+      {
+        return false;
+      }
+
+      return true;
     }
 
     public function getIsCancel()

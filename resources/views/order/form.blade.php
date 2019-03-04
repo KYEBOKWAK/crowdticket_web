@@ -562,6 +562,23 @@
                 @if($order->isOrderStateStandbyStart())
                   <button class="btn btn-muted" disabled="disabled">결제 에러</button>
                   <p>카드 결제가 진행된 경우 크라우드티켓으로 연락주세요.</p>
+                @elseif($project->isPickedComplete())
+                  @if($order->isPick())
+                    @if($order->isPaySuccess())
+                      <button class="btn btn-muted" disabled="disabled">참가확정</button>
+                      <p class="ps-tooltip text-danger">참가확정 및 결제가 완료되었습니다.</p>
+                    @elseif($order->isFundingPayFail())
+                      <button class="btn btn-muted" disabled="disabled">참가확정(결제 실패)</button>
+                      <p class="ps-tooltip text-danger">카드 잔고부족, 한도초과 외 기타 문제로 결제가 실패되었습니다. <br>크라우드티켓에서 별도로 연락을 드리겠습니다.</p>
+                    @else
+                      <button class="btn btn-muted" disabled="disabled">참가확정</button>
+                      <p class="ps-tooltip text-danger">참가가 확정되어, 상단의 결제일에 결제가 진행됩니다.</p>
+                    @endif
+                  @else
+                    <button class="btn btn-muted" disabled="disabled">이벤트 당첨실패</button>
+                    <p class="ps-tooltip text-danger">아쉽게도 참가자 명단에 선정되지 못하셨습니다. 티켓 결제정보는 자동으로 취소 및 삭제되었습니다.</p>
+                  @endif
+
                 @elseif ($order->canCancel())
                   @if($project->isEventTypeDefault() || $project->isPickType())
                     @if ($project->type === 'funding')
