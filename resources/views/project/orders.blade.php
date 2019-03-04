@@ -181,6 +181,7 @@
         {title:"굿즈수령주소", field:"deliveryAddress", align:"center"},
         {title:"기타사항", field:"requirement", align:"center"},
         {title:"결제일", field:"created_at", align:"center"},
+        {title:"사연", field:"order_story", align:"center"},
     ];
 
     var project_title = $('#project_title').val();
