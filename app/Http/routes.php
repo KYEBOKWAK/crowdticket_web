@@ -171,7 +171,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/{id}/pickingrandom', 'ProjectController@getPickingRandom');
     Route::get('projects/{id}/pickingrequestrandom', 'ProjectController@requestPickingRandom');
 
-    Route::get('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
+    Route::post('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
+    Route::post('projects/{id}/pickingcomplete/sendmail', 'ProjectController@sendMailAfterPickComplete');
+    Route::post('projects/{id}/pickingcomplete/sendsms', 'ProjectController@sendSMSAfterPickComplete');
+
     Route::post('projects/{id}/addpicking/{orderid}', 'ProjectController@addPicking');
     Route::delete('projects/{id}/deletepicking/{orderid}', 'ProjectController@deletePicking');
 

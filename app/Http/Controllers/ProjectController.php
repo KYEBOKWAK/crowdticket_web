@@ -1140,15 +1140,9 @@ class ProjectController extends Controller
 
       if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
           foreach ($project->orders as $order) {
-            if($order->is_pick == 'PICK')
-            {
-              $this->sendMailPick("success", $project, $order);
-              $this->sendPickSuccessSMS($project, $order);
-            }
-            else
+            if($order->is_pick != 'PICK')
             {
               app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_PICK_CANCEL,true);
-              $this->sendMailPick("fail", $project, $order);
             }
           }
 
@@ -1160,6 +1154,56 @@ class ProjectController extends Controller
 
       $project->pick_state = Project::PICK_STATE_PICKED;
       $project->save();
+
+      return ["state" => "success", "message" => ""];
+    }
+
+    public function sendMailAfterPickComplete($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $orders = $project->getOrdersWithPickCancel();
+
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+          foreach ($orders as $order) {
+            if($order->is_pick == 'PICK')
+            {
+              $this->sendMailPick("success", $project, $order);
+            }
+            else
+            {
+              $this->sendMailPick("fail", $project, $order);
+            }
+          }
+
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
+      }
+
+
+      return ["state" => "success", "message" => ''];
+    }
+
+    public function sendSMSAfterPickComplete($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $orders = $project->getOrdersOnlyPick();
+
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+          foreach ($orders as $order) {
+            if($order->is_pick == 'PICK')
+            {
+              $this->sendPickSuccessSMS($project, $order);
+            }
+          }
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
+      }
 
       return ["state" => "success", "message" => ""];
     }
@@ -1235,10 +1279,14 @@ class ProjectController extends Controller
         'gotoProjectURL' => url('projects/'.$project->id),
       ];
 
-      Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
-          $m->from('contact@crowdticket.kr', '크라우드티켓');
-          $m->to($to)->subject($subject);
-      });
+
+      if($this->isCheckEmail($to) == true)
+      {
+        Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
+            $m->from('contact@crowdticket.kr', '크라우드티켓');
+            $m->to($to)->subject($subject);
+        });
+      }
     }
 
     public function sendPickSuccessSMS($project, $order)
@@ -1287,6 +1335,22 @@ class ProjectController extends Controller
       $orders = $project->getOrdersWithoutPick();
 
       return ['state' => 'success', 'orders' => $orders];
+    }
+
+    public function isCheckEmail($email)
+    {
+      $check_email=preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $email);
+
+      if($check_email==true)
+      {
+         //echo "올바른 이메일 형식입니다.";
+         return true;
+      }
+      else
+      {
+         //echo "잘못된 이메일 형식입니다.";
+         return false;
+      }
     }
 
     public function test($projectId)

@@ -494,6 +494,75 @@
         }
     });
 
+    var sendSMSPickComplete = function(){
+      showLoadingPopup("SMS 전송중..");
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+
+      var url = '/projects/' + projectId + '/pickingcomplete/sendsms';
+      var method = 'post';
+
+      var success = function(result) {
+        stopLoadingPopup();
+        if(result.state == "error")
+        {
+          swal(result.message, "", "error");
+          return;
+        }
+        else
+        {
+          swal("추첨 완료 성공!", "", "success").then(function(){
+            window.location.reload();
+          });
+        }
+      };
+
+      var error = function(request, status) {
+        //console.error('request : ' + JSON.stringify(request) + ' status : ' + status);
+        swal("SMS 전송 실패", "", "error");
+      };
+
+      $.ajax({
+        'url': url,
+        'method': method,
+        'success': success,
+        'error': error
+      });
+    }
+
+    var sendEmailPickComplete = function(){
+      showLoadingPopup("EMAIL 전송중..");
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+
+      var url = '/projects/' + projectId + '/pickingcomplete/sendmail';
+      var method = 'post';
+
+      var success = function(result) {
+        stopLoadingPopup();
+        if(result.state == "error")
+        {
+          swal(result.message, "", "error");
+          return;
+        }
+        else
+        {
+          //console.error(JSON.stringify(result.message) + ' ' + result.test);
+          sendSMSPickComplete();
+        }
+      };
+
+      var error = function(request, status) {
+        //console.error('request : ' + JSON.stringify(request) + ' status : ' + status);
+        swal("이메일 전송 실패", "", "error");
+      };
+
+      $.ajax({
+        'url': url,
+        'method': method,
+        'success': success,
+        'error': error
+      });
+    }
+
     var pickCompletePopup = function(){
       var pickCounter = Number($("#pick_list_counter").attr('pick-count'));
       var projectId = Number($("#pick_list_counter").attr('projectid'));
@@ -527,9 +596,9 @@
         switch (value) {
           case "save":
           {
-            showLoadingPopup('');
+            showLoadingPopup('미당첨 취소 진행중..');
             var url = '/projects/' + projectId + '/pickingcomplete';
-            var method = 'get';
+            var method = 'post';
 
             var success = function(result) {
               stopLoadingPopup();
@@ -540,9 +609,7 @@
               }
               else
               {
-                swal("추첨 성공!", "", "success").then(function(){
-                  window.location.reload();
-                });
+                sendEmailPickComplete();
               }
             };
 

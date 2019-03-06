@@ -187,9 +187,7 @@
     <div id="picking_container">
       <div class="flex_layer">
         @if($project->isPickedComplete())
-          <div style="width: 50%; margin-bottom: 10px;">추첨이 완료되었습니다.</div>
-        @else
-          <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
+          <div style="width: 50%; margin-bottom: 10px;">추첨이 완료되었습니다.</div>          
         @endif
 
         <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
