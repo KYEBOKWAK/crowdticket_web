@@ -475,3 +475,90 @@ function getSubStartDayEndDay(sDay, eDay)
   //console.error(diffDays);
 
 }
+
+function replaceName(str)
+{
+  //return str;
+
+  var strLength = str.length;
+  var resultStr = "";
+  for(var i = 0 ; i < strLength ; i++)
+  {
+    if(i == 0)
+    {
+      resultStr += str[i];
+    }
+    else if(i == strLength - 1)
+    {
+      resultStr += str[i];
+    }
+    else
+    {
+      resultStr += "*";
+    }
+  }
+
+  return resultStr;
+}
+
+function replaceEmail(str)
+{
+  //return str;
+
+  var strLength = str.length;
+  var resultStr = "";
+  var atSignIdx = str.indexOf("@");
+  if(atSignIdx > 0)
+  {
+    //str = str.substr(0, atSignIdx+3);
+    //strLength = str.length;
+  }
+
+  for(var i = 0 ; i < strLength ; i++)
+  {
+    if(atSignIdx <= 0)
+    {
+      if(i == strLength-1)
+      {
+        resultStr += "*";
+      }
+      else
+      {
+        resultStr += str[i];
+      }
+    }
+    else
+    {
+      if(i == atSignIdx - 1)
+      {
+        resultStr += "*";
+      }
+      else if(i == atSignIdx - 2)
+      {
+        resultStr += "*";
+      }
+      else if(i == atSignIdx - 3)
+      {
+        resultStr += "*";
+      }
+      else
+      {
+        resultStr += str[i];
+      }
+    }
+  }
+
+  return resultStr;
+  //for()
+}
+
+// min (포함) 과 max (불포함) 사이의 임의 정수를 반환
+// Math.round() 를 사용하면 고르지 않은 분포를 얻게된다!
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+// min (포함) 과 max (포함) 사이의 임의 정수를 반환
+// Math.round() 를 사용하면 고르지 않은 분포를 얻게된다!
+function getRandomIntInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

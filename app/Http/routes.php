@@ -168,9 +168,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('projects/{id}/attend/{timeunix}', 'ProjectController@getAttendedList');
 
     Route::get('projects/{id}/picking', 'ProjectController@getPicking');
+    Route::get('projects/{id}/pickingrandom', 'ProjectController@getPickingRandom');
+    Route::get('projects/{id}/pickingrequestrandom', 'ProjectController@requestPickingRandom');
+
     Route::get('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
     Route::post('projects/{id}/addpicking/{orderid}', 'ProjectController@addPicking');
     Route::delete('projects/{id}/deletepicking/{orderid}', 'ProjectController@deletePicking');
+
+    //임시 코드
+    Route::post('projects/{id}/addy/{orderid}', 'ProjectController@addY');
+    Route::delete('projects/{id}/deletey/{orderid}', 'ProjectController@deleteY');
 
     Route::put('orders/{id}/updateorderstory', 'OrderController@updateOrderStory');
 });

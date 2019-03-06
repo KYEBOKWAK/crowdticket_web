@@ -1073,10 +1073,15 @@ class ProjectController extends Controller
       $ordersJson = json_encode($orders);
       $pickingJson = json_encode($pickingArray);
 
+      //임시코드
+      $pickingYList = $project->getOrdersWithPickY();
+      $pickingYList = json_encode($pickingYList);
+
       return view('project.picking', [
           'project' => $project,
           'orderList' => $ordersJson,
-          'pickingOldList' => $pickingJson
+          'pickingOldList' => $pickingJson,
+          'pickingYList' => $pickingYList,
       ]);
     }
 
@@ -1104,9 +1109,24 @@ class ProjectController extends Controller
       $project = $this->getSecureProjectById($projectId);
 
       $orders = $project->getOrdersWithPickY();
+      //$orders = $project->getOrdersWithoutPick();
 
-      return sizeof($orders);
+      $ordersLength = sizeof($orders);
 
+      $randIdx = rand(0, $ordersLength-1);
+
+      if($randIdx >= $ordersLength)
+      {
+        return ['state' => 'error', 'index' => $randIdx, 'message' => 'Over Random Index'];
+      }
+
+      $order = $orders[$randIdx];
+
+      $this->addPicking($project->id, $order->id);
+
+      $orders = $project->getOrdersWithoutPick();
+
+      return ['state' => 'success', 'order' => $order, 'orders' => $orders];
     }
 
     public function pickingComplete($projectId)
@@ -1120,7 +1140,7 @@ class ProjectController extends Controller
 
       if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
           foreach ($project->orders as $order) {
-            if($order->is_pick)
+            if($order->is_pick == 'PICK')
             {
               $this->sendMailPick("success", $project, $order);
               $this->sendPickSuccessSMS($project, $order);
@@ -1172,6 +1192,10 @@ class ProjectController extends Controller
 
       $order->is_pick = "";
       $order->save();
+
+      $orders = $project->getOrdersWithoutPick();
+
+      return ['state' => 'success', 'orders' => $orders];
     }
 
     public function sendMailPick($state, $project, $order)
@@ -1229,6 +1253,40 @@ class ProjectController extends Controller
       $msg = sprintf('(당첨!) %s 당첨 되었습니다.', $titleLimit);
 
       $sms->send([$contact], $msg);
+    }
+
+    public function addY($projectId, $orderId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      if($project->isPickedComplete())
+      {
+        return false;
+      }
+
+      $order = Order::findOrFail($orderId);
+
+      $order->is_pick = "Y";
+      $order->save();
+    }
+
+    public function deleteY($projectId, $orderId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      if($project->isPickedComplete())
+      {
+        return false;
+      }
+
+      $order = Order::findOrFail($orderId);
+
+      $order->is_pick = "";
+      $order->save();
+
+      $orders = $project->getOrdersWithoutPick();
+
+      return ['state' => 'success', 'orders' => $orders];
     }
 
     public function test($projectId)

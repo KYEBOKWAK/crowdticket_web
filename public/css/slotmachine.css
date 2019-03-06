@@ -1,0 +1,98 @@
+.slot-machine {
+  display: flex;
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(51, 51, 51, 0.08), 0 1px 2px rgba(51, 51, 51, 0.22);
+}
+
+.slot {
+  overflow: hidden;
+  position: relative;
+  margin-right: 5px;
+  padding: 0 10px;
+  width: 75%;
+  height: 40px;
+  background: #fff;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+}
+
+.reel {
+  will-change: transform;
+}
+
+.reel > span {
+  display: block;
+  line-height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0px); }
+  5% {
+    transform: translateY(-10px); }
+  10% {
+    transform: translateY(0px); }
+  }
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg); }
+  50% {
+    transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg); }
+  }
+@keyframes color {
+  from {
+    color: white; }
+  to {
+    color: red; }
+  }
+.loadingtext {
+  display: none;
+  font-size: 15px;
+  margin-top: auto;
+  perspective: 90px;
+}
+.loadingtext div {
+  display: inline-block;
+  animation-name: jump;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50% 8px;
+  transform-style: preserve-3d;
+}
+.loadingtext .l1 {
+  animation-delay: 0.1s;
+}
+.loadingtext .l2 {
+  animation-delay: 0.2s;
+}
+.loadingtext .l3 {
+  animation-delay: 0.3s;
+}
+.loadingtext .l4 {
+  animation-delay: 0.4s;
+}
+.loadingtext .l5 {
+  animation-delay: 0.5s;
+}
+.loadingtext .l6 {
+  animation-delay: 0.6s;
+}
+.loadingtext .l7 {
+  animation-delay: 0.7s;
+}
+.loadingtext .l8 {
+  animation-delay: 0.8s;
+}
+.loadingtext .l9 {
+  animation-delay: 0.9s;
+}
+.loadingtext .l10 {
+  animation-delay: 1s;
+}

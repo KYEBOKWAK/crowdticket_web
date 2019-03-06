@@ -70,7 +70,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->id === $entity->user_id || $this->isAdmin();
     }
 
-    private function isAdmin()
+    public function isAdmin()
     {
         return \DB::table('admins')->where('user_id', '=', $this->id)->count() > 0;
     }
