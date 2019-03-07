@@ -163,6 +163,8 @@
         @else
           <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
         @endif
+        <button id="pick_sendmail" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">메일보내기</button>
+        <button id="pick_sendSMS" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">문자보내기</button>
 
         <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
       </div>
@@ -547,8 +549,9 @@
         }
         else
         {
+          swal("메일보내기 성공!", "", "success");
           //console.error(JSON.stringify(result.message) + ' ' + result.test);
-          sendSMSPickComplete();
+          //sendSMSPickComplete();
         }
       };
 
@@ -888,6 +891,14 @@
           }
       });
     }
+
+    $('#pick_sendmail').click(function(){
+      sendEmailPickComplete();
+    });
+
+    $('#pick_sendSMS').click(function(){
+      sendSMSPickComplete();
+    });
 
     //임시코드 END
   });
