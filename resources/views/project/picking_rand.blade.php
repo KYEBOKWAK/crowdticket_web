@@ -195,7 +195,9 @@
       <div id="pick_list_container">
       </div>
 
-      <button id="pick_random" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">랜덤 추첨 하기!</button>
+      @if(!$project->isPickedComplete())
+        <button id="pick_random" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">랜덤 추첨 하기!</button>
+      @endif
 
       @if(!$project->isPickedComplete())
         <div id="orders_container">
