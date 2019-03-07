@@ -9,7 +9,11 @@ function showLoadingPopup(message){
   var elementPopup = document.createElement("div");
   elementPopup.innerHTML =
   "<div><b>" + title + "</b></div>" +
-  "<div class='loadingcontent'><b>" + "잠시만 기다려주세요." + "</b></div>" +
+  "<div class='loadingcontent'>" +
+  "<b>" +
+  "잠시만 기다려주세요." + "<br>" +
+  "페이지를 닫을 경우 오류가 발생할 수 있습니다." + 
+  "</b></div>" +
   "<div class='loading loading_util'>" +
 
   "</div>";
