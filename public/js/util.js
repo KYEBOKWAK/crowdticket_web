@@ -12,7 +12,7 @@ function showLoadingPopup(message){
   "<div class='loadingcontent'>" +
   "<b>" +
   "잠시만 기다려주세요." + "<br>" +
-  "페이지를 닫을 경우 오류가 발생할 수 있습니다." + 
+  "페이지를 닫을 경우 오류가 발생할 수 있습니다." +
   "</b></div>" +
   "<div class='loading loading_util'>" +
 
@@ -490,11 +490,25 @@ function replaceName(str)
   {
     if(i == 0)
     {
-      resultStr += str[i];
+      if(strLength == 1)
+      {
+        resultStr += "*";
+      }
+      else
+      {
+        resultStr += str[i];  
+      }
     }
     else if(i == strLength - 1)
     {
-      resultStr += str[i];
+      if(strLength == 2)
+      {
+        resultStr += "*";
+      }
+      else
+      {
+        resultStr += str[i];
+      }
     }
     else
     {
