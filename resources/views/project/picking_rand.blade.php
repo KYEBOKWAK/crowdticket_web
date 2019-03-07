@@ -187,7 +187,7 @@
     <div id="picking_container">
       <div class="flex_layer">
         @if($project->isPickedComplete())
-          <div style="width: 50%; margin-bottom: 10px;">추첨이 완료되었습니다.</div>          
+          <div style="width: 50%; margin-bottom: 10px;">추첨이 완료되었습니다.</div>
         @endif
 
         <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
@@ -281,7 +281,7 @@
     ];
 
     var columnsPickRandPopInfo = [
-        {title:unpickTitle, field:"unpick", align:"center",formatter:unpickIcon, width:103},
+        //{title:unpickTitle, field:"unpick", align:"center",formatter:unpickIcon, width:103},
 
         {title:"이름", field:"name", align:"center", width:103},
         //{title:"이름", field:"id", align:"center", width:103},
