@@ -174,12 +174,14 @@
         </div>
       @endif
 
-      @if (\Auth::check() && \Auth::user()->isAdmin())
-        <input id="pickingYList" type="hidden" value="{{$pickingYList}}"/>
-        <div id="orders_container_fire_N">
-        </div>
-        <div id="orders_container_fire">
-        </div>
+      @if(!$project->isPickedComplete())
+        @if (\Auth::check() && \Auth::user()->isAdmin())
+          <input id="pickingYList" type="hidden" value="{{$pickingYList}}"/>
+          <div id="orders_container_fire_N">
+          </div>
+          <div id="orders_container_fire">
+          </div>
+        @endif
       @endif
     </div>
 
