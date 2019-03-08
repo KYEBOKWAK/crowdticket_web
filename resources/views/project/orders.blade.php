@@ -164,7 +164,7 @@
     ];
 
     var columnsAllInfo = [
-        //{title:"아이디(test)", field:"name", align:"center", width:103},
+        //{title:"아이디(test)", field:"id", align:"center", width:103},
         {title:"이름", field:"name", align:"center", width:103, headerFilter:true},
         {title:"일시", field:"show_date", align:"center", width: 150},
         {title:"티켓종류", field:"ticket_category", align:"center"},
@@ -187,6 +187,7 @@
     var project_title = $('#project_title').val();
 
     var supervise_orders_json = $('#supervise_orders').val();
+
     var supervise_orders = $.parseJSON(supervise_orders_json);
     if(supervise_orders.length > 0)
     {
@@ -198,6 +199,7 @@
 
     //supervise_orders_all_ticket
     var supervise_orders_all_ticket_json = $('#supervise_orders_all_ticket').val();
+
     var supervise_orders_all_ticket = $.parseJSON(supervise_orders_all_ticket_json);
     if(supervise_orders_all_ticket[0]['orders'].length > 0)
     {
@@ -293,6 +295,11 @@
       if(columnsInfoRow.answer)
       {
         columnsObject.answer = columnsInfoRow.answer;
+      }
+
+      if(columnsInfoRow.attended)
+      {
+        columnsObject.attended = columnsInfoRow.attended;
       }
 
       columnsArray.push(columnsObject);
@@ -448,6 +455,11 @@
         columnsObject.answer = columnsInfoRow.answer;
       }
 
+      if(columnsInfoRow.attended)
+      {
+        columnsObject.attended = columnsInfoRow.attended;
+      }
+
       columnsNoTicketArray.push(columnsObject);
     }
 
@@ -599,6 +611,11 @@
       if(columnsInfoRow.bottomCalc)
       {
         columnsObject.bottomCalc = columnsInfoRow.bottomCalc;
+      }
+
+      if(columnsInfoRow.attended)
+      {
+        columnsObject.attended = columnsInfoRow.attended;
       }
 
       columnsOnlySupportArray.push(columnsObject);
@@ -780,6 +797,11 @@
         columnsObject.answer = columnsInfoRow.answer;
       }
 
+      if(columnsInfoRow.attended)
+      {
+        columnsObject.attended = columnsInfoRow.attended;
+      }
+
       columnsAllArray.push(columnsObject);
     }
 
@@ -855,11 +877,6 @@
         columns:columnsAllArray,
         data:tableAllDataArray,
     });
-/*
-    $("#download_excel").click(function(){
-        table.download("xlsx", "data.xlsx", {sheetName:"My Data"});
-    });
-*/
 
     //테이블 테스트
     //다운로드 테이블 데이터 셋팅

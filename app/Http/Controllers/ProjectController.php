@@ -714,30 +714,14 @@ class ProjectController extends Controller
         $ordersNoBuyTicketJson = json_encode($ordersNoBuyTicket);
 
         //전체리스트
+
         $ordersAllTicket = [];
         $tempAllTicket['orders'] = [];
 
-        foreach($orders as $order)
+        $orderAll = $project->ordersWithoutError()->withTrashed()->get();
+
+        foreach($orderAll as $order)
         {
-          /*
-          $ticket = $order->ticket;
-          if(!$ticket)
-          {
-            continue;
-          }
-          */
-
-          /*
-          $tempAllTicket['show_date_unix'] = 9999999999;
-          if($order->ticket)
-          {
-            $tempAllTicket['show_date_unix'] = strtotime($order->ticket->show_date);
-          }
-          */
-
-
-          //$tempAllTicket['orders']['show_date'] = $ticket->show_date;
-
           array_push($tempAllTicket['orders'], $this->getSuperviseOrderList($order, $project));
         }
 
@@ -750,11 +734,7 @@ class ProjectController extends Controller
             'ordersWithTimeJson' => $ordersWithTimeJson,
             'ordersNoTicketJson' => $ordersNoBuyTicketJson,
             'ordersAllWithTimeJson' => $ordersAllWithTimeJson,
-
-            'tickets' => $project->tickets()->with(['orders' => function ($query) {
-                $query->where('state', '<', Order::ORDER_STATE_ERROR_START)->withTrashed();
-            }, 'orders.user'])->get(),
-            'orders' => $project->ordersWithoutError()->withTrashed()->get(),
+            //'ordersAllWithTimeJson' => $orders,
         ]);
     }
 
@@ -767,6 +747,7 @@ class ProjectController extends Controller
         //$order['supporterPrice'] = number_format($order->supporter->price);
         $order['supporterPrice'] = $order->supporter->price;
       }
+
 
       if($order['attended'] === 'ATTENDED')
       {
