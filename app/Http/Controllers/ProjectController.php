@@ -793,13 +793,17 @@ class ProjectController extends Controller
 
           //실제 구매했는지 찾는다.
           $goodsOrders = json_decode($order->goods_meta, true);
+          //foreach($goodsOrders as $goodsOrder)
           foreach($goodsOrders as $goodsOrder)
           {
-            $goodsOrderId = intval($goodsOrder['id']);
+            $goodsOrderId = $goodsOrder['id'];
             if((int)$goodsOrderId === (int)$goods->id)
             {
               //$isSetGoodsOrder = true;
               $order[$goodsKey] = $goodsOrder['count'];
+
+              //set Log
+              \Log::info('order info ', ['id' => $order->id, 'goodsKey' => $goodsKey, 'counter' => $goodsOrder['count']]);
 
               if($isCancel)
               {
