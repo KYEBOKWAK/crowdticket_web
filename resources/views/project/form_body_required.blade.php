@@ -2,6 +2,7 @@
   <div class="project_form_title_wrapper">
     <h2 class="project_form_title">프로젝트 <span class="pointColor">분류</span>
       <p style="font-size:14px; font-weight: normal; margin-top: 8px;">개설 절차는 크롬에 최적화 되어 있습니다.</p>
+      <p style="font-size:14px; font-weight: normal; margin-top: 8px;">추첨형 티켓팅 진행을 원하시면 크라우드티켓으로 연락주세요.</p>
     </h2>
   </div>
   <div class="project_form_content_container">
