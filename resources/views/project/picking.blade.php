@@ -635,7 +635,8 @@
     };
 
     $("#pick_submit").click(function(){
-      pickCompletePopup();
+      //pickCompletePopup();//해당 함수가 기능힘수
+      swal("기능 개선중..", "해당 기능을 사용하려면 크라우드티켓에 연락주세요.", 'info');
     });
 
     window.addEventListener('resize', function(){
@@ -893,11 +894,17 @@
     }
 
     $('#pick_sendmail').click(function(){
-      sendEmailPickComplete();
+      swal("기능 개선중..", "해당 기능을 사용하려면 크라우드티켓에 연락주세요.", 'info');
+      /*
+      sendEmailPickComplete();//해당함수가 기능함수
+      */
     });
 
     $('#pick_sendSMS').click(function(){
-      sendSMSPickComplete();
+      swal("기능 개선중..", "해당 기능을 사용하려면 크라우드티켓에 연락주세요.", 'info');
+      /*
+      sendSMSPickComplete();//해당함수가 기능함수
+      */
     });
 
     //임시코드 END
