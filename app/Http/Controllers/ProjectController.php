@@ -803,7 +803,7 @@ class ProjectController extends Controller
               $order[$goodsKey] = $goodsOrder['count'];
 
               //set Log
-              \Log::info('order info ', ['id' => $order->id, 'goodsKey' => $goodsKey, 'counter' => $goodsOrder['count']]);
+              //\Log::info('order info ', ['id' => $order->id, 'goodsKey' => $goodsKey, 'counter' => $goodsOrder['count']]);
 
               if($isCancel)
               {
