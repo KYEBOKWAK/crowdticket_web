@@ -796,7 +796,7 @@ class ProjectController extends Controller
           foreach($goodsOrders as $goodsOrder)
           {
             $goodsOrderId = intval($goodsOrder['id']);
-            if($goodsOrderId === $goods->id)
+            if((int)$goodsOrderId === (int)$goods->id)
             {
               //$isSetGoodsOrder = true;
               $order[$goodsKey] = $goodsOrder['count'];
