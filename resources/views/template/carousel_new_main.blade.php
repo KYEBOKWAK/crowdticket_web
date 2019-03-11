@@ -76,6 +76,7 @@ if(isset($colOnly))
                                   @endif
 
                                   <span class="ct-percent">
+                                    <!--
                                   @if($project->isEventTypeCrawlingEvent())
                                     진행중
                                   @else
@@ -108,6 +109,7 @@ if(isset($colOnly))
                                       @endif
                                     @endif
                                   @endif
+                                -->
                                   </span>
                                 </h5>
                             </div>
