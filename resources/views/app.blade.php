@@ -48,7 +48,7 @@
     <link href="{{ asset('/css/base.css?version=4') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=4') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=11') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=12') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -150,6 +150,7 @@
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/projects') }}">전체보기</a></li>
+                    <li><a href="{{ url('/magazine') }}">매거진</a></li>
                     <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
                 </ul>
 
@@ -209,7 +210,7 @@
         </div>
         <div class="col-md-12 ct-info">
             <p>
-                 나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 859 12 00216&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a>
+                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a>
             </p>
         </div>
     </div>
@@ -226,7 +227,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=19') }}"></script>
+<script src="{{ asset('/js/util.js?version=20') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>

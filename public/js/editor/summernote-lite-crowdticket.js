@@ -46,7 +46,7 @@ $(document).ready(function() {
 
   $('#summernote').summernote({
     tabsize: 4,
-    width: 790,
+    //width: 790,
     height: 500,
     disableDragAndDrop: false,
 

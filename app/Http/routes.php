@@ -53,6 +53,11 @@ Route::get('projects/{id}/supporters', 'ProjectController@getSupporters');
 Route::get('projects/{id}/news', 'ProjectController@getNews');
 Route::get('projects/{id}/comments', 'ProjectController@getComments');
 
+//매거진 START
+Route::get('magazine', 'MagazineController@getMagazineAll');
+Route::get('magazine/{id}', 'MagazineController@getMagazine');
+//매거진 END
+
 Route::get('categories/{id}/projects', 'ProjectController@getCategoryProjectsById');
 Route::get('categories/{title}/projects', 'ProjectController@getCategoryProjectsByTitle');
 
@@ -183,6 +188,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('projects/{id}/deletey/{orderid}', 'ProjectController@deleteY');
 
     Route::put('orders/{id}/updateorderstory', 'OrderController@updateOrderStory');
+
+    //매거진 START
+    Route::get('magazine/write', 'MagazineController@goMagazineWrite');
+    Route::get('magazine/{id}/modify', 'MagazineController@goMagazineModifyWrite');
+    Route::post('magazine/story/images', 'MagazineController@uploadStoryImage');
+
+    Route::post('magazine/{id}/update', 'MagazineController@updateMagazine');
+    Route::post('magazine/update/story', 'MagazineController@updateMagazineStory');
+
+    Route::delete('magazine/{id}/delete', 'MagazineController@deleteMagazine');
+    Route::delete('magazine/{id}/deleteimg', 'MagazineController@removeMagazineTitleImageByRequest');
+    //Route::post('magazine/update/{id}', 'MagazineController@updateMagazine');
+    //매거진 END
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

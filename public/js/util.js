@@ -496,7 +496,7 @@ function replaceName(str)
       }
       else
       {
-        resultStr += str[i];  
+        resultStr += str[i];
       }
     }
     else if(i == strLength - 1)
