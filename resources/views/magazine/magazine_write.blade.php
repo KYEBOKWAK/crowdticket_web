@@ -115,6 +115,18 @@
 
     /*이미지 업로드 START*/
     #magazine_title_img_preview{
+      /*max-width: 100%;*/
+      /* 요게 매거진 타이틀 옵션*/
+      /*
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      transform:translateX(-50%);
+      bottom: 0px;
+      right: 0px;
+      margin: auto;
+      */
+
       max-width: 100%;
       position: absolute;
       top: 0px;
@@ -122,6 +134,7 @@
       bottom: 0px;
       right: 0px;
       margin: auto;
+
     }
 
     .magazine_title_img_preview_origin_size{
@@ -133,8 +146,8 @@
 
     .magazine_title_img_preview_wrapper{
       display: none;
-      width: 295px;
-      height: 164px;
+      width: 320px;
+      /*height: 164px;*/
       position: relative;
       overflow: hidden;
     }
@@ -166,8 +179,8 @@
 
     .magazine_thumb_img_preview_wrapper{
       display: none;
-      width: 295px;
-      height: 164px;
+      width: 320px;
+      /*height: 164px;*/
       position: relative;
       overflow: hidden;
     }
@@ -227,14 +240,14 @@
       </div>
 
       <div class="project_form_input_container">
-          <p class="magazine_content_title">상단 이미지(없을경우 썸네일 이미지가 상단이미지가 됨)</p>
+          <p class="magazine_content_title">상단 이미지(없을경우 썸네일 이미지가 상단이미지가 됨)-Height : 300px 고정</p>
           <div class="project-form-content">
               <a href="javascript:void(0);" id="magazine_title_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
               <a href="javascript:void(0);" id="magazine_title_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
               <div class="magazine_title_img_preview_wrapper">
                 <div class="magazine_title_img_preview_ratio_wrapper">
                   <div class="magazine_title_img_preview_origin_size">
-                    <img id="magazine_title_img_preview" onload="imageResize($('.magazine_title_img_preview_wrapper')[0], this);"/>
+                    <img id="magazine_title_img_preview" onload="imageFullResize($('.magazine_title_img_preview_wrapper')[0], this);"/>
                   </div>
                 </div>
               </div>
@@ -244,14 +257,14 @@
       </div>
 
       <div class="project_form_input_container">
-          <p class="magazine_content_title">썸네일 이미지</p>
+          <p class="magazine_content_title">썸네일 이미지(16:9)</p>
           <div class="project-form-content">
               <a href="javascript:void(0);" id="magazine_thumb_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
               <a href="javascript:void(0);" id="magazine_thumb_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
               <div class="magazine_thumb_img_preview_wrapper">
                 <div class="magazine_thumb_img_preview_ratio_wrapper">
                   <div class="magazine_thumb_img_preview_origin_size">
-                    <img id="magazine_thumb_img_preview" onload="imageResize($('.magazine_thumb_img_preview_wrapper')[0], this);"/>
+                    <img id="magazine_thumb_img_preview" onload="imageFullResize($('.magazine_thumb_img_preview_wrapper')[0], this);"/>
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@
     <div class="flex_layer">
       <div class="magazine_thumbnail_image_wrapper">
         <div class="bg-base magazine-thumbnail">
-          <img src="{{ $magazine->getThumbImgURL() }}" onload="imageResize($('.magazine-thumbnail')[0], this);" class="magazine-img"/>
+          <img src="{{ $magazine->getThumbImgURL() }}" onload="imageFullResize($('.magazine-thumbnail')[0], this);" class="magazine-img"/>
         </div>
       </div>
 
