@@ -35,6 +35,11 @@ class MagazineController extends Controller
         $this->removeMagazineTitleImage($magazine->title_img_url, $magazine->id);
       }
 
+      if($magazine->thumb_img_url)
+      {
+        $this->removeMagazineThumbImage($magazine->thumb_img_url, $magazine->id);
+      }
+
       $magazine->delete();
 
       return ['state' => 'sucess'];
@@ -61,6 +66,17 @@ class MagazineController extends Controller
       $magazine->title_img_url = $title_img_url;
     }
 
+    if ($request->file('magazine_thumb_img_file')) {
+      if($magazine->thumb_img_url)
+      {
+        $this->removeMagazineThumbImage($magazine->thumb_img_url, $magazineId);
+        $magazine->thumb_img_url = '';
+      }
+
+      $thumb_img_url = $this->createMagazineThumbImage($request, $magazineId);
+      $magazine->thumb_img_url = $thumb_img_url;
+    }
+
     $magazine->save();
 
     return ['state' => 'success'];
@@ -74,6 +90,18 @@ class MagazineController extends Controller
     {
       $this->removeMagazineTitleImage($magazine->title_img_url, $magazineId);
       $magazine->title_img_url = '';
+      $magazine->save();
+    }
+  }
+
+  public function removeMagazineThumbImageByRequest($magazineId)
+  {
+    $magazine = Magazine::findOrFail($magazineId);
+
+    if($magazine->thumb_img_url)
+    {
+      $this->removeMagazineThumbImage($magazine->thumb_img_url, $magazineId);
+      $magazine->thumb_img_url = '';
       $magazine->save();
     }
   }
@@ -164,7 +192,7 @@ class MagazineController extends Controller
     $originalName = \Input::get('magazine_title_image_name');
     $hashedName = md5($originalName);
 
-    $posterUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/'. $hashedName . '.jpg';
+    $posterUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/' . 'title/' . $hashedName . '.jpg';
 
     Storage::put(
         $posterUrlPartial,
@@ -177,7 +205,34 @@ class MagazineController extends Controller
   private function removeMagazineTitleImage($imgURL, $magazineId)
   {
     $fileName = basename($imgURL).PHP_EOL;
-    $magazineTitleUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/' . $fileName;
+    $magazineTitleUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/'. 'title/' . $fileName;
+
+    if(Storage::disk('s3')->exists($magazineTitleUrlPartial) == true)
+    {
+      //파일이 있으면 지워준다.
+      Storage::delete($magazineTitleUrlPartial);
+    }
+  }
+
+  private function createMagazineThumbImage($request, $magazineId)
+  {
+    $originalName = \Input::get('magazine_thumb_image_name');
+    $hashedName = md5($originalName);
+
+    $posterUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/' . 'thumb/' . $hashedName . '.jpg';
+
+    Storage::put(
+        $posterUrlPartial,
+        file_get_contents($request->file('magazine_thumb_img_file')->getRealPath())
+    );
+
+    return Model::S3_BASE_URL . $posterUrlPartial;
+  }
+
+  private function removeMagazineThumbImage($imgURL, $magazineId)
+  {
+    $fileName = basename($imgURL).PHP_EOL;
+    $magazineTitleUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/'. 'thumb/' . $fileName;
 
     if(Storage::disk('s3')->exists($magazineTitleUrlPartial) == true)
     {

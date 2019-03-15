@@ -50,7 +50,7 @@
     .magazine-thumbnail {
       position:relative;
       /*padding-top:75%;*/
-      padding-top:40%;
+      padding-top:56.25%;
       overflow:hidden;
       background-color: white;
     }

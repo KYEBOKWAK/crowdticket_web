@@ -199,6 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::delete('magazine/{id}/delete', 'MagazineController@deleteMagazine');
     Route::delete('magazine/{id}/deleteimg', 'MagazineController@removeMagazineTitleImageByRequest');
+    Route::delete('magazine/{id}/deletethumbimg', 'MagazineController@removeMagazineThumbImageByRequest');
     //Route::post('magazine/update/{id}', 'MagazineController@updateMagazine');
     //매거진 END
 });

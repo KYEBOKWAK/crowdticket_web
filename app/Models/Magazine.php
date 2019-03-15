@@ -2,7 +2,7 @@
 
 class Magazine extends Model
 {
-    protected $fillable = ['title', 'subtitle', 'title_img_url', 'story'];
+    protected $fillable = ['title', 'subtitle', 'title_img_url', 'thumb_img_url', 'story'];
 
     protected static $typeRules = [
         'title_img_url' => 'url',
@@ -15,7 +15,8 @@ class Magazine extends Model
 
     public function getThumbImgURL()
     {
-      return $this->title_img_url;
+      //return $this->title_img_url;
+      return $this->thumb_img_url;
     }
 
     public function getMagazineLinkURL()

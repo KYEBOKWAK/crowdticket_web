@@ -115,11 +115,6 @@
 
     /*이미지 업로드 START*/
     #magazine_title_img_preview{
-      /*width: 295px;
-      height: 164px;
-      background-repeat: no-repeat;
-      background-size: cover;*/
-
       max-width: 100%;
       position: absolute;
       top: 0px;
@@ -147,10 +142,42 @@
     .magazine_title_img_preview_ratio_wrapper{
       position: relative;
       width: 100%;
-      /*padding-bottom: 75%;*/
-      padding-bottom: 40%;
+      padding-bottom: 56.25%;
     }
     /*이미지 업로드 END*/
+
+    /*썸네일 이미지 업로드 START*/
+    #magazine_thumb_img_preview{
+      max-width: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      bottom: 0px;
+      right: 0px;
+      margin: auto;
+    }
+
+    .magazine_thumb_img_preview_origin_size{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .magazine_thumb_img_preview_wrapper{
+      display: none;
+      width: 295px;
+      height: 164px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .magazine_thumb_img_preview_ratio_wrapper{
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+    }
+    /*썸네일 이미지 업로드 END*/
 
     .magazine_form_container{
       margin: 0px 15px;
@@ -171,6 +198,7 @@
       @if(isset($magazine))
         <input type="hidden" id="magazineId" name="magazineId" value="{{$magazine->id}}"/>
         <input id="magazine_title_img_url" type="hidden" value="{{$magazine->title_img_url}}"/>
+        <input id="magazine_thumb_img_url" type="hidden" value="{{$magazine->thumb_img_url}}"/>
       @else
         <input type="hidden" id="magazineId" name="magazineId" value=""/>
       @endif
@@ -199,7 +227,7 @@
       </div>
 
       <div class="project_form_input_container">
-          <p class="magazine_content_title">상단 or 썸네일 이미지</p>
+          <p class="magazine_content_title">상단 이미지(없을경우 썸네일 이미지가 상단이미지가 됨)</p>
           <div class="project-form-content">
               <a href="javascript:void(0);" id="magazine_title_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
               <a href="javascript:void(0);" id="magazine_title_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
@@ -212,6 +240,23 @@
               </div>
                 <input id="magazine_title_img_file" type="file" name="magazine_title_img_file" style="height: 0; visibility: hidden"/>
                 <input id="magazine_title_image_name" type="hidden" name="magazine_title_image_name"/>
+          </div>
+      </div>
+
+      <div class="project_form_input_container">
+          <p class="magazine_content_title">썸네일 이미지</p>
+          <div class="project-form-content">
+              <a href="javascript:void(0);" id="magazine_thumb_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
+              <a href="javascript:void(0);" id="magazine_thumb_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
+              <div class="magazine_thumb_img_preview_wrapper">
+                <div class="magazine_thumb_img_preview_ratio_wrapper">
+                  <div class="magazine_thumb_img_preview_origin_size">
+                    <img id="magazine_thumb_img_preview" onload="imageResize($('.magazine_thumb_img_preview_wrapper')[0], this);"/>
+                  </div>
+                </div>
+              </div>
+                <input id="magazine_thumb_img_file" type="file" name="magazine_thumb_img_file" style="height: 0; visibility: hidden"/>
+                <input id="magazine_thumb_image_name" type="hidden" name="magazine_thumb_image_name"/>
           </div>
       </div>
     </form>
@@ -266,8 +311,6 @@ $(document).ready(function () {
       $('.magazine_title_img_preview_wrapper').show();
       $('#magazine_title_img_preview').attr("src", url);
       $('#magazine_title_image_name').val(filename);
-
-      //$('#goods_img_preview').css('background-image', "url('" + url + "')");
     }
     else
     {
@@ -276,8 +319,26 @@ $(document).ready(function () {
       $('.magazine_title_img_preview_wrapper').hide();
       $('#magazine_title_img_preview').attr("src", "");
       $('#magazine_title_image_name').val('');
-      //$('#goods_img_preview').hide();
-      //$('#goods_img_preview').css('background-image', "");
+    }
+  };
+
+  var setMagazineThumbImgPreview = function(url, filename){
+    if(url)
+    {
+      $('#magazine_thumb_file_sub').show();
+
+      //$('#goods_img_preview').show();
+      $('.magazine_thumb_img_preview_wrapper').show();
+      $('#magazine_thumb_img_preview').attr("src", url);
+      $('#magazine_thumb_image_name').val(filename);
+    }
+    else
+    {
+      $('#magazine_thumb_file_sub').hide();
+
+      $('.magazine_thumb_img_preview_wrapper').hide();
+      $('#magazine_thumb_img_preview').attr("src", "");
+      $('#magazine_thumb_image_name').val('');
     }
   };
 
@@ -293,8 +354,23 @@ $(document).ready(function () {
 	};
 
   var performMagazineFileClick = function() {
-		$('#magazine_title_img_file').trigger('click');
-	};
+    $('#magazine_title_img_file').trigger('click');
+  };
+
+  var performMagazineThumbFileClick = function() {
+    $('#magazine_thumb_img_file').trigger('click');
+  };
+
+  var onMagazineThumbImgChanged = function() {
+    if (this.files && this.files[0]) {
+      var fileName = getRemoveExpWord(this.files[0].name);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        setMagazineThumbImgPreview(e.target.result, fileName);
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  };
 
   var removePriviewLocalImg = function(){
     setMagazineImgPreview('', '');
@@ -308,6 +384,21 @@ $(document).ready(function () {
     {
       // other browser 일때 input[type=file] init.
       $("#magazine_title_img_file").val("");
+    }
+  };
+
+  var removePriviewLocalThumbImg = function(){
+    setMagazineThumbImgPreview('', '');
+
+    if ($.browser.msie)
+    {
+      // ie 일때 input[type=file] init.
+      $("#magazine_thumb_img_file").replaceWith( $("#magazine_thumb_img_file").clone(true) );
+    }
+    else
+    {
+      // other browser 일때 input[type=file] init.
+      $("#magazine_thumb_img_file").val("");
     }
   };
 
@@ -336,6 +427,31 @@ $(document).ready(function () {
 		});
   };
 
+  var removePriviewServeThumbImg = function(){
+    showLoadingPopup('이미지 제거중..');
+
+    var magazineId = $('#magazineId').val();
+    var url = '/magazine/' + magazineId + '/deletethumbimg';
+    var method = 'delete';
+
+    var success = function(e) {
+      stopLoadingPopup();
+      //console.error(e);
+      removePriviewLocalThumbImg();
+    };
+    var error = function(e) {
+      stopLoadingPopup();
+      swal("이미지 삭제에 실패하였습니다.", "", "error");
+    };
+
+    $.ajax({
+      'url': url,
+      'method': method,
+      'success': success,
+      'error': error
+    });
+  };
+
   $('#magazine_title_file_sub').click(function(){
     if($('#magazineId').val())
     {
@@ -344,6 +460,17 @@ $(document).ready(function () {
     else
     {
       removePriviewLocalImg();
+    }
+  });
+
+  $('#magazine_thumb_file_sub').click(function(){
+    if($('#magazineId').val())
+    {
+      removePriviewServeThumbImg();
+    }
+    else
+    {
+      removePriviewLocalThumbImg();
     }
   });
 
@@ -364,15 +491,13 @@ $(document).ready(function () {
 
   $('#magazine_title_file_fake').bind('click', performMagazineFileClick);
   $('#magazine_title_img_file').change(onMagazineImgChanged);
+
+  $('#magazine_thumb_file_fake').bind('click', performMagazineThumbFileClick);
+  $('#magazine_thumb_img_file').change(onMagazineThumbImgChanged);
+
   $('#magazine_form').ajaxForm(magazineAjaxOption);
 
   $('#update_story').bind('click', function(){
-    //test
-    //console.error($('#editor_image_name').val());
-    //return;
-    //////
-
-
     showLoadingPopup('저장중입니다..');
 
     var markupStr = $('#summernote').summernote('code');
@@ -417,6 +542,12 @@ $(document).ready(function () {
     {
        setMagazineImgPreview($('#magazine_title_img_url').val(), '');
     }
+
+    if($('#magazine_thumb_img_url'))
+    {
+       setMagazineThumbImgPreview($('#magazine_thumb_img_url').val(), '');
+    }
+
   };
 
   init();

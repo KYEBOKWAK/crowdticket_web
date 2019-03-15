@@ -119,7 +119,11 @@
 @section('content')
 
 <div class="magazine_title_wrapper">
+  @if($magazine->title_img_url)
     <img class="magazine_title_img" src="{{$magazine->title_img_url}}"/>
+  @else
+    <img class="magazine_title_img" src="{{$magazine->thumb_img_url}}"/>
+  @endif
   <div class="black-mask"></div>
   <p class="magazine_title">{{$magazine->title}}</p>
 </div>
