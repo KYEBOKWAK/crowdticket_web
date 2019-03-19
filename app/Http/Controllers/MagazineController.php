@@ -18,8 +18,19 @@ class MagazineController extends Controller
 
   public function getMagazine($magazineId)
   {
+    $magazine = Magazine::findOrFail($magazineId);
+
+    $cookieName = 'isShowMagazine_'.$magazineId;
+
+    if(!isset($_COOKIE[$cookieName]))
+    {
+      setcookie($cookieName,"true", time()+86400, "/magazine");
+
+      $magazine->increment('view_count');
+    }
+
     return view('magazine.magazine_detail', [
-        'magazine' => Magazine::findOrFail($magazineId),
+        'magazine' => $magazine,
     ]);
   }
 
