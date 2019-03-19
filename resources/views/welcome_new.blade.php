@@ -168,7 +168,7 @@
 
         /*메인 추천 슬라이드 css  ---- end  */
     </style>
-    <link href="{{ asset('/css/welcome.css?version=9') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=10') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
 
@@ -179,7 +179,13 @@
       @include('template.carousel_main')
     <!-- first section 끝 -->
     <!-- second section 시작 -->
+
       <div class="welcome_main_thumb_container">
+
+        @if($magazines)
+        @include('template.carousel_magazine', ['magazines' => $magazines])
+        @endif
+
         <div class="welcome_main_thumb_title_container">
           <h4 style="float:left">크라우드티켓 추천</h4>
           <!-- Controls -->
@@ -276,49 +282,41 @@
               },
             });
 
-            //alert("사용자가 창 닫음.");
-
-            //$(window).bind('beforeunload', function(){
-            //    alert("aaa");
-            //});​
-
-
+            var swiperMagazine = new Swiper('.swiper-magazine-container', {
+              loop: true,
+              centeredSlides: true,
+              /*
+              autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+              },
+              */
+              navigation: {
+                //nextEl: '.carousel-button-next',
+                //prevEl: '.carousel-button-prev',
+              },
+              pagination: {
+                el: '.swiper-magazine-pagination',
+                clickable: true,
+                renderBullet: function (index, className) {
+                  return '<span class="' + className + '">' + '</span>';
+                },
+              },
+            });
         });
 
         window.onbeforeunload = function(e) {
-          /*
-          var projectId = 237;
-      		var url = '/projects/' + projectId + '/admin/test';
-      		var method = 'put';
-      		var success = function(request) {
-            console.error(request);
-      			//swal('사용가능한 주소입니다.', "", "success");
-      		};
-      		var error = function(request) {
-            console.error("error");
-      		};
-
-      		$.ajax({
-      			'url': url,
-      			'method': method,
-      			'success': success,
-      			'error': error
-      		});
-          */
-          //console.error("aaaa");
-          /*
-          console.error("aaaa");
-          var e = e || window.event;
-
-          // For IE and Firefox prior to version 4
-          if (e) {
-              e.returnValue = 'Any string';
-          }
-
-          // For Safari
-          return 'Any string';
-          */
         }
+
+        $('.magazine_subtitle_data').each(function(){
+          var magazineId = $(this).attr("data-magazine-id");
+          var magazineContentClassName = '.magazine_thumb_content_content_'+magazineId;
+
+          var converterData = getConverterEnterString($(this).val());
+
+          $(magazineContentClassName).append(converterData);
+
+        });
     </script>
     <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
 @endsection

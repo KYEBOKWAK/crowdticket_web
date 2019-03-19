@@ -196,6 +196,18 @@
       margin: 0px 15px;
     }
 
+    #subtitle{
+      height: 190px;
+    }
+
+    @media(max-width:630px)
+    {
+      .magazine_container{
+        width: 100%;
+      }
+
+    }
+
 
     </style>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
@@ -228,14 +240,13 @@
       </div>
 
       <div class="project_form_input_container">
-          <p class="magazine_content_title">Sub Title</p>
+          <p class="magazine_content_title">Sub Title(5줄 이상 짤림)</p>
           <div class="project-form-content">
             @if(isset($magazine))
-              <input id="subtitle" name="subtitle" type="text" class="form_input_base" value="{{ $magazine->subtitle }}"/>
+              <textarea id="subtitle" name="subtitle" class="form_input_base">{{$magazine->subtitle}}</textarea>
             @else
-              <input id="subtitle" name="subtitle" type="text" class="form_input_base" value=""/>
+              <textarea id="subtitle" name="subtitle" class="form_input_base"></textarea>
             @endif
-
           </div>
       </div>
 

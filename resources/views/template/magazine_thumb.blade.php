@@ -11,8 +11,15 @@
         <div class="magazine_thumb_content_title">
           {{$magazine->title}}
         </div>
-        <div class="magazine_thumb_content_content">
-          {{$magazine->subtitle}}
+        <div class="magazine_thumb_date">
+          <?php
+            $updateDate = date('Y.m.d', strtotime($magazine->updated_at));
+          ?>
+          | {{$updateDate}}
+        </div>
+
+        <input type="hidden" id="ticket_notice" class="magazine_subtitle_data" data-magazine-id="{{$magazine->id}}" value="{{ $magazine->subtitle }}"/>
+        <div class="magazine_thumb_content_content magazine_thumb_content_content_{{$magazine->id}}">
         </div>
       </div>
     </div>

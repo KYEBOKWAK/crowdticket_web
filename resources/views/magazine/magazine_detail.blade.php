@@ -57,8 +57,8 @@
       margin-left: auto;
       margin-right: auto;
       position: relative;
-      top: 240px;
-      margin-bottom: 260px;
+      top: 290px;
+      margin-bottom: 310px;
     }
     .magazine_thumbnail_container{
       /*width: 90%;*/
@@ -127,7 +127,7 @@
     .magazine_title_image_container{
       /*width: 320px;*/
       width: 100%;
-      height: 300px;
+      height: 350px;
       margin-left: auto;
       margin-right: auto;
       overflow: hidden;
