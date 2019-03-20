@@ -249,7 +249,7 @@
 <div class="magazine_title_wrapper">
   <div class="magazine_title_image_container">
     <div class="bg-base magazine_title_img_wrapper">
-      <img class="magazine_title_img" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/newtest/maincarousel/yell.jpg"/>
+      <img class="magazine_title_img" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/newtest/magazine/maintitle/maintitle.jpg"/>
     </div>
   </div>
 
