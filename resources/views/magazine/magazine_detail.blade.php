@@ -1,5 +1,10 @@
 @extends('app')
 
+@section('meta')
+  <meta property="og:image" content="{{ $magazine->thumb_img_url }}"/>
+  <meta name="description" content="{{ $magazine->title }}"/>
+@endsection
+
 @section('css')
     <style>
     .magazine_title_wrapper{
