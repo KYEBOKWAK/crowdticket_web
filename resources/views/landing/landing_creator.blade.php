@@ -33,11 +33,11 @@
     크리에이터를 위한 티켓팅 서비스,<br> <b>CROWDTICKET CREATORS</b></h3>
 
     <div class="apply-btn-config">
-      <button id="creatorMoveApply" type="button" class="ct-btn ct-btn-default">사전 신청하기</button>
+      <button id="creatorMoveApply" type="button" class="ct-btn ct-btn-default">제휴 신청하기</button>
     </div>
   </div>
   <div class="apply-btn-config-M">
-    <button id="creatorMoveApply2" type="button" class="ct-btn ct-btn-default">사전 신청하기</button>
+    <button id="creatorMoveApply2" type="button" class="ct-btn ct-btn-default">제휴 신청하기</button>
   </div>
   <div class="landing-title-img-wrapping">
   </div>
@@ -98,7 +98,7 @@
   <h3>2018년 9월, CROWDTICKET CREATORS가 여러분을 만납니다.</h3>
   <h3>가장 먼저 이벤트 등록을 예약하세요.</h3>
   <h3>크라우드티켓팀이 기획에서 홍보까지 함께합니다.</h3>
-  <button type="button" onclick="window.open('{{ url('/landing/form') }}')" class="ct-btn ct-btn-apply">사전 신청하기</button>
+  <button type="button" onclick="window.open('{{ url('/landing/form') }}')" class="ct-btn ct-btn-apply">제휴 신청하기</button>
 </div>
 
 @endsection
