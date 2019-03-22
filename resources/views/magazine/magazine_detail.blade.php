@@ -173,6 +173,10 @@
   <p class="magazine_title">{{$magazine->title}}</p>
 
   <div class="magazine_story_wrapper">
+    @if (\Auth::check() && \Auth::user()->isAdmin())
+    조회수 : {{$magazine->view_count}}
+    @endif
+
    {!! html_entity_decode($magazine->story) !!}
   </div>
 </div>
