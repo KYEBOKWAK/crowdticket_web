@@ -47,7 +47,7 @@ class WelcomeController extends Controller
 
       if((int)$thumbnailType == Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE)
       {
-        $projectsByOrderInfo = \App\Models\Magazine::whereIn('id', $thumbnailProjectIds)->select('id', 'title', 'subtitle', 'thumb_img_url', 'updated_at')->get();
+        $projectsByOrderInfo = \App\Models\Magazine::whereIn('id', $thumbnailProjectIds)->select('id', 'title', 'subtitle', 'thumb_img_url', 'created_at')->get();
       }
       else
       {
