@@ -13,7 +13,7 @@
         </div>
         <div class="magazine_thumb_date">
           <?php
-            $updateDate = date('Y.m.d', strtotime($magazine->updated_at));
+            $updateDate = date('Y.m.d', strtotime($magazine->created_at));
           ?>
           | {{$updateDate}}
         </div>
