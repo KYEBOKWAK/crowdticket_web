@@ -123,14 +123,19 @@ $(document).ready(function() {
 		//listGoods();
 	};
 
-	$('.detail_comment_add_btn').click(function(){
+	var addComment = function(){
 		if(isLogin() == false)
 		{
-			alert("로그인을 해야 댓글을 달 수 있습니다.");
+			//alert("로그인을 해야 댓글을 달 수 있습니다.");
+			loginPopup($, addComment);
 			return;
 		}
 
 		$('#addComment').submit();
+	};
+
+	$('.detail_comment_add_btn').click(function(){
+		addComment();
 	});
 
 	var deleteComment = function(commentId) {
@@ -377,7 +382,7 @@ $(document).ready(function() {
 
 });
 
-
+/*
 function isLogin(){
 	var myId = Number($('#myId').val());
 	if(myId == 0)
@@ -387,6 +392,7 @@ function isLogin(){
 
 	return true;
 }
+*/
 
 
 function isMyOrMasterComment(commentId){

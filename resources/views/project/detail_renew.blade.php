@@ -402,7 +402,6 @@ $selectedTicket = "";
       <input type="hidden" id="project_id" value="{{ $project->id }}"/>
       <input type="hidden" id="goods_json" value="{{ $project->goods }}"/>
 
-      <input type="hidden" id="myId" value="@if(Auth::user()) {{ Auth::user()->id }} @else 0 @endif "/>
       <input type="hidden" id="isMaster" value="{{ $is_master }}"/>
 
       <input type="hidden" id="introduce_input_row" value="{{ $project->user->introduce }}">
@@ -428,7 +427,7 @@ $selectedTicket = "";
     @include('template.ticket_old')
     <script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-    <script src="{{ asset('/js/project/detail.js?version=17') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=18') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=19') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=20') }}"></script>
 @endsection

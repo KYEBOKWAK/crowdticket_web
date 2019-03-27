@@ -383,7 +383,11 @@ class ProjectController extends Controller
             if (\Auth::check()) {
                 \Auth::user()->checkOwnership($project);
             } else {
-                throw new \App\Exceptions\OwnershipException;
+                return false;
+                //throw new \App\Exceptions\OwnershipException("aabb");
+                //return view('auth.login', ['redirectPath' => redirect()->back()->getTargetUrl()]);
+                //return \Redirect::action('Auth\AuthController@completecomment', ['id' => $entityId]);
+                //return \Redirect::action('Auth\AuthController@getLogin');
             }
         }
         return $project;
@@ -393,6 +397,11 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $project = $this->getApprovedProject($project);
+
+        if(!$project)
+        {
+          return view('auth.login', ['redirectPath' => url().'/projects'.'/'.$id]);
+        }
 
         //NEW 체크
         $isArrayNew = $this->isArrayNew($project);
@@ -404,6 +413,11 @@ class ProjectController extends Controller
     {
         $project = Project::where('alias', '=', $alias)->firstOrFail();
         $project = $this->getApprovedProject($project);
+
+        if(!$project)
+        {
+          return view('auth.login', ['redirectPath' => url().'/projects'.'/'.$alias]);
+        }
 
         //NEW 체크
         $isArrayNew = $this->isArrayNew($project);

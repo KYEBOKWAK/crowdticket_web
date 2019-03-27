@@ -1,0 +1,157 @@
+.loginpopup_container{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.loginpopup_container h1{
+  font-size: 38px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.box-container form {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.box-container button[type="submit"] {
+    margin-top: 1.5em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+.ps-facebook-wrapper {
+    margin-top: 1em;
+}
+
+.form-body-default-container{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project_form_title_wrapper{
+  text-align: center;
+}
+
+.project-form-content{
+  width: 100%;
+  margin-left: 0px;
+  padding: 0px 0px;
+}
+
+.project_form_content_container{
+  width: 90%;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex_layer_project{
+  display: block !important;
+}
+
+.project-form-content-title{
+  display: table;
+  text-align: left;
+  padding-left: 0px;
+
+  text-align: right;
+  flex-basis: 200px;
+  flex-shrink: 0;
+
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 2.78;
+  letter-spacing: normal;
+  color: black;
+}
+
+.error{
+  font-size: 14px;
+  color: red;
+  margin-left: 5px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.btn_register_wrapper{
+  text-align: center;
+  margin-top: 30px;
+}
+
+.btn_register{
+  padding: 8px 44px;
+  border-radius: 4px;
+  font-size: 15px;
+  background-color: #EF4D5D;
+  border: 1px solid #EF4D5D;
+  font-weight: 500;
+  color: white;
+}
+
+.btn_register:hover{
+  color: white;
+}
+
+.btn_register:focus{
+  color: white;
+}
+
+.project_form_input_base{
+  width: 100%;
+  /*width: 600px;*/
+  height: 38px;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+
+  background-color: #ffffff;
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+#login_social_button_container{
+  text-align: center;
+  margin-bottom: 5px;
+  margin-top: 30px;
+}
+
+#login_social_facebook_button_wrapper{
+  width: 80%;
+  text-align: center;
+  color: white;
+  background-color: #4267b2;
+  padding: 5px 0px;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px){
+  .reset_wrapper{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+}
+
+.loading{
+  margin-top: 20px;
+}
+
+#forget_password{
+  color: black;
+}

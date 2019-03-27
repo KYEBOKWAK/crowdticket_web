@@ -54,6 +54,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/login/login.css?version=1') }}" rel="stylesheet"/>
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -108,8 +109,10 @@
 
     <!-- facebook js -->
     <script>
+    /*
     var fbAppID = '{{env('FACEBOOK_ID')}}';
     var fbVer = '{{env('FACEBOOK_VER')}}';
+    //var fbLibSrc = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version='+fbVer+'&appId='+fbAppID+'&autoLogAppEvents=1';
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
@@ -117,7 +120,11 @@
       js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version='+fbVer+'&appId='+fbAppID+'&autoLogAppEvents=1';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    */
     </script>
+
+    <!-- google js -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
     <script src="{{ asset('/js/util_header.js?version=6') }}"></script>
@@ -130,6 +137,8 @@
 
 <input type="hidden" id="base_url" value="{{ url() }}"/>
 <input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
+
+<input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 
 @section('navbar')
     <nav class="navbar navbar-default">
@@ -156,8 +165,10 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        <li><a href="{{ url('/auth/login') }}">로그인</a></li>
-                        <li><a href="{{ url('/auth/register') }}">회원가입</a></li>
+                        <!-- <li><a href="{{ url('/auth/login') }}">로그인</a></li> -->
+                        <!-- <li><a href="{{ url('/auth/register') }}">회원가입</a></li> -->
+                        <li id="g_login"><a>로그인</a></li>
+                        <li id="g_register"><a>회원가입</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -227,7 +238,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=20') }}"></script>
+<script src="{{ asset('/js/util.js?version=21') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -238,13 +249,23 @@
 <script src="{{ asset('/js/app.2.js?version=4') }}"></script>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
+<?php
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=2');
+?>
+<script src="{{ $loginFilePath }}"></script>
+
+<script>
+
+</script>
 <script>
 function logout(){
+  /*
       FB.getLoginStatus(function(response) {
         console.log(JSON.stringify(response));
         if (response.status === 'connected') {
           //페이스북이 연동된 상태에서 로그아웃 들어오면, 페북 로그 아웃 후 페이지 로그아웃 진행
           FB.logout(function(response) {
+            console.error("FB Logout : " + response);
               //var baseUrl = $('#base_url').val();
               //window.location.assign(baseUrl+'/auth/logout');
           });
@@ -255,13 +276,16 @@ function logout(){
           //window.location.assign(baseUrl+'/auth/logout');
         }
       });
-
+*/
       var baseUrl = $('#base_url').val();
       window.location.assign(baseUrl+'/auth/logout');
     }
 </script>
 
 @yield('js')
+
+<script>
+</script>
 
 </body>
 </html>

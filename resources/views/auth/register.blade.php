@@ -1,8 +1,7 @@
 @extends('app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
-<link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=9') }}"/>
+
     <style>
         .box-container form {
             padding-left: 2em;
@@ -109,7 +108,8 @@
 @endsection
 
 @section('content')
-
+<input type="hidden" id='redirectURL' value="@if(isset($redirectPath)){{$redirectPath}}@endif"/>
+<!--
 <div class="form-body-default-container">
   <div class="project_form_title_wrapper">
     <h2 class="project_form_title"><span class="pointColor">회원</span> 가입</h2>
@@ -182,12 +182,33 @@
 
   </div>
 </div>
-
+-->
 @endsection
 
 @section('js')
-<script src="{{ asset('/js/fblogin.js') }}"></script>
 <script>
+$(document).ready(function() {
+  var goCloseCallback = function(){
+    var redirectURL = $('#base_url').val();
+    window.location.href = redirectURL;
+  };
+
+  var goRedirectCallback = function(){
+    var redirectURL = $('#base_url').val();
+
+    if($("#redirectURL").val())
+    {
+      redirectURL = $("#redirectURL").val();
+    }
+
+    window.location.href = redirectURL;
+  };
+
+  registerPopup(goRedirectCallback, goCloseCallback);
+});
+</script>
+<script>
+/*
 $(document).ready(function () {
 
   $('#form_user_register').ajaxForm({
@@ -202,7 +223,7 @@ $(document).ready(function () {
       //alert(data);
        //컨트롤러 실행 후 성공시 넘어옴
        loadingProcessStop($(".btn_register_wrapper"));
-       if(data.request == 'success')
+       if(data.state == 'success')
        {
          //swal("회원가입 성공되었습니다.", "", "success");
          swal("회원가입 성공되었습니다.", {
@@ -377,28 +398,7 @@ $(document).ready(function () {
     loadingProcess($(".btn_register_wrapper"));
   });
 
-/*
-  $("#email").focusout(function(){
-    var value = $(this).val();
-    var errorName = $(this)[0].id + "-error";
-    var errorDiv = $("#" + errorName);
-
-    if(!isCheckEmailWithoutAlert(value))
-    {
-      errorDiv.show();
-      errorDiv.text("이메일이 잘못입력되었습니다.");
-    }
-  });
-
-  $("#email").focus(function(){
-    var value = $(this).val();
-    var errorName = $(this)[0].id + "-error";
-    var errorDiv = $("#" + errorName);
-    errorDiv.hide();
-  });
-  */
-
-
 });
+*/
 </script>
 @endsection

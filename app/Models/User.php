@@ -5,14 +5,16 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
-
     use Authenticatable, CanResetPassword;
 
-    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder'];
+    const LIKE_KEY_MAGAGINE = "magazine";
 
-    protected $hidden = ['password', 'remember_token', 'facebook_id'];
+    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder', 'like_meta'];
+
+    protected $hidden = ['password', 'remember_token', 'facebook_id', 'google_id'];
 
     protected static $creationRules = [
         'email' => 'required|email|unique:users',
@@ -61,7 +63,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function checkOwnership($entity)
     {
         if (!$this->isOwnerOf($entity)) {
-            throw new \App\Exceptions\OwnershipException;
+            throw new \App\Exceptions\OwnershipException("관리자 혹은 개설자만 접근 가능합니다.");
         }
     }
 
@@ -92,5 +94,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
       return $this->name;
     }
+
+/*
+    public function setLikeMeta($likekey, $id)
+    {
+      $like_meta = json_decode($this->like_meta);
+
+      if($likekey == self::LIKE_KEY_MAGAGINE)
+      {
+
+      }
+
+      return count($like_meta);
+    }
+    */
 
 }

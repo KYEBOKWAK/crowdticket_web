@@ -1198,11 +1198,31 @@ $(document).ready(function() {
 
   $('#goforward').bind('click', moveForwardJS);
   $('#goback').bind('click', moveBackS);
+
+
+  $('#ticketing-btn-calendar').click(function(){
+    loginPopup(selectCalendarTicket);
+  });
+
+  $('#detail_main_cw_btn').click(function(){
+    loginPopup(selectCalendarTicket);
+  });
+  $('#detail_tab_cw_btn_mobile').click(function(){
+    loginPopup(selectCalendarTicket);
+  });
+  $('#detail_tab_cw_btn').click(function(){
+    loginPopup(selectCalendarTicket);
+  });
+
+
+  /*
+  //본코드
   $('#ticketing-btn-calendar').bind('click', selectCalendarTicket);
 
   $('#detail_main_cw_btn').bind('click', selectCalendarTicket);
   $('#detail_tab_cw_btn_mobile').bind('click', selectCalendarTicket);
   $('#detail_tab_cw_btn').bind('click', selectCalendarTicket);
+  */
 
   setTicketDateSelectBind();
 

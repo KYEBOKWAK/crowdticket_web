@@ -1,3 +1,19 @@
+function isLogin()
+{
+  var myId = Number($('#myId').val());
+	if(myId == 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+function setLoginID(id)
+{
+  $('#myId').val(id);
+}
+
 function showLoadingPopup(message){
   var title = "처리중입니다.";
 
@@ -580,3 +596,158 @@ function getRandomInt(min, max) {
 function getRandomIntInclusive(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function parseQuery ( query ) {
+   var Params = new Object ();
+
+   if ( ! query ) return Params; // return empty object
+
+   var Pairs = query.split(/[;&]/);
+
+   for ( var i = 0; i < Pairs.length; i++ ) {
+
+      var KeyVal = Pairs[i].split('=');
+
+      if ( ! KeyVal || KeyVal.length != 2 ) continue;
+
+      var key = unescape( KeyVal[0] );
+
+      var val = unescape( KeyVal[1] );
+
+      val = val.replace(/\+/g, ' ');
+
+      Params[key] = val;
+
+   }
+   return Params;
+}
+
+/*
+function loginPopup(jQuery, successFunc){
+  if(isLogin())
+  {
+    successFunc();
+    return;
+  }
+  var elementPopup = document.createElement("div");
+  elementPopup.innerHTML =
+  "<div class='loginpopup_container'>"+
+  "<h1>로그인</h1>" +
+  "<div id='login_error_message' class='alert alert-danger' style='display:none;'></div>" +
+  "<div style='width:100%; text-align:center;'>" +
+  "</div>" +
+  "<div id='login_social_button_container'>" +
+    "<div id='login_social_facebook_button_wrapper'>" +
+      "<img src='https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/AHNFF9E2KeQ.png' style='width:30px;height:30px;margin-bottom:4px;margin-right:5px;'/>" +
+      "<span style='font-weight:500;margin-right:5px;'>" + "페이스북 로그인" + "</span>" +
+    "</div>" +
+    "또는" +
+  "</div>" +
+
+      "<div class='form-group'>" +
+          "<label class='control-label'>이메일</label>" +
+          "<input id='loginpopup_email' type='email' class='form-control' name='email' required='required'>" +
+      "</div>" +
+
+      "<div class='form-group'>" +
+          "<label class='control-label'>비밀번호</label>" +
+          "<input id='loginpopup_password' type='password' class='form-control' name='password' required='required'>" +
+      "</div>" +
+
+      "<div class='form-group text-center'>" +
+        "<button id='login_button' type='button' class='btn btn-default center-block'>로그인</button>" +
+      "</div>" +
+
+      "<div style='border-bottom: 1px #dad8cc solid; margin-bottom:13px; text-align: center; padding-bottom:18px;'>" +
+      "<p>크라우드티켓이 처음이세요?</p>" +
+      "<a id='register_go'><p style='font-weight: bold;'><u>10초 만에 가입하기!</u></p></a>" +
+      "</div>" +
+
+      "<div style='text-align:center;'>" +
+        "<a id='forget_password' class='btn btn-link'>비밀번호가 기억나지 않나요?</a>" +
+      "</div>" +
+
+  "</div>";
+
+
+  swal({
+      //title: "로그인",
+      content: elementPopup,
+      confirmButtonText: "V redu",
+      allowOutsideClick: "true",
+
+      buttons: {
+        close: {
+          text: "닫기",
+          value: "close",
+        },
+      },
+
+  }).then(function(value){
+
+  });
+
+  $('#forget_password').click(function(){
+    var url = $('#base_url').val() + '/password/email';
+    window.location.href = url;
+  });
+
+  $('#register_go').click(function(){
+    registerPopup(jQuery, successFunc);
+  });
+
+  $('#login_button').click(function(){
+    $('#login_error_message').hide();
+    var url = '/auth/login';
+    var method = 'post';
+    var data =
+    {
+      "email" : $('#loginpopup_email').val(),
+      "password" : $('#loginpopup_password').val(),
+      "ispopup" : 'TRUE',
+    }
+
+    var success = function(result) {
+      //console.error("로그인완료 !" + result);
+      if(result.state == 'success')
+      {
+        setLoginID(result.user_id);
+        if(successFunc)
+        {
+          successFunc();
+        }
+        else
+        {
+          window.location.reload();
+        }
+      }
+      else
+      {
+        $('#login_error_message').show();
+
+        $('#login_error_message').text(result.message);
+        //console.error("fail " + result.message);
+      }
+    };
+
+    var error = function(request, status) {
+      swal("로그인 실패", "", "error");
+    };
+
+    jQuery.ajax({
+      'url': url,
+      'method': method,
+      'data': data,
+      'success': success,
+      'error': error
+    });
+  });
+
+
+
+  $('#login_social_facebook_button_wrapper').click(function(){
+    //console.error("adfadf");
+
+  });
+}
+*/

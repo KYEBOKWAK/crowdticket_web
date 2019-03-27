@@ -32,6 +32,9 @@
 @endsection
 
 @section('content')
+
+<input type="hidden" id='redirectURL' value="@if(isset($redirectPath)){{$redirectPath}}@endif"/>
+<!--
     <div class="first-container container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 box-container reset_wrapper">
@@ -79,20 +82,32 @@
                       <a class="btn btn-link" href="{{ url('/password/email') }}">비밀번호가 기억나지 않나요?</a>
                     </div>
                 </form>
-                <!--
-                <div class="text-center ps-facebook-wrapper">
-                                    <p>또는</p>
-                                    <a href="{{ url('/facebook') }}" class="btn btn-primary">FACEBOOK으로 로그인</a>
-                                </div>
-                -->
-
-
-
             </div>
         </div>
     </div>
+  -->
 @endsection
 
 @section('js')
-<script src="{{ asset('/js/fblogin.js') }}"></script>
+<script>
+$(document).ready(function() {
+  var goCloseCallback = function(){
+    var redirectURL = $('#base_url').val();
+    window.location.href = redirectURL;
+  };
+
+  var goRedirectCallback = function(){
+    var redirectURL = $('#base_url').val();
+
+    if($("#redirectURL").val())
+    {
+      redirectURL = $("#redirectURL").val();
+    }
+
+    window.location.href = redirectURL;
+  };
+
+  loginPopup(goRedirectCallback, goCloseCallback);
+});
+</script>
 @endsection

@@ -1,8 +1,7 @@
 <?php namespace App\Exceptions;
 
-use Exception;
+//use Exception;
 
-class OwnershipException extends Exception
+class OwnershipException extends \Exception
 {
-
 }

@@ -238,21 +238,6 @@
 
 @section('js')
 
-    <!-- facebook login check -->
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '{{env('FACEBOOK_ID')}}',
-          cookie     : true,  // enable cookies to allow the server to access
-                              // the session
-          xfbml      : true,  // parse social plugins on this page
-          version    : '{{env('FACEBOOK_VER')}}' // use graph api version 2.8
-        });
-        console.log("FB Init Success!!!!!");
-      };
-    </script>
-
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
 

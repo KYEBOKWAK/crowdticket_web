@@ -13,7 +13,12 @@ Route::controllers([
 
 Route::get('/facebook', 'Auth\SocialAuthController@redirect');
 Route::get('/facebook/callback', 'Auth\SocialAuthController@callback');
-Route::get('/facebook/callback/{facebookid}/{facebookName}/{facebookEmail}/{previousURL}', 'Auth\SocialAuthController@callback')->where('previousURL', '.*');
+//Route::get('/facebook/callback/{facebookid}/{facebookName}/{facebookEmail}/{previousURL}', 'Auth\SocialAuthController@callback')->where('previousURL', '.*');
+
+Route::post('/social/gologin', 'Auth\SocialAuthController@goSocialLogin');
+//Route::get('/facebook/callback/{facebookid}/{facebookName}/{facebookEmail}', 'Auth\SocialAuthController@callback');
+
+//Route::get('/redirection/go', 'Auth\AuthController@redirect');
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/home', 'WelcomeController@index');
@@ -202,6 +207,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('magazine/{id}/deletethumbimg', 'MagazineController@removeMagazineThumbImageByRequest');
     //Route::post('magazine/update/{id}', 'MagazineController@updateMagazine');
     //매거진 END
+
+    Route::post('like/{id}/{likekey}', 'UserController@addLike');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

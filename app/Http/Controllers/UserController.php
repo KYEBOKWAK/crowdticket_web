@@ -104,6 +104,11 @@ class UserController extends Controller
         ]);
     }
 
+    public function addLike($id, $likekey)
+    {
+      
+    }
+
     private function getCreatingProject($user)
     {
         if (\Auth::check()) {
@@ -147,7 +152,7 @@ class UserController extends Controller
         $defaultURL = Model::S3_BASE_URL.'admin/profile/noimage/default-user-image.png';
         $user->setAttribute('profile_photo_url', $defaultURL);
       }
-      
+
       $user->update(\Input::all());
       $user->save();
 
@@ -245,5 +250,4 @@ class UserController extends Controller
         }
         throw new \App\Exceptions\OwnershipException;
     }
-
 }
