@@ -54,7 +54,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
-    <link href="{{ asset('/css/login/login.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -167,8 +167,8 @@
                     @if (Auth::guest())
                         <!-- <li><a href="{{ url('/auth/login') }}">로그인</a></li> -->
                         <!-- <li><a href="{{ url('/auth/register') }}">회원가입</a></li> -->
-                        <li id="g_login"><a>로그인</a></li>
-                        <li id="g_register"><a>회원가입</a></li>
+                        <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
+                        <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -178,7 +178,6 @@
                                 <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
                                 <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                                 <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
-                                <!-- <li><a href="{{ url('/auth/logout') }}">로그아웃</a></li> -->
                             </ul>
                         </li>
                     @endif
@@ -238,7 +237,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=21') }}"></script>
+<script src="{{ asset('/js/util.js?version=22') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -250,7 +249,7 @@
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=3');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=4');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 

@@ -12,6 +12,8 @@ var g_facebookAccessVer = params['fbver'];
 
 var g_googleAccessId = params['ggid'];
 
+var googleLogoURL = $("#asset_url").val() + 'img/app/g-logo.png';
+
 var jQuery_loginPopup = null;
 var loginCallback = null;
 
@@ -19,11 +21,11 @@ var loginCallback = null;
 $(document).ready(function() {
   jQuery_loginPopup = $;
   $('#g_login').click(function(){
-    loginPopup(null);
+    loginPopup(null, null);
   });
 
   $('#g_register').click(function(){
-    registerPopup(null);
+    registerPopup(null, null);
   });
 });
 
@@ -209,7 +211,7 @@ function googleLibInit(){
 
 //로그인 팝업 생성
 //function loginPopup(jQuery, successFunc){
-function loginPopup(successFunc, closeFunc=null){
+function loginPopup(successFunc, closeFunc){
   if(jQuery_loginPopup == null)
   {
     return;
@@ -244,7 +246,8 @@ function loginPopup(successFunc, closeFunc=null){
 
     //"<div class='g-signin2' data-onsuccess='onSignIn'></div>" +
     "<button id='login_social_google_button_wrapper'>" +
-      "<img src='https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/AHNFF9E2KeQ.png' style='width:30px;height:30px;margin-bottom:4px;margin-right:5px;'/>" +
+      "<img src="+googleLogoURL+" style='width:18px;height:18px;margin-bottom:4px;margin-right:5px;'/>" +
+      //"<span class='icon'></span>" +
       "<span style='font-weight:500;margin-right:5px;'>" + "구글 로그인" + "</span>" +
     "</button>" +
 
@@ -267,7 +270,7 @@ function loginPopup(successFunc, closeFunc=null){
 
       "<div style='border-bottom: 1px #dad8cc solid; margin-bottom:13px; text-align: center; padding-bottom:18px;'>" +
       "<p>크라우드티켓이 처음이세요?</p>" +
-      "<a id='register_go'><p style='font-weight: bold;'><u>10초 만에 가입하기!</u></p></a>" +
+      "<a id='register_go' href='javascript:;' onclick=''><p style='font-weight: bold;'><u>10초 만에 가입하기!</u></p></a>" +
       "</div>" +
 
       "<div style='text-align:center;'>" +
@@ -303,7 +306,7 @@ function loginPopup(successFunc, closeFunc=null){
   });
 
   $('#register_go').click(function(){
-    registerPopup(successFunc);
+    registerPopup(successFunc, closeFunc);
   });
 
   $('#login_button').click(function(){
@@ -350,7 +353,7 @@ function loginPopup(successFunc, closeFunc=null){
   });
 }
 
-function registerPopup(successFunc, closeFunc=null){
+function registerPopup(successFunc, closeFunc){
   if(jQuery_loginPopup == null)
   {
     return;
@@ -365,7 +368,7 @@ function registerPopup(successFunc, closeFunc=null){
   elementPopup.innerHTML =
   "<div class='form-body-default-container'>" +
     "<div class='project_form_title_wrapper'>" +
-      "<h2 class='project_form_title'><span class='pointColor'>회원</span> 가입</h2>" +
+      "<h1>회원 가입</h1>" +
     "</div>" +
     "<div class='project_form_content_container'>" +
       "<div id='login_error_message' class='alert alert-danger' style='display:none;'></div>" +
@@ -373,7 +376,7 @@ function registerPopup(successFunc, closeFunc=null){
           "<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이름(실명을 입력해주세요)*</p>" +
             "<div class='project-form-content'>" +
-              "<input id='name' name='name' type='text' class='project_form_input_base' maxlength='255'/>" +
+              "<input id='name' name='name' type='text' class='form-control' maxlength='255'/>" +
               "<div id='name-error' class='error' style='display:none;'></div>" +
             "</div>" +
           "</div>" +
@@ -383,7 +386,7 @@ function registerPopup(successFunc, closeFunc=null){
           "<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>닉네임(선택)</p>" +
             "<div class='project-form-content'>" +
-              "<input id='nick_name' name='nick_name' type='text' class='project_form_input_base' maxlength='255'/>" +
+              "<input id='nick_name' name='nick_name' type='text' class='form-control' maxlength='255'/>" +
             "</div>" +
           "</div>" +
         "</div>" +
@@ -392,7 +395,7 @@ function registerPopup(successFunc, closeFunc=null){
           "<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이메일*</p>" +
             "<div class='project-form-content'>" +
-              "<input id='email' name='email' type='email' class='project_form_input_base' maxlength='255'/>" +
+              "<input id='email' name='email' type='email' class='form-control' maxlength='255'/>" +
               "<div id='email-error' class='error' style='display:none;'></div>" +
             "</div>" +
           "</div>" +
@@ -402,7 +405,7 @@ function registerPopup(successFunc, closeFunc=null){
           "<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>비밀번호*</p>" +
             "<div class='project-form-content'>" +
-              "<input id='password' name='password' type='password' class='project_form_input_base' maxlength='255' required='required'/>" +
+              "<input id='password' name='password' type='password' class='form-control' maxlength='255' required='required'/>" +
               "<div id='password-error' class='error' style='display:none;'></div>" +
             "</div>" +
           "</div>" +
@@ -412,7 +415,7 @@ function registerPopup(successFunc, closeFunc=null){
           "<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>비밀번호 확인*</p>" +
             "<div class='project-form-content'>" +
-              "<input id='password_confirmation' name='password_confirmation' type='password' class='project_form_input_base' maxlength='255' required='required'/>" +
+              "<input id='password_confirmation' name='password_confirmation' type='password' class='form-control' maxlength='255' required='required'/>" +
               "<div id='password_confirmation-error' class='error' style='display:none;'></div>" +
             "</div>" +
           "</div>" +

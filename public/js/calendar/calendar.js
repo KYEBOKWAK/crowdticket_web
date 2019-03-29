@@ -1235,26 +1235,26 @@ $(document).ready(function() {
   $('#ticketing-btn-calendar').click(function(){
     if(!isFinishedEvent())
     {
-      loginPopup(selectCalendarTicket);
+      loginPopup(selectCalendarTicket, null);
     }
   });
 
   $('#detail_main_cw_btn').click(function(){
     if(!isFinishedEvent())
     {
-      loginPopup(selectCalendarTicket);
+      loginPopup(selectCalendarTicket, null);
     }
   });
   $('#detail_tab_cw_btn_mobile').click(function(){
     if(!isFinishedEvent())
     {
-      loginPopup(selectCalendarTicket);
+      loginPopup(selectCalendarTicket, null);
     }
   });
   $('#detail_tab_cw_btn').click(function(){
     if(!isFinishedEvent())
     {
-      loginPopup(selectCalendarTicket);  
+      loginPopup(selectCalendarTicket, null);
     }
   });
 
