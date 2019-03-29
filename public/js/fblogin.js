@@ -120,7 +120,7 @@ function statusChangeCallback(response) {
 
 function checkLoginState() {
   FB.getLoginStatus(function(response) {
-    console.error(respose);
+    //console.error(respose);
   });
 }
 
@@ -147,7 +147,7 @@ function facebookLibInit(){
     console.error("FB Init Success!!!!!");
 
     FB.getLoginStatus(function(response) {
-        console.error(response);
+        //console.error(response);
     });
 
   };
