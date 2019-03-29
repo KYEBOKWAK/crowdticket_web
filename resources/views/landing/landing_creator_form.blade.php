@@ -145,7 +145,7 @@
 <!-- 폼태그 -->
  <section class="contact_form" id="contact_form">
    <h3>CROWDTICKET CREATORS 사전등록 신청 페이지</h3>
-   <h5>2018년 9월, 오직 크리에이터/인플루언서들을 위한 티켓팅 서비스, 크라우드티켓 크리에이터스가 오픈됩니다.</h5>
+   <h5>오직 크리에이터/인플루언서들을 위한 티켓팅 서비스, 크라우드티켓 크리에이터스가 오픈됩니다.</h5>
    <h5>여러분의 오프라인 이벤트 페이지 개설을 위한 기본적인 정보만 알려주세요!</h5>
    <h5>벌써 100건이 넘는 공연을 진행해 온 크라우드티켓팀이, 여러분의 팬들과 직접 만날, 재밌는 이벤트 기획에 함께합니다.</h5>
    <form action="{{ url('/landing/sendmail') }}" method="post" onsubmit="return submitCheck()">
