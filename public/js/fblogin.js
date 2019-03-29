@@ -425,21 +425,22 @@ function registerPopup(successFunc, closeFunc){
           "<div class='btn_register_wrapper'>" +
             "<button id='register_button' type='button' class='btn btn_register'>가입</button>" +
           "</div>" +
+          "<p style='margin-top:10px; margin-bottom:0px;'>또는</p>" +
         "</div>" +
-        /*
-        "<div id='login_social_button_container'>" +
-          "또는" +
+
+        "<div id='login_social_button_container' style='margin-top:0px;'>" +
           "<button id='login_social_facebook_button_wrapper'>" +
             "<img src='https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/AHNFF9E2KeQ.png' style='width:30px;height:30px;margin-bottom:4px;margin-right:5px;'/>" +
             "<span style='font-weight:500;margin-right:5px;'>" + "페이스북 로그인" + "</span>" +
           "</button>" +
 
           "<button id='login_social_google_button_wrapper'>" +
-            "<img src='https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/AHNFF9E2KeQ.png' style='width:30px;height:30px;margin-bottom:4px;margin-right:5px;'/>" +
+            "<img src="+googleLogoURL+" style='width:18px;height:18px;margin-bottom:4px;margin-right:5px;'/>" +
+            //"<span class='icon'></span>" +
             "<span style='font-weight:500;margin-right:5px;'>" + "구글 로그인" + "</span>" +
           "</button>" +
         "</div>" +
-        */
+
 
     "</div>" +
   "</div>";
