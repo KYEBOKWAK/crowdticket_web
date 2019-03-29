@@ -63,7 +63,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function checkOwnership($entity)
     {
         if (!$this->isOwnerOf($entity)) {
-            throw new \App\Exceptions\OwnershipException("관리자 혹은 개설자만 접근 가능합니다.");
+          throw new \App\Exceptions\OwnershipException();
         }
     }
 

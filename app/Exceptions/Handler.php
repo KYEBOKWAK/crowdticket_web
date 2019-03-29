@@ -37,7 +37,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+      if ($e instanceof OwnershipException) {
+        return response()->view('errors.ownership');
+      }
+      else
+      {
         return parent::render($request, $e);
+      }
     }
-
 }

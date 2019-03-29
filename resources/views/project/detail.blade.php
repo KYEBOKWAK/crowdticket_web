@@ -353,5 +353,5 @@
     @include('template.supporter')
     @include('template.ticket')
     @include('template.fbForm', ['project' => $project])
-    <script src="{{ asset('/js/project/detail.js?version=18') }}"></script>
+    <script src="{{ asset('/js/project/detail.js?version=19') }}"></script>
 @endsection

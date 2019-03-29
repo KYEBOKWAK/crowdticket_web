@@ -29,13 +29,13 @@ class SocialAuthController extends Controller
 
       \Auth::login($user, true);
 
-      return ['state' => 'success', 'test' => $user];
+      return ['state' => 'success', 'user_id' => $user->id];
 
     }
 
     public function callback(Request $request)
     {
-      \Log::info('facebook callback : ' . $request);
+      //\Log::info('facebook callback : ' . $request);
 
       //return $request;
         //$facebookUser = Socialite::with('facebook')->user();

@@ -42,16 +42,19 @@ function loginAjaxSuccess(request){
       window.location.reload();
     }
   }
-  else if(request.state == 'already')
-  {
-    window.location.reload();
-  }
-  else
+  else if(request.state == 'fail')
   {
     $('#login_error_message').show();
 
     $('#login_error_message').text(request.message);
     //console.error("fail " + result.message);
+  }
+  else
+  {
+    $('#login_error_message').show();
+
+    $('#login_error_message').text('이미 로그인 되어 있습니다. 창을 닫고 새로고침 해주세요.');
+    //window.location.reload();
   }
 }
 
@@ -420,6 +423,7 @@ function registerPopup(successFunc, closeFunc=null){
             "<button id='register_button' type='button' class='btn btn_register'>가입</button>" +
           "</div>" +
         "</div>" +
+        /*
         "<div id='login_social_button_container'>" +
           "또는" +
           "<button id='login_social_facebook_button_wrapper'>" +
@@ -431,8 +435,8 @@ function registerPopup(successFunc, closeFunc=null){
             "<img src='https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/AHNFF9E2KeQ.png' style='width:30px;height:30px;margin-bottom:4px;margin-right:5px;'/>" +
             "<span style='font-weight:500;margin-right:5px;'>" + "구글 로그인" + "</span>" +
           "</button>" +
-
         "</div>" +
+        */
 
     "</div>" +
   "</div>";

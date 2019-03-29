@@ -127,7 +127,7 @@ $(document).ready(function() {
 		if(isLogin() == false)
 		{
 			//alert("로그인을 해야 댓글을 달 수 있습니다.");
-			loginPopup($, addComment);
+			loginPopup(addComment);
 			return;
 		}
 

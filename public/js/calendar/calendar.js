@@ -1139,14 +1139,45 @@ $(document).ready(function() {
     setTicketDateSelectBind();
   };
 
+  var isFinishedEvent = function(){
+    if($("#isFinished").val() == true)
+    {
+      if($("#isPickType").val())
+      {
+        if($("#isPickingFinished").val())
+        {
+          swal("이벤트 종료", "추첨이 완료되었습니다.", "info");
+        }
+        else
+        {
+          swal("추첨중 입니다.", "", "info");
+        }
+      }
+      else
+      {
+        swal("이미 끝난 프로젝트 입니다.", "", "info");
+      }
+
+      return true;
+    }
+
+    return false;
+  };
+
   var selectCalendarTicket = function(){
     if($("#isWaitSaleTime").val() == true)
     {
-      //var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";//오픈예정 진짜코드
-      var waitTimeWord = "COMING SOON";//오픈예정 임시
+      var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";//오픈예정 진짜코드
+      //var waitTimeWord = "COMING SOON";//오픈예정 임시
       swal(waitTimeWord, "", "info");
       return;
     }
+
+    if(isFinishedEvent())
+    {
+      return;
+    }
+    /*
     if($("#isFinished").val() == true)
     {
       if($("#isPickType").val())
@@ -1166,6 +1197,7 @@ $(document).ready(function() {
       }
       return;
     }
+    */
     var baseUrl = $('#base_url').val();
     var ticketID = $('#ticket_select_id_input').val();
     var projectId = $('#project_id').val();
@@ -1201,17 +1233,29 @@ $(document).ready(function() {
 
 
   $('#ticketing-btn-calendar').click(function(){
-    loginPopup(selectCalendarTicket);
+    if(!isFinishedEvent())
+    {
+      loginPopup(selectCalendarTicket);
+    }
   });
 
   $('#detail_main_cw_btn').click(function(){
-    loginPopup(selectCalendarTicket);
+    if(!isFinishedEvent())
+    {
+      loginPopup(selectCalendarTicket);
+    }
   });
   $('#detail_tab_cw_btn_mobile').click(function(){
-    loginPopup(selectCalendarTicket);
+    if(!isFinishedEvent())
+    {
+      loginPopup(selectCalendarTicket);
+    }
   });
   $('#detail_tab_cw_btn').click(function(){
-    loginPopup(selectCalendarTicket);
+    if(!isFinishedEvent())
+    {
+      loginPopup(selectCalendarTicket);  
+    }
   });
 
 

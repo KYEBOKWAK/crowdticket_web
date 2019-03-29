@@ -74,7 +74,6 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
   	{
-      
       $message = $this->getFailedLoginMessage();
 
       if($this->socialIdCheck() == 'isFacebook')
