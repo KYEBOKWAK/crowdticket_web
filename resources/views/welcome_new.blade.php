@@ -4,7 +4,7 @@
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="크라우드티켓"/>
     <meta property="og:description" content="아티스트와 크리에이터를 위한 티켓팅 플랫폼"/>
-    <meta property="og:image" content="{{ asset('/img/app/og_image_1.png') }}"/>
+    <meta property="og:image" content="{{ secure_asset('/img/app/og_image_1.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/"/>
 @endsection
 @section('css')
@@ -14,7 +14,7 @@
         }
         .ps-welcome-header {
             height:500px;
-            background-image:url("{{ asset('/img/app/welcome_header_bg_2.jpg') }}");
+            background-image:url("{{ secure_asset('/img/app/welcome_header_bg_2.jpg') }}");
             position:relative;
         }
         .ps-welcome-header h1 {
@@ -168,9 +168,9 @@
 
         /*메인 추천 슬라이드 css  ---- end  */
     </style>
-    <link href="{{ asset('/css/welcome.css?version=10') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/welcome.css?version=10') }}" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
+    <link rel="stylesheet" href="{{ secure_asset('/css/swiper/swiper.min.css?version=1') }}">
 
 @endsection
 
@@ -211,7 +211,7 @@
                 <div class="imgbox-overlay">
                 </div>
                 <h1 style="word-break:keep-all;">티켓, 그 이상의 경험, 크라우드티켓팅</h1>
-                <a href="{{ url('blueprints/welcome') }}" class="ct-btn ct-btn-default" style="background-color:#EF4D5D;">프로젝트 개설하기</a>
+                <a href="{{ secure_url('blueprints/welcome') }}" class="ct-btn ct-btn-default" style="background-color:#EF4D5D;">프로젝트 개설하기</a>
             </div>
         </div>
     </div>
@@ -239,9 +239,9 @@
 @section('js')
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-    <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ secure_asset('/js/jquery.counterup.min.js') }}"></script>
 
-    <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
+    <script src="{{ secure_asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script>
 
         $(document).ready(function () {
@@ -303,5 +303,5 @@
 
         });
     </script>
-    <script src="{{ asset('/js/project/jssor.slider.min.js') }}"></script>
+    <script src="{{ secure_asset('/js/project/jssor.slider.min.js') }}"></script>
 @endsection
