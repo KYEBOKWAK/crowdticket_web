@@ -12,7 +12,7 @@ if ( ! function_exists('url'))
     }
     else if($_SERVER['HTTP_HOST'] === 'qa.crowdticket.kr')
     {
-        $secure = true;
+        $secure = false;
     }
 
 		return app('Illuminate\Contracts\Routing\UrlGenerator')->to($path, $parameters, $secure);
@@ -31,7 +31,7 @@ if ( ! function_exists('asset'))
     }
     else if($_SERVER['HTTP_HOST'] === 'qa.crowdticket.kr')
     {
-        $secure = true;
+        $secure = false;
     }
 
 		return app('url')->asset($path, $secure);
