@@ -1,5 +1,5 @@
 <?php
-/*
+
 if ( ! function_exists('url'))
 {
 
@@ -17,7 +17,7 @@ if ( ! function_exists('url'))
 
 if ( ! function_exists('asset'))
 {
-	
+
 	function asset($path, $secure = null)
 	{
     $secure = true;
@@ -29,5 +29,5 @@ if ( ! function_exists('asset'))
 		return app('url')->asset($path, $secure);
 	}
 }
-*/
+
 ?>
