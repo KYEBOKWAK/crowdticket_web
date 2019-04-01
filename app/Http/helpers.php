@@ -10,6 +10,10 @@ if ( ! function_exists('url'))
     {
       $secure = false;
     }
+    else if($_SERVER['HTTP_HOST'] === 'qa.crowdticket.kr')
+    {
+        $secure = true;
+    }
 
 		return app('Illuminate\Contracts\Routing\UrlGenerator')->to($path, $parameters, $secure);
 	}
@@ -24,6 +28,10 @@ if ( ! function_exists('asset'))
 		if(env('APP_TYPE'))
     {
       $secure = false;
+    }
+    else if($_SERVER['HTTP_HOST'] === 'qa.crowdticket.kr')
+    {
+        $secure = true;
     }
 
 		return app('url')->asset($path, $secure);
