@@ -135,7 +135,7 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-<input type="hidden" id="base_url" value="{{ secure_url() }}"/>
+<input type="hidden" id="base_url" value="{{ secure_url(null, []) }}"/>
 <input type="hidden" id="asset_url" value="{{ secure_asset('/') }}"/>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
@@ -151,22 +151,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ secure_url('/') }}">
+                <a class="navbar-brand" href="{{ secure_url('/', []) }}">
                     <img src="{{ secure_asset('/img/app/logo-color.png') }}"/>
                 </a>
             </div>
 
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ secure_url('/projects') }}">전체보기</a></li>
-                    <li><a href="{{ secure_url('/magazine') }}">매거진</a></li>
-                    <li><a href="{{ secure_url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
+                    <li><a href="{{ secure_url('/projects', []) }}">전체보기</a></li>
+                    <li><a href="{{ secure_url('/magazine', []) }}">매거진</a></li>
+                    <li><a href="{{ secure_url('/blueprints/welcome', []) }}">프로젝트 만들기</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        <!-- <li><a href="{{ secure_url('/auth/login') }}">로그인</a></li> -->
-                        <!-- <li><a href="{{ secure_url('/auth/register') }}">회원가입</a></li> -->
+                        
                         <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
                         <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
                     @else
@@ -174,9 +173,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">{{ Auth::user()->getUserNickName() }} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ secure_url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
-                                <li><a href="{{ secure_url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
-                                <li><a href="{{ secure_url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
+                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}">내 페이지</a></li>
+                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                                 <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
                             </ul>
                         </li>
@@ -220,7 +219,7 @@
         </div>
         <div class="col-md-12 ct-info">
             <p>
-                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ secure_url('/terms') }}">이용약관</a> / <a href="{{ secure_url('/privacy') }}">개인정보취급방침</a>
+                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ secure_url('/terms', []) }}">이용약관</a> / <a href="{{ secure_url('/privacy', []) }}">개인정보취급방침</a>
             </p>
         </div>
     </div>
