@@ -43,18 +43,18 @@
     @section('title')
         <title>크라우드티켓</title>
     @show
-    <link rel="shortcut icon" href="{{ secure_asset('/img/app/ct-favicon.ico') }}">
-    <link href="{{ secure_asset('/css/lib/toast.min.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/base.css?version=4') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/app.css?version=4') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/main.css?version=4') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/global.css?version=12') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/jquery-ui.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
+    <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/base.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/main.css?version=4') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=12') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
-    <link href="{{ secure_asset('/css/flex.css?version=5') }}" rel="stylesheet">
-    <link href="{{ secure_asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -102,10 +102,10 @@
     </script>
 
     <!-- sweetAlert JS -->
-    <script type="text/javascript" src="{{ secure_asset('/js/sweetalert/sweetalert.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- toast alert -->
-    <script type="text/javascript" src="{{ secure_asset('/js/lib/toast.min.js?version=2') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js?version=2') }}"></script>
 
     <!-- facebook js -->
     <script>
@@ -127,7 +127,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ secure_asset('/js/util_header.js?version=6') }}"></script>
+    <script src="{{ asset('/js/util_header.js?version=6') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -135,8 +135,8 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-<input type="hidden" id="base_url" value="{{ secure_url(null, []) }}"/>
-<input type="hidden" id="asset_url" value="{{ secure_asset('/') }}"/>
+<input type="hidden" id="base_url" value="{{ url() }}"/>
+<input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 
@@ -151,21 +151,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ secure_url('/', []) }}">
-                    <img src="{{ secure_asset('/img/app/logo-color.png') }}"/>
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('/img/app/logo-color.png') }}"/>
                 </a>
             </div>
 
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ secure_url('/projects', []) }}">전체보기</a></li>
-                    <li><a href="{{ secure_url('/magazine', []) }}">매거진</a></li>
-                    <li><a href="{{ secure_url('/blueprints/welcome', []) }}">프로젝트 만들기</a></li>
+                    <li><a href="{{ url('/projects') }}">전체보기</a></li>
+                    <li><a href="{{ url('/magazine') }}">매거진</a></li>
+                    <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        
+                        <!-- <li><a href="{{ url('/auth/login') }}">로그인</a></li> -->
+                        <!-- <li><a href="{{ url('/auth/register') }}">회원가입</a></li> -->
                         <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
                         <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
                     @else
@@ -173,9 +174,9 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false">{{ Auth::user()->getUserNickName() }} <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}">내 페이지</a></li>
-                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
-                                <li><a href="{{ secure_url('/users/', []) }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
+                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
+                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                                 <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
                             </ul>
                         </li>
@@ -195,7 +196,7 @@
 <footer>
     <div class="container ct-res-text footer-top">
 	    <div class="col-md-3">
-            <img src="{{ secure_asset('/img/app/logo-color.png') }}" class="footer-logo">
+            <img src="{{ asset('/img/app/logo-color.png') }}" class="footer-logo">
         </div>
         <div class="col-md-3">
             <h2>social media</h2>
@@ -203,7 +204,7 @@
             <li>
             <a href="https://www.facebook.com/crowdticket/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
             <li><a href="https://www.instagram.com/crowdticket/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ secure_asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
+            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
             </h2>
         </div>
         <div class="col-md-3">
@@ -219,7 +220,7 @@
         </div>
         <div class="col-md-12 ct-info">
             <p>
-                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ secure_url('/terms', []) }}">이용약관</a> / <a href="{{ secure_url('/privacy', []) }}">개인정보취급방침</a>
+                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a>
             </p>
         </div>
     </div>
@@ -236,19 +237,19 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ secure_asset('/js/util.js?version=22') }}"></script>
-<script src="{{ secure_asset('/js/underscore-min.js') }}"></script>
-<script src="{{ secure_asset('/js/jquery-ui.min.js') }}"></script>
-<script src="{{ secure_asset('/js/jquery.form.min.js') }}"></script>
-<script src="{{ secure_asset('/js/jquery.toast.min.js') }}"></script>
-<script src="{{ secure_asset('/js/jquery.validate.min.js') }}"></script>
-<script src="{{ secure_asset('/js/additional-methods.min.js') }}"></script>
-<script src="{{ secure_asset('/js/jquery.form.custom.js') }}"></script>
-<script src="{{ secure_asset('/js/app.2.js?version=4') }}"></script>
-<script src="{{ secure_asset('/js/loader.js?version=1') }}"></script>
+<script src="{{ asset('/js/util.js?version=22') }}"></script>
+<script src="{{ asset('/js/underscore-min.js') }}"></script>
+<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('/js/jquery.form.min.js') }}"></script>
+<script src="{{ asset('/js/jquery.toast.min.js') }}"></script>
+<script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('/js/additional-methods.min.js') }}"></script>
+<script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
+<script src="{{ asset('/js/app.2.js?version=4') }}"></script>
+<script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = secure_asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=6');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=6');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
