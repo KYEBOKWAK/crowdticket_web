@@ -43,18 +43,18 @@
     @section('title')
         <title>크라우드티켓</title>
     @show
-    <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
-    <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/base.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/main.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=12') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ secure_asset('/img/app/ct-favicon.ico') }}">
+    <link href="{{ secure_asset('/css/lib/toast.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/base.css?version=4') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/app.css?version=4') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/main.css?version=4') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/global.css?version=12') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
-    <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
-    <link href="{{ asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
+    <link href="{{ secure_asset('/css/flex.css?version=5') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -102,10 +102,10 @@
     </script>
 
     <!-- sweetAlert JS -->
-    <script type="text/javascript" src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
+    <script type="text/javascript" src="{{ secure_asset('/js/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- toast alert -->
-    <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js?version=2') }}"></script>
+    <script type="text/javascript" src="{{ secure_asset('/js/lib/toast.min.js?version=2') }}"></script>
 
     <!-- facebook js -->
     <script>
@@ -127,7 +127,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ asset('/js/util_header.js?version=6') }}"></script>
+    <script src="{{ secure_asset('/js/util_header.js?version=6') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -136,7 +136,7 @@
   <!-- End Google Tag Manager (noscript) -->
 
 <input type="hidden" id="base_url" value="{{ url() }}"/>
-<input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
+<input type="hidden" id="asset_url" value="{{ secure_asset('/') }}"/>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 
@@ -152,7 +152,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/img/app/logo-color.png') }}"/>
+                    <img src="{{ secure_asset('/img/app/logo-color.png') }}"/>
                 </a>
             </div>
 
@@ -196,7 +196,7 @@
 <footer>
     <div class="container ct-res-text footer-top">
 	    <div class="col-md-3">
-            <img src="{{ asset('/img/app/logo-color.png') }}" class="footer-logo">
+            <img src="{{ secure_asset('/img/app/logo-color.png') }}" class="footer-logo">
         </div>
         <div class="col-md-3">
             <h2>social media</h2>
@@ -204,7 +204,7 @@
             <li>
             <a href="https://www.facebook.com/crowdticket/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
             <li><a href="https://www.instagram.com/crowdticket/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
+            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ secure_asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
             </h2>
         </div>
         <div class="col-md-3">
@@ -237,19 +237,19 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=22') }}"></script>
-<script src="{{ asset('/js/underscore-min.js') }}"></script>
-<script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('/js/jquery.form.min.js') }}"></script>
-<script src="{{ asset('/js/jquery.toast.min.js') }}"></script>
-<script src="{{ asset('/js/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('/js/additional-methods.min.js') }}"></script>
-<script src="{{ asset('/js/jquery.form.custom.js') }}"></script>
-<script src="{{ asset('/js/app.2.js?version=4') }}"></script>
-<script src="{{ asset('/js/loader.js?version=1') }}"></script>
+<script src="{{ secure_asset('/js/util.js?version=22') }}"></script>
+<script src="{{ secure_asset('/js/underscore-min.js') }}"></script>
+<script src="{{ secure_asset('/js/jquery-ui.min.js') }}"></script>
+<script src="{{ secure_asset('/js/jquery.form.min.js') }}"></script>
+<script src="{{ secure_asset('/js/jquery.toast.min.js') }}"></script>
+<script src="{{ secure_asset('/js/jquery.validate.min.js') }}"></script>
+<script src="{{ secure_asset('/js/additional-methods.min.js') }}"></script>
+<script src="{{ secure_asset('/js/jquery.form.custom.js') }}"></script>
+<script src="{{ secure_asset('/js/app.2.js?version=4') }}"></script>
+<script src="{{ secure_asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=6');
+  $loginFilePath = secure_asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=6');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
