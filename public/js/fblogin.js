@@ -373,52 +373,52 @@ function registerPopup(successFunc, closeFunc){
     "<div class='project_form_content_container'>" +
       "<div id='login_error_message' class='alert alert-danger' style='display:none;'></div>" +
         "<div class='project_form_input_container'>" +
-          "<div class='flex_layer_project'>" +
+          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이름(실명을 입력해주세요)*</p>" +
             "<div class='project-form-content'>" +
               "<input id='name' name='name' type='text' class='form-control' maxlength='255'/>" +
               "<div id='name-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          "</div>" +
+          //"</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-          "<div class='flex_layer_project'>" +
+          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>닉네임(선택)</p>" +
             "<div class='project-form-content'>" +
               "<input id='nick_name' name='nick_name' type='text' class='form-control' maxlength='255'/>" +
             "</div>" +
-          "</div>" +
+          //"</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-          "<div class='flex_layer_project'>" +
+          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이메일*</p>" +
             "<div class='project-form-content'>" +
               "<input id='email' name='email' type='email' class='form-control' maxlength='255'/>" +
               "<div id='email-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          "</div>" +
+          //"</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-          "<div class='flex_layer_project'>" +
+          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>비밀번호*</p>" +
             "<div class='project-form-content'>" +
               "<input id='password' name='password' type='password' class='form-control' maxlength='255' required='required'/>" +
               "<div id='password-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          "</div>" +
+          //"</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-          "<div class='flex_layer_project'>" +
+          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>비밀번호 확인*</p>" +
             "<div class='project-form-content'>" +
               "<input id='password_confirmation' name='password_confirmation' type='password' class='form-control' maxlength='255' required='required'/>" +
               "<div id='password_confirmation-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          "</div>" +
+          //"</div>" +
         "</div>" +
 
         "<div style='width: 100%; text-align: center;'>" +

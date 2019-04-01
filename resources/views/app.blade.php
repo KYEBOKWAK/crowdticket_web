@@ -54,7 +54,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
-    <link href="{{ asset('/css/login/login.css?version=2') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/login/login.css?version=3') }}" rel="stylesheet"/>
 
     <style>
     /*리얼에 스타일이 적용되지 않아서 임시로 넣어둠 크리에이터 N*/
@@ -249,7 +249,7 @@
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=6');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=7');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 

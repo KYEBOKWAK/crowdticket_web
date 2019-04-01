@@ -39,8 +39,8 @@
           margin-top: 30px;
         }
 
-        .flex_layer_project{
-          display: block !important;
+        .flex_login_layer_project{
+          /*display: block !important;*/
         }
 
         .project-form-content-title{
