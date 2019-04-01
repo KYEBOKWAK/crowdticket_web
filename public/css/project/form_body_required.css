@@ -2,6 +2,14 @@
   display: none;
 }
 
+.form-body-default-container{
+  width: 100%;
+}
+
+.project_form_title_wrapper{
+  margin-top: 0px;
+}
+
 .project-form-required-type-container-grid{
   /*delete 이거 버튼 감싸던거. 지워야 할지 ?*/
   /*display: grid;

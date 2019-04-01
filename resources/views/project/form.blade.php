@@ -161,7 +161,7 @@
     </style>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=9') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=10') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=10') }}"/>
 
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
