@@ -53,6 +53,27 @@ function imageFullResize(imgWrapDiv, img){
   }
 }
 
+function showToast(level, message){
+  toastr.options = {
+              positionClass: 'toast-bottom-center',
+              onclick: null
+          };
+  toastr.options.showMethod = 'slideDown';
+
+  switch (level) {
+      default:
+      case 'i':
+          toastr.info(message);
+          break;
+      case 's':
+          toastr.success(message);
+          break;
+      case 'e':
+          toastr.error(message);
+          break;
+  }
+}
+
 function get_version_of_IE () {
 
 	 var word;

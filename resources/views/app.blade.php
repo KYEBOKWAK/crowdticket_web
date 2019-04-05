@@ -108,27 +108,11 @@
     <!-- toast alert -->
     <script type="text/javascript" src="{{ asset('/js/lib/toast.min.js?version=2') }}"></script>
 
-    <!-- facebook js -->
-    <script>
-    /*
-    var fbAppID = '{{env('FACEBOOK_ID')}}';
-    var fbVer = '{{env('FACEBOOK_VER')}}';
-    //var fbLibSrc = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version='+fbVer+'&appId='+fbAppID+'&autoLogAppEvents=1';
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version='+fbVer+'&appId='+fbAppID+'&autoLogAppEvents=1';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    */
-    </script>
-
     <!-- google js -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ asset('/js/util_header.js?version=6') }}"></script>
+    <script src="{{ asset('/js/util_header.js?version=7') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -140,6 +124,7 @@
 <input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
+<input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif">
 
 @section('navbar')
     <nav class="navbar navbar-default">
@@ -238,7 +223,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=22') }}"></script>
+<script src="{{ asset('/js/util.js?version=23') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -279,6 +264,11 @@ function logout(){
 */
       var baseUrl = $('#base_url').val();
       window.location.assign(baseUrl+'/auth/logout');
+    }
+
+    if($('#notification').val())
+    {
+      showToast('i', $('#notification').val());
     }
 </script>
 

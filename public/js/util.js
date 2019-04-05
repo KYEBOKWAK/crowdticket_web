@@ -444,27 +444,6 @@ function sortByKey(array, key) {
     });
 }
 
-function showToast(level, message){
-  toastr.options = {
-              positionClass: 'toast-bottom-center',
-              onclick: null
-          };
-  toastr.options.showMethod = 'slideDown';
-
-  switch (level) {
-      default:
-      case 'i':
-          toastr.info(message);
-          break;
-      case 's':
-          toastr.success(message);
-          break;
-      case 'e':
-          toastr.error(message);
-          break;
-  }
-}
-
 function getTwoNumberToOneNumber(number)
 {
   number = Number(number);
