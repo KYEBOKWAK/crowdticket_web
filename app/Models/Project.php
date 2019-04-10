@@ -333,6 +333,13 @@ class Project extends Model
     {
       $open = new \DateTime('now');
       $close = new \DateTime('now');
+
+      if($this->funding_closing_at)
+      {
+        $open = new \DateTime($this->funding_closing_at);
+        $close = new \DateTime($this->funding_closing_at);  
+      }
+
       if ($this->performance_opening_at) {
           $open = new \DateTime($this->performance_opening_at);
       }
@@ -385,7 +392,6 @@ class Project extends Model
     //리뉴얼 시간 가져오는 함수
     public function getConcertDateFormatted()
     {
-      //if($this->poster_url)
       if($this->isOldProject())
       {
         //우선 포스터 URL로 기존 프로젝트인지 판단한다.
