@@ -76,51 +76,6 @@
 @section('content')
     <div class="first-container">
         <div class="container">
-            <div class="row ps-explore-tabs">
-                <?php
-                $tabs = [
-                        [
-                                'key' => 'all',
-                                'title' => '전체보기',
-                                'selected_ico_url' => asset('/img/app/ico_list_on.png'),
-                                'unselected_ico_url' => asset('/img/app/ico_list_out.png')
-                        ],
-                        [
-                                'key' => 'funding',
-                                'title' => '펀딩 중인 공연',
-                                'selected_ico_url' => asset('/img/app/ico_progress_on.png'),
-                                'unselected_ico_url' => asset('/img/app/ico_progress_out.png')
-                        ],
-                        [
-                                'key' => 'sale',
-                                'title' => '티켓팅 중인 공연',
-                                'selected_ico_url' => asset('/img/app/ico_ticket_on.png'),
-                                'unselected_ico_url' => asset('/img/app/ico_ticket_out.png')
-                        ],
-                        [
-                                'key' => 'date',
-                                'title' => '마감임박순',
-                                'selected_ico_url' => asset('/img/app/ico_watch_on.png'),
-                                'unselected_ico_url' => asset('/img/app/ico_watch_out.png')
-                        ]
-                ];
-                ?>
-
-                @foreach ($tabs as $tab)
-                    <div class="col-md-3">
-                        <a href="{{ url('/projects?tab=') }}{{ $tab['key'] }}">
-                            <div class="ps-explore-tab @if ($tab['key'] === $selected_tab) ps-explore-tab-selected @endif">
-                                @if ($tab['key'] === $selected_tab)
-                                    <img src="{{ $tab['selected_ico_url'] }}"/>
-                                @else
-                                    <img src="{{ $tab['unselected_ico_url'] }}"/>
-                                @endif
-                                <h5 class="ps-explore-tab-title">{{ $tab['title'] }}</h5>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
             @include('template.carousel_new_main', ['projects' => $projects ])
         </div>
     </div>
