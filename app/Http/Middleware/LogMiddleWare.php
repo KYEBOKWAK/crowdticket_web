@@ -18,8 +18,10 @@ class LogMiddleWare {
 		//\Log::info('order info ', ['before_step' => $request, 'next_step' => $request->url()]);
 		//\Log::info('order info ', ['before_step' => $request->header('Referer'), 'next_step' => $request->url()]);//외부링크url 이 없음
 		//\Log::info('order info ', ['before_step' => $request->getSession()->getName(), 'next_step' => $request->url()]);
-		\Log::info('order info ', ['before_step' => $request->getSession()->previousUrl(), 'next_step' => $request->url()]);
-		\Log::info('test', ['test' => redirect()->back()]);
+		//\Log::info('order info ', ['before_step' => $request->getSession()->previousUrl(), 'next_step' => $request->url()]);
+		//\Log::info('test', ['test' => redirect()->back()]);
+		//header
+		\Log::info('order info ', ['before_step' => $request->header()]);//외부링크url 이 없음
 
 		return $next($request);
 	}
