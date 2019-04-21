@@ -112,7 +112,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script src="{{ asset('/js/util_header.js?version=7') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=7') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -240,9 +240,6 @@
 <script src="{{ $loginFilePath }}"></script>
 
 <script>
-
-</script>
-<script>
 function logout(){
   /*
       FB.getLoginStatus(function(response) {
@@ -275,6 +272,10 @@ function logout(){
 @yield('js')
 
 <script>
+  ga(function(tracker) {
+    var clientId = tracker.get('clientId');
+  });
+  console.error("adsf");
 </script>
 
 </body>
