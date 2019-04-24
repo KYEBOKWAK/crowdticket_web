@@ -50,7 +50,11 @@ class SocialAuthController extends Controller
     private function findOrCreateUser($socialUser)
     {
       //페이스북 아이디가 있으면 해당 계정을 넘겨준다.
-      $email = $socialUser['email'];
+      $email = '';
+      if(isset($socialUser['email']))
+      {
+        $email = $socialUser['email'];
+      }
       $socialType = $socialUser['type'];
       if($socialType === 'FACEBOOK')
       {
@@ -59,7 +63,9 @@ class SocialAuthController extends Controller
         }
 
         //이메일을 찾았는데, 이메일이 있으면 페이스북 id를 등록해준다.
-        if ($user = User::where('email', $email)->first()) {
+        if($email)
+        {
+          if ($user = User::where('email', $email)->first()) {
             $user->facebook_id = $socialUser['id'];
             if(!$user->profile_photo_url)
             {
@@ -76,7 +82,9 @@ class SocialAuthController extends Controller
 
             $user->save();
             return $user;
+          }
         }
+        
 
         //둘다 없으면 email 을 가져온다.
         $email = $this->getFacebookEmail($socialUser);
@@ -188,7 +196,7 @@ class SocialAuthController extends Controller
     }
 
     private function getFacebookEmail($facebookUser) {
-        if ($facebookUser['email']) {
+        if (isset($facebookUser['email'])) {
             return $facebookUser['email'];
         }
         return $facebookUser['id'] . '@facebook.com';
