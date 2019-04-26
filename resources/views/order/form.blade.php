@@ -545,7 +545,7 @@
               정책에 동의합니다. <input id="refund_apply" type="checkbox" required="required">
             </div>
             <div>
-              크라우드티켓 약관과 정보이용정책에 동의합니다. <input id="policy_apply" type="checkbox" required="required">
+              <a href="{{url('/terms')}}" target="_blank"><u>크라우드티켓 약관</u></a>과 <a href="{{url('/privacy')}}" target="_blank"><u>정보이용정책</u></a>에 동의합니다. <input id="policy_apply" type="checkbox" required="required">
             </div>
           </div>
         </div>
