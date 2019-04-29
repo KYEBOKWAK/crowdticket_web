@@ -11,7 +11,7 @@
           </div>
         </div>
       @else
-        @for($i = 0 ; $i < 4 ; $i++)
+        @for($i = 0 ; $i < 6 ; $i++)
           <?php
             $imgNum = $i+1;
             $imgName = 'title_img_file_'.$imgNum;

@@ -246,6 +246,8 @@ class ProjectController extends Controller
       $postersArray['title_img_file_2'] = $this->makePosterURL($project, "title_img_file_2", 2);
       $postersArray['title_img_file_3'] = $this->makePosterURL($project, "title_img_file_3", 3);
       $postersArray['title_img_file_4'] = $this->makePosterURL($project, "title_img_file_4", 4);
+      $postersArray['title_img_file_5'] = $this->makePosterURL($project, "title_img_file_5", 5);
+      $postersArray['title_img_file_6'] = $this->makePosterURL($project, "title_img_file_6", 6);
 
       $project->poster_renew_url = $postersArray['title_img_file_1']['img_url'];
       $project->poster_sub_renew_url = $postersArray['poster_img_file']['img_url'];
