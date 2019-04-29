@@ -131,6 +131,12 @@ class Order extends Model
           }
           else
           {
+            if($project->isFinished())
+            {
+              //즉시 결제시 티켓 유무와 상관없이 프로젝트 종료 날이 지나면 무조건 취소 불가능하다
+              return false;
+            }
+
             $ticket = $this->getTicket();
             if($ticket)
             {
