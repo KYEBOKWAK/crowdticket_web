@@ -230,12 +230,11 @@ function isWordLengthCheck(inputNode, outputNode){
     maxNum = maxNum-1;
     var charRemain = maxNum - numChar;
 
-    outputNode.text(numChar+'/'+maxNum);
+    outputNode.text(numChar+'/'+(maxNum+1));
     if(charRemain < 0){
 
-      swal("아차! 글자 수 제한ㅠㅠ", "", "warning");
+      alert("아차! 글자 수 제한ㅠㅠ", "", "warning");
     }
-
   });
 }
 

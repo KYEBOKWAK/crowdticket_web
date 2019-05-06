@@ -140,6 +140,7 @@
 <input id="orderList" type="hidden" value="{{$orderList}}"/>
 <input id="pickingOldList" type="hidden" value="{{$pickingOldList}}"/>
 <input id="isPickComplete" type="hidden" value="{{$project->isPickedComplete()}}">
+<input id="questions" type="hidden" value="{{$project->questions}}"/>
 
     @include('helper.btn_admin', ['project' => $project])
 
@@ -175,7 +176,7 @@
         <div id="orders_container">
         </div>
       @endif
-
+<!--
       @if(!$project->isPickedComplete())
         @if (\Auth::check() && \Auth::user()->isAdmin())
           <input id="pickingYList" type="hidden" value="{{$pickingYList}}"/>
@@ -185,6 +186,7 @@
           </div>
         @endif
       @endif
+      -->
     </div>
 
 @endsection
@@ -208,6 +210,13 @@
     if(picking_old_json)
     {
       picking_old_list = $.parseJSON(picking_old_json);
+    }
+
+    var questionsjson = $('#questions').val();
+    var questions_list = null;
+    if(questionsjson)
+    {
+      questions_list = $.parseJSON(questionsjson);
     }
 
     //console.error(picking_old_list);
@@ -238,7 +247,8 @@
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
         {title:"이메일", field:"email", align:"center", width:221},
         {title:"전화번호", field:"contact", align:"center", width:151},
-        {title:"사연", field:"order_story", align:"center", width:151},
+        //{title:"사연", field:"order_story", align:"center", width:151},
+        {title:"사연", field:"answer", align:"center", width:151},
     ];
 
     var unpickTitle = "추첨빼기";
@@ -257,7 +267,8 @@
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
         {title:"이메일", field:"email", align:"center", width:221},
         {title:"전화번호", field:"contact", align:"center", width:151},
-        {title:"사연", field:"order_story", align:"center", width:151},
+        //{title:"사연", field:"order_story", align:"center", width:151},
+        {title:"사연", field:"answer", align:"center", width:151},
     ];
 
     ///////////table 값 셋팅
@@ -272,8 +283,33 @@
       orderObject = order;
 
       orderObject.order_id = order.id;
-      //orderObject.id = i + 1;
 
+      if(orderObject.answer)
+      {
+        if(questions_list.length <= 0)
+        {
+          continue;
+        }
+
+        var answerAndQuestion = '';
+
+        //orderObject.answer = 1;
+        var answerJson = $.parseJSON(orderObject.answer);
+        for(var j = 0 ; j < answerJson.length ; j++)
+        {
+          for(var k = 0 ; k < questions_list.length ; k++)
+          {
+             if(answerJson[j].key === questions_list[k].id)
+             {
+                answerAndQuestion += questions_list[k].question + "\n"+"\n";
+                answerAndQuestion += "- " + answerJson[j].value + "\n"+"\n";
+                break;
+             }
+          } 
+        }
+        orderObject.answer = answerAndQuestion;
+      }
+      
       tableDataArray.push(orderObject);
     }
 
@@ -285,7 +321,32 @@
       orderObject = order;
 
       orderObject.order_id = order.id;
-      //orderObject.id = i + 1;
+      
+      if(orderObject.answer)
+      {
+        if(questions_list.length <= 0)
+        {
+          continue;
+        }
+
+        var answerAndQuestion = '';
+
+        //orderObject.answer = 1;
+        var answerJson = $.parseJSON(orderObject.answer);
+        for(var j = 0 ; j < answerJson.length ; j++)
+        {
+          for(var k = 0 ; k < questions_list.length ; k++)
+          {
+             if(answerJson[j].key === questions_list[k].id)
+             {
+                answerAndQuestion += questions_list[k].question + "\n"+"\n";
+                answerAndQuestion += "- " + answerJson[j].value + "\n"+"\n";
+                break;
+             }
+          } 
+        }
+        orderObject.answer = answerAndQuestion;
+      }
 
       tablePickDataArray.push(orderObject);
     }
@@ -370,7 +431,6 @@
     };
 
     var getTableOutElement = function(data){
-
       var list = document.createElement("ul");
       list.className = "order_collapse_ul";
 
@@ -388,7 +448,6 @@
         }
 
         let item = document.createElement("li");
-        //item.innerHTML = "<div class='flex_layer order_collapse_rows'>" + "<p><strong>" + key + "</strong></p>" + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
         item.innerHTML = "<div class='order_collapse_rows'>" + "<p class='order_collapse_title'><strong>" + key + "</strong></p>" + "<div class='order_collapse_value'>" + data[key] + "</div>" + "</div>";
         list.appendChild(item);
       }
@@ -655,14 +714,7 @@
 
 
     //임시코드 START
-    /*
-    var picking_y_old_json = $('#pickingYList').val();
-    var picking_y_old_list = null;
-    if(picking_y_old_json)
-    {
-      picking_y_old_list = $.parseJSON(picking_y_old_json);
-    }
-    */
+
     if($('#pickingYList'))
     {
       var tableNDataArray = new Array();

@@ -20,6 +20,9 @@ Route::post('/social/gologin', 'Auth\SocialAuthController@goSocialLogin');
 
 //Route::get('/redirection/go', 'Auth\AuthController@redirect');
 
+Route::post('initialize', 'WelcomeController@initialize');
+Route::post('ping', 'WelcomeController@ping');
+
 Route::get('/', 'WelcomeController@index');
 Route::get('/home', 'WelcomeController@index');
 Route::get('terms/', function () {
@@ -155,9 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('tickets/{id}/overcounterorder', 'OrderController@overCounterOrder');
 
     Route::get('tickets/{id}/orders/completecomment', 'OrderController@completecomment');
-    //Route::post('tickets/{id}/orders/form', 'OrderController@getOrderForm');
+    
     Route::post('tickets/orders/form', 'OrderController@getOrderForm');
-    //Route::get('projects/{id}/tickets', 'OrderController@getTickets');
+    
     //이전 코드 getTickets
     Route::get('projects/{id}/tickets/{ticketid}', 'OrderController@getRenewalTicketsWithTicketID');
     Route::get('projects/{id}/tickets', 'OrderController@getRenewalTickets');
@@ -193,6 +196,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('projects/{id}/deletey/{orderid}', 'ProjectController@deleteY');
 
     Route::put('orders/{id}/updateorderstory', 'OrderController@updateOrderStory');
+
+    Route::put('orders/{id}/updateorderanswer', 'OrderController@updateOrderAnswer');
 
     //매거진 START
     Route::get('magazine/write', 'MagazineController@goMagazineWrite');

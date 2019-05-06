@@ -169,6 +169,11 @@ class Project extends Model
       //return $this->belongsTo('App\Models\Poster');
     }
 
+    public function questions()
+    {
+      return $this->hasMany('App\Models\Question')->orderBy('order_number', 'asc');
+    }
+
     public function orders()
     {
         //return $this->hasMany('App\Models\Order');

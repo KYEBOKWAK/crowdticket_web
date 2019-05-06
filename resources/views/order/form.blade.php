@@ -81,6 +81,24 @@
           width: 100%;
         }
 
+        .btn_order_answer_save{
+          padding: 5px 22px;
+          border-radius: 4px;
+          font-size: 15px;
+          background-color: #EF4D5D;
+          border: 1px solid #EF4D5D;
+          font-weight: 500;
+          color: white;
+        }
+
+        .btn_order_answer_save:hover{
+          color: white;
+        }
+
+        .btn_order_answer_save:focus{
+          color: white;
+        }
+
         .btn_order_story_save{
           padding: 5px 22px;
           border-radius: 4px;
@@ -109,6 +127,9 @@
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
     <input id="orderId" type="hidden" value="@if($order){{ $order->id }}@endif"/>
     <input id="isEventTypeInvitation" type="hidden" value="{{ $project->isEventTypeInvitationEvent() }}">
+
+    <input id="project_question_json" type="hidden" value="{{$project->questions}}"/>
+
 <div class="form_main_container">
   <div class="form_main_head_container">
     @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
@@ -211,7 +232,55 @@
           </div>
         @endif
 
-        @if($project->isPickType() || $project->isTemporarilyOrderStory())
+        @if(count($project->questions) > 0)
+          <div class="order_form_conform_container">
+            <div class='order_form_conform_title'>
+              <h3>
+              추가질문<span style="font-size: 15px;">(신청 후에도 수정이 가능합니다.)</span>
+              </h3>
+            </div>
+            <p class="help-block" style="margin-bottom: 10px;">이벤트 참가를 위해 필요한 개설자가 요청한 질문입니다. 모두 작성해주세요. <br>신청 후 내용 수정을 원하실 경우 사이트 오른쪽 상단 메뉴의 ‘결제확인’에서 하실 수 있습니다. <br>신청 마감일 이후에는 수정이 불가능합니다.</p>
+              @foreach($project->questions as $question)
+              <!-- 테이블에 질문이 있는 경우 -->
+                <p class="help-block" style="font-weight:bold">{{ $question->question }} *</p>
+                @if($order)
+                  <?php
+                    //JSON 형태로 수정
+                    $orderAnswers = json_decode($order->answer, true);
+                    $answer = '';
+                    //$questionId = $question->id;
+                    if(count($orderAnswers) > 0)
+                    {
+                      foreach($orderAnswers as $orderAnswer)
+                      {
+                        if($question->id === $orderAnswer["question_id"])
+                        {
+                          $answer = $orderAnswer["value"];
+                        }
+                      }
+                    }
+                  ?>
+                @endif
+
+                  @if($order && $project->isFinished())
+                    <textarea id="project-question-id-{{$question->id}}" name="question-id-{{$question->id}}" class="form-control" readonly="readonly">{{$answer}}</textarea>
+                  @else                     
+                    <textarea id="project-question-id-{{$question->id}}" name="question-id-{{$question->id}}" class="form-control" maxlength="200">@if($order){{$answer}}@endif</textarea>
+                  @endif
+                <p class="help-block" style="text-align:right" >
+                  <span >200자 내로 작성해주세요.  </span> <b><span class="order_question_length_{{$question->id}} project_form_length_text">0/200</span></b>
+                </p>
+              @endforeach
+
+              @if($order && !$project->isFinished())
+                <div style="text-align: center;">
+                  <button class="btn_order_answer_save" type="button">수정하기</button>
+                </div>
+              @endif
+          </div>
+        @endif
+
+        @if($project->isTemporarilyOrderStory())
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <h3>
@@ -658,7 +727,13 @@
         	if (ticketsCategoryJson) {
         		//alert(ticketsCategoryJson);
         		 ticketsCategory = $.parseJSON(ticketsCategoryJson);
-        	}
+          }
+          
+          var projectQuestionJson = $("#project_question_json").val();
+          var projectQuestions = '';
+          if(projectQuestionJson){
+            projectQuestions = $.parseJSON(projectQuestionJson);
+          }
 
           var g_isGetOrderForm = false;
           if($('#orderId').val())
@@ -1071,7 +1146,21 @@
           };
 
           $('#ticketing-btn-payment').click(function(){
-
+            if(projectQuestions.length > 0)
+            {
+              //프로젝트 질문이 있을 경우
+              for(var i = 0 ; i < projectQuestions.length ; i++)
+              {
+                var elementsName = '#project-question-id-'+projectQuestions[i].id;
+                if(!$(elementsName).val())
+                {
+                  alert("추가 질문을 작성해주세요");
+                  return;
+                }
+              }
+            }
+            //alert($("#project_question_json").val());
+            
              if(isCheckPhoneNumber($('#phone').val()) == false)
              {
                //alert("전화번호에 숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
@@ -1267,6 +1356,71 @@
 
           setOrderStory();
 
+          var updateOrderAnswer = function(){
+            if(!$('#orderId').val())
+            {
+              return;
+            }
+
+            //var data = new Array();
+            var data = {};
+
+            if(projectQuestions.length > 0)
+            {
+              //프로젝트 질문이 있을 경우
+              for(var i = 0 ; i < projectQuestions.length ; i++)
+              {
+                var elementsName = '#project-question-id-'+projectQuestions[i].id;
+                if(!$(elementsName).val())
+                {
+                  alert("추가 질문을 작성해주세요");
+                  return;
+                }
+
+                //data.push(questionObject);
+                data['question-id-'+projectQuestions[i].id] = $(elementsName).val();
+              }
+            }
+            else
+            {
+              alert("(오류)프로젝트 질문이 없습니다.");
+            }
+
+            var orderId = $('#orderId').val();
+        		
+        		var url = '/orders/' + orderId + '/updateorderanswer';
+        		var method = 'put';
+            
+
+        		var success = function(e) {
+              Swal.fire({
+                type: 'success',
+                title: '수정 완료!',
+                confirmButtonText: '확인',
+              }).then(function(){
+
+              });
+
+        		};
+        		var error = function(e) {
+              Swal.fire({
+                type: 'success',
+                title: '수정 실패',
+                confirmButtonText: '확인',
+              }).then(function(){
+
+              });
+        		};
+
+        		$.ajax({
+        			'url': url,
+        			'method': method,
+        			'data': data,
+        			'success': success,
+        			'error': error
+        		});
+          };
+
           var updateOrderStory = function() {
             if(!$('#order_story'))
             {
@@ -1316,6 +1470,19 @@
           $('.btn_order_story_save').click(function(){
             updateOrderStory();
           });
+
+          $('.btn_order_answer_save').click(function(){
+            updateOrderAnswer();
+          });
+
+          //질문 있는경우 length체크 함수를 셋팅 해준다.
+          for(var i = 0 ; i < projectQuestions.length ; i++)
+          {
+            var inputElements = $("#project-question-id-"+projectQuestions[i].id);
+            var outputElements = $(".order_question_length_"+projectQuestions[i].id);
+            isWordLengthCheck($(inputElements), $(outputElements));
+          }
+          
       });
     </script>
 @endsection
