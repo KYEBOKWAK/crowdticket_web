@@ -19,7 +19,7 @@ class LogMiddleWare {
 	public function handle($request, Closure $next)
 	{
 		$userip = $this->getUserIP();
-		if(strpos($userip, env('ADMIN_IP', '')))
+		if(strpos((string)$userip, env('ADMIN_IP', '')))
 		{	
 			//회사에서 접속할 경우는 제외
 			return $next($request);
