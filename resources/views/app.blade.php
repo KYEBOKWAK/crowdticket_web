@@ -13,11 +13,7 @@
     @show
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T94QPRD');</script>
+    
     <!-- End Google Tag Manager -->
 
     <!-- Facebook Pixel Code -->
@@ -82,7 +78,7 @@
 
 <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <!-- <script async="" src="https://www.google-analytics.com/analytics.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,16 +87,17 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    @include('template.data_collect')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93377526-1"></script>
     <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-        ga('create', 'UA-93377526-1', 'auto');
-        ga('send', 'pageview');
-
+      gtag('config', 'UA-93377526-1');
     </script>
+   
 
     <!-- sweetAlert JS -->
     <script type="text/javascript" src="{{ asset('/js/sweetalert/sweetalert.min.js') }}"></script>
@@ -116,8 +113,10 @@
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
+  <!--
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T94QPRD"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  -->
   <!-- End Google Tag Manager (noscript) -->
 
 <input type="hidden" id="base_url" value="{{ url() }}"/>
@@ -223,7 +222,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=23') }}"></script>
+<script src="{{ asset('/js/util.js?version=24') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -272,10 +271,73 @@ function logout(){
 @yield('js')
 
 <script>
+/*
   ga(function(tracker) {
     var clientId = tracker.get('clientId');
   });
-  console.error("adsf");
+  */
+/*
+  ga(function() {
+  // Logs an array of all tracker objects.
+    console.error(ga.getAll());
+  });
+  */
+
+  $(document).ready(function() {
+    if(!$("#isFirst"))
+    {
+      return;
+    }
+
+    if($("#isFirst").val())
+    {
+      var url = '/initialize';
+      var method = 'post';
+
+      var success = function(request) {
+      };
+      var error = function(request) {
+        console.error('유저 초기화 실패');
+      };
+
+      $.ajax({
+        'url': url,
+        'method': method,
+        'success': success,
+        'error': error
+      });
+    }
+
+    
+    var postPing = function(){
+      var url = '/ping';
+      var method = 'post';
+
+      var success = function(request) {
+        //console.error(request);
+      };
+      var error = function(request) {
+        console.error('유저 초기화 실패');
+      };
+
+      $.ajax({
+        'url': url,
+        'method': method,
+        'success': success,
+        'error': error
+      });
+    };
+
+    /*
+    var pingTag = setInterval(function(){
+      //console.log("cr_ping");
+      postPing();
+    }, 1500);
+    */
+    
+    //postPing();
+    
+  });
 </script>
 
 </body>

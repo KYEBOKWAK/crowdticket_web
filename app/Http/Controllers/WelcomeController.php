@@ -3,8 +3,106 @@
 use App\Models\Maincarousel as Maincarousel;
 use App\Models\Main_thumbnail as Main_thumbnail;
 
+use App\Models\Alive_user as Alive_user;
+
+use Illuminate\Http\Request as Request;
+
 class WelcomeController extends Controller
 {
+
+  public function initialize(Request $request)
+  {
+    $ga_id = $this->getGAId();
+    if($ga_id === '')
+    {
+      return false;
+    }
+
+    $aliveUser = Alive_user::where('ga_user', '=', $ga_id)->first();
+    $aliveUsers = null;
+    if(!$aliveUser)
+    {
+      $aliveUsers = new Alive_user();
+    }
+
+    if($aliveUsers)
+    {
+      $aliveUsers->ga_user = $ga_id;
+      $aliveUsers->save();
+    }
+  }
+
+  public function ping(Request $request)
+  {
+    $ga_id = $this->getGAId();
+    if($ga_id === '')
+    {
+      return false;
+    }
+    
+    $lastAliveUserInfo = Alive_user::orderBy('id', 'desc')->first();
+
+    $aliveUser = Alive_user::where('ga_user', '=', $ga_id)->first();
+
+    if(!isset($aliveUser))
+    {
+      $aliveUser = null;
+      $aliveUser = new Alive_user();
+      //$aliveUser->ga_user()
+
+      //id값 셋팅
+      if(isset($lastAliveUserInfo))
+      {
+        $id = (int)$lastAliveUserInfo->id + 1;
+        $aliveUser->id = $id;
+      }
+      else
+      {
+        $aliveUser->id = 1;
+      }
+    }
+
+    $aliveUser->ga_user = $ga_id;
+    $aliveUser->ping_at = date('Y-m-d H:i:s', time());
+
+    $aliveUser->save();
+    
+    return $aliveUser;
+
+    /*
+    $aliveUser = Alive_user::where('ga_user', '=', $ga_id)->first();
+    return $aliveUser;
+    if(!isset($aliveUser))
+    {
+      $aliveUser = null;
+      $aliveUser = new Alive_user();
+    }
+
+    //return $aliveUser;
+
+    if($aliveUser)
+    {
+      $aliveUser->ga_user = $ga_id;
+      $aliveUser->ping_at = date('Y-m-d H:i:s', time());
+      $aliveUser->save();
+    }
+
+    return $ga_id;
+    */
+  }
+
+  public function getGAId()
+  {
+    $ga_id = '';
+    if(isset($_COOKIE['_ga']))
+		{
+			$ga_id = $_COOKIE['_ga'];
+
+			//$ga_id = str_replace('GA1.1.', '', $ga_id);
+    }
+    
+    return $ga_id;
+  }
 
     public function index()
     {

@@ -29,6 +29,8 @@ class PosterController extends Controller
         $poster->setAttribute('title_2_img_cache', 0);
         $poster->setAttribute('title_3_img_cache', 0);
         $poster->setAttribute('title_4_img_cache', 0);
+        //$poster->setAttribute('title_5_img_cache', 0);
+        //$poster->setAttribute('title_6_img_cache', 0);
       }
       else{
         $poster = $project->posters()->firstOrFail();

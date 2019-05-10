@@ -17,6 +17,7 @@ abstract class Model extends BaseModel
     const S3_MAGAZINE_DIRECTORY = "magazine/";
     const S3_MAGAZINE_STORY_DIRECTORY = "magazine/story/";
     const S3_CONFIG_DIRECTORY = "config/";
+    const S3_LOG_DIRECTORY = "logs/";
 
     protected static $typeRules = array();
 

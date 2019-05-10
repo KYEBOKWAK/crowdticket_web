@@ -50,10 +50,18 @@ return [
 
 		's3' => [
 			'driver' => 's3',
-			'key'    => 'AKIAIHG4L3MAE22LAJ7Q',
-			'secret' => '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',
-			'region' => 'ap-northeast-1',
-			'bucket' => 'crowdticket0',
+			'key'    => env('AWS_S3_KEY',''),
+			'secret' => env('AWS_S3_SECRET',''),
+			'region' => env('AWS_S3_REGION',''),
+			'bucket' => env('AWS_S3_BUCKET',''),
+		],
+
+		's3-log' => [
+			'driver' => 's3',
+			'key'    => env('AWS_S3_KEY',''),
+			'secret' => env('AWS_S3_SECRET',''),
+			'region' => env('AWS_S3_REGION',''),
+			'bucket' => env('AWS_S3_BUCKET_LOG',''),
 		],
 
 		'rackspace' => [
