@@ -18,6 +18,13 @@ class LogMiddleWare {
 	 */
 	public function handle($request, Closure $next)
 	{
+		$userip = $this->getUserIP();
+		if(strpos($userip, '218.146.18'))
+		{	
+			//회사에서 접속할 경우는 제외
+			return $next($request);
+		}
+
 		$goURL = str_replace(url(), '', $request->url());
 		if($goURL === '/ping')
 		{
@@ -114,8 +121,6 @@ class LogMiddleWare {
 			$deviceOS = 'iphone';
 		}
 		//디바이스 정보 가져오기 END
-
-		$userip = $this->getUserIP();
 
 		$log = [
 				'time' => date('Y-m-d H:i:s', time()),
