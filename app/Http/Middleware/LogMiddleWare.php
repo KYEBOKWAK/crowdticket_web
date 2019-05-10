@@ -21,7 +21,7 @@ class LogMiddleWare {
 		$userip = $this->getUserIP();
 		$adminIp = env('ADMIN_IP', '');
 		
-		if(strpos($userip, $adminIp))
+		if($userip === $adminIp)
 		{	
 			//회사에서 접속할 경우는 제외
 			return $next($request);
