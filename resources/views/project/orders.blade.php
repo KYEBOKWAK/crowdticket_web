@@ -82,6 +82,7 @@
 <input id="supervise_orders_all_ticket" type="hidden" value="{{$ordersAllWithTimeJson}}"/>
 <input id="supervise_goods_list_json" type="hidden" value="{{$project->goods}}"/>
 <input id="project_title" type="hidden" value="{{$project->title}}"/>
+<input id="question_object_json" type="hidden" value="{{$project->questions}}"/>
 
     @include('helper.btn_admin', ['project' => $project])
 
@@ -170,7 +171,7 @@
         {title:"티켓종류", field:"ticket_category", align:"center"},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number", bottomCalc:"sum"},
         {title:"GOODSOBJECT", field:"GOODSOBJECT", align:"center", width:80, bottomCalc:"sum"},//반드시 title과 filed 는 GOODSOBJECT 이어야 함.
-        {title:"주문요청", field:"answer", align:"center"},
+        //{title:"주문요청", field:"answer", align:"center"},
         {title:"추가후원", field:"supporterPrice", align:"right", bottomCalc:"sum"},
         {title:"출석", field:"attended", align:"center", formatter:"tickCross", sorter:"boolean"},
         {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc:"sum"},
@@ -181,7 +182,8 @@
         {title:"굿즈수령주소", field:"deliveryAddress", align:"center"},
         {title:"기타사항", field:"requirement", align:"center"},
         {title:"결제일", field:"created_at", align:"center"},
-        {title:"사연", field:"order_story", align:"center"},
+        {title:"QUESTIONOBJECT", field:"QUESTIONOBJECT", align:"center"},
+        //{title:"사연", field:"order_story", align:"center"},
     ];
 
     var project_title = $('#project_title').val();
@@ -209,6 +211,13 @@
     var supervise_goods_list_json = $('#supervise_goods_list_json').val();
     var supervise_goods_list = $.parseJSON(supervise_goods_list_json);
     //alert(supervise_goods_list.length);
+
+    var question_object_json = $("#question_object_json").val();
+    var g_question_object = '';
+    if(question_object_json)
+    {
+      g_question_object = $.parseJSON(question_object_json);
+    }
 
     var order_supervise_container = $('#order_supervise_container');
 
@@ -292,10 +301,12 @@
       }
 
       //answer
+      
       if(columnsInfoRow.answer)
       {
         columnsObject.answer = columnsInfoRow.answer;
       }
+      
 
       if(columnsInfoRow.attended)
       {
@@ -747,6 +758,28 @@
         continue;
       }
 
+      if(columnsInfoRow.title === 'QUESTIONOBJECT')
+      {
+        for(var j = 0 ; j < g_question_object.length ; j++)
+        {
+          var columnsQuestion = new Object();
+          columnsQuestion.title = g_question_object[j].question;
+          columnsQuestion.field = 'question'+g_question_object[j].id;
+          columnsQuestion.optionName = 'question';
+          columnsQuestion.option_key = g_question_object[j].id;
+          //columnsGoods.field = 'question';
+          //columnsGoods.question_id = g_question_object[j].id;
+          columnsQuestion.width = 80;
+          columnsQuestion.align = 'center';
+          //columnsGoods.sorter = "number";
+          //columnsGoods.bottomCalc = "sum";
+
+          columnsAllArray.push(columnsQuestion);
+        }
+
+        continue;
+      }
+
       var columnsObject = new Object();
 
       if(columnsInfoRow.title)
@@ -832,10 +865,17 @@
           orderGoodsList = $.parseJSON(order.goods_meta);
         }
 
+        var orderAnswerList = [];
+        if(order.answer)
+        {
+          orderAnswerList = $.parseJSON(order.answer);
+        }
+
         var orderObject = new Object();
         for(var k = 0 ; k < columnsAllArray.length ; k++)
         {
           var fieldName = columnsAllArray[k].field;
+          var fieldOption = columnsAllArray[k].optionName;
           var orderValue = order[fieldName];
 
           orderObject[fieldName] = orderValue;
@@ -850,6 +890,22 @@
             if(d[0] == 0000){
               //날짜 미정
               orderObject[fieldName] = "날짜 미정";
+            }
+          }
+
+          if(fieldOption === 'question')
+          {
+            var question_id = Number(columnsAllArray[k].option_key);
+            for(var m = 0 ; m < orderAnswerList.length ; m++)
+            {
+              var answer_question_id = Number(orderAnswerList[m].question_id);
+              if(question_id === answer_question_id)
+              {
+                //orderObject[fieldName] = orderAnswerList[m].value;
+                orderObject[fieldName] = orderAnswerList[m].value;
+                //debugger;
+                break;
+              }
             }
           }
         }
@@ -900,11 +956,16 @@
       for(var j = 0 ; j < supervise_orders_all_ticket[i]['orders'].length ; j++)
       {
         var order = supervise_orders_all_ticket[i]['orders'][j];
-
         var orderGoodsList = '';
         if(order.goods_meta)
         {
           orderGoodsList = $.parseJSON(order.goods_meta);
+        }
+
+        var orderAnswerList = [];
+        if(order.answer)
+        {
+          orderAnswerList = $.parseJSON(order.answer);
         }
 
         var orderTableElement = document.createElement("tr");
@@ -913,12 +974,37 @@
         for(var k = 0 ; k < columnsAllArray.length ; k++)
         {
           var fieldName = columnsAllArray[k].field;
+          var fieldOption = columnsAllArray[k].optionName;
+          //var orderValue = order[fieldName];
 
           var fieldNameCheck = fieldName;
           if(fieldName.indexOf('goods') >= 0)
           {
             fieldNameCheck = "GOODSOBJECT";
           }
+
+          if(fieldName.indexOf('question') >= 0)
+          {
+            fieldNameCheck = "QUESTIONOJBECT";
+          }
+
+          if(fieldOption === 'question')
+          {
+            var question_id = Number(columnsAllArray[k].option_key);
+            for(var m = 0 ; m < orderAnswerList.length ; m++)
+            {
+              var answer_question_id = Number(orderAnswerList[m].question_id);
+              if(question_id === answer_question_id)
+              {
+                //orderObject[fieldName] = orderAnswerList[m].value;
+                //orderObject[fieldName] = orderAnswerList[m].value;
+                order[fieldName] = orderAnswerList[m].value;
+                //debugger;
+                break;
+              }
+            }
+          }
+
           //order value 값
           switch(fieldNameCheck)
           {
@@ -947,7 +1033,7 @@
                                         'value' : orderValue});
                 }
               }
-
+              break;
           }
 
           var orderValue = "<td field-name='"+ fieldName +"'>" + order[fieldName] + '</td>';
@@ -961,6 +1047,7 @@
 
 
     //최종 합계 셋팅
+    
     var sumTableElement = document.createElement("tr");
     for(var i = 0 ; i < columnsAllArray.length ; i++)
     {
@@ -988,8 +1075,10 @@
       var tdElement = "<td field-name='"+ columfieldName +"'>" + arrayValue + '</td>';
       sumTableElement.innerHTML = sumTableElement.innerHTML + tdElement;
     }
+    
 
     export_table_body.append(sumTableElement);
+    
 
     //합계
     var export_table = new Tabulator("#export_table", {});
