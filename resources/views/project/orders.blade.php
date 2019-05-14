@@ -764,7 +764,7 @@
         {
           var columnsQuestion = new Object();
           columnsQuestion.title = g_question_object[j].question;
-          columnsQuestion.field = 'question'+g_question_object[j].id;
+          columnsQuestion.field = 'table_question_'+g_question_object[j].id;
           columnsQuestion.optionName = 'question';
           columnsQuestion.option_key = g_question_object[j].id;
           //columnsGoods.field = 'question';
@@ -868,7 +868,11 @@
         var orderAnswerList = [];
         if(order.answer)
         {
-          orderAnswerList = $.parseJSON(order.answer);
+          try {
+              orderAnswerList = $.parseJSON(order.answer);
+          } catch (e) {
+              //return false;
+          }          
         }
 
         var orderObject = new Object();
@@ -965,7 +969,12 @@
         var orderAnswerList = [];
         if(order.answer)
         {
-          orderAnswerList = $.parseJSON(order.answer);
+          try{
+            orderAnswerList = $.parseJSON(order.answer);
+          }catch(e)
+          {
+
+          }
         }
 
         var orderTableElement = document.createElement("tr");
@@ -1081,7 +1090,14 @@
     
 
     //합계
-    var export_table = new Tabulator("#export_table", {});
+    
+    var export_table = new Tabulator("#export_table", {
+      height: tableHeight,
+      layout:"fitDataFill",
+      selectable:true,
+      movableColumns:true,
+      columns:columnsAllArray
+    });
     $("#download_excel").click(function(){
         export_table.download("xlsx", project_title + "_주문관리.xlsx", {sheetName:"주문관리"});
     });
