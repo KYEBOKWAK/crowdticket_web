@@ -214,6 +214,11 @@ Route::group(['middleware' => 'auth'], function () {
     //매거진 END
 
     Route::post('like/{id}/{likekey}', 'UserController@addLike');
+
+    /////test//////
+    //DB 테스트용 route
+    //Route::post('')
+    ///////////////
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

@@ -2,6 +2,7 @@
 
 class Project extends Model
 {
+    const DATA_CALL_ONETIME_MAX_COUNTER = 5; //데이터 요청시 한번에 보낼 데이터양
 
     const STATE_READY = 1;
     const STATE_READY_AFTER_FUNDING = 2;
@@ -182,20 +183,20 @@ class Project extends Model
 
     public function getOrdersWithPickCancel()
     {
-      //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->orWhere('state', '=', Order::ORDER_STATE_PROJECT_PICK_CANCEL);
-      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->orWhere('state', '=', Order::ORDER_STATE_PROJECT_PICK_CANCEL)->get();
+      //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->orWhere('state', '=', Order::ORDER_STATE_PROJECT_PICK_CANCEL)->get();
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->orWhere('state', '=', Order::ORDER_STATE_PROJECT_PICK_CANCEL);
     }
 
     public function getOrdersWithoutPick()
     {
-      //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->get();
-      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->orWhere('is_pick', '=', 'Y')->get();
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->get();
+      //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', '')->orWhere('is_pick', '=', 'Y')->get();
     }
 
     public function getOrdersOnlyPick()
     {
       //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '!=', '')->get();
-      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', 'PICK')->get();
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('is_pick', '=', 'PICK');
     }
 
     public function getOrdersWithPickY()

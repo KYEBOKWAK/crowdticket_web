@@ -164,8 +164,8 @@
         @else
           <button id="pick_submit" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">추첨 완료 하기</button>
         @endif
-        <button id="pick_sendmail" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">메일보내기</button>
-        <button id="pick_sendSMS" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">문자보내기</button>
+        <!-- <button id="pick_sendmail" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">메일보내기</button> -->
+        <!-- <button id="pick_sendSMS" class="pickButton" style="width: 50%; margin-bottom: 10px;" type="button">문자보내기</button> -->
 
         <p id="pick_list_counter" pick-count='' projectid='{{$project->id}}'>추첨된 인원수 : 0명</p>
       </div>
@@ -563,6 +563,46 @@
 
       var url = '/projects/' + projectId + '/pickingcomplete/sendsms';
       var method = 'post';
+      var data = {
+        "startindex": 0
+      };
+
+      var success = function(result) {
+        stopLoadingPopup();
+        swal("추첨 완료 성공!", "", "success").then(function(){
+            window.location.reload();
+          });
+
+        /*
+        if(result.state == "error")
+        {
+          swal(result.message, "", "error");
+          return;
+        }
+        else
+        {
+          swal("추첨 완료 성공!", "", "success").then(function(){
+            window.location.reload();
+          });
+        }
+        */
+      };
+
+      var error = function(request, status) {
+        //console.error('request : ' + JSON.stringify(request) + ' status : ' + status);
+        swal("SMS 전송 실패", "", "error");
+      };
+
+      requsetAjaxPartition(url, method, data, 0, success, error);
+    }
+
+/*
+    var sendSMSPickComplete = function(){
+      showLoadingPopup("SMS 전송중..");
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+
+      var url = '/projects/' + projectId + '/pickingcomplete/sendsms';
+      var method = 'post';
 
       var success = function(result) {
         stopLoadingPopup();
@@ -591,6 +631,7 @@
         'error': error
       });
     }
+    */
 
     var sendEmailPickComplete = function(){
       showLoadingPopup("EMAIL 전송중..");
@@ -598,35 +639,47 @@
 
       var url = '/projects/' + projectId + '/pickingcomplete/sendmail';
       var method = 'post';
+      var data = {
+        "startindex": 0
+      };
 
       var success = function(result) {
         stopLoadingPopup();
-        if(result.state == "error")
-        {
-          swal(result.message, "", "error");
-          return;
-        }
-        else
-        {
-          swal("메일보내기 성공!", "", "success");
-          //console.error(JSON.stringify(result.message) + ' ' + result.test);
-          //sendSMSPickComplete();
-        }
+        sendSMSPickComplete();
       };
 
       var error = function(request, status) {
-        //console.error('request : ' + JSON.stringify(request) + ' status : ' + status);
         swal("이메일 전송 실패", "", "error");
       };
 
-      $.ajax({
-        'url': url,
-        'method': method,
-        'success': success,
-        'error': error
-      });
+      requsetAjaxPartition(url, method, data, 0, success, error);
     }
 
+    var requestPickComplete = function(){
+      showLoadingPopup('미당첨 취소 진행중..');
+
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+      var url = '/projects/' + projectId + '/pickingcomplete';
+      var method = 'post';
+      var data = {
+        "startindex": 0
+      };
+
+      var success = function(result) {
+        console.error(result.message);
+        stopLoadingPopup();
+        sendEmailPickComplete();
+      };
+
+      var error = function(result) {
+        swal("추첨 완료 실패", result.message, "error");
+      };
+      
+      requsetAjaxPartition(url, method, data, 0, success, error);
+      
+    };
+
+    /*
     var pickCompletePopup = function(){
       var pickCounter = Number($("#pick_list_counter").attr('pick-count'));
       var projectId = Number($("#pick_list_counter").attr('projectid'));
@@ -665,7 +718,7 @@
             var method = 'post';
 
             var success = function(result) {
-              stopLoadingPopup();
+              //stopLoadingPopup();
               if(result.state == "error")
               {
                 swal(result.message, "", "error");
@@ -673,20 +726,65 @@
               }
               else
               {
-                sendEmailPickComplete();
+                //sendEmailPickComplete();
               }
             };
 
             var error = function(request, status) {
               swal("추첨 완료 실패", "", "error");
             };
-
+            
             $.ajax({
               'url': url,
               'method': method,
               'success': success,
               'error': error
             });
+            
+          }
+          break;
+        }
+      });
+    };
+
+    */
+
+    var pickCompletePopup = function(){
+      var pickCounter = Number($("#pick_list_counter").attr('pick-count'));
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+      //alert(pickCounter);
+
+      var elementPopup = document.createElement("div");
+      elementPopup.innerHTML =
+      "<div class=''>확정 하시면 더 이상 추첨이 불가능 합니다.<br> - 추첨된 인원수 : " + pickCounter + "명<br><br>"+
+      "추첨 확정시,<br><b>1. 당첨 문자, 메일 발송</b><br><b>2. 미당첨 메일 발송</b><br> <b>3. 당첨자 리스트 공개</b><br> 이 진행 됩니다.<br><b>*당첨 발표시간에 눌러주세요*</b>" +
+      "</div>";
+
+      swal({
+          title: "추첨 확정 하시겠습니까?",
+          content: elementPopup,
+          confirmButtonText: "V redu",
+          allowOutsideClick: "true",
+
+          buttons: {
+            nosave: {
+              text: "아니오",
+              value: "notsave",
+            },
+            save: {
+              text: "예",
+              value: "save",
+            },
+          },
+
+      }).then(function(value){
+        switch (value) {
+          case "save":
+          {
+            //showLoadingPopup('미당첨 취소 진행중..');
+            requestPickComplete();
+            //sendEmailPickComplete();
+            //sendSMSPickComplete();
           }
           break;
         }
@@ -694,8 +792,8 @@
     };
 
     $("#pick_submit").click(function(){
-      //pickCompletePopup();//해당 함수가 기능힘수
-      swal("기능 개선중..", "해당 기능을 사용하려면 크라우드티켓에 연락주세요.", 'info');
+      pickCompletePopup();//해당 함수가 기능힘수
+      //swal("기능 개선중..", "해당 기능을 사용하려면 크라우드티켓에 연락주세요.", 'info');
     });
 
     window.addEventListener('resize', function(){

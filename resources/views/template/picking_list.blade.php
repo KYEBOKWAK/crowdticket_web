@@ -11,7 +11,10 @@
         </tr>
         </thead>
         <tbody>
-        @foreach ($project->getOrdersOnlyPick() as $order)
+        <?php
+        $ordersOnlyPick = $project->getOrdersOnlyPick()->get();
+        ?>
+        @foreach ($ordersOnlyPick as $order)
         <?php
           $name = $order->name;
           $nameLen = mb_strlen($order->name, 'UTF-8');

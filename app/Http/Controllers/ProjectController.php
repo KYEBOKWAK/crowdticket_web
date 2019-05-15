@@ -10,6 +10,7 @@ use App\Models\Model as Model;
 use App\Models\Project as Project;
 use App\Models\Order as Order;
 use App\Models\Poster as Poster;
+use App\Models\Test as Test;
 use App\Services\SmsService;
 
 use Illuminate\Http\Request as Request;
@@ -1130,6 +1131,60 @@ class ProjectController extends Controller
       return ['state' => 'success', 'order' => $order, 'orders' => $orders];
     }
 
+    public function pickingComplete(Request $request, $projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      if($project->isPickedComplete())
+      {
+        return ["state" => "error", "message" => "이미 추첨이 완료되었습니다."];
+      }
+
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+        
+        $startIndex = (int)$request->startindex;
+        $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
+        $skip = $startIndex * ($take);
+
+        //$totalCounter = Test::count();
+        //$totalCounter = $project->orders()->where("is_pick", "<>", "PICK")->count();
+        $totalCounter = $project->orders()->count();
+
+        //$orders = $project->orders()->skip($skip)->take($take)->where("is_pick", "<>", "PICK")->get();
+        $orders = $project->orders()->skip(0)->take($take)->where("is_pick", "<>", "PICK")->get();
+        foreach($orders as $order)
+        {
+          if($order->state >= Order::ORDER_STATE_CANCEL_START)
+          {
+            continue;
+          }
+
+          if($order->is_pick != 'PICK')
+          {
+            app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_PICK_CANCEL,true);
+
+            $logMessage = $order->id;
+            $this->saveLog($logMessage, Model::LOG_TYPE_PICKER_ORDER_CANCEL);
+          }
+        }
+
+        if(count($orders) === 0)
+        {
+          //0개면 마무리
+          $project->pick_state = Project::PICK_STATE_PICKED;
+          $this->saveLog("pick_state = PICK_STATE_PICKED 변경", "");
+          $project->save();
+        }
+      
+        return ["state" => "success", "message" => '', 'start_index' => $startIndex, 'total_count' => $totalCounter, 'orders'=> $orders];  
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
+      }
+    }
+
+    /*
     public function pickingComplete($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
@@ -1158,35 +1213,89 @@ class ProjectController extends Controller
 
       return ["state" => "success", "message" => ""];
     }
+    */
 
-    public function sendMailAfterPickComplete($projectId)
+    public function sendMailAfterPickComplete(Request $request, $projectId)
     {
       $project = $this->getSecureProjectById($projectId);
 
-      $orders = $project->getOrdersWithPickCancel();
-
       if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
-          foreach ($orders as $order) {
-            if($order->is_pick == 'PICK')
-            {
-              $this->sendMailPick("success", $project, $order);
-            }
-            else
-            {
-              $this->sendMailPick("fail", $project, $order);
-            }
-          }
+        
+        $startIndex = (int)$request->startindex;
+        $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
+        $skip = $startIndex * ($take);
 
+        $totalCounter = $project->ordersAll()->count();
+
+        $orders = $project->ordersAll()->skip($skip)->take($take)->get();
+
+        foreach($orders as $order)
+        {
+          $logMessage = $order->email;
+          if($order->is_pick === 'PICK')
+          {
+            //$this->sendMailPick("success", $project, $order);
+            $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_EMAIL);
+          }
+          else
+          {
+            //$this->sendMailPick("fail", $project, $order);
+            $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_FAIL_EMAIL);
+          }
+        }
+
+        return ["state" => "success", "message" => '', 'start_index' => $startIndex, 'total_count' => $totalCounter, 'orders'=> $orders];
+        
       }
       else
       {
         return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
       }
-
-
-      return ["state" => "success", "message" => ''];
+      
     }
 
+    public function sendSMSAfterPickComplete(Request $request, $projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      /*
+      if($project->isPickedComplete())
+      {
+        return ["state" => "error", "message" => "이미 추첨이 완료되었습니다."];
+      }
+      */
+
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+        
+        $startIndex = (int)$request->startindex;
+        $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
+        $skip = $startIndex * ($take);
+
+        //$totalCounter = $project->getOrdersOnlyPick()->count();
+        $totalCounter = $project->ordersAll()->count();
+
+        //$orders = $project->getOrdersOnlyPick()->skip($skip)->take($take)->get();
+        $orders = $project->ordersAll()->skip($skip)->take($take)->get();
+        foreach($orders as $order)
+        {
+          if($order->is_pick === 'PICK')
+          {
+            $logMessage = 'id:'.$order->id."-".$order->email;
+            //$this->sendPickSuccessSMS($project, $order);
+            $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_SMS);
+          }
+        }
+
+        return ["state" => "success", "message" => '', 'start_index' => $startIndex, 'total_count' => $totalCounter, 'orders'=> $orders];
+        
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
+      }
+    }
+
+/*
     public function sendSMSAfterPickComplete($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
@@ -1208,6 +1317,7 @@ class ProjectController extends Controller
 
       return ["state" => "success", "message" => ""];
     }
+    */
 
     public function addPicking($projectId, $orderId)
     {
@@ -1361,5 +1471,32 @@ class ProjectController extends Controller
       //$project = Project::findOrFail($projectId);
       //$project->increment('view_count');
       //return "success";
+    }
+
+    public function saveLog($message, $type)
+    {
+      $logURL = Model::getS3Directory(Model::S3_LOG_PROCESS_DIRECTORY).'crowdticket-process'.date("Y-m-d").'.log';
+
+      $comma = ',';
+
+      if(Storage::disk('s3-log')->exists($logURL) == false)
+      {
+        Storage::disk('s3-log')->put($logURL, '');
+        $comma = '';//처음 파일 생성시 콤마를 뺀다.JSON포맷
+      }
+
+      $log = [
+          'time' => date('Y-m-d H:i:s', time()),
+          'type' => $type,
+          'message' => $message
+          ];
+
+      $log = json_encode($log);
+
+      //$log = $comma.$log.PHP_EOL;
+      $log = $comma.$log;
+      
+      //Save string to log, use FILE_APPEND to append.
+      Storage::disk('s3-log')->append($logURL, $log);
     }
 }

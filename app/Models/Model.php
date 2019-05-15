@@ -18,6 +18,12 @@ abstract class Model extends BaseModel
     const S3_MAGAZINE_STORY_DIRECTORY = "magazine/story/";
     const S3_CONFIG_DIRECTORY = "config/";
     const S3_LOG_DIRECTORY = "logs/";
+    const S3_LOG_PROCESS_DIRECTORY = "logs_process/";
+
+    const LOG_TYPE_PICKER_ORDER_CANCEL = "order_picker_cancel";
+    const LOG_TYPE_SEND_PICK_SUCCESS_EMAIL = "send_pick_success_email";
+    const LOG_TYPE_SEND_PICK_FAIL_EMAIL = "send_pick_fail_email";
+    const LOG_TYPE_SEND_PICK_SUCCESS_SMS = "send_pick_success_sms";
 
     protected static $typeRules = array();
 

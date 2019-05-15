@@ -30,8 +30,8 @@ function showLoadingPopup(message){
   "잠시만 기다려주세요." + "<br>" +
   "페이지를 닫을 경우 오류가 발생할 수 있습니다." +
   "</b></div>" +
+  "<div id='loading_options'></div>" +
   "<div class='loading loading_util'>" +
-
   "</div>";
 
   swal({
@@ -598,4 +598,62 @@ function parseQuery ( query ) {
 
    }
    return Params;
+}
+
+function requsetAjaxPartition(url, method, data, totalDataCount, func_success, func_error)
+{
+  var success = function(result){
+    console.error(result);
+    if(result.state === "error")
+    {
+      func_error(result);
+      return;
+    }
+
+    if(!result.orders)
+    {
+      func_error(result);
+      return;
+    }
+
+    totalDataCount+=result.orders.length;
+
+    if($("#loading_options"))
+    {
+      //팝업에 로딩 옵션이 있다면 옵션 셋팅
+      var optionText = totalDataCount + " / " + result.total_count;
+
+      $("#loading_options").text(optionText);
+    }
+
+    if(result.orders.length === 0)
+    {
+      console.error("finish");
+      func_success(result);
+      return;
+    }
+
+    var startIndex = Number(result.start_index);
+    startIndex++;
+    var reData={
+      "startindex" : startIndex
+    }
+
+    requsetAjaxPartition(url, method, reData, totalDataCount, func_success, func_error);
+    //alert(result.orders.length);
+
+    
+  }
+
+  var error = function(result){
+    func_error(result);
+  }
+
+  $.ajax({
+    'url': url,
+    'method': method,
+    'data' : data,
+    'success': success,
+    'error': error
+  });
 }
