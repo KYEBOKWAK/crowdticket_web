@@ -603,7 +603,6 @@ function parseQuery ( query ) {
 function requsetAjaxPartition(url, method, data, totalDataCount, func_success, func_error)
 {
   var success = function(result){
-    console.error(result);
     if(result.state === "error")
     {
       func_error(result);

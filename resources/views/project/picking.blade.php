@@ -666,7 +666,6 @@
       };
 
       var success = function(result) {
-        console.error(result.message);
         stopLoadingPopup();
         sendEmailPickComplete();
       };
@@ -966,7 +965,6 @@
             if(isPickY)
             {
               addPickY(row.getData(), row.getIndex());
-              //console.error(tableDataArray.length);
             }
 
             if(!isWorkedCollapse)
@@ -987,7 +985,6 @@
             }
           },
           responsiveLayoutCollapseFormatter:function(data){
-            //console.error(data);
 
               var list = getTableOutElement(data);
 
