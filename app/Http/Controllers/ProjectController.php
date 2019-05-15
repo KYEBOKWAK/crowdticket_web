@@ -1234,12 +1234,12 @@ class ProjectController extends Controller
           $logMessage = $order->email;
           if($order->is_pick === 'PICK')
           {
-            //$this->sendMailPick("success", $project, $order);
+            $this->sendMailPick("success", $project, $order);
             $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_EMAIL);
           }
           else
           {
-            //$this->sendMailPick("fail", $project, $order);
+            $this->sendMailPick("fail", $project, $order);
             $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_FAIL_EMAIL);
           }
         }
@@ -1281,7 +1281,7 @@ class ProjectController extends Controller
           if($order->is_pick === 'PICK')
           {
             $logMessage = 'id:'.$order->id."-".$order->email;
-            //$this->sendPickSuccessSMS($project, $order);
+            $this->sendPickSuccessSMS($project, $order);
             $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_SMS);
           }
         }
