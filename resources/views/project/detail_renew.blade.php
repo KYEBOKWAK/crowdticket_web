@@ -164,6 +164,7 @@ $selectedTicket = "";
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
 <input type="hidden" id="isPickingFinished" value="{{ $project->isFinishedAndPickingFinished() }}">
 <input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
+<input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
 
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
@@ -430,4 +431,13 @@ $selectedTicket = "";
     <script src="{{ asset('/js/project/detail.js?version=20') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=22') }}"></script>
+    <script>
+    $(document).ready(function() {
+      if($("#g_app_type").val() === 'qa')
+      {
+        //$("footer").css( "border", "9px solid red" );
+        $("footer").show();
+      }
+    });
+    </script>
 @endsection

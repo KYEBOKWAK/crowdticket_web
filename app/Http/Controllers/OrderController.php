@@ -981,6 +981,11 @@ class OrderController extends Controller
       $goodsArray = [];
       //$goodsArray = '';
 
+      if(!$orderGoodsList)
+      {
+        return $goodsArray;
+      }
+
       $goodsOrders = json_decode($orderGoodsList, true);
       foreach($goodsOrders as $goodsOrder)
       {
