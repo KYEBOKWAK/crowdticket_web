@@ -1231,6 +1231,11 @@ class ProjectController extends Controller
 
         foreach($orders as $order)
         {
+          if($order->state >= Order::ORDER_STATE_CANCEL_START)
+          {
+            continue;
+          }
+
           $logMessage = $order->email;
           if($order->is_pick === 'PICK')
           {
@@ -1278,6 +1283,11 @@ class ProjectController extends Controller
         $orders = $project->ordersAll()->skip($skip)->take($take)->get();
         foreach($orders as $order)
         {
+          if($order->state >= Order::ORDER_STATE_CANCEL_START)
+          {
+            continue;
+          }
+          
           if($order->is_pick === 'PICK')
           {
             $logMessage = 'id:'.$order->id."-".$order->email;
