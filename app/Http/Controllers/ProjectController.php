@@ -1069,7 +1069,7 @@ class ProjectController extends Controller
       $orders = $project->getOrdersWithoutPick();
 
       //주문자 정보 START
-      $pickingArray = $project->getOrdersOnlyPick();
+      $pickingArray = $project->getOrdersOnlyPick()->get();
       //최종 정리된 타임을 기준으로 주문자를 정렬한다.
 
       $ordersJson = json_encode($orders);
