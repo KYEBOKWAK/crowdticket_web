@@ -18,6 +18,8 @@ class LogMiddleWare {
 	 */
 	public function handle($request, Closure $next)
 	{
+		$logStorageTarget = 's3-log';
+
 		$userip = $this->getUserIP();
 		$adminIp = env('ADMIN_IP', '');
 		
@@ -64,10 +66,10 @@ class LogMiddleWare {
 
 		$comma = ',';
 
-		if(Storage::disk('s3-log')->exists($logURL) == false)
+		if(Storage::disk($logStorageTarget)->exists($logURL) == false)
 		{
-			Storage::disk('s3-log')->put($logURL, '');
-			$comma = '';//처음 파일 생성시 콤마를 뺀다.JSON포맷
+			Storage::disk($logStorageTarget)->put($logURL, '');
+			//$comma = '';//처음 파일 생성시 콤마를 뺀다.JSON포맷
 		}
 
 		if(!Auth::guest())
@@ -142,11 +144,11 @@ class LogMiddleWare {
 
 		$log = json_encode($log);
 
-		//$log = $comma.$log.PHP_EOL;
+		//$log = $comma.$log;
 		$log = $comma.$log;
 		
 		//Save string to log, use FILE_APPEND to append.
-		Storage::disk('s3-log')->append($logURL, $log);
+		Storage::disk($logStorageTarget)->append($logURL, $log);
 
 		return $next($request);
 	}
