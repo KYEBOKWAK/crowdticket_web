@@ -34,7 +34,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title" style="font-size: 50px;">크라우드티켓 서버 개선중..<br> 약 5분뒤 정상화 됩니다. <br> 더 좋은 모습으로 찾아뵙겠습니다. :)</div>
+        <div class="title" style="font-size: 50px;">크라우드티켓 서버 개선중..<br> 약 10분뒤 정상화 됩니다. <br> 더 좋은 모습으로 찾아뵙겠습니다. :)</div>
 
     </div>
 </div>
