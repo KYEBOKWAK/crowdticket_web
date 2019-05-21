@@ -614,15 +614,16 @@
           </div>
           <div style="text-align:right; margin-top:10px; margin-bottom:10px;">
             <div>
-              @if($project->isEventTypeDefault())
+              @if($project->isEventTypeDefault() || $project->isPickType())
                 환불
               @elseif($project->isEventTypeInvitationEvent())
                 초대권 신청
               @endif
-              정책에 동의합니다. <input id="refund_apply" type="checkbox" required="required">
+              정책에 동의 <input id="refund_apply" type="checkbox" required="required">
             </div>
             <div>
-              <a href="{{url('/terms')}}" target="_blank"><u>크라우드티켓 약관</u></a>과 <a href="{{url('/privacy')}}" target="_blank"><u>정보이용정책</u></a>에 동의합니다. <input id="policy_apply" type="checkbox" required="required">
+              <p style='margin-bottom:0px;'><a href="{{url('/terms')}}" target="_blank"><u>이용약관</u></a> / <a href="{{url('/privacy')}}" target="_blank"><u>정보이용정책</u></a> 동의 <input id="policy_apply" type="checkbox" required="required"></p>
+              <a href="{{url('/thirdterms')}}" target="_blank"><u>제3자 정보제공정책</u></a> 동의 <input id="third_policy_apply" type="checkbox" required="required">
             </div>
           </div>
         </div>
@@ -1246,14 +1247,13 @@
               return;
             }
 
-            //if(isSubmit == false)
-            //{
-              //isSubmit = true;
+            if(!$('#third_policy_apply').is(":checked"))
+            {
+              Swal.fire("제3자 정보제공 이용 약관 동의 해주세요.", "", "warning");
+              return;
+            }
 
-              showPayingAlert();
-              //loadingProcess($('#ticketing-btn-payment'));
-              //$('#ticketSubmitPayForm').submit();
-            //}
+            showPayingAlert();
           });
 
 

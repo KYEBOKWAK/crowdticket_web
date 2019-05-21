@@ -205,7 +205,7 @@
         </div>
         <div class="col-md-12 ct-info">
             <p>
-                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a>
+                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a> / <a href="{{ url('/thirdterms') }}">제3자 정보제공 약관</a>
             </p>
         </div>
     </div>
@@ -306,37 +306,7 @@ function logout(){
         'success': success,
         'error': error
       });
-    }
-
-    
-    var postPing = function(){
-      var url = '/ping';
-      var method = 'post';
-
-      var success = function(request) {
-        //console.error(request);
-      };
-      var error = function(request) {
-        console.error('유저 초기화 실패');
-      };
-
-      $.ajax({
-        'url': url,
-        'method': method,
-        'success': success,
-        'error': error
-      });
-    };
-
-    /*
-    var pingTag = setInterval(function(){
-      //console.log("cr_ping");
-      postPing();
-    }, 1500);
-    */
-    
-    //postPing();
-    
+    }   
   });
 </script>
 

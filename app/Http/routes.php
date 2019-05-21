@@ -31,6 +31,10 @@ Route::get('terms/', function () {
 Route::get('privacy/', function () {
     return view('customer.privacy');
 });
+Route::get('thirdterms/', function () {
+    return view('customer.thirdterms');
+});
+
 Route::get('help/', function () {
     return view('customer.help');
 });
