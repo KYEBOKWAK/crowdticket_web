@@ -95,7 +95,8 @@
           </div>
         </div>
       </div>
-
+      
+      @if(!env('REVIEW_ON'))
       <div class="order_ticket_md_container" style="background-color:white;">
         <div class="order_ticket_discount_md_title">
           <p>추가 후원금 입력(선택)</p>
@@ -112,6 +113,8 @@
           </div>
         </div>
       </div>
+      @endif
+      
     @endif
 
     <div id="order_pay_next_offset"></div>
@@ -251,7 +254,11 @@
               //ticketTotalPrice = ticketTotalPrice + mdTicketTotalPrice - mdTicketDiscountPrice
 
               //추가 후원이 있는지 확인
-              var supportPrice = Number($('#order_support_price_input').val());
+              var supportPrice = 0;
+              if($('#order_support_price_input').val())
+              {
+                supportPrice = Number($('#order_support_price_input').val());
+              }
 
               var totalPrice = ticketTotalPrice + goodsTotalPrice + supportPrice;
 
@@ -455,10 +462,14 @@
               }
 
               //후원만 있어도 결제 가능
-              var supportPrice = Number($('#order_support_price_input').val());
-              if(supportPrice > 0)
+              var supportPrice = 0;
+              if($('#order_support_price_input').val())
               {
-                return true;
+                supportPrice = Number($('#order_support_price_input').val());
+                if(supportPrice > 0)
+                {
+                  return true;
+                }
               }
 
               //굿즈 체크 후 티켓 체크

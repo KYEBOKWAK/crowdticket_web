@@ -136,16 +136,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/img/app/logo-color.png') }}"/>
-                </a>
+                @if(!env('REVIEW_ON'))
+                  <a class="navbar-brand" href="{{ url('/') }}">
+                      <img src="{{ asset('/img/app/logo-color.png') }}"/>
+                  </a>
+                @endif
             </div>
 
             <div id="ctNavBar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/projects') }}">전체보기</a></li>
-                    <li><a href="{{ url('/magazine') }}">매거진</a></li>
-                    <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
+                @if(env('REVIEW_ON'))
+                  <li><a href="{{ url('/magazine') }}">매거진</a></li>
+                @else
+                  <li><a href="{{ url('/projects') }}">전체보기</a></li>
+                  <li><a href="{{ url('/magazine') }}">매거진</a></li>
+                  <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
+                @endif
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

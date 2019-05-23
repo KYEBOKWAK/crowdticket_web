@@ -552,18 +552,30 @@
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
             <p class="order_form_title">
+              @if(env('REVIEW_ON'))
+              이용 정책 동의
+              @else
               크라우드티켓 이용 정책 동의
+              @endif
             </p>
           </div>
 
           <div>
             <h4>
               @if($project->isEventTypeDefault())
-                [크라우드티켓 취소/환불 규정]
+                @if(env('REVIEW_ON'))
+                  [취소/환불 규정]
+                @else
+                  [크라우드티켓 취소/환불 규정]
+                @endif
               @elseif($project->isEventTypeInvitationEvent())
                 초대권 신청 정책
               @else
+                @if(env('REVIEW_ON'))
+                [취소/환불 규정]
+                @else
                 [크라우드티켓 취소/환불 규정]
+                @endif
               @endif
             </h4>
             <div class="order_form_conform_container_grid_rows">

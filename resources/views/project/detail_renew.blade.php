@@ -254,7 +254,13 @@ $selectedTicket = "";
                   @if($project->isEventTypeCrawlingEvent())
                     <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">외부페이지로 이동</button></a>
                   @else
-                    <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">크라우드티켓팅</button>
+                    <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">
+                    @if(env('REVIEW_ON'))
+                    티켓팅
+                    @else
+                    크라우드티켓팅
+                    @endif
+                    </button>
                   @endif
               </div>
               <div class="detail_main_guide_share_btn_wrapper">
@@ -333,7 +339,13 @@ $selectedTicket = "";
                @if($project->isEventTypeCrawlingEvent())
                 <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
                @else
-                <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">크라우드티켓팅</button>
+                <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">
+                @if(env('REVIEW_ON'))
+                티켓팅
+                @else
+                크라우드티켓팅
+                @endif
+                </button>
                @endif
            </div>
         </div>

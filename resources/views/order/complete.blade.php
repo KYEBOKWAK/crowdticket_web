@@ -102,7 +102,11 @@
           <p class="text-left commentTitle">
             <strong>
               @if($project->isEventTypeDefault())
-                잠깐! 후원자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!
+                @if(env('REVIEW_ON'))
+                  잠깐! 티켓 구매자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!
+                @else
+                  잠깐! 후원자의 한마디는 프로젝트 진행자에게 큰 힘이 됩니다!
+                @endif
               @elseif($project->isEventTypeInvitationEvent())
                 잠깐! 여러분의 기대평이 프로젝트 진행자에게 큰 힘이 됩니다!
               @endif
@@ -119,7 +123,9 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
+              @if(!env('REVIEW_ON'))
                 <a href="{{ url('/projects') }}" class="btn btn-success ">더 둘러보기</a>
+              @endif
                 <span class="btn btn-facebook-Shar" id="BtnFBshare">페이스북 공유</span>
             </div>
         </div>
