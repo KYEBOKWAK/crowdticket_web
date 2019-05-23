@@ -177,6 +177,7 @@
                 <div class="order_form_goods_list"></div>
               </div>
 
+              @if(!env('REVIEW_ON'))
               <div class="order_form_conform_container_grid_columns">
                 <p class="order_form_title">추가후원</p>
                 <div class="flex_layer">
@@ -186,6 +187,7 @@
                   </div>
                 </div>
               </div>
+              @endif
 
               <div class="order_form_conform_container_grid_columns">
                 <p class="order_form_title">티켓 수수료</p>
@@ -598,6 +600,15 @@
                     $funding_closing_date = $funding_closing_date->format('Y년 m월 d일');
                   ?>
 
+                    @if(env('REVIEW_ON'))
+                    <p>1. 본 이벤트의 티켓 구매 및 결제 취소 마감일은 {{$funding_closing_date}} 입니다.</p>
+                    <p>2. 마감일 이후에는 티켓의 판매가 이루어지지 않으며 이에 따라 {{$funding_closing_date}} 이후에는 환불이 불가능합니다.</p>
+                    <p>3. 이벤트의 관람일 9일전부터는 티켓금액의 10%가 취소 수수료로 부과됩니다.</p>
+                    <p>4. 관람일을 기준으로 10일 이상 남은 경우에는 취소 수수료가 없습니다.</p>
+                    <p>5. 구매하신 티켓의 관람 당일 환불은 불가능합니다.</p>
+                    <p>6. 티켓을 구매하지 않은 굿즈 구매의 경우 결제 취소 시 환불 수수료가 붙지 않습니다.</p>
+                    <p>7. 티켓 환불은 사이트 오른쪽 상단 '결제확인' 탭에서 진행하시면 됩니다.</p>
+                    @else
                     <p>1. 본 이벤트의 티켓 구매, 후원 및 결제 취소 마감일은 {{$funding_closing_date}} 입니다.</p>
                     <p>2. 마감일 이후에는 티켓의 판매가 이루어지지 않으며 이에 따라 {{$funding_closing_date}} 이후에는 환불이 불가능합니다.</p>
                     <p>3. 이벤트의 관람일 9일전부터는 티켓금액의 10%가 취소 수수료로 부과됩니다.</p>
@@ -605,6 +616,7 @@
                     <p>5. 구매하신 티켓의 관람 당일 환불은 불가능합니다.</p>
                     <p>6. 티켓을 구매하지 않은 후원 및 굿즈 구매의 경우 결제 취소 시 환불 수수료가 붙지 않습니다.</p>
                     <p>7. 티켓 환불은 사이트 오른쪽 상단 '결제확인' 탭에서 진행하시면 됩니다.</p>
+                    @endif
                   @endif
                   
                 @endif
