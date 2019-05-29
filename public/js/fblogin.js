@@ -55,8 +55,8 @@ function loginAjaxSuccess(request){
   {
     $('#login_error_message').show();
 
-    $('#login_error_message').text('이미 로그인 되어 있습니다. 창을 닫고 새로고침 해주세요.');
-    //window.location.reload();
+    //$('#login_error_message').text('이미 로그인 되어 있습니다. 창을 닫고 새로고침 해주세요.');
+    $('#login_error_message').text('이미 가입 되어 있는 이메일 입니다. 로그인 해주세요.');
   }
 }
 
