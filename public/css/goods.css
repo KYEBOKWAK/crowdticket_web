@@ -78,7 +78,8 @@
 .project-form-goods-img-wrapper{
   position: relative;
   height: 0px;
-  padding-bottom: 75%;
+  /*padding-bottom: 75%;*/
+  padding-bottom: 60%;
 }
 
 .project_form_goods_img_origin_size{

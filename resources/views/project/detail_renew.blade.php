@@ -11,7 +11,7 @@
 
 @section('css')
     <link href="{{ asset('/css/detail.css?version=15') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=5') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=3') }}"/>
     <style>
         .container h2 {

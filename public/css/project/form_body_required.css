@@ -425,7 +425,8 @@
 .goods_img_preview_ratio_wrapper{
   position: relative;
   width: 100%;
-  padding-bottom: 75%;
+  /*padding-bottom: 60%;*/
+  padding-bottom: 60%;
 }
 
 /*poster*/
