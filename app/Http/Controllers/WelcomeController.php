@@ -2,6 +2,7 @@
 
 use App\Models\Maincarousel as Maincarousel;
 use App\Models\Main_thumbnail as Main_thumbnail;
+use App\Models\Main_thumb_play_creator as Main_thumb_play_creator;
 
 use App\Models\Alive_user as Alive_user;
 
@@ -106,27 +107,61 @@ class WelcomeController extends Controller
 
     public function index()
     {
-
         $thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
-        $thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
+        //$thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
 
         $thumbMagazines = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE);
 
+        $thumbPlayCreators = Main_thumb_play_creator::get();
+
+        return view('welcome_new_new', [
+          'projects' => $thumbnailProjects,
+          'magazines' => $thumbMagazines,
+          'playedcreators' => $thumbPlayCreators
+      ]);
+
+/*
+        //$thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
+        //$thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
+
+        //$thumbMagazines = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE);
+
         //maincarousel
-        $main_carousel = Maincarousel::where('order_number', '>', 0)->orderby('order_number')->get();
+        //$main_carousel = Maincarousel::where('order_number', '>', 0)->orderby('order_number')->get();
 
-        return view('welcome_new', [
+        return view('welcome_new_new', [
             'projects' => $thumbnailProjects,
-            'crowdticketPicProjects' => $thumbnailCrowdticketPicProject,
-            'main_carousels' => $main_carousel,
-            'magazines' => $thumbMagazines,
-            'isNotYet' => 'FALSE'
+            //'crowdticketPicProjects' => $thumbnailCrowdticketPicProject,
+            //'main_carousels' => $main_carousel,
+            //'magazines' => $thumbMagazines,
+            //'isNotYet' => 'FALSE'
         ]);
-
+*/
     }
 
     public function getThumbnailProject($thumbnailType)
     {
+      $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderBy('order_number')->skip(0)->take(4)->get();
+      $projects = [];
+      foreach($orderInfoList as $orderInfo)
+      {
+        $project = '';
+        if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND)
+        {
+          $project = \App\Models\Project::select('title', 'project_type', 'description', 'alias', 'poster_renew_url', 'poster_url', 'funding_closing_at', 'performance_opening_at', 'performance_closing_at')->find($orderInfo->project_id);
+        }
+        else if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE)
+        {
+          $project = \App\Models\Magazine::select('id', 'title', 'subtitle', 'thumb_img_url')->find($orderInfo->magazine_id);
+        }
+
+        $project['thumb_place'] = $orderInfo->thumb_place;
+
+        array_push($projects, $project);
+      }
+
+      return $projects;
+      /*
       $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderBy('order_number')->get();
 
       $thumbnailProjectIds = [];
@@ -155,6 +190,7 @@ class WelcomeController extends Controller
       $projectSortInfo = $this->getArraySortByOrdernumber($projectsByOrderInfo, $orderInfoList, $thumbnailType);
 
       return $projectSortInfo;
+      */
     }
 
 

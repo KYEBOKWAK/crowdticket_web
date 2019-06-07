@@ -35,6 +35,24 @@
   flex: 1;
 }
 
+.flex_layer_thumb{
+  display: flex;
+}
+
+.flex_layer_thumb_content{
+  display: block;
+}
+
+@media (max-width:1060px){
+  .flex_layer_thumb{
+    display: block;
+  }
+
+  .flex_layer_thumb_content{
+    display: flex;
+  }
+}
+
 @media (max-width:1050px){
   .flex_layer_most_mobile_main{
     display: block;

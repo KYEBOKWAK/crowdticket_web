@@ -1,7 +1,8 @@
 body{
   word-break: keep-all;
   background-color: white;
-  font-family:'Noto Sans KR',sans-serif;
+  /*font-family:'Noto Sans KR',sans-serif;*/
+  font-family:'NotoSansCJKkr';
 }
 
 .pointColor{

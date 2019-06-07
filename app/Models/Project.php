@@ -377,22 +377,54 @@ class Project extends Model
       }
 
       return $openDay . ' - ' . $close;
-      /*
-        $open = new \DateTime('now');
-        $close = new \DateTime('now');
-        if ($this->performance_opening_at) {
-            $open = new \DateTime($this->performance_opening_at);
-        }
-        if ($this->performance_closing_at) {
-            $close = new \DateTime($this->performance_closing_at);
-        }
-        $open = $open->format('Y. m. d');
-        $close = $close->format('Y. m. d');
-        if ($open === $close) {
-            return $open;
-        }
-        return $open . ' ~ ' . $close;
-        */
+    }
+
+    public function getTicketDateFormattedSlash()
+    {
+      $open = new \DateTime('now');
+      $close = new \DateTime('now');
+
+      if($this->funding_closing_at)
+      {
+        $open = new \DateTime($this->funding_closing_at);
+        $close = new \DateTime($this->funding_closing_at);  
+      }
+
+      if ($this->performance_opening_at) {
+          $open = new \DateTime($this->performance_opening_at);
+      }
+      if ($this->performance_closing_at) {
+          $close = new \DateTime($this->performance_closing_at);
+      }
+
+      $openDay = $open->format('m/d');
+      $closeDay = $close->format('m/d');
+      if ($openDay === $closeDay) {
+          return $openDay;
+      }
+
+      $startY = $open->format('Y');
+      $endY = $close->format('Y');
+
+      $startM = $open->format('m');
+      $endM = $close->format('m');
+
+      if($startY === $endY &&
+          $startM === $endM)
+      {
+        //년 월이 같으면 day 만 표시한다.
+        $close = $close->format('d');
+      }
+      else if($startY === $endY)
+      {
+        $close = $close->format('m/d');
+      }
+      else
+      {
+        $close = $close->format('Y/m/d');
+      }
+
+      return $openDay . ' - ' . $close;
     }
 
     //리뉴얼 시간 가져오는 함수

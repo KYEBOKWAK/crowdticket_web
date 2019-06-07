@@ -41,16 +41,16 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/base.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/main.css?version=4') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=12') }}" rel="stylesheet">
+    <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/main.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=13') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=3') }}" rel="stylesheet"/>
 @yield('css')
-    <link href="{{ asset('/css/flex.css?version=5') }}" rel="stylesheet">
+    <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet">
 
 
     <style>
@@ -74,10 +74,92 @@
         display: block;
       }
     }
+
+    /*3.5 START*/
+    .navbar{
+      min-width: 0;
+      width: 1060px;
+
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .navbar-default{
+      border-bottom: 0px;
+    }
+
+    .navbar-brand{
+      padding: 0px;
+      height: auto;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+
+    .navbar-brand img{
+      width: 141px;
+      height: 16px;
+      padding: 0px;
+    }
+
+    #ctNavBar{
+      padding: 0px;
+    }
+
+    .navbar-nav>li>a{
+      padding: 0px;
+      margin-left: 30px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+
+      font-weight: normal !important;
+      font-style: normal !important;
+      font-stretch: normal !important;
+      line-height: normal !important;
+      letter-spacing: normal !important;
+    }
+
+    .navbar-right{
+      margin-right: 0px;
+    }
+
+    @media (max-width:1060px){
+      .navbar{
+        min-width: 0;
+        width: 93%;
+
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .ct-res-text h2{
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .ct-res-text h4{
+      font-size: 12px;
+      font-weight: normal;
+      line-height: 1.5;
+    }
+
+    @media (max-width:767px){
+      .navbar-toggle{
+        margin-top: 27px;
+        margin-right: 0px;
+      }
+
+      .navbar-nav>li>a{
+        margin-top: 2px;
+        margin-bottom: 10px;
+        margin-left: 17px;
+      }
+    }
+    /*3.5 END*/
     </style>
 
 <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <!-- <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'> -->
     <!-- <script async="" src="https://www.google-analytics.com/analytics.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -109,7 +191,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=7') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=9') }}"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -126,8 +208,59 @@
 <input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif">
 
 @section('navbar')
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#ctNavBar">
+            <span class="sr-only">Toggle Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        @if(!env('REVIEW_ON'))
+          <a class="navbar-brand" href="{{ url('/') }}">
+              <img src="{{ asset('/img/app/logo-color.png') }}"/>
+          </a>
+        @endif
+    </div>
+
+    <div id="ctNavBar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+        @if(env('REVIEW_ON'))
+          <li><a href="{{ url('/magazine') }}">매거진</a></li>
+        @else
+          <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
+          <li><a href="{{ url('/magazine') }}">매거진</a></li>
+          <li style="display:none;">
+              <a href="{{ url('/blueprints/welcome') }}" style="display: inline-block;">만나요</a>
+              <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
+          </li>
+        @endif
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            @if (Auth::guest())
+                <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
+                <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
+            @else
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                        aria-expanded="false">{{ Auth::user()->getUserNickName() }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
+                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
+                        <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
+                    </ul>
+                </li>
+            @endif
+        </ul>
+    </div>
+    
+</nav>
+<!--
     <nav class="navbar navbar-default">
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left:0px; padding-right:0px">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#ctNavBar">
@@ -156,8 +289,6 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                        <!-- <li><a href="{{ url('/auth/login') }}">로그인</a></li> -->
-                        <!-- <li><a href="{{ url('/auth/register') }}">회원가입</a></li> -->
                         <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
                         <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
                     @else
@@ -176,6 +307,7 @@
             </div>
         </div>
     </nav>
+    -->
 @show
 
 <div id="main">

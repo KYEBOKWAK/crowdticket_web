@@ -9,7 +9,7 @@
 
 
 body {
-	font-family:'Noto Sans KR',sans-serif;
+	/*font-family:'Noto Sans KR',sans-serif;*/
 }
 .first-container {
 	padding-top:50px;
@@ -745,7 +745,7 @@ footer .container li {
 	margin-left:0px !important;
 }
 .naver-icon {
-	width:19px;
+	width:15px;
 	height:auto;
 }
 @media (max-width:768px) {

@@ -78,7 +78,7 @@
 
     .ct-btn-default{
       background-color: #ea535a;
-      font-family: 'Noto Sans KR',sans-serif;
+      /*font-family: 'Noto Sans KR',sans-serif;*/
     }
 
     @media (max-width: 768px) {
