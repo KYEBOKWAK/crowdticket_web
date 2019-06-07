@@ -16,8 +16,8 @@ class IamPortApi
 {
     const BASE_URL = "https://api.iamport.kr";
     const GET_TOKEN_URL = "/users/getToken";
-    const API_KEY = "9163335896350995";
-    const SECRET_KEY = "Ku4oEkbEuPXRcyKba5Ig1GN3k4N1QgEBKJZo3a2x00pcz9nKf60hMNk6R88HoNj8wixAtz8uAxGaH4UX";
+    const API_KEY = "";
+    const SECRET_KEY = "";
 
     private $client;
 
@@ -66,8 +66,8 @@ class IamPortApi
     {
         $res = $this->client->post(self::GET_TOKEN_URL, [
             'form_params' => [
-                'imp_key' => self::API_KEY,
-                'imp_secret' => self::SECRET_KEY
+                'imp_key' => env('IAMPORT_API_KEY'),
+                'imp_secret' => env('IAMPORT_SECRET_KEY')
             ]
         ]);
         $contents = $this->responseToObject($res);

@@ -1119,6 +1119,16 @@ class OrderController extends Controller
         $ticket = $order->ticket()->first();
         $project = $order->project()->first();
 
+        //결제 취소 프로젝트 점검중 해당 프로젝트는 수동 결제 취소 해야함.
+        if(isset($project->alias))
+        {
+          if($project->alias === 'yosang_jeju' ||
+          $project->alias === 'midnightconcert')
+          {
+            return ["orderResultType" => "orderResultNotCancel", "orderId" => "", "eMessage" => "결제 취소 기능 점검중입니다. 취소를 원하시면 070-8819-4308 로 전화 주세요."];
+          }
+        }
+
 
         try {
             if ((int)$order->total_price > 0) {
