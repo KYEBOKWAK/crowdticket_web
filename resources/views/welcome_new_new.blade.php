@@ -747,7 +747,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               <div class="flex_layer">
               @endif
               <?php
-                for($j = $i ; $j < count($projects) ; $j++)
+                for($j = $i ; $j < count($magazines) ; $j++)
                 {
                   ?>
                   @include('template.thumb_magazine', ['magazine' => $magazines[$projectIndex], 'index' => $projectIndex])
