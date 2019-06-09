@@ -800,10 +800,10 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               slidesPerView: 9,
               spaceBetween: 0,
               
-              //autoplay: {
-              //  delay: 4000,
-              //  disableOnInteraction: true,
-              //},
+              autoplay: {
+                delay: 4000,
+                //disableOnInteraction: true,
+              },
               
               breakpoints: {
                 // when window width is <= 320px
