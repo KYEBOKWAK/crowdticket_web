@@ -613,7 +613,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
           <div class="welcome_start_content_container">
             <div class="welcome_start_banner_content_container">
-              온라인으로만 보던 크리에이터를<br> 이제는 만나보세요!
+              <b>온라인으로만 보던 크리에이터를<br> 이제는 만나보세요!</b>
             </div>
 
             <div class="welcome_start_button_container">
