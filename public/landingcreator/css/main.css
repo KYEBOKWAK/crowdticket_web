@@ -8,7 +8,7 @@ body{
 
 .ct-btn-default{
   background-color: #ea535a;
-  /*font-family: 'Noto Sans KR',sans-serif;*/
+  font-family: 'Noto Sans KR',sans-serif;
 }
 
 /*1:1 녹색 그리드 컨테이너*/
@@ -234,7 +234,7 @@ body{
   background-color: white;
   color: #ea535a;
   margin-top: 40px;
-  /*font-family: 'Noto Sans KR',sans-serif;*/
+  font-family: 'Noto Sans KR',sans-serif;
 }
 
 .apply-btn-config-M{
