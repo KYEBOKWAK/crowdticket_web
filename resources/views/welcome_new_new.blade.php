@@ -801,7 +801,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               spaceBetween: 0,
               
               autoplay: {
-                delay: 4000,
+                delay: 2000,
                 //disableOnInteraction: true,
               },
               
