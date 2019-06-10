@@ -42,7 +42,7 @@
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet">
     <link href="{{ asset('/css/global.css?version=14') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
@@ -67,6 +67,13 @@
 
     #isMobile{
       display: none;
+    }
+
+    .ct-info{
+      margin-top: 40px;
+      font-size: 10px;
+      color: #acacac;
+      text-align: center;
     }
 
     @media (max-width:1030px){
@@ -120,6 +127,10 @@
 
     .navbar-right{
       margin-right: 0px;
+    }
+
+    .container{
+      padding-bottom: 0px;
     }
 
     @media (max-width:1060px){
@@ -343,20 +354,22 @@
              (주)나인에이엠</h4>
         </div>
         <div class="col-md-12 ct-info">
-            <p>
+            <p style="margin-bottom: 8px;">
                  (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a> / <a href="{{ url('/thirdterms') }}">제3자 정보제공 약관</a>
             </p>
         </div>
     </div>
     <div class="footer-bottom">
-        <div class="container">
+        <div class="container" style="margin-bottom: 20px;">
           @if(env('REVIEW_ON'))
           <h4>COPYRIGHT © 2016 NINEAM</h4>
           @else
-          <h4>COPYRIGHT © 2016 CROWDTICKET</h4>
           <p>
                 크라우드티켓은 펀딩을 받거나 티켓을 판매하는 공연의 당사자가 아닙니다. 따라서 공연의 진행과 보상 지급에 대한 책임은 해당 프로젝트 기획자에게 있습니다.<br>
                 하지만 크라우드티켓팀은 우리 공연예술의 발전을 위해 안전하고 편리한 플랫폼을 제공할 수 있도록 항상 최선을 다하겠습니다.
+          </p>
+          <p>
+            COPYRIGHT © 2016 CROWDTICKET
           </p>
           @endif
         </div>

@@ -663,6 +663,7 @@ footer .container img,footer .container div {
 }
 footer .container p {
 	margin-left:40px;
+	margin-bottom: 8px;
 }
 footer .container li {
 	display:inline-block;
@@ -714,16 +715,17 @@ footer {
 	font-weight:400;
 }
 .footer-bottom {
-	background-color:#333;
-	color:#fff;
+	color: #acacac;
 	text-align:center;
-	padding:20px 0px;
+	padding:0px 0px;
+	font-size: 10px;
 }
 .footer-bottom p {
-	color:#777;
 	text-align:center;
 	margin-left:0px !important;
 }
+
+
 footer .container li {
 	margin-right:0.2em;
 }
