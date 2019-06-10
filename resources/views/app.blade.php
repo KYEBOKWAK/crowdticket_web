@@ -133,6 +133,37 @@
       padding-bottom: 0px;
     }
 
+    .kakao_chat_icon_wrapper{
+      left: auto;
+      height:95px;
+      margin-right: 19px;
+      margin-bottom: 5px;
+    }
+
+    .kakao_chat_round{
+      width: 80px;
+      height: 80px;
+      box-shadow: 8px 8px 14px 0 rgba(0, 0, 0, 0.1);
+      background-color: #fae100;
+      border-radius: 100%;
+    }
+
+    .kakao_chat_ask{
+      position: relative;
+      top: 18px;
+      right: 1px;
+      font-size: 16px;
+      text-align: center;
+      color: #3c1e1e;
+      font-weight: bold;
+      line-height: 1.4;
+    }
+
+    .kakao_chat_icon_img{
+      margin-left:18px;
+      margin-top:20px;
+    }
+
     @media (max-width:1060px){
       .navbar{
         min-width: 0;
@@ -164,6 +195,30 @@
         margin-top: 2px;
         margin-bottom: 10px;
         margin-left: 17px;
+      }
+
+      .kakao_chat_round{
+        width: 50px;
+        height: 50px;
+      }
+
+      .kakao_chat_icon_img{
+        width: 40px;
+        margin-left:10px;
+        margin-top:11px;
+      }
+
+      .kakao_chat_icon_wrapper{
+        height:auto;
+        margin-bottom: 16px;
+        margin-right: 18px;
+      }
+
+      .kakao_chat_ask{
+        top: 11px;
+        right: 0px;
+        font-size: 12px;
+        line-height: 1.2;
       }
     }
     /*3.5 END*/
@@ -203,6 +258,9 @@
 
     <!-- crowdticket util before body -->
     <script type="text/javascript" src="{{ asset('/js/util_header.js?version=9') }}"></script>
+
+    <!-- 카카오톡 sdk -->
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
@@ -324,6 +382,33 @@
 
 <div id="main">
     @yield('content')
+
+      <div id="kakao_chat_ask" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
+          <div class="kakao_chat_round">
+          <p class="kakao_chat_ask">카톡<br>문의</p>
+          </div>
+      </div>
+
+      <div id="kakao_chat_icon" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
+          <div class="kakao_chat_round">
+            <img class="kakao_chat_icon_img" src="{{asset('/img/icons/svg/ic-bottom-btn-kakao-n.svg')}}">
+          </div>
+      </div>
+
+      <div id="kakao_chat_empty_area" class="kakao_chat_icon_wrapper navbar-fixed-bottom" style="box-shadow: unset; opacity:0">
+          <a href="javascript:void plusFriendChat()">
+            <div class="kakao_chat_round">
+            </div>
+          </a>
+      </div>
+    
+    <!--
+    <div id="animate" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
+      <a href="javascript:void plusFriendChat()">
+        <img src="https://developers.kakao.com/assets/img/about/logos/plusfriend/consult_small_yellow_pc.png"/>
+      </a>
+    </div>
+  -->
 </div>
 
 <div id="isMobile"></div>
@@ -427,18 +512,6 @@ function logout(){
 @yield('js')
 
 <script>
-/*
-  ga(function(tracker) {
-    var clientId = tracker.get('clientId');
-  });
-  */
-/*
-  ga(function() {
-  // Logs an array of all tracker objects.
-    console.error(ga.getAll());
-  });
-  */
-
   $(document).ready(function() {
     if(!$("#isFirst"))
     {
@@ -462,8 +535,73 @@ function logout(){
         'success': success,
         'error': error
       });
-    }   
+    }
+
+
+    function kakaoIconMove() {
+      var elem = document.getElementById("kakao_chat_icon");   
+      var pos = 0;
+      var id = setInterval(frame, 5);
+      //var initPosY = elem.style.bottom;
+      var moveTarget = 60;
+      function frame() {
+        if (pos === moveTarget) {
+          elem.style.bottom = moveTarget + "px";
+          clearInterval(id);
+        } else {
+          pos++; 
+          elem.style.bottom = pos + "px"; 
+          //elem.style.left = pos + "px"; 
+        }
+      }
+    }
+
+    function kakaoIconInitMove() {
+      var elem = document.getElementById("kakao_chat_icon");   
+      var pos = 0;
+      var id = setInterval(frame, 5);
+      var initPosY = elem.style.bottom;
+      function frame() {
+        if (pos <= 0) {
+          elem.style.bottom = 0;
+          clearInterval(id);
+        } else {
+          pos--; 
+          elem.style.bottom = pos + "px"; 
+          //elem.style.left = pos + "px"; 
+        }
+      }
+    }
+
+    $("#kakao_chat_empty_area").mouseenter(function(){
+      $("#kakao_chat_icon").fadeOut('slow');
+    });
+
+    $("#kakao_chat_empty_area").mouseleave(function(){
+      $("#kakao_chat_icon").fadeIn('slow');
+    });
+
+    $(window).scroll(function() {
+      $("#kakao_chat_icon").hide();
+      $("#kakao_chat_ask").hide();
+      
+      clearTimeout($.data(this, 'scrollTimer'));
+      $.data(this, 'scrollTimer', setTimeout(function() {
+        $("#kakao_chat_icon").fadeIn('slow', function(){
+          $("#kakao_chat_ask").show();
+        });
+      }, 1000));
+    });
   });
+</script>
+
+<script type='text/javascript'>
+    Kakao.init('0e5457b479dfe84c5e52e6de84d6d684');
+    function plusFriendChat() {
+      Kakao.PlusFriend.chat({
+        plusFriendId: '_JUxkxjM' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
 </script>
 
 </body>
