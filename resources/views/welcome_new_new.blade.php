@@ -215,7 +215,7 @@
         }
 
         .welcome_thumb_content_type{
-          margin-top: 5px;
+          margin-top: 3px;
           margin-bottom: auto;
           color: #808080;
           font-size: 12px;
@@ -291,6 +291,9 @@
           margin-top: 10px;
           margin-bottom: 10px;
           color: #808080;
+          font-size: 14px;
+          width: 56px;
+          margin-left: auto;
         }
 
         .welcome_thumb_container{
@@ -321,14 +324,14 @@
         .welcome_meetup_banner_title{
           /*height: 36px;*/
           margin-top: 64px;
-          font-size: 24px;
+          font-size: 20px;
           text-align: center;
         }
 
         .welcome_meetup_banner_subtitle{
           margin-top: 20px;
-          margin-bottom: 30px;
-          /*height: 44px;*/
+          /*margin-bottom: 30px;*/
+          margin-bottom: 0px;
           font-size: 14px;
           color: #4d4d4d;
           text-align: center;
@@ -336,7 +339,7 @@
         }
 
         .carousel_creator_container{
-          height: 300px;
+          height: 320px;
         }
 
         .welcome_meetup_banner_img{
@@ -446,6 +449,14 @@
           height:auto; 
         }
 
+        .container{
+          width: 1060px;
+        }
+
+        .footer_padding_left_remover{
+          padding-left: 0px;
+        }
+
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
           .welcome_content_container{
@@ -529,6 +540,10 @@
             color: #b652fb;
             font-size: 18px;
           }
+
+          .container{
+            width: 600px;
+          }
         }
 
         @media (max-width:768px) {
@@ -537,27 +552,34 @@
           }
 
           .welcome_meetup_banner_wrapper{
-            height: 500px;
+            height: 486px;
           }
 
           .carousel_creator_container{
-            margin-top: -40px;
+            margin-top: -37px;
           }
 
           .welcome_meetup_banner_title{
             margin-top: 40px;            
+          }
+
+          .footer_padding_left_remover{
+            padding-left: 15px;
           }
         }
 
         @media (max-width:650px) {
           .welcome_content_container{
             width: 93%;
-          } 
+          }
+          .container{
+            width: 100%;
+          }
         }
 
         @media (max-width:650px) {
           .welcome_meetup_under_title{
-            margin-top: -20px;
+            margin-top: -40px;
           } 
         }
 
@@ -633,10 +655,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
           <div class="welcome_content_more_wrapper">
             <a href="{{url('/projects')}}">
-              <p class="welcome_content_more">
-                더보기
-                <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px;">
-              </p>
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
             </a>
           </div>
         </div>
@@ -723,10 +747,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
           <div class="welcome_content_more_wrapper">
             <a href="{{url('/magazine')}}">
-              <p class="welcome_content_more">
-                더보기
-                <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px;">
-              </p>
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
             </a>
           </div>
         </div>

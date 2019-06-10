@@ -231,6 +231,7 @@
         @else
           <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
+          <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
           <li style="display:none;">
               <a href="{{ url('/blueprints/welcome') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
@@ -318,28 +319,28 @@
 
 <footer>
     <div class="container ct-res-text footer-top">
-	    <div class="col-md-3">
-            <img src="{{ asset('/img/app/logo-color.png') }}" class="footer-logo">
+	    <div class="col-md-3 footer_padding_left_remover">
+            <img src="{{ asset('/img/icons/svg/footer-crowd-tk-logo.svg') }}" class="footer-logo">
         </div>
         <div class="col-md-3">
             <h2>social media</h2>
             <h2 class="footer-social">
             <li>
-            <a href="https://www.facebook.com/crowdticket/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-            <li><a href="https://www.instagram.com/crowdticket/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/app/naver-icon.png') }}" class="naver-icon"></a></li>
+            <a href="https://www.facebook.com/crowdticket/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-01-facebook.svg') }}"></a></li>
+            <li><a href="https://www.instagram.com/crowdticket/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-02-instagram.svg') }}"></a></li>
+            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-03-naver.svg') }}"></a></li>
             </h2>
         </div>
         <div class="col-md-3">
-            <h2>address</h2>
-            <h4>서울시 동대문구 회기로 85<br>
-             카이스트 경영대학원 7415</h4>
+            <h2>contact</h2>
+            <h4>KAKAO : @크라우드티켓<br>
+              T : 070-8819-4308<br>
+              E : contact@crowdticket.kr</h4>
         </div>
         <div class="col-md-3">
-            <h2>contact</h2>
-            <h4>KAKAOTALK: @크라우드티켓<br>
-             TEL: 070-8819-4308<br>
-             E-MAIL: contact@crowdticket.kr</h4>
+            <h2>address</h2>
+            <h4>서울특별시 관악구 봉천로 545 4층<br>
+             (주)나인에이엠</h4>
         </div>
         <div class="col-md-12 ct-info">
             <p>

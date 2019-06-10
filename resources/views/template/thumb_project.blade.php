@@ -22,7 +22,7 @@
             {{$project->getTicketDateFormattedSlash()}} · {{$project->thumb_place}}
         </p>
 
-        <div class="welcome_thumb_content_type_wrapper isMobileDisable">
+        <div class="welcome_thumb_content_type_wrapper isMobileDisable" style="@if($project->project_type === 'artist')width:54px;@endif">
             <p class="welcome_thumb_content_type">
                 {{$project->project_type}}
             </p>
