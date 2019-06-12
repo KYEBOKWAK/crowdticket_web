@@ -141,7 +141,16 @@ class WelcomeController extends Controller
 
     public function getThumbnailProject($thumbnailType)
     {
-      $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderBy('order_number')->skip(0)->take(4)->get();
+      $orderInfoList = '';
+      if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND)
+      {
+        $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderByRaw("RAND()")->skip(0)->take(4)->get();
+      }
+      else
+      {
+        $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderBy('order_number')->skip(0)->take(4)->get();
+      }
+
       $projects = [];
       foreach($orderInfoList as $orderInfo)
       {
