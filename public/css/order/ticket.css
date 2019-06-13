@@ -395,7 +395,7 @@
 }
 
 #order-card-password{
-  /*width: 50px;*/
+  width: 50px;
   flex-basis: 40px;
   flex-shrink: 0;
 }

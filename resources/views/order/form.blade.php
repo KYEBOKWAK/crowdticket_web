@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=7') }}" rel="stylesheet">
     <style>
         body {
           padding-right: 0 !important;
@@ -397,6 +397,44 @@
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
+            <h3>참여자 정보</h3>
+          </div>
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">성명</p>
+              @if ($order)
+                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ $order->name }}" readonly="readonly"/>
+              @else
+                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ \Auth::user()->name }}"/>
+              @endif
+            </div>
+          </div>
+
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">연락처</p>
+              @if ($order)
+                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
+              @else
+                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
+              @endif
+            </div>
+          </div>
+
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">이메일</p>
+              @if ($order)
+                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ $order->email }}" readonly="readonly"/>
+              @else
+                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ \Auth::user()->email }}"/>
+              @endif
+            </div>
+          </div>
+        </div>
+
+        <div class="order_form_conform_container">
+          <div class='order_form_conform_title'>
             <h3>
               @if($project->isEventTypeDefault())
                 @if ($order)
@@ -452,39 +490,6 @@
         </div>
 
         <div class="order_user_info_container">
-          <div class="order_form_user_container_grid_two_columns">
-            <div class="flex_layer">
-              <p class="order_form_title order_form_user_title">성명</p>
-              @if ($order)
-                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ $order->name }}" readonly="readonly"/>
-              @else
-                <input id="name" class="order_form_inputs" type="text" name="name" value="{{ \Auth::user()->name }}"/>
-              @endif
-            </div>
-          </div>
-
-          <div class="order_form_user_container_grid_two_columns">
-            <div class="flex_layer">
-              <p class="order_form_title order_form_user_title">연락처</p>
-              @if ($order)
-                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ $order->contact }}" placeholder="-없이 숫자만 입력" readonly="readonly"/>
-              @else
-                <input id="phone" class="order_form_inputs" type="tel" name="contact" value="{{ \Auth::user()->contact }}" placeholder="-없이 숫자만 입력"/>
-              @endif
-            </div>
-          </div>
-
-          <div class="order_form_user_container_grid_two_columns">
-            <div class="flex_layer">
-              <p class="order_form_title order_form_user_title">이메일</p>
-              @if ($order)
-                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ $order->email }}" readonly="readonly"/>
-              @else
-                <input id="email" class="order_form_inputs" type="email" name="email" value="{{ \Auth::user()->email }}"/>
-              @endif
-            </div>
-          </div>
-
           @if (!$order)
             <div id="order_card_number_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
@@ -523,7 +528,7 @@
             <div id="order-birth_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <div style="flex-basis: 130px; flex-shrink: 0; padding-right: 50px;">
-                  <p class="order_form_title order_form_user_title" style="padding-right: 0px;">생년월일</p><p style="text-align:right;">(법인등록번호)</p>
+                  <p class="order_form_title order_form_user_title" style="padding-right: 0px; line-height: 1.0;">카드 소유자<br> 생년월일</p><p style="text-align:right;">(법인등록번호)</p>
                 </div>
                 <input id="order-birth" name="birth" type="text"
                    class="form-control order_form_inputs" autocomplete="off" required="required"
