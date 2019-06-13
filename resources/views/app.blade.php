@@ -44,7 +44,7 @@
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=14') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=15') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -302,7 +302,7 @@
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
           <li style="display:none;">
-              <a href="{{ url('/blueprints/welcome') }}" style="display: inline-block;">만나요</a>
+              <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
           </li>
         @endif
@@ -328,56 +328,6 @@
     </div>
     
 </nav>
-<!--
-    <nav class="navbar navbar-default">
-        <div class="container-fluid" style="padding-left:0px; padding-right:0px">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#ctNavBar">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @if(!env('REVIEW_ON'))
-                  <a class="navbar-brand" href="{{ url('/') }}">
-                      <img src="{{ asset('/img/app/logo-color.png') }}"/>
-                  </a>
-                @endif
-            </div>
-
-            <div id="ctNavBar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                @if(env('REVIEW_ON'))
-                  <li><a href="{{ url('/magazine') }}">매거진</a></li>
-                @else
-                  <li><a href="{{ url('/projects') }}">전체보기</a></li>
-                  <li><a href="{{ url('/magazine') }}">매거진</a></li>
-                  <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
-                @endif
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Auth::guest())
-                        <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
-                        <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">{{ Auth::user()->getUserNickName() }} <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
-                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
-                                <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
-                                <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </nav>
-    -->
 @show
 
 <div id="main">
@@ -450,8 +400,8 @@
           <h4>COPYRIGHT © 2016 NINEAM</h4>
           @else
           <p>
-                크라우드티켓은 펀딩을 받거나 티켓을 판매하는 공연의 당사자가 아닙니다. 따라서 공연의 진행과 보상 지급에 대한 책임은 해당 프로젝트 기획자에게 있습니다.<br>
-                하지만 크라우드티켓팀은 우리 공연예술의 발전을 위해 안전하고 편리한 플랫폼을 제공할 수 있도록 항상 최선을 다하겠습니다.
+            크라우드티켓은 이벤트의 당사자가 아닙니다. 따라서 이벤트 진행 전반에 대한 책임은 해당 이벤트를 진행하는 기획자에게 있습니다.<br>
+            크라우드티켓팀은 이벤트 티켓팅과 관련된 편리하고 공정한 온라인 솔루션을 제공할 수 있도록 항상 최선을 다하겠습니다.
           </p>
           <p>
             COPYRIGHT © 2016 CROWDTICKET
