@@ -495,22 +495,30 @@
 
     <div class="blueprint_welcome_start_container">
         <div class="blueprint_welcome_start_form_container">
-            <div class="form-group">
-                <label class="cr_label">이벤트 개설자</label>
-                <input class="form-control cr_input" placeholder="뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’">
-            </div>
-            <div class="form-group">
-                <label class="cr_label">계획중인 이벤트</label>
-                <input class="form-control cr_input" placeholder="팬미팅, 팬들과 함께하는 먹방 투어">
-            </div>
-            <div class="form-group">
-                <label class="cr_label">이메일</label>
-                <input class="form-control cr_input">
-            </div>
-            <div class="form-group">
-                <label class="cr_label">전화번호</label>
-                <input class="form-control cr_input">
-            </div>
+        
+            <form id="blueprint_form_start" action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
+                <div class="form-group">
+                    <label class="cr_label">이벤트 개설자</label>
+                    <input id="input-user-intro" name="user_introduction" class="form-control cr_input" placeholder="뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’">
+                </div>
+                <div class="form-group">
+                    <label class="cr_label">계획중인 이벤트</label>
+                    <input id="input-project-intro" name="project_introduction" class="form-control cr_input" placeholder="팬미팅, 팬들과 함께하는 먹방 투어">
+                </div>
+                <div class="form-group">
+                    <label class="cr_label">이메일</label>
+                    <input id="input-email" name="contact"  class="form-control cr_input">
+                </div>
+                <div class="form-group">
+                    <label class="cr_label">전화번호</label>
+                    <input id="input-phone" type="tel" name="tel" class="form-control cr_input" placeholder="-없이 숫자만 입력"/>
+                </div>
+
+                <input type="hidden" name="type" value="sale"/>
+                <input type="hidden" name="story" value="none"/>
+                <input type="hidden" name="estimated_amount" value="none"/>
+                @include('csrf_field')
+            </form>
 
             <div class="blueprint_start_button_wrapper">
                 <button id="blueprint_start_button" type="button" class="blue_button">시작하기</button>
@@ -545,7 +553,15 @@
                     return;
                 }
 
+                if(isCheckPhoneNumber($('#input-phone').val()) == false)
+                {
+                    //alert("전화번호에 숫자만 입력해주세요.(공백 혹은 - 이 입력되었습니다.)");
+                    return;
+                }
+
                 showLoadingPopup("프로젝트 개설중입니다..");
+                
+                $('#blueprint_form_start').submit();
             };
 
             $("#blueprint_start_button").click(function(){
