@@ -222,12 +222,13 @@
         }
 
         /*메인 추천 슬라이드 css  ---- end  */
-
+        /*
         .welcome_content_container{
           width:1060px;
           margin-left: auto;
           margin-right: auto;
         }
+        */
 
         .welcome_start_content_container{
           width:1060px;
@@ -270,10 +271,11 @@
           color: #ffffff;
           background-color: rgba(0, 0, 0, 0);
         }
-
+        /*
         .welcome_content_wrapper{
           margin-top: 64px;
         }
+        */
 
         .welcome_content_title{
           width: 100%;
@@ -340,6 +342,7 @@
 
         .carousel_creator_container{
           height: 320px;
+          margin-top: 20px;
         }
 
         .welcome_meetup_banner_img{
@@ -459,10 +462,11 @@
 
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
+          /*
           .welcome_content_container{
-            /*width: 93%;*/
             width: 600px;
           }
+          */
 
           .welcome_start_content_container{
             margin-left: 13%;
@@ -508,10 +512,11 @@
             line-height: 1.29;
             margin-bottom: 3px;
           }
-
+          /*
           .welcome_content_wrapper{
             margin-top: 40px;
           }
+          */
 
           .welcome_thumb_content_container{
             margin-top: 12px;
@@ -569,9 +574,11 @@
         }
 
         @media (max-width:650px) {
+          /*
           .welcome_content_container{
             width: 93%;
           }
+          */
           .container{
             width: 100%;
           }
@@ -584,9 +591,11 @@
         }
 
         @media (max-width:320px) {
+          /*
           .welcome_content_container{
             width: 300px;
           }
+          */
 
           .welcome_meetup_banner_wrapper{
             height: 545px;
@@ -617,20 +626,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
     <div class="welcome_start_banner_container">
       <div class="welcome_start_banner">
           <div class="welcome_start_bubble_container">
-            <!--
-            <div class="bubble">
-              <img src="https://yt3.ggpht.com/a/AGF-l78Qb_Npl8n4bB2ispe__X5S1FHC5CQc1M3_pg=s100-mo-c-c0xffffffff-rj-k-no" style="width:100%;height:100%;border-radius: 50%">
-            </div>
-            <div class="bubble">
-              <img src="https://yt3.ggpht.com/a/AGF-l7-d5lvs0qqvvoUJiOGmRfrY17AI-gj7vmtM=s100-mo-c-c0xffffffff-rj-k-no" style="width:100%;height:100%;border-radius: 50%">
-            </div>
-            <div class="bubble">
-              <img src="https://yt3.ggpht.com/a/AGF-l7-d5lvs0qqvvoUJiOGmRfrY17AI-gj7vmtM=s100-mo-c-c0xffffffff-rj-k-no" style="width:100%;height:100%;border-radius: 50%">
-            </div>
-            <div class="bubble">
-              <img src="https://yt3.ggpht.com/a/AGF-l78Qb_Npl8n4bB2ispe__X5S1FHC5CQc1M3_pg=s100-mo-c-c0xffffffff-rj-k-no" style="width:100%;height:100%;border-radius: 50%">
-            </div>
-      -->
           </div>
 
           <div class="welcome_start_content_container">
