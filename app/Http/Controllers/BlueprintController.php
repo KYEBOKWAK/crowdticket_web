@@ -73,7 +73,8 @@ class BlueprintController extends Controller
 
     public function getBlueprintWelcome()
     {
-      return view('blueprint.welcome');
+      //return view('blueprint.welcome');
+      return view('blueprint.welcome_new');
     }
 
     public function getCreateForm()

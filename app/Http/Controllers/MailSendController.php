@@ -53,10 +53,7 @@ class MailSendController extends Controller {
 	}
 
 	public function sendQuestionEmail(){
-
-		//$isSendMailSubmitFinal = $_COOKIE["isSendMailSubmitFinal"];
-		//if($isSendMailSubmitFinal == "true")
-		{
+		
 		  // 빈 필드가 있는지 확인하는 구문
 		  if(empty($_POST['user_introduction'])  		|| // post로 넘어온 name값이 비었는지 확인
 		      empty($_POST['project_introduction']) 		|| // 유투브 채널 값이 비었는지 확인
@@ -64,15 +61,12 @@ class MailSendController extends Controller {
 		     empty($_POST['tel']) 		|| // phone값이 비었는지 확인
 		     !filter_var($_POST['contact'],FILTER_VALIDATE_EMAIL)) // 전달된 이메일 값이 유효한 이메일값인지 검증
 		     {
-		  	     echo "잘못된 이메일을 사용하였습니다.";
-		  	     return false;
+				 return ['state' => 'error', 'message' => '값이 비어있거나 이메일이 잘못되었습니다.'];
 		     }
 		  // Cross-Site Scripting (XSS)을 방지하는 시큐어코딩
 		  // strip_tags() -> 문자열에서 html과 php태그를 제거한다
 		  // htmlspecialchars() -> 특수 문자를 HTML 엔터티로 변환
 		  // 악의적인 특수문자 삽입에 대비하기 위함
-
-			setcookie("isSendMailSubmitFinal","false", time()+604800);
 
 		  $name = strip_tags(htmlspecialchars($_POST['user_introduction']));
 		  $messageExplain = strip_tags(htmlspecialchars($_POST['project_introduction']));
@@ -89,9 +83,10 @@ class MailSendController extends Controller {
 								$m->from('contact@crowdticket.kr', '제휴 문의');
 								$m->to($to)->subject($email_subject);
 						});
-		}
+		
 
-		return view('landing.landing_creator_form_sendmail');
+		//return view('landing.landing_creator_form_sendmail');
+		return ['state' => 'success', 'message' => ''];
 	}
 
 	public function sendEmailRegister(Request $request)

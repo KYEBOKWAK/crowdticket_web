@@ -44,7 +44,7 @@
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=16') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=17') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -301,7 +301,7 @@
           <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
-          <li style="display:none;">
+          <li>
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
           </li>
@@ -413,7 +413,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=26') }}"></script>
+<script src="{{ asset('/js/util.js?version=27') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>

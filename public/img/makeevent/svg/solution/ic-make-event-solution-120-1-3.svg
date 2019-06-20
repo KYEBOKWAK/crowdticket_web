@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#43C9F0" fill-rule="nonzero" d="M66.94 66.586V59a1 1 0 0 1 2 0v10a1 1 0 0 1-1 1h-10a1 1 0 0 1 0-2h7.586l-6.879-6.879a1 1 0 1 1 1.415-1.414l6.878 6.879zM14.355 68h7.585a1 1 0 1 1 0 2h-10a1 1 0 0 1-1-1V59a1 1 0 0 1 2 0v7.586l6.879-6.879a1 1 0 1 1 1.414 1.414L14.355 68zm51.07-56H57.94a1 1 0 0 1 0-2h10a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0v-7.686l-6.878 6.878a1 1 0 0 1-1.415-1.414L65.426 12zM12 13.314V21a1 1 0 0 1-2 0V11a1 1 0 0 1 1-1h10a1 1 0 0 1 0 2h-7.485l6.778 6.778a1 1 0 0 1-1.414 1.414L12 13.314z"/>
+        <g stroke="#43C9F0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M57 36v6c0 3.314-4.477 6-10 6a15.84 15.84 0 0 1-3.997-.499M37 39v-3"/>
+            <g transform="translate(37 24)">
+                <path d="M20 6v6c0 3.314-4.477 6-10 6S0 15.314 0 12V6"/>
+                <ellipse cx="10" cy="6" rx="10" ry="6"/>
+            </g>
+            <g transform="translate(23 39)">
+                <path d="M20 6v6c0 3.314-4.477 6-10 6S0 15.314 0 12V6"/>
+                <ellipse cx="10" cy="6" rx="10" ry="6"/>
+            </g>
+        </g>
+    </g>
+</svg>

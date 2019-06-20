@@ -225,7 +225,8 @@ fieldset[disabled] .form-control {
 }
 
 .cr_input{
-  width: 390px;
+  /*width: 390px;*/
+  width: 100%;
   height: 56px;
   border-radius: 5px;
   border: solid 1px #e6e6e6;

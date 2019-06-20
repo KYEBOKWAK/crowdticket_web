@@ -287,12 +287,8 @@ $(document).ready(function () {
   var resizeTitleImg = function(){
     var parentData = $('.magazine_title_image_container')[0];
     var imgData = $('.magazine_title_img')[0];
-    //console.error('nowWidth: ' + data.width + 'nowHeight: ' + data.height);
-    //console.error('oriWidth: ' + data.naturalWidth + 'oriHeight: ' + data.naturalHeight);
 
     var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
-
-    //console.error(window.innerWidth);
 
     if(targetWidth <= window.innerWidth)
     {

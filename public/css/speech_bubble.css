@@ -1,0 +1,129 @@
+
+.bubble_left {
+	color:#fff;
+	display: inline-block;
+    /*padding:10px 20px;*/
+    padding: 24px;
+	position: relative;
+
+	background: white;
+
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+    
+    -webkit-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+
+	z-index: 1000;
+}
+.bubble_left:before {
+	width:50px;
+	height:100%;
+	position: absolute;
+	left:13px;
+	top:00px;
+	content: " ";
+
+	z-index: 1000;
+
+    background: white;
+}
+
+.bubble_left:after {
+	z-index: 999;
+
+	content: " ";
+	display:block;
+	height:12px;
+	position: absolute;
+	left:14px;
+	bottom:-4px;
+	width:12px;
+	background: white;
+    -webkit-transform: rotate(45deg);
+
+	box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+.bubble_left * {
+	position: relative;
+	z-index: 10000;
+}
+
+.bubble_left p {
+	color: #4d4d4d;
+    font-size: 20px;
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+.bubble_right {
+    /*border:3px solid rgba(22,23,23,0.9);*/
+    width: 508px;
+	color:#fff;
+	display: inline-block;
+    /*padding:10px 20px;*/
+    padding: 24px;
+	position: relative;
+
+    background: white;
+    
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+    
+    -webkit-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -ms-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    -o-box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+
+	z-index: 1000;
+}
+.bubble_right:before {
+	width:50px;
+	height:100%;
+	position: absolute;
+	right:13px;
+	top:00px;
+	content: " ";
+
+	z-index: 1000;
+
+    background: white;
+}
+
+.bubble_right:after {
+	z-index: 999;
+
+	/*border:3px solid rgba(35,33,30,1);*/
+	/*border-color: #000 transparent transparent transparent;*/
+	content: " ";
+	display:block;
+	height:12px;
+	position: absolute;
+	right:14px;
+	bottom:-4px;
+	width:12px;
+	background: white;
+    -webkit-transform: rotate(45deg);
+
+	box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+.bubble_right * {
+	position: relative;
+	z-index: 10000;
+}
+
+.bubble_right p {
+	color: #808080;
+    font-size: 16px;
+    margin-bottom: 0px;
+    text-align: left;
+    line-height: 24px;
+}
