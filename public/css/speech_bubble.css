@@ -127,3 +127,18 @@
     text-align: left;
     line-height: 24px;
 }
+
+@media (max-width:1060px) {
+    .bubble_left{
+        width: 100%;
+    }
+
+    .bubble_right{
+        width: 100%;
+    }
+
+    .bubble_left p{
+        font-size: 18px;
+        line-height: 1.33;
+    }
+}

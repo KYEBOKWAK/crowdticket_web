@@ -217,10 +217,10 @@ function loginPopup(successFunc, closeFunc){
     return;
   }
 
-  if(successFunc)
-  {
+  //if(successFunc)
+  //{
     loginCallback = successFunc;
-  }
+  //}
 
   if(isLogin())
   {

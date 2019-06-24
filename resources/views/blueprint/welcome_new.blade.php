@@ -24,19 +24,25 @@
             margin-top: 28px;
             font-size: 20px;
             margin-bottom: 0px;
-            color: #808080;
+            color: #4d4d4d;
         }
 
         .blueprint_welcome_start_container{
             width: 454px; 
             /*height: 566px; */
-            height: 609px;
+            height: auto;
             background-color:white; 
             position:absolute;
             border-radius: 10px;
             box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.1);
             top: 160px; 
             right:15%;
+            padding-bottom: 32px;
+        }
+
+        .blueprint_welcome_start_container_mobile{
+            width: 100%;
+            text-align: left;
         }
 
         .blueprint_welcome_start_form_container{
@@ -57,6 +63,8 @@
             width: 100%;
             height: 56px;
 
+            border: 0px;
+
             -webkit-border-radius: 5px;
 	        -moz-border-radius: 5px;
             border-radius: 5px;
@@ -64,7 +72,7 @@
             background-color: #43c9f0;
             font-size: 20px;
             font-weight: 500;
-            border-color: white;
+            /*border-color: white;*/
             color: white;
         }
 
@@ -98,7 +106,24 @@
         }
 
         .swiper-pagination{
-            top: 0 !important;
+            display: none;
+            position: relative !important;
+            margin-bottom: 16px;
+        }
+
+        .swiper-pagination-bullet{
+            margin-right: 4px;
+            width: 4px !important;
+            height: 4px !important;
+            border-radius: 4px !important;
+            background-color: #ebebeb !important;
+            opacity: 1 !important;
+        }
+
+        .swiper-pagination-bullet-active{
+            width: 12px !important;
+            height: 4px !important;
+            background-color: #acacac !important;
         }
 
         .blueprint_slide_button {
@@ -147,6 +172,7 @@
             font-size: 16px;
             font-weight: 500;
             margin-top: 20px;
+            /*height: 44px;*/
         }
 
         .blueprint_container{
@@ -175,7 +201,7 @@
         .blueprint_take_container{
             margin-top: 240px;
             width: 100%;
-            height: 816px;
+            /*height: 816px;*/
         }
 
         .bluprint_played_event_content{
@@ -383,15 +409,444 @@
 
         .popup_close_button{
             border: 0;
+            background-color: white;
+        }
+
+        .blueprint_welcome_start_mobile_wrapper{
+            display: none;
+            margin-top: 28px;
+        }
+
+        #blueprint_welcome_start_mobile_button{
+            width: 107px;
+            height: 51px;
+        }
+
+        .thumb_margin_left_mobile{
+            margin-left: 20px;
+        }
+
+        .thumb_margin_left_pc{
+            margin-left: 0px;
+        }
+
+        .blueprint_who_make_slide_mobile{
+            display: none;
+        }
+
+        .blueprint_who_make_slide_pc{
+        }
+
+        .blueprint_who_make_circle{
+            width: 80px;
+            height: 80px;
+            border: solid 1px #ebebeb;
+            background-color: white;
+            border-radius: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .blueprint_talk_bg{
+          width: 100%; 
+          height: 938px; 
+          background-color: #f7f7f7; 
+          position: absolute; 
+          top: 1698px;
+        }
+
+        .blueprint_played_event_container{
+            /*height: 630px;*/
+            margin-top: 235px;
+        }
+
+        .blueprint_played_event_img{
+            width: 100%; 
+            position: absolute; 
+            top: 3064px;
+        }
+
+        .blueprint_how_to_start_container_container{
+            padding-top: 395px;
+        }
+
+        .blueprint_how_to_number_background_container{
+            margin-bottom: 24px; 
+            height: 68px;
+        }
+
+        #blueprint_start_bottom_mobile_button{
+            display: none;
+        }
+
+        #blueprint_form_start_mobile{
+            text-align: left;
+        }
+
+        @media (max-width:1060px) {
+            .blueprint_solution_img_wrapper{
+                padding-top: 15px;
+            }
+
+            #blueprint_start_bottom_mobile_button{
+                display: block;
+            }
+
+            .blueprint_how_to_start_content{
+                margin-top: 40px;
+            }
+            .blueprint_how_to_number_background_container{
+                height: 43px;
+            }
+
+            .swiper-pagination{
+                display: block;
+            }
+
+            .blueprint_container{
+                /*display: none;*/
+                margin-top: 64px;
+            }
+            .blueprint_welcome_start_container{
+                display: none;
+            }
+            .blueprint_welcome_container{
+                text-align: center;
+            }
+
+            .blueprint_welcome_title>h4{
+                font-size: 28px;
+                font-weight: 500;
+                line-height: 1.29;
+            }
+
+            .blueprint_welcome_container{
+                top: 72px;
+                height: 3300px;
+            }
+
+            .blueprint_title_image_container{
+                height: 355px;
+            }
+
+            .blueprint_welcome_title>p{
+                font-size: 14px;
+                line-height: 1.57;
+                margin-top: 16px;
+            }
+
+            .blueprint_welcome_start_mobile_wrapper{
+                display: block;
+            }
+
+            .blueprint_solution_container{
+                margin-top: 136px;
+            }
+
+            .blueprint_solution_container>h4{
+                font-size: 20px;
+            }
+
+            .bluprint_carousel_container{
+                margin-top: 28px;
+            }
+
+            .blueprint_slide_button{
+                font-size: 14px;
+            }
+
+            .blueprint_carousel_box{
+                /*
+                width: 164px;
+                height: 100%;
+                max-height: 164px;
+                margin-left: 0px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding: 7.5% 0;
+                flex: 1;
+                */
+
+                width: 164px;
+                height: 100%;
+                max-height: 164px;
+                margin-left: 0px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding: 26px 0;
+                flex: 1;
+            }
+
+            .bluprint_carousel_box_circle{
+                width: 76px;
+                height: 76px;
+                margin-top: 0px;
+            }
+
+            .blueprint_solution_img{
+                width: 48px;
+                height: 48px;
+            }
+
+            .blueprint_carousel_box_content_wrapper{
+                font-size: 10px;
+                margin-top: 8px;
+            }
+
+            .blueprint_slide_button_container{
+                margin-bottom: 31px;
+            }
+
+            .thumb_margin_left_mobile{
+                margin-left: 0px;
+            }
+
+            .thumb_margin_left_pc{
+                margin-left: auto;
+            }
+
+            .blueprint_container_title>h4{
+                font-size: 20px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+            }
+
+            .blueprint_played_tags_container{
+                width: 100%;
+                margin-top: 32px;
+            }
+
+            .blueprint_who_make_box{
+                margin-top: 0px;
+                width: 100%;
+                height: 100%;
+            }
+
+            .blueprint_who_make_img{
+                width: 52px;
+                margin-top: 14px;
+            }
+
+            .blueprint_who_make_content{
+                font-size: 12px;
+                line-height: 1.33;
+                margin-top: 8px;
+            }
+
+            .blueprint_who_make_slide_mobile{
+                display: block;
+                margin-top: 28px !important;
+            }
+
+            .blueprint_who_make_slide_pc{
+                display: none;
+            }
+
+            .blueprint_talk_bg{
+                top: 1277px;
+                height: 924px;
+            }
+
+            .blueprint_talk_container{
+                padding-top: 40px;
+            }
+
+            .blueprint_talk_bubble_wrapper{
+                margin-bottom: 24px;
+            }
+
+            #blueprint_show_event_service_button{
+                margin-top: 21px;
+                width: 100%;
+            }
+
+            #blueprint_contact_button{
+                margin-top: 21px;
+                width: 100%;
+            }
+
+            .blue_button{
+                height: 50px;
+            }
+
+            .blueprint_container_title>h4{
+                /*margin-top: 128px;*/
+            }
+
+            .blueprint_played_first{
+                width: 258px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .blueprint_played_second{
+                width: 174px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 16px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2559px;
+            }
+            
+            .blueprint_how_to_start_title{
+                font-size: 20px;
+            }
+
+            #blueprint_start_up_button{
+                display: none;
+            }
+
+            .blueprint_how_to_start_content p{
+                font-size: 14px;
+                line-height: 1.57;
+                text-align: left;
+            }
+
+            .blueprint_played_event_container{
+                margin-top: 128px;
+            }
+        }
+
+        @media (max-width:720px) {
+            .blueprint_popup{
+                width: 100%;
+                /*height: 100%;*/
+                height: auto;
+                margin: 0;
+                border: 0;
+                border-radius: 0;
+            }
+
+            .blueprint_contact_popup_container{
+                width: 100%;
+                padding-top: 0px;
+                /*margin-bottom: 0px;*/
+            }
+
+            .blueprint_contact_popup_title{
+                font-size: 16px;
+                opacity: 0.7;
+                color: black;
+            }
+
+            .blueprint_contact_popup_content{
+                margin-top: 38px;
+                font-size: 14px;
+                line-height: 1.57;
+            }
+
+            .blueprint_form_popup_label{
+                font-size: 12px !important;
+            }
+
+            .popup_close_button_wrapper{
+                top: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width:640px) {
+            .blueprint_talk_bg{
+                height: 948px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2583px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3326px;
+            }
+        }
+
+        @media (max-width:423px) {
+            .blueprint_talk_bg{
+                height: 972px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2606px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3350px;
+            }
+        }
+
+        @media (max-width:408px) {
+            .blueprint_talk_bg{
+                height: 995px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2630px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3374px;
+            }
+        }
+
+        @media (max-width:385px) {
+            .blueprint_talk_bg{
+                height: 1018px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2653px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3396px;
+            }
+        }
+
+        @media (max-width:338px) {
+            .blueprint_carousel_box{
+                padding: 7.5% 0;
+            }
+        }
+
+        @media (max-width:350px) {
+            .blueprint_talk_bg{
+                height: 1036px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2672px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3414px;
+            }
+        }
+
+        @media (max-width:338px) {
+            .blueprint_talk_bg{
+                height: 1055px;
+            }
+
+            .blueprint_played_event_img{
+                top: 2691px;
+            }
+
+            .blueprint_welcome_container{
+                height: 3433px;
+            }
         }
     </style>
 
     <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
-    <link rel="stylesheet" href="{{ asset('/css/speech_bubble.css?version=1') }}">
+    <link rel="stylesheet" href="{{ asset('/css/speech_bubble.css?version=2') }}">
 @endsection
 
 @section('content')
     <!-- first section 시작 -->
+
     <div class="blueprint_title_wrapper">
         <div class="blueprint_title_image_container">
             <div class="bg-base" style="width: 100%;">
@@ -400,10 +855,13 @@
         </div>
     </div>
 
-    <div style="width: 100%; height: 938px; background-color: #f7f7f7; position: absolute; top: 1698px;">
+    <div class="blueprint_talk_bg">
     </div>
 
-    <div class="blueprint_played_event_img" style="width: 100%; position: absolute; top: 3064px;">
+    <div class="blueprint_played_event_img">
+        <div class="swiper-pagination">
+        </div>
+        
         <div class="swiper-container swiper-event-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide slide-test">
@@ -452,8 +910,10 @@
             팬들과 직접 만나 새로운 경험을 만들어 보세요
             </p>
         </div>
-        
-        
+
+        <div class="blueprint_welcome_start_mobile_wrapper">
+            <button id="blueprint_welcome_start_mobile_button" class="blue_button">시작하기</button>
+        </div>
 
         <div class="blueprint_solution_container">
             <h4>
@@ -467,95 +927,114 @@
                 </div>
                 <div class="swiper-container swiper-event-plan">
                     <div class="swiper-wrapper">
-                        @for($i = 0 ; $i < 3 ; $i++)
+                    @for($i = 0 ; $i < 3 ; $i++)
+                        <?php
+                            $itemIndex = 0;
+                        ?>
                         <div class="swiper-slide">
-                            <div class="flex_layer">
-                                @for($j = 0 ; $j < 4 ; $j++)
-                                <?php
-                                    //$iconURL = "ic-make-event-solution-120-1-1.svg";
-                                    $iconURL = asset('/img/makeevent/svg/solution/ic-make-event-solution-120-'.($i+1).'-'.($j+1).'.svg');
-                                    $content1 = "";
-                                    $content2 = "";
-                                    if($i === 0)
-                                    {
-                                        if($j === 0)
-                                        {
-                                            $content1 = "크리에이터 맞춤형";
-                                            $content2 = "콘셉트 제안";
-                                        }
-                                        else if($j === 1)
-                                        {
-                                            $content1 = "이벤트 분위기에";
-                                            $content2 = "딱 맞는 장소 대관";
-                                        }
-                                        else if($j === 2)
-                                        {
-                                            $content1 = "이벤트 진행 규모 및";
-                                            $content2 = "예산 컨설팅";
-                                        }
-                                        else if($j === 3)
-                                        {
-                                            $content1 = "티켓 / 베너 제작 ";
+                            <div class="flex_layer_thumb">
+                                @for($k = 0 ; $k < 2 ; $k++)
+                                    @if($k===1)
+                                    <div class="flex_layer thumb_margin_left_mobile">
+                                    @else
+                                    <div class="flex_layer">
+                                    @endif
+                                        @for($j = 0 ; $j < 2 ; $j++)
+                                        <?php
+                                            //$iconURL = "ic-make-event-solution-120-1-1.svg";
+                                            $iconURL = asset('/img/makeevent/svg/solution/ic-make-event-solution-120-'.($i+1).'-'.($itemIndex+1).'.svg');
+                                            $content1 = "";
                                             $content2 = "";
-                                        }
-                                    }
-                                    else if($i === 1)
-                                    {
-                                        if($j === 0)
-                                        {
-                                            $content1 = "선착순 / 추첨형 등";
-                                            $content2 = "다양한 티켓팅 옵션";
-                                        }
-                                        else if($j === 1)
-                                        {
-                                            $content1 = "쉬운 정산과 관객 관리";
-                                            $content2 = "";
-                                        }
-                                        else if($j === 2)
-                                        {
-                                            $content1 = "굿즈 판매 /";
-                                            $content2 = " 추가 후원";
-                                        }
-                                        else if($j === 3)
-                                        {
-                                            $content1 = "이벤트 펀딩 진행 가능";
-                                            $content2 = "";
-                                        }
-                                    }
-                                    else if($i === 2)
-                                    {
-                                        if($j === 0)
-                                        {
-                                            $content1 = "이벤트 진행 보조";
-                                            $content2 = "";
-                                        }
-                                        else if($j === 1)
-                                        {
-                                            $content1 = "이벤트 공간 세팅";
-                                            $content2 = "";
-                                        }
-                                        else if($j === 2)
-                                        {
-                                            $content1 = "검표 진행 / ";
-                                            $content2 = "입장 안내";
-                                        }
-                                        else if($j === 3)
-                                        {
-                                            $content1 = "관객 안전관리 / 위기대응";
-                                            $content2 = "";
-                                        }
-                                    }
-                                ?>
-                                    <div class="blueprint_carousel_box" style="@if($j===0)margin-left: 0px;@endif">
-                                        <div class="bluprint_carousel_box_circle">
-                                            <div class="blueprint_solution_img_wrapper">
-                                                <img src="{{$iconURL}}"/>
+                                            if($i === 0)
+                                            {
+                                                if($itemIndex === 0)
+                                                {
+                                                    $content1 = "크리에이터 맞춤형";
+                                                    $content2 = "콘셉트 제안";
+                                                }
+                                                else if($itemIndex === 1)
+                                                {
+                                                    $content1 = "이벤트 분위기에";
+                                                    $content2 = "딱 맞는 장소 대관";
+                                                }
+                                                else if($itemIndex === 2)
+                                                {
+                                                    $content1 = "이벤트 진행 규모 및";
+                                                    $content2 = "예산 컨설팅";
+                                                }
+                                                else if($itemIndex === 3)
+                                                {
+                                                    $content1 = "티켓 / 베너 제작 ";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                            }
+                                            else if($i === 1)
+                                            {
+                                                if($itemIndex === 0)
+                                                {
+                                                    $content1 = "선착순 / 추첨형 등";
+                                                    $content2 = "다양한 티켓팅 옵션";
+                                                }
+                                                else if($itemIndex === 1)
+                                                {
+                                                    $content1 = "쉬운 정산과 관객 관리";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                                else if($itemIndex === 2)
+                                                {
+                                                    $content1 = "굿즈 판매 /";
+                                                    $content2 = " 추가 후원";
+                                                }
+                                                else if($itemIndex === 3)
+                                                {
+                                                    $content1 = "이벤트 펀딩 진행 가능";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                            }
+                                            else if($i === 2)
+                                            {
+                                                if($itemIndex === 0)
+                                                {
+                                                    $content1 = "이벤트 진행 보조";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                                else if($itemIndex === 1)
+                                                {
+                                                    $content1 = "이벤트 공간 세팅";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                                else if($itemIndex === 2)
+                                                {
+                                                    $content1 = "검표 진행 / ";
+                                                    $content2 = "입장 안내";
+                                                }
+                                                else if($itemIndex === 3)
+                                                {
+                                                    $content1 = "관객 안전관리 / 위기대응";
+                                                    $content2 = "&nbsp;";
+                                                }
+                                            }
+                                        ?>
+                                            <!--<div class="blueprint_carousel_box" style="@if($itemIndex===0)margin-left: 0px;@endif">-->
+                                            @if($j===0)
+                                            <div class="blueprint_carousel_box thumb_margin_left_pc">
+                                            @else
+                                            <div class="blueprint_carousel_box">
+                                            @endif
+                                                <div class="bluprint_carousel_box_circle">
+                                                    <div class="blueprint_solution_img_wrapper">
+                                                        <img class="blueprint_solution_img" src="{{$iconURL}}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="blueprint_carousel_box_content_wrapper">
+                                                    {{$content1}}<br>
+                                                    {{$content2}}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="blueprint_carousel_box_content_wrapper">
-                                            {{$content1}}<br>
-                                            {{$content2}}
-                                        </div>
+                                            <?php
+                                            $itemIndex++;
+                                            ?>
+                                        @endfor
                                     </div>
                                 @endfor
                             </div>
@@ -573,7 +1052,7 @@
                 </h4>
             </div>
 
-            <div class="blueprint_who_make_container">
+            <div class="blueprint_who_make_container blueprint_who_make_slide_pc">     
                 @for($i = 0 ; $i < 8 ; $i++)
                 <?php
                 $whoMakeImgURL = asset('/img/makeevent/svg/ic-make-event-who-80-'.($i+1).'.svg');
@@ -623,7 +1102,7 @@
                 ?>
                 <div class="blueprint_who_make_box">
                     <div class="img_dummy" style="margin: 0px auto; padding-top: 0px;">
-                        <img src="{{$whoMakeImgURL}}">
+                        <img class="blueprint_who_make_img" src="{{$whoMakeImgURL}}">
                     </div>
                     <div class="blueprint_who_make_content">
                         {{$whoMakeContent}}
@@ -631,6 +1110,74 @@
                 </div>
                 @endfor
             </div>
+
+            <div class="swiper-container blueprint_who_make_container blueprint_who_make_slide_mobile">
+                <div class="swiper-wrapper">
+                    @for($i = 0 ; $i < 8 ; $i++)
+                    <?php
+                    $whoMakeImgURL = asset('/img/makeevent/svg/ic-make-event-who-80-'.($i+1).'.svg');
+                    $whoMakeContent = "";
+                    $whoMakeContent_2 = "&nbsp;";
+                    switch($i)
+                    {
+                        case 0:
+                        $whoMakeContent = "유튜브";
+                        $whoMakeContent_2 = "크리에이터";
+                        break;
+
+                        case 1:
+                        $whoMakeContent = "라이브 방송";
+                        $whoMakeContent_2 = "스트리머";
+                        break;
+
+                        case 2:
+                        $whoMakeContent = "팟캐스트";
+                        $whoMakeContent_2 = "진행자";
+                        break;
+
+                        case 3:
+                        $whoMakeContent = "SNS";
+                        $whoMakeContent_2 = "인플루언서";
+                        break;
+
+                        case 4:
+                        $whoMakeContent = "MCN 소속";
+                        $whoMakeContent_2 = "매니저/기획자";
+                        break;
+
+                        case 5:
+                        $whoMakeContent = "가수/뮤지션";
+                        $whoMakeContent_2 = "";
+                        break;
+
+                        case 6:
+                        $whoMakeContent = "문화기획단체";
+                        $whoMakeContent_2 = "/ 커뮤니티";
+                        break;
+
+                        case 7:
+                        $whoMakeContent = "그외 모든";
+                        $whoMakeContent_2 = "크리에이터";
+                        break;
+                    }
+                    ?>
+                    <div class="swiper-slide">
+                        <div class="blueprint_who_make_box">
+                            <div class="img_dummy" style="margin: 0px auto; padding-top: 0px;">
+                                <div class="blueprint_who_make_circle">
+                                    <img class="blueprint_who_make_img" src="{{$whoMakeImgURL}}">
+                                </div>
+                            </div>
+                            <div class="blueprint_who_make_content">
+                                {{$whoMakeContent}}<br>
+                                {{$whoMakeContent_2}}
+                            </div>
+                        </div>
+                    </div>
+                    @endfor
+                </div>
+            </div>
+
         </div>
 
         <div class="blueprint_container blueprint_take_container">
@@ -660,7 +1207,7 @@
                     </div>                        
                 </div>
             </div>
-            <div class="blueprint_talk_container" style="margin-top: 64px">
+            <div class="blueprint_talk_container" style="margin-top: 64px; padding-top: 0px;">
                 <div class="blueprint_talk_wrapper">
                     <div class="flex_layer_thumb">
                         <div class="blueprint_talk_bubble_wrapper" style="margin-bottom: 20px; margin-right: 20px;">
@@ -687,7 +1234,7 @@
                 </div>
             </div>
         </div>
-        <div class="blueprint_container text-center" style="height: 630px;">
+        <div class="blueprint_container text-center blueprint_played_event_container">
             <div class="blueprint_container_title">
                 <h4>
                     이미 다양한 형태의 이벤트가<br>
@@ -701,28 +1248,33 @@
             </div>
 
             <div class="blueprint_played_tags_container">
-                <div class="flex_layer">
-                    <div class="blueprint_played_tag_bg">
-                        영화제
+                <div class="flex_layer_thumb">
+                    <div class="flex_layer blueprint_played_first">
+                        <div class="blueprint_played_tag_bg">
+                            영화제
+                        </div>
+                        <div class="blueprint_played_tag_bg">
+                            강의
+                        </div>
+                        <div class="blueprint_played_tag_bg">
+                            팬미팅
+                        </div>
                     </div>
-                    <div class="blueprint_played_tag_bg">
-                        강의
-                    </div>
-                    <div class="blueprint_played_tag_bg">
-                        팬미팅
-                    </div>
-                    <div class="blueprint_played_tag_bg">
-                        콘서트
-                    </div>
-                    <div class="blueprint_played_tag_bg">
-                        파티
+                    
+                    <div class="flex_layer blueprint_played_second">
+                        <div class="blueprint_played_tag_bg">
+                            콘서트
+                        </div>
+                        <div class="blueprint_played_tag_bg">
+                            파티
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="blueprint_container">
-            <div class="flex_layer">
+        <div class="blueprint_container blueprint_how_to_start_container_container">
+            <div class="flex_layer_thumb">
                 <div class="blueprint_how_to_start_container">
                     <div class="blueprint_how_to_start_title">
                         화면 밖에서 나의 팬을 만나는<br>
@@ -734,28 +1286,28 @@
 
                 <div class="blueprint_how_to_start_container">
                     <div class="blueprint_how_to_start_content">
-                        <div class="flex_layer" style="margin-bottom: 24px; height: 68px;">
+                        <div class="flex_layer blueprint_how_to_number_background_container">
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">1</div>
                             </div>
                             <p>내 이름과 만들고 싶은 이벤트 종류, 연락처만 적고 '시작하기'를 누른다.</p>
                         </div>
 
-                        <div class="flex_layer" style="margin-bottom: 24px; height: 68px;">
+                        <div class="flex_layer blueprint_how_to_number_background_container">
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">2</div>
                             </div>
                             <p>아직 회원가입을 안 했다면 이름, 이메일, 비밀번호만 적고 10초만에 가입을 끝낸다</p>
                         </div>
 
-                        <div class="flex_layer" style="margin-bottom: 24px; height: 68px;">
+                        <div class="flex_layer blueprint_how_to_number_background_container">
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">3</div>
                             </div>
                             <p>이벤트 소개 내용을 직접 쓰거나 크라우드티켓에게 맡긴다</p>
                         </div>
 
-                        <div class="flex_layer" style="margin-bottom: 24px; height: 68px;">
+                        <div class="flex_layer blueprint_how_to_number_background_container">
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">4</div>
                             </div>
@@ -764,6 +1316,8 @@
                     </div>
                 </div>
             </div>
+
+            <button id="blueprint_start_bottom_mobile_button" type="button" class="blue_button">시작하기</button>
         </div>
     </div>
 
@@ -911,35 +1465,30 @@
                 }
                 else
                 {
-                    $('.blueprint_played_image').css('width', targetWidth);
+                    $('.blueprint_played_image').css('width', parentData.clientWidth);
                     $('.blueprint_played_image').css('height', parentData.clientHeight);
+                    //$('.blueprint_played_image').css('width', targetWidth);
+                    //$('.blueprint_played_image').css('height', parentData.clientHeight);
                 }
-                /*
-                var parentData = $('.blueprint_played_image_container')[0];
-                var imgData = $('.blueprint_played_image')[0];
-
-                var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
-
-                if(targetWidth <= window.innerWidth)
-                {
-                    $('.blueprint_played_image').css('width', '100%');
-                    $('.blueprint_played_image').css('height', 'auto');
-                }
-                else
-                {
-                    $('.blueprint_played_image').css('width', targetWidth);
-                    $('.blueprint_played_image').css('height', parentData.clientHeight);
-                }
-                */
             };
 
+            var replaceTitleImg = function(){
+                var assetURL = $("#asset_url").val();
+                if(window.innerWidth >= 768){
+                    $(".blueprint_title_img").attr('src', assetURL + "img/makeevent/MakeEvent_01_bg.png");
+                }
+                else{
+                    $(".blueprint_title_img").attr('src', assetURL + "img/makeevent/MakeEvent_01_bg_768.png");
+                }
+            };
+
+            replaceTitleImg();
             resizeTitleImg();
-            //resizePlayedEventImg();
 
             $(window).resize(function() {
-                //console.error("adf");
-                resizeTitleImg();
-                
+                //console.error("innerWidth" + window.innerWidth);
+                replaceTitleImg();
+                resizeTitleImg();                
             });
 
             var swiper_events = new Swiper('.swiper-event-container', {
@@ -948,6 +1497,13 @@
                 on: {
                     init: function () {
                         resizePlayedEventImg();
+                    },
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    renderBullet: function (index, className) {
+                        return '<span class="' + className + '"></span>';
                     },
                 },
                 breakpoints: {
@@ -982,11 +1538,7 @@
             var contactPopup = function(){
                 var elementPopup = document.createElement("div");
                 elementPopup.innerHTML = 
-                "<div class='popup_close_button_wrapper'>" +
-                    "<button type='button' class='popup_close_button'>" + 
-                        "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
-                    "</button>" +
-                "</div>" +
+                
                 "<div class='blueprint_contact_popup_container'>" + 
                     "<div class='blueprint_contact_popup_title'>" + 
                         "제휴 문의" + 
@@ -1026,6 +1578,12 @@
                         "<button id='blueprint_contact_popup_button' type='button' class='blue_button'>문의하기</button>" + 
                     "</div>" +
                     
+                "</div>" + 
+
+                "<div class='popup_close_button_wrapper'>" +
+                    "<button type='button' class='popup_close_button'>" + 
+                        "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
+                    "</button>" +
                 "</div>";
 
                 swal({
@@ -1080,6 +1638,154 @@
             $("#blueprint_contact_button").click(function(){
                 contactPopup();
             });
+
+            var swiper_who_make_events = new Swiper('.blueprint_who_make_slide_mobile', {
+                loop: true,
+                slidesPerView: 6,
+                spaceBetween: 4,
+
+                autoplay: {
+                    delay: 2000,
+                },
+                
+                breakpoints: {
+                // when window width is <= 320px
+                    640: {
+                    slidesPerView: 5
+                    },
+                    520: {
+                    slidesPerView: 4
+                    },
+                    370: {
+                    slidesPerView: 3
+                    }
+                }
+            });
+
+            var blueprint_mobile_start_popup = function(){
+                var elementPopup = document.createElement("div");
+                elementPopup.innerHTML = 
+                "<div class='blueprint_contact_popup_container'>" + 
+                    "<div class='blueprint_contact_popup_title' style='margin-bottom: 38px;'>" + 
+                            "프로젝트 개설신청" + 
+                    "</div>" +
+
+                    "<form id='blueprint_form_start_mobile' action='{{ url('/blueprints') }}' method='post' data-toggle='validator' role='form'>" +
+                        "<div class='form-group'>" +
+                            "<label class='cr_label'>크리에이터 이름</label>" +
+                            "<input id='input-user-intro-mobile' name='user_introduction' class='form-control cr_input' placeholder='뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’'>" +
+                        "</div>" +
+                        "<div class='form-group'>" +
+                            "<label class='cr_label'>만들고 싶은 이벤트</label>" +
+                            "<input id='input-project-intro-mobile' name='project_introduction' class='form-control cr_input' placeholder='팬미팅, 팬들과 함께하는 먹방 투어'>" +
+                        "</div>" +
+                        "<div class='form-group'>" +
+                            "<label class='cr_label'>이메일 주소</label>" +
+                            "<input id='input-email-mobile' name='contact'  class='form-control cr_input'>" +
+                        "</div>" +
+                        "<div class='form-group'>" +
+                            "<label class='cr_label'>전화번호</label>" +
+                            "<input id='input-phone-mobile' type='tel' name='tel' class='form-control cr_input' placeholder='-없이 숫자만 입력'/>" +
+                            "<p style='font-size: 12px; color: #acacac; margin-top: 8px;'>프로젝트 개설을 위한 연락 목적 외에는 절.대. 다른 용도로 사용되지 않습니다. 안심하세요</p>" +
+                        "</div>" +
+
+                        "<input type='hidden' name='type' value='sale'/>" +
+                        "<input type='hidden' name='story' value='none'/>" +
+                        "<input type='hidden' name='estimated_amount' value='none'/>" +
+                        "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
+                    "</form>" +
+
+                    "<div class='blueprint_start_button_wrapper'>" +
+                        "<button id='blueprint_start_button_mobile' type='button' class='blue_button'>시작하기</button>" +
+                    "</div>" +
+                "</div>" + 
+
+                "<div class='popup_close_button_wrapper'>" +
+                    "<button type='button' class='popup_close_button'>" + 
+                        "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
+                    "</button>" +
+                "</div>";
+
+                swal({
+                        //title: "로그인",
+                        content: elementPopup,
+                        allowOutsideClick: "true",
+                        className: "blueprint_popup",
+                        closeOnClickOutside: false,
+                        closeOnEsc: false
+                    });
+
+                $(".swal-footer").hide();
+
+                $('.popup_close_button').click(function(){
+                    swal.close();
+                });
+                /*
+                var blueprint_form_start_mobile_option = {
+                    'beforeSerialize': function($form, options) {
+                    },
+                    'success': function(result) {
+                        loadingProcessStop($(".blueprint_start_button_wrapper"));
+
+                        if(result.state === 'error')
+                        {
+                            alert(result.message);
+                            return;
+                        }
+                        
+                        //swal("문의 성공!", "곧 크라우드티켓에서 연락 드리겠습니다.", "success");
+                    },
+                    'error': function(data) {
+                        alert("개설 에러! 입력 확인 후 다시 한번 시도해주세요");
+                    }
+                    
+                };
+                */
+
+                //$('#blueprint_form_start_mobile').ajaxForm(blueprint_form_start_mobile_option);
+
+                var blueprint_start_mobile_button = function(){
+                    if(!isLogin())
+                    {
+                        loginPopup(blueprint_start_mobile_button, null);
+                        return;
+                    }
+
+                    if(!isCheckPhoneNumber($('#input-phone-mobile').val()))
+                    {
+                        return;
+                    }
+
+                    //loadingProcess($(".blueprint_start_button_wrapper"));
+                    $('#blueprint_form_start_mobile').submit();
+
+                    showLoadingPopup("프로젝트 개설중입니다..");
+                };
+
+                $("#blueprint_start_button_mobile").click(function(){
+                    blueprint_start_mobile_button();
+                });
+            };
+
+            $("#blueprint_welcome_start_mobile_button").click(function(){
+                if(!isLogin())
+                {
+                    loginPopup(null, null);
+                    return;
+                }
+                blueprint_mobile_start_popup();
+            });
+
+            $("#blueprint_start_bottom_mobile_button").click(function(){
+                if(!isLogin())
+                {
+                    loginPopup(null, null);
+                    return;
+                }
+
+                blueprint_mobile_start_popup();
+            });
+
         });
     </script>
 @endsection

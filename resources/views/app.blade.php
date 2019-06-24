@@ -301,7 +301,7 @@
           <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
-          <li>
+          <li style="display:none;">
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
           </li>
@@ -425,7 +425,7 @@
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=8');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=9');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 

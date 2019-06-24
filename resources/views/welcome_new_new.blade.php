@@ -896,17 +896,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
         window.onbeforeunload = function(e) {
         }
-/*
-        $('.magazine_subtitle_data').each(function(){
-          var magazineId = $(this).attr("data-magazine-id");
-          var magazineContentClassName = '.magazine_thumb_content_content_'+magazineId;
 
-          var converterData = getConverterEnterString($(this).val());
-
-          $(magazineContentClassName).append(converterData);
-
-        });
-        */
 /*
         var resizeTitleImg = function(){
           var parentData = $('.welcome_meetup_banner_img_container')[0];
