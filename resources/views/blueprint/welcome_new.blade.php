@@ -523,7 +523,7 @@
 
             .blueprint_welcome_container{
                 top: 72px;
-                height: 3318px;
+                height: 3324px;
             }
 
             .blueprint_title_image_container{
@@ -760,7 +760,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3344px;
+                height: 3350px;
             }
         }
 
@@ -774,7 +774,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3368px;
+                height: 3374px;
             }
         }
 
@@ -788,7 +788,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3392px;
+                height: 3398px;
             }
         }
 
@@ -802,7 +802,8 @@
             }
 
             .blueprint_welcome_container{
-                height: 3414px;
+                /*height: 3414px;*/
+                height: 3420px;
             }
         }
 
@@ -822,7 +823,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3432px;
+                height: 3438px;
             }
         }
 
@@ -836,7 +837,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3451px;
+                height: 3457px;
             }
         }
     </style>
