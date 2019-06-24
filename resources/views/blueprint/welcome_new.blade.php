@@ -418,7 +418,7 @@
         }
 
         #blueprint_welcome_start_mobile_button{
-            width: 107px;
+            width: 110px;
             height: 51px;
         }
 
@@ -490,6 +490,7 @@
 
             #blueprint_start_bottom_mobile_button{
                 display: block;
+                margin-top: 40px;
             }
 
             .blueprint_how_to_start_content{
@@ -522,7 +523,7 @@
 
             .blueprint_welcome_container{
                 top: 72px;
-                height: 3300px;
+                height: 3318px;
             }
 
             .blueprint_title_image_container{
@@ -759,7 +760,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3326px;
+                height: 3344px;
             }
         }
 
@@ -773,7 +774,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3350px;
+                height: 3368px;
             }
         }
 
@@ -787,7 +788,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3374px;
+                height: 3392px;
             }
         }
 
@@ -801,7 +802,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3396px;
+                height: 3414px;
             }
         }
 
@@ -821,7 +822,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3414px;
+                height: 3432px;
             }
         }
 
@@ -835,7 +836,7 @@
             }
 
             .blueprint_welcome_container{
-                height: 3433px;
+                height: 3451px;
             }
         }
     </style>
@@ -1640,7 +1641,7 @@
             });
 
             var swiper_who_make_events = new Swiper('.blueprint_who_make_slide_mobile', {
-                loop: true,
+                //loop: true,
                 slidesPerView: 6,
                 spaceBetween: 4,
 
