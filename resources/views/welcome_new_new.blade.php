@@ -460,6 +460,22 @@
           padding-left: 0px;
         }
 
+        .creator_slide_name{
+          position:absolute; 
+          bottom:12px; 
+          left: 12px; 
+          font-size: 12px; 
+          color: white;
+        }
+
+        .creator_slide_sub_counter{
+          position:absolute; 
+          bottom:12px; 
+          right: 12px; 
+          font-size: 12px; 
+          color: white;
+        }
+
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
           /*
@@ -570,6 +586,13 @@
 
           .footer_padding_left_remover{
             padding-left: 15px;
+          }
+
+          .creator_slide_name{
+          }
+
+          .creator_slide_sub_counter{
+            top: 12px;
           }
         }
 

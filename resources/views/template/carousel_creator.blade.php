@@ -54,7 +54,7 @@
                     <img src="{{$playedcreator->img_url}}" style="width:100%; border-radius: 20px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)); box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.2);"/>
                     <div class="thumb-black-mask">
                     </div>
-                    <div class="creator_slide_name" style="position:absolute; bottom:12px; left: 12px; font-size: 12px; color: white;">
+                    <div class="creator_slide_name">
                         @if($socialChannel_1)
                             <img src="{{$socialChannel_1}}">
                         @endif
@@ -63,7 +63,7 @@
                         @endif
                         {{$playedcreator->name}}
                     </div>
-                    <div class="creator_slide_name" style="position:absolute; bottom:12px; right: 12px; font-size: 12px; color: white;">
+                    <div class="creator_slide_sub_counter">
                         {{$playedcreator->subscription}}
                     </div>
                 </a>
