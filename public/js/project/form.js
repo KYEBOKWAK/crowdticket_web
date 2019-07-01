@@ -2550,6 +2550,27 @@ $(document).ready(function() {
 			setPickDayElement();
 		});
 	}
+	else if(selected_tab === 'required')
+	{
+		var elementPopup = document.createElement("div");
+		elementPopup.innerHTML =
+		"<p>크라우드티켓팀이 이벤트 개설 도움을 위해 연락을 드리겠습니다. <br>작성 시 어려움이 있으면 카톡문의 버튼을 눌러주세요!<p>"
+
+		"</div>";
+		swal({
+			title: "이벤트 개설 페이지 개선 중 입니다.",
+			content: elementPopup,
+			confirmButtonText: "확인",
+			allowOutsideClick: "true",
+			buttons: {
+				close: {
+				  text: "닫기",
+				  value: "close",
+				},
+			},
+			icon: 'info'
+		})
+	}
 
 });
 //form_body_required END
