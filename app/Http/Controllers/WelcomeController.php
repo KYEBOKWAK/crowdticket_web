@@ -157,7 +157,8 @@ class WelcomeController extends Controller
         $project = '';
         if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND)
         {
-          $project = \App\Models\Project::select('title', 'project_type', 'description', 'alias', 'poster_renew_url', 'poster_url', 'funding_closing_at', 'performance_opening_at', 'performance_closing_at')->find($orderInfo->project_id);
+          //$project = \App\Models\Project::select('title', 'project_type', 'description', 'alias', 'poster_renew_url', 'poster_url', 'funding_closing_at', 'performance_opening_at', 'performance_closing_at')->find($orderInfo->project_id);
+          $project = \App\Models\Project::find($orderInfo->project_id);
         }
         else if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE)
         {

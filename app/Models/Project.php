@@ -381,50 +381,56 @@ class Project extends Model
 
     public function getTicketDateFormattedSlash()
     {
-      $open = new \DateTime('now');
-      $close = new \DateTime('now');
-
-      if($this->funding_closing_at)
+      if($this->isPlace == "FALSE" || $this->isEventTypeCrawlingEvent())
       {
-        $open = new \DateTime($this->funding_closing_at);
-        $close = new \DateTime($this->funding_closing_at);  
+        return $this->temporary_date;
       }
 
-      if ($this->performance_opening_at) {
-          $open = new \DateTime($this->performance_opening_at);
-      }
-      if ($this->performance_closing_at) {
-          $close = new \DateTime($this->performance_closing_at);
-      }
+      $ticketCount = count($this->tickets);
 
-      $openDay = $open->format('m/d');
-      $closeDay = $close->format('m/d');
-      if ($openDay === $closeDay) {
-          return $openDay;
+      if($ticketCount === 0)
+      {
+        return "";
       }
 
-      $startY = $open->format('Y');
-      $endY = $close->format('Y');
+      $concertStartDayRow = $this->tickets[0]->show_date;
+      $concertEndDayRow = $this->tickets[$ticketCount - 1]->show_date;
 
-      $startM = $open->format('m');
-      $endM = $close->format('m');
+      $concertStartDayRow = new \DateTime($concertStartDayRow);
+      $concertEndDayRow = new \DateTime($concertEndDayRow);
+
+      //$concertStartDay = $concertStartDay->format('Y. m. d');
+      $startY = $concertStartDayRow->format('Y');
+      $endY = $concertEndDayRow->format('Y');
+
+      $startM = $concertStartDayRow->format('m');
+      $endM = $concertEndDayRow->format('m');
+
+      $concertStartDay = $concertStartDayRow->format('Y/m/d');
+      $concertEndDay = $concertEndDayRow->format('Y/m/d');
+
+      if($concertStartDay === $concertEndDay)
+      {
+        //return $concertEndDay;
+        return $concertEndDayRow->format('m/d');
+      }
 
       if($startY === $endY &&
           $startM === $endM)
       {
         //년 월이 같으면 day 만 표시한다.
-        $close = $close->format('d');
+        $concertEndDay = $concertEndDayRow->format('d');
       }
       else if($startY === $endY)
       {
-        $close = $close->format('m/d');
+        $concertEndDay = $concertEndDayRow->format('m/d');
       }
       else
       {
-        $close = $close->format('Y/m/d');
+        $concertStartDay = $concertStartDayRow->format('m/d');
       }
 
-      return $openDay . ' - ' . $close;
+      return $concertStartDay . ' - ' . $concertEndDay;
     }
 
     //리뉴얼 시간 가져오는 함수
