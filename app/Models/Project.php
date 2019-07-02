@@ -419,10 +419,12 @@ class Project extends Model
           $startM === $endM)
       {
         //년 월이 같으면 day 만 표시한다.
+        $concertStartDay = $concertStartDayRow->format('m/d');
         $concertEndDay = $concertEndDayRow->format('d');
       }
       else if($startY === $endY)
       {
+        $concertStartDay = $concertStartDayRow->format('m/d');
         $concertEndDay = $concertEndDayRow->format('m/d');
       }
       else
