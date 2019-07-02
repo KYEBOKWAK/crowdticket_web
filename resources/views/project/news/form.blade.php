@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=11') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=7') }}"/>
     <style>
         .container h2 {
             font-weight: bold;
@@ -78,6 +78,6 @@
 
 @section('js')
     <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>
-    <script src="{{ asset('/js/project/news/form.js?version=22') }}"></script>
+    <script src="{{ asset('/js/project/news/form.js?version=23') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=7') }}"></script>
 @endsection

@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
+<link rel="stylesheet" href="{{ asset('/css/project/form.css?version=7') }}"/>
 <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=11') }}"/>
     <style>
     /*

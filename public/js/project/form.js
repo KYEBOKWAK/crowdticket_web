@@ -2554,22 +2554,40 @@ $(document).ready(function() {
 	{
 		var elementPopup = document.createElement("div");
 		elementPopup.innerHTML =
-		"<p>크라우드티켓팀이 이벤트 개설 도움을 위해 연락을 드리겠습니다. <br>작성 시 어려움이 있으면 카톡문의 버튼을 눌러주세요!<p>"
+		"<div class='blueprint_check_pop_container'>" + 
+			"<div class='blueprint_check_pop_title'>" + 
+				"크라우드티켓이 확인 연락을 드려요!" +
+			"</div>" +
+			"<div class='blueprint_check_pop_line'>" + 
+			"</div>" +
+			"<div class='blueprint_check_pop_subtitle'>" + 
+				"<p style='margin-bottom: 0px;'>편한 프로젝트 준비 및 등록을 위해<br>" +
+				"저희 크라우드티켓이 작성을 함께 도와드려요</p>" +
+			"</div>" +
 
+			"<div class='blueprint_check_pop_contact_bg'>" + 
+				"<p>연락은 평일 오전 10시 ~ 7시 사이에 드릴 예정입니다.</p>" +
+			"</div>" +
+
+			"<button class='blueprint_check_pop_button'>" +
+				"확인" +
+			"</button>" +
+			"<p class='blueprint_check_pop_foot'>연락 전 직접 작성도 가능해요!</p>" +
 		"</div>";
+
 		swal({
-			title: "이벤트 개설 페이지 개선 중 입니다.",
 			content: elementPopup,
-			confirmButtonText: "확인",
 			allowOutsideClick: "true",
-			buttons: {
-				close: {
-				  text: "닫기",
-				  value: "close",
-				},
-			},
-			icon: 'info'
-		})
+			className: "blueprint_check_popup",
+			closeOnClickOutside: false,
+			closeOnEsc: false
+		});
+
+		$(".swal-footer").hide();
+
+		$(".blueprint_check_pop_button").click(function(){
+			swal.close();
+		});
 	}
 
 });

@@ -159,7 +159,7 @@
             margin-top: 15px;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=6') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=7') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=10') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=10') }}"/>
@@ -293,7 +293,7 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=22') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=23') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>
