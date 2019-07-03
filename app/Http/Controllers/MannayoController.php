@@ -39,10 +39,12 @@ class MannayoController extends Controller
         if($request->title)
         {
             $creators = Creator::where('title', 'LIKE', '%'.$request->title.'%')->get();   
-        }        
-        
-        return ['state' => 'success', 'data' => $creators];
-        //return $creators;
+        }
+
+        //$meetupsData = [];
+        $meetupsData = $this->getMeetupList($creators);
+
+        return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
     }
 
     public function callYoutubeSearch(Request $request)
@@ -55,11 +57,55 @@ class MannayoController extends Controller
         $json = file_get_contents($url);
         $objs = json_decode($json);
 
-        //$objs = json_encode($objs);
-        //return "asdfddd";
-        //return $objs->items;
+        return ['state' => 'success', 'data' => $objs->items];
+    }
+
+    public function getCreatorInfoInCrollingWithChannel(Request $request)
+    {
+        if(!strpos($request->url, 'youtube.com/channel/')){
+            return ['state' => 'error', 'message' => '주소가 잘못 입력되었습니다. 다시 한번 확인 해주세요.'];
+        }
+
+        $strPos = strpos($request->url, 'channel/');
+        $channel = substr($request->url, $strPos);
+        $strPos = strpos($channel, '/');
+        $channel = substr($channel, $strPos+1);
+
+        //동일한 채널이 있는지 DB에서 찾아본다.
+        $creators = Creator::where('channel_id', $channel)->get();
+        if(count($creators))
+        {
+            //동일한 채널이 있다면 채널 정보를 넘겨준다.
+            $meetupsData = $this->getMeetupList($creators);
+            return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
+        }
+
+        $referrer = url('/');
+        $api_key = env("GOOGLE_YOUTUBE_API_KEY");
+
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=channel&channelId=".$channel."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+        $json = file_get_contents($url);
+        $objs = json_decode($json);
 
         return ['state' => 'success', 'data' => $objs->items];
-        //return count($objs);
+    }
+
+    public function getMeetupList($creators)
+    {
+        $meetupsData = [];
+        foreach($creators as $creator)
+        {
+            $meetups = $creator->meetups;
+            foreach($meetups as $meetup)
+            {
+                $meetupRow['title'] = $creator->title;
+                $meetupRow['thumbnail_url'] = $creator->thumbnail_url;
+                $meetupRow['what'] = $meetup->what;
+                $meetupRow['where'] = $meetup->where;
+                array_push($meetupsData, $meetupRow);
+            }
+        }
+
+        return $meetupsData;
     }
 }

@@ -97,6 +97,7 @@ Route::get('order/error/overticketcount', function(){
 Route::get('mannayo', 'MannayoController@goMannayo');
 Route::post('get/creator/find/list', 'MannayoController@findCreatorList');
 Route::post('search/creator/api/list', 'MannayoController@callYoutubeSearch');
+Route::post('search/creator/crolling/info', 'MannayoController@getCreatorInfoInCrollingWithChannel');
 //Mannayo END
 
 Route::group(['middleware' => 'auth'], function () {
