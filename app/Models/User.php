@@ -12,7 +12,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     const LIKE_KEY_MAGAGINE = "magazine";
 
-    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder', 'like_meta'];
+    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder', 'like_meta', 'age', 'gender'];
 
     protected $hidden = ['password', 'remember_token', 'facebook_id', 'google_id'];
 
@@ -20,7 +20,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'email' => 'required|email|unique:users',
         'name' => 'required|string',
         'nick_name' => 'string',
-        'profile_photo_url' => 'url'
+        'profile_photo_url' => 'url',
+        'age' => 'string',
+        'gender' => 'string',
     ];
 
     protected static $updateRules = [
@@ -93,6 +95,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
       }
 
       return $this->name;
+    }
+
+    public function getUserAge()
+    {
+        return $this->age;
+    }
+
+    public function getUserGender()
+    {
+        return $this->gender;
     }
 
 /*

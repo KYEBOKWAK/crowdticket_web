@@ -51,6 +51,16 @@
         }
 
         .mannayo_search_container{
+          /*
+          position: absolute;
+          width: 520px;
+          left: 50%;
+          top: 288px;
+          transform:translate(-50%, 0);
+          */
+        }
+
+        .mannayo_search_container_target{
           position: absolute;
           width: 520px;
           left: 50%;
@@ -282,15 +292,6 @@
           border-bottom-left-radius: 0px;
           border-bottom-right-radius: 0px;
         }
-/*
-        .mannayo_search_result_ready_ul_container>p{
-          margin-bottom: 0px;
-          font-size: 12px;
-          color: #808080;
-          width: 476px;
-          margin: 0px auto;
-        }
-*/
         
         .mannayo_search_result_ready_label{
           margin-bottom: 0px;
@@ -380,6 +381,204 @@
           margin-left: 20px;
         }
 
+        .meetup_popup_container{
+          width: 380px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .meetup_popup_option_creator{
+          width: 327px;
+          height: 56px;
+          border-radius: 5px;
+          background-color: #f7f7f7;
+          margin-right: 12px;
+          position: relative;
+        }
+
+        .meetup_popup_option_label{
+          font-size: 18px;
+          color: #4d4d4d;
+          margin-top: 15px;
+        }
+
+        .swal-content{
+          margin-top: 40px;
+          margin-bottom: 40px;
+        }
+
+        .meetup_popup_option_img{
+          width: 36px;
+          height: 36px;
+          margin-left: auto;
+          margin-right: 12px;
+          border-radius: 100%;
+          margin-top: 10px;
+        }
+
+        .meetup_popup_option_creator_title{
+          margin-right: auto;
+          font-size: 16px;
+          margin-top: 16px;
+        }
+
+        .blueprint_popup{
+          width: 560px;
+        }
+
+        .popup_close_button_wrapper{
+          position: absolute;
+          top: 40px;
+          right: 40px;
+        }
+
+        .popup_close_button{
+          border: 0;
+          background-color: white;
+        }
+
+        .meetup_popup_title_container>h2{
+          margin: 0px;
+          font-size: 32px;
+          font-weight: 500;
+          color: #1a1a1a;
+        }
+
+        .meetup_popup_title_container>p{
+          margin-top: 20px;
+          margin-bottom: 40px;
+        }
+
+        select{
+            width: 100%;
+            height: 100%;
+        }
+
+        .city_meetup_select{
+          opacity: 0;
+        }
+
+        .age_user_select{
+          opacity: 0;
+        }
+
+        .meetup_popup_city_text_container{
+          position: absolute;
+          width: 100%;
+          font-size: 16px;
+          color: #4d4d4d;
+          margin-top: 16px;
+        }
+
+        #meetup_popup_city_text{
+          margin-left: auto;
+          margin-right: 95px;
+        }
+
+        .meetup_popup_option_wrapper{
+          margin-top: 12px; 
+        }
+
+        #meetup_popup_option_what_input{
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          /*color: #e6e6e6;*/
+          border: 1px solid #e6e6e6;
+        }
+
+        .meetup_popup_line{
+          width: 100%;
+          height: 1px;
+          opacity: 0.2;
+          background-color: #acacac;
+          margin: 40px 0px;
+        }
+
+        #meetup_popup_option_what_input::-ms-input-placeholder { 
+          color: #e6e6e6;
+          text-align: center;
+        }
+        #meetup_popup_option_what_input::-webkit-input-placeholder { 
+          color: #e6e6e6;
+          text-align: center;
+        } 
+        #meetup_popup_option_what_input::-moz-placeholder { 
+          color: #e6e6e6;
+          text-align: center;
+        }
+
+        .meetup_popup_user_nickname_input{
+          width: 100%;
+          border-radius: 5px;
+          /*color: #e6e6e6;*/
+          border: 1px solid #e6e6e6;
+          font-size: 18px;
+          padding: 5px;
+          margin-bottom: 10px;
+        }
+
+        .meetup_popup_user_label{
+          font-size: 18px;
+          width: 50px;
+          margin-right: 60px;
+          text-align: left;
+        }
+
+        .meetup_popup_user_options_container{
+          text-align: left;
+        }
+
+        .meetup_popup_user_anonymous_inputbox[type="checkbox"]{
+          /*display: none;*/
+          width: 16px;
+          margin-right: 8px;
+          margin-top: 2px;
+        }
+
+        .meetup_popup_user_gender_input[type="radio"]{
+          width: 20px;
+          margin-right: 12px;
+        }
+
+        .meetup_popup_user_wrapper{
+          margin-bottom: 28px;
+        }
+
+        input[type="radio"], input[type=checkbox]{
+          zoom: 1;
+        }
+
+        .meetup_popup_user_age_container{
+          width: 160px;
+          height: 52px;
+          border-radius: 5px;
+          background-color: #f7f7f7;
+          position: relative;
+        }
+
+        #meetup_popup_user_age_text{
+          margin-left: 16px;
+          margin-right: auto;
+        }
+
+        #meetup_new_button{
+          width: 100%;
+          height: 56px;
+          color: white;
+          border-radius: 5px;
+          background-color: #43c9f0;
+          font-size: 20px;
+          font-weight: 500;
+          border: 0;
+        }
+
+        .meetup_popup_bottom_label{
+          font-size: 12px;
+          color: #808080;
+          margin-top: 12px;
+        }
+
         @media (max-width:1060px) {
           .welcome_start_content_container{
             margin-left: 13%;
@@ -389,6 +588,13 @@
 
         @media (max-width:768px) {
           
+        }
+
+        @media (max-width:720px) {
+          .popup_close_button_wrapper{
+            top: 20px;
+            right: 20px;
+          }
         }
 
         @media (max-width:650px) {
@@ -410,6 +616,16 @@
 @endsection
 
 @section('content')
+@if (Auth::guest())
+<input id='user_nickname' type='hidden' value=''/>
+<input id='user_age' type='hidden' value=''/>
+<input id='user_gender' type='hidden' value=''/>
+@else
+<input id='user_nickname' type='hidden' value='{{\Auth::user()->getUserNickName()}}'/>
+<input id='user_age' type='hidden' value='{{\Auth::user()->getUserAge()}}'/>
+<input id='user_gender' type='hidden' value='{{\Auth::user()->getUserGender()}}'/>
+@endif
+
     <div class="mannayo_title_container">
         <div class="mannayo_title_background">  
           <p>만나고 싶은 크리에이터를 등록하세요.<br>
@@ -417,50 +633,52 @@
         </div>
     </div>
 
-    <div class="mannayo_search_container">
-        <div class="mannayo_search_input_container">
-          <div class="flex_layer">
-            <div class="input_mannayo_search_img"><img src="{{ asset('/img/icons/svg/ic-search-wh.svg') }}" style="width: 24px; height: 24px; margin-top: 19px;"/></div>
-            <input type="text" id="input_mannayo_search" placeholder="크리에이터 검색" />
+    <div class="mannayo_search_container_target">
+      <div class="mannayo_search_container">
+          <div class="mannayo_search_input_container">
+            <div class="flex_layer">
+              <div class="input_mannayo_search_img"><img src="{{ asset('/img/icons/svg/ic-search-wh.svg') }}" style="width: 24px; height: 24px; margin-top: 19px;"/></div>
+              <input type="text" id="input_mannayo_search" placeholder="크리에이터 검색"/>
+            </div>
           </div>
-        </div>
 
-        <div class="mannayo_searching_loading_container">
-          <p class="searching"><span>.</span><span>.</span><span>.</span><span>.</span></p>
-        </div>
+          <div class="mannayo_searching_loading_container">
+            <p class="searching"><span>.</span><span>.</span><span>.</span><span>.</span></p>
+          </div>
 
-        <div id="mannayo_search_result_container">
-          <!-- 검색 안에 내용 start -->
-          <!-- 크리에이터 검색 결과 START -->
-          <div class="mannayo_search_result_ul_container">
-            <div class="mannayo_search_result_ul_wrapper">
-              <ul id="mannayo_search_result_ul">
-              </ul>
+          <div id="mannayo_search_result_container">
+            <!-- 검색 안에 내용 start -->
+            <!-- 크리에이터 검색 결과 START -->
+            <div class="mannayo_search_result_ul_container">
+              <div class="mannayo_search_result_ul_wrapper">
+                <ul id="mannayo_search_result_ul">
+                </ul>
+              </div>
+              
+              <div class="mannayo_result_ul_gradation">
+              </div>
             </div>
-            
-            <div class="mannayo_result_ul_gradation">
-            </div>
-          </div>
-          <!-- 크리에이터 검색 결과 END -->
+            <!-- 크리에이터 검색 결과 END -->
 
-          <!-- 이미 만나요 검색 결과 START -->
-          <div class="mannayo_search_result_line">
-          </div>
-          <p class="mannayo_search_result_ready_label">이미 있는 만나요</p>
-          <div class="mannayo_search_result_ready_ul_container">
-            <div class="mannayo_search_result_ready_ul_wrapper">
-              <ul id="mannayo_search_result_ready_ul">
-              </ul>
+            <!-- 이미 만나요 검색 결과 START -->
+            <div class="mannayo_search_result_line">
             </div>
-            
-            <div class="mannayo_result_ul_gradation">
+            <p class="mannayo_search_result_ready_label">이미 있는 만나요</p>
+            <div class="mannayo_search_result_ready_ul_container">
+              <div class="mannayo_search_result_ready_ul_wrapper">
+                <ul id="mannayo_search_result_ready_ul">
+                </ul>
+              </div>
+              
+              <div class="mannayo_result_ul_gradation">
+              </div>
             </div>
+            <!-- 이미 만나요 검색 결과 END -->
+            <div class="mannayo_search_result_find_container">
+            </div>
+            <!-- 검색 안에 내용 end -->
           </div>
-          <!-- 이미 만나요 검색 결과 END -->
-          <div class="mannayo_search_result_find_container">
-          </div>
-          <!-- 검색 안에 내용 end -->
-        </div>
+      </div>
     </div>
 
     <div class="welcome_content_container" style="height: 2000px; background-color:bisque;">
@@ -486,9 +704,7 @@
 
       const SEARCH_OBJECT_HEIGHT = 76;
 
-      //const STATE_MEET_FIND_INIT = 0;
-      //const STATE_MEET_FIND_MYDB = 1;
-      //const STATE_MEET_FIND_MYDB_NO = 1;
+      var citys = ['서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
       $(document).ready(function () {
         var g_creatorsSearchList = $("#mannayo_search_result_ul");
@@ -614,6 +830,255 @@
           //setCreatorScrollOption();
         }
 
+        var requestNewMeetUp = function(){
+          var url="/get/creator/find/list";
+          var method = 'post';
+          var data =
+          {
+              //"title" : $("#input_mannayo_search").val()
+              "title" : "공대생"
+          }
+          var success = function(request) {
+            searchingOnOff(false);
+
+            //console.error(request);
+            //return;
+            if(request.data.length === 0)
+            {
+              setCreatorList(request.data, TYPE_LIST_FIRST_FIND_NO);
+            }
+            else
+            {
+              setCreatorList(request.data, TYPE_LIST_FIRST_CREATOR);
+            }
+
+            //console.error(request.meetups.length);
+            if(request.meetups.length === 0)
+            {
+              setMeetupList(null, TYPE_LIST_SECOND_FIND_NO);
+            }
+            else
+            {
+              setMeetupList(request.meetups, TYPE_LIST_SECOND_MEETUP);
+            }
+          };
+          
+          var error = function(request) {
+              swal("에러", '크리에이터를 찾지 못했습니다. 다시 시도해주세요.', 'error');
+              console.error(request);
+          };
+
+          $.ajax({
+          'url': url,
+          'method': method,
+          'data' : data,
+          'success': success,
+          'error': error
+          });
+        };
+
+        var openNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url){
+          var cityOptions = '';
+          var ageOptions = '';
+          for(var i = 0 ; i < citys.length ; i++)
+          {
+            var value = citys[i];
+            cityOptions += "<option value='"+ value +"'>" + value + "</option>";
+          }
+
+          var nowYear = Number(new Date().getFullYear());
+          for(var i = 1900 ; i <= nowYear ; i++ )
+          {
+            if(i === 2000)
+            {
+              ageOptions += "<option value='"+ i +"' selected>" + i + "</option>";
+            }
+            else
+            {
+              ageOptions += "<option value='"+ i +"'>" + i + "</option>";
+            }
+          }
+
+          var nickName = $('#user_nickname').val();
+          
+          var elementPopup = document.createElement("div");
+          elementPopup.innerHTML = 
+          
+          "<div class='meetup_popup_container'>" + 
+            "<div class='meetup_popup_title_container'>" +
+              "<h2>새 만나요 만들기</h2>" +
+              "<p>언제까지 좋아요만 누를 순 없다! <br>크리에이터와 만나요 요청하고 진짜 만나요</p>" +
+            "</div>" +
+            
+            "<div class='meetup_popup_option_container'>" + 
+              "<div class='meetup_popup_option_wrapper flex_layer'>" +
+                "<div class='meetup_popup_option_creator'>" +
+                  "<div class='flex_layer'>" +
+                    "<img class='meetup_popup_option_img' src='"+creator_thumbnail_url+"'>" +
+                    "<p class='meetup_popup_option_creator_title'>" + 
+                      creator_title +
+                    "</p>" +
+                  "</div>" +
+                "</div>" +
+                "<p class='meetup_popup_option_label'>과/와" + 
+                "</p>" +
+              "</div>" +
+
+              "<div class='meetup_popup_option_wrapper flex_layer'>" +
+                "<div class='meetup_popup_option_creator'>" +
+                  "<div class='meetup_popup_city_text_container flex_layer'>" +
+                    "<p id='meetup_popup_city_text'>장소 선택</p>" +
+                    "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 24px;'>" +
+                  "</div>" +
+                  "<select class='city_meetup_select' name='city_meetup'>" +
+                      "<option value='장소 선택'>장소 선택</option>" +
+                      cityOptions +
+                  "</select>" +
+                "</div>" +
+                "<p class='meetup_popup_option_label'>에서" + 
+                "</p>" +
+              "</div>" +
+
+              "<div class='meetup_popup_option_wrapper flex_layer'>" +
+                "<div class='meetup_popup_option_creator' style='width: 254px;'>" +
+                  "<input id='meetup_popup_option_what_input' placeholder='무엇을 하고 싶나요?'>" + 
+                "</div>" +
+                "<p class='meetup_popup_option_label'>를 하고 싶어요!" + 
+                "</p>" +
+              "</div>" +
+
+            "</div>" +
+
+            "<div class='meetup_popup_line'>" + 
+            "</div>" +
+
+            "<div class='meetup_popup_user_container'>" +
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label'>" +
+                  "닉네임" +
+                "</div>" +
+                "<div class='meetup_popup_user_options_container'>" + 
+                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'>" +
+                  "<div class='flex_layer'>" +
+                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''>" +
+                    "<p style='font-size: 14px;'>익명</p>" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label'>" +
+                  "성별" +
+                "</div>" +
+                "<div class='meetup_popup_user_options_container flex_layer'>" + 
+                  "<input class='meetup_popup_user_gender_input' type='radio' name='gender' value='m'/>" +
+                  "<p style='font-size: 18px; margin-right: 40px;'>남</p>" + 
+                  "<input class='meetup_popup_user_gender_input' type='radio' name='gender' value='f'/>" +
+                  "<p style='font-size: 18px;'>여</p>" + 
+                "</div>" +
+              "</div>" +
+
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label' style='margin-top: 16px;'>" +
+                  "년생" +
+                "</div>" +
+                "<div class='meetup_popup_user_age_container'>" + 
+                  "<div class='meetup_popup_city_text_container flex_layer'>" +
+                    "<p id='meetup_popup_user_age_text'>2000</p>" +
+                    "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 24px;'>" +
+                  "</div>" +
+                  "<select class='age_user_select' name='age_user'>" +
+                      ageOptions +
+                  "</select>" +
+                "</div>" +
+              "</div>" +
+
+            "</div>" +
+
+            "<button id='meetup_new_button'>" +
+              "새 만나요 만들기" +
+            "</button>" +
+            "<p class='meetup_popup_bottom_label'>이벤트가 성사되면 가장먼저 초대해 드리겠습니다</p>" +
+          "</div>" +
+
+          "<div class='popup_close_button_wrapper'>" +
+              "<button type='button' class='popup_close_button'>" + 
+                  "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
+              "</button>" +
+          "</div>";
+
+
+          swal({
+                  content: elementPopup,
+                  allowOutsideClick: "true",
+                  className: "blueprint_popup",
+                  closeOnClickOutside: false,
+                  closeOnEsc: true
+              });
+
+          $(".swal-footer").hide();
+
+          $('.popup_close_button').click(function(){
+              swal.close();
+          });
+
+          $(".city_meetup_select").change(function(){
+            //console.error($(".city_meetup_select option").index($(".city_meetup_select option:selected")));
+            $("#meetup_popup_city_text").text($(this).val());
+          });
+
+          $(".age_user_select").change(function(){
+            $("#meetup_popup_user_age_text").text($(this).val());
+          });
+
+          $("#meetup_popup_user_anonymous_inputbox").change(function(){
+            //console.error($(this).is(":checked"));
+            if($(this).is(":checked")){
+              //익명 체크하면
+              $("#meetup_popup_user_nickname_input").attr("disabled",true);
+              $("#meetup_popup_user_nickname_input").css('background-color', '#f7f7f7');
+            }
+            else{
+              $("#meetup_popup_user_nickname_input").attr("disabled",false);
+              $("#meetup_popup_user_nickname_input").css('background-color', 'white');
+            }
+            
+          });
+
+          if($("#user_gender").val())
+          {
+            $('input:radio[name=gender]:input[value=' + $("#user_gender").val() + ']').attr("checked", true); 
+          }
+
+          if($("#user_age").val())
+          {
+            $(".age_user_select").val($("#user_age").val());
+            $("#meetup_popup_user_age_text").text($("#user_age").val());
+          }
+
+          $("#meetup_new_button").click(function(){
+            requestNewMeetUp();
+          });
+
+          //addSearchBar(".meetup_popup_option_searchbar");
+        };
+
+        var closeLoginPopup = function(){
+          swal.close();
+        };
+
+        var setOpenNewMeetPopup = function(){
+          $(".result_new_meet_button").click(function(){
+            if(!isLogin())
+            {
+              loginPopup(closeLoginPopup, null);
+              return;
+            }
+            var element = $(this);
+            openNewMeetPopup(element.attr("data_creator_id"), element.attr("data_creator_title"), element.attr("data_creator_img_url"));
+          });
+        };
+
         var addSearchFindSuccessObject = function(){
           var element = document.createElement("li");
           element.innerHTML =
@@ -655,7 +1120,7 @@
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
               "<div class='result_creator_name'>"+creator.title+"</div>" +
-              "<button class='result_creator_meet_container flex_layer'>" + 
+              "<button data_creator_id='"+ creator.id +"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button result_creator_meet_container flex_layer'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
                 "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
               "</button>" + 
@@ -793,6 +1258,8 @@
           }
 
           setCreatorScrollOption();
+
+          setOpenNewMeetPopup();
         };
 
         var setMeetupList = function(meetups, list_second_type){
@@ -842,7 +1309,8 @@
           var method = 'post';
           var data =
           {
-              "title" : $("#input_mannayo_search").val()
+              //"title" : $("#input_mannayo_search").val()
+              "title" : "공대생"
           }
           var success = function(request) {
             searchingOnOff(false);
@@ -985,6 +1453,65 @@
 
         //만나요 팝업 start
         //만나요 팝업 end
+
+        //만나요 따로 분리
+        var removeSearchBar = function(targetElement){
+          $(targetElement).children().remove();
+        }
+
+        var addSearchBar = function(targetElement){
+          var element = document.createElement("div");
+          element.innerHTML =
+          "<div class='mannayo_search_container'>" +
+              "<div class='mannayo_search_input_container'>" +
+                "<div class='flex_layer'>" +
+                  "<div class='input_mannayo_search_img'><img src='{{ asset('/img/icons/svg/ic-search-wh.svg') }}' style='width: 24px; height: 24px; margin-top: 19px;'/></div>" +
+                  "<input type='text' id='input_mannayo_search' placeholder='크리에이터 검색' />" +
+                "</div>" +
+              "</div>" +
+
+              "<div class='mannayo_searching_loading_container'>" +
+                "<p class='searching'><span>.</span><span>.</span><span>.</span><span>.</span></p>" +
+              "</div>" +
+
+              "<div id='mannayo_search_result_container'>" +
+                //<!-- 검색 안에 내용 start -->
+                //<!-- 크리에이터 검색 결과 START -->
+                "<div class='mannayo_search_result_ul_container'>" +
+                  "<div class='mannayo_search_result_ul_wrapper'>" +
+                    "<ul id='mannayo_search_result_ul'>" +
+                    "</ul>" +
+                  "</div>" +
+                  
+                  "<div class='mannayo_result_ul_gradation'>" +
+                  "</div>" +
+                "</div>" +
+                //<!-- 크리에이터 검색 결과 END -->
+
+                //<!-- 이미 만나요 검색 결과 START -->
+                "<div class='mannayo_search_result_line'>" +
+                "</div>" +
+                "<p class='mannayo_search_result_ready_label'>이미 있는 만나요</p>" +
+                "<div class='mannayo_search_result_ready_ul_container'>" +
+                  "<div class='mannayo_search_result_ready_ul_wrapper'>" +
+                    "<ul id='mannayo_search_result_ready_ul'>" +
+                    "</ul>" +
+                  "</div>" +
+                  
+                  "<div class='mannayo_result_ul_gradation'>" +
+                  "</div>" +
+                "</div>" +
+                //<!-- 이미 만나요 검색 결과 END -->
+                "<div class='mannayo_search_result_find_container'>" +
+                "</div>" +
+                //<!-- 검색 안에 내용 end -->
+              "</div>" +
+          "</div>";
+
+          if($(targetElement)){
+            $(targetElement).append(element);
+          }
+        };
       });
     </script>
     
