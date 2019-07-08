@@ -161,7 +161,8 @@
               </div>
             </div>
 
-            @if($project->isEventTypeDefault())
+            @if($project->isEventTypeDefault() ||
+                $project->isPickType())
               <div class="order_form_conform_container_grid_columns">
                 <p class="order_form_title">할인내역</p>
                 <div class="flex_layer">
@@ -939,7 +940,7 @@
           */
 
           var setCommissionInfo = function(){
-            var ticketCount = $('#ticket_count').val();
+            var ticketCount = Number($('#ticket_count').val());
 
             var discountTicketPrice = g_ticketPrice - g_discoutPrice;
             if(ticketCount > 0 && g_ticketPrice > 0 && discountTicketPrice > 0)
