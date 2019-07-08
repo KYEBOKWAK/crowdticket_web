@@ -12,7 +12,7 @@ class MagazineController extends Controller
   public function getMagazineAll()
   {
     return view('magazine.magazine', [
-        'magazines' => Magazine::all()
+        'magazines' => Magazine::orderBy('id', 'desc')->get()
     ]);
   }
 
