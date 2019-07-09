@@ -95,6 +95,7 @@ Route::get('order/error/overticketcount', function(){
 
 //Mannayo START
 Route::get('mannayo', 'MannayoController@goMannayo');
+Route::get('mannayo/list', 'MannayoController@getMannayoList');
 Route::post('get/creator/find/list', 'MannayoController@findCreatorList');
 Route::post('search/creator/api/list', 'MannayoController@callYoutubeSearch');
 Route::post('search/creator/crolling/info', 'MannayoController@getCreatorInfoInCrollingWithChannel');
@@ -224,6 +225,10 @@ Route::group(['middleware' => 'auth'], function () {
     //매거진 END
 
     Route::post('like/{id}/{likekey}', 'UserController@addLike');
+
+    Route::post('mannayo/create', 'MannayoController@createMeetup');
+    Route::get('mannayo/get/meetup/count', 'MannayoController@getMeetupCount');
+    Route::post('mannayo/meetup', 'MannayoController@meetUp');
 
     /////test//////
     //DB 테스트용 route

@@ -667,3 +667,28 @@ function delay(callback, ms) {
       }, ms || 0);
   };
 }
+
+function Check_nonTag(text){
+  var opentag = '><';
+  var i ; 
+  
+  for ( i=0; i < text.length; i++ ){
+    if( opentag.indexOf(text.substring(i,i+1)) > 0){
+    break ; 
+    }
+  }
+  
+  if ( i != text.length ){
+    return false;
+  }else{
+    return true ;
+  } 
+  
+  return false;
+} 
+
+function Check_nonTagReturn(inputId){
+  alert("HTML 태그는 입력하실 수 없습니다! 예)< > 기호...");
+  document.getElementById(inputId).focus();
+  return false;
+}

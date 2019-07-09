@@ -28,7 +28,7 @@
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
     <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet">
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=17') }}" rel="stylesheet">
+    <link href="{{ asset('/css/global.css?version=18') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
@@ -397,7 +397,7 @@
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=27') }}"></script>
+<script src="{{ asset('/js/util.js?version=28') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>

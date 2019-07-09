@@ -560,9 +560,21 @@
         #meetup_popup_user_age_text{
           margin-left: 16px;
           margin-right: auto;
+          font-size: 14px;
         }
 
         #meetup_new_button{
+          width: 100%;
+          height: 56px;
+          color: white;
+          border-radius: 5px;
+          background-color: #43c9f0;
+          font-size: 20px;
+          font-weight: 500;
+          border: 0;
+        }
+
+        #meetup_up_button{
           width: 100%;
           height: 56px;
           color: white;
@@ -577,6 +589,184 @@
           font-size: 12px;
           color: #808080;
           margin-top: 12px;
+        }
+
+        .meetup_callyou_popup_title{
+          font-size: 16px;
+          color: #4d4d4d;
+          margin-bottom: 28px;
+        }
+
+        #meetup_callyou_popup_option_contact_input{
+        }
+
+        #meetup_callyou_popup_option_email_input{
+        }
+
+        .meetup_callyou_popup_input{
+          width: 100%;
+          height: 56px;
+          border-radius: 5px;
+          border: 1px solid #e6e6e6;
+          background-color: white;
+          margin-bottom: 8px;
+          text-align: center;
+        }
+
+        #meetup_callyou_popup_ok_button{
+          width: 100%;
+          height: 56px;
+          border-radius: 5px;
+          background-color: #43c9f0;
+          margin-top: 4px;
+          margin-bottom: 12px;
+          color: white;
+          font-size: 20px;
+          font-weight: 500;
+        }
+
+        .meetup_callyou_help_block{
+          font-size: 12px;
+          color: #808080;
+        }
+
+        .meetup_popup_complete{
+          width: 200px;
+          height: 190px;
+          border-radius: 21px;
+          box-shadow: 2px 2px 12px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .meetup_popup_complete>.swal-content{
+          margin-top: 20px;
+          margin-bottom: 20px;
+          padding: 0px;
+        }
+
+        .meetup_popup_complete_button{
+          height: 150px;
+          border: 0;
+          background-color: white;
+        }
+
+        .meetup_popup_complete_button>p{
+          font-size: 12px;
+          color: #4d4d4d;
+        }
+
+        .meetup_popup_complete_img{
+          height: 60px;
+          margin-bottom: 30px;
+        }
+
+        .meetup_popup_thumb_container{
+          margin-top: 32px;
+        }
+
+        .meetup_popup_content_container{
+          margin-top: 16px;
+          font-size: 24px;
+          color: #4d4d4d;
+        }
+
+        .meetup_popup_content_point_color{
+          font-weight: 500;
+          color: black;
+        }
+
+        .meetup_popup_meet_count_container{
+          margin-top: 15px;
+        }
+
+        .meetup_popup_meet_count_container>p{
+          font-size: 12px;
+          color: #808080;
+          margin-top: 8px;
+        }
+
+        .searching_span{
+          font-size: 30px;
+        }
+
+        .mannayo_list_container{
+          margin-top: 130px;
+        }
+/*
+        .mannayo_thumb_img{
+          max-width: 250px;
+          max-height: 250px;
+        }
+        */
+
+        .mannayo_thumb_img_wrapper{
+          max-width: 250px;
+          position: relative;
+        }
+
+        .mannayo_thumb_img_resize{
+          position: relative;
+          width: 100%;
+          padding-top: 100%;
+          overflow: hidden;
+          border-radius: 10px;
+        }
+
+        .project-img {
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            max-width:100%;
+            margin: auto;
+        }
+
+        .mannayo_thumb_meet_count{
+          position: absolute;
+          bottom: 12px;
+          left: 12px;
+          color: #fafafa;
+          font-size: 12px;
+        }
+
+        .mannayo_thumb_meet_users_container{
+          position: absolute;
+          bottom: 12px;
+          right: 12px;
+          color: #fafafa;
+          font-size: 12px;
+        }
+
+        .thumb-black-mask{
+          width:100%;
+          height:100%;
+          position:absolute;
+          top:0;
+          bottom:0;
+          background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+          border-radius: 20px;
+        }
+
+        .meetup_users_profile_img{
+          width: 16px; 
+          height: 16px; 
+          border-radius: 100%; 
+          margin-left: -10px;
+          position: relative;
+        }
+
+        .mannayo_thumb_content_container{
+          font-size: 12px;
+          color: #808080;
+        }
+
+        .mannayo_thumb_container{
+          width: 250px;
+        }
+
+        .mannayo_list_loading_container{
+          text-align: center;
+          font-size: 40px;
         }
 
         @media (max-width:1060px) {
@@ -681,7 +871,58 @@
       </div>
     </div>
 
-    <div class="welcome_content_container" style="height: 2000px; background-color:bisque;">
+    <div class="welcome_content_container">
+        
+        <div class='mannayo_list_container' style='display:none;'>
+          @foreach($meetups as $meetup)
+            <div class='mannayo_thumb_container'>
+              <div class='mannayo_thumb_img_wrapper'>
+                <div class='mannayo_thumb_img_resize'>
+                  <img class='mannayo_thumb_img project-img' src='{{$meetup->thumbnail_url}}'>
+                  <div class="thumb-black-mask">
+                  </div>
+                  <div class='mannayo_thumb_meet_count'>
+                    <img src="{{ asset('/img/icons/svg/ic-meet-join-member-wh.svg') }}" style="margin-right: 4px; margin-bottom: 3px;"/>{{$meetup->meet_count}} 명 요청중
+                  </div>
+
+                  <div class='mannayo_thumb_meet_users_container'>
+                  <?php
+                    $zIndex = count($meetup->meetup_users);
+                  ?>
+                  @foreach($meetup->meetup_users as $meetup_user)
+                    <img src='{{$meetup_user->user_profile_url}}' class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                    <?php
+                      $zIndex--;
+                    ?>
+                  @endforeach
+                  </div>
+                </div>
+              </div>
+
+              <div class='mannayo_thumb_title_wrapper'>
+                {{$meetup->title}}
+              </div>
+              <div class='mannayo_thumb_content_container'>
+                {{$meetup->where}}에서 · {{$meetup->what}}
+              </div>
+              <div class='mannayo_thumb_button_wrapper'>
+                @if($meetup->is_meetup)
+                  <button class='mannayo_thumb_meetup_cancel_button'>
+                    만나요 요청됨
+                  </button>
+                @else
+                  <button class='mannayo_thumb_meetup_button'>
+                    만나요
+                  </button>
+                @endif
+              </div>
+            </div>
+          @endforeach
+        </div>
+
+        <div class="mannayo_list_loading_container">
+          <p class="searching"><span>.</span><span>.</span><span>.</span><span>.</span></p>
+        </div>
     </div>
  
 @endsection
@@ -704,7 +945,13 @@
 
       const SEARCH_OBJECT_HEIGHT = 76;
 
-      var citys = ['서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
+      const AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
+
+      const SORT_TYPE_NEW = 0;
+      const SORT_TYPE_POPULAR = 1;
+      const SORT_TYPE_MY_MEETUP = 2;
+
+      var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
       $(document).ready(function () {
         var g_creatorsSearchList = $("#mannayo_search_result_ul");
@@ -825,49 +1072,195 @@
         }
 
         var removeCreatorLastObject = function(){
-          //g_creatorsSearchList.children().last().remove();
-
-          //setCreatorScrollOption();
+          
         }
 
-        var requestNewMeetUp = function(){
-          var url="/get/creator/find/list";
+        var completeMeetUpPopup = function(creator_title){
+          var elementPopup = document.createElement("div");
+          elementPopup.innerHTML = 
+          "<button class='meetup_popup_complete_button'>" + 
+            "<div class='meetup_popup_complete_img'>" +
+              "짝!" +
+            "</div>" +
+            "<p>" +
+              "<span style='font-weight: bold; color: #43c9f0;'>" + creator_title + "</span>" +
+              " 과의 만나요 요청이 완료되었습니다." +
+            "</p>" +
+          "</button>";
+
+          swal({
+                  content: elementPopup,
+                  allowOutsideClick: "true",
+                  className: "meetup_popup_complete",
+                  closeOnClickOutside: true,
+                  closeOnEsc: true
+              }).then(function(value){
+                showLoadingPopup('');
+                window.location.reload();
+              });
+
+          $(".swal-footer").hide();
+
+          $('.meetup_popup_complete_button').click(function(){
+              swal.close();
+          });
+        };
+
+        var requestResetUserData = function(){
+
+        };
+
+        var createCallYouPopup = function(contactNumber, email, creator_title){
+          var elementPopup = document.createElement("div");
+          elementPopup.innerHTML = 
+          "<div class='meetup_popup_container'>" + 
+            "<div class='meetup_callyou_popup_title'>" + 
+              "아래 연락처로 알림을 드릴게요" +
+            "</div>" +
+            "<input id='meetup_callyou_popup_option_contact_input' class='meetup_callyou_popup_input' type='tel' name='tel' placeholder='연락처가 없습니다. (-없이 숫자만 입력)' value='"+contactNumber+"'>" + 
+            "<input id='meetup_callyou_popup_option_email_input' class='meetup_callyou_popup_input' type='email' placeholder='이메일 주소' value='"+email+"'>" + 
+
+            "<button id='meetup_callyou_popup_ok_button'>" +
+              "확인" +
+            "</button>" +
+            "<p class='meetup_callyou_help_block'>" + 
+              "정보가 없을 경우 알림을 드릴 수 없어요!" +
+            "</p>" +
+          "</div>" +
+
+          "<div class='popup_close_button_wrapper'>" +
+              "<button type='button' class='popup_close_button'>" + 
+                  "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
+              "</button>" +
+          "</div>";
+
+          swal({
+                  content: elementPopup,
+                  allowOutsideClick: "true",
+                  className: "blueprint_popup",
+                  closeOnClickOutside: false,
+                  closeOnEsc: false
+              });
+
+          $(".swal-footer").hide();
+
+          $('.popup_close_button').click(function(){
+              swal.close();
+              completeMeetUpPopup(creator_title);
+          });
+
+          $("#meetup_callyou_popup_ok_button").click(function(){
+            swal.close();
+            completeMeetUpPopup(creator_title);
+          });
+        };
+
+        var checkCreateMeetup = function(creator_channel_id){
+          if(!creator_channel_id || creator_channel_id === '0')
+          {
+            alert("크리에이터 채널 id 값 에러");
+            return false;
+          };
+
+          if($(".city_meetup_select").val() === '0'){
+            alert("장소를 선택해주세요.");
+            return false;
+          };
+
+          if(Check_nonTag(document.getElementById('meetup_popup_option_what_input').value) == false){
+            Check_nonTagReturn('meetup_popup_option_what_input');
+            return false;
+          };
+
+          if(!$("#meetup_popup_option_what_input").val()){
+            alert("무엇을 할지 정해주세요!");
+            return false;
+          };
+
+          if(isCheckOnlyEmptyValue($("#meetup_popup_option_what_input").val())){
+            alert("'하고 싶어요!' 가 공백입니다. 무엇을 할지 정해주세요!");
+            return false;
+          };
+
+          if(!$('input:radio[name=gender]:checked').val()){
+            alert("성별을 선택해주세요.");
+            return false;
+          };
+
+          if(Number($(".age_user_select").val()) === AGE_NONE_TYPE_OPTION){
+            alert("생년을 선택해주세요.");
+            return false;
+          };
+
+          return true;
+        };
+
+        var checkMeetup = function(meetup_id){
+          if(!meetup_id || meetup_id === '0')
+          {
+            alert("만나요 ID 값 에러");
+            return false;
+          };
+
+          if(!$('input:radio[name=gender]:checked').val()){
+            alert("성별을 선택해주세요.");
+            return false;
+          };
+
+          if(Number($(".age_user_select").val()) === AGE_NONE_TYPE_OPTION){
+            alert("생년을 선택해주세요.");
+            return false;
+          };
+
+          return true;
+        };
+
+        var requestCreateMeetUp = function(creator_id, creator_channel_id, creator_title, creator_img_url){
+          if(!checkCreateMeetup(creator_channel_id))
+          {
+            return;
+          }
+          loadingProcess($("#meetup_new_button"));
+          $(".popup_close_button_wrapper").hide();
+
+          //console.error($("#meetup_popup_user_anonymous_inputbox").is(":checked"));
+          var url="/mannayo/create";
           var method = 'post';
           var data =
           {
-              //"title" : $("#input_mannayo_search").val()
-              "title" : "공대생"
+            "creator_id" : creator_id,
+            "creator_channel_id" : creator_channel_id,
+            "creator_title" : creator_title,
+            "creator_img_url" : creator_img_url,
+            "where" : $(".city_meetup_select").val(),
+            "what" : $("#meetup_popup_option_what_input").val(),
+            "nick_name" : $("#meetup_popup_user_nickname_input").val(),
+            "anonymity" : Number($("#meetup_popup_user_anonymous_inputbox").is(":checked")),
+            "gender" : $('input:radio[name=gender]:checked').val(),
+            "age" : $(".age_user_select").val()
           }
           var success = function(request) {
-            searchingOnOff(false);
-
+            loadingProcessStop($("#meetup_new_button"));
+            $(".popup_close_button_wrapper").show();
             //console.error(request);
-            //return;
-            if(request.data.length === 0)
+            if(request.state === 'success')
             {
-              setCreatorList(request.data, TYPE_LIST_FIRST_FIND_NO);
+              createCallYouPopup(request.data.contact, request.data.email, request.data.creator_title);
             }
             else
             {
-              setCreatorList(request.data, TYPE_LIST_FIRST_CREATOR);
-            }
-
-            //console.error(request.meetups.length);
-            if(request.meetups.length === 0)
-            {
-              setMeetupList(null, TYPE_LIST_SECOND_FIND_NO);
-            }
-            else
-            {
-              setMeetupList(request.meetups, TYPE_LIST_SECOND_MEETUP);
+              alert(request.message);
             }
           };
           
           var error = function(request) {
-              swal("에러", '크리에이터를 찾지 못했습니다. 다시 시도해주세요.', 'error');
-              console.error(request);
+            loadingProcessStop($("#meetup_new_button"));
+            $(".popup_close_button_wrapper").show();
+            alert('만나요 생성 실패. 다시 시도해주세요.');
+            //swal("에러", '만나요 생성 실패. 다시 시도해주세요.', 'error');
+            //console.error(request);
           };
-
+          
           $.ajax({
           'url': url,
           'method': method,
@@ -875,29 +1268,35 @@
           'success': success,
           'error': error
           });
+          
         };
 
-        var openNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url){
+        var openNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url, creator_channel_id){
           var cityOptions = '';
           var ageOptions = '';
           for(var i = 0 ; i < citys.length ; i++)
           {
             var value = citys[i];
-            cityOptions += "<option value='"+ value +"'>" + value + "</option>";
+            //cityOptions += "<option value='"+ value +"'>" + value + "</option>";
+
+            if(i === 0)
+            {
+              cityOptions += "<option value='"+ i +"' selected>" + value + "</option>";
+            }
+            else
+            {
+              cityOptions += "<option value='"+ value +"'>" + value + "</option>";
+            }
           }
 
           var nowYear = Number(new Date().getFullYear());
           for(var i = 1900 ; i <= nowYear ; i++ )
           {
-            if(i === 2000)
-            {
-              ageOptions += "<option value='"+ i +"' selected>" + i + "</option>";
-            }
-            else
-            {
-              ageOptions += "<option value='"+ i +"'>" + i + "</option>";
-            }
+            ageOptions += "<option value='"+ i +"'>" + i + "</option>";
           }
+
+          //마지막 옵션은 나이 선택란.
+          ageOptions += "<option value='"+ AGE_NONE_TYPE_OPTION +"' selected>" + "년도 선택" + "</option>";
 
           var nickName = $('#user_nickname').val();
           
@@ -931,7 +1330,7 @@
                     "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 24px;'>" +
                   "</div>" +
                   "<select class='city_meetup_select' name='city_meetup'>" +
-                      "<option value='장소 선택'>장소 선택</option>" +
+                      //"<option value='장소 선택'>장소 선택</option>" +
                       cityOptions +
                   "</select>" +
                 "</div>" +
@@ -963,6 +1362,7 @@
                     "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''>" +
                     "<p style='font-size: 14px;'>익명</p>" +
                   "</div>" +
+                  "<p class='help-block'>닉네임을 지우시면 회원 이름이 공개됩니다.</p>" +
                 "</div>" +
               "</div>" +
 
@@ -984,8 +1384,8 @@
                 "</div>" +
                 "<div class='meetup_popup_user_age_container'>" + 
                   "<div class='meetup_popup_city_text_container flex_layer'>" +
-                    "<p id='meetup_popup_user_age_text'>2000</p>" +
-                    "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 24px;'>" +
+                    "<p id='meetup_popup_user_age_text'>년도 선택</p>" +
+                    "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 16px;'>" +
                   "</div>" +
                   "<select class='age_user_select' name='age_user'>" +
                       ageOptions +
@@ -995,9 +1395,11 @@
 
             "</div>" +
 
-            "<button id='meetup_new_button'>" +
-              "새 만나요 만들기" +
-            "</button>" +
+            "<div class='meetup_new_button_wrapper'>" +
+              "<button id='meetup_new_button' data_creator_id='"+creator_id+"' data_creator_channel_id='"+creator_channel_id+"' data_creator_title='"+creator_title+"' data_creator_img_url='"+creator_thumbnail_url+"'>" +
+                "새 만나요 만들기" +
+              "</button>" +
+            "</div>" +
             "<p class='meetup_popup_bottom_label'>이벤트가 성사되면 가장먼저 초대해 드리겠습니다</p>" +
           "</div>" +
 
@@ -1013,7 +1415,7 @@
                   allowOutsideClick: "true",
                   className: "blueprint_popup",
                   closeOnClickOutside: false,
-                  closeOnEsc: true
+                  closeOnEsc: false
               });
 
           $(".swal-footer").hide();
@@ -1024,11 +1426,26 @@
 
           $(".city_meetup_select").change(function(){
             //console.error($(".city_meetup_select option").index($(".city_meetup_select option:selected")));
-            $("#meetup_popup_city_text").text($(this).val());
+            if($(this).val() === '0')
+            {
+              $("#meetup_popup_city_text").text(citys[0]);
+            }
+            else
+            {
+              $("#meetup_popup_city_text").text($(this).val());
+            }
           });
 
           $(".age_user_select").change(function(){
-            $("#meetup_popup_user_age_text").text($(this).val());
+            if(Number($(this).val()) === AGE_NONE_TYPE_OPTION)
+            {
+              $("#meetup_popup_user_age_text").text("년도 선택");
+            }
+            else
+            {
+              $("#meetup_popup_user_age_text").text($(this).val());
+            }
+            
           });
 
           $("#meetup_popup_user_anonymous_inputbox").change(function(){
@@ -1057,7 +1474,7 @@
           }
 
           $("#meetup_new_button").click(function(){
-            requestNewMeetUp();
+            requestCreateMeetUp($(this).attr('data_creator_id'), $(this).attr('data_creator_channel_id'), $(this).attr('data_creator_title'), $(this).attr('data_creator_img_url'));
           });
 
           //addSearchBar(".meetup_popup_option_searchbar");
@@ -1075,7 +1492,286 @@
               return;
             }
             var element = $(this);
-            openNewMeetPopup(element.attr("data_creator_id"), element.attr("data_creator_title"), element.attr("data_creator_img_url"));
+            openNewMeetPopup(element.attr("data_creator_id"), element.attr("data_creator_title"), element.attr("data_creator_img_url"), element.attr("data_creator_channel_id"));
+          });
+        };
+
+        var requestMeetUp = function(meetup_id){
+          if(!checkMeetup(meetup_id))
+          {
+            return;
+          }
+
+          loadingProcess($("#meetup_up_button"));
+          $(".popup_close_button_wrapper").hide();
+
+          //console.error($("#meetup_popup_user_anonymous_inputbox").is(":checked"));
+          var url="/mannayo/meetup";
+          var method = 'post';
+          var data =
+          {
+            "meetup_id" : meetup_id,
+            "nick_name" : $("#meetup_popup_user_nickname_input").val(),
+            "anonymity" : Number($("#meetup_popup_user_anonymous_inputbox").is(":checked")),
+            "gender" : $('input:radio[name=gender]:checked').val(),
+            "age" : $(".age_user_select").val()
+          }
+          var success = function(request) {
+            loadingProcessStop($("#meetup_up_button"));
+            $(".popup_close_button_wrapper").show();
+            //console.error(request);
+
+            if(request.state === 'success')
+            {
+              createCallYouPopup(request.data.contact, request.data.email, request.data.creator_title);
+            }
+            else
+            {
+              alert(request.message);
+            }
+          };
+          
+          var error = function(request) {
+            loadingProcessStop($("#meetup_up_button"));
+            $(".popup_close_button_wrapper").show();
+            alert('만나요 실패. 다시 시도해주세요.');
+            //swal("에러", '만나요 생성 실패. 다시 시도해주세요.', 'error');
+            //console.error(request);
+          };
+          
+          $.ajax({
+          'url': url,
+          'method': method,
+          'data' : data,
+          'success': success,
+          'error': error
+          });
+          
+        };
+
+        //만나요 요청 팝업 START
+        var openMeetPopup = function(meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count){
+          var ageOptions = '';
+
+          var nowYear = Number(new Date().getFullYear());
+          for(var i = 1900 ; i <= nowYear ; i++ )
+          {
+            ageOptions += "<option value='"+ i +"'>" + i + "</option>";
+          }
+
+          //마지막 옵션은 나이 선택란.
+          ageOptions += "<option value='"+ AGE_NONE_TYPE_OPTION +"' selected>" + "년도 선택" + "</option>";
+
+          var nickName = $('#user_nickname').val();
+          
+          var elementPopup = document.createElement("div");
+          elementPopup.innerHTML = 
+          
+          "<div class='meetup_popup_container'>" + 
+            "<div class='meetup_popup_title_container'>" +
+              "<h2>만나요</h2>" +
+            "</div>" +
+
+            "<div class='meetup_popup_thumb_container'>" + 
+              "<img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'>" +
+            "</div>" +
+
+            "<div class='meetup_popup_content_container'>" + 
+              "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+              "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+              "</p>" +
+            "</div>" +
+
+            "<div class='meetup_popup_meet_count_container'>" +
+              "<div class='meetup_count_loading_container'>" +
+                //"<p class='searching'>🔥 <span class='searching_span'>.</span><span class='searching_span'>.</span><span class='searching_span'>.</span> 명이 만나고 싶어해요</p>" +
+                "<p>🔥 "+meetup_count+" 명이 만나고 싶어해요</p>" +
+              "</div>" +
+              "<p>함께 할수록 이벤트가 성사될 가능성이 높아요!</p>" +
+            "</div>" +
+
+            
+
+            "<div class='meetup_popup_line'>" + 
+            "</div>" +
+
+            "<div class='meetup_popup_user_container'>" +
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label'>" +
+                  "닉네임" +
+                "</div>" +
+                "<div class='meetup_popup_user_options_container'>" + 
+                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'>" +
+                  "<div class='flex_layer'>" +
+                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''>" +
+                    "<p style='font-size: 14px;'>익명</p>" +
+                  "</div>" +
+                  "<p class='help-block'>닉네임을 지우시면 회원 이름이 공개됩니다.</p>" +
+                "</div>" +
+              "</div>" +
+
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label'>" +
+                  "성별" +
+                "</div>" +
+                "<div class='meetup_popup_user_options_container flex_layer'>" + 
+                  "<input class='meetup_popup_user_gender_input' type='radio' name='gender' value='m'/>" +
+                  "<p style='font-size: 18px; margin-right: 40px;'>남</p>" + 
+                  "<input class='meetup_popup_user_gender_input' type='radio' name='gender' value='f'/>" +
+                  "<p style='font-size: 18px;'>여</p>" + 
+                "</div>" +
+              "</div>" +
+
+              "<div class='meetup_popup_user_wrapper flex_layer'>" +
+                "<div class='meetup_popup_user_label' style='margin-top: 16px;'>" +
+                  "년생" +
+                "</div>" +
+                "<div class='meetup_popup_user_age_container'>" + 
+                  "<div class='meetup_popup_city_text_container flex_layer'>" +
+                    "<p id='meetup_popup_user_age_text'>년도 선택</p>" +
+                    "<img src='{{ asset('/img/icons/svg/icon-box.svg') }}' style='margin-right: 16px;'>" +
+                  "</div>" +
+                  "<select class='age_user_select' name='age_user'>" +
+                      ageOptions +
+                  "</select>" +
+                "</div>" +
+              "</div>" +
+
+            "</div>" +
+
+            "<div class='meetup_new_button_wrapper'>" +
+              "<button id='meetup_up_button' data_meetup_id='"+meetup_id+"'>" +
+                "만나요 요청" +
+              "</button>" +
+            "</div>" +
+            "<p class='meetup_popup_bottom_label'>이벤트가 성사되면 가장먼저 초대해 드리겠습니다</p>" +
+          "</div>" +
+
+          "<div class='popup_close_button_wrapper'>" +
+              "<button type='button' class='popup_close_button'>" + 
+                  "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
+              "</button>" +
+          "</div>";
+
+
+          swal({
+                  content: elementPopup,
+                  allowOutsideClick: "true",
+                  className: "blueprint_popup",
+                  closeOnClickOutside: false,
+                  closeOnEsc: false
+              });
+
+          $(".swal-footer").hide();
+
+          $('.popup_close_button').click(function(){
+              swal.close();
+          });
+
+          $(".age_user_select").change(function(){
+            if(Number($(this).val()) === AGE_NONE_TYPE_OPTION)
+            {
+              $("#meetup_popup_user_age_text").text("년도 선택");
+            }
+            else
+            {
+              $("#meetup_popup_user_age_text").text($(this).val());
+            }
+            
+          });
+
+          $("#meetup_popup_user_anonymous_inputbox").change(function(){
+            //console.error($(this).is(":checked"));
+            if($(this).is(":checked")){
+              //익명 체크하면
+              $("#meetup_popup_user_nickname_input").attr("disabled",true);
+              $("#meetup_popup_user_nickname_input").css('background-color', '#f7f7f7');
+            }
+            else{
+              $("#meetup_popup_user_nickname_input").attr("disabled",false);
+              $("#meetup_popup_user_nickname_input").css('background-color', 'white');
+            }
+            
+          });
+
+          if($("#user_gender").val())
+          {
+            $('input:radio[name=gender]:input[value=' + $("#user_gender").val() + ']').attr("checked", true); 
+          }
+
+          if($("#user_age").val())
+          {
+            $(".age_user_select").val($("#user_age").val());
+            $("#meetup_popup_user_age_text").text($("#user_age").val());
+          }
+
+          $("#meetup_up_button").click(function(){
+            requestMeetUp($(this).attr('data_meetup_id'));
+          });
+
+          var setMeetupCounter = function(counter){
+            $(".meetup_count_loading_container").children().remove();
+
+            var element = document.createElement("div");
+            element.innerHTML = 
+            "<p>🔥 "+Number(counter)+" 명이 만나고 싶어해요</p>";
+
+            $(".meetup_count_loading_container").append(element);
+          };
+
+          var requestMeetupCounter = function(){
+            var url="/mannayo/get/meetup/count";
+            var method = 'get';
+            var data =
+            {
+                "meetup_id" : meetup_id
+            }
+            var success = function(request) {
+              //console.error(request);
+              setMeetupCounter(request.counter);
+            };
+            
+            var error = function(request) {
+              setMeetupCounter("???");
+            };
+
+            $.ajax({
+            'url': url,
+            'method': method,
+            'data' : data,
+            'success': success,
+            'error': error
+            });
+          };
+
+          //requestMeetupCounter();
+        };
+        //만나요 요청 팝업 END
+
+        //api 를 통해 새로운 크리에이터 팝업
+        var setOpenNewCreatorApiMeetupPopup = function(){
+          $(".result_add_new_creator_button").click(function(){
+            if(!isLogin())
+            {
+              loginPopup(closeLoginPopup, null);
+              return;
+            }
+
+            var element = $(this);
+            openNewMeetPopup(null, element.attr("data_creator_title"), element.attr("data_creator_img_url"), element.attr("data_creator_channel_id"));
+          });
+        };
+
+        var setOpenMeetupPopup = function(){
+          $(".result_meetup_meet_button").click(function(){
+            if(!isLogin())
+            {
+              loginPopup(closeLoginPopup, null);
+              return;
+            }
+
+            var element = $(this);
+            openMeetPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"));
           });
         };
 
@@ -1120,7 +1816,7 @@
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
               "<div class='result_creator_name'>"+creator.title+"</div>" +
-              "<button data_creator_id='"+ creator.id +"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button result_creator_meet_container flex_layer'>" + 
+              "<button data_creator_id='"+ creator.id +"' data_creator_channel_id='"+creator.channel_id+"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button result_creator_meet_container flex_layer'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
                 "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
               "</button>" + 
@@ -1133,6 +1829,19 @@
         var addMeetupObject = function(meetup){
           var img = "<img class='result_creator_thumbnail_img' src='"+meetup.thumbnail_url+"'>";
 
+          var buttonElement = 
+          "<button class='result_meetup_meet_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"'>" + 
+          "<p>만나요</p>" +
+          "</button>";
+
+          if(meetup.is_meetup)
+          {
+            buttonElement = 
+            "<button class='result_meetup_meet_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"'>" + 
+            "<p>만나요 요청됨</p>" +
+            "</button>";
+          }
+
           var element = document.createElement("li");
           element.innerHTML =
           "<div class='result_creator_wrapper'>" +
@@ -1144,9 +1853,10 @@
                 "<div class='result_meetup_content text-ellipsize'>"+meetup.what+"</div>" +
               "</div>" +
               "<div class='result_meetup_meet_button_container'>" +
-                "<button class='result_meetup_meet_button'>" + 
-                  "<p>만나요</p>"
-                "</button>" + 
+                buttonElement +
+                //"<button class='result_meetup_meet_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"'>" + 
+                //  "<p>만나요</p>" +
+                //"</button>" + 
               "</div>" +
             "</div>" +
           "</div>";
@@ -1155,7 +1865,10 @@
         };
 
         var addCreatorApiObject = function(creator){
-          var img = "<img class='result_creator_thumbnail_img' src='"+creator.thumbnails.default.url+"'>";
+          var channelId = creator.channelId;
+          var channelTitle = creator.channelTitle;
+          var channelThumbnailURL = creator.thumbnails.high.url;
+          var img = "<img class='result_creator_thumbnail_img' src='"+channelThumbnailURL+"'>";
 
           var element = document.createElement("li");
           element.innerHTML =
@@ -1163,8 +1876,8 @@
           
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
-              "<div class='result_creator_name'>"+creator.channelTitle+"</div>" +
-              "<button class='result_creator_meet_container flex_layer'>" + 
+              "<div class='result_creator_name'>"+channelTitle+"</div>" +
+              "<button class='result_add_new_creator_button result_creator_meet_container flex_layer' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
                 "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
               "</button>" + 
@@ -1172,6 +1885,10 @@
           "</div>";
           
           g_meetupSearchList.append(element);
+
+          //$(".result_add_new_creator_button").click(function(){
+
+          //});
         };
 
         var addSearchAPINoCreatorObject = function(){
@@ -1290,6 +2007,8 @@
           
 
           setMeetupScrollOption(list_second_type);
+          setOpenMeetupPopup();
+          setOpenNewCreatorApiMeetupPopup();//
         };
 
         var removeAllList = function(){
@@ -1309,8 +2028,8 @@
           var method = 'post';
           var data =
           {
-              //"title" : $("#input_mannayo_search").val()
-              "title" : "공대생"
+              "title" : $("#input_mannayo_search").val()
+              //"title" : "공대생"
           }
           var success = function(request) {
             searchingOnOff(false);
@@ -1375,6 +2094,7 @@
           var data=
           {
             'searchvalue': $("#input_mannayo_search").val()
+            //'searchvalue': '공대생'
           };
 
           var success = function(request) {
@@ -1512,6 +2232,36 @@
             $(targetElement).append(element);
           }
         };
+
+        //하단 리스트 START
+        var requestMannayoList = function(){
+          var url="/mannayo/list";
+          var method = 'get';
+          var data =
+          {
+            "sort_type" : SORT_TYPE_NEW
+          }
+          var success = function(request) {
+            console.error(request);
+          };
+          
+          var error = function(request) {
+            alert('크리에이터 정보 가져오기 실패. 다시 시도해주세요.');
+            
+            console.error(request);
+          };
+          
+          $.ajax({
+          'url': url,
+          'method': method,
+          'data' : data,
+          'success': success,
+          'error': error
+          });
+        };
+
+        requestMannayoList();
+        //하단 리스트 END
       });
     </script>
     
