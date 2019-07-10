@@ -30,6 +30,10 @@ use Illuminate\Http\Response;
 
 class MannayoController extends Controller
 {
+    const SORT_TYPE_NEW = 0;
+    const SORT_TYPE_POPULAR = 1;
+    const SORT_TYPE_MY_MEETUP = 2;
+
     public function goMannayo()
     {
         //test
@@ -344,7 +348,93 @@ class MannayoController extends Controller
 
     public function getMannayoList(Request $request)
     {
-        return "asdf";
+        $orderBy = 'meetups.id';
+        $orderType = 'desc';
+
+        if((int)$request->sort_type === self::SORT_TYPE_NEW)
+        {
+            $orderBy = 'meetups.id';
+            $orderType = 'desc';
+        }
+        else
+        {
+            $orderType = 'asc';
+        }
+
+        $skip = $request->call_skip_counter;
+        $take = $request->call_once_max_counter;
+
+        $meetups = \DB::table('meetups')
+        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+
+        /*
+        $meetups = \DB::table('meetups')
+        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+        ->orderBy($orderBy, $orderType)->get();
+        */
+
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
+        foreach($meetups as $meetup)
+        {
+            $meetup->meetup_users = [];
+            $meetup->is_meetup = false;
+            if($user)
+            {
+                $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+                if($meetup_user_my)
+                {
+                    $userMyInfo = $meetup_user_my->user;
+                    $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                    $meetup_user_my->user_profile_url = $userMyProfileURL;
+
+                    array_push($meetup->meetup_users, $meetup_user_my);
+
+                    $meetup->is_meetup = true;
+                }
+            }
+
+            $meetup_users = null;
+
+            if($user)
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+            else
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+
+            foreach($meetup_users as $meetup_user)
+            {
+                $userInfo = $meetup_user->user;
+                $userProfileURL = $userInfo->getPhotoUrl();
+
+                $meetup_user->user_profile_url = $userProfileURL;
+
+                array_push($meetup->meetup_users, $meetup_user);
+
+                if(count($meetup->meetup_users) >= 3)
+                {
+                    break;
+                }
+            }
+        }
+
+        return ['state' => 'success', 'meetups' => $meetups];
+        //return "asdf";
     }
 
     //해당 밋업을 이미 한 유저인지 체크 한다.
