@@ -36,88 +36,44 @@ class MannayoController extends Controller
 
     public function goMannayo()
     {
-        //test
         $meetups = [];
-        /*
-        $meetups = \DB::table('meetups')
-        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-        ->orderBy('meetups.id', 'desc')->get();
-
-        $user = null;
-        if(\Auth::check() && \Auth::user())
-        {
-            $user = \Auth::user();
-        }
-
-        foreach($meetups as $meetup)
-        {
-            $meetup->meetup_users = [];
-            $meetup->is_meetup = false;
-            if($user)
-            {
-                $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
-                if($meetup_user_my)
-                {
-                    $userMyInfo = $meetup_user_my->user;
-                    $userMyProfileURL = $userMyInfo->getPhotoUrl();
-
-                    $meetup_user_my->user_profile_url = $userMyProfileURL;
-
-                    array_push($meetup->meetup_users, $meetup_user_my);
-
-                    $meetup->is_meetup = true;
-                }
-            }
-
-            $meetup_users = null;
-
-            if($user)
-            {
-                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
-            }
-            else
-            {
-                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
-            }
-
-            foreach($meetup_users as $meetup_user)
-            {
-                $userInfo = $meetup_user->user;
-                $userProfileURL = $userInfo->getPhotoUrl();
-
-                $meetup_user->user_profile_url = $userProfileURL;
-
-                array_push($meetup->meetup_users, $meetup_user);
-
-                if(count($meetup->meetup_users) >= 3)
-                {
-                    break;
-                }
-            }
-        }
-        */
-        //test
-
         return view('mannayo.welcome_mannayo', ['meetups' => $meetups]);
+    }
+
+    public function createCreator(Request $request)
+    {
+        $creator = null;
+        
+        if($request->has('creator_channel_id'))
+        {
+            $creator = Creator::where('channel_id', $request->creator_channel_id)->first();
+        }
+        else
+        {
+            return ['state' => 'error', 'message' => '채널 정보가 없습니다.'];
+        }
+
+        if(!$creator)
+        {
+            //크리에이터 정보가 없으면 정보 생성
+            $creator = new Creator();
+            $creator->channel_id = $request->creator_channel_id;
+            $creator->title = $request->creator_title;
+            $creator->thumbnail_url = $request->creator_img_url;
+            $creator->social_channel = 'youtube';
+            $creator->save();
+            //return ['state' => 'error', 'message' => 'ERROR!! 크리에이터 정보가 없습니다.'];
+        }
+
+        return ['state' => 'success'];
     }
 
     public function createMeetup(Request $request)
     {
         $creator = null;
-        /*
-        if($request->has('creator_id'))
-        {
-            $creator = Creator::find((int)$request->creator_id);
-        }
-        */
-
+        
         if($request->has('creator_channel_id'))
         {
-            //$creator = Creator::find((int)$request->creator_channel_id);
-            //$creator = Creator::where((int)$request->creator_channel_id);
             $creator = Creator::where('channel_id', $request->creator_channel_id)->first();
         }
 
@@ -156,8 +112,8 @@ class MannayoController extends Controller
         $meetUp->what = $request->what;
         $meetUp->anonymity = $request->anonymity;
         $meetUp->state = Meetup::MEETUP_STATE_COLLECT;
-        $meetUp->increment('meet_count');
         $meetUp->save();
+        $meetUp->increment('meet_count');
 
         if(!$request->anonymity)
         {
@@ -259,6 +215,7 @@ class MannayoController extends Controller
                 $meetupRow['thumbnail_url'] = $creator->thumbnail_url;
                 $meetupRow['what'] = $meetup->what;
                 $meetupRow['where'] = $meetup->where;
+                $meetupRow['meet_count'] = $meetup->meet_count;
                 $meetupRow['is_meetup'] = false;
 
                 if($user)
@@ -371,15 +328,6 @@ class MannayoController extends Controller
                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
 
-        /*
-        $meetups = \DB::table('meetups')
-        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-        ->orderBy($orderBy, $orderType)->get();
-        */
-
         $user = null;
         if(\Auth::check() && \Auth::user())
         {
@@ -435,6 +383,63 @@ class MannayoController extends Controller
 
         return ['state' => 'success', 'meetups' => $meetups];
         //return "asdf";
+    }
+
+    public function meetUpCancel(Request $request)
+    {
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
+        if(!$user)
+        {
+            return ['state' => 'error', 'message' => '로그인이 되어 있지 않습니다. 로그인 해주세요.'];
+        }
+
+        $meetUp = Meetup::find($request->meetup_id);
+        if(!$meetUp)
+        {
+            return ['state' => 'error', 'message' => 'ERROR!! 만나요 정보가 없습니다. 다시 시도해주세요.'];
+        }
+
+        $meetupUser = Meetup_user::where('meetup_id', $request->meetup_id)->where('user_id', $user->id)->first();
+        if(!$meetupUser)
+        {
+            //return ['state' => 'success', 'meetupUser' => $meetupUser, 'message' => '값이 있음!'];
+            return ['state' => 'error', 'message' => 'ERROR!! 만나요 정보와 유저 정보가 다릅니다!'];
+        }
+
+        $meetupUser->delete();
+
+        if($meetUp->meet_count > 0)
+        {
+            $meetUp->decrement('meet_count');
+        }
+
+        $meetupUserRealCounter = Meetup_user::where('meetup_id', $request->meetup_id)->count();
+
+        if($meetupUserRealCounter === 0)
+        {
+            //밋업 유저가 한명도 없으면 밋업을 제거한다.
+            $meetUp->delete();
+        }
+
+        
+        return ['state' => 'success'];
+
+
+
+        /*
+        $creator = Creator::find($meetUp->creator_id);
+        if(!$creator)
+        {
+            return ['state' => 'error', 'message' => 'ERROR!! 크리에이터 정보가 없습니다. 다시 시도해주세요.'];
+        }
+        */
+
+        return ['state' => 'success'];
     }
 
     //해당 밋업을 이미 한 유저인지 체크 한다.

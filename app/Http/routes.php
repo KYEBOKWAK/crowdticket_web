@@ -227,8 +227,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('like/{id}/{likekey}', 'UserController@addLike');
 
     Route::post('mannayo/create', 'MannayoController@createMeetup');
+    Route::post('mannayo/create/creator', 'MannayoController@createCreator');
+    
     Route::get('mannayo/get/meetup/count', 'MannayoController@getMeetupCount');
     Route::post('mannayo/meetup', 'MannayoController@meetUp');
+    Route::post('mannayo/meetup/cancel', 'MannayoController@meetUpCancel');
 
     /////test//////
     //DB 테스트용 route
