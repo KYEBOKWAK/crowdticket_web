@@ -264,6 +264,11 @@
           /*padding-top: 5px;*/
           position: relative;
         }
+
+        .result_creator_wrapper_main{
+          width: 520px;
+          height: 100px;
+        }
 /*
         .result_meetup_container:hover{
           background-color: #f7f7f7;
@@ -814,8 +819,7 @@
         }
 
         .meetup_popup_complete_img{
-          height: 60px;
-          margin-bottom: 30px;
+          margin-bottom: 16px;
         }
 
         .meetup_popup_thumb_container{
@@ -1104,6 +1108,20 @@
           color: white;
         }
 
+        .mannayo_creator_list_container{
+          margin-top: 64px;
+        }
+
+        .mannayo_creator_list_title{
+          display: none;
+          font-size: 24px;
+          color: #000000;
+        }
+
+        .mannayo_creator_list{
+          margin-top: 32px;
+        }
+
         @media (max-width:1060px) {
           .welcome_start_content_container{
             margin-left: 13%;
@@ -1112,6 +1130,10 @@
 
           .mannayo_flex_second_object{
             margin-left: 0px;
+          }
+
+          .result_creator_wrapper_main{
+            width: 100%;
           }
         }
 
@@ -1211,7 +1233,20 @@
     </div>
 
     <div class="welcome_content_container">
+        <div class='mannayo_creator_list_container'>
+          <div class='mannayo_creator_list_title'>
+            새 만나요 만들기
+          </div>
+          <div class='mannayo_creator_list'>
+          </div>
+        </div>
+
         <div class='mannayo_list_container'>
+          <div class='mannayo_creator_list_title' style='margin-bottom: 48px;'>
+            이미 있는 만나요
+          </div>
+          <div class='mannayo_meetup_list_container'>
+          </div>
         </div>
 
         <div class="mannayo_list_loading_container">
@@ -1237,6 +1272,7 @@
       const TYPE_LIST_FIRST_FIND_SUCCESS = 2;
       const TYPE_LIST_FIRST_FIND_NO = 3;
       const TYPE_LIST_FIRST_FIND_API_NO = 4;
+      const TYPE_LIST_FIRST_CREATOR_MAIN = 5;
 
       const TYPE_LIST_SECOND_MEETUP = 1;
       const TYPE_LIST_SECOND_FIND_API = 2;
@@ -1261,15 +1297,26 @@
       const TYPE_CREATE_MEETUP = 0;
       const TYPE_CREATE_MEETUP_NEW = 1;
 
+      const INPUT_SEARCH_WAIT_MS = 300;
+
+      //서버 코드와 동일
+      const INPUT_KEY_TYPE_NORMAL = 'key_type_normal';
+      const INPUT_KEY_TYPE_ENTER = 'key_type_enter';
+
       var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
       //var g_mannayoArray = new Array();
       var g_mannayoCounter = 0;
 
+      var isPressEnterKey = false;
+
       $(document).ready(function () {
         var g_creatorsSearchList = $("#mannayo_search_result_ul");
         var g_meetupSearchList = $("#mannayo_search_result_ready_ul");
         var g_footerContainer = $(".mannayo_search_result_find_container");
+
+        var g_creatorsSearchList_main = $(".mannayo_creator_list");
+        var g_footerContainer_main = $(".mannayo_search_result_find_container");
 
         var setScrollUI = function(selector){
           var el = document.querySelector(selector);
@@ -1316,11 +1363,17 @@
           {
             $(".mannayo_list_loading_container").show();
             $(".mannayo_list_more_wrapper").hide();
+            //$(".mannayo_meetup_list_container").hide();
+            $(".mannayo_creator_list_container").hide();
+            $(".mannayo_list_container").hide();
           }
           else
           {
             $(".mannayo_list_loading_container").hide();
             $(".mannayo_list_more_wrapper").show();
+            //$(".mannayo_meetup_list_container").show();
+            $(".mannayo_creator_list_container").show();
+            $(".mannayo_list_container").show();
           }
         };
 
@@ -1427,6 +1480,10 @@
           g_meetupSearchList.children().remove();
         }
 
+        var removeCreatorListInMain = function(){
+          g_creatorsSearchList_main.children().remove();
+        };
+
         var removeCreatorLastObject = function(){
           
         }
@@ -1436,7 +1493,7 @@
           elementPopup.innerHTML = 
           "<button class='meetup_popup_complete_button'>" + 
             "<div class='meetup_popup_complete_img'>" +
-              "짝!" +
+              "<img src='{{ asset('/img/icons/svg/ic-meet-popup-highfive.svg') }}' style=''/>" +
             "</div>" +
             "<p>" +
               "<span style='font-weight: bold; color: #43c9f0;'>" + creator_title + "</span>" +
@@ -2682,6 +2739,26 @@
           g_creatorsSearchList.append(element);
         };
 
+        var addCreatorObjectInMain = function(creator, targetElement){
+          var img = "<img class='result_creator_thumbnail_img' src='"+creator.thumbnail_url+"'>";
+
+          var element = document.createElement("div");
+          element.innerHTML =
+          "<div class='result_creator_wrapper result_creator_wrapper_main'>" +
+          
+            "<div class='flex_layer' style='margin-left: 0px;'>" + 
+              "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
+              "<div class='result_creator_name'>"+creator.title+"</div>" +
+              "<button data_creator_id='"+ creator.id +"' data_creator_channel_id='"+creator.channel_id+"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button_in_main result_creator_meet_container flex_layer'>" + 
+                "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
+                "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
+              "</button>" + 
+            "</div>" +
+          "</div>";
+          
+          targetElement.append(element);           
+        }
+
         var removeFooter = function(){
           g_footerContainer.children().remove();
         };
@@ -2793,6 +2870,48 @@
             addSearchAPINoCreatorObject();
             addFooter(FIND_TYPE_IN_CHANNEL);
           }
+          else if(list_first_type === TYPE_LIST_FIRST_CREATOR_MAIN){
+            removeCreatorListInMain();
+
+            var rowCount = Math.ceil(creators.length / 2);
+            var index = 0;
+            for(var i = 0 ; i < rowCount ; i++)
+            {
+              var mannayoFlexLayer = document.createElement("div");
+              mannayoFlexLayer.className = 'mannayo_creator_object_container flex_layer_thumb';
+              g_creatorsSearchList_main.append(mannayoFlexLayer);
+
+              var isEnd = false;
+              for(var j = 0 ; j < 2 ; j++)
+              {
+                var creator = creators[index];
+                addCreatorObjectInMain(creator, mannayoFlexLayer);
+                index++;
+
+                if(index >= creators.length)
+                {
+                  isEnd = true;
+                  break;
+                }
+              }
+
+              if(isEnd)
+              {
+                break;
+              }
+            }
+
+            $(".result_new_meet_button_in_main").click(function(){
+              //메인 새로 만나요 버튼
+              if(!isLogin())
+              {
+                loginPopup(closeLoginPopup, null);
+                return;
+              }
+              var element = $(this);
+              openNewMeetPopup(element.attr("data_creator_id"), element.attr("data_creator_title"), element.attr("data_creator_img_url"), element.attr("data_creator_channel_id"), TYPE_CREATE_MEETUP);
+            });
+          }
 
           setCreatorScrollOption();
 
@@ -2837,11 +2956,22 @@
           removeMeetupList();
         };
 
-        var requestFindCreator = function(){
+        var requestFindCreator = function(keyType){
+          isPressEnterKey = false;
+          searchingOnOff(true);
           if(!$("#input_mannayo_search").val())
           {
             searchingOnOff(false);
-            initSearchBar();
+            $("#mannayo_search_result_container").hide();
+            return;
+          }
+
+          if(keyType === INPUT_KEY_TYPE_ENTER)
+          {
+            isPressEnterKey = true;
+            searchingOnOff(false);
+            $("#mannayo_search_result_container").hide();
+            requestMannayoList(INPUT_KEY_TYPE_ENTER);
             return;
           }
 
@@ -2849,10 +2979,19 @@
           var method = 'post';
           var data =
           {
-              "title" : $("#input_mannayo_search").val()
-              //"title" : "공대생"
+              "title" : $("#input_mannayo_search").val(),
+              "keytype" : keyType
           }
           var success = function(request) {
+            //if(Number(request.keytype) === INPUT_KEY_TYPE_ENTER)
+            //{
+            //  return;
+            //}
+            if(isPressEnterKey)
+            {
+              return;
+            }
+
             searchingOnOff(false);
 
             if(request.data.length === 0)
@@ -2875,6 +3014,7 @@
           };
           
           var error = function(request) {
+              searchingOnOff(false);
               swal("에러", '크리에이터를 찾지 못했습니다. 다시 시도해주세요.', 'error');
           };
 
@@ -2887,19 +3027,39 @@
           });
         };
 
-        
-
         var initSearchBar = function(){
           //searchingOnOff(false);
           $("#mannayo_search_result_container").hide();
 
-          $('#input_mannayo_search').keydown(function(){
-            searchingOnOff(true);
-          });
 
-          $('#input_mannayo_search').keyup(delay(function (e) {
-            requestFindCreator();
-          }, 300));
+          var g_keyType = INPUT_KEY_TYPE_NORMAL;
+          var callbackSearchRequest = function(){
+            console.error('callbackSearchRequest');
+            requestFindCreator(g_keyType);
+          }
+          var callbackSearchRequestInfo = null;
+
+          var resetSearchCallbackTimer = function(keyType, ms){
+            g_keyType = keyType;
+            clearTimeout(callbackSearchRequestInfo);
+            callbackSearchRequestInfo = setTimeout(callbackSearchRequest, ms);
+          }
+
+
+          $('#input_mannayo_search').keydown(function(event){
+            if (event.which === 13) {
+              console.error('key press enter');
+              event.preventDefault();
+              resetSearchCallbackTimer(INPUT_KEY_TYPE_ENTER, 0);
+            }
+            else
+            {
+              console.error('key press normal key');
+              resetSearchCallbackTimer(INPUT_KEY_TYPE_NORMAL, INPUT_SEARCH_WAIT_MS);
+            }
+
+            //return false;
+          });
         };
 
         initSearchBar();
@@ -3221,8 +3381,19 @@
           });
         }
 
-        var setMannayoList = function(meetups){
-          var mannayoListElement = $(".mannayo_list_container");
+        var setMannayoList = function(meetups, requestKeyType){
+          if(requestKeyType === INPUT_KEY_TYPE_ENTER)
+          {
+            $(".mannayo_creator_list_title").show();
+            $('.mannayo_list_container').css("margin-top", '64px');
+          }
+          else
+          {
+            $('.mannayo_list_container').css("margin-top", '130px');
+          }
+
+          var mannayoListElement = $(".mannayo_meetup_list_container");
+          mannayoListElement.children().remove();
           
           var rowCount = Math.ceil(meetups.length / MANNAYO_COLUM_COUNT);
           
@@ -3316,8 +3487,13 @@
           
         };
 
-        var requestMannayoList = function(){
+        var requestMannayoList = function(keyType){
+          if(keyType === INPUT_KEY_TYPE_ENTER)
+          {
+            g_mannayoCounter = 0;
+          }
           setSwitchMoreLoading(true);
+
           var callMannayoOnceMaxCounter = CALL_MANNAYO_ONCE_MAX_COUNT
           if(g_mannayoCounter === 0)
           {
@@ -3330,12 +3506,30 @@
           {
             "sort_type" : SORT_TYPE_NEW,
             "call_once_max_counter" : callMannayoOnceMaxCounter,
-            "call_skip_counter" : g_mannayoCounter
+            "call_skip_counter" : g_mannayoCounter,
+            'keytype' : keyType,
+            'searchvalue': $("#input_mannayo_search").val()
           }
           var success = function(request) {
-            setSwitchMoreLoading(false);
-            setMannayoList(request.meetups);
-            g_mannayoCounter += request.meetups.length;            
+            if(request.state === 'success')
+            {
+              if(isPressEnterKey && request.keytype === INPUT_KEY_TYPE_NORMAL)
+              {
+                return;
+              }
+              
+              setSwitchMoreLoading(false);
+              if(request.keytype === INPUT_KEY_TYPE_ENTER)
+              {
+                setCreatorList(request.creators, TYPE_LIST_FIRST_CREATOR_MAIN);
+              }
+
+              setMannayoList(request.meetups, request.keytype);
+              g_mannayoCounter += request.meetups.length;
+            }
+                        
+
+            console.error(request);
           };
           
           var error = function(request) {
@@ -3352,10 +3546,10 @@
           });
         };
 
-        requestMannayoList();
+        requestMannayoList(INPUT_KEY_TYPE_NORMAL);
 
         $("#mannayo_list_more_button").click(function(){
-          requestMannayoList();
+          requestMannayoList(INPUT_KEY_TYPE_NORMAL);
         });
         //하단 리스트 END
 

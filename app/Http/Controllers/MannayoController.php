@@ -34,6 +34,9 @@ class MannayoController extends Controller
     const SORT_TYPE_POPULAR = 1;
     const SORT_TYPE_MY_MEETUP = 2;
 
+    const INPUT_KEY_TYPE_NORMAL = 'key_type_normal';
+    const INPUT_KEY_TYPE_ENTER = 'key_type_enter';
+
     public function goMannayo()
     {
         $meetups = [];
@@ -156,7 +159,7 @@ class MannayoController extends Controller
         //$meetupsData = [];
         $meetupsData = $this->getMeetupList($creators, $user);
 
-        return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
+        return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData, 'keytype' => $request->keytype];
     }
 
     public function callYoutubeSearch(Request $request)
@@ -321,12 +324,42 @@ class MannayoController extends Controller
         $skip = $request->call_skip_counter;
         $take = $request->call_once_max_counter;
 
+        /*
         $meetups = \DB::table('meetups')
         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                 'meetups.what', 'meetups.where', 'meetups.meet_count',
                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+        */
+
+        $creators = [];
+        $meetups = [];
+        if($request->keytype === self::INPUT_KEY_TYPE_ENTER)
+        {
+            $creators = Creator::where('title', 'LIKE', '%'.$request->searchvalue.'%')->get();
+            $creatorIds = [];
+            foreach($creators as $creator)
+            {
+                array_push($creatorIds, $creator->id);
+            }
+            $meetups = \DB::table('meetups')
+                        ->whereIn('creator_id', $creatorIds)
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+        }
+        else
+        {
+            $meetups = \DB::table('meetups')
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+        }
 
         $user = null;
         if(\Auth::check() && \Auth::user())
@@ -381,7 +414,7 @@ class MannayoController extends Controller
             }
         }
 
-        return ['state' => 'success', 'meetups' => $meetups];
+        return ['state' => 'success', 'meetups' => $meetups, 'creators' => $creators, 'keytype' => $request->keytype];
         //return "asdf";
     }
 
