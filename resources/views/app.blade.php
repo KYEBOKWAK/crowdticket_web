@@ -285,7 +285,7 @@
           <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
-          <li style="display:none;">
+          <li style="">
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
           </li>
