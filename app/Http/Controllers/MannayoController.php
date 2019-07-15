@@ -191,7 +191,7 @@ class MannayoController extends Controller
         if(count($creators))
         {
             //동일한 채널이 있다면 채널 정보를 넘겨준다.
-            $meetupsData = $this->getMeetupList($creators);
+            $meetupsData = $this->getMeetupList($creators, null);
             return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
         }
 
@@ -311,30 +311,35 @@ class MannayoController extends Controller
         $orderBy = 'meetups.id';
         $orderType = 'desc';
 
-        if((int)$request->sort_type === self::SORT_TYPE_NEW)
+        if((int)$request->sort_type === self::SORT_TYPE_POPULAR)
+        {
+            $orderBy = 'meetups.meet_count';
+            $orderType = 'desc';
+        }
+        else if((int)$request->sort_type === self::SORT_TYPE_MY_MEETUP)
         {
             $orderBy = 'meetups.id';
             $orderType = 'desc';
         }
         else
         {
-            $orderType = 'asc';
+            //$orderType = 'asc';
+            $orderBy = 'meetups.id';
+            $orderType = 'desc';
         }
 
         $skip = $request->call_skip_counter;
         $take = $request->call_once_max_counter;
 
-        /*
-        $meetups = \DB::table('meetups')
-        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-        */
-
         $creators = [];
         $meetups = [];
+
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
         if($request->keytype === self::INPUT_KEY_TYPE_ENTER)
         {
             $creators = Creator::where('title', 'LIKE', '%'.$request->searchvalue.'%')->get();
@@ -343,6 +348,33 @@ class MannayoController extends Controller
             {
                 array_push($creatorIds, $creator->id);
             }
+
+            if((int)$request->sort_type === self::SORT_TYPE_MY_MEETUP)
+            {
+                if($user)
+                {
+                    $meetups = \DB::table('meetups')
+                        ->whereIn('creator_id', $creatorIds)
+                        ->where('user_id', $user->id)
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->get();
+                }
+            }
+            else
+            {
+                $meetups = \DB::table('meetups')
+                        ->whereIn('creator_id', $creatorIds)
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->get();
+            }
+
+            /*
             $meetups = \DB::table('meetups')
                         ->whereIn('creator_id', $creatorIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
@@ -350,21 +382,32 @@ class MannayoController extends Controller
                                 'meetups.what', 'meetups.where', 'meetups.meet_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+                        */
         }
         else
         {
-            $meetups = \DB::table('meetups')
+            if((int)$request->sort_type === self::SORT_TYPE_MY_MEETUP)
+            {
+                if($user)
+                {
+                    $meetups = \DB::table('meetups')
+                        ->where('user_id', $user->id)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-        }
-
-        $user = null;
-        if(\Auth::check() && \Auth::user())
-        {
-            $user = \Auth::user();
+                }
+            }
+            else
+            {
+                $meetups = \DB::table('meetups')
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+            }
         }
 
         foreach($meetups as $meetup)
@@ -415,7 +458,6 @@ class MannayoController extends Controller
         }
 
         return ['state' => 'success', 'meetups' => $meetups, 'creators' => $creators, 'keytype' => $request->keytype];
-        //return "asdf";
     }
 
     public function meetUpCancel(Request $request)
