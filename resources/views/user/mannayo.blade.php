@@ -1456,6 +1456,10 @@
           #meetup_cancel_button{
             width: 100%;
           }
+
+          .mannayo_creator_list_title{
+              margin-left: 10px;
+          }
         }
 
         @media (max-width:320px) {
