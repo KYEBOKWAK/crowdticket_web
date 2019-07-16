@@ -1180,6 +1180,19 @@
           color: #acacac;
         }
 
+        .mannayo_no_creator_list_in_api_container{
+          display: none;
+          margin-top: 160px;
+          text-align: center;
+          margin-bottom: 64px;
+        }
+
+        .mannayo_no_creator_list_in_api_container>p{
+          margin-top: 24px;
+          font-size: 24px;
+          color: #acacac;
+        }
+
         .mannayo_sort_select{
           opacity:0;
           position: relative;
@@ -1611,6 +1624,10 @@
           <img src="{{ asset('/img/icons/svg/ic-no-result-emoji.svg') }}"/>
           <p>검색 결과가 없어요</p>
         </div>
+        <div class='mannayo_no_creator_list_in_api_container'>
+          <img src="{{ asset('/img/icons/svg/ic-no-result-emoji.svg') }}"/>
+          <p>없는 채널이네요. 채널 주소를 직접 입력해주세요 👇</p>
+        </div>
         <div class='mannayo_creator_list_container'>
           <div class='mannayo_creator_list_title'>
             새 만나요 만들기
@@ -1708,7 +1725,8 @@
       const MAIN_FIND_STATE_NORMAL = 0;
       const MAIN_FIND_STATE_FIND_API = 1;
       const MAIN_FIND_STATE_NO_LIST = 2;
-      const MAIN_FIND_STATE_NO_MORE = 3;
+      const MAIN_FIND_STATE_NO_LIST_IN_API = 3;
+      const MAIN_FIND_STATE_NO_MORE = 4;
 
       var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
@@ -1777,6 +1795,7 @@
             //$(".mannayo_list_container").hide();
             $(".mannayo_search_result_find_container_main").hide();
             $(".mannayo_no_creator_list_container").hide();
+            $(".mannayo_no_creator_list_in_api_container").hide();
 
             if(keyType === INPUT_KEY_TYPE_MORE)
             {
@@ -1797,6 +1816,17 @@
               $(".mannayo_list_container").hide();
               $(".mannayo_search_result_find_container_main").show();
               $(".mannayo_no_creator_list_container").show();
+              $(".mannayo_no_creator_list_in_api_container").hide();
+            }
+            else if(state === MAIN_FIND_STATE_NO_LIST_IN_API)
+            {
+              $(".mannayo_list_loading_container").hide();
+              $(".mannayo_list_more_wrapper").hide();
+              $(".mannayo_creator_list_container").hide();
+              $(".mannayo_list_container").hide();
+              $(".mannayo_search_result_find_container_main").show();
+              $(".mannayo_no_creator_list_container").hide();
+              $(".mannayo_no_creator_list_in_api_container").show();
             }
             else
             {
@@ -1817,6 +1847,7 @@
                 }
 
                 $(".mannayo_no_creator_list_container").hide();
+                $(".mannayo_no_creator_list_in_api_container").hide();
               }
               else
               {
@@ -1826,6 +1857,7 @@
                 $(".mannayo_list_container").show();
                 $(".mannayo_search_result_find_container_main").hide();
                 $(".mannayo_no_creator_list_container").hide();
+                $(".mannayo_no_creator_list_in_api_container").hide();
               }
             }
           }
@@ -3718,7 +3750,7 @@
             {
               if(request.data.length === 0){
                 setCreatorList(null, TYPE_LIST_FIRST_FIND_API_NO_MAIN);
-                setSwitchMoreLoading(false, INPUT_KEY_TYPE_ENTER, MAIN_FIND_STATE_NO_LIST);
+                setSwitchMoreLoading(false, INPUT_KEY_TYPE_ENTER, MAIN_FIND_STATE_NO_LIST_IN_API);
               }
               else{
                 setCreatorList(request.data, TYPE_LIST_FIRST_CREATOR_MAIN_FIND_API);
