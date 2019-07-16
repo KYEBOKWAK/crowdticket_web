@@ -264,6 +264,10 @@
           margin-top: 24px;
         }
 
+        .result_creator_name_in_main{
+          width: 230px;
+        }
+
         .result_creator_name_popup{
           font-size: 16px;
           margin-top: 20px;
@@ -3264,7 +3268,7 @@
           
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
-              "<div class='result_creator_name'>"+creator.title+"</div>" +
+              "<div class='result_creator_name text-ellipsize'>"+creator.title+"</div>" +
               "<button data_creator_id='"+ creator.id +"' data_creator_channel_id='"+creator.channel_id+"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button_in_main result_creator_meet_container flex_layer'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
                 "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
@@ -3302,7 +3306,7 @@
           
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
-              "<div class='result_creator_name'>"+channelTitle+"</div>" +
+              "<div class='result_creator_name result_creator_name_in_main text-ellipsize'>"+channelTitle+"</div>" +
               "<button data_creator_channel_id='"+channelId+"' data_creator_title='"+ channelTitle +"' data_creator_img_url='"+ channelThumbnailURL +"' class='result_add_new_creator_button_in_main result_creator_meet_container flex_layer'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
                 "<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
