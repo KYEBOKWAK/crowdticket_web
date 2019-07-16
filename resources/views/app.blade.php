@@ -23,18 +23,18 @@
     @section('title')
         <title>크라우드티켓</title>
     @show
-    <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}">
-    <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet">
-    <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet">
-    <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet">
-    <link href="{{ asset('/css/global.css?version=18') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}"/>
+    <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/global.css?version=18') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=3') }}" rel="stylesheet"/>
 @yield('css')
-    <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet">
+    <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
 
     <style>
@@ -209,7 +209,7 @@
     </style>
 
 <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'/>
     <!-- <script async="" src="https://www.google-analytics.com/analytics.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -258,7 +258,7 @@
 <input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
-<input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif">
+<input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif"/>
 
 @section('navbar')
 <nav class="navbar navbar-default">

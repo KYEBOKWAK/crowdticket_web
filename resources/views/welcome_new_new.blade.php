@@ -634,9 +634,9 @@
         }
     </style>
 
-    <link href="{{ asset('/css/bubble.css?version=1') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bubble.css?version=1') }}" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
+    <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}"/>
 
 @endsection
 

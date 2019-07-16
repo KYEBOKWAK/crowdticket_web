@@ -1550,7 +1550,7 @@
         }
     </style>
 
-<link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet">
+<link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -2044,8 +2044,8 @@
             "<div class='meetup_callyou_popup_title'>" + 
               "아래 연락처로 알림을 드릴게요" +
             "</div>" +
-            "<input id='meetup_callyou_popup_option_contact_input' class='meetup_callyou_popup_input' type='tel' name='tel' placeholder='연락처가 없습니다. (-없이 숫자만 입력)' value='"+contactNumber+"'>" + 
-            "<input id='meetup_callyou_popup_option_email_input' class='meetup_callyou_popup_input' type='email' placeholder='이메일 주소' value='"+email+"'>" + 
+            "<input id='meetup_callyou_popup_option_contact_input' class='meetup_callyou_popup_input' type='tel' name='tel' placeholder='연락처가 없습니다. (-없이 숫자만 입력)' value='"+contactNumber+"'/>" + 
+            "<input id='meetup_callyou_popup_option_email_input' class='meetup_callyou_popup_input' type='email' placeholder='이메일 주소' value='"+email+"'/>" + 
 
             "<button id='meetup_callyou_popup_ok_button'>" +
               "확인" +
@@ -2284,7 +2284,7 @@
 
               "<div class='meetup_popup_option_wrapper flex_layer'>" +
                 "<div class='meetup_popup_option_creator' style='width: 254px;'>" +
-                  "<input id='meetup_popup_option_what_input' placeholder='무엇을 하고 싶나요?'>" + 
+                  "<input id='meetup_popup_option_what_input' placeholder='무엇을 하고 싶나요?'/>" + 
                 "</div>" +
                 "<p class='meetup_popup_option_label'>를 하고 싶어요!" + 
                 "</p>" +
@@ -2301,9 +2301,9 @@
                   "닉네임" +
                 "</div>" +
                 "<div class='meetup_popup_user_options_container'>" + 
-                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'>" +
+                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'/>" +
                   "<div class='flex_layer'>" +
-                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''>" +
+                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''/>" +
                     "<p class='meetup_popup_user_anonymous_text'>익명</p>" +
                   "</div>" +
                   "<p class='help-block'>닉네임을 지우시면 회원 이름이 공개됩니다.</p>" +
@@ -2768,9 +2768,9 @@
                   "닉네임" +
                 "</div>" +
                 "<div class='meetup_popup_user_options_container'>" + 
-                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'>" +
+                  "<input id='meetup_popup_user_nickname_input' type='text' class='meetup_popup_user_nickname_input' value='"+nickName+"'/>" +
                   "<div class='flex_layer'>" +
-                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''>" +
+                    "<input id='meetup_popup_user_anonymous_inputbox' type='checkbox' class='meetup_popup_user_anonymous_inputbox' value=''/>" +
                     "<p class='meetup_popup_user_anonymous_text'>익명</p>" +
                   "</div>" +
                   "<p class='help-block'>닉네임을 지우시면 회원 이름이 공개됩니다.</p>" +
@@ -3272,7 +3272,8 @@
             "</div>" +
           "</div>";
           
-          targetElement.append(element);           
+          //targetElement.append(element);
+          targetElement.appendChild(element);
         };
 
         var addCreatorObjectInMainFindApi = function(creator, targetElement){
@@ -3309,7 +3310,8 @@
             "</div>" +
           "</div>";
           
-          targetElement.append(element);           
+          //targetElement.append(element);
+          targetElement.appendChild(element);
         };
 
         var addSearchAPINoCreatorObjectInMain = function(){
@@ -3378,7 +3380,7 @@
                 "<p class='mannayo_channel_input_label mannayo_channel_input_label_popup'>채널주소 직접 입력하기</p>" +
                 "<div class='mannayo_channel_input_wrapper'>" +
                   "<div class='flex_layer'>" +
-                    "<input class='mannayo_channel_input mannayo_channel_input_popup' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'>" +
+                    "<input class='mannayo_channel_input mannayo_channel_input_popup' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'/>" +
                     "<button id='mannayo_channel_input_button' type='button'>검색하기</button>" +
                   "</div>" +
                   "<p class='mannayo_channel_input_help_block mannayo_channel_input_help_block_popup'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
@@ -3390,7 +3392,7 @@
                 "<p class='mannayo_channel_input_label'>채널주소 직접 입력하기</p>" +
                 "<div class='mannayo_channel_input_wrapper'>" +
                   "<div class='flex_layer'>" +
-                    "<input class='mannayo_channel_input' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'>" +
+                    "<input class='mannayo_channel_input' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'/>" +
                     "<button id='mannayo_channel_input_button' type='button'>검색하기</button>" +
                   "</div>" +
                   "<p class='mannayo_channel_input_help_block'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
@@ -3424,7 +3426,7 @@
               "<p class='mannayo_channel_input_label'>채널주소 직접 입력하기</p>" +
               "<div class='mannayo_channel_input_wrapper'>" +
                 "<div class='flex_layer'>" +
-                  "<input class='mannayo_channel_input_in_main' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'>" +
+                  "<input class='mannayo_channel_input_in_main' placeholder='https://www.youtube.com/channel/UCdD6uPaV3eR95r06R1VgaAA'/>" +
                   "<button id='mannayo_channel_input_button_in_main' type='button'>검색하기</button>" +
                 "</div>" +
                 "<p class='mannayo_channel_input_help_block'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
@@ -4021,7 +4023,8 @@
               "</div>" +
             "</div>";
 
-            parentElement.append(mannayoObject);
+            //parentElement.append(mannayoObject);
+            parentElement.appendChild(mannayoObject);
         };
 
         var addMannayoObject = function(meetup, parentElement, index){
@@ -4093,7 +4096,8 @@
               "</div>" +
             "</div>";
 
-            parentElement.append(mannayoObject);
+            //parentElement.append(mannayoObject);
+            parentElement.appendChild(mannayoObject);
         };
 
         var setMannayoCancelButton = function(){
@@ -4114,6 +4118,8 @@
           mannayoListElement.children().remove();
         };
 
+
+        //원본 START
         var setMannayoList = function(meetups, requestKeyType){
           if(requestKeyType === INPUT_KEY_TYPE_ENTER)
           {
@@ -4124,18 +4130,131 @@
           }
           else
           {
-            //$('.mannayo_list_container').css("margin-top", '130px');
-            //$('.mannayo_list_container').css("margin-top", '28px');
             $('.mannayo_sort_container').css('margin-top', '50px');
           }
 
           var mannayoListElement = $(".mannayo_meetup_list_container");
-          //mannayoListElement.children().remove();
           if(requestKeyType !== INPUT_KEY_TYPE_MORE)
           {
             removeMannayoListInMain();
           }
-          //removeMannayoListInMain();
+          
+          var rowCount = Math.ceil((meetups.length + 1) / MANNAYO_COLUM_COUNT);
+          
+          var index = 0;
+          for(var i = 0 ; i < rowCount ; i++)
+          {
+            var mannayoFlexLayer = document.createElement("div");
+            mannayoFlexLayer.className = 'mannayo_object_container flex_layer_thumb';
+            mannayoListElement.append(mannayoFlexLayer);
+
+            var isEnd = false;
+
+            //2칸씩 flex_layer 해줘야함
+            for(var j = 0 ; j < 2 ; j++)
+            {
+              var objectFlexLayer = document.createElement("div");
+              if(j === 1)
+              {
+                objectFlexLayer.className = 'flex_layer mannayo_flex_second_object';
+              }
+              else
+              {
+                objectFlexLayer.className = 'flex_layer';
+              }
+
+              mannayoFlexLayer.appendChild(objectFlexLayer);
+
+              for(var k = 0 ; k < 2 ; k++)
+              {
+                if(i === 0 && j === 0 && k === 0 && g_mannayoCounter === 0)
+                {
+                  //처음 오브젝트는 새 만나요 만들기 버튼
+                  addCreateMannayoObject(objectFlexLayer);
+                }
+                else
+                {
+                  var meetup = meetups[index];
+                  if(meetup)
+                  {
+                    addMannayoObject(meetup, objectFlexLayer, k);
+                  }
+                  index++;
+                }
+
+                if(index >= meetups.length)
+                {
+                  isEnd = true;
+                  break;
+                }
+              }
+
+              if(isEnd)
+              {
+                break;
+              }
+            }
+
+            if(isEnd)
+            {
+              break;
+            }
+          }
+
+          var setMannayoListMeetupButton = function(){
+            $(".mannayo_thumb_meetup_button").click(function(){
+              if(!isLogin())
+              {
+                loginPopup(closeLoginPopup, null);
+                return;
+              }
+
+              var element = $(this);
+              openMeetPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"));
+            });
+          };
+
+          var setMannayoCreateMeetupButton = function(){
+            $(".mannayo_create_button").click(function(){
+              if(!isLogin())
+              {
+                loginPopup(closeLoginPopup, null);
+                return;
+              }
+
+              removeSearchBar($(".mannayo_search_container_target"));
+              openNewMeetPopup('', '', '', '', TYPE_CREATE_MEETUP_NEW);
+              addSearchBarPopup($(".meetup_popup_option_creator_info_target"));
+            });
+          };
+
+          setMannayoListMeetupButton();
+          setMannayoCreateMeetupButton();
+          setMannayoCancelButton();
+          
+        };
+        //원본END
+        
+        //원본 START
+        /*
+        var setMannayoList = function(meetups, requestKeyType){
+          if(requestKeyType === INPUT_KEY_TYPE_ENTER)
+          {
+            $(".mannayo_creator_list_title").show();
+            $('.mannayo_list_container').css("margin-top", '64px');
+
+            $('.mannayo_sort_container').css('margin-top', '0px');
+          }
+          else
+          {
+            $('.mannayo_sort_container').css('margin-top', '50px');
+          }
+
+          var mannayoListElement = $(".mannayo_meetup_list_container");
+          if(requestKeyType !== INPUT_KEY_TYPE_MORE)
+          {
+            removeMannayoListInMain();
+          }
           
           var rowCount = Math.ceil((meetups.length + 1) / MANNAYO_COLUM_COUNT);
           
@@ -4231,6 +4350,8 @@
           setMannayoCancelButton();
           
         };
+        */
+        //원본END
 
         var requestMannayoList = function(keyType){
           if(keyType === INPUT_KEY_TYPE_ENTER)
