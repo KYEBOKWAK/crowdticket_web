@@ -36,6 +36,7 @@ class MannayoController extends Controller
 
     const INPUT_KEY_TYPE_NORMAL = 'key_type_normal';
     const INPUT_KEY_TYPE_ENTER = 'key_type_enter';
+    const INPUT_KEY_TYPE_MORE = 'key_type_more_button';
 
     public function goMannayo()
     {

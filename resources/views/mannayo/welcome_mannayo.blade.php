@@ -1703,10 +1703,12 @@
       //서버 코드와 동일
       const INPUT_KEY_TYPE_NORMAL = 'key_type_normal';
       const INPUT_KEY_TYPE_ENTER = 'key_type_enter';
+      const INPUT_KEY_TYPE_MORE = 'key_type_more_button';
 
       const MAIN_FIND_STATE_NORMAL = 0;
       const MAIN_FIND_STATE_FIND_API = 1;
       const MAIN_FIND_STATE_NO_LIST = 2;
+      const MAIN_FIND_STATE_NO_MORE = 3;
 
       var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
@@ -1772,9 +1774,18 @@
             $(".mannayo_list_loading_container").show();
             $(".mannayo_list_more_wrapper").hide();
             $(".mannayo_creator_list_container").hide();
-            $(".mannayo_list_container").hide();
+            //$(".mannayo_list_container").hide();
             $(".mannayo_search_result_find_container_main").hide();
             $(".mannayo_no_creator_list_container").hide();
+
+            if(keyType === INPUT_KEY_TYPE_MORE)
+            {
+              $(".mannayo_list_container").show();
+            }
+            else
+            {
+              $(".mannayo_list_container").hide();
+            }
           }
           else
           {
@@ -1817,6 +1828,11 @@
                 $(".mannayo_no_creator_list_container").hide();
               }
             }
+          }
+
+          if(state === MAIN_FIND_STATE_NO_MORE)
+          {
+            $(".mannayo_list_more_wrapper").hide();
           }
         };
 
@@ -4083,7 +4099,11 @@
 
           var mannayoListElement = $(".mannayo_meetup_list_container");
           //mannayoListElement.children().remove();
-          removeMannayoListInMain();
+          if(requestKeyType !== INPUT_KEY_TYPE_MORE)
+          {
+            removeMannayoListInMain();
+          }
+          //removeMannayoListInMain();
           
           var rowCount = Math.ceil((meetups.length + 1) / MANNAYO_COLUM_COUNT);
           
@@ -4211,7 +4231,16 @@
                 return;
               }
               
-              setSwitchMoreLoading(false, request.keytype, MAIN_FIND_STATE_NORMAL);
+              if(request.meetups.length < callMannayoOnceMaxCounter)
+              {
+                //length보다 호출된 개수가 작으면 더보기가 없다
+                setSwitchMoreLoading(false, request.keytype, MAIN_FIND_STATE_NO_MORE);
+              }
+              else
+              {
+                setSwitchMoreLoading(false, request.keytype, MAIN_FIND_STATE_NORMAL);
+              }
+              
               if(request.keytype === INPUT_KEY_TYPE_ENTER)
               {
                 setCreatorList(request.creators, TYPE_LIST_FIRST_CREATOR_MAIN);
@@ -4242,7 +4271,8 @@
         requestMannayoList(INPUT_KEY_TYPE_NORMAL);
 
         $("#mannayo_list_more_button").click(function(){
-          requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+          //requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+          requestMannayoList(INPUT_KEY_TYPE_MORE);
         });
         //하단 리스트 END
 
