@@ -188,6 +188,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function getUserMannayo($id)
+    {
+        $user = $this->ensureLoginUser($id);
+        return view('user.mannayo');
+    }
+
     private function getValidUniqueOrders($user)
     {
         return $user->orders()->groupBy('project_id')->get();

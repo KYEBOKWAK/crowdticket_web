@@ -354,6 +354,24 @@ class MannayoController extends Controller
             {
                 if($user)
                 {
+
+                    $rowMeetupUsers = Meetup_user::where('user_id', $user->id)->get();
+                    $meetupsIds = [];
+                    foreach($rowMeetupUsers as $rowMeetupUser)
+                    {
+                        array_push($meetupsIds, $rowMeetupUser->meetup_id);
+                    }
+
+                    $meetups = \DB::table('meetups')
+                        ->whereIn('creator_id', $creatorIds)
+                        ->whereIn('meetups.id', $meetupsIds)
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+
+                    /*
                     $meetups = \DB::table('meetups')
                         ->whereIn('creator_id', $creatorIds)
                         ->where('user_id', $user->id)
@@ -362,6 +380,7 @@ class MannayoController extends Controller
                                 'meetups.what', 'meetups.where', 'meetups.meet_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->get();
+                        */
                 }
             }
             else
@@ -391,6 +410,23 @@ class MannayoController extends Controller
             {
                 if($user)
                 {
+                    $rowMeetupUsers = Meetup_user::where('user_id', $user->id)->get();
+                    $meetupsIds = [];
+                    foreach($rowMeetupUsers as $rowMeetupUser)
+                    {
+                        array_push($meetupsIds, $rowMeetupUser->meetup_id);
+                    }
+
+                    $meetups = \DB::table('meetups')
+                        ->whereIn('meetups.id', $meetupsIds)
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+                        
+
+                    /*
                     $meetups = \DB::table('meetups')
                         ->where('user_id', $user->id)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
@@ -398,6 +434,7 @@ class MannayoController extends Controller
                                 'meetups.what', 'meetups.where', 'meetups.meet_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+                        */
                 }
             }
             else

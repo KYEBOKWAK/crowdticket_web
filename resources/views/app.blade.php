@@ -285,7 +285,7 @@
           <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
-          <li style="">
+          <li>
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
           </li>
@@ -302,6 +302,7 @@
                         aria-expanded="false">{{ Auth::user()->getUserNickName() }} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
+                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/mannayo">내 만나요</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                         <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
