@@ -939,6 +939,7 @@
         .mannayo_thumb_container{
           width: 250px;
           margin-bottom: 40px;
+          position: relative;
         }
 
         .mannayo_list_loading_container{
@@ -982,7 +983,7 @@
           margin-top: 16px;
         }
 
-        .mannayo_thumb_meetup_button{
+        .mannayo_thumb_meetup_button_fake{
           width: 79px;
           height: 44px;
           border-radius: 5px;
@@ -993,7 +994,7 @@
           color: #4d4d4d;
         }
 
-        .mannayo_thumb_meetup_cancel_button{
+        .mannayo_thumb_meetup_cancel_button_fake{
           width: 121px;
           height: 44px;
           border-radius: 5px;
@@ -1002,6 +1003,24 @@
           font-size: 14px;
           font-weight: 500;
           color: white;
+        }
+
+        .mannayo_thumb_meetup_button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+        }
+
+        .mannayo_thumb_meetup_cancel_button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
         }
 
         .mannayo_search_cancel_button{
@@ -3541,17 +3560,29 @@
             meetupUsersElement += "<img src='{{ asset('/img/icons/ic-profile-more-512.png') }}' class='meetup_users_profile_img' style='z-index:"+zIndex+"'/>";
           }
           
-          var meetupMeetButton = '';
+          var meetupMeetButtonFake = '';
           if(meetup.is_meetup)
           {
-            meetupMeetButton = "<button class='mannayo_thumb_meetup_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
+            meetupMeetButtonFake = "<button class='mannayo_thumb_meetup_cancel_button_fake' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
                                 "만나요 요청됨" +
                                 "</button>";
           }
           else
           {
-            meetupMeetButton = "<button class='mannayo_thumb_meetup_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
+            meetupMeetButtonFake = "<button class='mannayo_thumb_meetup_button_fake' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
                                 "만나요" +
+                                "</button>";
+          }
+
+          var meetupMeetButton = '';
+          if(meetup.is_meetup)
+          {
+            meetupMeetButton = "<button class='mannayo_thumb_meetup_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
+                                "</button>";
+          }
+          else
+          {
+            meetupMeetButton = "<button class='mannayo_thumb_meetup_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
                                 "</button>";
           }
 
@@ -3587,8 +3618,9 @@
                 meetup.where+"에서 · " + meetup.what +
               "</div>" +
               "<div class='mannayo_thumb_button_wrapper'>" +
-                meetupMeetButton + 
+                meetupMeetButtonFake + 
               "</div>" +
+              meetupMeetButton +
             "</div>";
 
             parentElement.append(mannayoObject);
