@@ -2281,7 +2281,7 @@
                   className: "meetup_popup_complete",
                   closeOnClickOutside: true,
                   closeOnEsc: true,
-                  timer: 1000,
+                  timer: 1300,
               }).then(function(value){
                 showLoadingPopup('');
                 window.location.reload();
@@ -2752,7 +2752,8 @@
         //신규 만남 만들기 팝업 END        
 
         var closeLoginPopup = function(){
-          swal.close();
+          //swal.close();
+          swal('로그인 완료!', '', 'success');
         };
 
         var setCreatorInfoInNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url, creator_channel_id){
@@ -4134,8 +4135,11 @@
 
           $('#input_mannayo_search').keydown(function(event){
             if (event.which === 13) {
-              event.preventDefault();
-              resetSearchCallbackTimer(INPUT_KEY_TYPE_ENTER, 0);
+              if(!isMannayoSearchPopup())
+              {
+                event.preventDefault();
+                resetSearchCallbackTimer(INPUT_KEY_TYPE_ENTER, 0);
+              }
             }
             else
             {
