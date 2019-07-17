@@ -140,7 +140,7 @@
           background-color: white;
           border-radius: 10px;
           text-align: left;
-          /*height: 200px;*//*테스트*/
+          box-shadow: 4px 4px 30px 0 rgba(0, 0, 0, 0.1);
         }
 
 
@@ -305,7 +305,7 @@
 */
         .result_creator_meet_container{
           /*margin-top: 13px;*/
-          margin-top: 8px;
+          margin-top: 5px;
           margin-left: auto;
           height: 50px;
           border: 0;
@@ -483,13 +483,16 @@
         }
 
         .mannayo_channel_input::-ms-input-placeholder{
-          color: #808080;
+          color: #acacac;
+          padding-left: 16px;
         }
         .mannayo_channel_input::-webkit-input-placeholder{
-          color: #808080;
+          color: #acacac;
+          padding-left: 16px;
         }
         .mannayo_channel_input::-moz-placeholder{
-          color: #808080;
+          color: #acacac;
+          padding-left: 16px;
         }
 
         .mannayo_channel_input_popup{
@@ -1891,6 +1894,7 @@
       const TYPE_LIST_SECOND_FIND_API = 2;
       const TYPE_LIST_SECOND_FIND_NO = 3;
       
+      //const SEARCH_OBJECT_HEIGHT_PC = 100;
       const SEARCH_OBJECT_HEIGHT_PC = 76;
       const SEARCH_OBJECT_HEIGHT_POPUP = 64;
 
@@ -2079,6 +2083,10 @@
               SEARCH_OBJECT_HEIGHT = 100;
               $('.result_creator_find_success_title').css('padding-top', '40px');
             }
+            else if(list_first_type === TYPE_LIST_FIRST_FIND_NO)
+            {
+              SEARCH_OBJECT_HEIGHT = 100;
+            }
             else
             {
               SEARCH_OBJECT_HEIGHT = SEARCH_OBJECT_HEIGHT_PC;
@@ -2099,7 +2107,8 @@
               ssContent[0].style.width = '100%';
             }
 
-            var resultULHeight = Number(g_creatorsSearchList.children().size()) * SEARCH_OBJECT_HEIGHT;
+            //var resultULHeight = Number(g_creatorsSearchList.children().size()) * SEARCH_OBJECT_HEIGHT;
+            var resultULHeight = (Number(g_creatorsSearchList.children().size()) * SEARCH_OBJECT_HEIGHT);
             $(".mannayo_search_result_ul_wrapper")[0].style.height=resultULHeight+"px";
           }
           else{
@@ -3338,7 +3347,7 @@
             element.innerHTML =
               "<div class='result_creator_wrapper'>" +
               
-                "<div class='flex_layer_mobile' style='margin-top: 15px;'>" + 
+                "<div class='flex_layer_mobile' style='margin-top: 22px;'>" + 
                   "<div class='result_creator_meet_more_search_title'>"+"검색값이 없네요 :( 크티가 더 찾아볼까요?"+"</div>" +
                   "<button id='mannayo_search_result_find_button' class='result_creator_meet_container'>" + 
                     "<span>찾아보기</span>" + 
@@ -3682,6 +3691,8 @@
                     "</button>" +
                   "</div>" +
                 "</div>";
+
+                $('.mannayo_search_result_find_container').css('height', '100px');
             }
             
           }
@@ -3697,17 +3708,17 @@
                 "<div class='mannayo_channel_input_wrapper'>" +
                   "<div class='flex_layer'>" +
                     "<input class='mannayo_channel_input mannayo_channel_input_popup' placeholder='https://www.youtube.com/channel/0000'/>" +
-                    "<button id='mannayo_channel_input_button' class='mannayo_channel_input_button_popup' type='button'>검색</button>" +
+                    "<button id='mannayo_channel_input_button' class='mannayo_channel_input_button_popup' type='button'>입력</button>" +
                   "</div>" +
                   "<p class='mannayo_channel_input_help_block mannayo_channel_input_help_block_popup'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
                 "</div>";
             }
             else
             {
-              var buttonText = "검색하기";
+              var buttonText = "입력";
               if(isMobile())
               {
-                buttonText = '검색';
+                buttonText = '입력';
               }
 
               element.innerHTML =
@@ -3719,6 +3730,8 @@
                   "</div>" +
                   "<p class='mannayo_channel_input_help_block'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
                 "</div>";
+
+              $('.mannayo_search_result_find_container').css('height', '134px');
             }
           }
           else if(findType === FIND_TYPE_IN_API_MAIN)
@@ -3737,6 +3750,8 @@
                   "</button>" +
                 "</div>" +
               "</div>";
+
+            //$('.mannayo_search_result_find_container').css('height', '100px');
           }
           else if(findType === FIND_TYPE_IN_CHANNEL_MAIN)
           {
@@ -3749,7 +3764,7 @@
               "<div class='mannayo_channel_input_wrapper'>" +
                 "<div class='flex_layer'>" +
                   "<input class='mannayo_channel_input_in_main' placeholder='https://www.youtube.com/channel/0000'/>" +
-                  "<button id='mannayo_channel_input_button_in_main' type='button'>검색하기</button>" +
+                  "<button id='mannayo_channel_input_button_in_main' type='button'>입력</button>" +
                 "</div>" +
                 "<p class='mannayo_channel_input_help_block'>유튜브 채널주소를 입력하면 더 정확해요!</p>" +
               "</div>";
