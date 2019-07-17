@@ -745,6 +745,95 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         </div>
     </div>
 
+    <div class="welcome_content_container">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            인기있는 만나요
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/mannayo')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            //for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            for($i = 0 ; $i < 0 ; $i++)
+            {
+              $itemCount = 0;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($meetups) ; $j++)
+                {
+                  //만나요
+                  ?>
+
+                  {{$meetups[$projectIndex]->id}}
+                  <div class='mannayo_thumb_object_container_in_main'>
+                    <div class='mannayo_thumb_container'>
+                      <div class='mannayo_thumb_img_wrapper'>
+                        <div class='mannayo_thumb_img_resize'>
+                          <img class='mannayo_thumb_img project-img' src="{{$meetups[$projectIndex]->thumbnail_url}}">
+                          <div class='thumb-black-mask'>
+                          </div>
+                          <div class='mannayo_thumb_meet_count'>
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetups[$projectIndex]->meet_count}} 명 요청중
+                          </div>
+
+                          <div class='mannayo_thumb_meet_users_container'>
+                          <!--meetupUsersElement-->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='mannayo_thumb_title_wrapper'>
+                        {{$meetups[$projectIndex]->title}}
+                      </div>
+                      <div class='mannayo_thumb_content_container'>
+                        {{$meetups[$projectIndex]->where}} 에서 · {{$meetups[$projectIndex]->what}}
+                      </div>
+                      <div class='mannayo_thumb_button_wrapper'>
+                        <!-- meetupMeetButtonFake -->
+                      </div>
+                      <!-- meetupMeetButton -->
+                    </div>
+                  </div>
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
+      </div>
+    </div>
+
     <div class="welcome_content_wrapper" style="display:none;">
       <div class="welcome_banner_container">
         <div class="flex_layer_thumb">

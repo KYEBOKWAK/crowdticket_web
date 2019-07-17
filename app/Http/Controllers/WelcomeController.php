@@ -3,6 +3,7 @@
 use App\Models\Maincarousel as Maincarousel;
 use App\Models\Main_thumbnail as Main_thumbnail;
 use App\Models\Main_thumb_play_creator as Main_thumb_play_creator;
+use App\Models\Meetup_user as Meetup_user;
 
 use App\Models\Alive_user as Alive_user;
 
@@ -114,10 +115,73 @@ class WelcomeController extends Controller
 
         $thumbPlayCreators = Main_thumb_play_creator::get();
 
+        ///////meetup start
+        $meetups = \DB::table('meetups')
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
+        
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+        
+        foreach($meetups as $meetup)
+        {
+            $meetup->meetup_users = [];
+            $meetup->is_meetup = false;
+            if($user)
+            {
+                $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+                if($meetup_user_my)
+                {
+                    $userMyInfo = $meetup_user_my->user;
+                    $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                    $meetup_user_my->user_profile_url = $userMyProfileURL;
+
+                    array_push($meetup->meetup_users, $meetup_user_my);
+
+                    $meetup->is_meetup = true;
+                }
+            }
+
+            $meetup_users = null;
+
+            if($user)
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+            else
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+
+            foreach($meetup_users as $meetup_user)
+            {
+                $userInfo = $meetup_user->user;
+                $userProfileURL = $userInfo->getPhotoUrl();
+
+                $meetup_user->user_profile_url = $userProfileURL;
+
+                array_push($meetup->meetup_users, $meetup_user);
+
+                if(count($meetup->meetup_users) >= 3)
+                {
+                    break;
+                }
+            }
+        }
+        ///////meetup end
+
         return view('welcome_new_new', [
           'projects' => $thumbnailProjects,
           'magazines' => $thumbMagazines,
-          'playedcreators' => $thumbPlayCreators
+          'playedcreators' => $thumbPlayCreators,
+          'meetups' => $meetups
       ]);
 
 /*

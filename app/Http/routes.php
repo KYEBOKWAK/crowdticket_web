@@ -230,6 +230,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('mannayo/create', 'MannayoController@createMeetup');
     Route::post('mannayo/create/creator', 'MannayoController@createCreator');
     
+    Route::get('mannayo/user/info', 'MannayoController@getUserInfo');
+    Route::post('mannayo/user/info/set', 'MannayoController@setUserInfo');
     Route::get('mannayo/get/meetup/count', 'MannayoController@getMeetupCount');
     Route::post('mannayo/meetup', 'MannayoController@meetUp');
     Route::post('mannayo/meetup/cancel', 'MannayoController@meetUpCancel');

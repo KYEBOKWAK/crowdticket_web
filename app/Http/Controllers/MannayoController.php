@@ -393,16 +393,6 @@ class MannayoController extends Controller
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->get();
             }
-
-            /*
-            $meetups = \DB::table('meetups')
-                        ->whereIn('creator_id', $creatorIds)
-                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-                        */
         }
         else
         {
@@ -565,5 +555,42 @@ class MannayoController extends Controller
         }
 
         return false;
+    }
+
+    public function setUserInfo(Request $request)
+    {
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
+        if(!$user)
+        {
+            return ['state' => 'error', 'message' => ''];
+        }
+
+        $user->contact = $request->contact;
+        $user->save();
+    }
+
+    public function getUserInfo(Request $request)
+    {
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
+        if(!$user)
+        {
+            return ['state' => 'error', 'message' => ''];
+        }
+
+        $user_nickname = $user->getUserNickName();
+        $user_age = $user->getUserAge();
+        $user_gender = $user->getUserGender();
+
+        return ['state' => 'success', 'user_nickname' => $user_nickname, 'user_age' => $user_age, 'user_gender' => $user_gender];
     }
 }

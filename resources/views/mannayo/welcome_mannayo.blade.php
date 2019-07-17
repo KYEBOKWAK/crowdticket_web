@@ -2337,7 +2337,43 @@
               completeMeetUpPopup(creator_title);
           });
 
+          var requestSetUserInfo = function(){
+            //값이 변경됐을때만 요청한다.
+            var inputContactValue = $('#meetup_callyou_popup_option_contact_input').val();
+            if(contactNumber === inputContactValue)
+            {
+              console.error('same number');
+              return;
+            }
+
+            var url="/mannayo/user/info/set";
+            var method = 'post';
+            var data =
+            {
+              "contact" : inputContactValue
+            }
+            var success = function(request) {
+              
+            };
+            
+            var error = function(request) {
+              console.error("error!!?");
+            };
+            
+            $.ajax({
+            'url': url,
+            'method': method,
+            'data' : data,
+            'success': success,
+            'error': error
+            });
+          };
+
           $("#meetup_callyou_popup_ok_button").click(function(){
+            if($('#meetup_callyou_popup_option_contact_input').val() && !isCheckPhoneNumber($('#meetup_callyou_popup_option_contact_input').val())){
+              return false;
+            }
+            requestSetUserInfo();
             swal.close();
             completeMeetUpPopup(creator_title);
           });
@@ -2751,9 +2787,38 @@
         
         //신규 만남 만들기 팝업 END        
 
+        var callUserInfo = function(){
+          var url="/mannayo/user/info";
+          var method = 'get';
+          var data =
+          {
+            
+          }
+          var success = function(request) {
+            if(request.state === 'success'){
+              $('#user_nickname').val(request.user_nickname);
+              $('#user_age').val(request.user_age);
+              $('#user_gender').val(request.user_gender);
+            }
+          };
+          
+          var error = function(request) {
+            
+          };
+          
+          $.ajax({
+          'url': url,
+          'method': method,
+          'data' : data,
+          'success': success,
+          'error': error
+          });
+        };
+
         var closeLoginPopup = function(){
           //swal.close();
           swal('로그인 완료!', '', 'success');
+          callUserInfo();
         };
 
         var setCreatorInfoInNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url, creator_channel_id){
@@ -3594,15 +3659,46 @@
                     "<img class='result_creator_thumbnail_img result_creator_thumbnail_img_popup' src='"+channelThumbnailURL+"'>" +
                   "</div>" +
                   "<div class='result_creator_name text-ellipsize result_creator_name_popup'>"+channelTitle+"</div>" +
+                  "<div class='result_creator_meet_container flex_layer'>" + 
+                    "<img class='result_creator_plus_img result_creator_plus_img_pop' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
+                  "</div>" + 
+                "</div>" +
+                "<button class='result_add_new_creator_button result_object_button_fake' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
+                "</button>" + 
+              "</div>";
+            /*
+            element.innerHTML =
+              "<div class='result_creator_wrapper'>" +
+              
+                "<div class='flex_layer' style='margin-left: 0px;'>" + 
+                  "<div class='result_creator_thumbnail_img_wrapper result_creator_thumbnail_img_wrapper_popup'>" +
+                    "<img class='result_creator_thumbnail_img result_creator_thumbnail_img_popup' src='"+channelThumbnailURL+"'>" +
+                  "</div>" +
+                  "<div class='result_creator_name text-ellipsize result_creator_name_popup'>"+channelTitle+"</div>" +
                   "<button class='result_add_new_creator_button result_creator_meet_container flex_layer' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
-                    
                     "<img class='result_creator_plus_img result_creator_plus_img_pop' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
                   "</button>" + 
                 "</div>" +
               "</div>";
+              */
           }
           else
           {
+            element.innerHTML =
+              "<div class='result_creator_wrapper'>" +
+                "<div class='flex_layer' style='margin-left: 0px;'>" + 
+                  "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
+                  "<div class='result_creator_name text-ellipsize result_creator_name_width'>"+channelTitle+"</div>" +
+                  "<div class='result_creator_meet_container flex_layer'>" + 
+                    "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
+                    "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
+                  "</div>" + 
+                "</div>" +
+                "<button class='result_add_new_creator_button result_object_button_fake' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
+                "</button>" + 
+              "</div>";
+
+            /*
             element.innerHTML =
               "<div class='result_creator_wrapper'>" +
               
@@ -3611,18 +3707,15 @@
                   "<div class='result_creator_name text-ellipsize result_creator_name_width'>"+channelTitle+"</div>" +
                   "<button class='result_add_new_creator_button result_creator_meet_container flex_layer' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
                     "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
-                    //"<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
                     "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
                   "</button>" + 
                 "</div>" +
               "</div>";
+              */
           }
           
           g_meetupSearchList.append(element);
 
-          //$(".result_add_new_creator_button").click(function(){
-
-          //});
         };
 
         var addSearchAPINoCreatorObject = function(){
@@ -3650,6 +3743,23 @@
           var img = "<img class='result_creator_thumbnail_img' src='"+creator.thumbnail_url+"'>";
 
           var element = document.createElement("div");
+
+          element.innerHTML =
+          "<div class='result_creator_wrapper result_creator_wrapper_main'>" +
+          
+            "<div class='flex_layer' style='margin-left: 0px;'>" + 
+              "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
+              "<div class='result_creator_name text-ellipsize'>"+creator.title+"</div>" +
+              "<div class='result_creator_meet_container flex_layer'>" + 
+                "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
+                "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
+              "</div>" + 
+            "</div>" +
+            "<button data_creator_id='"+ creator.id +"' data_creator_channel_id='"+creator.channel_id+"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button_in_main result_object_button_fake'>" +
+            "</button>" + 
+          "</div>";
+
+          /*
           element.innerHTML =
           "<div class='result_creator_wrapper result_creator_wrapper_main'>" +
           
@@ -3663,8 +3773,8 @@
               "</button>" + 
             "</div>" +
           "</div>";
+          */
           
-          //targetElement.append(element);
           targetElement.appendChild(element);
         };
 
@@ -3695,15 +3805,17 @@
             "<div class='flex_layer' style='margin-left: 0px;'>" + 
               "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
               "<div class='result_creator_name result_creator_name_in_main text-ellipsize'>"+channelTitle+"</div>" +
-              "<button data_creator_channel_id='"+channelId+"' data_creator_title='"+ channelTitle +"' data_creator_img_url='"+ channelThumbnailURL +"' class='result_add_new_creator_button_in_main result_creator_meet_container flex_layer'>" + 
+              "<div class='result_creator_meet_container flex_layer'>" + 
                 "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
-                //"<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
                 "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
-              "</button>" + 
+              "</div>" + 
             "</div>" +
+
+            "<button data_creator_channel_id='"+channelId+"' data_creator_title='"+ channelTitle +"' data_creator_img_url='"+ channelThumbnailURL +"' class='result_add_new_creator_button_in_main result_object_button_fake'>" + 
+            "</button>" + 
           "</div>";
           
-          //targetElement.append(element);
+          
           targetElement.appendChild(element);
         };
 
