@@ -670,7 +670,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             </div>
 
             <div class="welcome_start_button_container">
-              <a href="{{url('/blueprints/welcome')}}">
+              <a href="{{url('/mannayo')}}">
                 <button type="button" class="welcome_start_button">시작하기</button>
               </a>
             </div>
