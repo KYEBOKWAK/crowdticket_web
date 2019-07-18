@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="크라우드티켓"/>
-    <meta property="og:description" content="크리에이터에게 좋아요를 요청해보세요!"/>
+    <meta property="og:description" content="크리에이터에게 만나요를 요청해보세요!"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_1.png') }}"/>
     <!-- <meta property="og:url" content="https://crowdticket.kr/"/> -->
 @endsection
@@ -367,6 +367,8 @@
           width: 143px;
           text-align: right;
           padding-top: 3px;
+          margin-top: auto;
+          margin-bottom: auto;
         }
 
         .mannayo_search_result_ready_ul_wrapper{
@@ -1249,12 +1251,14 @@
           background-color: #f7f7f7;
           text-align: center;
           margin-top: 24px;
+          position: relative;
         }
 
         .mannayo_search_result_find_wrapper{
           width: 530px;
           margin-left: auto;
           margin-right: auto;
+          height: 100%;
         }
 
         .mannayo_no_creator_list_container{
@@ -1412,6 +1416,15 @@
           padding-top: 40px;
         }
 
+        .mannayo_search_result_find_label_fix{
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+
+        .mannayo_search_result_find_button_fix{
+          height: auto;
+        }
+
         @media (max-width:1060px) {
           .welcome_start_content_container{
             margin-left: 13%;
@@ -1446,6 +1459,20 @@
 
           .mannayo_meetup_list_container{
             padding: 0px 5px;
+          }
+
+          .mannayo_search_result_find_label_fix{
+            margin-left: 0px;
+            padding-top: 25px;
+          }
+
+          .mannayo_search_result_find_button_wrapper_in_main{
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          .mannayo_search_result_find_button_fix{
+            width: 100px;
           }
         }
 
@@ -1775,6 +1802,14 @@
 
           .mannayo_search_result_find_container_container{
             padding-top: 20px;
+          }
+
+          .mannayo_search_result_find_wrapper{
+            width: 100%;
+          }
+
+          .mannayo_search_result_find_label_fix{
+            padding-top: 30px;
           }
         }
 
@@ -3863,6 +3898,22 @@
 
             element = document.createElement("div");
             element.className = 'mannayo_search_result_find_wrapper';
+
+            element.innerHTML =
+              "<div class='flex_layer_thumb' style='height: 100%'>" +
+                "<p class='mannayo_search_result_find_label mannayo_search_result_find_label_fix'>원하는 크리에이터가 없나요? 크티가 더 찾아볼게요</p>" +
+                "<div class='mannayo_search_result_find_button_wrapper mannayo_search_result_find_button_wrapper_in_main'>" +
+                  "<div class='mannayo_search_result_find_button mannayo_search_result_find_button_fix'>" +
+                    "<span>찾아보기</span>" +
+                    "<img src='{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}' style='margin-left:8px; margin-top:1px; margin-right: 24px;'/>" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+
+              "<button class='mannayo_search_result_find_button_fake result_object_button_fake'>" +
+              "</button>";
+
+            /*
             element.innerHTML =
               "<div class='flex_layer'>" +
                 "<p class='mannayo_search_result_find_label'>원하는 크리에이터가 없나요? 크티가 더 찾아볼게요</p>" +
@@ -3873,6 +3924,7 @@
                   "</button>" +
                 "</div>" +
               "</div>";
+              */
 
             //$('.mannayo_search_result_find_container').css('height', '100px');
           }
@@ -3905,6 +3957,10 @@
           }
 
           $(".mannayo_search_result_find_button").click(function(){
+            youtubeGetSearchInfo(findType);
+          });
+
+          $(".mannayo_search_result_find_button_fake").click(function(){
             youtubeGetSearchInfo(findType);
           });
 
@@ -4204,7 +4260,6 @@
           var data=
           {
             'searchvalue': $("#input_mannayo_search").val()
-            //'searchvalue': '공대생'
           };
 
           var success = function(request) {

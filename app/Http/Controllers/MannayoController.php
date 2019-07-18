@@ -172,7 +172,6 @@ class MannayoController extends Controller
         $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
         $json = file_get_contents($url);
         $objs = json_decode($json);
-
         return ['state' => 'success', 'data' => $objs->items];
     }
 
@@ -449,6 +448,7 @@ class MannayoController extends Controller
                 {
                     $userMyInfo = $meetup_user_my->user;
                     $userMyProfileURL = $userMyInfo->getPhotoUrl();
+                    //$userMyProfileURL = $userMyInfo->getMannayoPhotoURL($meetup_user_my->anonymity);
 
                     $meetup_user_my->user_profile_url = $userMyProfileURL;
 
@@ -473,6 +473,7 @@ class MannayoController extends Controller
             {
                 $userInfo = $meetup_user->user;
                 $userProfileURL = $userInfo->getPhotoUrl();
+                //$userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
 
                 $meetup_user->user_profile_url = $userProfileURL;
 

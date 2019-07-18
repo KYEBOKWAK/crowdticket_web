@@ -88,6 +88,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return asset('/img/icons/ic-default-profile-512.png');
     }
 
+    public function getMannayoPhotoURL($isAnonymity)
+    {
+        if($isAnonymity === 1)
+        {
+            return asset('/img/icons/ic-default-profile-512.png');
+        }
+
+        if ($this->profile_photo_url) {
+            return $this->profile_photo_url;
+        }
+        //return asset('/img/app/default-user-image.png');
+        return asset('/img/icons/ic-default-profile-512.png');
+    }
+
     public function getUserNickName()
     {
       if($this->nick_name)
