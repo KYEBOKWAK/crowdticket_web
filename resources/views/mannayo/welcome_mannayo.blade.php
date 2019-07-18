@@ -3466,20 +3466,6 @@
                 "<button id='mannayo_search_result_find_button' class='result_object_button_fake'>" + 
                 "</button>" +
               "</div>";
-
-            /*
-            element.innerHTML =
-              "<div class='result_creator_wrapper'>" +
-              
-                "<div class='flex_layer_mobile' style='margin-top: 22px;'>" + 
-                  "<div class='result_creator_meet_more_search_title'>"+"검색값이 없네요 :( 크티가 더 찾아볼까요?"+"</div>" +
-                  "<button id='mannayo_search_result_find_button' class='result_creator_meet_container'>" + 
-                    "<span>찾아보기</span>" + 
-                    "<img src='{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}' style='margin-left:8px; margin-top:1px; margin-right: 0px;'/>" +
-                  "</button>" + 
-                "</div>" +
-              "</div>";
-              */
           }
           
           g_creatorsSearchList.append(element);
@@ -3552,13 +3538,6 @@
             buttonElement = 
             "<button class='mannayo_thumb_meetup_cancel_button mannayo_search_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" + 
             "</button>";
-
-            /*
-            buttonElement = 
-            "<button class='result_meetup_meet_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" + 
-            "<p>만나요 요청됨</p>" +
-            "</button>";
-            */
 
             if(isMannayoSearchPopup())
             {
@@ -3666,21 +3645,6 @@
                 "<button class='result_add_new_creator_button result_object_button_fake' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
                 "</button>" + 
               "</div>";
-            /*
-            element.innerHTML =
-              "<div class='result_creator_wrapper'>" +
-              
-                "<div class='flex_layer' style='margin-left: 0px;'>" + 
-                  "<div class='result_creator_thumbnail_img_wrapper result_creator_thumbnail_img_wrapper_popup'>" +
-                    "<img class='result_creator_thumbnail_img result_creator_thumbnail_img_popup' src='"+channelThumbnailURL+"'>" +
-                  "</div>" +
-                  "<div class='result_creator_name text-ellipsize result_creator_name_popup'>"+channelTitle+"</div>" +
-                  "<button class='result_add_new_creator_button result_creator_meet_container flex_layer' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
-                    "<img class='result_creator_plus_img result_creator_plus_img_pop' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
-                  "</button>" + 
-                "</div>" +
-              "</div>";
-              */
           }
           else
           {
@@ -3698,20 +3662,7 @@
                 "</button>" + 
               "</div>";
 
-            /*
-            element.innerHTML =
-              "<div class='result_creator_wrapper'>" +
-              
-                "<div class='flex_layer' style='margin-left: 0px;'>" + 
-                  "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
-                  "<div class='result_creator_name text-ellipsize result_creator_name_width'>"+channelTitle+"</div>" +
-                  "<button class='result_add_new_creator_button result_creator_meet_container flex_layer' data_creator_channel_id='"+channelId+"' data_creator_title='"+channelTitle+"' data_creator_img_url='"+channelThumbnailURL+"'>" + 
-                    "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
-                    "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
-                  "</button>" + 
-                "</div>" +
-              "</div>";
-              */
+            
           }
           
           g_meetupSearchList.append(element);
@@ -3759,21 +3710,6 @@
             "</button>" + 
           "</div>";
 
-          /*
-          element.innerHTML =
-          "<div class='result_creator_wrapper result_creator_wrapper_main'>" +
-          
-            "<div class='flex_layer' style='margin-left: 0px;'>" + 
-              "<div class='result_creator_thumbnail_img_wrapper'>"+img+"</div>" +
-              "<div class='result_creator_name text-ellipsize'>"+creator.title+"</div>" +
-              "<button data_creator_id='"+ creator.id +"' data_creator_channel_id='"+creator.channel_id+"' data_creator_title='"+ creator.title +"' data_creator_img_url='"+ creator.thumbnail_url +"' class='result_new_meet_button_in_main result_creator_meet_container flex_layer'>" + 
-                "<div class='result_creator_meet_word'>"+"새 만나요 만들기"+"</div>" +
-                //"<div class='result_creator_meet_plus'>" + "<p>+</p>" + "</div>" +
-                "<img class='result_creator_plus_img' src='{{ asset('/img/icons/svg/ic-plus-blue-circle-36.svg') }}'/>" +
-              "</button>" + 
-            "</div>" +
-          "</div>";
-          */
           
           targetElement.appendChild(element);
         };
@@ -3879,20 +3815,7 @@
 
                 element.className = 'mannayo_search_result_find_container_container';
                 
-              /*
-              element.innerHTML =
-                "<div class='flex_layer_mobile'>" +
-                  "<p class='mannayo_search_result_find_label'>원하는 크리에이터가 없나요? 크티가 더 찾아볼게요</p>" +
-                  "<div class='mannayo_search_result_find_button_wrapper'>" +
-                    "<button class='mannayo_search_result_find_button'>" +
-                      "<span>찾아보기</span>" +
-                      "<img class='mannayo_search_result_find_more_img' src='{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}'/>" +
-                    "</button>" +
-                  "</div>" +
-                "</div>";
-
-                $('.mannayo_search_result_find_container').css('height', '100px');
-                */
+              
             }
             
           }
