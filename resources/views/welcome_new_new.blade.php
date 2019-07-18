@@ -756,7 +756,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         </div>
     </div>
 
-    <div class="welcome_content_container" style='display:none;'>
+    <div class="welcome_content_container">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
@@ -780,10 +780,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           <div class="flex_layer_thumb">
             <?php
             $projectIndex = 0;
-            //for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
-            for($i = 0 ; $i < 0 ; $i++)
+            
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
             {
               $itemCount = 0;
+              $isEnd = false;
               ?>
               @if($projectIndex === 0)
               <div class="flex_layer thumb_container_is_mobile">
@@ -860,14 +861,27 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   <?php
                   $projectIndex++;
                   $itemCount++;
+                  
+                  if(count($meetups) < $projectIndex + 1)
+                  {
+                    $isEnd = true;
+                    break;
+                  }
+
                   if($itemCount >= $mobileOneLineItemCount)
                   {
                     break;
                   }
+
+                  
                 }
               ?>
               </div>
               <?php
+              if($isEnd)
+              {
+                break;
+              }
             }             
             ?>           
           </div>
