@@ -756,7 +756,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         </div>
     </div>
 
-    <div class="welcome_content_container">
+    <div class="welcome_content_container" style='display:none;'>
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
@@ -780,7 +780,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           <div class="flex_layer_thumb">
             <?php
             $projectIndex = 0;
-            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            //for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            for($i = 0 ; $i < 0 ; $i++)
             {
               $itemCount = 0;
               ?>
@@ -1109,7 +1110,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
             var closeLoginPopup = function(){
               callUserInfo();
-              
+
               swal('로그인 완료!', '', 'success').then(function(value){
                 window.location.reload();
               });
