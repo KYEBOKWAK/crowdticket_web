@@ -174,6 +174,42 @@ class MannayoController extends Controller
         $objs = json_decode($json);
         return ['state' => 'success', 'data' => $objs->items];
     }
+/*
+    public function getCreatorLastInfo(Request $request, $channel_id)
+    {
+        include_once(__DIR__.'/../lib/simple_html_dom.php');
+
+        $creator = Creator::find($request->creator_id);
+        //return $creator;
+        $subscriber = $creator->subscriber_count;
+		
+        $html = file_get_html('https://www.youtube.com/channel/'.$channel_id);
+        
+		foreach($html->find('span.yt-subscription-button-subscriber-count-branded-horizontal') as $e)
+		{
+			$subscriber = str_replace(',', '', $e->plaintext);
+			break;
+        }
+
+        $thumbnailURL = $creator->thumbnail_url;
+
+		foreach($html->find('img.channel-header-profile-image') as $e)
+		{
+            //$str = str_replace(',', '', $e->src);
+            $thumbnailURL = $e->src;
+			//\Log::info($e->src);
+			//\Log::info($e->title);
+        }
+        
+        $creator->subscriber_count = $subscriber;
+        $creator->thumbnail_url = $thumbnailURL;
+        $creator->save();
+		
+		//테스트후 크롤controller 만들어서 분리 end
+        //return $channel_id;
+        return ['state' => 'success'];
+    }
+    */
 
     public function getCreatorInfoInCrollingWithChannel(Request $request)
     {
