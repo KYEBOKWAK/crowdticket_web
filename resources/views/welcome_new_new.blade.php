@@ -10,7 +10,9 @@
 @section('css')
     <link href="{{ asset('/css/mannayo.css?version=1') }}" rel="stylesheet"/>
     <style>
-    
+      p{
+        margin-bottom: 10px;
+      }
         body{
           font-weight: normal;
           font-style: normal;
