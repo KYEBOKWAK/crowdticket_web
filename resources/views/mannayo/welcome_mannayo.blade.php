@@ -1250,7 +1250,8 @@
           border-radius: 10px;
           background-color: #f7f7f7;
           text-align: center;
-          margin-top: 24px;
+          /*margin-top: 24px;*/
+          margin-top: 64px;
           position: relative;
         }
 
@@ -1263,7 +1264,7 @@
 
         .mannayo_no_creator_list_container{
           display: none;
-          margin-top: 160px;
+          margin-top: 64px;
           text-align: center;
           margin-bottom: 64px;
         }
@@ -1276,7 +1277,7 @@
 
         .mannayo_no_creator_list_in_api_container{
           display: none;
-          margin-top: 160px;
+          margin-top: 64px;
           text-align: center;
           margin-bottom: 64px;
         }
@@ -1447,6 +1448,21 @@
         }
 
         @media (max-width:1060px) {
+          .mannayo_no_creator_list_in_api_container{
+            margin-top: 40px;
+          }
+          .mannayo_no_creator_list_container{
+            margin-top: 40px;
+          }
+          .mannayo_creator_list_container{
+            margin-top: 40px;
+          }
+          .mannayo_search_result_find_container_main{
+            margin-top: 40px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 90%;
+          }
           .welcome_start_content_container{
             margin-left: 13%;
             width: 70%;
@@ -1923,13 +1939,15 @@
     </div>
 
     <div class="welcome_content_container">
+        <div class='mannayo_search_result_find_container_main'>
+        </div>
         <div class='mannayo_no_creator_list_container'>
           <img src="{{ asset('/img/icons/svg/ic-no-result-emoji.svg') }}"/>
           <p>검색 결과가 없어요</p>
         </div>
         <div class='mannayo_no_creator_list_in_api_container'>
           <img src="{{ asset('/img/icons/svg/ic-no-result-emoji.svg') }}"/>
-          <p>없는 채널이네요. 채널 주소를 직접 입력해주세요 👇</p>
+          <p>없는 채널이네요. 채널 주소를 직접 입력해주세요</p>
         </div>
         <div class='mannayo_creator_list_container'>
           <div class='mannayo_creator_list_title'>
@@ -1962,8 +1980,7 @@
           </div>
         </div>
 
-        <div class='mannayo_search_result_find_container_main'>
-        </div>
+        
         <div class="mannayo_list_loading_container">
           <div class='mannayo_youtube_crolling_info_container mannayo_youtube_crolling_info_container_main'>
             <p class="mannayo_youtube_crolling_now_counter"></p>
@@ -3982,6 +3999,13 @@
             findType === FIND_TYPE_IN_CHANNEL_MAIN)
           {
             g_footerContainer_main.append(element);
+
+            if(findType === FIND_TYPE_IN_CHANNEL_MAIN){
+              g_footerContainer_main.css('height', 'auto');
+            }
+            else{
+              g_footerContainer_main.css('height', '100px');
+            }
           }
           else
           {
@@ -4316,6 +4340,11 @@
           };
 
           var success = function(request) {
+            if(request.state === 'error')
+            {
+              alert(request.message);
+              return;
+            }
             var allCount = Number(request.channel_all_count);
             var nowCount = allCount - request.channels.length;
             //console.error("nowCount :" + nowCount);
@@ -4382,6 +4411,11 @@
 
 
         var youtubeGetSearchInfo = function(findType){
+          if(!$("#input_mannayo_search").val()){
+            alert('검색어가 없습니다.');
+            return;
+          }
+
           if(findType === FIND_TYPE_IN_API_MAIN)
           {
             setSwitchMoreLoading(true, INPUT_KEY_TYPE_ENTER, MAIN_FIND_STATE_FIND_API);
@@ -4405,10 +4439,13 @@
             {
               //타입이 크롤링이면 유투브 api 횟수 초과 혹은 에러로 인해 크롤링 검색으로 데이터가 왔다.
               console.error("in crolling");
-              setYoutubeCrollingListNowCounter(0, request.data.length);
-              setYoutubeCrollingListAllCounter(request.data.length);
-              youtubeGetCrollingCreatorData(request.data, request.data.length, findType);
-              return;
+              if(request.data.length > 0)
+              {
+                setYoutubeCrollingListNowCounter(0, request.data.length);
+                setYoutubeCrollingListAllCounter(request.data.length);
+                youtubeGetCrollingCreatorData(request.data, request.data.length, findType);
+                return;
+              }
             }
             
             ////////

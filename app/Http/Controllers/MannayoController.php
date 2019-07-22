@@ -281,13 +281,20 @@ class MannayoController extends Controller
         include_once(__DIR__.'/../lib/simple_html_dom.php');
 
         $channels = $request->channels;
-        $channel = array_splice($channels, 0, 1);
+        $channel = '';
+        if($channels)
+        {
+            $channel = array_splice($channels, 0, 1);
+        }
 
+        if(!$channel)
+        {
+            return ['state' => 'error', 'message'=> '검색값이 없습니다.', 'channel' => '', 'channels' => '', 'channel_all_count' => 0];
+        }
         
         $html_channel = file_get_html("https://www.youtube.com/".$channel[0]['channel_id']);
-        $channelDataObject = '';
 
-        //return $html_channel;
+        $channelDataObject = '';
 
         foreach($html_channel->find('img.channel-header-profile-image') as $e)
         {
@@ -322,7 +329,7 @@ class MannayoController extends Controller
         
         $channelDataObject['snippet']['thumbnails']['high']['url'] = str_replace("=s100", "=s800", $channelDataObject['snippet']['thumbnails']['high']['url']);        
         
-        return ['channel' => $channelDataObject, 'channels' => $channels, 'channel_all_count' => $request->channel_all_count];
+        return ['state' => 'success', 'channel' => $channelDataObject, 'channels' => $channels, 'channel_all_count' => $request->channel_all_count];
         
     }
 
