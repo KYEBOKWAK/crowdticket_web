@@ -1448,9 +1448,14 @@
         }
 
         @media (max-width:1060px) {
+          .mannayo_creator_list_title{
+            margin-left: 19px;
+          }
+          
           .mannayo_no_creator_list_in_api_container{
             margin-top: 40px;
           }
+
           .mannayo_no_creator_list_container{
             margin-top: 40px;
           }
