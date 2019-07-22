@@ -660,6 +660,7 @@
         select{
             width: 100%;
             height: 100%;
+            -webkit-appearance: menulist-button;
         }
 
         .city_meetup_select{
@@ -1451,7 +1452,7 @@
           .mannayo_creator_list_title{
             margin-left: 19px;
           }
-          
+
           .mannayo_no_creator_list_in_api_container{
             margin-top: 40px;
           }
