@@ -482,13 +482,27 @@
           border-radius: 10px;
         }
 
+        .welcome_meetup_banner_title_pc{
+            display: block;
+          }
+
+          .welcome_meetup_banner_title_mobile{
+            display: none;
+          }
+
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
-          /*
-          .welcome_content_container{
-            width: 600px;
+          .welcome_meetup_banner_title_pc{
+            display: none;
           }
-          */
+
+          .welcome_meetup_banner_title_mobile{
+            display: block;
+          }
+
+          .welcome_content_container_banner{
+            width: 100%;
+          }
 
           .welcome_start_content_container{
             margin-left: 13%;
@@ -749,9 +763,15 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         <div class="welcome_meetup_banner_wrapper">
           <div style="height:1px">
           </div>
-          <div class="welcome_meetup_banner_title">
+
+          <div class="welcome_meetup_banner_title welcome_meetup_banner_title_pc">
             내가 좋아하는 사람을 화면 밖에서 만나는 인생경험
           </div>
+
+          <div class="welcome_meetup_banner_title welcome_meetup_banner_title_mobile">
+            내가 좋아하는 사람을<br> 화면 밖에서 만나는 인생경험
+          </div>
+
           <div class="welcome_meetup_banner_subtitle">
           온라인으로만 소통할 수 있었던 크리에이터와 팬.<br>
           이제는 크라우드티켓을 통해 더욱 쉽고 즐겁게 오프라인에서 만나고 가까워지세요!
@@ -900,7 +920,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
     </div>
     
-    <div class="welcome_content_container">
+    <div class="welcome_content_container welcome_content_container_banner">
       <div class="welcome_content_wrapper">
         <div class="welcome_banner_container">
           <div class="flex_layer_thumb">
