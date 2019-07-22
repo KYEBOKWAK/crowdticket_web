@@ -1534,7 +1534,7 @@
             });
             
             $("#blueprint_show_event_service_button").click(function(){
-                window.open('https://drive.google.com/a/crowdticket.kr/file/d/19UajFPeJRtk8_I41JgrZgzwUF847MBFG/view?usp=sharing', '_blank');
+                window.open('https://drive.google.com/a/crowdticket.kr/file/d/16oWryNurh8LwMF4f7PlbKfT9XOwcMvI8/view?usp=sharing', '_blank');
             });
 
             var contactPopup = function(){
