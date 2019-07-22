@@ -260,6 +260,7 @@
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 <input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif"/>
 
+
 @section('navbar')
 <nav class="navbar navbar-default">
     <div class="navbar-header">
@@ -410,7 +411,7 @@
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=9');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=10');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 

@@ -309,14 +309,12 @@
           width: 520px;
           height: 128px;
           border-radius: 10px;
-          background-color: #f5c935;
         }
 
         .welcome_banner_2{
           width: 520px;
           height: 128px;
           border-radius: 10px;
-          background-color: #141611;
           margin-left: 20px;
         }
 
@@ -479,6 +477,11 @@
           color: white;
         }
 
+        .welcome_banner_img{
+          width: 100%;
+          border-radius: 10px;
+        }
+
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
           /*
@@ -547,7 +550,8 @@
 
           .welcome_banner_mobile{
             width: 100%;
-            height: 78px;
+            /*height: 78px;*/
+            height: 100%;
             border-radius: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -567,6 +571,10 @@
 
           .container{
             width: 600px;
+          }
+
+          .welcome_banner_img{
+            border-radius: 0px;
           }
         }
 
@@ -891,18 +899,27 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         <!-- 썸네일 테스트 END -->
       </div>
     </div>
-
-    <div class="welcome_content_wrapper" style="display:none;">
-      <div class="welcome_banner_container">
-        <div class="flex_layer_thumb">
-            <div class="welcome_banner_1 welcome_banner_mobile">
-            </div>
-          
-            <div class="welcome_banner_2 welcome_banner_mobile">
-            </div>
+    
+    <div class="welcome_content_container">
+      <div class="welcome_content_wrapper">
+        <div class="welcome_banner_container">
+          <div class="flex_layer_thumb">
+              <div class="welcome_banner_1 welcome_banner_mobile">
+                <a href='{{url("/magazine/12")}}'>
+                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190718_banner_1.png'>
+                </a>
+              </div>
+            
+              <div class="welcome_banner_2 welcome_banner_mobile">
+                <a href='{{url("/magazine/13")}}'>
+                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190718_1357_banner_2.png'>
+                </a>
+              </div>
+          </div>
         </div>
       </div>
     </div>
+    
 
     <div class="welcome_content_container">
       <div class="welcome_content_wrapper">

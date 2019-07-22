@@ -500,7 +500,7 @@
                          class="form-control" autocomplete="off" required="required"
                          placeholder="-없이 숫자만 입력"/>
                    <div>
-                       *체크카드, 신용카드, 법인카드 모두 가능합니다.
+                       *체크카드, 신용카드, 법인카드 모두 가능합니다.<br>(하나카드 사용불가)
                    </div>
                 </div>
               </div>

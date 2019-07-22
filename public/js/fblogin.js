@@ -168,7 +168,6 @@ function facebookLibInit(){
 //google login started
 
 function attachSignin(element) {
-
   auth2.attachClickHandler(element, {},
       function(googleUser) {
         //console.error("google!! : " + googleUser.getBasicProfile().getName());
@@ -202,7 +201,20 @@ function googleLibInit(){
       // Request scopes in addition to 'profile' and 'email'
       //scope: 'additional_scope'
     });
-    attachSignin(document.getElementById('login_social_google_button_wrapper'));
+
+    var userAgent = window.navigator.userAgent;
+    var isKakao = userAgent.indexOf('KAKAOTALK');
+    //alert(isKakao);
+    if(isKakao > 0)
+    {
+      $('#login_social_google_button_wrapper').click(function(){
+        alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
+      });
+    }
+    else
+    {
+      attachSignin(document.getElementById('login_social_google_button_wrapper'));
+    }
   });
 };
 
