@@ -17,7 +17,7 @@
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-NV5RZWL');</script>
+    })(window,document,'script','dataLayer','GTM-T94QPRD');</script>
     <!-- End Google Tag Manager -->
 
     @section('title')
@@ -210,6 +210,7 @@
 
 <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'/>
+
     <!-- <script async="" src="https://www.google-analytics.com/analytics.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -247,12 +248,10 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <!--
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T94QPRD"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  -->
-  <!-- End Google Tag Manager (noscript) -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T94QPRD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <input type="hidden" id="base_url" value="{{ url() }}"/>
 <input type="hidden" id="asset_url" value="{{ asset('/') }}"/>
