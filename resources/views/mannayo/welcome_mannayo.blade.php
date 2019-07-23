@@ -1873,6 +1873,7 @@
 @endsection
 
 @section('content')
+
 @if (Auth::guest())
 <input id='user_nickname' type='hidden' value=''/>
 <input id='user_age' type='hidden' value=''/>
@@ -1881,6 +1882,18 @@
 <input id='user_nickname' type='hidden' value='{{\Auth::user()->getUserNickName()}}'/>
 <input id='user_age' type='hidden' value='{{\Auth::user()->getUserAge()}}'/>
 <input id='user_gender' type='hidden' value='{{\Auth::user()->getUserGender()}}'/>
+@endif
+
+@if(isset($share_channel_id))
+<input id='share_channel_id' type='hidden' value='{{$share_channel_id}}'/>
+@else
+<input id='share_channel_id' type='hidden' value=''/>
+@endif
+
+@if(isset($share_meetup_info))
+<input id='share_meetup_info' type='hidden' value='{{$share_meetup_info}}'/>
+@else
+<input id='share_meetup_info' type='hidden' value=''/>
 @endif
 
     <div class="mannayo_title_container">
@@ -3000,6 +3013,7 @@
             else
             {
               alert(request.message);
+              window.location.reload();
             }
           };
           
@@ -4337,7 +4351,7 @@
         
         var g_youtubeCrollingDataArray = [];
         var youtubeGetCrollingCreatorData = function(channels, channelAllCount, findType){
-          var url="/search/creator/crolling";
+          var url="/search/creator/find/crolling";
           var method = 'post';
           var data=
           {
@@ -4527,7 +4541,7 @@
           }
           
 
-          var url="/search/creator/crolling/channel";
+          var url="/search/creator/find/crolling/channel";
           var method = 'post';
           var data =
           {
@@ -4995,6 +5009,9 @@
             'searchvalue': $("#input_mannayo_search").val()
           }
           var success = function(request) {
+            //console.error(request);
+            //return;
+
             if(request.state === 'success')
             {
               if(isPressEnterKey && request.keytype === INPUT_KEY_TYPE_NORMAL)
@@ -5039,7 +5056,55 @@
           });
         };
 
-        requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+        var manualLoginPopupClose = function(){
+          console.error("CLOSE!!!");
+        };
+
+        var shareCallMeetupPopup = function(){
+          if(!isLogin())
+          {
+            loginPopup(shareCallMeetupPopup, manualLoginPopupClose);
+            return;
+          }
+
+          callUserInfo();
+
+          if(!$('#share_meetup_info').val())
+          {
+            return;
+          }
+
+          var share_meetup_info_json = $.parseJSON($('#share_meetup_info').val());
+          if(share_meetup_info_json)
+          {
+            var data_meetup_id = share_meetup_info_json.id;
+            var data_meetup_title = share_meetup_info_json.creator.title;
+            var data_meetup_where = share_meetup_info_json.where;
+            var data_meetup_what = share_meetup_info_json.what;
+            var data_meetup_img_url = share_meetup_info_json.creator.thumbnail_url;
+            var data_meetup_count = share_meetup_info_json.meet_count;
+            openMeetPopup(data_meetup_id, data_meetup_title, data_meetup_where, data_meetup_what, data_meetup_img_url, data_meetup_count);
+          }
+        };
+
+        if($('#share_channel_id').val()){
+          $("#input_mannayo_search").val($('#share_channel_id').val());
+          requestMannayoList(INPUT_KEY_TYPE_ENTER);
+          $("#input_mannayo_search").val('');
+        }
+        else if($('#share_meetup_info').val()){
+          if($('#share_meetup_info').val() === 'none'){
+            alert('크리에이터의 만나요가 없습니다!');
+            requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+          }
+          else{
+            shareCallMeetupPopup();
+            requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+          }
+        }
+        else{
+          requestMannayoList(INPUT_KEY_TYPE_NORMAL);
+        }
 
         $("#mannayo_list_more_button").click(function(){
           //requestMannayoList(INPUT_KEY_TYPE_NORMAL);

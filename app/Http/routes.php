@@ -98,8 +98,11 @@ Route::get('mannayo', 'MannayoController@goMannayo');
 Route::get('mannayo/list', 'MannayoController@getMannayoList');
 Route::post('get/creator/find/list', 'MannayoController@findCreatorList');
 Route::post('search/creator/api/list', 'MannayoController@callYoutubeSearch');
-Route::post('search/creator/crolling', 'MannayoController@callYoutubeSearchCrolling');
-Route::post('search/creator/crolling/channel', 'MannayoController@getCreatorInfoInCrollingWithChannel');
+Route::post('search/creator/find/crolling', 'MannayoController@callYoutubeSearchCrolling');
+Route::post('search/creator/find/crolling/channel', 'MannayoController@getCreatorInfoInCrollingWithChannel');
+
+Route::get('mannayo/share/{channel_id}', 'MannayoController@goMannayoCreators');
+Route::get('mannayo/share/meetup/{meetup_id}', 'MannayoController@goMannayoMeetups');
 //Mannayo END
 
 Route::group(['middleware' => 'auth'], function () {

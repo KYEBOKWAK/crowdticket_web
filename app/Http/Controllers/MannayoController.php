@@ -43,8 +43,27 @@ class MannayoController extends Controller
 
     public function goMannayo()
     {
-        $meetups = [];
-        return view('mannayo.welcome_mannayo', ['meetups' => $meetups]);
+        return view('mannayo.welcome_mannayo');
+    }
+
+    public function goMannayoCreators($channel_id)
+    {
+        //$creators = Meetups::where('channel_id', $creator_id)->get();
+
+        return view('mannayo.welcome_mannayo', ['share_channel_id' => $channel_id]);
+    }
+
+    public function goMannayoMeetups($meetup_id)
+    {
+        $meetup = Meetup::find($meetup_id);
+        if(!$meetup)
+        {
+            return view('mannayo.welcome_mannayo', ['share_meetup_info' => 'none']);    
+        }
+
+        $meetup->creator;
+
+        return view('mannayo.welcome_mannayo', ['share_meetup_info' => $meetup]);
     }
 
     public function createCreator(Request $request)
@@ -554,6 +573,12 @@ class MannayoController extends Controller
         if($request->keytype === self::INPUT_KEY_TYPE_ENTER)
         {
             $creators = Creator::where('title', 'LIKE', '%'.$request->searchvalue.'%')->get();
+            if(count($creators) === 0)
+            {
+                //검색값이 없으면, creatorid 로도 찾아본다.
+                $creators = Creator::where('channel_id', $request->searchvalue)->get();
+            }
+
             $creatorIds = [];
             foreach($creators as $creator)
             {
