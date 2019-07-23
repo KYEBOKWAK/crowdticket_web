@@ -2387,7 +2387,13 @@
                   timer: 1300,
               }).then(function(value){
                 showLoadingPopup('');
-                window.location.reload();
+                var baseUrl = $('#base_url').val();
+                if(window.location.href === baseUrl){
+                  window.location.reload();
+                }
+                else{
+                  window.location.href = baseUrl+'/mannayo';
+                }
               });
 
           $(".swal-footer").hide();
@@ -3083,7 +3089,13 @@
                       closeOnEsc: true
                   }).then(function(value){
                     showLoadingPopup('');
-                    window.location.reload();
+                    var baseUrl = $('#base_url').val();
+                    if(window.location.href === baseUrl){
+                      window.location.reload();
+                    }
+                    else{
+                      window.location.href = baseUrl+'/mannayo';
+                    }
                   });
 
               $(".swal-footer").hide();
