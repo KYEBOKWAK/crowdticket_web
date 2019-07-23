@@ -2890,7 +2890,7 @@
         
         //신규 만남 만들기 팝업 END        
 
-        var callUserInfo = function(){
+        var callUserInfo = function(successFunc){
           var url="/mannayo/user/info";
           var method = 'get';
           var data =
@@ -2902,6 +2902,11 @@
               $('#user_nickname').val(request.user_nickname);
               $('#user_age').val(request.user_age);
               $('#user_gender').val(request.user_gender);
+
+              if(successFunc != null)
+              {
+                successFunc();
+              }
             }
           };
           
@@ -2921,7 +2926,7 @@
         var closeLoginPopup = function(){
           //swal.close();
           swal('로그인 완료!', '', 'success');
-          callUserInfo();
+          callUserInfo(null);
         };
 
         var setCreatorInfoInNewMeetPopup = function(creator_id, creator_title, creator_thumbnail_url, creator_channel_id){
@@ -5056,19 +5061,7 @@
           });
         };
 
-        var manualLoginPopupClose = function(){
-          console.error("CLOSE!!!");
-        };
-
-        var shareCallMeetupPopup = function(){
-          if(!isLogin())
-          {
-            loginPopup(shareCallMeetupPopup, manualLoginPopupClose);
-            return;
-          }
-
-          callUserInfo();
-
+        var openShareCallMeetupPopup = function(){
           if(!$('#share_meetup_info').val())
           {
             return;
@@ -5085,6 +5078,16 @@
             var data_meetup_count = share_meetup_info_json.meet_count;
             openMeetPopup(data_meetup_id, data_meetup_title, data_meetup_where, data_meetup_what, data_meetup_img_url, data_meetup_count);
           }
+        };
+
+        var shareCallMeetupPopup = function(){
+          if(!isLogin())
+          {
+            loginPopup(shareCallMeetupPopup, null);
+            return;
+          }
+
+          callUserInfo(openShareCallMeetupPopup);
         };
 
         if($('#share_channel_id').val()){
