@@ -1026,7 +1026,7 @@ p{
     width: 16px; 
     height: 16px; 
     border-radius: 100%; 
-    margin-left: -2px;
+    margin-left: -4px;
     position: relative;
   }
 
@@ -1400,6 +1400,47 @@ p{
     padding-top: 40px;
   }
 
+  .mannayo_thumb_user_list_thumb_button{
+    width: 110%;
+    height: 110%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    opacity: 0;
+  }
+
+  .mannayo_thumb_user_name_container{
+    display: none;
+    position: relative;
+  }
+
+  .mannayo_thumb_user_name_ul_container{
+    position: absolute;
+    background-color: #4d4d4d;
+    border-radius: 5px;
+    text-align: left;
+    top: 0;
+    right: 0;
+    width: 74px;
+    max-height: 99px;
+    z-index: 100;
+    padding: 5px;
+    font-size: 12px;
+    color: white;
+  }
+
+  .mannayo_thumb_user_container_arrow{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #4d4d4d;
+    top: -5px;
+    right: 15px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
   @media (max-width:1060px) {
     .welcome_start_content_container{
       margin-left: 13%;
@@ -1771,6 +1812,12 @@ p{
   @media (max-width:420px) {
     .meetup_popup_option_label_creator_what{
       width: 50px;
+    }
+  }
+
+  @media (max-width:355px) {
+    .mannayo_thumb_meet_users_container{
+      display: none;
     }
   }
 

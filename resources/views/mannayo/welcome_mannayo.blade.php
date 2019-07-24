@@ -1040,7 +1040,7 @@
           width: 16px; 
           height: 16px; 
           border-radius: 100%; 
-          margin-left: -2px;
+          margin-left: -4px;
           position: relative;
         }
 
@@ -1446,6 +1446,47 @@
         .mannayo_youtube_crolling_info_container_popup{
           font-size: 12px;
           color: #4d4d4d;
+        }
+
+        .mannayo_thumb_user_list_thumb_button{
+          width: 110%;
+          height: 110%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: 1000;
+          opacity: 0;
+        }
+
+        .mannayo_thumb_user_name_container{
+          display: none;
+          position: relative;
+        }
+
+        .mannayo_thumb_user_name_ul_container{
+          position: absolute;
+          background-color: #4d4d4d;
+          border-radius: 5px;
+          text-align: left;
+          top: 0;
+          right: 0;
+          width: 74px;
+          max-height: 99px;
+          z-index: 100;
+          padding: 5px;
+          font-size: 12px;
+          color: white;
+        }
+
+        .mannayo_thumb_user_container_arrow{
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background-color: #4d4d4d;
+          top: -5px;
+          right: 15px;
+          transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
         }
 
         @media (max-width:1060px) {
@@ -1865,6 +1906,10 @@
         @media (max-width:320px) {
           .mannayo_title_background p{
             width: 296px;
+          }
+
+          .mannayo_thumb_meet_users_container{
+            display: none;
           }
         }
     </style>
@@ -4782,6 +4827,7 @@
           var thumbnail_url = meetup.thumbnail_url;
 
           var meetupUsersElement = '';
+          var meetupUserNames = '';
 
           var zIndex = meetup.meetup_users.length;
           for(var i = 0 ; i < meetup.meetup_users.length ; i++)
@@ -4789,12 +4835,15 @@
             var meetup_user = meetup.meetup_users[i];
             meetupUsersElement += "<img src='"+meetup_user.user_profile_url+"' class='meetup_users_profile_img' style='z-index:"+zIndex+"'/>";
             zIndex--;
+
+            meetupUserNames += "<li class='text-ellipsize'>"+ meetup_user.user_name +"</li>";
           }
 
           if(meetup.meet_count >= 4)
           {
             //인원이 4명 초과면 ... 이 나오게 한다.
             meetupUsersElement += "<img src='{{ asset('/img/icons/ic-profile-more-512.png') }}' class='meetup_users_profile_img' style='z-index:"+zIndex+"'/>";
+            meetupUserNames += "<li>"+ "외 "+ (Number(meetup.meet_count) - meetup.meetup_users.length)+"명"+"</li>";
           }
           
           var meetupMeetButtonFake = '';
@@ -4839,11 +4888,22 @@
                   "<div class='thumb-black-mask'>" +
                   "</div>" +
                   "<div class='mannayo_thumb_meet_count'>" +
-                    "<img src='{{ asset('/img/icons/svg/ic-meet-join-member-wh.svg') }}' style='margin-right: 4px; margin-bottom: 3px;'/>" + meetup.meet_count + " 명 요청중" +
+                    "<img src='{{ asset('/img/icons/svg/ic-meet-join-member-wh.svg') }}' style='margin-right: 4px; margin-bottom: 3px;'/>" + meetup.meet_count + "명 요청중" +
                   "</div>" +
 
                   "<div class='mannayo_thumb_meet_users_container'>" +
                     meetupUsersElement +
+                    "<button class='mannayo_thumb_user_list_thumb_button' data_meetup_id='"+meetup.id+"'>" + 
+                    "</button>" +
+                  "</div>" +
+                "</div>" +
+                "<div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_"+meetup.id+"'>" +
+                  "<div class='mannayo_thumb_user_container_arrow'>" +
+                  "</div>" + 
+                  "<div class='mannayo_thumb_user_name_ul_container'>" +
+                    "<ul>" + 
+                      meetupUserNames +
+                    "</ul>" +
                   "</div>" +
                 "</div>" +
               "</div>" +
@@ -4992,10 +5052,46 @@
             });
           };
 
+          var isTouchUserInfoButton = false;
+
+          var resetUserInfoList = function(){
+            $('.mannayo_thumb_user_name_container').hide();
+          };
+
+          var setMannayoUserInfoButton = function(){
+            $('.mannayo_thumb_user_list_thumb_button').click(function(event){
+              isTouchUserInfoButton = true;
+              resetUserInfoList();
+              var meetupId = $(this).attr('data_meetup_id');
+              var getElementUserName = '.mannayo_thumb_user_name_container_'+meetupId;
+              $(getElementUserName).show();
+            });
+
+            $('.mannayo_thumb_user_list_thumb_button').hover(function(event){
+              resetUserInfoList();
+              var meetupId = $(this).attr('data_meetup_id');
+              var getElementUserName = '.mannayo_thumb_user_name_container_'+meetupId;
+              $(getElementUserName).show();
+            });
+
+            $(document).click(function(e){
+              if(isTouchUserInfoButton){
+                isTouchUserInfoButton = false;
+                return;
+              }
+
+              resetUserInfoList();
+            });
+
+            $(window).resize(function() {
+              resetUserInfoList();
+            });
+          };
+
           setMannayoListMeetupButton();
           setMannayoCreateMeetupButton();
           setMannayoCancelButton();
-          
+          setMannayoUserInfoButton();
         };
         //원본END
         
@@ -5161,9 +5257,8 @@
         };
 
         setInputAction();
-
-        
       });
+
     </script>
     
 @endsection

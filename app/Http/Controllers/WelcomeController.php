@@ -142,6 +142,7 @@ class WelcomeController extends Controller
                     $userMyProfileURL = $userMyInfo->getPhotoUrl();
 
                     $meetup_user_my->user_profile_url = $userMyProfileURL;
+                    $meetup_user_my->user_name = '나';
 
                     array_push($meetup->meetup_users, $meetup_user_my);
 
@@ -163,9 +164,11 @@ class WelcomeController extends Controller
             foreach($meetup_users as $meetup_user)
             {
                 $userInfo = $meetup_user->user;
-                $userProfileURL = $userInfo->getPhotoUrl();
+                //$userProfileURL = $userInfo->getPhotoUrl();
+                $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
 
                 $meetup_user->user_profile_url = $userProfileURL;
+                $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
 
                 array_push($meetup->meetup_users, $meetup_user);
 

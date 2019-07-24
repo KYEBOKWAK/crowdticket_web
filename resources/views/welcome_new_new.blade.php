@@ -8,7 +8,7 @@
     <meta property="og:url" content="https://crowdticket.kr/"/>
 @endsection
 @section('css')
-    <link href="{{ asset('/css/mannayo.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=2') }}" rel="stylesheet"/>
     <style>
       p{
         margin-bottom: 10px;
@@ -840,7 +840,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                           <div class='thumb-black-mask'>
                           </div>
                           <div class='mannayo_thumb_meet_count'>
-                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}} 명 요청중
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
                           </div>
 
                           <div class='mannayo_thumb_meet_users_container'>
@@ -858,6 +858,23 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                               <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
                             @endif
                           <!--meetupUsersElement-->
+                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                          <div class='mannayo_thumb_user_container_arrow'>
+                          </div>
+                          <div class='mannayo_thumb_user_name_ul_container'>
+                            <ul>
+                              @foreach($meetup->meetup_users as $meetup_user)
+                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              @endforeach
+                              @if($meetup->meet_count >= 4)
+                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                              @endif
+                            </ul>
                           </div>
                         </div>
                       </div>
@@ -1770,8 +1787,44 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               });
             };
 
+            var isTouchUserInfoButton = false;
+            var resetUserInfoList = function(){
+              $('.mannayo_thumb_user_name_container').hide();
+            };
+
+            var setMannayoUserInfoButton = function(){
+              $('.mannayo_thumb_user_list_thumb_button').click(function(event){
+                isTouchUserInfoButton = true;
+                resetUserInfoList();
+                var meetupId = $(this).attr('data_meetup_id');
+                var getElementUserName = '.mannayo_thumb_user_name_container_'+meetupId;
+                $(getElementUserName).show();
+              });
+
+              $('.mannayo_thumb_user_list_thumb_button').hover(function(event){
+                resetUserInfoList();
+                var meetupId = $(this).attr('data_meetup_id');
+                var getElementUserName = '.mannayo_thumb_user_name_container_'+meetupId;
+                $(getElementUserName).show();
+              });
+
+              $(document).click(function(e){
+                if(isTouchUserInfoButton){
+                  isTouchUserInfoButton = false;
+                  return;
+                }
+
+                resetUserInfoList();
+              });
+
+              $(window).resize(function() {
+                resetUserInfoList();
+              });
+            };
+
             setMannayoListMeetupButton();
             setMannayoCancelButton();
+            setMannayoUserInfoButton();
 
         });
 

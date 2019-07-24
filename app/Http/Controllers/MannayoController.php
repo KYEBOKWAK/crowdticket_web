@@ -687,6 +687,8 @@ class MannayoController extends Controller
                     //$userMyProfileURL = $userMyInfo->getMannayoPhotoURL($meetup_user_my->anonymity);
 
                     $meetup_user_my->user_profile_url = $userMyProfileURL;
+                    $meetup_user_my->user_name = '나';
+                    //$meetup_user_my->user_name = $userMyInfo->getMannayoUserNickName($meetup_user_my->anonymity);
 
                     array_push($meetup->meetup_users, $meetup_user_my);
 
@@ -708,10 +710,11 @@ class MannayoController extends Controller
             foreach($meetup_users as $meetup_user)
             {
                 $userInfo = $meetup_user->user;
-                $userProfileURL = $userInfo->getPhotoUrl();
-                //$userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
+                //$userProfileURL = $userInfo->getPhotoUrl();
+                $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
 
                 $meetup_user->user_profile_url = $userProfileURL;
+                $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
 
                 array_push($meetup->meetup_users, $meetup_user);
 

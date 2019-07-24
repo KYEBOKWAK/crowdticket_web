@@ -112,6 +112,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
       return $this->name;
     }
 
+    public function getMannayoUserNickName($isAnonymity)
+    {
+        if($isAnonymity === 1)
+        {
+            return '익명';
+        }
+
+        if($this->nick_name)
+        {
+            return $this->nick_name;
+        }
+
+        return $this->name;
+    }
+
     public function getUserAge()
     {
         return $this->age;
