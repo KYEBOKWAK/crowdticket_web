@@ -449,6 +449,7 @@ class MannayoController extends Controller
                 $meetupRow['what'] = $meetup->what;
                 $meetupRow['where'] = $meetup->where;
                 $meetupRow['meet_count'] = $meetup->meet_count;
+                $meetupRow['comments_count'] = $meetup->comments_count;
                 $meetupRow['is_meetup'] = false;
 
                 if($user)
@@ -602,20 +603,9 @@ class MannayoController extends Controller
                         ->whereIn('meetups.id', $meetupsIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-
-                    /*
-                    $meetups = \DB::table('meetups')
-                        ->whereIn('creator_id', $creatorIds)
-                        ->where('user_id', $user->id)
-                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-                        ->orderBy($orderBy, $orderType)->get();
-                        */
                 }
             }
             else
@@ -624,7 +614,7 @@ class MannayoController extends Controller
                         ->whereIn('creator_id', $creatorIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->get();
             }
@@ -646,20 +636,10 @@ class MannayoController extends Controller
                         ->whereIn('meetups.id', $meetupsIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
                         
-
-                    /*
-                    $meetups = \DB::table('meetups')
-                        ->where('user_id', $user->id)
-                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
-                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
-                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
-                        ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-                        */
                 }
             }
             else
@@ -667,7 +647,7 @@ class MannayoController extends Controller
                 $meetups = \DB::table('meetups')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
             }
@@ -771,18 +751,6 @@ class MannayoController extends Controller
 
         
         return ['state' => 'success'];
-
-
-
-        /*
-        $creator = Creator::find($meetUp->creator_id);
-        if(!$creator)
-        {
-            return ['state' => 'error', 'message' => 'ERROR!! 크리에이터 정보가 없습니다. 다시 시도해주세요.'];
-        }
-        */
-
-        return ['state' => 'success'];
     }
 
     //해당 밋업을 이미 한 유저인지 체크 한다.
@@ -832,5 +800,84 @@ class MannayoController extends Controller
         $user_gender = $user->getUserGender();
 
         return ['state' => 'success', 'user_nickname' => $user_nickname, 'user_age' => $user_age, 'user_gender' => $user_gender];
+    }
+
+    public function getMannayoUsers(Request $request)
+    {
+        $user_me = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user_me = \Auth::user();
+        }
+
+        $skip = $request->call_skip_counter;
+        $take = $request->call_once_max_counter;
+        
+        $meetup_users = Meetup_user::where('meetup_id', $request->meetup_id)->skip($skip)->take($take)->get();
+        foreach($meetup_users as $meetup_user)
+        {
+            $user = $meetup_user->user;
+
+            if($user_me && $user_me->id === $user->id)
+            {
+                $meetup_user->user->nick_name = '나';
+            }
+            else
+            {
+                $meetup_user->user->nick_name = $user->getMannayoUserNickName($meetup_user->anonymity);
+                $meetup_user->user->profile_photo_url = $user->getMannayoPhotoURL($meetup_user->anonymity);
+            }
+        }
+
+        return ['state' => 'success', 'meetup_users' => $meetup_users, 'meetup_id' => $request->meetup_id];
+    }
+
+    public function getComments(Request $request)
+    {
+        $user_me = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user_me = \Auth::user();
+        }
+
+        $skip = $request->call_skip_counter;
+        $take = $request->call_once_max_counter;
+
+        //$targetMeetupId = $request->target_meetup_id;//현재 불러온 마지막 밋업 id 기준으로 가져온다.
+        //$meetup_comments = Meetup::comments()->skip($skip)->take($take)->get();
+        $meetup = Meetup::find($request->meetup_id);
+        if(!$meetup)
+        {
+            return ['state' => 'error', 'message' => '만나요 정보가 없습니다.'];
+        }
+        //$request->last_comment_id = 465;
+
+        $meetup_comments = [];
+        if((int)$request->last_comment_id === 0)
+        {
+            $meetup_comments = $meetup->comments()->with('user', 'comments', 'comments.user')->skip($skip)->take($take)->get();
+        }
+        else
+        {
+            $meetup_comments = $meetup->comments()->where('id', '<', $request->last_comment_id)->with('user', 'comments', 'comments.user')->skip($skip)->take($take)->get();
+        }
+
+        foreach($meetup_comments as $meetup_comment)
+        {
+            $user = $meetup_comment->user;
+
+            if($user_me && $user_me->id === $user->id)
+            {
+                $meetup_comment->user->nick_name = '나';
+                //$meetup_comment->user->profile_photo_url = $user->getPhotoUrl();
+            }
+            else
+            {
+                $meetup_comment->user->nick_name = $user->getMannayoUserNickName($meetup_comment->anonymity);
+                $meetup_comment->user->profile_photo_url = $user->getMannayoPhotoURL($meetup_comment->anonymity);
+            }
+        }
+
+        return ['state' => 'success', 'meetup_comments' => $meetup_comments, 'comments_count' => $meetup->comments_count, 'meetup_id' => $request->meetup_id];
     }
 }

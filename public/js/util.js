@@ -692,3 +692,15 @@ function Check_nonTagReturn(inputId){
   document.getElementById(inputId).focus();
   return false;
 }
+
+function isMyOrMasterComment(commentId){
+	var myId = Number($('#myId').val());
+	var isMaster = $('#isMaster').val();
+
+	if(myId == commentId || isMaster)
+	{
+		return true;
+	}
+
+	return false;
+};

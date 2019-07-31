@@ -9,21 +9,21 @@
 		</a>
 		<div class="comment-section-right">
 			<a href="{{ url('/users') }}/<%= data.user.id %>" target="_blank">
-        <span class="comment-username">
-          <strong>
-            <% if(data.user.nick_name) { %>
-              <%= data.user.nick_name %>
-            <% } else { %>
-              <%= data.user.name %>
-            <% } %>
+				<span class="comment-username">
+				<strong>
+					<% if(data.user.nick_name) { %>
+					<%= data.user.nick_name %>
+					<% } else { %>
+					<%= data.user.name %>
+					<% } %>
 
-          </strong>
-        </span>
-      </a>
+				</strong>
+				</span>
+			</a>
 			<span class="comment-created-at"><%= data.created_at %></span>
 			<span class="toggle-reply">답글달기</span>
-      <% if(isMyOrMasterComment(data.user.id)) { %>
-      <span class="delete-comment" data-comment-id="<%= data.id %>">삭제하기</span>
+      		<% if(isMyOrMasterComment(data.user.id)) { %>
+      			<span class="delete-comment" data-comment-id="<%= data.id %>">삭제하기</span>
 			<% } %>
 
 			<p class="comment-content"><%= data.contents.split("\n").join("<br />") %></p>

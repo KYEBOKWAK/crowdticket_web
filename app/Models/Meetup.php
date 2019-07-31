@@ -14,4 +14,10 @@ class Meetup extends Model
     {
         return $this->belongsTo('App\Models\Creator');
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable')->orderBy('created_at', 'desc');
+        //return $this->morphMany('App\Models\Comment', 'commentable');
+    }
 }

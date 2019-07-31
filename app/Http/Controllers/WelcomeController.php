@@ -119,7 +119,7 @@ class WelcomeController extends Controller
         $meetups = \DB::table('meetups')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
-                                'meetups.what', 'meetups.where', 'meetups.meet_count',
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
         

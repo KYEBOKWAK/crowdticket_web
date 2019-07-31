@@ -4,7 +4,7 @@ Route::pattern('id', '[0-9]+');
 Route::pattern('code', '[a-zA-Z0-9]+');
 Route::pattern('alias', '[a-zA-Z0-9-_]+');
 Route::pattern('name', '[a-zA-Z]+');
-Route::pattern('entity', 'projects|comments|tickets|overcount');
+Route::pattern('entity', 'projects|comments|tickets|overcount|mannayo|mannayocommentscomment');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',
@@ -103,6 +103,10 @@ Route::post('search/creator/find/crolling/channel', 'MannayoController@getCreato
 
 Route::get('mannayo/share/{channel_id}', 'MannayoController@goMannayoCreators');
 Route::get('mannayo/share/meetup/{meetup_id}', 'MannayoController@goMannayoMeetups');
+
+Route::get('mannayo/users/list', 'MannayoController@getMannayoUsers');
+
+Route::get('mannayo/comments/list', 'MannayoController@getComments');
 //Mannayo END
 
 Route::group(['middleware' => 'auth'], function () {
@@ -185,6 +189,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('{entity}/{id}/comments', 'CommentController@createComment');
     Route::delete('comments/{id}', 'CommentController@deleteComment');
+
+    Route::delete('comments/delete', 'CommentController@deleteMeetupComment');
 
     Route::post('discounts/{id}/nodiscount', 'ProjectController@setNoDiscount');
     Route::post('goods/{id}/nogoods', 'ProjectController@setNoGoods');

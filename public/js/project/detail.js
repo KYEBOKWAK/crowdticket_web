@@ -394,7 +394,7 @@ function isLogin(){
 }
 */
 
-
+/*
 function isMyOrMasterComment(commentId){
 	var myId = Number($('#myId').val());
 	var isMaster = $('#isMaster').val();
@@ -406,3 +406,4 @@ function isMyOrMasterComment(commentId){
 
 	return false;
 };
+*/
