@@ -1964,10 +1964,10 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                       "<div class='clear'></div>";
 
                 if(isAdd){
-                  $('.'+parentElement).prepend(element);
+                  $('.'+parentElement).append(element);
                 }
                 else{
-                  $('.'+parentElement).prepend(element);
+                  $('.'+parentElement).append(element);
                 }
 
                 var deleteComment = function(commentId) {
@@ -2049,7 +2049,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 var commentscommentElement = '';
-                var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+                var commentsCommentFormId = 'mannayo_comments_comment_form_'+comment.id;
                 if(isLogin()){
                   commentscommentElement = "<form id='"+commentsCommentFormId+"' action='{{ url('/mannayocommentscomment') }}/"+comment.id+"/comments' method='post' data-toggle='validator' role='form' class='form-horizontal'>" +
                                             "<div class='form-group'>" +
@@ -2059,12 +2059,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                                 "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
                                               "</div>" +
                                               "<div class='col-md-2 reply-button'>" +
-                                                "<button id='button-comments-comment-"+user.index_object+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
+                                                "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
                                               "</div>" +
                                             "</div>" +
                                             "<input type='hidden' name='meetup_id' value='"+meetup_id+"'>" +
-                                            "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
-                                            "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+user.index_object+"'>" +
+                                            "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                                            "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+comment.id+"'>" +
                                             "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
                                           "</form>";
                 }
@@ -2099,7 +2099,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "<span class='comment-created-at'>" +
                     comment.created_at +
                   "</span>" + 
-                  "<span id='toggle-reply-"+user.index_object+"' class='toggle-reply'>답글달기</span>" +
+                  "<span id='toggle-reply-"+comment.id+"' class='toggle-reply'>답글달기</span>" +
                     deleteElement +
                     "<p class='comment-content'>" + 
                       contentElement +
@@ -2110,7 +2110,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 "<div class='reply-wrapper'>" +
                   commentscommentElement +
-                  "<ul class='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
+                  "<ul class='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
                     //commentsComment +
                   "</ul>" +
                 "</div>";
@@ -2124,7 +2124,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
 
-                var replyElementId = "#toggle-reply-"+user.index_object+"";
+                var replyElementId = "#toggle-reply-"+comment.id+"";
                 $(replyElementId).click(function(){
                   if(isLogin() == false)
                   {
@@ -2139,7 +2139,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 });
 
                 var setCommentsComment = function(){
-                  var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+user.index_object;
+                  var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+comment.id;
                   if (comment.comments && comment.comments.length > 0) {
                     for (var i = comment.comments.length - 1, l = 0; i >= l; i--) {
                       var reply = comment.comments[i];
@@ -2174,7 +2174,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 $("#"+commentsCommentFormId).ajaxForm(mannayoCommentsCommentAjaxOption);
 
-                $("#button-comments-comment-"+user.index_object).click(function(){
+                $("#button-comments-comment-"+comment.id).click(function(){
                   var commentsFormId = $(this).attr('data-comment-form-id');
 
                   loadingProcessWithSize($(this));
@@ -2953,10 +2953,10 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                       "<div class='clear'></div>";
 
                 if(isAdd){
-                  $('.'+parentElement).prepend(element);
+                  $('.'+parentElement).append(element);
                 }
                 else{
-                  $('.'+parentElement).prepend(element);
+                  $('.'+parentElement).append(element);
                 }
 
                 var deleteComment = function(commentId) {
@@ -3038,7 +3038,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 var commentscommentElement = '';
-                var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+                var commentsCommentFormId = 'mannayo_comments_comment_form_'+comment.id;
                 if(isLogin()){
                   commentscommentElement = "<form id='"+commentsCommentFormId+"' action='{{ url('/mannayocommentscomment') }}/"+comment.id+"/comments' method='post' data-toggle='validator' role='form' class='form-horizontal'>" +
                                             "<div class='form-group'>" +
@@ -3048,12 +3048,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                                 "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
                                               "</div>" +
                                               "<div class='col-md-2 reply-button'>" +
-                                                "<button id='button-comments-comment-"+user.index_object+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
+                                                "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
                                               "</div>" +
                                             "</div>" +
                                             "<input type='hidden' name='meetup_id' value='"+meetup_id+"'>" +
-                                            "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
-                                            "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+user.index_object+"'>" +
+                                            "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                                            "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+comment.id+"'>" +
                                             "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
                                           "</form>";
                 }
@@ -3088,7 +3088,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "<span class='comment-created-at'>" +
                     comment.created_at +
                   "</span>" + 
-                  "<span id='toggle-reply-"+user.index_object+"' class='toggle-reply'>답글달기</span>" +
+                  "<span id='toggle-reply-"+comment.id+"' class='toggle-reply'>답글달기</span>" +
                     deleteElement +
                     "<p class='comment-content'>" + 
                       contentElement +
@@ -3099,7 +3099,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 "<div class='reply-wrapper'>" +
                   commentscommentElement +
-                  "<ul class='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
+                  "<ul class='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
                     //commentsComment +
                   "</ul>" +
                 "</div>";
@@ -3113,7 +3113,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
 
-                var replyElementId = "#toggle-reply-"+user.index_object+"";
+                var replyElementId = "#toggle-reply-"+comment.id+"";
                 $(replyElementId).click(function(){
                   if(isLogin() == false)
                   {
@@ -3128,7 +3128,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 });
 
                 var setCommentsComment = function(){
-                  var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+user.index_object;
+                  var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+comment.id;
                   if (comment.comments && comment.comments.length > 0) {
                     for (var i = comment.comments.length - 1, l = 0; i >= l; i--) {
                       var reply = comment.comments[i];
@@ -3163,7 +3163,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                 $("#"+commentsCommentFormId).ajaxForm(mannayoCommentsCommentAjaxOption);
 
-                $("#button-comments-comment-"+user.index_object).click(function(){
+                $("#button-comments-comment-"+comment.id).click(function(){
                   var commentsFormId = $(this).attr('data-comment-form-id');
 
                   loadingProcessWithSize($(this));

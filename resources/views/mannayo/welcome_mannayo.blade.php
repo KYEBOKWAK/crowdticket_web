@@ -3613,7 +3613,7 @@
               profile_photo_url = user.profile_photo_url;
             }
             else{
-              profile_photo_url = $('#asset_url').val()+'img/app/default-user-image.png';
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
             }
 
 
@@ -3798,7 +3798,7 @@
             }
             else
             {
-              var defultURL = $('#asset_url').val()+'img/app/default-user-image.png';
+              var defultURL = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
               thumbImgElement = "<img class='user-photo-comment' src='"+defultURL+"'>";
             }
 
@@ -3845,10 +3845,10 @@
                                   "<div class='clear'></div>";
 
             if(isAdd){
-              $('.'+parentElement).prepend(element);
+              $('.'+parentElement).append(element);
             }
             else{
-              $('.'+parentElement).prepend(element);
+              $('.'+parentElement).append(element);
             }
 
             var deleteComment = function(commentId) {
@@ -3930,7 +3930,8 @@
             }
 
             var commentscommentElement = '';
-            var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+            //var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+            var commentsCommentFormId = 'mannayo_comments_comment_form_'+comment.id;
             if(isLogin()){
               commentscommentElement = "<form id='"+commentsCommentFormId+"' action='{{ url('/mannayocommentscomment') }}/"+comment.id+"/comments' method='post' data-toggle='validator' role='form' class='form-horizontal'>" +
                                         "<div class='form-group'>" +
@@ -3940,12 +3941,12 @@
                                             "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
                                           "</div>" +
                                           "<div class='col-md-2 reply-button'>" +
-                                            "<button id='button-comments-comment-"+user.index_object+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
+                                            "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
                                           "</div>" +
                                         "</div>" +
                                         "<input type='hidden' name='meetup_id' value='"+meetup_id+"'>" +
-                                        "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
-                                        "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+user.index_object+"'>" +
+                                        "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                                        "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+comment.id+"'>" +
                                         "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
                                       "</form>";
             }
@@ -3957,7 +3958,7 @@
             }
             else
             {
-              profile_photo_url = $('#asset_url').val()+'img/app/default-user-image.png';
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
             }
 
             var commentLiClassName = 'comment_li_delete_id_'+comment.id;
@@ -3980,7 +3981,7 @@
               "<span class='comment-created-at'>" +
                 comment.created_at +
               "</span>" + 
-              "<span id='toggle-reply-"+user.index_object+"' class='toggle-reply'>답글달기</span>" +
+              "<span id='toggle-reply-"+comment.id+"' class='toggle-reply'>답글달기</span>" +
                 deleteElement +
                 "<p class='comment-content'>" + 
                   contentElement +
@@ -3991,7 +3992,7 @@
 
             "<div class='reply-wrapper'>" +
               commentscommentElement +
-              "<ul class='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
+              "<ul class='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
                 //commentsComment +
               "</ul>" +
             "</div>";
@@ -4005,7 +4006,7 @@
 
             $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
 
-            var replyElementId = "#toggle-reply-"+user.index_object+"";
+            var replyElementId = "#toggle-reply-"+comment.id+"";
             $(replyElementId).click(function(){
               if(isLogin() == false)
               {
@@ -4020,7 +4021,7 @@
             });
 
             var setCommentsComment = function(){
-              var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+user.index_object;
+              var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+comment.id;
               if (comment.comments && comment.comments.length > 0) {
                 for (var i = comment.comments.length - 1, l = 0; i >= l; i--) {
                   var reply = comment.comments[i];
@@ -4055,7 +4056,7 @@
 
             $("#"+commentsCommentFormId).ajaxForm(mannayoCommentsCommentAjaxOption);
 
-            $("#button-comments-comment-"+user.index_object).click(function(){
+            $("#button-comments-comment-"+comment.id).click(function(){
               var commentsFormId = $(this).attr('data-comment-form-id');
 
               loadingProcessWithSize($(this));
@@ -4187,7 +4188,7 @@
                   var meetup_comment = request.meetup_comments[i];
                   var objectIndex = ((i+1) + popupNowMannayoCommentCountNumber);
 
-                  meetup_comment.user.index_object = objectIndex;
+                  //meetup_comment.user.index_object = objectIndex;
 
                   addMannayoCommentObject(meetup_comment, false);
 
@@ -4661,7 +4662,7 @@
               profile_photo_url = user.profile_photo_url;
             }
             else{
-              profile_photo_url = $('#asset_url').val()+'img/app/default-user-image.png';
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
             }
 
             var element = document.createElement("li");
@@ -4847,7 +4848,7 @@
             }
             else
             {
-              var defultURL = $('#asset_url').val()+'img/app/default-user-image.png';
+              var defultURL = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
               thumbImgElement = "<img class='user-photo-comment' src='"+defultURL+"'>";
             }
 
@@ -4894,10 +4895,10 @@
                                   "<div class='clear'></div>";
 
             if(isAdd){
-              $('.'+parentElement).prepend(element);
+              $('.'+parentElement).append(element);
             }
             else{
-              $('.'+parentElement).prepend(element);
+              $('.'+parentElement).append(element);
             }
 
             var deleteComment = function(commentId) {
@@ -4979,7 +4980,7 @@
             }
 
             var commentscommentElement = '';
-            var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+            var commentsCommentFormId = 'mannayo_comments_comment_form_'+comment.id;
             if(isLogin()){
               commentscommentElement = "<form id='"+commentsCommentFormId+"' action='{{ url('/mannayocommentscomment') }}/"+comment.id+"/comments' method='post' data-toggle='validator' role='form' class='form-horizontal'>" +
                                         "<div class='form-group'>" +
@@ -4989,12 +4990,12 @@
                                             "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
                                           "</div>" +
                                           "<div class='col-md-2 reply-button'>" +
-                                            "<button id='button-comments-comment-"+user.index_object+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
+                                            "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
                                           "</div>" +
                                         "</div>" +
                                         "<input type='hidden' name='meetup_id' value='"+meetup_id+"'>" +
-                                        "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
-                                        "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+user.index_object+"'>" +
+                                        "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                                        "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+comment.id+"'>" +
                                         "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
                                       "</form>";
             }
@@ -5006,7 +5007,7 @@
             }
             else
             {
-              profile_photo_url = $('#asset_url').val()+'img/app/default-user-image.png';
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
             }
 
             var commentLiClassName = 'comment_li_delete_id_'+comment.id;
@@ -5029,7 +5030,7 @@
               "<span class='comment-created-at'>" +
                 comment.created_at +
               "</span>" + 
-              "<span id='toggle-reply-"+user.index_object+"' class='toggle-reply'>답글달기</span>" +
+              "<span id='toggle-reply-"+comment.id+"' class='toggle-reply'>답글달기</span>" +
                 deleteElement +
                 "<p class='comment-content'>" + 
                   contentElement +
@@ -5040,7 +5041,7 @@
 
             "<div class='reply-wrapper'>" +
               commentscommentElement +
-              "<ul class='mannayo_popup_comments_comment_ul_"+user.index_object+"'>" +
+              "<ul class='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
                 //commentsComment +
               "</ul>" +
             "</div>";
@@ -5054,7 +5055,7 @@
 
             $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
 
-            var replyElementId = "#toggle-reply-"+user.index_object+"";
+            var replyElementId = "#toggle-reply-"+comment.id+"";
             $(replyElementId).click(function(){
               if(isLogin() == false)
               {
@@ -5069,7 +5070,7 @@
             });
 
             var setCommentsComment = function(){
-              var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+user.index_object;
+              var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+comment.id;
               if (comment.comments && comment.comments.length > 0) {
                 for (var i = comment.comments.length - 1, l = 0; i >= l; i--) {
                   var reply = comment.comments[i];
@@ -5088,7 +5089,7 @@
 
                 var parentUlClass = request.commentscomment_parent;
                 var buttonID = "#"+request.commentscomment_button_id;
-                //addMannayoCommentObject(request.meetup_comment, true);
+
                 addMannayoCommentsCommentObject(request.meetup_comment, parentUlClass, true);
                 setCommentCounterText(request.comments_count);
                 loadingProcessStopWithSize($(buttonID));
@@ -5104,7 +5105,7 @@
 
             $("#"+commentsCommentFormId).ajaxForm(mannayoCommentsCommentAjaxOption);
 
-            $("#button-comments-comment-"+user.index_object).click(function(){
+            $("#button-comments-comment-"+comment.id).click(function(){
               var commentsFormId = $(this).attr('data-comment-form-id');
 
               loadingProcessWithSize($(this));
