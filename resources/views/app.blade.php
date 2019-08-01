@@ -23,7 +23,7 @@
     @section('title')
         <title>크라우드티켓</title>
     @show
-    <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-1.png') }}"/>
+    <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=8') }}" rel="stylesheet"/>
