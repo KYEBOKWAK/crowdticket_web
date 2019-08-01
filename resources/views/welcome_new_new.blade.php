@@ -888,20 +888,20 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                       </div>
                       <div class='mannayo_thumb_button_wrapper'>
                         @if($meetup->is_meetup)
-                          <button class='mannayo_thumb_meetup_cancel_button_fake' data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetups[$projectIndex]->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
                             만나요 요청됨
                           </button>
                         @else
-                          <button class='mannayo_thumb_meetup_button_fake' data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                          <button class='mannayo_thumb_meetup_button_fake'>
                             만나요
                           </button>
                         @endif
                       </div>
                       @if($meetup->is_meetup)
-                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
                         </button>
                       @else
-                        <button class='mannayo_thumb_meetup_button' data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
                         </button>
                       @endif
                     </div>
@@ -1370,8 +1370,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             };
 
             //만나요 요청 팝업 START
-            var openMeetPopup = function(meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){
+            var openMeetPopup = function(meetup_channel_id, meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){
               g_nowOpenPopup_meetup_id = meetup_id;
+              g_nowOpenPopup_meetup_channel = meetup_channel_id;
+
+              var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
               var makeTabTitleInPopup = function(meetup_count){
                 return "<div class='flex_layer'>" +
                   "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -1407,7 +1410,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               var makeMeetupContent = function(meetup_img_url, meetup_title, meetup_where, meetup_what, meetup_count, nickName, ageOptions, meetup_id){
                 return "<div class='meetup_popup_container'>" + 
                   "<div class='meetup_popup_thumb_container'>" + 
-                    "<img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'>" +
+                    "<a href='"+youtubeLink+"' target='_blank'><img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'></a>" +
                   "</div>" +
 
                   "<div class='meetup_popup_content_container'>" + 
@@ -2418,7 +2421,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 var element = $(this);
-                openMeetPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
+                openMeetPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
               });
             };
 
@@ -2501,8 +2504,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             };
 
             //만나요 취소 팝업 START
-            var openCancelPopup = function(meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){        
+            var openCancelPopup = function(meetup_channel_id, meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){        
               g_nowOpenPopup_meetup_id = meetup_id;
+              g_nowOpenPopup_meetup_channel = meetup_channel_id;
+
+              var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
               var makeTabTitleInPopup = function(meetup_count){
                 return "<div class='flex_layer'>" +
                   "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -2538,7 +2544,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               var makeMeetupContent = function(meetup_img_url, meetup_title, meetup_where, meetup_what, meetup_count, meetup_id){
                 return "<div class='meetup_popup_container'>" + 
                         "<div class='meetup_popup_thumb_container meetup_popup_thumb_container_cancel'>" + 
-                          "<img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'>" +
+                          "<a href='"+youtubeLink+"' target='_blank'><img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'></a>" +
                         "</div>" +
 
                         "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
@@ -3412,7 +3418,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 var element = $(this);
-                openCancelPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
+                openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
               });
             };
 

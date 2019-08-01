@@ -451,6 +451,7 @@ class MannayoController extends Controller
                 $meetupRow['meet_count'] = $meetup->meet_count;
                 $meetupRow['comments_count'] = $meetup->comments_count;
                 $meetupRow['is_meetup'] = false;
+                $meetupRow['channel_id'] = $creator->channel_id;
 
                 if($user)
                 {
