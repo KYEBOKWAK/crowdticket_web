@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="{{ asset('/img/app/ct-favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/app.css?version=7') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/app.css?version=8') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=18') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
@@ -82,13 +82,16 @@
     .navbar-brand{
       padding: 0px;
       height: auto;
-      margin-top: 32px;
-      margin-bottom: 32px;
+      margin-top: 26px;
+      margin-bottom: 26px;
     }
 
     .navbar-brand img{
-      width: 141px;
+      /*width: 141px;
       height: 16px;
+      padding: 0px;*/
+      width: 100%;
+      height: 28px;
       padding: 0px;
     }
 
@@ -272,7 +275,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </button>
         @if(!env('REVIEW_ON'))
           <a class="navbar-brand" href="{{ url('/') }}">
-              <img src="{{ asset('/img/app/logo-color.png') }}"/>
+              <img src="{{ asset('/img/icons/svg/header-logo-color-v-1.svg') }}"/>
           </a>
         @endif
     </div>
@@ -351,7 +354,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>
     <div class="container ct-res-text footer-top">
 	    <div class="col-md-3 footer_padding_left_remover">
-            <img src="{{ asset('/img/icons/svg/footer-crowd-tk-logo.svg') }}" class="footer-logo">
+            <img src="{{ asset('/img/icons/svg/footer-logo-color-v-1.svg') }}" class="footer-logo">
         </div>
         <div class="col-md-3">
             <h2>social media</h2>
