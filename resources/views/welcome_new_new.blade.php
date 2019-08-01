@@ -1853,7 +1853,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                     
                     $('.ss-content').bind('scroll', function(){
-                      console.error("asdf");
                       var lastObjectName = '.li_meetup_object_' + g_popupNowMannayoCount;
                       //console.error(lastObjectName);
                       var lastObjectTop = $(lastObjectName).offset().top;
@@ -2287,7 +2286,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "call_skip_counter" : 0,
                 }
                 var success = function(request) {
-                  console.error(request);
                   if($(".mannayo_meetup_popup_comments_ul_wrapper").length === 0)
                   {
                     console.error("팝업 없음!!");
@@ -3284,7 +3282,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "call_skip_counter" : 0,
                 }
                 var success = function(request) {
-                  console.error(request);
                   if($(".mannayo_meetup_popup_comments_ul_wrapper").length === 0)
                   {
                     console.error("팝업 없음!!");
