@@ -90,7 +90,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function getMannayoPhotoURL($isAnonymity)
     {
-        if($isAnonymity === 1)
+        if((int)$isAnonymity === 1)
         {
             return asset('/img/icons/ic-default-profile-512.png');
         }
@@ -114,7 +114,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function getMannayoUserNickName($isAnonymity)
     {
-        if($isAnonymity === 1)
+        if((int)$isAnonymity === 1)
         {
             return '익명';
         }
