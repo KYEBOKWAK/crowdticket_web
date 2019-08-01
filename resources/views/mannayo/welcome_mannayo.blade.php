@@ -2102,7 +2102,7 @@
           }
 
           .reply-button{
-            margin-top: 60px !important;
+            margin-top: 70px !important;
           }
 
           .meetup_new_button_wrapper_cancel{
