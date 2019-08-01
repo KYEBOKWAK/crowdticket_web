@@ -2007,6 +2007,10 @@ p{
     .reply-button{
       margin-top: 60px !important;
     }
+
+    .meetup_new_button_wrapper_cancel{
+      margin-top: 36px;
+    }
   }
 
   @media (max-width:420px) {

@@ -2101,6 +2101,10 @@
           .reply-button{
             margin-top: 60px !important;
           }
+
+          .meetup_new_button_wrapper_cancel{
+            margin-top: 36px;
+          }
         }
 
         @media (max-width:420px) {
@@ -4206,7 +4210,7 @@
                   var meetup_comment = request.meetup_comments[i];
                   var objectIndex = ((i+1) + popupNowMannayoCommentCountNumber);
 
-                  //meetup_comment.user.index_object = objectIndex;
+                  meetup_comment.user.index_object = objectIndex;
 
                   addMannayoCommentObject(meetup_comment, false);
 
