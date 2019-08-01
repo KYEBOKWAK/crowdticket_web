@@ -2280,6 +2280,7 @@
 
 @section('js')
 <script src="{{ asset('/js/simple-scrollbar.js?version=1') }}"></script>
+<script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
 
     <script>
       const FIND_TYPE_IN_API = 1;
@@ -3411,6 +3412,8 @@
           g_nowOpenPopup_meetup_channel = meetup_channel_id;
 
           var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
+
+          var sharedLink = $('#base_url').val() + '/mannayo/share/meetup/'+meetup_id;
           var makeTabTitleInPopup = function(meetup_count){
             return "<div class='flex_layer'>" +
               "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -3428,7 +3431,7 @@
               "<div class='mannayo_popup_tab_title_right_wrapper'>" +
                 "<div class='flex_layer'>" +
                   "<div class='mannayo_popup_close_button_wrapper' style='margin-right: 12px;'>" +
-                    "<button type='button' class='popup_share_button popup_close_button_meetup_popup'>" + 
+                    "<button type='button' class='popup_share_button popup_close_button_meetup_popup' data-clipboard-text='"+sharedLink+"'>" + 
                       "<img src='{{ asset('/img/icons/svg/ic-share.svg') }}'>" +
                     "</button>" +
                   "</div>" +
@@ -3533,6 +3536,21 @@
             //requestMeetUp($(this).attr('data_meetup_id'));
             requestCancelMeetUp($(this).attr('data_meetup_id'));
           });
+
+          var setSharedClipboard = function(){
+            new ClipboardJS('.popup_share_button');
+            $('.popup_share_button').click(function(){
+              toastr.options = {
+                          positionClass: 'toast-bottom-center',
+                          onclick: null
+                      };
+              toastr.options.showMethod = 'slideDown';
+
+              toastr.success("주소가 복사 되었습니다.");
+            });
+          };
+
+          setSharedClipboard();
 
           var setMeetupCounter = function(counter){
             $(".meetup_count_loading_container").children().remove();
@@ -4305,6 +4323,8 @@
           g_nowOpenPopup_meetup_channel = meetup_channel_id;
 
           var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
+
+          var sharedLink = $('#base_url').val() + '/mannayo/share/meetup/'+meetup_id;
           var makeTabTitleInPopup = function(meetup_count){
             return "<div class='flex_layer'>" +
               "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -4322,7 +4342,7 @@
               "<div class='mannayo_popup_tab_title_right_wrapper'>" +
                 "<div class='flex_layer'>" +
                   "<div class='mannayo_popup_close_button_wrapper' style='margin-right: 12px;'>" +
-                    "<button type='button' class='popup_share_button popup_close_button_meetup_popup'>" + 
+                    "<button type='button' class='popup_share_button popup_close_button_meetup_popup' data-clipboard-text='"+sharedLink+"'>" + 
                       "<img src='{{ asset('/img/icons/svg/ic-share.svg') }}'>" +
                     "</button>" +
                   "</div>" +
@@ -4496,6 +4516,21 @@
           });
 
           isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
+
+          var setSharedClipboard = function(){
+            new ClipboardJS('.popup_share_button');
+            $('.popup_share_button').click(function(){
+              toastr.options = {
+                          positionClass: 'toast-bottom-center',
+                          onclick: null
+                      };
+              toastr.options.showMethod = 'slideDown';
+
+              toastr.success("주소가 복사 되었습니다.");
+            });
+          };
+
+          setSharedClipboard();
 
           $(".age_user_select").change(function(){
             if(Number($(this).val()) === AGE_NONE_TYPE_OPTION)

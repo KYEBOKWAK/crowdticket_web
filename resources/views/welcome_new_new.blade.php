@@ -1029,6 +1029,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script src="{{ asset('/js/simple-scrollbar.js?version=1') }}"></script>
+    <script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
     <script>
         const AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
 
@@ -1375,6 +1376,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               g_nowOpenPopup_meetup_channel = meetup_channel_id;
 
               var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
+
+              var sharedLink = $('#base_url').val() + '/mannayo/share/meetup/'+meetup_id;
               var makeTabTitleInPopup = function(meetup_count){
                 return "<div class='flex_layer'>" +
                   "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -1392,7 +1395,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "<div class='mannayo_popup_tab_title_right_wrapper'>" +
                     "<div class='flex_layer'>" +
                       "<div class='mannayo_popup_close_button_wrapper' style='margin-right: 12px;'>" +
-                        "<button type='button' class='popup_share_button popup_close_button_meetup_popup'>" + 
+                        "<button type='button' class='popup_share_button popup_close_button_meetup_popup' data-clipboard-text='"+sharedLink+"'>" + 
                           "<img src='{{ asset('/img/icons/svg/ic-share.svg') }}'>" +
                         "</button>" +
                       "</div>" +
@@ -1566,6 +1569,21 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               });
 
               isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
+
+              var setSharedClipboard = function(){
+                new ClipboardJS('.popup_share_button');
+                $('.popup_share_button').click(function(){
+                  toastr.options = {
+                              positionClass: 'toast-bottom-center',
+                              onclick: null
+                          };
+                  toastr.options.showMethod = 'slideDown';
+
+                  toastr.success("주소가 복사 되었습니다.");
+                });
+              };
+
+              setSharedClipboard();
 
               $(".age_user_select").change(function(){
                 if(Number($(this).val()) === AGE_NONE_TYPE_OPTION)
@@ -2507,6 +2525,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               g_nowOpenPopup_meetup_channel = meetup_channel_id;
 
               var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
+              var sharedLink = $('#base_url').val() + '/mannayo/share/meetup/'+meetup_id;
+
               var makeTabTitleInPopup = function(meetup_count){
                 return "<div class='flex_layer'>" +
                   "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
@@ -2524,7 +2544,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "<div class='mannayo_popup_tab_title_right_wrapper'>" +
                     "<div class='flex_layer'>" +
                       "<div class='mannayo_popup_close_button_wrapper' style='margin-right: 12px;'>" +
-                        "<button type='button' class='popup_share_button popup_close_button_meetup_popup'>" + 
+                        "<button type='button' class='popup_share_button popup_close_button_meetup_popup' data-clipboard-text='"+sharedLink+"'>" + 
                           "<img src='{{ asset('/img/icons/svg/ic-share.svg') }}'>" +
                         "</button>" +
                       "</div>" +
@@ -2624,6 +2644,21 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               });
 
               isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
+
+              var setSharedClipboard = function(){
+                new ClipboardJS('.popup_share_button');
+                $('.popup_share_button').click(function(){
+                  toastr.options = {
+                              positionClass: 'toast-bottom-center',
+                              onclick: null
+                          };
+                  toastr.options.showMethod = 'slideDown';
+
+                  toastr.success("주소가 복사 되었습니다.");
+                });
+              };
+
+              setSharedClipboard();
 
               $("#meetup_cancel_button").click(function(){
                 //requestMeetUp($(this).attr('data_meetup_id'));
