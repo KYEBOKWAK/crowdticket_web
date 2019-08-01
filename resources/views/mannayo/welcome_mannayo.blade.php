@@ -1528,7 +1528,7 @@
         .mannayo_popup_tab_counter_text{
           font-size: 12px;
           margin-left: 4px;
-          margin-top: 4px;
+          margin-top: 2px;
           color: #43c9f0;
         }
 
@@ -1789,6 +1789,9 @@
 
         /*@media (max-width:320px) {*/
         @media (max-width:650px) {
+          .swal-content{
+            margin-top: 20px;
+          }
           .mannayo_search_container_target{
             width: 100%;
             padding: 0px 20px;
