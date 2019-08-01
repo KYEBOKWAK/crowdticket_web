@@ -1480,7 +1480,7 @@ p{
   .mannayo_popup_tab_counter_text{
     font-size: 12px;
     margin-left: 4px;
-    margin-top: 1px;
+    margin-top: 4px;
     color: #43c9f0;
   }
 
@@ -1620,6 +1620,18 @@ p{
     border-top-color: #43c9f0;
   }
   /*취소 팝업 css end*/
+
+  .comments_length_text{
+    text-align: right;
+    font-size: 11px;
+    color: #aaa;
+  }
+
+  .comments_comment_length_text{
+    text-align: right;
+    font-size: 11px;
+    color: #aaa;
+  }
 
   @media (max-width:1060px) {
     .welcome_start_content_container{

@@ -9,7 +9,7 @@
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/mannayo.css?version=3') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=4') }}" rel="stylesheet"/>
     <style>
       p{
         margin-bottom: 10px;
@@ -1509,7 +1509,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 return  "<div class='mannayo_meetup_popup_comments_container'>" + 
 
                           "<form id='mannayo_comments_form' action='{{ url('/mannayo') }}/"+meetup_id+"/comments' method='post' data-toggle='validator' role='form' class='ps-detail-comment-wrapper'>" +
-                              "<textarea id='input_mannayo_comments' name='contents' class='form-control' rows='3' placeholder='만나요 댓글을 자유롭게 남겨주세요!'></textarea>" +
+                              "<textarea id='input_mannayo_comments' maxlength='255' name='contents' class='form-control' rows='3' placeholder='만나요 댓글을 자유롭게 남겨주세요!'></textarea>" +
+                              "<p class='comments_length_text'>0/255</p>" +
                               "<button type='button' class='btn btn-success pull-right mannayo_comments_button'>댓글달기</button>" +
                               "<div class='clear'></div>" +
                               "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
@@ -1560,6 +1561,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               $('.popup_close_button').click(function(){
                   swal.close();
               });
+
+              isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
 
               $(".age_user_select").change(function(){
                 if(Number($(this).val()) === AGE_NONE_TYPE_OPTION)
@@ -2056,7 +2059,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                               "<div class='col-md-2'>" +
                                               "</div>" +
                                               "<div class='col-md-7 reply-textarea'>" +
-                                                "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
+                                                "<textarea id='comments_comment_textarea_id_"+comment.id+"' maxlength='255' name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
+                                                "<p class='comments_comment_length_text comments_comment_length_text_id_"+comment.id+"'>0/255</p>" +
                                               "</div>" +
                                               "<div class='col-md-2 reply-button'>" +
                                                 "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
@@ -2123,6 +2127,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
+
+                isWordLengthCheck($('#comments_comment_textarea_id_'+comment.id), $('.comments_comment_length_text_id_'+comment.id));
 
                 var replyElementId = "#toggle-reply-"+comment.id+"";
                 $(replyElementId).click(function(){
@@ -2572,7 +2578,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 return  "<div class='mannayo_meetup_popup_comments_container'>" + 
 
                           "<form id='mannayo_comments_form' action='{{ url('/mannayo') }}/"+meetup_id+"/comments' method='post' data-toggle='validator' role='form' class='ps-detail-comment-wrapper'>" +
-                              "<textarea id='input_mannayo_comments' name='contents' class='form-control' rows='3' placeholder='만나요 댓글을 자유롭게 남겨주세요!'></textarea>" +
+                              "<textarea id='input_mannayo_comments' maxlength='255' name='contents' class='form-control' rows='3' placeholder='만나요 댓글을 자유롭게 남겨주세요!'></textarea>" +
+                              "<p class='comments_length_text'>0/255</p>" +
                               "<button type='button' class='btn btn-success pull-right mannayo_comments_button'>댓글달기</button>" +
                               "<div class='clear'></div>" +
                               "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
@@ -2611,6 +2618,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               $('.popup_close_button').click(function(){
                   swal.close();
               });
+
+              isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
 
               $("#meetup_cancel_button").click(function(){
                 //requestMeetUp($(this).attr('data_meetup_id'));
@@ -3045,7 +3054,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                                               "<div class='col-md-2'>" +
                                               "</div>" +
                                               "<div class='col-md-7 reply-textarea'>" +
-                                                "<textarea name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
+                                                "<textarea id='comments_comment_textarea_id_"+comment.id+"' maxlength='255' name='contents' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
+                                                "<p class='comments_comment_length_text comments_comment_length_text_id_"+comment.id+"'>0/255</p>" +
                                               "</div>" +
                                               "<div class='col-md-2 reply-button'>" +
                                                 "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
@@ -3112,6 +3122,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 }
 
                 $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
+
+                isWordLengthCheck($('#comments_comment_textarea_id_'+comment.id), $('.comments_comment_length_text_id_'+comment.id));
 
                 var replyElementId = "#toggle-reply-"+comment.id+"";
                 $(replyElementId).click(function(){
