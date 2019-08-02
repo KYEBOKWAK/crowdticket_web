@@ -25,14 +25,14 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=5') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=8') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/global.css?version=18') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/global.css?version=19') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/login/login.css?version=3') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/login/login.css?version=4') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -290,7 +290,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
           <li>
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
-              <span style="position:relative; margin-left:2px; top:-4px; color:#ef4d5d; font-size:10px">beta</span>
+              <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
           </li>
         @endif
         </ul>

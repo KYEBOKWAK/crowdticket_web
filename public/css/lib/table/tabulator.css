@@ -25,7 +25,7 @@
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  border-bottom: 4px solid #EF4D5D;
+  border-bottom: 4px solid #43c9f0;
   background-color: white;
   color: black;
   font-weight: bold;
@@ -547,7 +547,7 @@
   height: 15px;
   width: 15px;
   border-radius: 20px;
-  background: #EF4D5D;
+  background: #43c9f0;
   color: #fff;
   font-weight: bold;
   font-size: 1.1em;

@@ -120,7 +120,7 @@
 }
 
 .detail_main_guide_amount_progress{
-  color: #EF4D5D;
+  color: #43c9f0;
 }
 
 .detail_main_guide_funding_explain{
@@ -131,15 +131,15 @@
   display: inline-block;
   padding: 0px;
   width: 77%;
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .detail_main_guide_ticketing_btn{
   padding: 15px;
   border-radius: 4px;
   font-size: 15px;
-  background-color: #EF4D5D;
-  border: 1px solid #EF4D5D;
+  background-color: #43c9f0;
+  border: 1px solid #43c9f0;
   font-weight: 500;
 }
 
@@ -153,21 +153,21 @@
   padding:15px;
   border-radius:4px;
   font-size:15px;
-  background-color:#333333;
-  border:1px solid #333333;
+  background-color:#ebebeb;
+  border:1px solid #ebebeb;
   font-weight:400;
   color:#ffffff;
 }
 
 .detail_main_guide_share_btn:hover,.detail_main_guide_share_btn:active,.detail_main_guide_share_btn:focus {
-    background-color:#000000;
-    border:1px solid #000000;
+    background-color:#ebebeb;
+    border:1px solid #ebebeb;
     color:#ffffff;
 }
 
 .detail_main_guide_ticketing_btn:hover,.detail_main_guide_ticketing_btn:active,.detail_main_guide_ticketing_btn:focus {
-    background-color:#db4756;
-    border:1px solid #db4756;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
 }
 
 .detail_main_img_container{
@@ -257,7 +257,7 @@
 }
 
 .detail_creator_info_type{
-  color:#EF4D5D;
+  color:#43c9f0;
 }
 
 .detail_creator_info_introduce{
@@ -368,17 +368,17 @@
     padding:15px;
     border-radius:4px;
     font-size:15px;
-    background-color:#EF4D5D;
-    border:1px solid #EF4D5D;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
     font-weight:500;
 }
 .ticketing-btn:hover,.ticketing-btn:active,.ticketing-btn:focus {
-    background-color:#db4756;
-    border:1px solid #db4756;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
 }
 
 .count {
-    color:#EF4D5D;
+    color:#43c9f0;
     font-size:13px !important;
     margin:0px 0px 0px 5px;
     vertical-align:super;
@@ -421,14 +421,14 @@
     padding:10px 20px;
     border-radius:0;
     font-size:14px;
-    background-color:#EF4D5D;
-    border:1px solid #EF4D5D;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
     font-weight:400;
     border-radius:4px;
 }
 .detail_comment_add_btn:hover, .detail_comment_add_btn:active, .detail_comment_add_btn:focus{
-    background-color:#db4756;
-    border:1px solid #db4756;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
 }
 
 .user-photo-support,.user-photo-comment {
@@ -470,14 +470,14 @@
     border-radius:4px;
     font-size:12px;
     color:#fff;
-    background-color:#EF4D5D;
-    border:1px solid #EF4D5D;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
     font-weight:500;
     padding:5px 10px;
 }
 .ticket-btn:hover, .ticket-btn:active, .ticket-btn:focus{
-    background-color:#db4756;
-    border:1px solid #db4756;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
 }
 
 .detail_discount_container{
@@ -575,7 +575,7 @@
 }
 
 .toggle-reply{
-  color: #EF4D5D;
+  color: #43c9f0;
   font-weight: bold;
 }
 
@@ -642,7 +642,7 @@
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #dddddd;
-  border-left: 5px solid #EF4D5D;
+  border-left: 5px solid #43c9f0;
 }
 
 .table_pick td{

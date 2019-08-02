@@ -49,14 +49,14 @@
 					<div class="calendar-header">
 						<div id="goback" class="goback" ng-click="moveBack()" ng-if="pickdate" data-ticket-year="@{{ currentViewDate.getFullYear() }}" data-ticket-month="@{{ day.month }}">
 							<svg width="30" height="30">
-								<path fill="none" stroke="#EF4D5D" stroke-width="3" d="M19,6 l-9,9 l9,9"/>
+								<path fill="none" stroke="#43c9f0" stroke-width="3" d="M19,6 l-9,9 l9,9"/>
 							</svg>
 						</div>
 						<div class="current-month-container">@{{ currentViewDate.getFullYear() }} @{{ currentMonthName() }}</div>
 						<!-- <div class="current-month-container">@{{ currentViewDate.getFullYear() }} @{{ currentMonthName() }}</div> -->
 						<div id="goforward" class="goforward" ng-click="moveForward()" ng-if="pickdate" data-ticket-year="@{{ currentViewDate.getFullYear() }}" data-ticket-month="@{{ day.month }}">
 							<svg width="30" height="30">
-								<path fill="none" stroke="#EF4D5D" stroke-width="3" d="M11,6 l9,9 l-9,9" />
+								<path fill="none" stroke="#43c9f0" stroke-width="3" d="M11,6 l9,9 l-9,9" />
 							</svg>
 						</div>
 					</div>

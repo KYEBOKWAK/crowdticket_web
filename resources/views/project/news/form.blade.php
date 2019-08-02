@@ -3,7 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=11') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=12') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
     <style>
         .container h2 {
@@ -77,7 +77,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>
     <script src="{{ asset('/js/project/news/form.js?version=23') }}"></script>
-    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=7') }}"></script>
+    <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=8') }}"></script>
 @endsection

@@ -321,8 +321,8 @@
 @endsection
 
 @section('js')
-  <script src="{{ asset('/js/editor/summernote-lite.js?version=4') }}"></script>
-  <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=7') }}"></script>
+  <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>
+  <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=8') }}"></script>
 <script>
 $(document).ready(function () {
 

@@ -506,8 +506,8 @@
                   callback: function ($button) {
                       var $recentColor = $button.find('.note-recent-color');
                       if (type !== 'foreColor') {
-                          $recentColor.css('background-color', '#EF4D5D');
-                          $button.attr('data-backColor', '#EF4D5D');
+                          $recentColor.css('background-color', '#43c9f0');
+                          $button.attr('data-backColor', '#43c9f0');
                       }
                   }
               }),
@@ -5790,7 +5790,7 @@
                               _this.context.invoke('editor.color', {
                                   //backColor: $button.attr('data-backColor'),
                                   //foreColor: $button.attr('data-foreColor')
-                                  backColor: "#EF4D5D",
+                                  backColor: "#43c9f0",
                                   foreColor: "#ffffff"
                               });
                           }
@@ -5808,8 +5808,8 @@
                       callback: function ($button) {
                         var $recentColor = $button.find('.note-recent-color');
                         if (backColor) {
-                            $recentColor.css('background-color', '#EF4D5D');
-                            $button.attr('data-backColor', '#EF4D5D');
+                            $recentColor.css('background-color', '#43c9f0');
+                            $button.attr('data-backColor', '#43c9f0');
                         }
                         if (foreColor) {
                             $recentColor.css('color', 'white');

@@ -23,7 +23,7 @@
   letter-spacing: normal;
   text-align: left;
 
-  border-bottom: 5px solid #ef4d5d;
+  border-bottom: 5px solid #43c9f0;
 }
 
 
@@ -66,11 +66,11 @@
 }
 
 .order_ticket_discount_item_btn:hover,.order_ticket_discount_item_btn:focus,.order_ticket_discount_item_btn:active{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .order_ticket_discount_item_btn_on{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .order_ticket_goods_img_wrapper{
@@ -201,7 +201,7 @@
 .order_ticket_discount_md_title{
   width: 100%;
   height: 41px;
-  background-color: #EF4D5D;
+  background-color: #4d4d4d;
   text-align: center;
   /*margin-top: 18px;*/
 }
@@ -241,7 +241,7 @@
   font-style: normal;
   font-stretch: normal;
   line-height: 2;
-  color: #ef4d5d;
+  color: #43c9f0;
 }
 
 .order_ticket_discount_content_wrapper{
@@ -350,7 +350,7 @@
 .order_pay_next_btn{
   width: 100%;
   height: 78px;
-  background-color: #ef4d5d;
+  background-color: #43c9f0;
   color: white;
 }
 
@@ -382,11 +382,12 @@
 }
 
 .ticketing-btn-payment{
-  background-color: #ef4d5d;
+  background-color: #43c9f0;
+  border: 0;
 }
 
 .ticketing-btn-payment:hover,.ticketing-btn-payment:focus,.ticketing-btn-payment:active{
-  background-color: #ef4d5d;
+  background-color: #43c9f0;
 }
 
 .order_ticket_discount_item_btn_on{

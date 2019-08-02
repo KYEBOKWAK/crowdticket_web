@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('/css/lib/table/tabulator.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/lib/table/tabulator.css?version=1') }}">
     <style>
         #picking_container{
           width: 605px;

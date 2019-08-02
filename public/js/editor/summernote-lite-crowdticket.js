@@ -69,7 +69,7 @@ $(document).ready(function() {
     fontSizes: ['12', '16', '20', '28'],
     colors: [
               ['#000000', '#424242', '#636363', '#9C9C94', '#CEC6CE', '#EFEFEF', '#F7F7F7', '#FFFFFF'],
-              ['#EF4D5D'],
+              ['#43c9f0'],
           ],
 
     colorsName: [
@@ -136,7 +136,6 @@ $(document).ready(function() {
 
   $('#summernote').summernote('fontSize', 16);
   $('#summernote').summernote('lineHeight', 2.0);
-  //$('#summernote').summernote('backColor', "#EF4D5D");
 
   $('.note-current-color-button').click(function(){
     isColorChange = true;

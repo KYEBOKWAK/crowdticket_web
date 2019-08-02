@@ -242,7 +242,7 @@
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus{
   background-color: #f9f8f6 !important;
-  color: #EF4D5D !important;
+  color: #43c9f0 !important;
 }
 
 .project_form_ticket_notice_textarea_wrapper{
@@ -539,7 +539,7 @@
   letter-spacing: normal;
   text-align: left;
 
-  border-bottom: 5px solid #ef4d5d;
+  border-bottom: 5px solid #43c9f0;
   margin-left: 118px;
 }
 

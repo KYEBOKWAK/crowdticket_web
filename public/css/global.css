@@ -47,7 +47,7 @@ body{
 }
 
 .swal-button{
-  background-color: #ea535a !important;
+  background-color: #43c9f0 !important;
 }
 
 .swal2-success-ring{
@@ -170,7 +170,7 @@ fieldset[disabled] .form-control {
 }
 
 .toast-success{
-  background-color: #EF4D5D;
+  background-color: #43c9f0;
 }
 
 .loadingcontent{

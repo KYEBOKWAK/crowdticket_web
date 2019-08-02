@@ -10,7 +10,7 @@
 @endsection
 
 @section('css')
-    <link href="{{ asset('/css/detail.css?version=15') }}" rel="stylesheet">
+    <link href="{{ asset('/css/detail.css?version=16') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_ticket.css?version=3') }}"/>
     <style>
@@ -143,9 +143,13 @@
         footer{
           display: none;
         }
+
+        .datepicker-title{
+          background-color: #43c9f0 !important;
+        }
     </style>
 
-    <link href="{{ asset('/css/calendar.css?version=9') }}" rel="stylesheet">
+    <link href="{{ asset('/css/calendar.css?version=10') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-lite.css?version=1') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/editor/summernote-crowdticket.css?version=3') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
@@ -248,6 +252,9 @@ $selectedTicket = "";
                   @endif
                 </h5>
               </div>
+              <div class="detail_main_guide_share_btn_wrapper">
+                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-clipboard-text="{{ $project->getProjectURLWithIdOrAlias() }}"><i class="fa fa-share" style='color: #acacac;'></i></button>
+              </div>
 
               <div class="detail_main_guide_ticketing_btn_wrapper">
 
@@ -262,10 +269,6 @@ $selectedTicket = "";
                     @endif
                     </button>
                   @endif
-              </div>
-              <div class="detail_main_guide_share_btn_wrapper">
-                <!-- <a tabindex="0" role="button" data-trigger="focus" type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-toggle="popover"><i class="fa fa-share"></i></a> -->
-                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-clipboard-text="{{ $project->getProjectURLWithIdOrAlias() }}"><i class="fa fa-share"></i></button>
               </div>
             </div>
           </div>

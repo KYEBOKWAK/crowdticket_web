@@ -75,6 +75,7 @@ html, body {
   font-size: 15px;
   font-weight: bolder;
   text-align: center;
+  background-color: #4d4d4d;
 }
 
 .datepicker-subheader {
@@ -222,7 +223,7 @@ html, body {
 }
 
 .datenumber:hover::before {
-  background: #FFAB91;
+  background: #7BD9F4;
   -webkit-transform: scale(1);
   transform: scale(1);
 }
@@ -232,7 +233,7 @@ html, body {
 }
 
 .datenumber.day-selected:before {
-  background: #FF6E40;
+  background: #43c9f0;
   -webkit-transform: scale(1);
   transform: scale(1);
   -webkit-animation: select-date .25s forwards;
@@ -241,18 +242,18 @@ html, body {
 
 @-webkit-keyframes select-date {
   0% {
-    background: #FFAB91;
+    background: #7BD9F4;
   }
   100% {
-    background: #FF6E40;
+    background: #43c9f0;
   }
 }
 @keyframes select-date {
   0% {
-    background: #FFAB91;
+    background: #7BD9F4;
   }
   100% {
-    background: #FF6E40;
+    background: #43c9f0;
   }
 }
 /* timepicker styles */
@@ -333,7 +334,7 @@ html, body {
   width: 40px;
   height: 40px;
   position: absolute;
-  background: #FF6E40;
+  background: #43c9f0;
   -webkit-transition: all 0.15s ease;
   transition: all 0.15s ease;
   -webkit-transform: rotate(45deg);
@@ -576,7 +577,7 @@ html, body {
 }
 .datepicker.am .datepicker-header {
   color: white;
-  background: #EF4D5D;
+  background: #43c9f0;
 }
 .datepicker.am .current-time::after {
   background: #0DAD83;
@@ -585,22 +586,22 @@ html, body {
   color: white;
 }
 .datepicker.am .display-time {
-  color: #FF6E40;
+  color: #43c9f0;
 }
 .datepicker.am .time-input {
-  color: #FF693C;
+  color: #43c9f0;
 }
 .datepicker.am .time:after {
-  background: #FF693C;
+  background: #43c9f0;
 }
 .datepicker.am .increment-time path,
 .datepicker.am .decrement-time path {
-  stroke: #FF693C;
+  stroke: #43c9f0;
 }
 
 .datepicker.pm .datepicker-header {
   background: white;
-  color: #FF693C;
+  color: #43c9f0;
 }
 .datepicker.pm .datepicker-subheader {
   color: #0DAD83;
@@ -623,7 +624,7 @@ html, body {
   transform: scale(1);
 }
 .datepicker.pm .datenumber.day-selected {
-  color: #FF693C;
+  color: #7BD9F4;
 }
 .datepicker.pm .datenumber.day-selected:before {
   background: white;
@@ -637,7 +638,7 @@ html, body {
   background: white;
 }
 .datepicker.pm .actual-time {
-  color: #FF6E40;
+  color: #43c9f0;
 }
 .datepicker.pm .display-time {
   color: white;
@@ -649,7 +650,7 @@ html, body {
   background: white;
 }
 .datepicker.pm .am-pm-button:last-child {
-  color: #FF6E40;
+  color: #43c9f0;
 }
 .datepicker.pm .cancel-button {
   background: none;
@@ -657,7 +658,7 @@ html, body {
 }
 .datepicker.pm .save-button {
   background: white;
-  color: #FF693C;
+  color: #7BD9F4;
 }
 .datepicker.pm .goback path,
 .datepicker.pm .goforward path {
@@ -665,7 +666,7 @@ html, body {
 }
 .datepicker.pm .time-input:focus ~ .formatted-time {
   background: white;
-  color: #FF693C;
+  color: #7BD9F4;
 }
 
 .datepicker.compact .datepicker-title,
@@ -737,11 +738,11 @@ html, body {
 }
 
 .ticket_time_btn:hover,.ticket_time_btn:focus,.ticket_time_btn:active{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .ticket_time_btn_on{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .ticket_time_btn_order{
@@ -789,11 +790,11 @@ html, body {
 }
 
 .ticket_seat_btn:hover,.ticket_seat_btn:focus,.ticket_seat_btn:active{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .ticket_seat_btn_on{
-  border: 1px solid #EF4D5D
+  border: 1px solid #43c9f0
 }
 
 .ticket_seat_btn_order{
@@ -820,13 +821,13 @@ html, body {
     margin-top: 10px;
     border-radius:4px;
     font-size:15px;
-    background-color:#EF4D5D;
-    border:1px solid #EF4D5D;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
     font-weight:500;
 }
 .ticketing-btn-calendar:hover,.ticketing-btn-calendar:active,.ticketing-btn-calendar:focus {
-    background-color:#db4756;
-    border:1px solid #db4756;
+    background-color:#43c9f0;
+    border:1px solid #43c9f0;
 }
 
 .ticket_count_input_wrapper{
