@@ -1398,7 +1398,7 @@
         }
 
         .meetup_popup_option_label_creator_what{
-          width: 110px;
+          
         }
 
         .result_object_button_fake{
@@ -1680,6 +1680,10 @@
           text-align: right;
           font-size: 11px;
           color: #aaa;
+        }
+
+        .meetup_popup_option_creator_what_wrapper{
+          width: 254px;
         }
 
         @media (max-width:1060px) {
@@ -2981,7 +2985,7 @@
               "</div>" +
 
               "<div class='meetup_popup_option_wrapper flex_layer'>" +
-                "<div class='meetup_popup_option_creator'>" +
+                "<div class='meetup_popup_option_creator meetup_popup_option_creator_what_wrapper'>" +
                   "<input id='meetup_popup_option_what_input' placeholder='무엇을 하고 싶나요?'/>" + 
                 "</div>" +
                 "<p class='meetup_popup_option_label meetup_popup_option_label_creator_what'>를 하고 싶어요!" + 
