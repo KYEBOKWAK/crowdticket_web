@@ -1064,6 +1064,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               $('.mannayo_popup_tab_comment_counter_text').text(string);
             };
 
+            var resetPopupContentHeight = function(){
+              var heightPx = $('.swal-content').outerHeight(true);
+              $('.blueprint_popup').css('height', heightPx+'px');
+            }
+
             var swiper = new Swiper('.swiper-container', {
               //centerInsufficientSlides: true,
               loop: true,
@@ -2425,6 +2430,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
               //addMannayoCommentObject();
               //comment end
+
+              resetPopupContentHeight();
             };
             //만나요 요청 팝업 END
 
@@ -3435,9 +3442,10 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 $('#mannayo_comments_form').submit();
               });
 
-              //addMannayoCommentObject();
               //comment end
               //////////////////////tab cancel end/////
+
+              resetPopupContentHeight();
             };
             //만나요 취소 팝업 END
 

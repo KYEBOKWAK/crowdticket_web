@@ -2377,6 +2377,11 @@
           $('.mannayo_popup_tab_comment_counter_text').text(string);        
         };
 
+        var resetPopupContentHeight = function(){
+          var heightPx = $('.swal-content').outerHeight(true);
+          $('.blueprint_popup').css('height', heightPx+'px');
+        }
+
         setScrollUI(".mannayo_search_result_ul_wrapper");
         setScrollUI(".mannayo_search_result_ready_ul_wrapper");
 
@@ -3168,6 +3173,8 @@
           $("#meetup_new_button").click(function(){
             requestCreateMeetUp($(this).attr('data_creator_id'), $(this).attr('data_creator_channel_id'), $(this).attr('data_creator_title'), $(this).attr('data_creator_img_url'));
           });
+
+          resetPopupContentHeight();
         };
 
         //신규 만남 만들기 팝업 START
@@ -3593,11 +3600,6 @@
                 $('.meetup_popup_container').show();
                 $('.mannayo_meetup_popup_users_container').hide();
                 $('.mannayo_meetup_popup_comments_container').hide();
-
-                //var popupHeight = $('.blueprint_popup')[0].clientHeight;
-                //$('.blueprint_popup').css('height', popupHeight);
-
-                $('.blueprint_popup').css('height', POPUP_CANCEL_HEIGHT);
               }
               break;
 
@@ -4310,6 +4312,8 @@
           //addMannayoCommentObject();
           //comment end
           //////////////////////tab cancel end/////
+
+          resetPopupContentHeight();
         };
         //만나요 취소 팝업 END
 
@@ -4649,11 +4653,6 @@
                 $('.meetup_popup_container').show();
                 $('.mannayo_meetup_popup_users_container').hide();
                 $('.mannayo_meetup_popup_comments_container').hide();
-
-                //var popupHeight = $('.blueprint_popup')[0].clientHeight;
-                //$('.blueprint_popup').css('height', popupHeight);
-
-                $('.blueprint_popup').css('height', POPUP_HEIGHT);
               }
               break;
 
@@ -5366,6 +5365,8 @@
 
           //addMannayoCommentObject();
           //comment end
+
+          resetPopupContentHeight();
         };
         //만나요 요청 팝업 END
 
