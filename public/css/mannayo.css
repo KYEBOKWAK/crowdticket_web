@@ -666,7 +666,7 @@ p{
   }
 
   #meetup_popup_city_text{
-    margin-left: auto;
+    margin-left: 20px;
     /*margin-right: 95px;*/
     margin-right: auto;
   }

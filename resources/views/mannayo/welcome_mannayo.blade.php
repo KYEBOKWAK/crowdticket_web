@@ -611,7 +611,7 @@
         .meetup_popup_option_img{
           width: 36px;
           height: 36px;
-          margin-left: auto;
+          margin-left: 20px;
           margin-right: 12px;
           border-radius: 100%;
           margin-top: 10px;
@@ -680,7 +680,7 @@
         }
 
         #meetup_popup_city_text{
-          margin-left: auto;
+          margin-left: 20px;
           /*margin-right: 95px;*/
           margin-right: auto;
         }
@@ -695,7 +695,8 @@
           border-radius: 5px;
           /*color: #e6e6e6;*/
           border: 1px solid #e6e6e6;
-          text-align: center;
+          text-align: left;
+          padding-left: 20px;
         }
 
         .meetup_popup_line{
@@ -708,15 +709,15 @@
 
         #meetup_popup_option_what_input::-ms-input-placeholder { 
           color: #e6e6e6;
-          text-align: center;
+          text-align: left;
         }
         #meetup_popup_option_what_input::-webkit-input-placeholder { 
           color: #e6e6e6;
-          text-align: center;
+          text-align: left;
         } 
         #meetup_popup_option_what_input::-moz-placeholder { 
           color: #e6e6e6;
-          text-align: center;
+          text-align: left;
         }
 
         .meetup_popup_user_nickname_input{
@@ -2330,7 +2331,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                       <div class='mannayo_thumb_title_wrapper'>
                         {{$meetup->title}}
                       </div>
-                      <div class='mannayo_thumb_content_container'>
+                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
                         {{$meetup->where}} 에서 · {{$meetup->what}}
                       </div>
                       <div class='mannayo_thumb_button_wrapper'>
@@ -3657,7 +3658,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                     "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
                       "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
-                      "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+                      "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                       "</p>" +
                     "</div>" +
 
@@ -4568,7 +4569,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
               "<div class='meetup_popup_content_container'>" + 
                 "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
-                "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+                "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                 "</p>" +
               "</div>" +
 
@@ -6958,7 +6959,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               "<div class='mannayo_thumb_title_wrapper'>" +
                 meetup.title +
               "</div>" +
-              "<div class='mannayo_thumb_content_container'>" +
+              "<div class='text-ellipsize-2 mannayo_thumb_content_container'>" +
                 meetup.where+"에서 · " + meetup.what +
               "</div>" +
               "<div class='mannayo_thumb_button_wrapper'>" +

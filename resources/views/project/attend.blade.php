@@ -119,6 +119,9 @@
         @endforeach
     </select>
   </div>
+  <div class='attend_counter' style='text-align: right;'>
+    출석수: 0 미출석수: 0 전체수: 0 (새로고침해야 적용됨)
+  </div>
 </div>
 
   <div class="attend_container attend_container_custom">
@@ -360,6 +363,10 @@
             });
           };
 
+          var setAttendCountText = function(attendCount, unAttendCount, allCount){
+            $('.attend_counter').text('출석수: '+attendCount+' 미출석수: '+unAttendCount+' 전체수: '+allCount+'(새로고침해야 적용됨)');
+          };
+
           var setAttendList = function(attendOrders){
             var projectId = $("#projectid").val();
 
@@ -367,6 +374,8 @@
 
             attendListtBody.children().remove();
 
+            var attendCount = 0;
+            var unAttendCount = 0;
             for(var i = 0 ; i < attendOrders.length ; ++i)
             {
               var order = attendOrders[i];
@@ -374,7 +383,6 @@
               var attendButtonElement =
               "<button class='attendButton' attend-button-order-id='"+order.id+"'>"+
               "</button>";
-
 
               var elementPopup = document.createElement("tr");
               elementPopup.innerHTML =
@@ -395,6 +403,12 @@
                 attendButton.attr("isattended", order.attended);
 
                 attendButton.text("출석 완료!");
+
+                attendCount++;
+              }
+              else
+              {
+                unAttendCount++;
               }
 
               attendButton.attr("project-id", projectId);
@@ -418,6 +432,8 @@
             }
 
             setClickAttendButton();
+
+            setAttendCountText(attendCount, unAttendCount, attendOrders.length);
           };
 
           var getAttendList = function(ticketShowDateUnix)

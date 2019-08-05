@@ -9,7 +9,7 @@
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/mannayo.css?version=8') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=9') }}" rel="stylesheet"/>
     <style>
       p{
         margin-bottom: 10px;
@@ -883,7 +883,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                       <div class='mannayo_thumb_title_wrapper'>
                         {{$meetup->title}}
                       </div>
-                      <div class='mannayo_thumb_content_container'>
+                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
                         {{$meetup->where}} 에서 · {{$meetup->what}}
                       </div>
                       <div class='mannayo_thumb_button_wrapper'>
@@ -1439,7 +1439,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                   "<div class='meetup_popup_content_container'>" + 
                     "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
-                    "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+                    "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                     "</p>" +
                   "</div>" +
 
@@ -2594,7 +2594,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                         "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
                           "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
-                          "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+                          "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                           "</p>" +
                         "</div>" +
 
