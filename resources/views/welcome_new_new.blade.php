@@ -9,7 +9,7 @@
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/mannayo.css?version=7') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=8') }}" rel="stylesheet"/>
     <style>
       p{
         margin-bottom: 10px;

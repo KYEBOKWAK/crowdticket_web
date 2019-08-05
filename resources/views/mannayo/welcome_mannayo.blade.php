@@ -1047,6 +1047,7 @@
         .mannayo_thumb_content_container{
           font-size: 12px;
           color: #808080;
+          word-break: break-all;
         }
 
         .mannayo_thumb_container{
