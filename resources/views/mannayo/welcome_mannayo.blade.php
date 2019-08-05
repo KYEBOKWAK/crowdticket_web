@@ -693,7 +693,6 @@
           width: 100%;
           height: 100%;
           border-radius: 5px;
-          /*color: #e6e6e6;*/
           border: 1px solid #e6e6e6;
           text-align: left;
           padding-left: 20px;
@@ -718,6 +717,32 @@
         #meetup_popup_option_what_input::-moz-placeholder { 
           color: #e6e6e6;
           text-align: left;
+        }
+
+        #meetup_popup_option_comment_input{
+          width: 100%;
+          height: 100%;
+          border-radius: 5px;
+          border: 1px solid #e6e6e6;
+          text-align: left;
+          padding-left: 20px;
+        }
+
+        #meetup_popup_option_comment_input::-ms-input-placeholder { 
+          color: #e6e6e6;
+          text-align: left;
+        }
+        #meetup_popup_option_comment_input::-webkit-input-placeholder { 
+          color: #e6e6e6;
+          text-align: left;
+        } 
+        #meetup_popup_option_comment_input::-moz-placeholder { 
+          color: #e6e6e6;
+          text-align: left;
+        }
+
+        .meetup_popup_option_comment_input_wrapper{
+          width: 100%;
         }
 
         .meetup_popup_user_nickname_input{
@@ -3052,7 +3077,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             "nick_name" : $("#meetup_popup_user_nickname_input").val(),
             "anonymity" : Number($("#meetup_popup_user_anonymous_inputbox").is(":checked")),
             "gender" : $('input:radio[name=gender]:checked').val(),
-            "age" : $(".age_user_select").val()
+            "age" : $(".age_user_select").val(),
+            'comment' : $('#meetup_popup_option_comment_input').val()
           }
           
           var success = function(request) {
@@ -3178,6 +3204,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 "</div>" +
                 "<p class='meetup_popup_option_label meetup_popup_option_label_creator_what'>를 하고 싶어요!" + 
                 "</p>" +
+              "</div>" +
+
+              "<div class='meetup_popup_option_wrapper'>" +
+                "<div class='meetup_popup_option_creator meetup_popup_option_comment_input_wrapper'>" +
+                  "<input id='meetup_popup_option_comment_input' placeholder='크리에이터에게 한마디 (선택)'/>" + 
+                "</div>" +
               "</div>" +
 
             "</div>" +
@@ -3490,7 +3522,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             "nick_name" : $("#meetup_popup_user_nickname_input").val(),
             "anonymity" : Number($("#meetup_popup_user_anonymous_inputbox").is(":checked")),
             "gender" : $('input:radio[name=gender]:checked').val(),
-            "age" : $(".age_user_select").val()
+            "age" : $(".age_user_select").val(),
+            "comment" : $('#meetup_popup_option_comment_input').val()
           }
           var success = function(request) {
             loadingProcessStop($("#meetup_up_button"));
@@ -3657,7 +3690,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                     "</div>" +
 
                     "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
-                      "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                      "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</a></u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
                       "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                       "</p>" +
                     "</div>" +
@@ -4568,7 +4601,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               "</div>" +
 
               "<div class='meetup_popup_content_container'>" + 
-                "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</a></u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
                 "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                 "</p>" +
               "</div>" +
@@ -4640,6 +4673,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "</div>" +
                 "</div>" +
 
+                "<div class='meetup_popup_option_wrapper'>" +
+                  "<div class='meetup_popup_option_creator meetup_popup_option_comment_input_wrapper'>" +
+                    "<input id='meetup_popup_option_comment_input' placeholder='크리에이터에게 한마디 (선택)'/>" + 
+                  "</div>" +
+                "</div>" +
               "</div>" +
 
               "<div class='meetup_new_button_wrapper'>" +
@@ -4867,6 +4905,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 $('.meetup_popup_container').hide();
                 $('.mannayo_meetup_popup_users_container').hide();
                 $('.mannayo_meetup_popup_comments_container').show();
+
+                resetScrollContentHeight();
               }
               break;
             }

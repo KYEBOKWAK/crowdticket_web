@@ -9,7 +9,7 @@
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/mannayo.css?version=9') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=10') }}" rel="stylesheet"/>
     <style>
       p{
         margin-bottom: 10px;
@@ -1438,7 +1438,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   "</div>" +
 
                   "<div class='meetup_popup_content_container'>" + 
-                    "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                    "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</a></u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
                     "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                     "</p>" +
                   "</div>" +
@@ -1510,6 +1510,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                       "</div>" +
                     "</div>" +
 
+                    "<div class='meetup_popup_option_wrapper'>" +
+                      "<div class='meetup_popup_option_creator meetup_popup_option_comment_input_wrapper'>" +
+                        "<input id='meetup_popup_option_comment_input' placeholder='크리에이터에게 한마디 (선택)'/>" + 
+                      "</div>" +
+                    "</div>" +
                   "</div>" +
 
                   "<div class='meetup_new_button_wrapper'>" +
@@ -1724,11 +1729,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                     $('.meetup_popup_container').show();
                     $('.mannayo_meetup_popup_users_container').hide();
                     $('.mannayo_meetup_popup_comments_container').hide();
-
-                    //var popupHeight = $('.blueprint_popup')[0].clientHeight;
-                    //$('.blueprint_popup').css('height', popupHeight);
-
-                    $('.blueprint_popup').css('height', POPUP_HEIGHT);
                   }
                   break;
 
@@ -2593,7 +2593,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                         "</div>" +
 
                         "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
-                          "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                          "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
                           "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                           "</p>" +
                         "</div>" +
@@ -2734,11 +2734,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                     $('.meetup_popup_container').show();
                     $('.mannayo_meetup_popup_users_container').hide();
                     $('.mannayo_meetup_popup_comments_container').hide();
-
-                    //var popupHeight = $('.blueprint_popup')[0].clientHeight;
-                    //$('.blueprint_popup').css('height', popupHeight);
-
-                    $('.blueprint_popup').css('height', POPUP_CANCEL_HEIGHT);
                   }
                   break;
 
@@ -2753,6 +2748,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                     $('.meetup_popup_container').hide();
                     $('.mannayo_meetup_popup_users_container').hide();
                     $('.mannayo_meetup_popup_comments_container').show();
+
+                    resetScrollContentHeight();
                   }
                   break;
                 }

@@ -1,32 +1,13 @@
 <?php namespace App\Http\Controllers;
 
-/*
-use App\Models\Blueprint as Blueprint;
-use App\Models\Category as Category;
-use App\Models\Categories_ticket as Categories_ticket;
-use App\Models\Categories_channel as Categories_channel;
-use App\Models\Maincarousel as Maincarousel;
-use App\Models\City as City;
-use App\Models\Model as Model;
-use App\Models\Project as Project;
-use App\Models\Order as Order;
-use App\Models\Poster as Poster;
-use App\Models\Test as Test;
-use App\Services\SmsService;
-*/
-
 use App\Models\Meetup as Meetup;
 use App\Models\Meetup_user as Meetup_user;
 use App\Models\Creator as Creator;
 use App\Models\User as User;
+use App\Models\Comment as Comment;
 
 use Illuminate\Http\Request as Request;
 use Illuminate\Http\Response;
-//use Storage as Storage;
-
-//use Illuminate\Support\Facades\Auth;
-//use Illuminate\Support\Facades\DB;
-//use Illuminate\Support\Facades\Mail;
 
 class MannayoController extends Controller
 {
@@ -225,6 +206,13 @@ class MannayoController extends Controller
         $meetup_user->anonymity = $request->anonymity;
         $meetup_user->save();
 
+        if($request->has('comment'))
+        {
+            if($request->comment){
+                $this->createComment($meetUp, $request->comment);
+            }
+        }
+
 
         return ['state' => 'success', 'data' => ['creator_title' => $creator->title, 'contact' => $user->contact, 'email' => $user->email]];
     }
@@ -276,9 +264,6 @@ class MannayoController extends Controller
             $channelDataTempArray = [];
             //좌측에 나오는 기본 채널들은 제외
             //음악, 스포츠, 영화, 뉴스, 실시간, 가상현실
-            //$passChannels = ['UC-9-kyTW8ZkZNDHQJ6FgpwQ', 'UCEgdi0XIXXZ-qJOFPf4JSKw', 'UClgRkhTL3_hImCAmdLfDE4g', 
-            //                'UCYfdidRxbB8Qhf0Nx7ioOYw', 'UC4R8DWoMoI7CAwX8_LjQHig', 'UCzuqhhs6NWbgTzMuM09WKDQ',
-            //                ];
                             
             foreach($html->find('a') as $element)
             {
@@ -599,6 +584,13 @@ class MannayoController extends Controller
 
         $meetUp->increment('meet_count');
         $meetUp->save();
+
+        if($request->has('comment'))
+        {
+            if($request->comment){
+                $this->createComment($meetUp, $request->comment);
+            }
+        }
 
         return ['state' => 'success', 'data' => ['creator_title' => $creator->title, 'contact' => $user->contact, 'email' => $user->email]];
     }
@@ -945,5 +937,16 @@ class MannayoController extends Controller
         }
 
         return ['state' => 'success', 'meetup_comments' => $meetup_comments, 'comments_count' => $meetup->comments_count, 'meetup_id' => $request->meetup_id];
+    }
+
+    public function createComment($meetup, $contents)
+    {
+        $comment = new Comment();
+        $comment->contents = $contents;
+        $comment->user()->associate(\Auth::user());
+        $meetup->comments()->save($comment);
+        $comment->save();
+
+        $meetup->increment('comments_count');
     }
 }
