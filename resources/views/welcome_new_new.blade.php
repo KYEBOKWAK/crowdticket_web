@@ -920,8 +920,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   {
                     break;
                   }
-
-                  
                 }
               ?>
               </div>
@@ -1062,6 +1060,21 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
             var setCommentCounterText = function(string){
               $('.mannayo_popup_tab_comment_counter_text').text(string);
+            };
+
+            var resetScrollContentHeight = function(){
+              var popupMarginBottom = parseInt($('.blueprint_popup').css("margin-bottom"));
+              var popupTotalHeight = $('.blueprint_popup').position().top + $('.blueprint_popup').outerHeight(true) - popupMarginBottom - 5;
+              var commentContainerHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').position().top + $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true);
+
+              if(commentContainerHeight > popupTotalHeight)
+              {
+                //코멘트 사이즈가 팝업의 토탈 사이즈를 넘어가면 재조정 해준다.
+                var gap = commentContainerHeight - popupTotalHeight;
+                var commentHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true) - gap;
+                
+                $('.mannayo_meetup_popup_comments_ul_wrapper').css('height', commentHeight + 'px');
+              }
             };
 
             var resetPopupContentHeight = function(){
@@ -1335,6 +1348,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               loadingProcess($("#meetup_up_button"));
               $(".mannayo_popup_close_button_wrapper").hide();
 
+              resetPopupContentHeight();
+
               var url="/mannayo/meetup";
               var method = 'post';
               var data =
@@ -1362,6 +1377,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               var error = function(request) {
                 loadingProcessStop($("#meetup_up_button"));
                 $(".mannayo_popup_close_button_wrapper").show();
+                resetPopupContentHeight();
                 alert('만나요 실패. 다시 시도해주세요.');
               };
               
@@ -1727,6 +1743,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                     $('.meetup_popup_container').hide();
                     $('.mannayo_meetup_popup_users_container').hide();
                     $('.mannayo_meetup_popup_comments_container').show();
+
+                    resetScrollContentHeight();
                   }
                   break;
                 }
@@ -2451,6 +2469,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             var requestCancelMeetUp = function(meetup_id){
               loadingProcess($("#meetup_cancel_button"));
               $(".mannayo_popup_close_button_wrapper").hide();
+              resetPopupContentHeight();
 
               var url="/mannayo/meetup/cancel";
               var method = 'post';
@@ -2513,6 +2532,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               var error = function(request) {
                 loadingProcessStop($("#meetup_cancel_button"));
                 $(".mannayo_popup_close_button_wrapper").show();
+                resetPopupContentHeight();
                 alert('만나요 취소 실패. 다시 시도해주세요.');
               };
               

@@ -1686,7 +1686,22 @@
           width: 254px;
         }
 
+        .welcome_content_title{
+          width: 100%;
+          font-size: 24px;
+          margin-bottom: 32px;
+        }
+
+        .thumb_container_is_mobile{
+          margin-right: 20px;
+        }
+
         @media (max-width:1060px) {
+          .thumb_container_is_mobile{
+            margin-right: 0px;
+            margin-bottom: 24px;
+          }
+
           .mannayo_creator_list_title{
             margin-left: 19px;
           }
@@ -2162,6 +2177,11 @@
 <input id='share_meetup_info' type='hidden' value=''/>
 @endif
 
+<?php
+$maxItemCountInLine = 4;  //한줄에 표시될 아이템 개수
+$mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이템 개수
+?>
+
     <div class="mannayo_title_container">
         <div class="mannayo_title_background">  
           <p class='mannayo_title_text mannayo_title_text_pc'>만나고 싶은 크리에이터를 등록하세요.<br>
@@ -2220,6 +2240,145 @@
             </div>
             <!-- 검색 안에 내용 end -->
           </div>
+      </div>
+    </div>
+
+    <div class="welcome_content_container">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            신규 만나요
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              $isEnd = false;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($newmeetups) ; $j++)
+                {
+                  $meetup = $newmeetups[$projectIndex];
+
+                  //만나요
+                  ?>
+                  <div class='mannayo_thumb_object_container_in_main'>
+                    @if($itemCount === 0)
+                    <div class='mannayo_thumb_container' style='margin-right: 20px'>
+                    @else
+                    <div class='mannayo_thumb_container'>
+                    @endif
+                      <div class='mannayo_thumb_img_wrapper'>
+                        <div class='mannayo_thumb_img_resize'>
+                          <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
+                          <div class='thumb-black-mask'>
+                          </div>
+                          <div class='mannayo_thumb_meet_count'>
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
+                          </div>
+
+                          <div class='mannayo_thumb_meet_users_container'>
+                            <?php
+                            $zIndex = count($meetup->meetup_users);
+                            ?>
+                            @foreach($meetup->meetup_users as $meetup_user)
+                            <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            <?php
+                              $zIndex--;
+                            ?>
+                            @endforeach
+
+                            @if($meetup->meet_count >= 4)
+                              <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            @endif
+                          <!--meetupUsersElement-->
+                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                          <div class='mannayo_thumb_user_container_arrow'>
+                          </div>
+                          <div class='mannayo_thumb_user_name_ul_container'>
+                            <ul>
+                              @foreach($meetup->meetup_users as $meetup_user)
+                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              @endforeach
+                              @if($meetup->meet_count >= 4)
+                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                              @endif
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='mannayo_thumb_title_wrapper'>
+                        {{$meetup->title}}
+                      </div>
+                      <div class='mannayo_thumb_content_container'>
+                        {{$meetup->where}} 에서 · {{$meetup->what}}
+                      </div>
+                      <div class='mannayo_thumb_button_wrapper'>
+                        @if($meetup->is_meetup)
+                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
+                            만나요 요청됨
+                          </button>
+                        @else
+                          <button class='mannayo_thumb_meetup_button_fake'>
+                            만나요
+                          </button>
+                        @endif
+                      </div>
+                      @if($meetup->is_meetup)
+                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @else
+                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  
+                  if(count($newmeetups) < $projectIndex + 1)
+                  {
+                    $isEnd = true;
+                    break;
+                  }
+
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+              if($isEnd)
+              {
+                break;
+              }
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
       </div>
     </div>
 
@@ -2358,7 +2517,8 @@
 
       var isPressEnterKey = false;
 
-      var g_sortType = SORT_TYPE_NEW;
+      //var g_sortType = SORT_TYPE_NEW;
+      var g_sortType = SORT_TYPE_POPULAR;
 
       var g_nowOpenPopup_meetup_id = 0;
       var g_nowOpenPopup_meetup_channel = '';
@@ -2381,9 +2541,34 @@
           $('.mannayo_popup_tab_comment_counter_text').text(string);        
         };
 
+        var resetScrollContentHeight = function(){
+          var popupMarginBottom = parseInt($('.blueprint_popup').css("margin-bottom"));
+          var popupTotalHeight = $('.blueprint_popup').position().top + $('.blueprint_popup').outerHeight(true) - popupMarginBottom - 5;
+          var commentContainerHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').position().top + $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true);
+
+          if(commentContainerHeight > popupTotalHeight)
+          {
+            //코멘트 사이즈가 팝업의 토탈 사이즈를 넘어가면 재조정 해준다.
+            var gap = commentContainerHeight - popupTotalHeight;
+            var commentHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true) - gap;
+            
+            $('.mannayo_meetup_popup_comments_ul_wrapper').css('height', commentHeight + 'px');
+          }
+        };
+
         var resetPopupContentHeight = function(){
           var heightPx = $('.swal-content').outerHeight(true);
           $('.blueprint_popup').css('height', heightPx+'px');
+
+          //var test = $('.mannayo_meetup_popup_comments_ul_wrapper').offset().top;
+          //var test2 = $('.mannayo_meetup_popup_comments_ul_wrapper')[0].clientHeight;
+
+          //$('.mannayo_meetup_popup_comments_ul_wrapper').offset().top = 700;
+          //var test2 = $('.mannayo_meetup_popup_comments_ul_wrapper').getPosition().y;
+          //console.error("top: " + test);
+
+          //var popupHeight = $('.blueprint_popup')[0].clientHeight - 100;
+          //$('.mannayo_meetup_popup_comments_ul_wrapper').css('height', popupHeight + 'px');
         }
 
         setScrollUI(".mannayo_search_result_ul_wrapper");
@@ -2867,6 +3052,7 @@
             "gender" : $('input:radio[name=gender]:checked').val(),
             "age" : $(".age_user_select").val()
           }
+          
           var success = function(request) {
             loadingProcessStop($("#meetup_new_button"));
             $(".popup_close_button_wrapper").show();
@@ -3292,6 +3478,8 @@
           loadingProcess($("#meetup_up_button"));
           $(".mannayo_popup_close_button_wrapper").hide();
 
+          resetPopupContentHeight();
+
           var url="/mannayo/meetup";
           var method = 'post';
           var data =
@@ -3320,6 +3508,7 @@
           var error = function(request) {
             loadingProcessStop($("#meetup_up_button"));
             $(".mannayo_popup_close_button_wrapper").show();
+            resetPopupContentHeight();
             alert('만나요 실패. 다시 시도해주세요.');
           };
           
@@ -3336,6 +3525,7 @@
         var requestCancelMeetUp = function(meetup_id){
           loadingProcess($("#meetup_cancel_button"));
           $(".mannayo_popup_close_button_wrapper").hide();
+          resetPopupContentHeight();
 
           var url="/mannayo/meetup/cancel";
           var method = 'post';
@@ -3404,6 +3594,7 @@
           var error = function(request) {
             loadingProcessStop($("#meetup_cancel_button"));
             $(".mannayo_popup_close_button_wrapper").show();
+            resetPopupContentHeight();
             alert('만나요 취소 실패. 다시 시도해주세요.');
           };
           
@@ -3618,6 +3809,9 @@
                 $('.meetup_popup_container').hide();
                 $('.mannayo_meetup_popup_users_container').hide();
                 $('.mannayo_meetup_popup_comments_container').show();
+
+
+                resetScrollContentHeight();
               }
               break;
             }
@@ -7071,10 +7265,18 @@
         });
         //하단 리스트 END
 
+        var setSortMannayoText = function(optionValue){
+          $("#mannayo_sort_fake_text").text(sortTypes[optionValue]);
+          $(".mannayo_sort_select").val(optionValue);
+        };
+
+        setSortMannayoText(g_sortType);
+
         $(".mannayo_sort_select").change(function(){
           var optionValue = Number($(this).val());
-
-          $("#mannayo_sort_fake_text").text(sortTypes[optionValue]);
+          
+          //$("#mannayo_sort_fake_text").text(sortTypes[optionValue]);
+          setSortMannayoText(optionValue);
           g_sortType = optionValue;
           g_mannayoCounter = 0;
 
@@ -7086,9 +7288,6 @@
           {
             requestMannayoList(INPUT_KEY_TYPE_ENTER);   
           }
-
-          //requestMannayoList(INPUT_KEY_TYPE_NORMAL);
-          //requestMannayoList(INPUT_KEY_TYPE_ENTER);
           
         });
 
