@@ -1358,7 +1358,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                 "nick_name" : $("#meetup_popup_user_nickname_input").val(),
                 "anonymity" : Number($("#meetup_popup_user_anonymous_inputbox").is(":checked")),
                 "gender" : $('input:radio[name=gender]:checked').val(),
-                "age" : $(".age_user_select").val()
+                "age" : $(".age_user_select").val(),
+                "comment" : $('#meetup_popup_option_comment_input').val()
               }
               var success = function(request) {
                 loadingProcessStop($("#meetup_up_button"));
@@ -2593,7 +2594,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                         "</div>" +
 
                         "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
-                          "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                          "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</a></u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
                           "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
                           "</p>" +
                         "</div>" +
