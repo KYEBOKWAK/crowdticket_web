@@ -1683,7 +1683,7 @@
         }
 
         .meetup_new_button_wrapper{
-          margin-top: 40px;
+          margin-top: 28px;
         }
 
         .meetup_new_button_wrapper_cancel{
@@ -1723,7 +1723,42 @@
           margin-right: 20px;
         }
 
+        .mannayo_creator_pop_list_title{
+          font-size: 24px;
+        }
+
+        .mannayo_sort_fake_text_container>img{
+          margin-left: auto;
+        }
+
+        .mannayo_creator_list_title_searching{
+          margin-bottom: 48px;
+          margin-top: 12px;
+        }
+
         @media (max-width:1060px) {
+          .mannayo_list_container{
+            margin-top: 0px !important;
+          }
+
+          .mannayo_creator_list_title_searching{
+            margin-bottom: 0px;
+          }
+
+          #mannayo_sort_fake_text{
+            margin-left: auto;
+          }
+
+          .mannayo_sort_fake_text_container>img{
+            margin-left: 8px;
+          }
+
+          .mannayo_creator_pop_list_title{
+            padding-left: 5px;
+          }
+          .welcome_content_title{
+            padding-left: 5px;
+          }
           .thumb_container_is_mobile{
             margin-right: 0px;
             margin-bottom: 24px;
@@ -1763,7 +1798,9 @@
           }
 
           .mannayo_sort_container{
-            margin-right: auto;
+            /*margin-right: auto;*/
+            margin-top: 41px;
+            background-color: white;
           }
 
           .mannayo_thumb_object_container_in_main{
@@ -1835,6 +1872,11 @@
 
         /*@media (max-width:320px) {*/
         @media (max-width:650px) {
+          .mannayo_creator_list_title_searching{
+            margin-bottom: 0px;
+            margin-top: 50px;
+          }
+
           .swal-content{
             margin-top: 20px;
           }
@@ -2270,11 +2312,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
     </div>
 
-    <div class="welcome_content_container">
+    <div class="welcome_content_container welcome_content_new_meetup_container">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
-            신규 만나요
+            최신 만나요
           </div>
         </div>
 
@@ -2302,85 +2344,102 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
                   //만나요
                   ?>
-                  <div class='mannayo_thumb_object_container_in_main'>
-                    @if($itemCount === 0)
-                    <div class='mannayo_thumb_container' style='margin-right: 20px'>
-                    @else
-                    <div class='mannayo_thumb_container'>
-                    @endif
-                      <div class='mannayo_thumb_img_wrapper'>
-                        <div class='mannayo_thumb_img_resize'>
-                          <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
-                          <div class='thumb-black-mask'>
-                          </div>
-                          <div class='mannayo_thumb_meet_count'>
-                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
-                          </div>
-
-                          <div class='mannayo_thumb_meet_users_container'>
-                            <?php
-                            $zIndex = count($meetup->meetup_users);
-                            ?>
-                            @foreach($meetup->meetup_users as $meetup_user)
-                            <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
-                            <?php
-                              $zIndex--;
-                            ?>
-                            @endforeach
-
-                            @if($meetup->meet_count >= 4)
-                              <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
-                            @endif
-                          <!--meetupUsersElement-->
-                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                  @if($i === 0 && $j === 0)
+                    <div class='mannayo_thumb_object_container_in_main'>
+                      <div class='mannayo_thumb_container' style='margin-right: 20px;'>
+                        <div class='mannayo_thumb_img_wrapper'>
+                          <div class='mannayo_thumb_img_resize'>
+                            <button class='mannayo_create_button' type='button'>
+                              <img class='mannayo_peace_img' src="{{ asset('/img/icons/ic-emoji-wantomeet-peace-64.png') }}" style=''/>
+                              <p>새 만나요 만들기</p>
                             </button>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                  @else
+                    <div class='mannayo_thumb_object_container_in_main'>
+                      @if($itemCount === 0)
+                      <div class='mannayo_thumb_container' style='margin-right: 20px'>
+                      @else
+                      <div class='mannayo_thumb_container'>
+                      @endif
+                        <div class='mannayo_thumb_img_wrapper'>
+                          <div class='mannayo_thumb_img_resize'>
+                            <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
+                            <div class='thumb-black-mask'>
+                            </div>
+                            <div class='mannayo_thumb_meet_count'>
+                              <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
+                            </div>
 
-                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
-                          <div class='mannayo_thumb_user_container_arrow'>
-                          </div>
-                          <div class='mannayo_thumb_user_name_ul_container'>
-                            <ul>
+                            <div class='mannayo_thumb_meet_users_container'>
+                              <?php
+                              $zIndex = count($meetup->meetup_users);
+                              ?>
                               @foreach($meetup->meetup_users as $meetup_user)
-                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                              <?php
+                                $zIndex--;
+                              ?>
                               @endforeach
+
                               @if($meetup->meet_count >= 4)
-                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                                <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
                               @endif
-                            </ul>
+                            <!--meetupUsersElement-->
+                              <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                              </button>
+                            </div>
+                          </div>
+
+                          <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                            <div class='mannayo_thumb_user_container_arrow'>
+                            </div>
+                            <div class='mannayo_thumb_user_name_ul_container'>
+                              <ul>
+                                @foreach($meetup->meetup_users as $meetup_user)
+                                  <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                                @endforeach
+                                @if($meetup->meet_count >= 4)
+                                  <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                                @endif
+                              </ul>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div class='mannayo_thumb_title_wrapper'>
-                        {{$meetup->title}}
-                      </div>
-                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
-                        {{$meetup->where}} 에서 · {{$meetup->what}}
-                      </div>
-                      <div class='mannayo_thumb_button_wrapper'>
+                        <div class='mannayo_thumb_title_wrapper'>
+                          {{$meetup->title}}
+                        </div>
+                        <div class='text-ellipsize-2 mannayo_thumb_content_container'>
+                          {{$meetup->where}} 에서 · {{$meetup->what}}
+                        </div>
+                        <div class='mannayo_thumb_button_wrapper'>
+                          @if($meetup->is_meetup)
+                            <button class='mannayo_thumb_meetup_cancel_button_fake'>
+                              만나요 요청됨
+                            </button>
+                          @else
+                            <button class='mannayo_thumb_meetup_button_fake'>
+                              만나요
+                            </button>
+                          @endif
+                        </div>
                         @if($meetup->is_meetup)
-                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
-                            만나요 요청됨
+                          <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
                           </button>
                         @else
-                          <button class='mannayo_thumb_meetup_button_fake'>
-                            만나요
+                          <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
                           </button>
                         @endif
                       </div>
-                      @if($meetup->is_meetup)
-                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
-                        </button>
-                      @else
-                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
-                        </button>
-                      @endif
                     </div>
-                  </div>
+                    <?php
+                    $projectIndex++;
+                    ?>
+                  @endif
                   <?php
-                  $projectIndex++;
                   $itemCount++;
                   
                   if(count($newmeetups) < $projectIndex + 1)
@@ -2430,13 +2489,16 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
         <div class='mannayo_list_container'>
           <div class='flex_layer'>
-            <div class='mannayo_creator_list_title' style='margin-bottom: 48px;'>
+            <div class='mannayo_creator_list_title mannayo_creator_list_title_searching'>
               이미 있는 만나요
+            </div>
+            <div class='mannayo_creator_pop_list_title' style='margin-top: 51px;'>
+              인기 만나요
             </div>
             <div class='mannayo_sort_container'>
               <div class='mannayo_sort_fake_text_container flex_layer'>
                 <p id='mannayo_sort_fake_text'>최신순</p>
-                <img src="{{ asset('/img/icons/svg/icon-box.svg') }}" style='margin-left: auto;'>
+                <img src="{{ asset('/img/icons/svg/icon-box.svg') }}">
               </div>
               <select class='mannayo_sort_select' name='mannayo_sort'>
                 <option value='0' selected>최신순</option>
@@ -6382,6 +6444,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             isPressEnterKey = true;
             searchingOnOff(false);
             $("#mannayo_search_result_container").hide();
+            $('.welcome_content_new_meetup_container').hide();
             requestMannayoList(INPUT_KEY_TYPE_ENTER);
             return;
           }
@@ -6610,7 +6673,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             if(request.search_type === YOUTUBE_SEARCH_TYPE_CROLLING)
             {
               //타입이 크롤링이면 유투브 api 횟수 초과 혹은 에러로 인해 크롤링 검색으로 데이터가 왔다.
-              console.error("in crolling");
               if(request.data.length > 0)
               {
                 setYoutubeCrollingListNowCounter(0, request.data.length);
@@ -6898,7 +6960,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             "<div class='mannayo_thumb_container' style='margin-right: 20px;'>" +
               "<div class='mannayo_thumb_img_wrapper'>" +
                 "<div class='mannayo_thumb_img_resize'>" +
-                  //"<img class='mannayo_thumb_img project-img' src='"+thumbnail_url+"'>" +
                   "<button class='mannayo_create_button' type='button'>" +
                     "<img class='mannayo_peace_img' src='{{ asset('/img/icons/ic-emoji-wantomeet-peace-64.png') }}' style=''/>" +
                     "<p>새 만나요 만들기</p>" +
@@ -6907,7 +6968,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               "</div>" +
             "</div>";
 
-            //parentElement.append(mannayoObject);
             parentElement.appendChild(mannayoObject);
         };
 
@@ -7035,6 +7095,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         var setMannayoList = function(meetups, requestKeyType){
           if(requestKeyType === INPUT_KEY_TYPE_ENTER)
           {
+            $('.mannayo_creator_pop_list_title').hide();
             $(".mannayo_creator_list_title").show();
             $('.mannayo_list_container').css("margin-top", '64px');
 
@@ -7042,7 +7103,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           }
           else
           {
-            $('.mannayo_sort_container').css('margin-top', '50px');
+            //$('.mannayo_sort_container').css('margin-top', '41px');
           }
 
           var mannayoListElement = $(".mannayo_meetup_list_container");
@@ -7079,6 +7140,28 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
               for(var k = 0 ; k < 2 ; k++)
               {
+                if(i === 0 && j === 0 && k === 0 && g_mannayoCounter === 0 && isPressEnterKey)
+                {
+                  //처음 오브젝트는 새 만나요 만들기 버튼
+                  addCreateMannayoObject(objectFlexLayer);
+                }
+                else
+                {
+                  var meetup = meetups[index];
+                  if(meetup)
+                  {
+                    addMannayoObject(meetup, objectFlexLayer, k);
+                  }
+                  index++;
+                }
+
+                if(index >= meetups.length)
+                {
+                  isEnd = true;
+                  break;
+                }
+
+                /*
                 if(i === 0 && j === 0 && k === 0 && g_mannayoCounter === 0)
                 {
                   //처음 오브젝트는 새 만나요 만들기 버튼
@@ -7099,6 +7182,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   isEnd = true;
                   break;
                 }
+                */
               }
 
               if(isEnd)
@@ -7194,8 +7278,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           setSwitchMoreLoading(true, keyType, MAIN_FIND_STATE_NORMAL);
 
           var callMannayoOnceMaxCounter = CALL_MANNAYO_ONCE_MAX_COUNT
-          if(g_mannayoCounter === 0)
+          if(g_mannayoCounter === 0 && isPressEnterKey)
           {
+            //처음엔 새만나요 만들기 때문에 첫 요청시에는 11개만 요청해야만 했다.
             callMannayoOnceMaxCounter = CALL_MANNAYO_ONCE_MAX_COUNT - 1;
           }
 
