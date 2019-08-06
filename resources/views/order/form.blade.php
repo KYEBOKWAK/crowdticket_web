@@ -120,6 +120,18 @@
         .shooting_agreement_apply_text{
           cursor:pointer;
         }
+
+        .shooting_agreement_apply_content{
+          font-family: 'NotoSansCJKkr';
+          font-size: 12px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #808080;
+          opacity: 0.6;
+        }
     </style>
 @endsection
 
@@ -1513,10 +1525,14 @@
           }
           
           $('.shooting_agreement_apply_text').click(function(){
-            var title = '이벤트 진행 중 콘텐츠 촬영이 진행 될 예정이며,<br> '+
-                        '이 과정에서 참가자의 얼굴이 유튜브 영상 및 인스타그램 등을 통해 외부로 노출될 수 있습니다.<br>' +
-                        '이와 관련하여 본인은 상기 사항을 숙지하였으며,<br>' +
-                        '이에 따라 이벤트 주최 측이 촬영한 저작물에 대하여 본인의 초상권을 사용하는 것에 동의합니다.';
+            var title = 
+                        "<div class='shooting_agreement_apply_content'>" +
+                        '이벤트 진행 중 콘텐츠 촬영이 진행 될 예정이며,'+
+                        '이 과정에서 참가자의 얼굴이 유튜브 영상 및 인스타그램 등을 통해 외부로 노출될 수 있습니다.<br><br>' +
+                        '이와 관련하여 본인은 상기 사항을 숙지하였으며,' +
+                        '이에 따라 이벤트 주최 측이 촬영한 저작물에 대하여 본인의 초상권을 사용하는 것에 동의합니다.' +
+                        "</div>";
+
             Swal.fire({
                 type: 'info',
                 title: title,
