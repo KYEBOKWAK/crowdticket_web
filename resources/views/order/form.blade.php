@@ -116,6 +116,10 @@
         .btn_order_story_save:focus{
           color: white;
         }
+
+        .shooting_agreement_apply_text{
+          cursor:pointer;
+        }
     </style>
 @endsection
 
@@ -653,7 +657,10 @@
             </div>
             <div>
               <p style='margin-bottom:0px;'><a href="{{url('/terms')}}" target="_blank"><u>이용약관</u></a> / <a href="{{url('/privacy')}}" target="_blank"><u>정보이용정책</u></a> 동의 <input id="policy_apply" type="checkbox" required="required"></p>
-              <a href="{{url('/thirdterms')}}" target="_blank"><u>제3자 정보제공정책</u></a> 동의 <input id="third_policy_apply" type="checkbox" required="required">
+              <p style='margin-bottom:0px;'><a href="{{url('/thirdterms')}}" target="_blank"><u>제3자 정보제공정책</u></a> 동의 <input id="third_policy_apply" type="checkbox" required="required"></p>
+              @if($project->shooting_agreement)
+                <p style='margin-bottom:0px;'><b><u class='shooting_agreement_apply_text'>이벤트 참가자 초상권</u> 활용 동의</b><input id="shooting_agreement_apply" type="checkbox" required="required"></p>
+              @endif
             </div>
           </div>
         </div>
@@ -921,23 +928,6 @@
               }
             }
           };
-
-          /*
-          var getTicketCategory = function(ticket){
-            var ticketCategoryTemp = ticket.category;
-        		if(ticketsCategory.length > 0){
-        			var categoryNum = Number(ticket.category);
-        			for (var i = 0; i < ticketsCategory.length; i++) {
-        				if(Number(ticketsCategory[i].id) === categoryNum){
-        					ticketCategoryTemp = ticketsCategory[i].title;
-        					break;
-        				}
-        			}
-        		}
-
-            return ticketCategoryTemp;
-          };
-          */
 
           var setCommissionInfo = function(){
             var ticketCount = Number($('#ticket_count').val());
@@ -1283,6 +1273,15 @@
               return;
             }
 
+            if($('#shooting_agreement_apply').length > 0)
+            {
+              if(!$('#shooting_agreement_apply').is(":checked"))
+              {
+                Swal.fire("이벤트 참가자 초상권 활용에 동의 해주세요.", "", "warning");
+                return;
+              }
+            }
+
             showPayingAlert();
           });
 
@@ -1513,6 +1512,19 @@
             isWordLengthCheck($(inputElements), $(outputElements));
           }
           
+          $('.shooting_agreement_apply_text').click(function(){
+            var title = '이벤트 진행 중 콘텐츠 촬영이 진행 될 예정이며,<br> '+
+                        '이 과정에서 참가자의 얼굴이 유튜브 영상 및 인스타그램 등을 통해 외부로 노출될 수 있습니다.<br>' +
+                        '이와 관련하여 본인은 상기 사항을 숙지하였으며,<br>' +
+                        '이에 따라 이벤트 주최 측이 촬영한 저작물에 대하여 본인의 초상권을 사용하는 것에 동의합니다.';
+            Swal.fire({
+                type: 'info',
+                title: title,
+                confirmButtonText: '확인',
+              }).then(function(){
+
+              });
+          });
       });
     </script>
 @endsection

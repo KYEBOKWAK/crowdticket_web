@@ -139,10 +139,41 @@
       overflow: hidden;
     }
 
+    .mannayo_banner_container{
+      margin-top: 64px;
+      margin-bottom: 44px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .mannayo_banner_img{
+      width: 100%;
+    }
+
+    .mannayo_banner_img_pc{
+      border-radius: 10px;
+    }
+
+    .mannayo_banner_img_mobile{
+      display: none;
+    }
+
     @media (max-width:640px) {
       .magazine_container{
         width: 100%;
         padding: 0px 15px;
+      }
+
+      .mannayo_banner_container{
+        margin-top: 40px;
+        margin-bottom: 0px;
+      }
+
+      .mannayo_banner_img_pc{
+        display: none;
+      }
+      .mannayo_banner_img_mobile{
+        display: block;
       }
     }
 
@@ -178,6 +209,13 @@
     @endif
 
    {!! html_entity_decode($magazine->story) !!}
+  </div>
+
+  <div class='mannayo_banner_container'>
+    <a href="{{url('/mannayo')}}" target='_blank'>
+      <img class='mannayo_banner_img mannayo_banner_img_pc' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190806_meet_banner_wide.png'>
+      <img class='mannayo_banner_img mannayo_banner_img_mobile' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190806_meet_banner.png'>
+    </a>
   </div>
 </div>
 

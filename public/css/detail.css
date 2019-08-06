@@ -557,13 +557,21 @@
   /*display: none;*/
 }
 
+.detail_ticket_md_container{
+  padding-left: 15px;
+}
+
 #detail_ticket_md{
-  /*background-color: #f9f8f6;*/
-  margin-left: 15px;
-  /*display: inline-table;*/
+  /*margin-left: 15px;*/
   flex-basis: 410px;
   flex-shrink: 0;
-  height: 100%;
+  /*height: 100%;*/
+  border: 0;
+}
+
+.mannayo_banner_container{
+  margin-top: 20px;
+  margin-bottom: 55px;
 }
 
 #isMobile{
@@ -652,6 +660,11 @@
 
 .table_pick thead td{
 
+}
+
+.mannayo_banner_img{
+  width: 100%;
+  border-radius: 10px;
 }
 
 @media (max-width:1030px){
@@ -821,6 +834,14 @@
 
     .table_pick_wrapper{
       width: 70%;
+    }
+
+    .detail_ticket_md_container{
+      padding-left: 0px;
+    }
+
+    .mannayo_banner_img{
+      border-radius: 0px;
     }
 }
 
