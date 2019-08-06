@@ -296,7 +296,8 @@ function loginPopup(successFunc, closeFunc){
       //title: "로그인",
       content: elementPopup,
       confirmButtonText: "V redu",
-      allowOutsideClick: "true",
+      //allowOutsideClick: true,
+      closeOnClickOutside: false,
 
       buttons: {
         close: {
