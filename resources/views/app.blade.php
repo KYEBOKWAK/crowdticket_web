@@ -21,7 +21,7 @@
     <!-- End Google Tag Manager -->
 
     @section('title')
-        <title>크티: 크라우드티켓 - 팬 중심 크리에이터 밋업 플랫폼 </title>
+        <title>크티: 크라우드티켓 - 팬 중심 크리에이터 밋업 플랫폼</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>

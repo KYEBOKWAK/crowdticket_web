@@ -4,7 +4,7 @@
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="크라우드티켓"/>
     <meta property="og:description" content="크리에이터에게 만나요를 요청해보세요!"/>
-    <meta property="og:image" content="{{ asset('/img/app/og_image_1.png') }}"/>
+    <meta property="og:image" content="{{ asset('/img/app/og_image_2.png') }}"/>
     <!-- <meta property="og:url" content="https://crowdticket.kr/"/> -->
 @endsection
 @section('css')

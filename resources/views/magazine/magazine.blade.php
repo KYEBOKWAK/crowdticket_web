@@ -3,7 +3,7 @@
 @section('meta')
   <meta property="og:title" content="크라우드티켓 매거진"/>
   <meta property="og:description" content="아티스트와 크리에이터를 위한 티켓팅 플랫폼"/>
-  <meta property="og:image" content="{{ asset('/img/app/og_image_1.png') }}"/>
+  <meta property="og:image" content="{{ asset('/img/app/og_image_2.png') }}"/>
 @endsection
 
 @section('css')
