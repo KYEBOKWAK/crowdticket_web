@@ -291,7 +291,7 @@ function loginPopup(successFunc, closeFunc){
 
   "</div>";
 
-
+  stopDocumentScroll();
   swal({
       //title: "로그인",
       content: elementPopup,
@@ -307,6 +307,7 @@ function loginPopup(successFunc, closeFunc){
       },
 
   }).then(function(value){
+    reStartDocumentScroll();
     if(closeFunc)
     {
       closeFunc();
@@ -458,7 +459,7 @@ function registerPopup(successFunc, closeFunc){
     "</div>" +
   "</div>";
 
-
+  stopDocumentScroll();
   swal({
       //title: "회원가입",
       content: elementPopup,
@@ -476,6 +477,7 @@ function registerPopup(successFunc, closeFunc){
       },
 
   }).then(function(value){
+    reStartDocumentScroll();
     if(closeFunc)
     {
       closeFunc();

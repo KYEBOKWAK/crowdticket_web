@@ -65,6 +65,7 @@ body {
 .comment-list .comment-content {
 	font-size:14px;
 	color:#666;
+	word-break: break-all;
 }
 .comment-list .toggle-reply {
 	cursor:pointer;

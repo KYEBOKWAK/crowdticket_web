@@ -1580,13 +1580,15 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               makeMeetupUsers() + 
               makeMeetupComments();
 
-
+              stopDocumentScroll();
               swal({
                       content: elementPopup,
                       allowOutsideClick: "true",
                       className: "blueprint_popup",
                       closeOnClickOutside: false,
                       closeOnEsc: false
+                  }).then(function(){
+                    reStartDocumentScroll();
                   });
 
               $(".swal-footer").hide();
@@ -2657,12 +2659,15 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               makeMeetupUsers() + 
               makeMeetupComments();
 
+              stopDocumentScroll();
               swal({
                       content: elementPopup,
                       allowOutsideClick: "true",
                       className: "blueprint_popup",
                       closeOnClickOutside: false,
                       closeOnEsc: false
+                  }).then(function(){
+                    reStartDocumentScroll();
                   });
 
               $(".swal-footer").hide();

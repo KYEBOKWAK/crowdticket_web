@@ -26,7 +26,7 @@
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/base.css?version=6') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/app.css?version=8') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=19') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
@@ -401,7 +401,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=29') }}"></script>
+<script src="{{ asset('/js/util.js?version=30') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -413,7 +413,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=11');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=12');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
@@ -529,20 +529,7 @@ function logout(){
           $("#kakao_chat_ask").show();
         });
       }, 1000));
-    });
-/*
-    var scrollValue = $(document).scrollTop();
-    $(window).scroll(function(){
-      if($('.swal-overlay--show-modal').length > 0){
-        $(document).scrollTop(0);
-      }
-      else{
-        scrollValue = $(document).scrollTop()
-      }
-
-      console.error(scrollValue);
-    });
-    */
+    });    
   });
 </script>
 

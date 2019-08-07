@@ -2438,12 +2438,15 @@
           makeMeetupUsers() + 
           makeMeetupComments();
 
+          stopDocumentScroll();
           swal({
                   content: elementPopup,
                   allowOutsideClick: "true",
                   className: "blueprint_popup",
                   closeOnClickOutside: false,
                   closeOnEsc: false
+              }).then(function(){
+                reStartDocumentScroll();
               });
 
           $(".swal-footer").hide();

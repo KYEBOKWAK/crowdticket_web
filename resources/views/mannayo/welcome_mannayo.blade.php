@@ -3336,7 +3336,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               "</button>" +
           "</div>";
 
-
+          stopDocumentScroll();
           swal({
                   content: elementPopup,
                   allowOutsideClick: "true",
@@ -3344,6 +3344,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   closeOnClickOutside: false,
                   closeOnEsc: false
               }).then(function(value){
+                reStartDocumentScroll();
                 removeOptionMannayoSearchPopup();
                 if(type === TYPE_CREATE_MEETUP_NEW)
                 {
@@ -3802,12 +3803,15 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           makeMeetupUsers() + 
           makeMeetupComments();
 
+          stopDocumentScroll();
           swal({
                   content: elementPopup,
                   allowOutsideClick: "true",
                   className: "blueprint_popup",
                   closeOnClickOutside: false,
                   closeOnEsc: false
+              }).then(function(){
+                reStartDocumentScroll();
               });
 
           $(".swal-footer").hide();
@@ -4787,13 +4791,15 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           makeMeetupUsers() + 
           makeMeetupComments();
 
-
+          stopDocumentScroll();
           swal({
                   content: elementPopup,
                   allowOutsideClick: "true",
                   className: "blueprint_popup",
                   closeOnClickOutside: false,
                   closeOnEsc: false
+              }).then(function(){
+                reStartDocumentScroll();
               });
 
           $(".swal-footer").hide();

@@ -704,3 +704,14 @@ function isMyOrMasterComment(commentId){
 
 	return false;
 };
+
+var g_documentSaveScrollValue = 0;
+function stopDocumentScroll(){
+  g_documentSaveScrollValue = $(document).scrollTop();
+  $('body').css('overflow', 'hidden');
+}
+
+function reStartDocumentScroll(){
+  $('body').css('overflow', '');
+  $(document).scrollTop(g_documentSaveScrollValue);
+}
