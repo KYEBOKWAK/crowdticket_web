@@ -1517,6 +1517,10 @@
 
         <div class='mannayo_search_result_find_container_main'>
         </div>
+
+        <div class='mannayo_meetup_list_end_fake_offset'>
+        </div>
+        
         <div class="mannayo_list_loading_container">
           <p class="searching"><span>.</span><span>.</span><span>.</span><span>.</span></p>
         </div>
@@ -2248,84 +2252,6 @@
           'success': success,
           'error': error
           });
-
-          /*
-          loadingProcess($("#meetup_cancel_button"));
-          $(".popup_close_button_wrapper").hide();
-          resetPopupContentHeight();
-
-          var url="/mannayo/meetup/cancel";
-          var method = 'post';
-          var data =
-          {
-            "meetup_id" : meetup_id
-          }
-          var success = function(request) {
-            loadingProcessStop($("#meetup_cancel_button"));
-            $(".popup_close_button_wrapper").show();
-
-            if(request.state === 'success')
-            {
-              var elementPopup = document.createElement("div");
-              elementPopup.innerHTML = 
-              
-              "<div class='meetup_popup_container'>" + 
-                "<div class='meetup_popup_title_container'>" +
-                  "<h3>만나요 취소 완료</h3>" +
-                "</div>" +
-
-                "<div class='meetup_popup_cancel_callback'>" + 
-                  "<p>" +
-                    "만나요 요청이 취소되었습니다." +
-                  "</p>" +
-                "</div>" +
-
-                "<div class='meetup_new_button_wrapper' style='margin-top: 40px;'>" +
-                  "<button class='meetup_popup_cancel_callback_ok'>" +
-                    "확인" +
-                  "</button>" +
-                "</div>" +
-              "</div>"
-
-              swal({
-                      content: elementPopup,
-                      allowOutsideClick: "true",
-                      className: "mannayo_alert_popup",
-                      closeOnClickOutside: true,
-                      closeOnEsc: true
-                  }).then(function(value){
-                    showLoadingPopup('');
-                    window.location.reload();
-                  });
-
-              $(".swal-footer").hide();
-
-              $('.meetup_popup_cancel_callback_ok').click(function(){
-                swal.close();
-              });
-            }
-            else
-            {
-              alert(request.message);
-            }
-          };
-          
-          var error = function(request) {
-            loadingProcessStop($("#meetup_cancel_button"));
-            $(".popup_close_button_wrapper").show();
-            resetPopupContentHeight();
-            alert('만나요 취소 실패. 다시 시도해주세요.');
-          };
-          
-          $.ajax({
-          'url': url,
-          'method': method,
-          'data' : data,
-          'success': success,
-          'error': error
-          });
-          
-          */
         };
 
         //만나요 취소 팝업 START
@@ -4713,6 +4639,21 @@
           requestMannayoList(INPUT_KEY_TYPE_MORE);
         });
         //하단 리스트 END
+
+        $(window).bind('scroll', function(){
+          if($('.mannayo_list_more_button').is(':visible'))
+          {
+            var lastObjectName = '.mannayo_meetup_list_end_fake_offset';
+            var lastObjectTop = $(lastObjectName).offset().top;
+            var targetObjectTop = $(window).scrollTop() + $(window).height();
+
+            if(lastObjectTop < targetObjectTop)
+            {
+              console.error("request more users!!");
+              requestMannayoList(INPUT_KEY_TYPE_MORE);
+            }
+          }
+        });
     });
 </script>
 

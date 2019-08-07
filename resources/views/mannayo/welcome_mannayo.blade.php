@@ -2513,8 +2513,10 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
         </div>
 
-        
-        <div class="mannayo_list_loading_container">
+        <div class='mannayo_meetup_list_end_fake_offset'>
+        </div>
+
+        <div class="mannayo_list_loading_container mannayo_list_loading_container_main">
           <div class='mannayo_youtube_crolling_info_container mannayo_youtube_crolling_info_container_main'>
             <p class="mannayo_youtube_crolling_now_counter"></p>
             <p class="mannayo_youtube_crolling_all_counter"></p>
@@ -7376,7 +7378,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         }
 
         $("#mannayo_list_more_button").click(function(){
-          //requestMannayoList(INPUT_KEY_TYPE_NORMAL);
           requestMannayoList(INPUT_KEY_TYPE_MORE);
         });
         //하단 리스트 END
@@ -7419,6 +7420,20 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
         setInputAction();
 
+        $(window).bind('scroll', function(){
+          if($('.mannayo_list_more_button').is(':visible'))
+          {
+            var lastObjectName = '.mannayo_meetup_list_end_fake_offset';
+            var lastObjectTop = $(lastObjectName).offset().top;
+            var targetObjectTop = $(window).scrollTop() + $(window).height();
+
+            if(lastObjectTop < targetObjectTop)
+            {
+              console.error("request more users!!");
+              requestMannayoList(INPUT_KEY_TYPE_MORE);
+            }
+          }
+        });
       });
 
     </script>
