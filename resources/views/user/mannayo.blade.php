@@ -1520,7 +1520,7 @@
 
         <div class='mannayo_meetup_list_end_fake_offset'>
         </div>
-        
+
         <div class="mannayo_list_loading_container">
           <p class="searching"><span>.</span><span>.</span><span>.</span><span>.</span></p>
         </div>
@@ -4649,7 +4649,6 @@
 
             if(lastObjectTop < targetObjectTop)
             {
-              console.error("request more users!!");
               requestMannayoList(INPUT_KEY_TYPE_MORE);
             }
           }

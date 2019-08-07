@@ -7429,7 +7429,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
             if(lastObjectTop < targetObjectTop)
             {
-              console.error("request more users!!");
               requestMannayoList(INPUT_KEY_TYPE_MORE);
             }
           }
