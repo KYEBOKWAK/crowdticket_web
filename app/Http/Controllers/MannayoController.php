@@ -96,20 +96,150 @@ class MannayoController extends Controller
     {
         //$creators = Meetups::where('channel_id', $creator_id)->get();
 
-        return view('mannayo.welcome_mannayo', ['share_channel_id' => $channel_id]);
+        ///////meetup start
+        $meetups = \DB::table('meetups')
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy('meetups.id', 'desc')->skip(0)->take(3)->get();
+                        //->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
+        
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+        
+        foreach($meetups as $meetup)
+        {
+            $meetup->meetup_users = [];
+            $meetup->is_meetup = false;
+            if($user)
+            {
+                $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+                if($meetup_user_my)
+                {
+                    $userMyInfo = $meetup_user_my->user;
+                    $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                    $meetup_user_my->user_profile_url = $userMyProfileURL;
+                    $meetup_user_my->user_name = '나';
+
+                    array_push($meetup->meetup_users, $meetup_user_my);
+
+                    $meetup->is_meetup = true;
+                }
+            }
+
+            $meetup_users = null;
+
+            if($user)
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+            else
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+
+            foreach($meetup_users as $meetup_user)
+            {
+                $userInfo = $meetup_user->user;
+                //$userProfileURL = $userInfo->getPhotoUrl();
+                $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
+
+                $meetup_user->user_profile_url = $userProfileURL;
+                $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
+
+                array_push($meetup->meetup_users, $meetup_user);
+
+                if(count($meetup->meetup_users) >= 3)
+                {
+                    break;
+                }
+            }
+        }
+
+        return view('mannayo.welcome_mannayo', ['share_channel_id' => $channel_id, 'newmeetups' => $meetups]);
     }
 
     public function goMannayoMeetups($meetup_id)
     {
-        $meetup = Meetup::find($meetup_id);
-        if(!$meetup)
+        ///////meetup start
+        $meetups = \DB::table('meetups')
+                        ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                        ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                                'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
+                                'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                        ->orderBy('meetups.id', 'desc')->skip(0)->take(3)->get();
+                        //->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
+        
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+        
+        foreach($meetups as $meetup)
+        {
+            $meetup->meetup_users = [];
+            $meetup->is_meetup = false;
+            if($user)
+            {
+                $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+                if($meetup_user_my)
+                {
+                    $userMyInfo = $meetup_user_my->user;
+                    $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                    $meetup_user_my->user_profile_url = $userMyProfileURL;
+                    $meetup_user_my->user_name = '나';
+
+                    array_push($meetup->meetup_users, $meetup_user_my);
+
+                    $meetup->is_meetup = true;
+                }
+            }
+
+            $meetup_users = null;
+
+            if($user)
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+            else
+            {
+                $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+            }
+
+            foreach($meetup_users as $meetup_user)
+            {
+                $userInfo = $meetup_user->user;
+                //$userProfileURL = $userInfo->getPhotoUrl();
+                $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
+
+                $meetup_user->user_profile_url = $userProfileURL;
+                $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
+
+                array_push($meetup->meetup_users, $meetup_user);
+
+                if(count($meetup->meetup_users) >= 3)
+                {
+                    break;
+                }
+            }
+        }
+
+        $meetup_share = Meetup::find($meetup_id);
+        if(!$meetup_share)
         {
             return view('mannayo.welcome_mannayo', ['share_meetup_info' => 'none']);    
         }
 
-        $meetup->creator;
+        $meetup_share->creator;
 
-        return view('mannayo.welcome_mannayo', ['share_meetup_info' => $meetup]);
+        return view('mannayo.welcome_mannayo', ['share_meetup_info' => $meetup_share, 'newmeetups' => $meetups]);
     }
 
     public function createCreator(Request $request)
