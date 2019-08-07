@@ -371,14 +371,6 @@
           top: 0;
           left: 0;
           opacity: 0;
-          /*
-          width: 85px;
-          height: 40px;
-          font-size: 16px;
-          border-radius: 21px;
-          border: 0.8px solid #acacac;
-          color: #acacac;
-          */
         }
 
         .result_meetup_meet_button_popup{
@@ -1492,6 +1484,8 @@
           }
         }
     </style>
+    <link href="{{ asset('/css/mannayo.css?version=11') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -1516,19 +1510,6 @@
             <div class='mannayo_creator_list_title' style='margin-bottom: 48px;'>
               내가 참여한 만나요
             </div>
-
-            <!--
-            <div class='mannayo_sort_container'>
-              <div class='mannayo_sort_fake_text_container flex_layer'>
-                <p id='mannayo_sort_fake_text'>최신순</p>
-                <img src="{{ asset('/img/icons/svg/icon-box.svg') }}" style='margin-left: auto;'>
-              </div>
-              <select class='mannayo_sort_select' name='mannayo_sort'>
-                <option value='0' selected>최신순</option>
-                <option value='1'>인기순</option>
-              </select>
-            </div>
-            -->
           </div>
           <div class='mannayo_meetup_list_container'>
           </div>
@@ -1548,6 +1529,9 @@
 @endsection
 
 @section('js')
+
+<script src="{{ asset('/js/simple-scrollbar.js?version=1') }}"></script>
+<script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
 
 <script>
       const FIND_TYPE_IN_API = 1;
@@ -1571,7 +1555,6 @@
       const SEARCH_OBJECT_HEIGHT_POPUP = 64;
 
       var SEARCH_OBJECT_HEIGHT = SEARCH_OBJECT_HEIGHT_PC;
-      //const SEARCH_OBJECT_HEIGHT = 64;
 
       const AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
 
@@ -1582,6 +1565,8 @@
       const SORT_TYPE_MY_MEETUP = 2;
 
       const CALL_MANNAYO_ONCE_MAX_COUNT = 12;
+      const CALL_MANNAYO_POPUP_ONCE_USERS_MAX_COUNT = 12; //팝업시 유저 정보 요청수
+      const CALL_MANNAYO_POPUP_ONCE_USERS_COMMENT_MAX_COUNT = 12; //팝업시 유저 정보 요청수
 
       const MANNAYO_COLUM_COUNT = 4;
 
@@ -1602,13 +1587,19 @@
 
       var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
-      //var g_mannayoArray = new Array();
       var g_mannayoCounter = 0;
 
       var isPressEnterKey = false;
 
       var g_sortType = SORT_TYPE_MY_MEETUP;
       //var g_inputKeyType = INPUT_KEY_TYPE_NORMAL;//정렬에만 씀.
+
+      const TYPE_TAB_MEETUP_POPUP_MEET = 0;
+      const TYPE_TAB_MEETUP_POPUP_UESRS = 1;
+      const TYPE_TAB_MEETUP_POPUP_COMMENT = 2;
+
+      var g_nowOpenPopup_meetup_id = 0;
+      var g_nowOpenPopup_meetup_channel = '';
 
       $(document).ready(function () {
         var g_creatorsSearchList = $("#mannayo_search_result_ul");
@@ -1621,6 +1612,30 @@
         var setScrollUI = function(selector){
           var el = document.querySelector(selector);
           SimpleScrollbar.initEl(el);
+        };
+
+        var setCommentCounterText = function(string){
+          $('.mannayo_popup_tab_comment_counter_text').text(string);        
+        };
+
+        var resetPopupContentHeight = function(){
+          var heightPx = $('.swal-content').outerHeight(true);
+          $('.blueprint_popup').css('height', heightPx+'px');
+        };
+
+        var resetScrollContentHeight = function(){
+          var popupMarginBottom = parseInt($('.blueprint_popup').css("margin-bottom"));
+          var popupTotalHeight = $('.blueprint_popup').position().top + $('.blueprint_popup').outerHeight(true) - popupMarginBottom - 5;
+          var commentContainerHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').position().top + $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true);
+
+          if(commentContainerHeight > popupTotalHeight)
+          {
+            //코멘트 사이즈가 팝업의 토탈 사이즈를 넘어가면 재조정 해준다.
+            var gap = commentContainerHeight - popupTotalHeight;
+            var commentHeight = $('.mannayo_meetup_popup_comments_ul_wrapper').outerHeight(true) - gap;
+            
+            $('.mannayo_meetup_popup_comments_ul_wrapper').css('height', commentHeight + 'px');
+          }
         };
 
         var isMannayoSearchPopup = function(){
@@ -2158,7 +2173,86 @@
 
         var requestCancelMeetUp = function(meetup_id){
           loadingProcess($("#meetup_cancel_button"));
+          $(".mannayo_popup_close_button_wrapper").hide();
+          resetPopupContentHeight();
+
+          var url="/mannayo/meetup/cancel";
+          var method = 'post';
+          var data =
+          {
+            "meetup_id" : meetup_id
+          }
+          var success = function(request) {
+            loadingProcessStop($("#meetup_cancel_button"));
+            $(".mannayo_popup_close_button_wrapper").show();
+
+            if(request.state === 'success')
+            {
+              var elementPopup = document.createElement("div");
+              elementPopup.innerHTML = 
+              
+              "<div class='meetup_popup_container'>" + 
+                "<div class='meetup_popup_title_container'>" +
+                  "<h3>만나요 취소 완료</h3>" +
+                "</div>" +
+
+                "<div class='meetup_popup_cancel_callback'>" + 
+                  "<p>" +
+                    "만나요 요청이 취소되었습니다." +
+                  "</p>" +
+                "</div>" +
+
+                "<div class='meetup_new_button_wrapper' style='margin-top: 40px;'>" +
+                  "<button class='meetup_popup_cancel_callback_ok'>" +
+                    "확인" +
+                  "</button>" +
+                "</div>" +
+              "</div>"
+
+              swal({
+                      content: elementPopup,
+                      allowOutsideClick: "true",
+                      className: "mannayo_alert_popup",
+                      closeOnClickOutside: true,
+                      closeOnEsc: true
+                  }).then(function(value){
+                    showLoadingPopup('');
+                    window.location.reload();
+                  });
+
+              $(".swal-footer").hide();
+
+              $('.mannayo_alert_popup').css('height', 'auto');
+
+              $('.meetup_popup_cancel_callback_ok').click(function(){
+                swal.close();
+              });
+            }
+            else
+            {
+              alert(request.message);
+            }
+          };
+          
+          var error = function(request) {
+            loadingProcessStop($("#meetup_cancel_button"));
+            $(".mannayo_popup_close_button_wrapper").show();
+            resetPopupContentHeight();
+            alert('만나요 취소 실패. 다시 시도해주세요.');
+          };
+          
+          $.ajax({
+          'url': url,
+          'method': method,
+          'data' : data,
+          'success': success,
+          'error': error
+          });
+
+          /*
+          loadingProcess($("#meetup_cancel_button"));
           $(".popup_close_button_wrapper").hide();
+          resetPopupContentHeight();
 
           var url="/mannayo/meetup/cancel";
           var method = 'post';
@@ -2219,6 +2313,7 @@
           var error = function(request) {
             loadingProcessStop($("#meetup_cancel_button"));
             $(".popup_close_button_wrapper").show();
+            resetPopupContentHeight();
             alert('만나요 취소 실패. 다시 시도해주세요.');
           };
           
@@ -2230,50 +2325,118 @@
           'error': error
           });
           
+          */
         };
 
         //만나요 취소 팝업 START
-        var openCancelPopup = function(meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count){        
-          var elementPopup = document.createElement("div");
-          elementPopup.innerHTML = 
-          
-          "<div class='meetup_popup_container'>" + 
-            "<div class='meetup_popup_title_container'>" +
-              "<h2>만나요</h2>" +
-            "</div>" +
+        var openCancelPopup = function(meetup_channel_id, meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){        
+          g_nowOpenPopup_meetup_id = meetup_id;
+          g_nowOpenPopup_meetup_channel = meetup_channel_id;
 
-            "<div class='meetup_popup_thumb_container'>" + 
-              "<img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'>" +
-            "</div>" +
+          var youtubeLink = 'https://www.youtube.com/channel/'+g_nowOpenPopup_meetup_channel;
 
-            "<div class='meetup_popup_content_container'>" + 
-              "<p><span class='meetup_popup_content_point_color'>"+meetup_title+"</span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
-              "<span class='meetup_popup_content_point_color'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
-              "</p>" +
-            "</div>" +
-
-            "<div class='meetup_popup_meet_count_container'>" +
-              "<div class='meetup_count_loading_container'>" +
-                //"<p class='searching'>🔥 <span class='searching_span'>.</span><span class='searching_span'>.</span><span class='searching_span'>.</span> 명이 만나고 싶어해요</p>" +
-                "<p>🔥 "+meetup_count+" 명이 만나고 싶어해요</p>" +
+          var sharedLink = $('#base_url').val() + '/mannayo/share/meetup/'+meetup_id;
+          var makeTabTitleInPopup = function(meetup_count){
+            return "<div class='flex_layer'>" +
+              "<div data_tab_index='0' class='mannayo_popup_tab_button mannayo_popup_tab_button_active' type='button'>만나요</div>" +
+              "<div data_tab_index='1' class='mannayo_popup_tab_button' type='button'>" +
+                "<div class='flex_layer'>" +
+                  "참여한 유저<p class='mannayo_popup_tab_counter_text'>"+meetup_count+"</p>" +
+                "</div>" +
               "</div>" +
-              "<p>함께 할수록 이벤트가 성사될 가능성이 높아요!</p>" +
-            "</div>" +
+              "<div data_tab_index='2' class='mannayo_popup_tab_button' type='button'>" +
+                "<div class='flex_layer'>" +
+                    "댓글<p class='mannayo_popup_tab_counter_text mannayo_popup_tab_comment_counter_text'>"+"</p>" +
+                "</div>" +
+              "</div>" +
 
-            "<div class='meetup_new_button_wrapper'>" +
-              "<button id='meetup_cancel_button' data_meetup_id='"+meetup_id+"'>" +
-                "만나요 요청 취소" +
-              "</button>" +
-            "</div>" +
-            "<p class='meetup_popup_bottom_label'>이벤트가 성사되면 가장먼저 초대해 드리겠습니다</p>" +
-          "</div>" +
+              "<div class='mannayo_popup_tab_title_right_wrapper'>" +
+                "<div class='flex_layer'>" +
+                  "<div class='mannayo_popup_close_button_wrapper' style='margin-right: 12px;'>" +
+                    "<button type='button' class='popup_share_button popup_close_button_meetup_popup' data-clipboard-text='"+sharedLink+"'>" + 
+                      "<img src='{{ asset('/img/icons/svg/ic-share.svg') }}'>" +
+                    "</button>" +
+                  "</div>" +
+                  "<div class='mannayo_popup_close_button_wrapper'>" +
+                    "<button type='button' class='popup_close_button popup_close_button_meetup_popup'>" + 
+                      "<img src='{{ asset('/img/icons/svg/ic-exit.svg') }}'>" +
+                    "</button>" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+              
+            "</div>";
+          };
 
-          "<div class='popup_close_button_wrapper'>" +
-              "<button type='button' class='popup_close_button'>" + 
-                  "<img src='{{ asset('/img/makeevent/svg/ic-exit.svg') }}'>" +
-              "</button>" +
-          "</div>";
+          var makeMeetupContent = function(meetup_img_url, meetup_title, meetup_where, meetup_what, meetup_count, meetup_id){
+            return "<div class='meetup_popup_container'>" + 
+                    "<div class='meetup_popup_thumb_container meetup_popup_thumb_container_cancel'>" + 
+                      "<a href='"+youtubeLink+"' target='_blank'><img src='"+meetup_img_url+"' style='width: 80px; height: 80px; border-radius: 100%;'></a>" +
+                    "</div>" +
 
+                    "<div class='meetup_popup_content_container meetup_popup_content_container_cancel'>" + 
+                      "<p><span class='meetup_popup_content_point_color'><u><a href='"+youtubeLink+"' target='_blank'>"+meetup_title+"</a></u></span> 과/와 <span class='meetup_popup_content_point_color'>"+meetup_where+"</span> 에서 <br>" + 
+                      "<span class='meetup_popup_content_point_color' style='word-break: break-all'>" + meetup_what +"</span>" + " 를 하고 싶어요!" +
+                      "</p>" +
+                    "</div>" +
+
+                    "<div class='meetup_popup_meet_count_container meetup_popup_meet_count_container_cancel'>" +
+                      "<div class='meetup_count_loading_container'>" +
+                        "<p>🔥 "+meetup_count+" 명이 만나고 싶어해요</p>" +
+                      "</div>" +
+                      "<p>함께 할수록 이벤트가 성사될 가능성이 높아요!</p>" +
+                    "</div>" +
+
+                    "<div class='meetup_new_button_wrapper meetup_new_button_wrapper_cancel'>" +
+                      "<button id='meetup_cancel_button' class='meetup_cancel_button' data_meetup_id='"+meetup_id+"'>" +
+                        "만나요 요청 취소" +
+                      "</button>" +
+                    "</div>" +
+                    "<p class='meetup_popup_bottom_label'>이벤트가 성사되면 가장먼저 초대해 드리겠습니다</p>" +
+                  "</div>";
+          };
+
+          var makeMeetupUsers = function(){
+            return  "<div class='mannayo_meetup_popup_users_container'>" + 
+                      "<div class='mannayo_meetup_popup_users_ul_wrapper'>" +
+                        "<ul class='mannayo_meetup_popup_users_ul'>" +
+                        "</ul>" +
+                      "</div>" +
+                      "<div class='mannayo_meetup_popup_scroll_bottom_fake_offset'>" +
+                      "</div>" +
+                    "</div>";
+          };
+
+          var makeMeetupComments = function(){
+            return  "<div class='mannayo_meetup_popup_comments_container'>" + 
+
+                      "<form id='mannayo_comments_form' action='{{ url('/mannayo') }}/"+meetup_id+"/comments' method='post' data-toggle='validator' role='form' class='ps-detail-comment-wrapper'>" +
+                          "<textarea id='input_mannayo_comments' maxlength='255' name='contents' class='form-control' rows='3' placeholder='만나요 댓글을 자유롭게 남겨주세요!'></textarea>" +
+                          "<p class='comments_length_text'>0/255</p>" +
+                          "<button type='button' class='btn btn-success pull-right mannayo_comments_button'>댓글달기</button>" +
+                          "<div class='clear'></div>" +
+                          "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
+                      "</form>" +
+
+
+                      "<div class='mannayo_meetup_popup_comments_ul_wrapper'>" +
+                        "<ul class='mannayo_meetup_popup_comments_ul'>" +
+                        "</ul>" +
+                      "</div>" +
+                      "<div class='mannayo_meetup_popup_scroll_bottom_comments_fake_offset'>" +
+                      "</div>" +
+                    "</div>";
+          };
+          
+          //var nickName = $('#user_nickname').val();
+
+          var elementPopup = document.createElement("div");
+          elementPopup.className = 'meetup_popup_container_wrapper';
+          elementPopup.innerHTML = 
+          makeTabTitleInPopup(meetup_count) + 
+          makeMeetupContent(meetup_img_url, meetup_title, meetup_where, meetup_what, meetup_count, meetup_id) + 
+          makeMeetupUsers() + 
+          makeMeetupComments();
 
           swal({
                   content: elementPopup,
@@ -2289,10 +2452,27 @@
               swal.close();
           });
 
+          isWordLengthCheck($('#input_mannayo_comments'), $('.comments_length_text'));
+
           $("#meetup_cancel_button").click(function(){
             //requestMeetUp($(this).attr('data_meetup_id'));
             requestCancelMeetUp($(this).attr('data_meetup_id'));
           });
+
+          var setSharedClipboard = function(){
+            new ClipboardJS('.popup_share_button');
+            $('.popup_share_button').click(function(){
+              toastr.options = {
+                          positionClass: 'toast-bottom-center',
+                          onclick: null
+                      };
+              toastr.options.showMethod = 'slideDown';
+
+              toastr.success("주소가 복사 되었습니다.");
+            });
+          };
+
+          setSharedClipboard();
 
           var setMeetupCounter = function(counter){
             $(".meetup_count_loading_container").children().remove();
@@ -2328,7 +2508,730 @@
             });
           };
 
-          //requestMeetupCounter();
+          /////////////////////tab cancel start////
+          var setTabTitleInPopup = function(type_tab){
+            switch(type_tab){
+              case TYPE_TAB_MEETUP_POPUP_MEET:{
+                $('.meetup_popup_container').show();
+                $('.mannayo_meetup_popup_users_container').hide();
+                $('.mannayo_meetup_popup_comments_container').hide();
+              }
+              break;
+
+              case TYPE_TAB_MEETUP_POPUP_UESRS:{
+                $('.meetup_popup_container').hide();
+                $('.mannayo_meetup_popup_users_container').show();
+                $('.mannayo_meetup_popup_comments_container').hide();
+              }
+              break;
+
+              case TYPE_TAB_MEETUP_POPUP_COMMENT:{
+                $('.meetup_popup_container').hide();
+                $('.mannayo_meetup_popup_users_container').hide();
+                $('.mannayo_meetup_popup_comments_container').show();
+
+
+                resetScrollContentHeight();
+              }
+              break;
+            }
+          };
+
+          var setClickTabInPopup = function(){
+            $('.mannayo_popup_tab_button').click(function(){
+              var tabTouchIndex = Number($(this).attr('data_tab_index'));
+
+              $('.mannayo_popup_tab_button').each(function(index, element){
+                var tabIndex = Number($(this).attr('data_tab_index'));
+                $(element).removeClass("mannayo_popup_tab_button_active");
+
+                if(tabIndex === tabTouchIndex)
+                {
+                  $(element).addClass("mannayo_popup_tab_button_active");
+                }
+              });
+
+              
+              setTabTitleInPopup(tabTouchIndex);
+            });
+          };
+
+          var switchSearchingMeetupUsersMark = function(isSearching){
+            if(isSearching){
+              $('.mannayo_meetup_popup_users_searching_wrapper').show();
+            }
+            else{
+              $('.mannayo_meetup_popup_users_searching_wrapper').hide();
+            }
+          };
+
+          var g_popupNowMannayoCount = 0;
+          var g_popupNowMannayoCommentCount = 0;
+
+          var addMeetupUserObject = function(user){
+            var profile_photo_url = '';
+            if(user.profile_photo_url){
+              profile_photo_url = user.profile_photo_url;
+            }
+            else{
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
+            }
+
+
+            var element = document.createElement("li");
+            element.className = 'li_meetup_object_'+user.index_object;
+            element.innerHTML =
+            "<div class='result_creator_wrapper result_creator_wrapper_user_object' data_index='"+user.index_object+"'>" +
+            
+              "<div class='flex_layer' style='margin-left: 0px;'>" + 
+                "<div class='result_creator_thumbnail_img_wrapper result_creator_thumbnail_img_wrapper_user_object'>"+
+                  "<img class='result_creator_thumbnail_img result_creator_thumbnail_img_user_object' src='"+profile_photo_url+"'>" +
+                "</div>" +
+                "<div class='result_creator_name result_creator_name_user_object text-ellipsize'>"+user.nick_name+"</div>" +                
+              "</div>" +
+              "<div class='result_user_thumbnail_line'>"+
+              "</div>" +
+            "</div>";
+
+            $('.mannayo_meetup_popup_users_ul').append(element);
+          };
+
+          
+
+          var addMeetupUserMoreObject = function(user){
+            var element = document.createElement("li");
+            element.className = 'mannayo_meetup_popup_users_searching_wrapper_ul';
+            element.innerHTML =
+              "<div class='mannayo_meetup_popup_users_searching_wrapper'>" +
+                "<p class='searching'><span>.</span><span>.</span><span>.</span><span>.</span></p>" +
+              "</div>";
+
+            $('.mannayo_meetup_popup_users_ul').append(element);
+          };
+
+          var initMeetupUsersScroll = function(){
+            
+          };
+
+          var isRequestUsers = false;
+          var isEndUsers = false;
+          var requestMeetupUsersInPopup = function(){
+            if(!meetup_id)
+            {
+              alert('만나요 id값 오류!');
+              return;
+            }
+            //친구 리스트 불러오기 작업 해야함.
+            var url="/mannayo/users/list";
+            var method = 'get';
+            var data =
+            {
+              "meetup_id" : meetup_id,
+              "call_once_max_counter" : CALL_MANNAYO_POPUP_ONCE_USERS_MAX_COUNT,
+              "call_skip_counter" : g_popupNowMannayoCount,
+            }
+            var success = function(request) {
+              if($(".mannayo_meetup_popup_users_ul_wrapper").length === 0)
+              {
+                console.error("팝업 없음!!");
+                return;
+              }
+
+              if(Number(request.meetup_id) !== Number(g_nowOpenPopup_meetup_id))
+              {
+                console.error("다른 밋업 id임");
+                return;
+              }
+
+              var popupNowMannayoCountNumber = Number(g_popupNowMannayoCount);
+              var isInit = false;
+
+              if(popupNowMannayoCountNumber === 0)
+              {
+                $('.mannayo_meetup_popup_users_searching_wrapper').remove();
+                isInit = true;
+              }
+              else
+              {
+                $('.mannayo_meetup_popup_users_searching_wrapper_ul').remove();
+              }
+              
+              if(request.state === 'success')
+              {
+                for(var i = 0 ; i < request.meetup_users.length ; i++)
+                {
+                  var meetup_user = request.meetup_users[i];
+                  var objectIndex = ((i+1) + popupNowMannayoCountNumber);
+
+                  meetup_user.user.index_object = objectIndex;
+
+                  addMeetupUserObject(meetup_user.user);
+                }
+
+                popupNowMannayoCountNumber += request.meetup_users.length;
+
+                g_popupNowMannayoCount = popupNowMannayoCountNumber;
+              }
+
+              isRequestUsers = false;
+
+              if(request.meetup_users.length < CALL_MANNAYO_POPUP_ONCE_USERS_MAX_COUNT)
+              {
+                isEndUsers = true;
+              }
+
+              if(isInit){
+                setScrollUI('.mannayo_meetup_popup_users_ul_wrapper');
+                var popupHeight = $('.blueprint_popup')[0].clientHeight;
+                $('.mannayo_meetup_popup_users_ul_wrapper').css('height', popupHeight - 100);
+
+                
+                $('.ss-content').bind('scroll', function(){
+                  var lastObjectName = '.li_meetup_object_' + g_popupNowMannayoCount;
+                  
+                  var lastObjectTop = $(lastObjectName).offset().top;
+                  var targetObjectTop = $('.mannayo_meetup_popup_scroll_bottom_fake_offset').offset().top;
+
+                  if(isEndUsers){
+                    return;
+                  }
+
+                  if(lastObjectTop < targetObjectTop)
+                  {
+                    if(!isRequestUsers)
+                    {
+                      addMeetupUserMoreObject();
+                      requestMeetupUsersInPopup();
+                      isRequestUsers = true;
+                    }
+                  }
+                });
+                
+              }
+            };
+            
+            var error = function(request) {
+              //alert('만나요 유저 정보 리스트 ');
+            };
+            
+            $.ajax({
+            'url': url,
+            'method': method,
+            'data' : data,
+            'success': success,
+            'error': error
+            });
+          };
+
+          //팝업 set 하는곳 start
+
+          setClickTabInPopup();
+          setTabTitleInPopup(TYPE_TAB_MEETUP_POPUP_MEET);
+
+          addMeetupUserMoreObject();
+
+          requestMeetupUsersInPopup();
+
+          //팝업 set 하는곳 end
+
+          //comment start
+
+          var addMeetupCommentMoreObject = function(){
+            var element = document.createElement("li");
+            element.className = 'mannayo_meetup_popup_comments_searching_wrapper_ul';
+            element.innerHTML =
+              "<div class='mannayo_meetup_popup_users_searching_wrapper'>" +
+                "<p class='searching'><span>.</span><span>.</span><span>.</span><span>.</span></p>" +
+              "</div>";
+
+            $('.mannayo_meetup_popup_comments_ul').append(element);
+          }
+
+          var addMannayoCommentsCommentObject = function(reply, parentElement, isAdd){
+            var thumbImgElement = '';
+            if(reply.user.profile_photo_url){
+              thumbImgElement = "<img class='user-photo-comment' src='"+reply.user.profile_photo_url+"'>";
+            }
+            else
+            {
+              var defultURL = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
+              thumbImgElement = "<img class='user-photo-comment' src='"+defultURL+"'>";
+            }
+
+            var userName = '';
+            if(reply.user.nick_name){
+              userName = reply.user.nick_name;
+            }
+            else{
+              userName = reply.user.name;
+            }
+
+            var replyLiClassName = 'comment_li_delete_id_'+reply.id;
+            var deleteElement = '';
+            if(isMyOrMasterComment(reply.user.id)){
+              deleteElement = "<span class='delete-comment-wrapper-"+reply.id+"'>" +
+                              "<span class='delete-comment delete-comment-fake delete-comment-fake-"+reply.id+"' data-comment-id='"+reply.id+"'>삭제하기</span>" +
+                              "<span class='delete-comment delete-comment-real delete-comment-"+reply.id+"' data-comment-id='"+reply.id+"'>삭제</span>" +
+                              "<span class='delete-comment delete-comment-real delete-comment-cancel-"+reply.id+"' data-comment-id='"+reply.id+"'>취소</span>" +
+                              "</span>";
+            }
+
+            var element = document.createElement("li");
+            element.className = replyLiClassName;
+            element.innerHTML =   "<a href='{{ url('/users') }}/"+reply.user.id+"' target='_blank'>" +
+                                    "<div class='user-photo-reply bg-base pull-left'>" +
+                                      thumbImgElement +
+                                    "</div>" +                                     
+                                  "</a>" +
+
+                                  "<div class='comment-section-right'>" +
+                                    "<a href='{{ url('/users') }}/"+reply.user.id+"' target='_blank'>" +
+                                      "<span class='comment-username'>" +
+                                        "<strong>" +
+                                          userName +
+                                        "</strong>" +
+                                      "</span>" +
+                                    "</a>" +
+                                    "<span class='comment-created-at'>"+
+                                      reply.created_at+
+                                    "</span>" +
+                                    deleteElement +
+                                    "<p class='comment-content'>"+reply.contents.split("\n").join("<br />")+"</p>" +
+                                  "</div>" +
+                                  "<div class='clear'></div>";
+
+            if(isAdd){
+              $('.'+parentElement).append(element);
+            }
+            else{
+              $('.'+parentElement).append(element);
+            }
+
+            var deleteComment = function(commentId) {
+              if(!commentId)
+              {
+                alert("코멘트 삭제 에러");
+                return;
+              }
+
+              loadingProcessWithSize($('.delete-comment-wrapper-'+commentId));
+
+              var url = '/comments/delete';
+              var method = 'delete';
+              var data =
+              {
+                'comment_id' : commentId,
+                'meetup_id' : meetup_id
+              };
+
+              var success = function(result) {
+                $('.comment_li_delete_id_'+result.comment_id).remove();
+                setCommentCounterText(result.comments_count);
+                alert('댓글 삭제 성공!');
+              };
+              var error = function(request) {
+                alert('댓글 삭제에 실패하였습니다.');
+                //loadingProcessStopWithSize()
+              };
+
+              $.ajax({
+                'url': url,
+                'method': method,
+                'data' : data,
+                'success': success,
+                'error': error
+              });
+            };
+
+
+            $(".delete-comment-fake-"+reply.id).click(function(){
+
+              $(".delete-comment-fake-"+reply.id).hide();
+              $(".delete-comment-"+reply.id).show();
+              $(".delete-comment-cancel-"+reply.id).show();
+            });
+
+            $(".delete-comment-"+reply.id).click(function(){
+              deleteComment(reply.id);
+            });
+
+            $(".delete-comment-cancel-"+reply.id).click(function(){
+              $(".delete-comment-fake-"+reply.id).show();
+              $(".delete-comment-"+reply.id).hide();
+              $(".delete-comment-cancel-"+reply.id).hide();
+            });
+          }
+
+          var addMannayoCommentObject = function(comment, isAdd){
+            var user = comment.user;
+
+            var deleteElement = '';
+            if(isMyOrMasterComment(user.id)){
+              //deleteElement = "<span class='delete-comment' data-comment-id='"+comment.id+"'>삭제하기</span>";
+              deleteElement = "<span class='delete-comment-wrapper-"+comment.id+"'>" +
+                              "<span class='delete-comment delete-comment-fake delete-comment-fake-"+comment.id+"' data-comment-id='"+comment.id+"'>삭제하기</span>" +
+                              "<span class='delete-comment delete-comment-real delete-comment-"+comment.id+"' data-comment-id='"+comment.id+"'>삭제</span>" +
+                              "<span class='delete-comment delete-comment-real delete-comment-cancel-"+comment.id+"' data-comment-id='"+comment.id+"'>취소</span>" +
+                              "</span>";
+            }
+
+            var contentElement = comment.contents.split("\n").join("<br />");
+
+            var userName = '';
+            if(user.nick_name){
+              userName = user.nick_name;
+            }
+            else{
+              userName = user.name;
+            }
+
+            var commentscommentElement = '';
+            //var commentsCommentFormId = 'mannayo_comments_comment_form_'+user.index_object;
+            var commentsCommentFormId = 'mannayo_comments_comment_form_'+comment.id;
+            if(isLogin()){
+              commentscommentElement = "<form id='"+commentsCommentFormId+"' action='{{ url('/mannayocommentscomment') }}/"+comment.id+"/comments' method='post' data-toggle='validator' role='form' class='form-horizontal'>" +
+                                        "<div class='form-group'>" +
+                                          "<div class='col-md-2'>" +
+                                          "</div>" +
+                                          "<div class='col-md-7 reply-textarea'>" +
+                                            "<textarea id='comments_comment_textarea_id_"+comment.id+"' name='contents' maxlength='255' class='form-control' rows='3' placeholder='답글을 입력하세요'></textarea>" +
+                                            "<p class='comments_comment_length_text comments_comment_length_text_id_"+comment.id+"'>0/255</p>" +
+                                          "</div>" +
+                                          "<div class='col-md-2 reply-button'>" +
+                                            "<button id='button-comments-comment-"+comment.id+"' type='button' class='btn btn-success pull-right button-comments-comment' data-comment-form-id='"+commentsCommentFormId+"'>답글달기</button>" +
+                                          "</div>" +
+                                        "</div>" +
+                                        "<input type='hidden' name='meetup_id' value='"+meetup_id+"'>" +
+                                        "<input type='hidden' name='commentscomment_parent' value='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                                        "<input type='hidden' name='commentscomment_button_id' value='button-comments-comment-"+comment.id+"'>" +
+                                        "<input type='hidden' name='_token' value='{{ csrf_token() }}'/>" + 
+                                      "</form>";
+            }
+
+            var profile_photo_url = '';
+            if(user.profile_photo_url)
+            {
+              profile_photo_url = user.profile_photo_url;
+            }
+            else
+            {
+              profile_photo_url = $('#asset_url').val()+'img/icons/ic-default-profile-512.png';
+            }
+
+            var commentLiClassName = 'comment_li_delete_id_'+comment.id;
+
+            var element = document.createElement("li");
+            element.className = 'comment-list li_meetup_comment_object_'+user.index_object + " "+commentLiClassName;
+            element.innerHTML = 
+            "<div class='user-photo-comment bg-base pull-left'>" +
+              "<img class='user-photo-comment' src='"+profile_photo_url+"'>" +
+            "</div>" +
+
+            "<div class='comment-section-right'>" +
+			        "<a href='{{ url('/users') }}' target='_blank'>" +
+				        "<span class='comment-username'>" +
+				          "<strong>" +
+                    userName +
+				          "</strong>" +
+				        "</span>" +
+			        "</a>" +
+              "<span class='comment-created-at'>" +
+                comment.created_at +
+              "</span>" + 
+              "<span id='toggle-reply-"+comment.id+"' class='toggle-reply'>답글달기</span>" +
+                deleteElement +
+                "<p class='comment-content'>" + 
+                  contentElement +
+                "</p>" +
+		          "</div>" +
+            "<div class='clear'>" +
+            "</div>" + 
+
+            "<div class='reply-wrapper'>" +
+              commentscommentElement +
+              "<ul class='mannayo_popup_comments_comment_ul_"+comment.id+"'>" +
+                //commentsComment +
+              "</ul>" +
+            "</div>";
+            
+            if(isAdd){
+              $('.mannayo_meetup_popup_comments_ul').prepend(element);
+            }
+            else{
+              $('.mannayo_meetup_popup_comments_ul').append(element);
+            }
+
+            $('.li_meetup_comment_object_'+user.index_object).attr('data-comment-id', comment.id);
+            
+            isWordLengthCheck($('#comments_comment_textarea_id_'+comment.id), $('.comments_comment_length_text_id_'+comment.id));
+
+            var replyElementId = "#toggle-reply-"+comment.id+"";
+            $(replyElementId).click(function(){
+              if(isLogin() == false)
+              {
+                alert("로그인을 해야 댓글을 달 수 있습니다.");
+                return;
+              }
+
+              var list = $(this).closest('.comment-list');
+              list.find("form").toggle();
+            });
+
+            var setCommentsComment = function(){
+              var commentCommentParent = 'mannayo_popup_comments_comment_ul_'+comment.id;
+              if (comment.comments && comment.comments.length > 0) {
+                for (var i = comment.comments.length - 1, l = 0; i >= l; i--) {
+                  var reply = comment.comments[i];
+                  addMannayoCommentsCommentObject(reply, commentCommentParent, false);
+                }
+              }
+            };
+
+            var mannayoCommentsCommentAjaxOption = {
+              'beforeSerialize': function($form, options) {
+
+              },
+              'success': function(request) {
+
+                var parentUlClass = request.commentscomment_parent;
+                var buttonID = "#"+request.commentscomment_button_id;
+                //addMannayoCommentObject(request.meetup_comment, true);
+                addMannayoCommentsCommentObject(request.meetup_comment, parentUlClass, true);
+                setCommentCounterText(request.comments_count);
+                loadingProcessStopWithSize($(buttonID));
+
+                alert('댓글이 성공적으로 달렸습니다.');
+
+
+              },
+              'error': function(data) {
+                console.error('만나요 코맨트 실패!');
+              }
+            };
+
+            $("#"+commentsCommentFormId).ajaxForm(mannayoCommentsCommentAjaxOption);
+
+            $("#button-comments-comment-"+comment.id).click(function(){
+              var commentsFormId = $(this).attr('data-comment-form-id');
+
+              loadingProcessWithSize($(this));
+              $('#'+commentsFormId).submit();
+            });
+
+            var deleteComment = function(commentId) {
+              if(!commentId)
+              {
+                alert("코멘트 삭제 에러");
+                return;
+              }
+
+              loadingProcessWithSize($('.delete-comment-wrapper-'+commentId));
+
+              var url = '/comments/delete';
+              var method = 'delete';
+              var data =
+              {
+                'comment_id' : commentId,
+                'meetup_id' : meetup_id
+              };
+
+              var success = function(result) {
+                $('.comment_li_delete_id_'+result.comment_id).remove();
+                setCommentCounterText(result.comments_count);
+                alert('댓글 삭제 성공!');
+              };
+              var error = function(request) {
+                alert('댓글 삭제에 실패하였습니다.');
+                //loadingProcessStopWithSize()
+              };
+
+              $.ajax({
+                'url': url,
+                'method': method,
+                'data' : data,
+                'success': success,
+                'error': error
+              });
+            };
+
+            $(".delete-comment-fake-"+comment.id).click(function(){
+
+              $(".delete-comment-fake-"+comment.id).hide();
+              $(".delete-comment-"+comment.id).show();
+              $(".delete-comment-cancel-"+comment.id).show();
+            });
+
+            $(".delete-comment-"+comment.id).click(function(){
+              deleteComment(comment.id);
+            });
+
+            $(".delete-comment-cancel-"+comment.id).click(function(){
+              $(".delete-comment-fake-"+comment.id).show();
+              $(".delete-comment-"+comment.id).hide();
+              $(".delete-comment-cancel-"+comment.id).hide();
+            });
+
+            setCommentsComment();
+          };
+
+          var mannayoCommentsAjaxOption = {
+            'beforeSerialize': function($form, options) {
+
+            },
+            'success': function(request) {
+
+              addMannayoCommentObject(request.meetup_comment, true);
+              setCommentCounterText(request.comments_count);
+              loadingProcessStop($('.mannayo_comments_button'));
+
+              alert('댓글이 성공적으로 달렸습니다.');
+            },
+            'error': function(data) {
+              console.error('만나요 코맨트 실패!');
+            }
+          };
+
+          var lastCommentId = 0;
+          var isCommentRequestUsers = false;
+          var isCommentEndUsers = false;
+
+          var requestMannayoUserList = function(){
+            if(!meetup_id)
+            {
+              alert('만나요 id값 오류!');
+              return;
+            }
+
+            var url="/mannayo/comments/list";
+            var method = 'get';
+            var data =
+            {
+              "meetup_id" : meetup_id,
+              'last_comment_id': lastCommentId,
+              "call_once_max_counter" : CALL_MANNAYO_POPUP_ONCE_USERS_COMMENT_MAX_COUNT,
+              "call_skip_counter" : 0,
+            }
+            var success = function(request) {
+              if($(".mannayo_meetup_popup_comments_ul_wrapper").length === 0)
+              {
+                console.error("팝업 없음!!");
+                return;
+              }
+
+              if(Number(request.meetup_id) !== Number(g_nowOpenPopup_meetup_id))
+              {
+                console.error("다른 밋업 id임");
+                return;
+              }
+
+              var popupNowMannayoCommentCountNumber = Number(g_popupNowMannayoCommentCount);
+
+              var isInit = false;
+              if(lastCommentId === 0)
+              {
+               // $('.mannayo_meetup_popup_comments_searching_wrapper').remove();
+                isInit = true;
+              }
+
+              if(request.state === 'success'){
+                for(var i = 0 ; i < request.meetup_comments.length ; i++)
+                {
+                  var meetup_comment = request.meetup_comments[i];
+                  var objectIndex = ((i+1) + popupNowMannayoCommentCountNumber);
+
+                  meetup_comment.user.index_object = objectIndex;
+
+                  addMannayoCommentObject(meetup_comment, false);
+                }
+
+                popupNowMannayoCommentCountNumber += request.meetup_comments.length;
+
+                g_popupNowMannayoCommentCount = popupNowMannayoCommentCountNumber;
+              }
+
+              isRequestUsers = false;
+
+              if(request.meetup_comments.length < CALL_MANNAYO_POPUP_ONCE_USERS_COMMENT_MAX_COUNT)
+              {
+                isCommentEndUsers = true;
+              }
+
+              if(isInit){
+
+                setCommentCounterText(request.comments_count);
+
+                setScrollUI('.mannayo_meetup_popup_comments_ul_wrapper');
+                //var popupHeight = $('.blueprint_popup')[0].clientHeight;
+                //$('.mannayo_meetup_popup_comments_ul_wrapper').css('height', popupHeight - 100);
+
+                $('.ss-content').bind('scroll', function(){
+                  var lastObjectName = '.li_meetup_comment_object_' + g_popupNowMannayoCommentCount;
+                  
+                  var lastObjectTop = $(lastObjectName).offset().top;
+                  var targetObjectTop = $('.mannayo_meetup_popup_scroll_bottom_comments_fake_offset').offset().top;
+
+                  if(isCommentEndUsers){
+                    return;
+                  }
+
+                  if(lastObjectTop < targetObjectTop)
+                  {
+                    if(!isRequestUsers)
+                    {
+                      lastCommentId = Number($(lastObjectName).attr('data-comment-id'));
+                      addMeetupCommentMoreObject();
+                      requestMannayoUserList();
+                      isRequestUsers = true;
+                    }
+                  }
+                });
+              }
+
+
+              $('.mannayo_meetup_popup_comments_searching_wrapper_ul').remove();
+            };
+            
+            var error = function(request) {
+              alert('댓글 정보 가져오기 실패!');
+            };
+            
+            $.ajax({
+            'url': url,
+            'method': method,
+            'data' : data,
+            'success': success,
+            'error': error
+            });
+          };
+
+          $('#mannayo_comments_form').ajaxForm(mannayoCommentsAjaxOption);
+
+          addMeetupCommentMoreObject();
+          requestMannayoUserList();
+
+          $('.mannayo_comments_button').click(function(){
+            if(isLogin() == false)
+            {
+              alert("로그인을 해야 댓글을 달 수 있습니다.");
+              return;
+            }
+
+            if(!$('#input_mannayo_comments').val())
+            {
+              alert("댓글을 입력해주세요!");
+              return;
+            }
+
+            loadingProcess($('.mannayo_comments_button'));
+
+            $('#mannayo_comments_form').submit();
+          });
+
+          //addMannayoCommentObject();
+          //comment end
+          //////////////////////tab cancel end/////
+
+          resetPopupContentHeight();
         };
         //만나요 취소 팝업 END
 
@@ -2705,15 +3608,8 @@
           {
 
             buttonElement = 
-            "<button class='mannayo_thumb_meetup_cancel_button mannayo_search_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" + 
+            "<button class='mannayo_thumb_meetup_cancel_button mannayo_search_cancel_button' data_meetup_channel_id='"+meetup.channel_id+"' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"' data_comments_count='"+meetup.comments_count+"'>" + 
             "</button>";
-
-            /*
-            buttonElement = 
-            "<button class='result_meetup_meet_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" + 
-            "<p>만나요 요청됨</p>" +
-            "</button>";
-            */
 
             if(isMannayoSearchPopup())
             {
@@ -3563,7 +4459,7 @@
           var meetupMeetButtonFake = '';
           if(meetup.is_meetup)
           {
-            meetupMeetButtonFake = "<button class='mannayo_thumb_meetup_cancel_button_fake' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
+            meetupMeetButtonFake = "<button class='mannayo_thumb_meetup_cancel_button_fake'>" +
                                 "만나요 요청됨" +
                                 "</button>";
           }
@@ -3577,7 +4473,7 @@
           var meetupMeetButton = '';
           if(meetup.is_meetup)
           {
-            meetupMeetButton = "<button class='mannayo_thumb_meetup_cancel_button' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"'>" +
+            meetupMeetButton = "<button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id='"+meetup.channel_id+"' data_meetup_id='"+meetup.id+"' data_meetup_title='"+ meetup.title +"' data_meetup_where='"+ meetup.where +"' data_meetup_what='"+ meetup.what +"' data_meetup_img_url='"+ meetup.thumbnail_url +"' data_meetup_count='"+meetup.meet_count+"' data_comments_count='"+meetup.comments_count+"'>" +
                                 "</button>";
           }
           else
@@ -3635,7 +4531,8 @@
             }
 
             var element = $(this);
-            openCancelPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"));
+            //openCancelPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"));
+            openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
           });
         }
 
@@ -3813,24 +4710,6 @@
           requestMannayoList(INPUT_KEY_TYPE_MORE);
         });
         //하단 리스트 END
-        /*
-        $(".mannayo_sort_select").change(function(){
-          var optionValue = Number($(this).val());
-
-          $("#mannayo_sort_fake_text").text(sortTypes[optionValue]);
-          g_sortType = optionValue;
-          g_mannayoCounter = 0;
-
-          if($('.mannayo_search_result_find_container_main').css("display") === 'none')
-          {
-            requestMannayoList(INPUT_KEY_TYPE_NORMAL);
-          }
-          else
-          {
-            requestMannayoList(INPUT_KEY_TYPE_ENTER);   
-          }          
-        });
-        */
     });
 </script>
 

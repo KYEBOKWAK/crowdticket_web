@@ -21,7 +21,7 @@
     <!-- End Google Tag Manager -->
 
     @section('title')
-        <title>크라우드티켓</title>
+        <title>크티: 크라우드티켓 - 팬 중심 크리에이터 밋업 플랫폼 </title>
     @show
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
@@ -530,6 +530,19 @@ function logout(){
         });
       }, 1000));
     });
+/*
+    var scrollValue = $(document).scrollTop();
+    $(window).scroll(function(){
+      if($('.swal-overlay--show-modal').length > 0){
+        $(document).scrollTop(0);
+      }
+      else{
+        scrollValue = $(document).scrollTop()
+      }
+
+      console.error(scrollValue);
+    });
+    */
   });
 </script>
 

@@ -2596,9 +2596,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       const TYPE_TAB_MEETUP_POPUP_UESRS = 1;
       const TYPE_TAB_MEETUP_POPUP_COMMENT = 2;
 
-      const POPUP_HEIGHT = 805;
-      const POPUP_CANCEL_HEIGHT = 805;
-
       var citys = ['장소 선택', '서울', '부산', '대전', '대구', '광주', '울산', '인천', '경기도', '강원도', '충청도', '경상도', '전라도', '제주'];
 
       //var g_mannayoArray = new Array();
@@ -2648,16 +2645,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         var resetPopupContentHeight = function(){
           var heightPx = $('.swal-content').outerHeight(true);
           $('.blueprint_popup').css('height', heightPx+'px');
-
-          //var test = $('.mannayo_meetup_popup_comments_ul_wrapper').offset().top;
-          //var test2 = $('.mannayo_meetup_popup_comments_ul_wrapper')[0].clientHeight;
-
-          //$('.mannayo_meetup_popup_comments_ul_wrapper').offset().top = 700;
-          //var test2 = $('.mannayo_meetup_popup_comments_ul_wrapper').getPosition().y;
-          //console.error("top: " + test);
-
-          //var popupHeight = $('.blueprint_popup')[0].clientHeight - 100;
-          //$('.mannayo_meetup_popup_comments_ul_wrapper').css('height', popupHeight + 'px');
         }
 
         setScrollUI(".mannayo_search_result_ul_wrapper");
@@ -4611,10 +4598,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           resetPopupContentHeight();
         };
         //만나요 취소 팝업 END
-
-        //만나요 취소 팝업 START
-        //만나요 취소 팝업 END
-
 
         //만나요 요청 팝업 START
         var openMeetPopup = function(meetup_channel_id, meetup_id, meetup_title, meetup_where, meetup_what, meetup_img_url, meetup_count, comments_count){
