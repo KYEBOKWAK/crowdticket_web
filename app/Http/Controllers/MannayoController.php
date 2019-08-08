@@ -25,7 +25,7 @@ class MannayoController extends Controller
     public function goMannayo()
     {
         ///////meetup start
-        $meetups = \DB::table('meetups')
+        $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
@@ -97,7 +97,7 @@ class MannayoController extends Controller
         //$creators = Meetups::where('channel_id', $creator_id)->get();
 
         ///////meetup start
-        $meetups = \DB::table('meetups')
+        $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
@@ -167,7 +167,7 @@ class MannayoController extends Controller
     public function goMannayoMeetups($meetup_id)
     {
         ///////meetup start
-        $meetups = \DB::table('meetups')
+        $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
@@ -786,7 +786,7 @@ class MannayoController extends Controller
                         array_push($meetupsIds, $rowMeetupUser->meetup_id);
                     }
 
-                    $meetups = \DB::table('meetups')
+                    $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->whereIn('creator_id', $creatorIds)
                         ->whereIn('meetups.id', $meetupsIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
@@ -798,7 +798,7 @@ class MannayoController extends Controller
             }
             else
             {
-                $meetups = \DB::table('meetups')
+                $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->whereIn('creator_id', $creatorIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
@@ -820,7 +820,7 @@ class MannayoController extends Controller
                         array_push($meetupsIds, $rowMeetupUser->meetup_id);
                     }
 
-                    $meetups = \DB::table('meetups')
+                    $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->whereIn('meetups.id', $meetupsIds)
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
@@ -832,7 +832,7 @@ class MannayoController extends Controller
             }
             else
             {
-                $meetups = \DB::table('meetups')
+                $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',

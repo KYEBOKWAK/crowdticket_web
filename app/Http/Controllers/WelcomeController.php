@@ -116,7 +116,7 @@ class WelcomeController extends Controller
         $thumbPlayCreators = Main_thumb_play_creator::get();
 
         ///////meetup start
-        $meetups = \DB::table('meetups')
+        $meetups = \DB::table('meetups')->whereNull('deleted_at')
                         ->join('creators', 'meetups.creator_id', '=', 'creators.id')
                         ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
