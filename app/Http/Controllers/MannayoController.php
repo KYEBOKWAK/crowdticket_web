@@ -249,6 +249,13 @@ class MannayoController extends Controller
         if($request->has('creator_channel_id'))
         {
             $creator = Creator::where('channel_id', $request->creator_channel_id)->first();
+            //이름이 바뀌는 경우도 있다.
+            if($creator)
+            {
+                $creator->title = $request->creator_title;
+                $creator->thumbnail_url = $request->creator_img_url;
+                $creator->save();
+            }
         }
         else
         {
@@ -277,6 +284,13 @@ class MannayoController extends Controller
         if($request->has('creator_channel_id'))
         {
             $creator = Creator::where('channel_id', $request->creator_channel_id)->first();
+            //이름이 바뀌는 경우도 있다.
+            if($creator)
+            {
+                $creator->title = $request->creator_title;
+                $creator->thumbnail_url = $request->creator_img_url;
+                $creator->save();
+            }
         }
 
         if(!$creator)
