@@ -2,7 +2,7 @@
 
 @section('meta')
   <meta property="og:image" content="{{ $magazine->thumb_img_url }}"/>
-  <meta property="og:title" content="크라우드티켓 매거진"/>
+  <meta property="og:title" content="크티 : 크라우드티켓 매거진"/>
   <meta property="og:description" content="{{ $magazine->title }}"/>
 @endsection
 

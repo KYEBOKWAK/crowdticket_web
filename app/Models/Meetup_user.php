@@ -15,10 +15,4 @@ class Meetup_user extends Model
     {
         return $this->belongsTo('App\Models\Meetup'); 
     }
-/*
-    public function creator()
-    {
-        return $this->belongsTo('App\Models\Creator');
-    }
-    */
 }
