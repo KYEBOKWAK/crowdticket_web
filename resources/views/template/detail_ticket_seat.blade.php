@@ -19,6 +19,8 @@
             구매 가능한 수량 <%= addComma(amountTicketCount) %> 매
           @elseif($project->isEventTypeInvitationEvent())
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
+          @elseif($project->isPickType())
+            &nbsp
           @else
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
           @endif
