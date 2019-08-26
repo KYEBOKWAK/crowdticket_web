@@ -221,7 +221,7 @@
       }
 
       .magazine_thumb_content_container{
-        padding-left: 9px;
+        padding-left: 20px;
       }
     }
 
