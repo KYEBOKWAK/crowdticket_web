@@ -219,6 +219,10 @@
       .magazine_thumbnail_container{
         margin-bottom: 20px;
       }
+
+      .magazine_thumb_content_container{
+        padding-left: 9px;
+      }
     }
 
     @media (max-width:320px) {
