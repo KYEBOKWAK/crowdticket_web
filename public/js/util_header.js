@@ -150,3 +150,41 @@ function get_version_of_IE () {
 
 	 return -1;
 }
+
+//이미지가 깨지는 이슈가 있어서 onload에 넣기 위해 임시로 넣는다.
+var resizeBluePrintTitleImgOnload = function(){
+  var parentData = $('.blueprint_title_image_container')[0];
+  var imgData = $('.blueprint_title_img')[0];
+
+  var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
+
+  if(targetWidth <= window.innerWidth)
+  {
+      $('.blueprint_title_img').css('width', '100%');
+      $('.blueprint_title_img').css('height', 'auto');
+  }
+  else
+  {
+      $('.blueprint_title_img').css('width', targetWidth);
+      $('.blueprint_title_img').css('height', parentData.clientHeight);
+  }
+};
+
+//이미지가 깨지는 이슈가 있어서 onload에 넣기 위해 임시로 넣는다.
+var resizeMagazineTitleImgOnLoad = function(){
+  var parentData = $('.magazine_title_image_container')[0];
+  var imgData = $('.magazine_title_img')[0];
+
+  var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
+
+  if(targetWidth <= window.innerWidth)
+  {
+    $('.magazine_title_img').css('width', '100%');
+    $('.magazine_title_img').css('height', 'auto');
+  }
+  else
+  {
+    $('.magazine_title_img').css('width', targetWidth);
+    $('.magazine_title_img').css('height', parentData.clientHeight);
+  }
+};

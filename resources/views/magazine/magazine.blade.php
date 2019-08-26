@@ -255,7 +255,7 @@
 <div class="magazine_title_wrapper">
   <div class="magazine_title_image_container">
     <div class="bg-base magazine_title_img_wrapper">
-      <img class="magazine_title_img" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/newtest/magazine/maintitle/maintitle.jpg"/>
+      <img class="magazine_title_img" src="https://s3-ap-northeast-1.amazonaws.com/crowdticket0/newtest/magazine/maintitle/maintitle.jpg" onload='resizeMagazineTitleImgOnLoad();'/>
     </div>
   </div>
 
@@ -302,7 +302,7 @@ $(document).ready(function () {
     }
   };
 
-  resizeTitleImg();
+  //resizeTitleImg();
 
   $(window).resize(function() {
     //console.error("adf");

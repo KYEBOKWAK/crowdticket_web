@@ -189,9 +189,9 @@
   <div class="magazine_title_image_container">
     <div class="bg-base magazine_title_img_wrapper">
       @if($magazine->title_img_url)
-        <img class="magazine_title_img" src="{{$magazine->title_img_url}}" onload=""/>
+        <img class="magazine_title_img" src="{{$magazine->title_img_url}}" onload="resizeMagazineTitleImgOnLoad();"/>
       @else
-        <img class="magazine_title_img" src="{{$magazine->thumb_img_url}}" onload=""/>
+        <img class="magazine_title_img" src="{{$magazine->thumb_img_url}}" onload="resizeMagazineTitleImgOnLoad();"/>
       @endif
 
     </div>
@@ -316,7 +316,7 @@ $(document).ready(function () {
     }
   };
 
-  resizeTitleImg();
+  //resizeTitleImg();
 
   $(window).resize(function() {
 		//console.error("adf");

@@ -852,7 +852,7 @@
     <div class="blueprint_title_wrapper">
         <div class="blueprint_title_image_container">
             <div class="bg-base" style="width: 100%;">
-                <img class="blueprint_title_img" src="{{ asset('/img/makeevent/MakeEvent_01_bg.png') }}"/>
+                <img class="blueprint_title_img" src="{{ asset('/img/makeevent/MakeEvent_01_bg.png') }}" onload='resizeBluePrintTitleImgOnload();'/>
             </div>
         </div>
     </div>
@@ -1485,7 +1485,7 @@
             };
 
             replaceTitleImg();
-            resizeTitleImg();
+            //resizeTitleImg();
 
             $(window).resize(function() {
                 //console.error("innerWidth" + window.innerWidth);
