@@ -391,10 +391,6 @@
         /*썸네일 CSS START*/
         .welcome_thumb_img_wrapper{
           width: 100%;
-          /*width: 250px;*/
-          /*height: 160px;*/
-          /*position: relative;
-          overflow: hidden;*/
         }
 
         .welcome_thumb_img_resize{
@@ -549,11 +545,6 @@
             line-height: 1.29;
             margin-bottom: 3px;
           }
-          /*
-          .welcome_content_wrapper{
-            margin-top: 40px;
-          }
-          */
 
           .welcome_thumb_content_container{
             margin-top: 12px;
@@ -700,6 +691,64 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
       </div>
     </div>
+    @if(count($thumbEventProjects) > 0)
+      <div class="welcome_content_container">
+        <div class="welcome_content_wrapper">
+          <div class="flex_layer">
+            <div class="welcome_content_title">
+              샌드박스 추석 이벤트
+            </div>
+            <div class="welcome_content_more_wrapper">
+              <a href="{{url('/mcn/sandbox')}}">
+                <div class="welcome_content_more">
+                  <div class="flex_layer">
+                    <span style="height:21px;">더보기</span>
+                    <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+          <!-- 썸네일 테스트 START -->
+          <div class="welcome_thumb_projects_wrapper">
+            <div class="flex_layer_thumb">
+              <?php
+              $projectIndex = 0;
+              for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+              {
+                $itemCount = 0;
+                ?>
+                @if($projectIndex === 0)
+                <div class="flex_layer thumb_container_is_mobile">
+                @else
+                <div class="flex_layer">
+                @endif
+                <?php
+                  for($j = $i ; $j < count($thumbEventProjects) ; $j++)
+                  {
+                    ?>
+                    @include('template.thumb_project', ['project' => $thumbEventProjects[$projectIndex], 'index' => $projectIndex])
+                    <?php
+                    $projectIndex++;
+                    $itemCount++;
+                    if($itemCount >= $mobileOneLineItemCount)
+                    {
+                      break;
+                    }
+                  }
+                ?>
+                </div>
+                <?php
+              }             
+              ?>           
+            </div>
+          </div>
+          <!-- 썸네일 테스트 END -->
+        </div>
+      </div>
+    @endif
 
     <div class="welcome_content_container">
       <div class="welcome_content_wrapper">
@@ -755,8 +804,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
         </div>
         <!-- 썸네일 테스트 END -->
-
-        
       </div>
     </div>
 

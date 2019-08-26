@@ -31,7 +31,6 @@ class MannayoController extends Controller
                                 'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
                                 'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
                         ->orderBy('meetups.id', 'desc')->skip(0)->take(3)->get();
-                        //->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
         
         $user = null;
         if(\Auth::check() && \Auth::user())

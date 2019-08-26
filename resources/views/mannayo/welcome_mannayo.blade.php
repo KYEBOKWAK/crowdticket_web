@@ -7377,8 +7377,11 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           requestMannayoList(INPUT_KEY_TYPE_NORMAL);
         }
 
+        var isTouchMoreButton = false;  //더보기 처음 터치하면 그 이후부턴 자동 더보기가 된다.
+
         $("#mannayo_list_more_button").click(function(){
           requestMannayoList(INPUT_KEY_TYPE_MORE);
+          isTouchMoreButton = true;
         });
         //하단 리스트 END
 
@@ -7421,7 +7424,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         setInputAction();
 
         $(window).bind('scroll', function(){
-          if($('.mannayo_list_more_button').is(':visible'))
+          if(isTouchMoreButton && $('.mannayo_list_more_button').is(':visible'))
           {
             var lastObjectName = '.mannayo_meetup_list_end_fake_offset';
             var lastObjectTop = $(lastObjectName).offset().top;

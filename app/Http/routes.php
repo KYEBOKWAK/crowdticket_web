@@ -57,7 +57,9 @@ Route::get('register/sendmail', 'MailSendController@sendEmailRegister');
 
 Route::get('blueprints/welcome', 'BlueprintController@getBlueprintWelcome');
 
+Route::get('object/projects', 'ProjectController@getProjectObjects');
 Route::get('projects', 'ProjectController@getProjects');
+Route::get('mcn/{company}', 'ProjectController@getMCNProjects');
 Route::get('projects/{id}', 'ProjectController@getProjectById');
 Route::get('projects/{alias}', 'ProjectController@getProjectByAlias');
 Route::get('projects/{id}/alias/{alias}', 'ProjectController@checkProjectAlias');

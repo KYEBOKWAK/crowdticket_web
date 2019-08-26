@@ -113,6 +113,9 @@ class WelcomeController extends Controller
 
         $thumbMagazines = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE);
 
+        $thumbEventProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT);
+
+
         $thumbPlayCreators = Main_thumb_play_creator::get();
 
         ///////meetup start
@@ -184,32 +187,16 @@ class WelcomeController extends Controller
           'projects' => $thumbnailProjects,
           'magazines' => $thumbMagazines,
           'playedcreators' => $thumbPlayCreators,
-          'meetups' => $meetups
+          'meetups' => $meetups,
+          'thumbEventProjects' => $thumbEventProjects
       ]);
-
-/*
-        //$thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
-        //$thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
-
-        //$thumbMagazines = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE);
-
-        //maincarousel
-        //$main_carousel = Maincarousel::where('order_number', '>', 0)->orderby('order_number')->get();
-
-        return view('welcome_new_new', [
-            'projects' => $thumbnailProjects,
-            //'crowdticketPicProjects' => $thumbnailCrowdticketPicProject,
-            //'main_carousels' => $main_carousel,
-            //'magazines' => $thumbMagazines,
-            //'isNotYet' => 'FALSE'
-        ]);
-*/
     }
 
     public function getThumbnailProject($thumbnailType)
     {
       $orderInfoList = '';
-      if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND)
+      if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND ||
+        (int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT)
       {
         $orderInfoList = Main_thumbnail::where('type', '=', $thumbnailType)->where('order_number', '>', 0)->orderByRaw("RAND()")->skip(0)->take(4)->get();
       }
@@ -222,7 +209,8 @@ class WelcomeController extends Controller
       foreach($orderInfoList as $orderInfo)
       {
         $project = '';
-        if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND)
+        if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND ||
+          (int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT)
         {
           //$project = \App\Models\Project::select('title', 'project_type', 'description', 'alias', 'poster_renew_url', 'poster_url', 'funding_closing_at', 'performance_opening_at', 'performance_closing_at')->find($orderInfo->project_id);
           $project = \App\Models\Project::find($orderInfo->project_id);
