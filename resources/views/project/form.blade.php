@@ -162,7 +162,7 @@
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=12') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=11') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=12') }}"/>
 
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/tooltip/tippy.css?version=2') }}"/>

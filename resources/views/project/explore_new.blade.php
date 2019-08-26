@@ -211,7 +211,7 @@
       }
     }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=11') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=12') }}" rel="stylesheet">
 @endsection
 
 @section('content')

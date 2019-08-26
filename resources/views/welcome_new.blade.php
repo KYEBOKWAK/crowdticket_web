@@ -168,7 +168,7 @@
 
         /*메인 추천 슬라이드 css  ---- end  */
     </style>
-    <link href="{{ asset('/css/welcome.css?version=11') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=12') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}">
 

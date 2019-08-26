@@ -46,6 +46,7 @@
       padding-top:40%;
       overflow:hidden;
       background-color: white;
+      border-radius: 10px;
     }
 
     .magazine-img {

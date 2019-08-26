@@ -60,6 +60,7 @@
       padding-top:56.25%;
       overflow:hidden;
       background-color: white;
+      border-radius: 10px;
     }
 
     .magazine-img {
