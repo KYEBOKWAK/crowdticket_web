@@ -80,7 +80,7 @@
 
     .magazine_thumb_content_container{
       width: 310px;
-      padding: 0px 10px;
+      padding-left: 32px;
       word-break: break-all;
     }
 
