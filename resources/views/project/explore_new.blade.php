@@ -319,6 +319,11 @@ $(document).ready(function () {
     var projectLink = project.link;
 
     var projectTypeWidth = '';
+    if(!project.project_type)
+    {
+      project.project_type = 'artist';
+    }
+    
     if(project.project_type === 'artist')
     {
       projectTypeWidth = 'width:54px'
