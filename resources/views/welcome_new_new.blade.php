@@ -1213,7 +1213,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               elementPopup.innerHTML = 
               "<button class='meetup_popup_complete_button'>" + 
                 "<div class='meetup_popup_complete_img'>" +
-                  "<img src='{{ asset('/img/icons/svg/ic-meet-popup-highfive.svg') }}' style=''/>" +
+                  "<img src='{{ asset('/img/icons/gif/highfive-gif.gif') }}' style=''/>" +
                 "</div>" +
                 "<p>" +
                   "<span style='font-weight: bold; color: #43c9f0;'>" + creator_title + "</span>" +
@@ -1227,7 +1227,8 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                       className: "meetup_popup_complete",
                       closeOnClickOutside: true,
                       closeOnEsc: true,
-                      timer: 1300,
+                      //timer: 1300,
+                      timer: 1500,
                   }).then(function(value){
                     showLoadingPopup('');
                     window.location.reload();
