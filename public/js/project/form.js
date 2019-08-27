@@ -2588,8 +2588,84 @@ $(document).ready(function() {
 		$(".blueprint_check_pop_button").click(function(){
 			swal.close();
 		});
-	}
+  }
+  
+  var addMannayoObject = function(project, parentElement, index){
+    var containerClassName = '';
+    var firstDiv = '';
+    if(index === 0 )
+    {
+      firstDiv = "<div class='welcome_thumb_container thumb_container_right_is_mobile'>";
+      containerClassName = 'welcome_thumb_container thumb_container_right_is_mobile';
+    }
+    else
+    {
+      firstDiv = "<div class='welcome_thumb_container'>";
+      containerClassName = 'welcome_thumb_container';
+    }
 
+    var projectLink = project.link;
+
+    var projectTypeWidth = '';
+    if(!project.project_type)
+    {
+      project.project_type = 'artist';
+    }
+    
+    if(project.project_type === 'artist')
+    {
+      projectTypeWidth = 'width:54px'
+    }
+
+    var projectImgClass = 'img_project_id_' + project.id;
+
+    var mannayoObject = document.createElement("div");
+    mannayoObject.className = containerClassName;
+    mannayoObject.innerHTML = "<div class='welcome_thumb_img_wrapper'>" +
+            "<div class='welcome_thumb_img_resize'>" +
+                //"<img src='"+project.poster_url+"' onload='imageResize_new($('.welcome_thumb_img_resize')[0], this);' class='project-img'/>" +
+                "<img class='"+projectImgClass+" project-img' src='"+$('#poster_url').val()+"'/>" +
+            "</div>" +
+        "</div>" +
+        "<div class='welcome_thumb_content_container'>" +
+        
+            "<h5 class='text-ellipsize welcome_thumb_content_disc'>" +
+                project.description +
+            "</h5>" +
+
+            "<h4 class='text-ellipsize-2 welcome_thumb_content_title'>" +
+                project.title +
+            "</h4>" +
+
+            "<p class='welcome_thumb_content_date_place'>" +
+              $('#ticket_data_slash').val() +
+            "</p>" +
+
+            "<div class='welcome_thumb_content_type_wrapper isMobileDisable' style='"+projectTypeWidth+"'>" +
+                "<p class='welcome_thumb_content_type'>" +
+                    project.project_type +
+                "</p>" +
+            "</div>" +
+            
+        "</div>" +
+    "</div>";
+
+    parentElement.appendChild(mannayoObject);      
+    
+    $('.'+projectImgClass).on('load', function() {
+      //alert("image is loaded");
+      imageResize_new($('.welcome_thumb_img_resize')[0], $('.'+projectImgClass)[0]);
+    });
+  };
+
+  if($('#selected_tab').val() === 'poster')
+  {
+    var project = $('#g_project').val();
+    project = $.parseJSON(project);
+
+    //console.error(project.id);
+    addMannayoObject(project, $('.project_form_poster_sampleview_container')[0], 0);
+  }
 });
 //form_body_required END
 

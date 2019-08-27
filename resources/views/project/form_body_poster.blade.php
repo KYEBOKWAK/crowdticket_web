@@ -1,5 +1,7 @@
 <input type="hidden" id="posters_json" value="{{ $posters }}"/>
 <input type="hidden" id="viewerDefaultImgURL" value="{{ asset('/img/app/img_no_poster.png') }}">
+<input type='hidden' id='poster_url' value='{{$project->getPosterUrl()}}'>
+<input type='hidden' id='ticket_data_slash' value='{{$project->getTicketDateFormattedSlash()}}'>
 
 <div class="form-body-default-container">
   <div class="project_form_title_wrapper project_form_title_poster_wrapper">
@@ -61,7 +63,6 @@
         <div class="project_form_poster_sampleview_tag_img">
           <img src="{{ asset('/img/app/img_sampleview.png') }}">
         </div>
-        @include('template.carousel_new_main', ['projects' => [$project], 'colOnly' => false])
       </div>
     </div>
 

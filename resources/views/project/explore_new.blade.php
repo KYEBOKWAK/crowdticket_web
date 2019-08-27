@@ -370,69 +370,6 @@ $(document).ready(function () {
       //alert("image is loaded");
       imageResize_new($('.welcome_thumb_img_resize')[0], $('.'+projectImgClass)[0]);
     });
-
-    /*
-    var firstDiv = '';
-    if(index === 0 )
-    {
-      firstDiv = "<div class='welcome_thumb_container thumb_container_right_is_mobile'>";
-    }
-    else
-    {
-      firstDiv = "<div class='welcome_thumb_container'>";
-    }
-
-    var projectLink = project.link;
-
-    var projectTypeWidth = '';
-    if(project.project_type === 'artist')
-    {
-      projectTypeWidth = 'width:54px'
-    }
-
-    var projectImgClass = 'img_project_id_' + project.id;
-
-    var mannayoObject = document.createElement("div");
-    mannayoObject.className = 'mannayo_thumb_object_container_in_main';
-    mannayoObject.innerHTML = firstDiv +    
-    "<a href='"+projectLink+"'>" +
-        "<div class='welcome_thumb_img_wrapper'>" +
-            "<div class='welcome_thumb_img_resize'>" +
-                //"<img src='"+project.poster_url+"' onload='imageResize_new($('.welcome_thumb_img_resize')[0], this);' class='project-img'/>" +
-                "<img class='"+projectImgClass+" project-img' src='"+project.poster_url+"'/>" +
-            "</div>" +
-        "</div>" +
-        "<div class='welcome_thumb_content_container'>" +
-        
-            "<h5 class='text-ellipsize welcome_thumb_content_disc'>" +
-                project.description +
-            "</h5>" +
-
-            "<h4 class='text-ellipsize-2 welcome_thumb_content_title'>" +
-                project.title +
-            "</h4>" +
-
-            "<p class='welcome_thumb_content_date_place'>" +
-              project.ticket_data_slash +
-            "</p>" +
-
-            "<div class='welcome_thumb_content_type_wrapper isMobileDisable' style='"+projectTypeWidth+"'>" +
-                "<p class='welcome_thumb_content_type'>" +
-                    project.project_type +
-                "</p>" +
-            "</div>" +
-            
-        "</div>" +
-    "</a>" +
-    "</div>";
-
-    parentElement.appendChild(mannayoObject);      
-    
-    $('.'+projectImgClass).on('load', function() {
-      //alert("image is loaded");
-      imageResize_new($('.welcome_thumb_img_resize')[0], $('.'+projectImgClass)[0]);
-    });
-      */
   };
 
 

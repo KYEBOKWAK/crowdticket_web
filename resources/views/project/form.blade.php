@@ -158,6 +158,116 @@
         .ps-update-creator .box-creator-profile {
             margin-top: 15px;
         }
+
+        .welcome_thumb_container{
+          width: 250px;
+          margin-left: 45px;
+          margin-top: 32px;
+        }
+
+        /*썸네일 CSS START*/
+        .welcome_thumb_img_wrapper{
+          width: 100%;
+        }
+
+        .welcome_thumb_img_resize{
+          position: relative;
+          width: 100%;
+          padding-top: 64%;
+          overflow: hidden;
+          border-radius: 10px;
+        }
+
+        .project-img {
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            max-width:100%;
+            margin: auto;
+        }
+        /*썸네일 CSS END*/
+
+        .welcome_thumb_content_container{
+          margin-top: 20px;
+          text-align: left;
+        }
+
+        .welcome_thumb_content_disc{
+          height: 13px;
+          font-size: 12px;
+          color: #808080;
+          margin-top: 0px;
+          margin-bottom: 8px;
+          font-weight: normal;
+        }
+
+        .welcome_thumb_content_container{
+          margin-top: 20px;
+        }
+
+        .welcome_thumb_content_title{
+          margin-top: 0px;
+          margin-bottom: 6px;
+          font-size: 16px;
+          font-weight: bold;
+          color: black;
+          line-height: 1.4;
+        }
+
+        .welcome_thumb_content_date_place{
+          font-size: 12px;
+          line-height: 1.42;
+          color: #808080;
+        }
+
+        .welcome_thumb_content_type_wrapper{
+          width: 65px;
+          height: 28px;
+          border-radius: 14px;
+          border: solid 1px #b3b3b3;
+          text-align: center;
+        }
+
+        .welcome_thumb_content_type{
+          margin-top: 3px;
+          margin-bottom: auto;
+          color: #808080;
+          font-size: 12px;
+        }
+
+        @media (max-width:960px) {
+          .welcome_thumb_container{
+            margin-left: 0px;
+          }
+        }
+        
+        /*
+        @media (max-width:1060px) {
+          .welcome_thumb_container{
+            width: 145px;
+            flex-basis: 50%;
+          }
+          .thumb_container_right_is_mobile{
+            margin-right: 10px;
+          }
+
+          .welcome_thumb_content_title{
+            font-size: 14px;
+            line-height: 1.29;
+            margin-bottom: 3px;
+          }
+
+          .welcome_thumb_content_container{
+            margin-top: 12px;
+          }
+
+          .welcome_thumb_content_disc{
+            margin-bottom: 5px;
+          }
+        }
+        */
     </style>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
@@ -233,6 +343,8 @@ array_push($tabs, [
 
 <input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
 
+<input id='g_project' type='hidden' value='{{$project}}'>
+
 <div class="project-create-form-container">
   <div class="project-form-tab-container">
     <div class="flex_layer_project">
@@ -293,7 +405,7 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=23') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=24') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>
