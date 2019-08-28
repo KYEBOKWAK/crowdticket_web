@@ -2493,7 +2493,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               이미 있는 만나요
             </div>
             <div class='mannayo_creator_pop_list_title' style='margin-top: 51px;'>
-              인기 만나요
+              모든 만나요
             </div>
             <div class='mannayo_sort_container'>
               <div class='mannayo_sort_fake_text_container flex_layer'>
