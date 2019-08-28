@@ -34,6 +34,7 @@ $(document).ready(function() {
 function loginAjaxSuccess(request){
   if(request.state == 'success')
   {
+    reStartDocumentScroll();
     setLoginID(request.user_id);
     if(loginCallback)
     {
@@ -47,7 +48,6 @@ function loginAjaxSuccess(request){
   else if(request.state == 'fail')
   {
     $('#login_error_message').show();
-
     $('#login_error_message').text(request.message);
     //console.error("fail " + result.message);
   }
@@ -222,7 +222,6 @@ function googleLibInit(){
 //social login end
 
 //로그인 팝업 생성
-//function loginPopup(jQuery, successFunc){
 function loginPopup(successFunc, closeFunc){
   if(jQuery_loginPopup == null)
   {
@@ -240,7 +239,7 @@ function loginPopup(successFunc, closeFunc){
     {
       loginCallback();
     }
-    //successFunc();
+    
     return;
   }
   var elementPopup = document.createElement("div");
