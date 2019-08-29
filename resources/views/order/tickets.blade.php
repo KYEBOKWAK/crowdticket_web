@@ -89,7 +89,7 @@
               <div class="order_no_discount_goods"><p>선택 가능한 굿즈가 없습니다.</p></div>
             @else
               @foreach ($project->goods as $goods)
-                @include('template.order.goods', ['goods' => $goods])
+                  @include('template.order.goods', ['goods' => $goods])
               @endforeach
             @endif
           </div>

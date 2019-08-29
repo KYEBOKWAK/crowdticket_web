@@ -52,12 +52,15 @@ class Goods extends Model
       $orderCount = 0;
       foreach($orders as $order)
       {
-        $goodsOrders = json_decode($order->goods_meta, true);
-        foreach($goodsOrders as $goodsOrder)
+        if($order->goods_meta)
         {
-          if($this->id == $goodsOrder['id'])
+          $goodsOrders = json_decode($order->goods_meta, true);
+          foreach($goodsOrders as $goodsOrder)
           {
-            $orderCount += $goodsOrder['count'];
+            if($this->id == $goodsOrder['id'])
+            {
+              $orderCount += $goodsOrder['count'];
+            }
           }
         }
       }

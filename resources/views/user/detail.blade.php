@@ -48,20 +48,27 @@
         </div>
     </div>
     <div class="container">
+
+        @if (sizeof($super_projects) > 0)
+            <h3 class="ps-detail-title"><strong>관여하는 이벤트</strong></h3>
+            @include('template.carousel_new_main', ['projects' => $super_projects])
+        @endif
+
         @if (sizeof($creating) > 0)
-            <h3 class="ps-detail-title"><strong>개설중인 공연</strong></h3>
+            <h3 class="ps-detail-title"><strong>개설중인 이벤트</strong></h3>
             @include('template.carousel_new_main', ['projects' => $creating])
         @endif
 
         @if (sizeof($created) > 0)
-            <h3 class="ps-detail-title"><strong>개설한 공연</strong></h3>
+            <h3 class="ps-detail-title"><strong>개설한 이벤트</strong></h3>
             @include('template.carousel_new_main', ['projects' => $created])
         @endif
 
         @if (sizeof($orders) > 0)
-            <h3 class="ps-detail-title"><strong>참여한 공연</strong></h3>
+            <h3 class="ps-detail-title"><strong>참여한 이벤트</strong></h3>
             @include('template.carousel_new_main', ['projects' => $orders])
         @endif
+
     </div>
 @endsection
 

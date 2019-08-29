@@ -100,8 +100,19 @@ class UserController extends Controller
             'user' => $user,
             'orders' => $this->getProjectsByOrders($this->getValidUniqueOrders($user)),
             'created' => $user->projects()->where('state', Project::STATE_APPROVED)->orderBy('id', 'desc')->get(),
-            'creating' => $this->getCreatingProject($user)
+            'creating' => $this->getCreatingProject($user),
+            'super_projects' => $this->getSuperUserProjects($user)
         ]);
+    }
+
+    public function getSuperUserProjects($user)
+    {
+      if (\Auth::check()) {
+        if ($user->id === \Auth::user()->id) {
+            return Project::where('super_user_id', $user->id)->orderBy('id', 'desc')->get();
+        }
+      }
+      return [];
     }
 
     public function addLike($id, $likekey)

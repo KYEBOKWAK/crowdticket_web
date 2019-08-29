@@ -71,7 +71,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public function isOwnerOf($entity)
     {
-        return $this->id === $entity->user_id || $this->isAdmin();
+        return $this->id === $entity->user_id || $this->isAdmin() || $this->isSuperUser($entity);
+    }
+
+    public function isSuperUser($entity)
+    {
+      if(isset($entity->super_user_id))
+      {
+        return $this->id === $entity->super_user_id;
+      }
+      else
+      {
+        return false;
+      }
     }
 
     public function isAdmin()
