@@ -362,6 +362,12 @@ class ProjectController extends Controller
           $project->link = $project->getProjectURLWithIdOrAlias();
           $project->poster_url = $project->getPosterUrl();
           $project->ticket_data_slash = $project->getTicketDateFormattedSlash();
+
+          $project->city_name = '';
+          if(isset($project->city->name))
+          {
+            $project->city_name = $project->city->name;
+          }
         }
 
         return ['state' => 'success', 'projects' => $projects, 'keytype' => $request->keytype];

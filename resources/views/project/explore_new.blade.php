@@ -351,7 +351,7 @@ $(document).ready(function () {
             "</h4>" +
 
             "<p class='welcome_thumb_content_date_place'>" +
-              project.ticket_data_slash +
+              project.ticket_data_slash + ' · ' + project.city_name +
             "</p>" +
 
             "<div class='welcome_thumb_content_type_wrapper isMobileDisable' style='"+projectTypeWidth+"'>" +
