@@ -720,6 +720,168 @@ class ProjectController extends Controller
 
     public function getOrders($id)
     {
+        $project = $this->getSecureProjectById($id);
+        //티켓 정보만 넘겨준다.
+
+        $ordersWithTimeJson = '';
+        $ordersNoBuyTicketJson = '';
+        $ordersAllWithTimeJson = '';
+        $orders = '';
+
+        return view('project.orders', [
+            'project' => $project,
+            'ordersWithTimeJson' => $ordersWithTimeJson,
+            'ordersNoTicketJson' => $ordersNoBuyTicketJson,
+            'ordersAllWithTimeJson' => $ordersAllWithTimeJson,
+            'ordersAllWithTimeJson' => $orders,
+        ]);
+    }
+
+    public function getOrdersTickets(Request $request)
+    {      
+      $project_id = $request->project_id;
+      $project = $this->getSecureProjectById($project_id);
+      if(!$project)
+      {
+        return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
+      }
+      //$orders = $project->ordersWithoutError()->withTrashed()->get();
+      $tickets = $project->tickets;
+      foreach($tickets as $ticket)
+      {
+        $ticket->ticket_name = $ticket->getSeatCategory();
+        $ticket->order_max_count = $ticket->orders()->count();
+      }
+
+      $goods = $project->goods;
+
+      return ['state' => 'success', 'data_tickets' => $tickets, 'data_goods' => $goods];
+    }
+
+    public function getOrderObjects(Request $request, $project_id, $ticket_id)
+    {
+      $take = (int)$request->size;
+      $skip = ((int)$request->page - 1) * $take;
+
+      $project = Project::find($project_id);
+      //$orders = Order::where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
+      $orders = $project->orders()->where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
+      foreach($orders as $order)
+      {
+        $this->getSuperviseOrderList($order, $project);
+      }
+
+      //$orderTotalCount = Order::where('ticket_id', $ticket_id)->count();
+      $orderTotalCount = $project->orders()->where('ticket_id', $ticket_id)->count();
+      $total_page = (int)$orderTotalCount / $take;
+      
+      return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
+    }
+
+    public function getOrdersNoTickets(Request $request)
+    {
+      $project_id = $request->project_id;
+      $project = $this->getSecureProjectById($project_id);
+      if(!$project)
+      {
+        return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
+      }
+
+      $noTicketOrdersCount = $project->orders()->whereNull('ticket_id')->count();
+
+      $goods = $project->goods;
+
+      return ['state' => 'success', 'data_noticket_orders_count' => $noTicketOrdersCount, 'data_goods' => $goods];
+    }
+
+    public function getOrderObjectsNoTicket(Request $request, $project_id)
+    {
+      $take = (int)$request->size;
+      $skip = ((int)$request->page - 1) * $take;
+
+      $project = Project::find($project_id);
+      $orders = $project->orders()->whereNull('ticket_id')->skip($skip)->take($take)->get();
+      foreach($orders as $order)
+      {
+        $this->getSuperviseOrderList($order, $project);
+      }
+
+      $orderTotalCount = $project->orders()->whereNull('ticket_id')->count();
+      $total_page = (int)$orderTotalCount / $take;
+      
+      return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
+    }
+
+    public function getOrdersSupports(Request $request)
+    {
+      $project_id = $request->project_id;
+      $project = $this->getSecureProjectById($project_id);
+      if(!$project)
+      {
+        return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
+      }
+
+      $supportOrdersCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+
+      return ['state' => 'success', 'data_support_orders_count' => $supportOrdersCount];
+    }
+
+    public function getOrderObjectsSupports(Request $request, $project_id)
+    {
+      $take = (int)$request->size;
+      $skip = ((int)$request->page - 1) * $take;
+
+      $project = Project::find($project_id);
+      $orders = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->skip($skip)->take($take)->get();
+      foreach($orders as $order)
+      {
+        $this->getSuperviseOrderList($order, $project);
+      }
+
+      $orderTotalCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+      $total_page = (int)$orderTotalCount / $take;
+      
+      return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
+    }
+
+    public function getOrdersAll(Request $request)
+    {
+      $project_id = $request->project_id;
+      $project = $this->getSecureProjectById($project_id);
+      if(!$project)
+      {
+        return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
+      }
+
+      //$supportOrdersCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+      $ordersCount = $project->ordersWithoutError()->withTrashed()->count();
+
+      $goods = $project->goods;
+
+      return ['state' => 'success', 'data_orders_count' => $ordersCount, 'data_goods' => $goods];
+    }
+
+    public function getOrderObjectsAll(Request $request, $project_id)
+    {
+      $take = (int)$request->size;
+      $skip = ((int)$request->page - 1) * $take;
+
+      $project = Project::find($project_id);
+      $orders = $project->ordersWithoutError()->withTrashed()->skip($skip)->take($take)->get();
+      foreach($orders as $order)
+      {
+        $this->getSuperviseOrderList($order, $project);
+      }
+
+      $orderTotalCount = $project->ordersWithoutError()->withTrashed()->count();
+      $total_page = (int)$orderTotalCount / $take;
+      
+      return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
+    }
+
+    /*
+    public function getOrders($id)
+    {
 
         $project = $this->getSecureProjectById($id);
         $orders = $project->ordersWithoutError()->withTrashed()->get();
@@ -819,6 +981,7 @@ class ProjectController extends Controller
             //'ordersAllWithTimeJson' => $orders,
         ]);
     }
+    */
 
     public function getSuperviseOrderList($order, $project)
     {

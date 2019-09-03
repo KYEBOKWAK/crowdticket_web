@@ -252,6 +252,19 @@ Route::group(['middleware' => 'auth'], function () {
     //DB 테스트용 route
     //Route::post('')
     ///////////////
+
+    //주문관리 api start
+    Route::get('orders/project/tickets', 'ProjectController@getOrdersTickets');
+    Route::get('orders/project/notickets', 'ProjectController@getOrdersNoTickets');
+    Route::get('orders/project/supports', 'ProjectController@getOrdersSupports');
+    Route::get('orders/project/all', 'ProjectController@getOrdersAll');
+    //
+    Route::get('orders/project/{project_id}/objects/{ticket_id}', 'ProjectController@getOrderObjects');
+    Route::get('orders/project/{project_id}/notickets', 'ProjectController@getOrderObjectsNoTicket');
+    Route::get('orders/project/{project_id}/supports', 'ProjectController@getOrderObjectsSupports');
+    Route::get('orders/project/{project_id}/all', 'ProjectController@getOrderObjectsAll');
+    //주문관리 api end
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
