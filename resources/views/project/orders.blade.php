@@ -75,13 +75,28 @@
 
         .order_state_container{
           margin-bottom: 30px;
+          font-size: 15px;
+          font-weight: 900;
+          margin-top: 5px;
         }
 
         .order_loading{
           margin-top: 0px;
           margin-bottom: 0px;
-          width: 20px;
-          height: 20px;
+          width: 30px;
+          height: 30px;
+        }
+
+        .state_ticket_info_loading_word_wrapper{
+          margin-left: auto;
+        }
+
+        .state_ticket_margin_top{
+          margin-top: 5px;
+        }
+
+        .state_ticket_info_loading_wrapper{
+          margin-left: 5px;
         }
 
     </style>
@@ -167,8 +182,8 @@ $(document).ready(function () {
   ];
 
   var columnsNoTicketInfo = [
-      {title:"아이디(test)", field:"id", align:"center", width:103},
-      //{title:"이름", field:"name", align:"center", width:103},
+      //{title:"아이디(test)", field:"id", align:"center", width:103},
+      {title:"이름", field:"name", align:"center", width:103},
       {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc: "sum"},
       {title:"상태", field:"state_string", align:"center"},
       {title:"이메일", field:"email", align:"center", width:221},
@@ -183,8 +198,8 @@ $(document).ready(function () {
   ];
 
   var columnsOnlySupportInfo = [
-      {title:"아이디(test)", field:"id", align:"center", width:103},
-      //{title:"이름", field:"name", align:"center", width:103},
+      //{title:"아이디(test)", field:"id", align:"center", width:103},
+      {title:"이름", field:"name", align:"center", width:103},
       {title:"결제금액", field:"totalPriceWithoutCommission", align:"right", bottomCalc: "sum"},
       {title:"상태", field:"state_string", align:"center"},
       {title:"이메일", field:"email", align:"center", width:221},
@@ -274,10 +289,18 @@ $(document).ready(function () {
 
       var loadingElement = document.createElement("div");
       loadingElement.setAttribute('class', 'order_state_container');
-      loadingElement.innerHTML = "<div class='flex_layer'>" + 
-                                    "<p id='"+loadingWordID+"'>로딩중...</p>" + 
-                                    "<div id='"+loadingNameID+"' class='loading order_loading'></div>" + 
+      loadingElement.innerHTML = "<div class='flex_layer'>" +
+                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
+                                      "<p>"+getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name)+"</p>" +
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_wrapper'>" +
+                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                    "</div>" +
                                   "</div>";
+
       order_supervise_container.append(loadingElement);
 
       var ajaxURL = '/orders/project/'+$('#project_id').val()+'/objects/' + ticketInfo.id;
@@ -302,7 +325,7 @@ $(document).ready(function () {
             var removeURL = url.split('/');
             var ticketId = Number(removeURL[5]);
 
-            $('#'+'loading_word_ticket_id_'+ticketId).text('완료');
+            $('#'+'loading_word_ticket_id_'+ticketId).text('데이터 모두 가져옴');
             $('#'+'loading_ticket_id_'+ticketId).hide();
           }
 
@@ -412,10 +435,18 @@ $(document).ready(function () {
 
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" + 
-                                  "<p id='"+loadingWordID+"'>로딩중...</p>" + 
-                                  "<div id='"+loadingNameID+"' class='loading order_loading'></div>" + 
-                                "</div>";
+    loadingElement.innerHTML = "<div class='flex_layer'>" +
+                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
+                                      "<p>"+'티켓 구매 안하신 분(굿즈, 후원)'+"</p>" +
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_wrapper'>" +
+                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                    "</div>" +
+                                  "</div>";
+
     order_no_ticket_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/notickets';
@@ -437,7 +468,7 @@ $(document).ready(function () {
         var callCount = response.data.length;
         if(callCount < call_once_order_count)
         {
-          $('#'+'loading_word_no_ticket_order').text('완료');
+          $('#'+'loading_word_no_ticket_order').text('데이터 모두 가져옴');
           $('#'+'loading_no_ticket_order').hide();
         }
 
@@ -527,10 +558,17 @@ $(document).ready(function () {
 
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" + 
-                                  "<p id='"+loadingWordID+"'>로딩중...</p>" + 
-                                  "<div id='"+loadingNameID+"' class='loading order_loading'></div>" + 
-                                "</div>";
+    loadingElement.innerHTML = "<div class='flex_layer'>" +
+                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
+                                      "<p>"+'후원만 하신분'+"</p>" +
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_wrapper'>" +
+                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                    "</div>" +
+                                  "</div>";
     order_no_ticket_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/supports';
@@ -552,7 +590,7 @@ $(document).ready(function () {
         var callCount = response.data.length;
         if(callCount < call_once_order_count)
         {
-          $('#'+'loading_word_support_order').text('완료');
+          $('#'+'loading_word_support_order').text('데이터 모두 가져옴');
           $('#'+'loading_support_order').hide();
         }
 
@@ -698,10 +736,17 @@ $(document).ready(function () {
 
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" + 
-                                  "<p id='"+loadingWordID+"'>로딩중...</p>" + 
-                                  "<div id='"+loadingNameID+"' class='loading order_loading'></div>" + 
-                                "</div>";
+    loadingElement.innerHTML = "<div class='flex_layer'>" +
+                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
+                                      "<p>"+'전체 리스트'+"</p>" +
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                    "</div>" +
+                                    "<div class='state_ticket_info_loading_wrapper'>" +
+                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                    "</div>" +
+                                  "</div>";
     order_all_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/all';
@@ -724,7 +769,7 @@ $(document).ready(function () {
         var callCount = response.data.length;
         if(callCount < call_once_order_count)
         {
-          $('#'+'loading_word_all_order').text('완료');
+          $('#'+'loading_word_all_order').text('데이터 모두 가져옴');
           $('#'+'loading_all_order').hide();
         }
 

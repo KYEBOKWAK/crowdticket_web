@@ -1065,6 +1065,19 @@ class ProjectController extends Controller
         }
       }
 
+      if($order->answer)
+      {
+        $orderAnswers = json_decode($order->answer, true);
+        if($orderAnswers)
+        {
+          foreach($orderAnswers as $orderAnswer)
+          {
+            $answerKey = 'table_question_'.$orderAnswer['question_id'];
+            $order[$answerKey] = $orderAnswer['value'];
+          }
+        }
+      }
+
       if($isCancel)
       {
         $order['count'] = 0;
