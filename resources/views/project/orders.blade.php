@@ -141,7 +141,7 @@
 
 <script>
 $(document).ready(function () {
-  var call_once_order_count = 20;
+  var call_once_order_count = 40;
   var call_delay_time = 100;
   var order_supervise_container = $('#order_supervise_container');
   var order_no_ticket_supervise_container = $('#order_no_ticket_supervise_container');
