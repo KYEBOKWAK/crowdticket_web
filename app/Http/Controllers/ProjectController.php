@@ -745,12 +745,12 @@ class ProjectController extends Controller
       {
         return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
       }
-      //$orders = $project->ordersWithoutError()->withTrashed()->get();
+
       $tickets = $project->tickets;
       foreach($tickets as $ticket)
       {
         $ticket->ticket_name = $ticket->getSeatCategory();
-        $ticket->order_max_count = $ticket->orders()->count();
+        $ticket->order_max_count = $ticket->ordersWithoutError()->withTrashed()->count();
       }
 
       $goods = $project->goods;
@@ -764,15 +764,16 @@ class ProjectController extends Controller
       $skip = ((int)$request->page - 1) * $take;
 
       $project = Project::find($project_id);
-      //$orders = Order::where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
-      $orders = $project->orders()->where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
+      //$orders = $project->orders()->where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
+      $orders = $project->ordersWithoutError()->withTrashed()->where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
       foreach($orders as $order)
       {
         $this->getSuperviseOrderList($order, $project);
       }
 
-      //$orderTotalCount = Order::where('ticket_id', $ticket_id)->count();
-      $orderTotalCount = $project->orders()->where('ticket_id', $ticket_id)->count();
+      
+      //$orderTotalCount = $project->orders()->where('ticket_id', $ticket_id)->count();
+      $orderTotalCount = $project->ordersWithoutError()->withTrashed()->where('ticket_id', $ticket_id)->count();
       $total_page = (int)$orderTotalCount / $take;
       
       return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
@@ -787,7 +788,7 @@ class ProjectController extends Controller
         return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
       }
 
-      $noTicketOrdersCount = $project->orders()->whereNull('ticket_id')->count();
+      $noTicketOrdersCount = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->count();
 
       $goods = $project->goods;
 
@@ -800,13 +801,15 @@ class ProjectController extends Controller
       $skip = ((int)$request->page - 1) * $take;
 
       $project = Project::find($project_id);
-      $orders = $project->orders()->whereNull('ticket_id')->skip($skip)->take($take)->get();
+      //$orders = $project->orders()->whereNull('ticket_id')->skip($skip)->take($take)->get();
+      $orders = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->skip($skip)->take($take)->get();
       foreach($orders as $order)
       {
         $this->getSuperviseOrderList($order, $project);
       }
 
-      $orderTotalCount = $project->orders()->whereNull('ticket_id')->count();
+      //$orderTotalCount = $project->orders()->whereNull('ticket_id')->count();
+      $orderTotalCount = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->count();
       $total_page = (int)$orderTotalCount / $take;
       
       return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
@@ -821,7 +824,7 @@ class ProjectController extends Controller
         return ['state' => 'error', 'message' => '본인의 프로젝트가 아닙니다.'];
       }
 
-      $supportOrdersCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+      $supportOrdersCount = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
 
       return ['state' => 'success', 'data_support_orders_count' => $supportOrdersCount];
     }
@@ -832,13 +835,15 @@ class ProjectController extends Controller
       $skip = ((int)$request->page - 1) * $take;
 
       $project = Project::find($project_id);
-      $orders = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->skip($skip)->take($take)->get();
+      //$orders = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->skip($skip)->take($take)->get();
+      $orders = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->skip($skip)->take($take)->get();
       foreach($orders as $order)
       {
         $this->getSuperviseOrderList($order, $project);
       }
 
-      $orderTotalCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+      //$orderTotalCount = $project->orders()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
+      $orderTotalCount = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->count();
       $total_page = (int)$orderTotalCount / $take;
       
       return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
