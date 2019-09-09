@@ -99,17 +99,30 @@
                 <h2 class="text-center"><strong>THANK YOU!</strong></h2>
                 @if ($project->type === 'funding')
                   @if($project->isPickType())
-                    <h3 class="text-center"><strong>결제가 성공적으로 예약되었습니다.</strong></h3>
-                    <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
-                    <p class="text-center ps-text-detail" style="margin-top:30px;">
-                        <strong>
-                            지금 결제가 진행된 것이 아닙니다!<br/>
+                    @if($project->isEventSubTypeSandBox())
+                      <h3 class="text-center"><strong>참여가 성공적으로 완료되었습니다.</strong></h3>
+                      <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
+                      <p class="text-center ps-text-detail" style="margin-top:30px;">
+                          <strong>
+                            아직 당첨이 확정된 것은 아니예요!<br/>
                             <br/>
-                        </strong>
-                        당첨되었을 경우에 한하여 결제가 진행됩니다. <br/>
-                        당첨 결과는 오른쪽 결제 확인 탭에서 확인 할 수 있습니다. <br/><br/>
-                        당첨되지 않으면 결제가 진행되지 않습니다.
-                    </p>
+                          </strong>
+                          당첨된 분들에게는 발표 날짜에 맞춰 문자로 안내를 드립니다. <br/>
+                          당첨 결과는 사이트 오른쪽 상단의 결제확인 탭에서 확인 할 수 있습니다.<br/><br/>
+                      </p>
+                    @else
+                      <h3 class="text-center"><strong>결제가 성공적으로 예약되었습니다.</strong></h3>
+                      <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
+                      <p class="text-center ps-text-detail" style="margin-top:30px;">
+                          <strong>
+                              지금 결제가 진행된 것이 아닙니다!<br/>
+                              <br/>
+                          </strong>
+                          당첨되었을 경우에 한하여 결제가 진행됩니다. <br/>
+                          당첨 결과는 오른쪽 결제 확인 탭에서 확인 할 수 있습니다. <br/><br/>
+                          당첨되지 않으면 결제가 진행되지 않습니다.
+                      </p>
+                    @endif
                   @else
                     <h3 class="text-center"><strong>결제가 성공적으로 예약되었습니다.</strong></h3>
                     <p class="text-center text-danger">입력하신 정보는 철저히 암호화 된 상태로 안전하게 다뤄집니다.</p>
