@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=8') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=9') }}" rel="stylesheet">
     <style>
         body {
           padding-right: 0 !important;
@@ -132,6 +132,26 @@
           color: #808080;
           opacity: 0.6;
         }
+
+        .form_address_container{
+          margin-bottom: 15px;
+          padding: 0px;
+        }
+
+        .form_address_group_container{
+          margin-left: 0px !important;
+          margin-right: 0px !important;
+        }
+
+        #postcodify_search_button_fake{
+          margin-top: 0px;
+        }
+
+        @media (max-width:768px){
+          #postcodify_search_button_fake{
+            margin-top: 5px;
+          }
+        }
     </style>
 @endsection
 
@@ -177,8 +197,7 @@
               </div>
             </div>
 
-            @if($project->isEventTypeDefault() ||
-                $project->isPickType())
+            @if($project->isEventTypeDefault())
               <div class="order_form_conform_container_grid_columns">
                 <p class="order_form_title">할인내역</p>
                 <div class="flex_layer">
@@ -206,6 +225,16 @@
               </div>
               @endif
 
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">티켓 수수료</p>
+                <div class="flex_layer">
+                  <div class="order_form_commission_contant order_form_text">
+                  </div>
+                  <div class="order_form_align_right order_form_commission_price order_form_text">
+                  </div>
+                </div>
+              </div>
+            @elseif($project->isPickType() && $ticket->price !== 0)
               <div class="order_form_conform_container_grid_columns">
                 <p class="order_form_title">티켓 수수료</p>
                 <div class="flex_layer">
@@ -332,14 +361,18 @@
               굿즈 배송 정보
               <input id="placeReceive" type="checkbox" disabled="disabled"/><span class="order_form_title">현장 수령</span>
             @else
-              굿즈 배송 정보 입력
-              <input id="placeReceive" type="checkbox"/><span class="order_form_title">현장 수령</span>
+              @if($project->isEventSubTypeSandBox())
+                상품 배송지 입력
+              @else
+                굿즈 배송 정보 입력
+                <input id="placeReceive" type="checkbox"/><span class="order_form_title">현장 수령</span>
+              @endif
             @endif
           </div>
           <div class="order_form_goods_address_container" style="margin: 20px 0px;">
-            <div class="col-md-12">
-                <div class="ps-box">
-                    <div class="form-group">
+            <div class="col-md-12 form_address_container order_form_conform_container_grid_rows">
+                <div class="ps-box" style='border: 0;'>
+                    <div class="form-group form_address_group_container">
                         <label for="order-address" class="col-sm-2 control-label">주소</label>
                         <div class="col-sm-2">
                             @if ($order)
@@ -359,7 +392,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form_address_group_container">
                         <div class="col-sm-6 col-sm-offset-2">
                             @if ($order)
                                 <input type="text" name="address_main"
@@ -372,7 +405,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group form_address_group_container">
                         <div class="col-sm-6 col-sm-offset-2">
                             @if ($order)
                                 <input type="text" name="address_detail"
@@ -385,27 +418,44 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="order-comment" class="col-sm-2 control-label">비고</label>
+                    <div class="form-group form_address_group_container">
+                      @if($project->isEventSubTypeSandBox())
+                      <label for="order-comment" class="col-sm-2 control-label">기타 요청 사항</label>
                         <div class="col-sm-8">
                             @if ($order)
                                 <input id="order-comment" name="requirement" type="text"
-                                       class="form-control" readonly="readonly"
-                                       value="{{ $order->requirement }}"/>
+                                        class="form-control" readonly="readonly"
+                                        value="{{ $order->requirement }}"/>
                             @else
                                 <input id="order-comment" name="requirement" type="text"
-                                       class="form-control" placeholder="보상품 세부사항 및 기타 요청 사항"/>
+                                        class="form-control" placeholder="기타 요청 사항"/>
                             @endif
                         </div>
+                      @else
+                      <label for="order-comment" class="col-sm-2 control-label">비고</label>
+                        <div class="col-sm-8">
+                            @if ($order)
+                                <input id="order-comment" name="requirement" type="text"
+                                        class="form-control" readonly="readonly"
+                                        value="{{ $order->requirement }}"/>
+                            @else
+                                <input id="order-comment" name="requirement" type="text"
+                                        class="form-control" placeholder="보상품 세부사항 및 기타 요청 사항"/>
+                            @endif
+                        </div>
+                      @endif
                     </div>
-                    <div class="form-group">
+                    @if($project->isEventSubTypeSandBox())
+                    @else
+                    <div class="form-group form_address_group_container">
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-8">
                             <p class="ps-form-control-like text-danger">
-                                입력하신 개인 정보는 결제 확인 알림 및 현재 참여하고 있는 공연 정보 발송 외의 용도로는 절대 사용하지 않으니 걱정하지 마세요!
+                              입력하신 개인 정보는 결제 확인 알림 및 현재 참여하고 있는 공연 정보 발송 외의 용도로는 절대 사용하지 않으니 걱정하지 마세요!
                             </p>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
           </div>
@@ -486,12 +536,20 @@
             @if($project->isPickType())
               <p class="order_form_title" style="margin-top: 10px; height:30px;">추첨 프로젝트에 관하여</p>
               <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
+                @if($project->isEventSubTypeSandBox())
+                  <p style="margin-top:6px">1. 당첨자는 {{$project->getPickStartTime()}} ~ {{$pickingEndTime}} 중에 확정 됩니다. 더 정확한 발표 시간은 이벤트 메인 페이지의 소개란을 참고해주세요.</p>
+                  <p>2. 당첨 여부는 사이트 우측상단의 ‘결제확인’ 메뉴를 확인해주세요.</p>
+                  <p>3. 연락처 정보가 정확한지 다시 한 번 확인해주세요. 잘못된 정보로 인해 연락이 되지 않을 경우 당첨 내역이 취소될 수 있습니다.</p>
+                  <p>4. 당첨자에 한하여 별도의 문자로 안내를 드리겠습니다.</p>
+                @else
                 <u style="font-size: 18px; font-weight: bold; margin-bottom:10px">지금 결제 정보를 입력해도 결제가 진행되지 않습니다.</u>
-                <p style="margin-top:6px">1. 당첨자는 {{$project->getPickStartTime()}} ~ {{$pickingEndTime}} 해당 기간에 확정 됩니다.</p>
-                <p>2. 당첨이 되지 않으면 결제가 진행되지 않습니다.</p>
-                <p>3. 당첨 여부는 [추첨확정일] 이후에 우측상단 결제내역을 확인 해주세요.</p>
-                <p>4. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
-                <h4><u>당첨자에 한하여, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+                  <p style="margin-top:6px">1. 당첨자는 {{$project->getPickStartTime()}} ~ {{$pickingEndTime}} 해당 기간에 확정 됩니다.</p>
+                  <p>2. 당첨이 되지 않으면 결제가 진행되지 않습니다.</p>
+                  <p>3. 당첨 여부는 [추첨확정일] 이후에 우측상단 결제내역을 확인 해주세요.</p>
+                  <p>4. 카드분실, 잔액부족으로 인해 예약된 결제가 제대로 처리되지 않을 수 있습니다.</p>
+                  <h4><u>당첨자에 한하여, {{ $funding_pay_day }} 1pm 에 결제가 진행됩니다!</u></h4>
+                @endif
+                
               </div>
             @else
               <p class="order_form_title" style="margin-top: 10px; height:30px;">결제 예약에 관하여</p>
@@ -651,10 +709,15 @@
               $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
               $funding_closing_date_without_time = $funding_closing_date_without_time->format('Y-m-d');
               ?>
-                <p style="margin-top:10px;">본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
-                <p> * {{$funding_closing_date_without_time}} 이후 참여 취소 및 환불 불가능</p>
-                <!--<p><b>추첨일 이후에 당첨이 확정되면 환불이 불가능합니다.</b></p>-->
-                <p><b>추첨이 시작되면 취소 및 환불이 불가능합니다.</b></p>
+                @if($project->isEventSubTypeSandBox())
+                  <p style="margin-top:10px;">본 이벤트는 무료로 진행되며 별도의 수수료가 발생하지 않습니다.</b></p>
+                  <p> * 참가 내역 취소는 {{$funding_closing_date_without_time}} 까지 가능하며 이후에는 취소가 불가능합니다.</p>
+                @else
+                  <p style="margin-top:10px;">본 프로젝트는 <b>참가자로 선정된 경우에만 결제가 진행됩니다.</b></p>
+                  <p> * {{$funding_closing_date_without_time}} 이후 참여 취소 및 환불 불가능</p>
+                  <!--<p><b>추첨일 이후에 당첨이 확정되면 환불이 불가능합니다.</b></p>-->
+                  <p><b>추첨이 시작되면 취소 및 환불이 불가능합니다.</b></p>
+                @endif
               @endif
             </div>
           </div>

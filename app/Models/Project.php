@@ -14,6 +14,8 @@ class Project extends Model
     const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
     const EVENT_TYPE_PICK_EVENT = 3;  //pick 이벤트
 
+    const EVENT_TYPE_SUB_SANDBOX_PICK = 1;  //샌드박스 전용 pick 이벤트
+
     const PICK_STATE_NONE = 0;  //pick 상태
     const PICK_STATE_PICKED = 1;  //pick 완료 상태
 
@@ -21,7 +23,7 @@ class Project extends Model
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'sale_start_at', 'funding_closing_at', 'picking_closing_at', 'event_type', 'pick_state'
+            'sale_start_at', 'funding_closing_at', 'picking_closing_at', 'event_type', 'event_type_sub', 'pick_state'
         ],
 
         Project::STATE_READY_AFTER_FUNDING => [
@@ -34,7 +36,7 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-          'description', 'video_url', 'story', 'ticket_notice', 'event_type', 'pick_state'
+          'description', 'video_url', 'story', 'ticket_notice', 'event_type', 'event_type_sub', 'pick_state'
         ]
     ];
 
@@ -58,6 +60,7 @@ class Project extends Model
         'pledged_amount' => 'integer|min:0',
         'audiences_limit' => 'integer|min:0',
         'event_type' => 'integer|min:0',
+        'event_type_sub' => 'integer|min:0',
         'funding_closing_at' => 'date_format:Y-m-d H:i:s',
         'performance_opening_at' => 'date_format:Y-m-d',
         'pick_state' => 'integer|min:0'
@@ -685,6 +688,11 @@ class Project extends Model
     {
         //return $this->type === 'pick';
         return (int)$this->event_type === Project::EVENT_TYPE_PICK_EVENT;
+    }
+
+    public function isEventSubTypeSandBox()
+    {
+      return (int)$this->event_type_sub === Project::EVENT_TYPE_SUB_SANDBOX_PICK;
     }
 
     public function isSuccess()

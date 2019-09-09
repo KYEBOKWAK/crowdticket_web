@@ -1430,37 +1430,6 @@ class ProjectController extends Controller
       }
     }
 
-    /*
-    public function pickingComplete($projectId)
-    {
-      $project = $this->getSecureProjectById($projectId);
-
-      if($project->isPickedComplete())
-      {
-        return false;
-      }
-
-      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
-          foreach ($project->orders as $order) {
-            if($order->is_pick != 'PICK')
-            {
-              app('App\Http\Controllers\OrderController')->deleteOrder($order->id, Order::ORDER_STATE_PROJECT_PICK_CANCEL,true);
-            }
-          }
-
-      }
-      else
-      {
-        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
-      }
-
-      $project->pick_state = Project::PICK_STATE_PICKED;
-      $project->save();
-
-      return ["state" => "success", "message" => ""];
-    }
-    */
-
     public function sendMailAfterPickComplete(Request $request, $projectId)
     {
       $project = $this->getSecureProjectById($projectId);
