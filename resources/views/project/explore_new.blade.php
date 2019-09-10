@@ -218,11 +218,6 @@
 <input type='hidden' id='company' value='{{$company}}'>
 <div class="welcome_content_container">
     <div class='mannayo_list_container'>
-      @if($company === 'sandbox')
-      <div class='mannayo_creator_pop_list_title' style='margin-top: 51px; display:none;'>
-        SANDBOX 추석 이벤트!
-      </div>
-      @endif
       <div class='mannayo_meetup_list_container'>
       </div>
     </div>
