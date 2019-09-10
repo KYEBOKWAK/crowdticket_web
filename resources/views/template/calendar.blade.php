@@ -23,7 +23,9 @@
 				'pm': timeframe == 'pm',
 				'compact': compact
 			}">
-			<div class="datepicker-header">
+      
+      @if(!$project->isEventSubTypeSandBox())
+      <div class="datepicker-header">
 				<div class="datepicker-title" ng-if="datepicker_title">
 					@if($project->isPlace == "TRUE")
 						날짜 선택
@@ -44,6 +46,8 @@
 					@endif
 				</div>
 			</div>
+      @endif
+
 			<div class="datepicker_calendar_container @if($isDetail == 'FALSE') flex_layer_mobile @endif">
 				<div class="datepicker-calendar @if($isDetail == 'FALSE') detail_calendar_flex @endif @if($project->isPlace == 'FALSE') display_none @endif">
 					<div class="calendar-header">

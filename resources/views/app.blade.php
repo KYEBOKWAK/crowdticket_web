@@ -25,7 +25,7 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=6') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=7') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=19') }}" rel="stylesheet"/>
