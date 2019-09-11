@@ -197,7 +197,7 @@ $selectedTicket = "";
 
           <div class="detail_main_container_grid">
             <div class="detail_main_img_container">
-              
+              @include('template.carousel_detail_new_main', ['project' => $project])
             </div>
             <div class="detail_main_contant_container">
               <h5 class="detail_main_sub_title">날짜</h5>
@@ -245,7 +245,7 @@ $selectedTicket = "";
                 </div>
                 <h5 class="detail_main_guide_amount">
                   @if(!$project->isEventTypeCrawlingEvent())
-                    {{ $project->getNowAmount() }}
+                    
                     @if($project->isFundingType() && !$project->isPickType())
                       <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
                     @endif
