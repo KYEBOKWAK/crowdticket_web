@@ -1693,8 +1693,23 @@ class ProjectController extends Controller
     {
       //$project = Project::where('alias', '=', $projectId)->firstOrFail();
       $project = Project::findOrFail($projectId);
+      
+      $project->load(['category', 'city', 'tickets']);
+      $project->countSessionDependentViewNum();
+      $posterJson = $this->getPosterUrl($project);
+      $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
+      return view('test', [
+          'project' => $project,
+          'posters' =>$posterJson,
+          //'ticketsCountInfoJson' => $ticketsCountInfoListJson,
+          'ticketsCountInfoJson' => $ticketsCountInfoListJson,
+          'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
+          'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
+      ]);
+        /*
       return view('test', [
           'project' => $project]);
+          */
     }
 
     public function saveLog($message, $type)
