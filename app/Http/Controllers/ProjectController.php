@@ -480,7 +480,6 @@ class ProjectController extends Controller
     public function getProjectByAlias($alias)
     {
         $project = Project::where('alias', '=', $alias)->firstOrFail();
-        //$project = Project::where('alias', '=', $alias)->select('id, ')->firstOrFail();
         $project = $this->getApprovedProject($project);
 
         if(!$project)
