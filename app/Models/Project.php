@@ -792,6 +792,32 @@ class Project extends Model
 
     public function getAmountTicketCountInfoList()
     {
+      //$orders = $this->orders;
+      $tickets = $this->tickets;
+
+      $ticketBuyInfoArray = [];
+
+      if($tickets)
+      {
+        foreach ($tickets as $ticket) {
+          $ticketBuyTotalCount = (int)$ticket->orders()->sum('count');
+          if($ticketBuyTotalCount > 0)
+          {
+            $ticketInfoObject['id'] = $ticket->id;
+            $ticketInfoObject['buycount'] = $ticketBuyTotalCount;
+
+            array_push($ticketBuyInfoArray, $ticketInfoObject);
+          }
+        }
+      }
+
+      return json_encode($ticketBuyInfoArray);
+    }
+    
+
+    /*
+    public function getAmountTicketCountInfoList()
+    {
       $orders = $this->orders;
       $tickets = $this->tickets;
 
@@ -821,6 +847,8 @@ class Project extends Model
 
       return json_encode($ticketBuyInfoArray);
     }
+    */
+    
 
     //현재 할인 수량
     public function getDiscountCount($discountId)
