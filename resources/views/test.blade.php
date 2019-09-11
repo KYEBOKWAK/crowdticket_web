@@ -240,12 +240,12 @@ $selectedTicket = "";
                   @if($project->isEventTypeCrawlingEvent())
                     본 이벤트는 크라우드티켓이 아닌 외부에서 진행 중인 이벤트 입니다.
                   @else
-                    
+                    {{ $project->getMainExplain() }}
                   @endif
                 </div>
                 <h5 class="detail_main_guide_amount">
                   @if(!$project->isEventTypeCrawlingEvent())
-                    
+                    {{ $project->getNowAmount() }}
                     @if($project->isFundingType() && !$project->isPickType())
                       <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
                     @endif

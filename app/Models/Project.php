@@ -596,18 +596,7 @@ class Project extends Model
               $nowAmount = "티켓팅이 마감되었습니다.";
             }
           }
-          else
-          {
-            $totalFundingAmount = number_format($this->getTotalFundingAmount());
-            $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
-
-            if($this->project_target == "people")
-            {
-              $nowAmount = "신청자 " . $totalFundingAmount . "명";
-            }
-          }
-
-          if($this->isPickType())
+          else if($this->isPickType())
           {
             $nowAmount = "현재 신청 가능";
 
@@ -618,6 +607,16 @@ class Project extends Model
             else if($this->isFinished())
             {
               $nowAmount = "추첨중 입니다.";
+            }
+          }
+          else
+          {
+            $totalFundingAmount = number_format($this->getTotalFundingAmount());
+            $nowAmount = "현재 " . $totalFundingAmount . "원 모임";
+
+            if($this->project_target == "people")
+            {
+              $nowAmount = "신청자 " . $totalFundingAmount . "명";
             }
           }
         }
@@ -884,21 +883,9 @@ class Project extends Model
 
       return $discountAmount;
     }
-/*
-    public function isPlace()
-    {
-      if($this->isPlace == 'TRUE')
-      {
-        return "TRUE";
-      }
 
-      return "FALSE";
-    }
-*/
     public function getTotalFundingAmount()
     {
-      //$orders = $this->orders;
-      //$orders = $this->ordersAll;
       $orders = $this->ordersWithoutUserCancel;
       $totalFundingAmount = 0;
 
