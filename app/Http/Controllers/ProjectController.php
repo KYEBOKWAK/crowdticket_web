@@ -1692,6 +1692,7 @@ class ProjectController extends Controller
     public function test($projectId)
     {
       $project = Project::where('alias', '=', $projectId)->firstOrFail();
+      //$project = Project::findOrFail($projectId);
       return view('test', [
           'project' => $project]);
     }

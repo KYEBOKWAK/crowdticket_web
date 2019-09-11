@@ -262,6 +262,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/project/{project_id}/all', 'ProjectController@getOrderObjectsAll');
     //주문관리 api end
 
+    //test URL
+    Route::get('projects/{id}/admin/test', 'ProjectController@test');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
@@ -290,7 +292,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //오더 98번 체크
     Route::get('projects/{id}/orderinitstatecheck', 'AdminController@getOrderStateInitCheck');
-
-    //test URL
-    Route::get('projects/{id}/admin/test', 'ProjectController@test');
 });
