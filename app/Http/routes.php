@@ -86,9 +86,6 @@ Route::get('{entity}/{id}/comments', 'CommentController@getComments');
 
 Route::get('users/{id}', 'UserController@getUser');
 
-//test URL
-Route::get('projects/{id}/admin/test', 'ProjectController@test');
-
 /*
 Route::get('order/error/overticketcount', function(){
   return view('errors.overcounter_ticket');
@@ -293,4 +290,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //오더 98번 체크
     Route::get('projects/{id}/orderinitstatecheck', 'AdminController@getOrderStateInitCheck');
+
+    //test URL
+    Route::get('projects/{id}/admin/test', 'ProjectController@test');
 });

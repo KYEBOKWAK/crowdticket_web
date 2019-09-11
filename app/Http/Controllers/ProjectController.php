@@ -479,8 +479,8 @@ class ProjectController extends Controller
 
     public function getProjectByAlias($alias)
     {
-        //$project = Project::where('alias', '=', $alias)->firstOrFail();
         $project = Project::where('alias', '=', $alias)->firstOrFail();
+        //$project = Project::where('alias', '=', $alias)->select('id, ')->firstOrFail();
         $project = $this->getApprovedProject($project);
 
         if(!$project)
@@ -1691,11 +1691,9 @@ class ProjectController extends Controller
 
     public function test($projectId)
     {
+      $project = Project::where('alias', '=', $projectId)->firstOrFail();
       return view('test', [
-          'project' => "abc"]);
-      //$project = Project::findOrFail($projectId);
-      //$project->increment('view_count');
-      //return "success";
+          'project' => $project]);
     }
 
     public function saveLog($message, $type)

@@ -8,7 +8,7 @@
 <?php
 //$projects = json_decode($projecta, true);
 ?>
-{{ var_dump($project) }}
+{{ $project }}
 
 @endsection
 
