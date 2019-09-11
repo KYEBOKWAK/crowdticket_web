@@ -171,7 +171,248 @@ $selectedTicket = "";
 <input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
 
     @include('helper.btn_admin', ['project' => $project])
-    
+    <div class="basecontainer">
+      <div class="detail_width_wrapper">
+        <div class="detail_top_main_container">
+          <div class="detail_top_container">
+            <div class="detail_title">
+              {{ $project->title }}
+            </div>
+            @if ($project->category)
+              <span class="detail_hash_tag">
+                #{{ $project->category->title }}
+              </span>
+            @endif
+            @if ($project->hash_tag1)
+              <span class="detail_hash_tag">
+                #{{ $project->hash_tag1 }}
+              </span>
+            @endif
+            @if ($project->hash_tag2)
+              <span class="detail_hash_tag">
+                #{{ $project->hash_tag2 }}
+              </span>
+            @endif
+          </div>
+
+          <div class="detail_main_container_grid">
+            <div class="detail_main_img_container">
+              @include('template.carousel_detail_new_main', ['project' => $project])
+            </div>
+            <div class="detail_main_contant_container">
+              <h5 class="detail_main_sub_title">날짜</h5>
+              <p class="detail_main_sub_contant">{{ $project->getConcertDateFormatted() }}</p>
+
+              <h5 class="detail_main_sub_title">장소</h5>
+              <p class="detail_main_sub_contant detail_margin_bottom_10">{{ $project->concert_hall }}</p>
+              <p class="detail_main_place_detail detail_margin_bottom_30">
+                @if($project->isPlace == "TRUE")
+                  {{ $project->detailed_address }}
+                @endif
+              </p>
+
+              <div class="detail_main_guide_container">
+                <div class="detail_main_guide_funding_title">
+                  @if($project->isWaitSaling())
+                    오픈 예정
+                  @else
+                    @if($project->isPickType())
+                      @if($project->isFinishedAndPickingFinished())
+                        신청종료(추첨확정)
+                      @elseif($project->isFinished())
+                        신청이 마감되었습니다.
+                      @else
+                        신청가능
+                      @endif
+
+                    @elseif($project->isEventTypeCrawlingEvent())
+                      진행중
+                    @else
+                      @if($project->isFinished())
+                          종료됨
+                      @else
+                          진행중
+                      @endif
+                    @endif
+                  @endif
+                </div>
+                <div class="detail_main_guide_funding_explain">
+                  @if($project->isEventTypeCrawlingEvent())
+                    본 이벤트는 크라우드티켓이 아닌 외부에서 진행 중인 이벤트 입니다.
+                  @else
+                    {{ $project->getMainExplain() }}
+                  @endif
+                </div>
+                <h5 class="detail_main_guide_amount">
+                  @if(!$project->isEventTypeCrawlingEvent())
+                    {{ $project->getNowAmount() }}
+                    @if($project->isFundingType() && !$project->isPickType())
+                      <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                    @endif
+                  @endif
+                </h5>
+              </div>
+              <div class="detail_main_guide_share_btn_wrapper">
+                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-clipboard-text="{{ $project->getProjectURLWithIdOrAlias() }}"><i class="fa fa-share" style='color: #acacac;'></i></button>
+              </div>
+
+              <div class="detail_main_guide_ticketing_btn_wrapper">
+
+                  @if($project->isEventTypeCrawlingEvent())
+                    <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">외부페이지로 이동</button></a>
+                  @else
+                    <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">
+                    @if(env('REVIEW_ON'))
+                    티켓팅
+                    @else
+                    이벤트 참여신청
+                    @endif
+                    </button>
+                  @endif
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail_creator_container">
+        <div class="detail_width_wrapper">
+          <div class="flex_layer_mobile detail_creator_container_grid">
+            <!-- creator 소개란  -->
+            <div class="detail_creator_creator_grid">
+              <div class="flex_layer_mobile">
+                <img src="{{ $project->user->getPhotoUrl() }}" class="detail_creator_creator_thumb">
+                <div class="detail_creator_info_container">
+                  <h5 class="detail_creator_info_title">
+                    <span class="detail_creator_info_type">
+                      @if($project->project_type == 'creator')
+                        CREATOR
+                      @elseif($project->project_type == 'culture')
+                        CULTURE
+                      @else
+                        ARTISTS
+                      @endif
+
+                    </span>&nbsp;|&nbsp;
+                    {{ $project->user->name }}
+                  </h5>
+                      <h5 class="detail_creator_info_introduce">
+                        {{ $project->user->introduce }}
+                      </h5>
+                </div>
+              </div>
+            </div>
+            <!-- 활동채널란 -->
+            <div class="detail_creator_info_channel">
+              <h5 class="detail_creator_info_channel_title">활동채널</h5>
+              <ul class="detail_creator_info_channel_channels">
+                @foreach($channels as $channel)
+                  <li class="detail_creator_info_channel_channels_thumb">
+                    <a href="{{ $channel->url }}" target="_blank"><img src="{{ $channel->categories_channel->img_url }}"></a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="stickoffset"></div>
+      <div id="sticky" class="container-fluid middle-tap-menu">
+        <div class="detail_width_wrapper">
+          <div class="detail_tab_container">
+            <ul role="tablist" class="nav nav-tabs">
+                
+            </ul>
+          </div>
+
+          <!-- 중간 네비게이션에 스크롤링에 의해 노출되는 크라우드 티켓팅 버튼 -->
+          <div class="nav-ticketing-btn">
+
+               @if($project->isEventTypeCrawlingEvent())
+                <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+               @else
+                <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">
+                @if(env('REVIEW_ON'))
+                티켓팅
+                @else
+                이벤트 참여신청
+                @endif
+                </button>
+               @endif
+           </div>
+        </div>
+      </div>
+
+      <div class="detail_contant_wrapper">
+        <div class="detail_width_wrapper">
+          <div class="detail_content_calendar_container_grid">
+            <div class="tab-content">
+              <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
+                @include('template.picking_list', ['project' => $project])
+                <div class="detail_story_wrapper">
+                 {!! html_entity_decode($project->story) !!}
+                </div>
+              </div>
+
+              <div id="tab-news" role="tabpanel" class="tab-pane loadable">
+                <ul id="news-container" class="list-group"></ul>
+                  @if ($is_master)
+                      <div class="text-center">
+                          <a href="{{ url('/projects') }}/{{ $project->id }}/news/form"
+                             class="btn btn-success">업데이트 작성</a>
+                      </div>
+                  @endif
+                  <div class="tab-pane" style="margin-bottom:0px; margin-top:50px;">
+
+                  </div>
+              </div>
+
+              <div id="tab-comments" role="tabpanel" class="tab-pane loadable">
+                <form id="addComment" action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
+                      data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
+                    <textarea id="input_comment" name="contents" class="form-control" rows="3"
+                              placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                    <button type="button" class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
+                    <div class="clear"></div>
+                    @include('csrf_field')
+                </form>
+                <ul id="comments-container"></ul>
+              </div>
+
+              <div id="tab-md" role="tabpanel" class="tab-pane loadable">
+              </div>
+            </div>
+
+            @if($project->isOldProject())
+              <div id="old_ticket_list" data-tickets="{{ $project->tickets }}"></div>
+            @else
+              @include('template.detail_ticket_md')
+            @endif
+
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-ticketing-btn-mobile">
+        @if($project->isEventTypeCrawlingEvent())
+          <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+        @else
+         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">이벤트 참여신청</button>
+        @endif
+       </div>
+
+      <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>
+      <input type="hidden" id="project_type" value="{{ $project->type }}"/>
+      <input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
+      <input type="hidden" id="project_id" value="{{ $project->id }}"/>
+      <input type="hidden" id="goods_json" value="{{ $project->goods }}"/>
+
+      <input type="hidden" id="isMaster" value="{{ $is_master }}"/>
+
+      <input type="hidden" id="introduce_input_row" value="{{ $project->user->introduce }}">
+
+      <!--baseContainer end-->
+    </div>
 
     <div class="col-md-3 ps-detail-share-facebook" id="BtnFBshare" style="display:none;">
                         <span class="btn">페이스북 공유하기</span>
