@@ -1698,7 +1698,7 @@ class ProjectController extends Controller
       $project->countSessionDependentViewNum();
       $posterJson = $this->getPosterUrl($project);
       $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
-      return view('test', [
+      return view('project.detail_renew', [
           'project' => $project,
           'posters' =>$posterJson,
           //'ticketsCountInfoJson' => $ticketsCountInfoListJson,
