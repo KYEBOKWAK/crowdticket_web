@@ -172,7 +172,108 @@ $selectedTicket = "";
 
     @include('helper.btn_admin', ['project' => $project])
     <div class="basecontainer">
-      
+      <div class="detail_width_wrapper">
+        <div class="detail_top_main_container">
+          <div class="detail_top_container">
+            <div class="detail_title">
+              {{ $project->title }}
+            </div>
+            @if ($project->category)
+              <span class="detail_hash_tag">
+                #{{ $project->category->title }}
+              </span>
+            @endif
+            @if ($project->hash_tag1)
+              <span class="detail_hash_tag">
+                #{{ $project->hash_tag1 }}
+              </span>
+            @endif
+            @if ($project->hash_tag2)
+              <span class="detail_hash_tag">
+                #{{ $project->hash_tag2 }}
+              </span>
+            @endif
+          </div>
+
+          <div class="detail_main_container_grid">
+            <div class="detail_main_img_container">
+              
+            </div>
+            <div class="detail_main_contant_container">
+              <h5 class="detail_main_sub_title">날짜</h5>
+              <p class="detail_main_sub_contant">{{ $project->getConcertDateFormatted() }}</p>
+
+              <h5 class="detail_main_sub_title">장소</h5>
+              <p class="detail_main_sub_contant detail_margin_bottom_10">{{ $project->concert_hall }}</p>
+              <p class="detail_main_place_detail detail_margin_bottom_30">
+                @if($project->isPlace == "TRUE")
+                  {{ $project->detailed_address }}
+                @endif
+              </p>
+
+              <div class="detail_main_guide_container">
+                <div class="detail_main_guide_funding_title">
+                  @if($project->isWaitSaling())
+                    오픈 예정
+                  @else
+                    @if($project->isPickType())
+                      @if($project->isFinishedAndPickingFinished())
+                        신청종료(추첨확정)
+                      @elseif($project->isFinished())
+                        신청이 마감되었습니다.
+                      @else
+                        신청가능
+                      @endif
+
+                    @elseif($project->isEventTypeCrawlingEvent())
+                      진행중
+                    @else
+                      @if($project->isFinished())
+                          종료됨
+                      @else
+                          진행중
+                      @endif
+                    @endif
+                  @endif
+                </div>
+                <div class="detail_main_guide_funding_explain">
+                  @if($project->isEventTypeCrawlingEvent())
+                    본 이벤트는 크라우드티켓이 아닌 외부에서 진행 중인 이벤트 입니다.
+                  @else
+                    {{ $project->getMainExplain() }}
+                  @endif
+                </div>
+                <h5 class="detail_main_guide_amount">
+                  @if(!$project->isEventTypeCrawlingEvent())
+                    {{ $project->getNowAmount() }}
+                    @if($project->isFundingType() && !$project->isPickType())
+                      <span class="detail_main_guide_amount_progress">{{ $project->getProgress() }}%</span>
+                    @endif
+                  @endif
+                </h5>
+              </div>
+              <div class="detail_main_guide_share_btn_wrapper">
+                <button type="button" class="btn btn-primary btn-block detail_main_guide_share_btn" data-clipboard-text="{{ $project->getProjectURLWithIdOrAlias() }}"><i class="fa fa-share" style='color: #acacac;'></i></button>
+              </div>
+
+              <div class="detail_main_guide_ticketing_btn_wrapper">
+
+                  @if($project->isEventTypeCrawlingEvent())
+                    <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">외부페이지로 이동</button></a>
+                  @else
+                    <button id="detail_main_cw_btn" type="button" class="btn btn-primary btn-block detail_main_guide_ticketing_btn">
+                    @if(env('REVIEW_ON'))
+                    티켓팅
+                    @else
+                    이벤트 참여신청
+                    @endif
+                    </button>
+                  @endif
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="detail_creator_container">
         <div class="detail_width_wrapper">
