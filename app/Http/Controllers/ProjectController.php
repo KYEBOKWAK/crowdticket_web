@@ -472,9 +472,9 @@ class ProjectController extends Controller
         }
 
         //NEW 체크
-        $isArrayNew = $this->isArrayNew($project);
+        //$isArrayNew = $this->isArrayNew($project);
 
-        return $this->getProjectDetailView($project, $isArrayNew);
+        return $this->getProjectDetailView($project);
     }
 
     public function getProjectByAlias($alias)
@@ -488,9 +488,9 @@ class ProjectController extends Controller
         }
 
         //NEW 체크
-        $isArrayNew = $this->isArrayNew($project);
+        //$isArrayNew = $this->isArrayNew($project);
 
-        return $this->getProjectDetailView($project, $isArrayNew);
+        return $this->getProjectDetailView($project);
     }
 
     //new 인지 아닌지 boolean array 로 return 키 : news, comment, support
@@ -567,7 +567,7 @@ class ProjectController extends Controller
       return $isNewArray;
     }
 
-    private function getProjectDetailView($project, $isArrayNew)
+    private function getProjectDetailView($project)
     {
         $project->load(['category', 'city', 'tickets']);
         $project->countSessionDependentViewNum();
@@ -575,7 +575,6 @@ class ProjectController extends Controller
         $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
         return view('project.detail_renew', [
             'project' => $project,
-            'isArrayNew' => $isArrayNew,
             'posters' =>$posterJson,
             //'ticketsCountInfoJson' => $ticketsCountInfoListJson,
             'ticketsCountInfoJson' => $ticketsCountInfoListJson,

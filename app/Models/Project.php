@@ -792,7 +792,6 @@ class Project extends Model
 
     public function getAmountTicketCountInfoList()
     {
-      //$orders = $this->orders;
       $tickets = $this->tickets;
 
       $ticketBuyInfoArray = [];
