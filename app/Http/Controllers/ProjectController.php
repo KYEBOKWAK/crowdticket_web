@@ -1691,6 +1691,7 @@ class ProjectController extends Controller
 
     public function test($projectId)
     {
+      /*
       //$project = Project::where('alias', '=', $projectId)->firstOrFail();
       $project = Project::findOrFail($projectId);
       
@@ -1707,10 +1708,7 @@ class ProjectController extends Controller
           'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
           'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
       ]);
-        /*
-      return view('test', [
-          'project' => $project]);
-          */
+      */
     }
 
     public function saveLog($message, $type)
