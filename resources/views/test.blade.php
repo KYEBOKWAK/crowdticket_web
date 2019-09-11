@@ -321,7 +321,18 @@ $selectedTicket = "";
         <div class="detail_width_wrapper">
           <div class="detail_tab_container">
             <ul role="tablist" class="nav nav-tabs">
-                
+                <li role="presentation" class="active">
+                <a href="#tab-story" aria-controls="default" role="tab" data-toggle="tab" class="first-navmenu--margin-top">스토리</a>
+                </li>
+                <li role="presentation" class="">
+                <a href="#tab-news" aria-controls="default" role="tab" data-toggle="tab">업데이트<span class="count">{{ $project->news_count }}</span></a>
+                </li>
+                <li role="presentation" class="">
+                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->getCommentCount() }}</span></a>
+                </li>
+                <li id="tabTicketMD" role="presentation" class="">
+                <a href="#tab-md" aria-controls="default" role="tab" data-toggle="tab">티켓&amp;MD정보</a>
+                </li>
             </ul>
           </div>
 
@@ -350,7 +361,7 @@ $selectedTicket = "";
               <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
                 @include('template.picking_list', ['project' => $project])
                 <div class="detail_story_wrapper">
-                 {!! html_entity_decode($project->story) !!}
+                 
                 </div>
               </div>
 
