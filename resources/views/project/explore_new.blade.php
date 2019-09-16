@@ -471,6 +471,11 @@ $(document).ready(function () {
 
         setMannayoList(request.projects, request.keytype);
         g_mannayoCounter += request.projects.length;
+
+        if(request.message)
+        {
+          swal('해당 MCN 이벤트가 없습니다.', '', 'error');
+        }
       }
     };
     

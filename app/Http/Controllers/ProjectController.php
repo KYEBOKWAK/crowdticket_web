@@ -10,6 +10,7 @@ use App\Models\Model as Model;
 use App\Models\Project as Project;
 use App\Models\Order as Order;
 use App\Models\Poster as Poster;
+use App\Models\Mcn as Mcn;
 use App\Models\Main_thumbnail as Main_thumbnail;
 use App\Models\Test as Test;
 use App\Services\SmsService;
@@ -346,6 +347,58 @@ class ProjectController extends Controller
             $user = \Auth::user();
         }
 
+        $mcnMessage = '';
+
+        if($request->company)
+        {
+          $mcn = Mcn::where('url', $request->company)->first();
+          if($mcn)
+          {
+            $projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+          }
+          else
+          {
+            $mcnMessage = 'MCN 정보가 없습니다!!';
+          }
+        }
+        else
+        {
+          $projects = Project::where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+        }
+
+        foreach($projects as $project)
+        {
+          $project->link = $project->getProjectURLWithIdOrAlias();
+          $project->poster_url = $project->getPosterUrl();
+          $project->ticket_data_slash = $project->getTicketDateFormattedSlash();
+
+          $project->city_name = '';
+          if(isset($project->city->name))
+          {
+            $project->city_name = $project->city->name;
+          }
+        }
+
+        return ['state' => 'success', 'projects' => $projects, 'keytype' => $request->keytype, 'message' => $mcnMessage];
+    }
+
+    /*
+    public function getProjectObjects(Request $request)
+    {
+        $orderBy = 'projects.funding_closing_at';
+        $orderType = 'desc';
+
+        $skip = $request->call_skip_counter;
+        $take = $request->call_once_max_counter;
+
+        $projects = [];
+
+        $user = null;
+        if(\Auth::check() && \Auth::user())
+        {
+            $user = \Auth::user();
+        }
+
         if($request->company === self::MCN_SANDBOX)
         {
           $thumb_projectIds = Main_thumbnail::where('type', Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT)->where('order_number', '>', 0)->select('project_id')->get();
@@ -372,6 +425,7 @@ class ProjectController extends Controller
 
         return ['state' => 'success', 'projects' => $projects, 'keytype' => $request->keytype];
     }
+    */
 
 
     public function getProjects()
