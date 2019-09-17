@@ -7065,6 +7065,18 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         };
 
         var setMannayoCancelButton = function(){
+          $(".mannayo_thumb_meetup_cancel_button").off('click');
+          $(".mannayo_thumb_meetup_cancel_button").on('click', function(){
+            if(!isLogin())
+            {
+              loginPopup(closeLoginPopup, null);
+              return;
+            }
+
+            var element = $(this);
+            openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
+          });
+          /*
           $(".mannayo_thumb_meetup_cancel_button").click(function(){
             if(!isLogin())
             {
@@ -7075,6 +7087,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
             var element = $(this);
             openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
           });
+          */
         }
 
         var removeMannayoListInMain = function(){
@@ -7152,29 +7165,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
                   isEnd = true;
                   break;
                 }
-
-                /*
-                if(i === 0 && j === 0 && k === 0 && g_mannayoCounter === 0)
-                {
-                  //처음 오브젝트는 새 만나요 만들기 버튼
-                  addCreateMannayoObject(objectFlexLayer);
-                }
-                else
-                {
-                  var meetup = meetups[index];
-                  if(meetup)
-                  {
-                    addMannayoObject(meetup, objectFlexLayer, k);
-                  }
-                  index++;
-                }
-
-                if(index >= meetups.length)
-                {
-                  isEnd = true;
-                  break;
-                }
-                */
               }
 
               if(isEnd)
@@ -7190,6 +7180,19 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           }
 
           var setMannayoListMeetupButton = function(){
+            $(".mannayo_thumb_meetup_button").off('click');
+            $(".mannayo_thumb_meetup_button").on('click', function(){
+              if(!isLogin())
+              {
+                loginPopup(closeLoginPopup, null);
+                return;
+              }
+
+              var element = $(this);
+              openMeetPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
+            })
+            /*
+            $(".mannayo_thumb_meetup_button").off('click');
             $(".mannayo_thumb_meetup_button").click(function(){
               if(!isLogin())
               {
@@ -7200,6 +7203,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               var element = $(this);
               openMeetPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
             });
+            */
           };
 
           var setMannayoCreateMeetupButton = function(){

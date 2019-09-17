@@ -4452,6 +4452,18 @@
         };
 
         var setMannayoCancelButton = function(){
+          $(".mannayo_thumb_meetup_cancel_button").off('click');
+          $(".mannayo_thumb_meetup_cancel_button").on('click', function(){
+            if(!isLogin())
+            {
+              loginPopup(closeLoginPopup, null);
+              return;
+            }
+
+            var element = $(this);
+            openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
+          });
+          /*
           $(".mannayo_thumb_meetup_cancel_button").click(function(){
             if(!isLogin())
             {
@@ -4463,6 +4475,7 @@
             //openCancelPopup(element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"));
             openCancelPopup(element.attr("data_meetup_channel_id"), element.attr("data_meetup_id"), element.attr("data_meetup_title"), element.attr("data_meetup_where"), element.attr("data_meetup_what"), element.attr("data_meetup_img_url"), element.attr("data_meetup_count"), element.attr("data_comments_count"));
           });
+          */
         }
 
         var removeMannayoListInMain = function(){
