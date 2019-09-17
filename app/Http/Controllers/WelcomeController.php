@@ -115,8 +115,7 @@ class WelcomeController extends Controller
 
         $thumbEventProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT);
 
-
-        $thumbPlayCreators = Main_thumb_play_creator::get();
+        $thumbPlayCreators = Main_thumb_play_creator::orderBy('order_number')->get();
 
         ///////meetup start
         $meetups = \DB::table('meetups')->whereNull('deleted_at')
