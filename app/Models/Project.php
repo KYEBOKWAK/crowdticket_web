@@ -986,7 +986,7 @@ class Project extends Model
         $time = '';
         if ($this->sale_start_at) {
             $time = strtotime($this->sale_start_at);
-            $time = date('Y-m-d H:00', $time);
+            $time = date('Y-m-d H:i', $time);
         }
 
         return $time;
