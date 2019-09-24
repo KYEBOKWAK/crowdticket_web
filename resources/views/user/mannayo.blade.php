@@ -1484,7 +1484,7 @@
           }
         }
     </style>
-    <link href="{{ asset('/css/mannayo.css?version=11') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/mannayo.css?version=12') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
 @endsection
 

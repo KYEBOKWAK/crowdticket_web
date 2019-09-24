@@ -1425,7 +1425,7 @@
         }
 
         .meetup_popup_option_label_creator_what{
-          
+          width: 145px;
         }
 
         .result_object_button_fake{
@@ -1710,7 +1710,7 @@
         }
 
         .meetup_popup_option_creator_what_wrapper{
-          width: 254px;
+          width: 250px;
         }
 
         .welcome_content_title{
@@ -2200,7 +2200,7 @@
 
         @media (max-width:420px) {
           .meetup_popup_option_label_creator_what{
-            width: 50px;
+            /*width: 50px;*/
           }
 
           .meetup_popup_container_wrapper{
