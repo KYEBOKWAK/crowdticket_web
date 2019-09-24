@@ -436,9 +436,6 @@ $(document).ready(function () {
       var loadingElement = document.createElement("div");
       loadingElement.setAttribute('class', 'order_state_container');
       loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
-                                      "<p>"+getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name)+"</p>" +
-                                    "</div>" +
                                     "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
                                       "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
                                     "</div>" +
@@ -587,9 +584,6 @@ $(document).ready(function () {
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
     loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
-                                      "<p>"+'티켓 구매 안하신 분(굿즈, 후원)'+"</p>" +
-                                    "</div>" +
                                     "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
                                       "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
                                     "</div>" +
@@ -602,6 +596,7 @@ $(document).ready(function () {
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/notickets';
     var table = new Tabulator(parentElement, {
+      height: tableHeight,
       placeholder:"No Data Set",
       layout:"fitDataFill",
       responsiveLayout:"collapse",
@@ -715,9 +710,6 @@ $(document).ready(function () {
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
     loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
-                                      "<p>"+'후원만 하신분'+"</p>" +
-                                    "</div>" +
                                     "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
                                       "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
                                     "</div>" +
@@ -729,6 +721,7 @@ $(document).ready(function () {
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/supports';
     var table = new Tabulator(parentElement, {
+      height: tableHeight,
       placeholder:"No Data Set",
       layout:"fitDataFill",
       responsiveLayout:"collapse",
@@ -899,9 +892,6 @@ $(document).ready(function () {
     var loadingElement = document.createElement("div");
     loadingElement.setAttribute('class', 'order_state_container');
     loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_wrapper state_ticket_margin_top'>" +
-                                      "<p>"+'전체 리스트'+"</p>" +
-                                    "</div>" +
                                     "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
                                       "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
                                     "</div>" +
