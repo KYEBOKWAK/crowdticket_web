@@ -260,6 +260,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/project/{project_id}/notickets', 'ProjectController@getOrderObjectsNoTicket');
     Route::get('orders/project/{project_id}/supports', 'ProjectController@getOrderObjectsSupports');
     Route::get('orders/project/{project_id}/all', 'ProjectController@getOrderObjectsAll');
+
+    Route::get('orders/light/info', 'ProjectController@getOrderLightInfo');
     //주문관리 api end
 
     //test URL

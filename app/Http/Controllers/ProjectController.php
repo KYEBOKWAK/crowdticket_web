@@ -776,17 +776,8 @@ class ProjectController extends Controller
         $project = $this->getSecureProjectById($id);
         //티켓 정보만 넘겨준다.
 
-        $ordersWithTimeJson = '';
-        $ordersNoBuyTicketJson = '';
-        $ordersAllWithTimeJson = '';
-        $orders = '';
-
         return view('project.orders', [
-            'project' => $project,
-            'ordersWithTimeJson' => $ordersWithTimeJson,
-            'ordersNoTicketJson' => $ordersNoBuyTicketJson,
-            'ordersAllWithTimeJson' => $ordersAllWithTimeJson,
-            'ordersAllWithTimeJson' => $orders,
+            'project' => $project
         ]);
     }
 
@@ -936,110 +927,6 @@ class ProjectController extends Controller
       
       return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
     }
-
-    /*
-    public function getOrders($id)
-    {
-
-        $project = $this->getSecureProjectById($id);
-        $orders = $project->ordersWithoutError()->withTrashed()->get();
-
-
-        //주문자 정보 START
-        $ordersWithTime = [];
-        //최종 정리된 타임을 기준으로 주문자를 정렬한다.
-        foreach($orders as $order)
-        {
-          $ticket = $order->ticket;
-          if(!$ticket)
-          {
-            continue;
-          }
-
-          $ticketTimeUnix = strtotime($ticket->show_date);
-
-          $isSameTicket = false;
-
-          foreach($ordersWithTime as $key => $value)
-          {
-            //같은 티켓이면 order 데이터에 쌓아준다.
-            if($ticketTimeUnix === $value['show_date_unix'] && $ticket->id === $value['ticketId'])
-            {
-              $isSameTicket = true;
-              //중복된 값 셋팅
-              array_push($ordersWithTime[$key]['orders'], $this->getSuperviseOrderList($order, $project));
-              break;
-            }
-          }
-
-          if($isSameTicket)
-          {
-            continue;
-          }
-
-          //셋팅되지 않은 티켓 정보 최초 셋팅
-          $tempTicket['show_date_unix'] = $ticketTimeUnix;
-          $tempTicket['show_date'] = $ticket->show_date;
-          $tempTicket['ticketId'] = $ticket->id;
-          $tempTicket['isPlaceTicket'] = $ticket->isPlaceTicket();
-
-          $tempTicket['ticket_category'] = $ticket->getSeatCategory();
-
-          //티켓 셋팅
-          $tempTicket['orders'] = [];
-          array_push($tempTicket['orders'], $this->getSuperviseOrderList($order, $project));
-
-          array_push($ordersWithTime, $tempTicket);
-        }
-
-        $ordersWithTimeJson = json_encode($ordersWithTime);
-
-        //주문자 정보 END
-
-        //티켓 미구매 리스트
-        $ordersNoBuyTicket = [];
-        $tempNoTicket['orders'] = [];
-
-        foreach($orders as $order)
-        {
-          $ticket = $order->ticket;
-          if($ticket)
-          {
-            continue;
-          }
-
-          array_push($tempNoTicket['orders'], $this->getSuperviseOrderList($order, $project));
-        }
-
-        array_push($ordersNoBuyTicket, $tempNoTicket);
-
-        $ordersNoBuyTicketJson = json_encode($ordersNoBuyTicket);
-
-        //전체리스트
-
-        $ordersAllTicket = [];
-        $tempAllTicket['orders'] = [];
-
-        $orderAll = $project->ordersWithoutError()->withTrashed()->get();
-
-        foreach($orderAll as $order)
-        {
-          array_push($tempAllTicket['orders'], $this->getSuperviseOrderList($order, $project));
-        }
-
-        array_push($ordersAllTicket, $tempAllTicket);
-
-        $ordersAllWithTimeJson = json_encode($ordersAllTicket);
-
-        return view('project.orders', [
-            'project' => $project,
-            'ordersWithTimeJson' => $ordersWithTimeJson,
-            'ordersNoTicketJson' => $ordersNoBuyTicketJson,
-            'ordersAllWithTimeJson' => $ordersAllWithTimeJson,
-            //'ordersAllWithTimeJson' => $orders,
-        ]);
-    }
-    */
 
     public function getSuperviseOrderList($order, $project)
     {
@@ -1192,6 +1079,20 @@ class ProjectController extends Controller
       }
 
       return "FALSE";
+    }
+
+    public function getOrderLightInfo(Request $request)
+    {
+      $project = Project::find($request->project_id);
+      $orderAllCount = $project->ordersWithoutError()->withTrashed()->count();
+      $orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('count');
+      $orderTotalPrice = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('price');
+
+      $orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
+
+      $orderCancelCount = $project->ordersWithoutError()->withTrashed()->where('state', '>', Order::ORDER_STATE_PAY_END)->count();
+
+      return ['state' => 'success', 'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];
     }
 
     public function getAttend($projectId)
@@ -1572,30 +1473,6 @@ class ProjectController extends Controller
         return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
       }
     }
-
-/*
-    public function sendSMSAfterPickComplete($projectId)
-    {
-      $project = $this->getSecureProjectById($projectId);
-
-      $orders = $project->getOrdersOnlyPick();
-
-      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
-          foreach ($orders as $order) {
-            if($order->is_pick == 'PICK')
-            {
-              $this->sendPickSuccessSMS($project, $order);
-            }
-          }
-      }
-      else
-      {
-        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
-      }
-
-      return ["state" => "success", "message" => ""];
-    }
-    */
 
     public function addPicking($projectId, $orderId)
     {

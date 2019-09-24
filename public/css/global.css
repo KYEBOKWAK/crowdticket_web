@@ -123,9 +123,9 @@ body{
   width: 20px;
   height: 20px;
   margin-bottom: 0px;
-  border: 3px solid rgba(234,83,90,.3);
+  border: 3px solid rgba(67, 201,240,.3);
   border-radius: 50%;
-  border-top-color: #ea535a;
+  border-top-color: #43c9f0;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
 }

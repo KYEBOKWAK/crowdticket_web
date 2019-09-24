@@ -11,14 +11,10 @@
         }
 
         #order_supervise_container{
-          /*width: 900px;
-          margin-left: auto;
-          margin-right: auto;*/
         }
 
         .order_container{
           width: 900px;
-          /*width: 100%;*/
           margin-left: auto;
           margin-right: auto;
         }
@@ -39,11 +35,6 @@
           /*margin-bottom: 30px;*/
           background-color: white;
         }
-/*
-        .order_supervise_all_list{
-          max-height: 300px;
-        }
-  */
 
         .order_collapse_rows{
           width: 50%;
@@ -99,6 +90,112 @@
           margin-left: 5px;
         }
 
+        .btn_order_info{
+          width: 100px;
+          padding: 15px;
+          border-radius: 4px;
+          font-size: 15px;
+          background-color: #43c9f0;
+          border: 1px solid #43c9f0;
+          font-weight: 500;
+        }
+
+        .btn_order_info:hover,.btn_order_info:active,.btn_order_info:focus {
+            background-color:#43c9f0;
+            border:1px solid #43c9f0;
+        }
+
+        .info_label{
+          font-size: 15px;
+          margin-top: auto;
+          margin-bottom: auto;
+          margin-right: 20px;
+          font-weight: bold;
+        }
+
+        .order_info_tickets_wrapper{
+          margin-bottom: 20px;
+        }
+
+        .input_check_box{
+          opacity: 0;
+          position: relative;
+          z-index: 100;
+          bottom: 4px;
+        }
+
+        .input_check_box[type="checkbox"]{
+          width: 13px;
+          height: 100%;
+          margin-right: 0px;
+          margin-top: 0px;
+        }
+
+        .checkbox_img{
+          display: none;
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          top: 6px;
+          left: 0px;
+        }
+
+        .checkbox_img_unselect{
+          display: block;
+        }
+
+        .checkbox_wrapper{
+          position: relative;
+          margin-right: 12px;
+        }
+
+        .order_checkbox_bg{
+          background-color: #f7f7f7;
+          width: 100%;
+          height: 124px;
+          border-top: 1px solid #cccccc;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+
+        .checkbox_label{
+          margin-top: 16px;
+          margin-left: 16px;
+          font-size: 14px;
+          font-weight: normal;
+          color: #4d4d4d;
+          margin-bottom: 25px;
+        }
+
+        #input_check_box_tickets{
+          margin-top: 6px;
+        }
+
+        #input_check_box_all_list{
+          margin-top: 6px;
+        }
+
+        .loading_size_20{
+          margin-top: 7px;
+          margin-left: 7px;
+        }
+
+        .order_tickets_label{
+          margin-top: 8px;
+          margin-left: 4px;
+          color: #43c9f0;
+          font-size: 14px;
+          font-weight: normal;
+        }
+
+        .order_all_info_label{
+          margin-top: 8px;
+          margin-left: 4px;
+          color: #43c9f0;
+          font-size: 14px;
+          font-weight: normal;
+        }
+
     </style>
 @endsection
 
@@ -123,10 +220,57 @@
             <p class="text-center">조회수 {{ $project->view_count }}</p>
             <p class="text-center">** pc에 최적화 되어있습니다. **</p>
         </div>
-
     </div>
 
     <div class='order_container'>
+      <div id='order_info_word'>
+        <div class='order_info_tickets_wrapper flex_layer'>
+          <p id='order_light_info_label' class='info_label'>총 참여자수: 0명 / 총 티켓구매 : 0매 / 취소 수 : 0매 / 후원만 한 금액 : 0원 / 총 티켓 판매 금액 : 0원</p>
+        </div>
+      </div>
+
+      <div class='flex_layer'>
+        <div class='checkbox_wrapper'>
+          <input id='input_check_box_all' type='checkbox' class='input_check_box' value=''/>
+          <img class='checkbox_img checkbox_img_select checkbox_img_select_all' src="{{ asset('/img/icons/svg/ic-checkbox-btn-s.svg') }}"/>
+          <img class='checkbox_img checkbox_img_unselect checkbox_img_unselect_all' src="{{ asset('/img/icons/svg/ic-checkbox-btn-n.svg') }}"/>
+        </div>
+        <p style='font-size: 24px; font-weight: normal; margin-bottom: 0px;'>
+          전체 불러오기
+        </p>
+      </div>
+
+      <div class='order_checkbox_bg'>
+        <p class='checkbox_label'>자세한 데이터 확인을 하고 싶으신 경우, 아래에서 확인할 데이터를 선택해주세요</p>
+        <div class='order_checkbox_wrapper flex_layer'>
+          <div class='flex_layer' style='margin-left: 32px;'>
+            <div class='checkbox_wrapper'>
+              <input id='input_check_box_tickets' type='checkbox' class='input_check_box' data-ischecked='' value=''/>
+              <img class='checkbox_img checkbox_img_select checkbox_img_select_tickets' src="{{ asset('/img/icons/svg/ic-checkbox-btn-s.svg') }}"/>
+              <img class='checkbox_img checkbox_img_unselect checkbox_img_unselect_tickets' src="{{ asset('/img/icons/svg/ic-checkbox-btn-n.svg') }}"/>
+            </div>
+            <p style='font-size: 14px; font-weight: normal; margin-bottom: 0px; margin-top: 7px;'>
+              티켓 종류
+            </p>
+            <p class='order_tickets_label'>
+            </p>
+          </div>
+
+          <div class='flex_layer' style='margin-left: 32px;'>
+            <div class='checkbox_wrapper'>
+              <input id='input_check_box_all_list' type='checkbox' class='input_check_box' data-ischecked='' value=''/>
+              <img class='checkbox_img checkbox_img_select checkbox_img_select_all_list' src="{{ asset('/img/icons/svg/ic-checkbox-btn-s.svg') }}"/>
+              <img class='checkbox_img checkbox_img_unselect checkbox_img_unselect_all_list' src="{{ asset('/img/icons/svg/ic-checkbox-btn-n.svg') }}"/>
+            </div>
+            <p style='font-size: 14px; font-weight: normal; margin-bottom: 0px; margin-top: 7px;'>
+              전체 리스트
+            </p>
+            <p class='order_all_info_label'>
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div id="order_supervise_container">
       </div>
 
@@ -159,6 +303,7 @@ $(document).ready(function () {
   //var call_once_order_count = 40;
   var call_once_order_count = 100;
   var call_delay_time = 100;
+  var tableHeight = "375px";
   var order_supervise_container = $('#order_supervise_container');
   var order_no_ticket_supervise_container = $('#order_no_ticket_supervise_container');
   var order_all_supervise_container = $('#order_all_supervise_container');
@@ -282,7 +427,7 @@ $(document).ready(function () {
       order_supervise_container.append(eventStartElement);
 
       var parentElement = document.createElement("div");
-      parentElement.setAttribute('class', 'order_supervise_list');
+      parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
       order_supervise_container.append(parentElement);
 
       var loadingNameID = 'loading_ticket_id_' + ticketInfo.id;
@@ -306,6 +451,7 @@ $(document).ready(function () {
 
       var ajaxURL = '/orders/project/'+$('#project_id').val()+'/objects/' + ticketInfo.id;
       var table = new Tabulator(parentElement, {
+        height: tableHeight,
         placeholder:"No Data Set",
         layout:"fitDataFill",
         responsiveLayout:"collapse",
@@ -363,6 +509,7 @@ $(document).ready(function () {
   }
 
   var requestTicketList = function(){
+    loadingProcessWithSize($('.order_tickets_label'));
     var url="/orders/project/tickets";
     var method = 'get';
     var data =
@@ -370,12 +517,15 @@ $(document).ready(function () {
       'project_id' : $('#project_id').val()
     }
     var success = function(request) {
+      loadingProcessStopWithSize($('.order_tickets_label'));
       if(request.state === 'success'){
+        $('.order_tickets_label').text('완료');
         initTable(request.data_tickets, request.data_goods);
       }
     };
     
     var error = function(request) {
+      loadingProcessStopWithSize($('.order_tickets_label'));
       console.error('error');
     };
     
@@ -428,7 +578,7 @@ $(document).ready(function () {
     order_no_ticket_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
-    parentElement.setAttribute('class', 'order_supervise_list');
+    parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
     order_no_ticket_supervise_container.append(parentElement);
 
     var loadingNameID = 'loading_no_ticket_order';
@@ -515,8 +665,13 @@ $(document).ready(function () {
       if(request.state === 'success'){
         if(request.data_noticket_orders_count > 0)
         {
+          $('.order_no_tickets_label').text('완료');
           //티켓 미구매인데 주문이 있을때 초기화 해준다.
           initNoTicketTable(request.data_goods);
+        }
+        else
+        {
+          $('.order_no_tickets_label').text('없음');
         }
       }
     };
@@ -549,7 +704,7 @@ $(document).ready(function () {
     order_no_ticket_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
-    parentElement.setAttribute('class', 'order_supervise_list');
+    parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
     order_no_ticket_supervise_container.append(parentElement);
 
     //var loadingNameID = 'loading_order_id_' + orderInfo.id;
@@ -638,7 +793,12 @@ $(document).ready(function () {
         if(request.data_support_orders_count > 0)
         {
           //티켓 미구매인데 주문이 있을때 초기화 해준다.
+          $('.order_only_support_label').text('완료');
           initSupportsTable();
+        }
+        else
+        {
+          $('.order_only_support_label').text('없음');
         }
       }
     };
@@ -660,6 +820,7 @@ $(document).ready(function () {
 
   var initAllTable = function(data_goods, order_counter){
     var question_object_json = $("#question_object_json").val();
+    var _tableHeight = tableHeight;
     var g_question_object = '';
     if(question_object_json)
     {
@@ -669,7 +830,7 @@ $(document).ready(function () {
     //컬럼 셋팅 start//
     var columnsArray = new Array();
     //columnsArray.push(formatterObject);
-    var tableHeight = "375px";
+    
     for(var i = 0 ; i < columnsAllInfo.length ; i++)
     {
       var columnsInfoRow = columnsAllInfo[i];
@@ -716,7 +877,7 @@ $(document).ready(function () {
 
     if(order_counter <= 13)
     {
-      tableHeight = "100%";
+      _tableHeight = "100%";
     }
 
     //컬럼 셋팅 end//
@@ -724,7 +885,7 @@ $(document).ready(function () {
     var eventStartElement = document.createElement("div");
     eventStartElement.setAttribute('class', 'order_supervise_list_event_start');
     //$(eventStartElement).text("");
-    eventStartElement.innerHTML = "전체 리스트 <button id='download_excel' type='button'><img style='height: 100%;' src='https://img.icons8.com/color/96/2980b9/ms-excel.png'>엑셀 다운로드</button><button id='down_all_button'>다운로드</button>"
+    eventStartElement.innerHTML = "전체 리스트 <button id='download_excel' type='button'><img style='height: 100%;' src='https://img.icons8.com/color/96/2980b9/ms-excel.png'>엑셀 다운로드</button>"
     order_all_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
@@ -742,7 +903,7 @@ $(document).ready(function () {
                                       "<p>"+'전체 리스트'+"</p>" +
                                     "</div>" +
                                     "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
-                                      "<p id='"+loadingWordID+"'>데이터 가져오기를 눌러주세요</p>" + 
+                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
                                     "</div>" +
                                     "<div class='state_ticket_info_loading_wrapper'>" +
                                       "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
@@ -753,7 +914,7 @@ $(document).ready(function () {
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/all';
 
     var export_table = new Tabulator(parentElement, {
-      height: tableHeight,
+      height: _tableHeight,
       placeholder:"No Data Set",
       layout:"fitDataFill",
       ajaxURL : ajaxURL, // ajax URL 
@@ -785,10 +946,6 @@ $(document).ready(function () {
       },
     });
 
-    //$('#down_all_button').click(function(){
-    //  export_table.setData('/orders/project/'+$('#project_id').val()+'/all')
-    //});
-
     $("#download_excel").click(function(){
         if( $('#'+'loading_all_order').css("display") === "none" )
         {
@@ -804,6 +961,7 @@ $(document).ready(function () {
   }
 
   var requestOrdersAll = function(){
+    loadingProcessWithSize($('.order_all_info_label'));
     var url="/orders/project/all";
     var method = 'get';
     var data =
@@ -811,11 +969,44 @@ $(document).ready(function () {
       'project_id' : $('#project_id').val()
     }
     var success = function(request) {
+      loadingProcessStopWithSize($('.order_all_info_label'));
       if(request.state === 'success'){
         if(request.data_orders_count > 0)
         {
+          $('.order_all_info_label').text('완료');
           initAllTable(request.data_goods, request.data_orders_count);
         }
+        else
+        {
+          $('.order_all_info_label').text('없음');
+        }
+      }
+    };
+    
+    var error = function(request) {
+      loadingProcessStopWithSize($('.order_all_info_label'));
+      console.error('error');
+    };
+    
+    $.ajax({
+    'url': url,
+    'method': method,
+    'data' : data,
+    'success': success,
+    'error': error
+    });
+  };
+
+  var requestLightInfo = function(){
+    var url="/orders/light/info";
+    var method = 'get';
+    var data =
+    {
+      'project_id' : $('#project_id').val()
+    }
+    var success = function(request) {
+      if(request.state === 'success'){
+        $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만 한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원');
       }
     };
     
@@ -832,8 +1023,158 @@ $(document).ready(function () {
     });
   };
 
-  requestOrdersAll();
+  requestLightInfo();
 
+  var checkboxImgToggle = function(isChecked, selectName, unselectName){
+    if(isChecked){
+      $("."+selectName).show();
+      $("."+unselectName).hide();
+    }
+    else{
+      $("."+selectName).hide();
+      $("."+unselectName).show();
+    }
+  }
+
+  var checkAllToggle = function(isAll){
+    if(isAll)
+    {
+      document.getElementById("input_check_box_tickets").checked = isAll;
+      checkboxImgToggle(isAll, 'checkbox_img_select_tickets', 'checkbox_img_unselect_tickets');
+
+      document.getElementById("input_check_box_all_list").checked = isAll;
+      checkboxImgToggle(isAll, 'checkbox_img_select_all_list', 'checkbox_img_unselect_all_list');
+
+      if($('#input_check_box_tickets').attr('data-ischecked') === 'ischecked')
+      {
+        setToggleTicketsValue(true, false);
+      }
+      else
+      {
+        setToggleTicketsValue(true, true);
+        setIsChecked($('#input_check_box_tickets'), 'ischecked');
+      }
+
+      if($('#input_check_box_all_list').attr('data-ischecked') === 'ischecked')
+      {
+        setToggleAllListValue(true, false);
+      }
+      else
+      {
+        setToggleAllListValue(true, true);
+        setIsChecked($('#input_check_box_all_list'), 'ischecked');
+      }
+    }
+    else
+    {
+      document.getElementById("input_check_box_tickets").checked = isAll;
+      checkboxImgToggle(isAll, 'checkbox_img_select_tickets', 'checkbox_img_unselect_tickets');
+
+      document.getElementById("input_check_box_all_list").checked = isAll;
+      checkboxImgToggle(isAll, 'checkbox_img_select_all_list', 'checkbox_img_unselect_all_list');
+
+      setToggleTicketsValue(false, false);
+      setToggleAllListValue(false, false);
+    }
+  }
+
+  var setToggleTicketsValue = function(isToggle, isFirst){
+    if(isToggle)
+    {
+      if(isFirst)
+      {
+        requestTicketList();
+        requestNoTicketList();
+        requestOnlySupportList();
+      }
+      else
+      {
+        $('#order_supervise_container').show();
+        $('#order_no_ticket_supervise_container').show();
+      }
+    }
+    else
+    {
+      $('#order_supervise_container').hide();
+      $('#order_no_ticket_supervise_container').hide();
+    }
+  };
+
+  var setToggleAllListValue = function(isToggle, isFirst){
+    if(isToggle)
+    {
+      if(isFirst)
+      {
+        requestOrdersAll();
+      }
+      else
+      {
+        $('#order_all_supervise_container').show();
+      }
+    }
+    else
+    {
+      $('#order_all_supervise_container').hide();
+    }
+  };
+
+  var setIsChecked = function(dom, isChecked){
+    dom.attr('data-ischecked', isChecked);
+  };
+
+  $("#input_check_box_all").change(function(){
+    if($(this).is(":checked")){
+      //익명 체크하면
+      checkboxImgToggle(true, 'checkbox_img_select_all', 'checkbox_img_unselect_all');
+      checkAllToggle(true);
+    }
+    else{
+      checkboxImgToggle(false, 'checkbox_img_select_all', 'checkbox_img_unselect_all');
+      checkAllToggle(false);
+    }
+  });
+
+  $("#input_check_box_tickets").change(function(){
+    if($(this).is(":checked")){
+      //체크하면
+      checkboxImgToggle(true, 'checkbox_img_select_tickets', 'checkbox_img_unselect_tickets');
+
+      if($(this).attr('data-ischecked') === 'ischecked')
+      {
+        setToggleTicketsValue(true, false);
+      }
+      else
+      {
+        setToggleTicketsValue(true, true);
+        setIsChecked($(this), 'ischecked');
+      }
+    }
+    else{
+      checkboxImgToggle(false, 'checkbox_img_select_tickets', 'checkbox_img_unselect_tickets');
+      setToggleTicketsValue(false, false);
+    }
+  });
+
+  $("#input_check_box_all_list").change(function(){
+    if($(this).is(":checked")){
+      //체크하면
+      checkboxImgToggle(true, 'checkbox_img_select_all_list', 'checkbox_img_unselect_all_list');
+
+      if($(this).attr('data-ischecked') === 'ischecked')
+      {
+        setToggleAllListValue(true, false);
+      }
+      else
+      {
+        setToggleAllListValue(true, true);
+        setIsChecked($(this), 'ischecked');
+      }
+    }
+    else{
+      checkboxImgToggle(false, 'checkbox_img_select_all_list', 'checkbox_img_unselect_all_list');
+      setToggleAllListValue(false, false);
+    }
+  });
 });
 
 </script>
