@@ -1098,7 +1098,7 @@ class ProjectController extends Controller
       */
       $orderTotalPrice = 0;
       //$orderTotalPrice = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('price');
-      Order::where('project_id', $project->id)->chunk(100, function($orders) use(&$orderTotalPrice){
+      Order::where('project_id', $project->id)->where('state', '<=', Order::ORDER_STATE_PAY_END)->withTrashed()->chunk(100, function($orders) use(&$orderTotalPrice){
         foreach($orders as $order)
         {
           $orderTotalPrice += $order->getTotalPriceWithoutCommission();
