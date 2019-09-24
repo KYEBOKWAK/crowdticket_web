@@ -72,6 +72,11 @@ class Ticket extends Model
       return $this->hasMany('App\Models\Order');
     }
 
+    public function ordersOnlySuccess()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END);
+    }
+
     public function ordersWithoutError()
     {
       return $this->hasMany('App\Models\Order')->where('state', '<', Order::ORDER_STATE_ERROR_START);

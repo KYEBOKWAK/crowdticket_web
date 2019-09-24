@@ -798,7 +798,7 @@ class Project extends Model
       if($tickets)
       {
         foreach ($tickets as $ticket) {
-          $ticketBuyTotalCount = (int)$ticket->orders()->sum('count');
+          $ticketBuyTotalCount = (int)$ticket->ordersOnlySuccess()->sum('count');
           if($ticketBuyTotalCount > 0)
           {
             $ticketInfoObject['id'] = $ticket->id;

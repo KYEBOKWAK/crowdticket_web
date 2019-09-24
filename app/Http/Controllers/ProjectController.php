@@ -1086,10 +1086,26 @@ class ProjectController extends Controller
       $project = Project::find($request->project_id);
       $orderAllCount = $project->ordersWithoutError()->withTrashed()->count();
       $orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('count');
-      $orderTotalPrice = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('price');
+      
+      /*
+      User::chunk(200, function($users)
+      {
+          foreach ($users as $user)
+          {
+              //
+          }
+      });
+      */
+      $orderTotalPrice = 0;
+      //$orderTotalPrice = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('price');
+      Order::where('project_id', $project->id)->chunk(100, function($orders) use(&$orderTotalPrice){
+        foreach($orders as $order)
+        {
+          $orderTotalPrice += $order->getTotalPriceWithoutCommission();
+        }
+      });
 
       $orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
-
       $orderCancelCount = $project->ordersWithoutError()->withTrashed()->where('state', '>', Order::ORDER_STATE_PAY_END)->count();
 
       return ['state' => 'success', 'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];

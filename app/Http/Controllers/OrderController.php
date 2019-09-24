@@ -187,18 +187,8 @@ class OrderController extends Controller
         $this->sendMail($emailTo, $project, $order);
       }
 
-
-      //setcookie("isNewOrderStart","false", time()+604800, "/tickets");
-
-      //return ["isSuccess" => true, "orderId" => $order->id];
       return ["orderResultType" => "orderResultSuccess", "orderId" => $order->id, "eMessage" => ""];
-/*
-      return view('order.complete', [
-          'project' => $project,
-          'order' => $order,
-          'isComment' => FALSE
-      ]);
-      */
+
     } catch (PaymentFailedException $e) {
       $orderId = '';
       if($g_order)
@@ -211,22 +201,6 @@ class OrderController extends Controller
 
 
       return ["orderResultType" => "FALSE", "orderId" => $orderId, "eMessage" => $e->getMessage()];
-
-      /*
-      if($g_order)
-      {
-        $g_order->setState(Order::ORDER_STATE_ERROR_PAY);
-        $g_order->fail_message = $e->getMessage();
-        $g_order->save();
-      }
-
-      return view('order.error', [
-          'message' => $e->getMessage(),
-          'project_id' => $project->id,
-          'request_price' => $this->getOrderUnitPrice(),
-          'ticket_count' => $this->getOrderCount()
-      ]);
-      */
     }
   }
 

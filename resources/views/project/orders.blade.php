@@ -225,7 +225,7 @@
     <div class='order_container'>
       <div id='order_info_word'>
         <div class='order_info_tickets_wrapper flex_layer'>
-          <p id='order_light_info_label' class='info_label'>총 참여자수: 0명 / 총 티켓구매 : 0매 / 취소 수 : 0매 / 후원만 한 금액 : 0원 / 총 티켓 판매 금액 : 0원</p>
+          <p id='order_light_info_label' class='info_label'>총 참여자수: 0명 / 총 티켓구매 : 0매 / 취소 수 : 0매 / 후원한 금액 : 0원 / 총 티켓 판매 금액 : 0원</p>
         </div>
       </div>
 
@@ -1006,7 +1006,7 @@ $(document).ready(function () {
     }
     var success = function(request) {
       if(request.state === 'success'){
-        $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만 한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원');
+        $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원');
       }
     };
     
