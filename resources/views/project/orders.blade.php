@@ -10,7 +10,16 @@
           }
         }
 
+        p{
+          margin-bottom: 0px;
+        }
+
         #order_supervise_container{
+          
+        }
+
+        #order_no_ticket_supervise_container{
+          
         }
 
         .order_container{
@@ -52,6 +61,7 @@
           font-size: 15px;
           font-weight: 900;
           margin-bottom: 5px;
+          margin-top: 50px;
         }
 
         #download_excel{
@@ -421,30 +431,31 @@ $(document).ready(function () {
     {
       var ticketInfo = data_tickets[i];
 
+      var loadingWordID = 'loading_word_ticket_id_' + ticketInfo.id;
+      var loadingNameID = 'loading_ticket_id_' + ticketInfo.id;
+
       var eventStartElement = document.createElement("div");
       eventStartElement.setAttribute('class', 'order_supervise_list_event_start');
-      $(eventStartElement).text(getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name));
+      eventStartElement.innerHTML = "<div class='flex_layer'>" +
+                                      "<p style='margin-top: auto;'>" +
+                                        getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name)+
+                                      "</p>" +
+
+                                      "<div class='flex_layer' style='margin-left: auto;'>" +
+                                        "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                          "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                        "</div>" +
+                                        "<div class='state_ticket_info_loading_wrapper'>" +
+                                          "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                        "</div>" +
+                                      "</div>" +
+                                    "</div>";
+      //$(eventStartElement).text(getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name));
       order_supervise_container.append(eventStartElement);
 
       var parentElement = document.createElement("div");
       parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
       order_supervise_container.append(parentElement);
-
-      var loadingNameID = 'loading_ticket_id_' + ticketInfo.id;
-      var loadingWordID = 'loading_word_ticket_id_' + ticketInfo.id;
-
-      var loadingElement = document.createElement("div");
-      loadingElement.setAttribute('class', 'order_state_container');
-      loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
-                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
-                                    "</div>" +
-                                    "<div class='state_ticket_info_loading_wrapper'>" +
-                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
-                                    "</div>" +
-                                  "</div>";
-
-      order_supervise_container.append(loadingElement);
 
       var ajaxURL = '/orders/project/'+$('#project_id').val()+'/objects/' + ticketInfo.id;
       var table = new Tabulator(parentElement, {
@@ -568,31 +579,31 @@ $(document).ready(function () {
     }
     //컬럼 셋팅 end//
 
+    var loadingNameID = 'loading_no_ticket_order';
+    var loadingWordID = 'loading_word_no_ticket_order';
+
     var eventStartElement = document.createElement("div");
     eventStartElement.setAttribute('class', 'order_supervise_list_event_start');
-    
-    $(eventStartElement).text('티켓 구매 안하신 분(굿즈, 후원)');
+    eventStartElement.innerHTML = "<div class='flex_layer'>" +
+                                      "<p style='margin-top: auto;'>" +
+                                      '티켓 구매 안하신 분(굿즈, 후원)' +
+                                      "</p>" +
+
+                                      "<div class='flex_layer' style='margin-left: auto;'>" +
+                                        "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                          "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                        "</div>" +
+                                        "<div class='state_ticket_info_loading_wrapper'>" +
+                                          "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                        "</div>" +
+                                      "</div>" +
+                                    "</div>";
+
     order_no_ticket_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
     parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
     order_no_ticket_supervise_container.append(parentElement);
-
-    var loadingNameID = 'loading_no_ticket_order';
-    var loadingWordID = 'loading_word_no_ticket_order';
-
-    var loadingElement = document.createElement("div");
-    loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
-                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
-                                    "</div>" +
-                                    "<div class='state_ticket_info_loading_wrapper'>" +
-                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
-                                    "</div>" +
-                                  "</div>";
-
-    order_no_ticket_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/notickets';
     var table = new Tabulator(parentElement, {
@@ -692,32 +703,30 @@ $(document).ready(function () {
     columnsArray.push(formatterObject);
     //컬럼 셋팅 end//
 
+    var loadingNameID = 'loading_support_order';
+    var loadingWordID = 'loading_word_support_order';
+
     var eventStartElement = document.createElement("div");
     eventStartElement.setAttribute('class', 'order_supervise_list_event_start');
-    //$(eventStartElement).text(getTicketDateFullInfoWithCategoryText(ticketInfo.show_date, ticketInfo.ticket_name));
-    $(eventStartElement).text('후원만 하신분');
+    eventStartElement.innerHTML = "<div class='flex_layer'>" +
+                                      "<p style='margin-top: auto;'>" +
+                                      '후원만 하신분' +
+                                      "</p>" +
+
+                                      "<div class='flex_layer' style='margin-left: auto;'>" +
+                                        "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                          "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                        "</div>" +
+                                        "<div class='state_ticket_info_loading_wrapper'>" +
+                                          "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                        "</div>" +
+                                      "</div>" +
+                                    "</div>";
     order_no_ticket_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
     parentElement.setAttribute('class', 'order_supervise_list order_tickets_div');
     order_no_ticket_supervise_container.append(parentElement);
-
-    //var loadingNameID = 'loading_order_id_' + orderInfo.id;
-    //var loadingWordID = 'loading_word_order_id_' + orderInfo.id;
-    var loadingNameID = 'loading_support_order';
-    var loadingWordID = 'loading_word_support_order';
-
-    var loadingElement = document.createElement("div");
-    loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
-                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
-                                    "</div>" +
-                                    "<div class='state_ticket_info_loading_wrapper'>" +
-                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
-                                    "</div>" +
-                                  "</div>";
-    order_no_ticket_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/supports';
     var table = new Tabulator(parentElement, {
@@ -875,31 +884,34 @@ $(document).ready(function () {
 
     //컬럼 셋팅 end//
 
+    var loadingNameID = 'loading_all_order';
+    var loadingWordID = 'loading_word_all_order';
+
     var eventStartElement = document.createElement("div");
     eventStartElement.setAttribute('class', 'order_supervise_list_event_start');
-    //$(eventStartElement).text("");
-    eventStartElement.innerHTML = "전체 리스트 <button id='download_excel' type='button'><img style='height: 100%;' src='https://img.icons8.com/color/96/2980b9/ms-excel.png'>엑셀 다운로드</button>"
+    //eventStartElement.innerHTML = "전체 리스트 <button id='download_excel' type='button'><img style='height: 100%;' src='https://img.icons8.com/color/96/2980b9/ms-excel.png'>엑셀 다운로드</button>"
+
+    eventStartElement.innerHTML = "<div class='flex_layer'>" +
+                                      "<p style='margin-top: auto;'>" +
+                                      "전체 리스트 <button id='download_excel' type='button'><img style='height: 100%;' src='https://img.icons8.com/color/96/2980b9/ms-excel.png'>엑셀 다운로드</button>" +
+                                      "</p>" +
+
+                                      "<div class='flex_layer' style='margin-left: auto;'>" +
+                                        "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
+                                          "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
+                                        "</div>" +
+                                        "<div class='state_ticket_info_loading_wrapper'>" +
+                                          "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
+                                        "</div>" +
+                                      "</div>" +
+                                    "</div>";
+                                    
     order_all_supervise_container.append(eventStartElement);
 
     var parentElement = document.createElement("div");
     //parentElement.setAttribute('id', 'order_supervise_list_'+i);
     parentElement.setAttribute('class', 'order_supervise_list order_supervise_all_list');
     order_all_supervise_container.append(parentElement);
-
-    var loadingNameID = 'loading_all_order';
-    var loadingWordID = 'loading_word_all_order';
-
-    var loadingElement = document.createElement("div");
-    loadingElement.setAttribute('class', 'order_state_container');
-    loadingElement.innerHTML = "<div class='flex_layer'>" +
-                                    "<div class='state_ticket_info_loading_word_wrapper state_ticket_margin_top'>" +
-                                      "<p id='"+loadingWordID+"'>데이터 가져오는 중</p>" + 
-                                    "</div>" +
-                                    "<div class='state_ticket_info_loading_wrapper'>" +
-                                      "<p id='"+loadingNameID+"' class='loading order_loading'></p>" +
-                                    "</div>" +
-                                  "</div>";
-    order_all_supervise_container.append(loadingElement);
 
     var ajaxURL = '/orders/project/'+$('#project_id').val()+'/all';
 
