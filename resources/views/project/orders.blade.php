@@ -303,7 +303,7 @@ $(document).ready(function () {
   //var call_once_order_count = 40;
   var call_once_order_count = 100;
   var call_delay_time = 100;
-  var tableHeight = "375px";
+  var tableHeight = "700px";
   var order_supervise_container = $('#order_supervise_container');
   var order_no_ticket_supervise_container = $('#order_no_ticket_supervise_container');
   var order_all_supervise_container = $('#order_all_supervise_container');
