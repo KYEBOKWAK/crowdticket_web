@@ -633,11 +633,11 @@
     }
     */
 
-    var sendEmailPickComplete = function(){
-      showLoadingPopup("EMAIL 전송중..");
+    var sendEmailCancelPickComplete = function(){
+      showLoadingPopup("미당첨 EMAIL 전송중..");
       var projectId = Number($("#pick_list_counter").attr('projectid'));
 
-      var url = '/projects/' + projectId + '/pickingcomplete/sendmail';
+      var url = '/projects/' + projectId + '/pickingcomplete/sendcancelmail';
       var method = 'post';
       var data = {
         "startindex": 0
@@ -649,7 +649,30 @@
       };
 
       var error = function(request, status) {
-        swal("이메일 전송 실패", "", "error");
+        swal("미당첨 이메일 전송 실패", "", "error");
+      };
+
+      requsetAjaxPartition(url, method, data, 0, success, error);
+    }
+
+    var sendEmailPickComplete = function(){
+      showLoadingPopup("당첨 EMAIL 전송중..");
+      var projectId = Number($("#pick_list_counter").attr('projectid'));
+
+      var url = '/projects/' + projectId + '/pickingcomplete/sendmail';
+      var method = 'post';
+      var data = {
+        "startindex": 0
+      };
+
+      var success = function(result) {
+        stopLoadingPopup();
+        //sendSMSPickComplete();
+        sendEmailCancelPickComplete();
+      };
+
+      var error = function(request, status) {
+        swal("당첨 이메일 전송 실패", "", "error");
       };
 
       requsetAjaxPartition(url, method, data, 0, success, error);
