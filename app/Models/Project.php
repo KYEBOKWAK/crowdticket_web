@@ -2,7 +2,7 @@
 
 class Project extends Model
 {
-    const DATA_CALL_ONETIME_MAX_COUNTER = 5; //데이터 요청시 한번에 보낼 데이터양
+    const DATA_CALL_ONETIME_MAX_COUNTER = 10; //데이터 요청시 한번에 보낼 데이터양
 
     const STATE_READY = 1;
     const STATE_READY_AFTER_FUNDING = 2;

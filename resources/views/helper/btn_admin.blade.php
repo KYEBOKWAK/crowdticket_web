@@ -10,6 +10,7 @@
             @if($project->isPickType())
               <li><a href="{{ url('/projects') }}/{{ $project->id }}/picking">추첨 하기</a></li>
               <li><a href="{{ url('/projects') }}/{{ $project->id }}/pickingrandom">추첨 하기(랜덤)</a></li>
+              <li><a href="{{ url('/projects') }}/{{ $project->id }}/pickingexcel">추첨 하기(엑셀 선택)</a></li>
             @endif
         </ul>
     </div>

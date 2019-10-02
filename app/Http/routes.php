@@ -203,14 +203,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('projects/{id}/picking', 'ProjectController@getPicking');
     Route::get('projects/{id}/pickingrandom', 'ProjectController@getPickingRandom');
+    Route::get('projects/{id}/pickingexcel', 'ProjectController@getPickingExcel');
     Route::get('projects/{id}/pickingrequestrandom', 'ProjectController@requestPickingRandom');
 
     Route::post('projects/{id}/pickingcomplete', 'ProjectController@pickingComplete');
     Route::post('projects/{id}/pickingcomplete/sendmail', 'ProjectController@sendMailAfterPickComplete');
+    Route::post('projects/{id}/pickingcomplete/sendcancelmail', 'ProjectController@sendCancelMailAfterPickComplete');
     Route::post('projects/{id}/pickingcomplete/sendsms', 'ProjectController@sendSMSAfterPickComplete');
 
     Route::post('projects/{id}/addpicking/{orderid}', 'ProjectController@addPicking');
     Route::delete('projects/{id}/deletepicking/{orderid}', 'ProjectController@deletePicking');
+
+    Route::post('picking/{id}/excel/check', 'ProjectController@pickingExcelCheck');
+    Route::post('picking/{id}/excel', 'ProjectController@pickingExcel');
+    Route::post('picking/{id}/excel/cancel', 'ProjectController@pickingExcelCancel');
+    Route::get('picking/{id}/excel/picked', 'ProjectController@getPickedExcel');
 
     //임시 코드
     Route::post('projects/{id}/addy/{orderid}', 'ProjectController@addY');

@@ -1323,6 +1323,96 @@ class ProjectController extends Controller
       ]);
     }
 
+    public function getPickingExcel($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $pickTotalCount = $project->ordersWithoutError()->where('is_pick', 'PICK')->count();
+
+      return view('project.picking_excel', [
+          'project' => $project,
+          'pickcount' => $pickTotalCount
+      ]);
+    }
+
+    public function getPickedExcel(Request $request, $project_id)
+    {
+      $take = (int)$request->size;
+      $skip = ((int)$request->page - 1) * $take;
+
+      $project = Project::find($project_id);
+      //$orders = $project->orders()->where('ticket_id', $ticket_id)->skip($skip)->take($take)->get();
+      $orders = $project->ordersWithoutError()->where('is_pick', 'PICK')->skip($skip)->take($take)->get();
+      /*
+      foreach($orders as $order)
+      {
+        $order->state = 'OK';
+      }
+      */
+      
+      $orderTotalCount = $project->ordersWithoutError()->where('is_pick', 'PICK')->count();
+      $total_page = (int)$orderTotalCount / $take;
+      
+      return ["last_page"=> (int)$total_page + 1, 'data'=>$orders];
+    }
+
+    public function pickingExcelCheck($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $isPick = Order::where('project_id', $projectId)->where('is_pick', 'PICK')->count();
+      if($isPick > 0)
+      {
+        return ['state' => 'error', 'message' => '추첨된 인원이 있습니다. 추첨 취소 후 진행 해주세요.'];
+      }
+      
+      return ['state' => 'success'];
+    }
+
+    public function pickingExcel(Request $request, $projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      /*
+      $isPick = Order::where('project_id', $projectId)->where('is_pick', 'PICK')->count();
+      if($isPick > 0)
+      {
+        return ['state' => 'error', 'message' => '추첨된 인원이 있습니다. 추첨 취소 후 진행 해주세요.'];
+      }
+      */
+
+      $dataArray = [];
+      foreach($request->list as $localData)
+      {
+        //$object['ccc'] = $object['email'].'dfdf';
+
+        
+        $order = Order::where('project_id', $projectId)->where('email', $localData['email'])->where('name', $localData['name'])->where('contact', $localData['contact'])->first();
+        if(count($order) > 0)
+        {
+          $order->is_pick = "PICK";
+          $order->save();
+        }
+      }
+      
+      return ['state' => 'success', 'data' => $request->list, 'nextindex' => $request->nextindex, 'islast' => $request->islast, 'alllength' => $request->alllength];
+    }
+
+    public function pickingExcelCancel($projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      $orders = Order::where('project_id', $projectId)->where('is_pick', 'PICK')->get();
+      foreach($orders as $order)
+      {
+        $order->is_pick = '';
+        $order->save();
+        //\Log::info($order);
+      }
+
+      return ['state' => 'success'];
+    }
+
     public function requestPickingRandom($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
@@ -1363,11 +1453,8 @@ class ProjectController extends Controller
         $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
         $skip = $startIndex * ($take);
 
-        //$totalCounter = Test::count();
-        //$totalCounter = $project->orders()->where("is_pick", "<>", "PICK")->count();
         $totalCounter = $project->orders()->count();
 
-        //$orders = $project->orders()->skip($skip)->take($take)->where("is_pick", "<>", "PICK")->get();
         $orders = $project->orders()->skip(0)->take($take)->where("is_pick", "<>", "PICK")->get();
         foreach($orders as $order)
         {
@@ -1411,22 +1498,57 @@ class ProjectController extends Controller
         $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
         $skip = $startIndex * ($take);
 
-        $totalCounter = $project->ordersAll()->count();
-
-        $orders = $project->ordersAll()->skip($skip)->take($take)->get();
+        
+        $totalCounter = $project->ordersAll()->where('state', '<', Order::ORDER_STATE_PAY_END)->count();
+        
+        $orders = $project->ordersAll()->where('state', '<', Order::ORDER_STATE_PAY_END)->skip($skip)->take($take)->get();
 
         foreach($orders as $order)
         {
-          if($order->state >= Order::ORDER_STATE_CANCEL_START)
-          {
-            continue;
-          }
-
           $logMessage = $order->email;
           if($order->is_pick === 'PICK')
           {
             $this->sendMailPick("success", $project, $order);
             $this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_EMAIL);
+          }
+          else
+          {
+            //$this->sendMailPick("fail", $project, $order);
+            //$this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_FAIL_EMAIL);
+          }
+        }
+
+        return ["state" => "success", "message" => '', 'start_index' => $startIndex, 'total_count' => $totalCounter, 'orders'=> $orders];
+        
+      }
+      else
+      {
+        return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
+      }
+    }
+
+    public function sendCancelMailAfterPickComplete(Request $request, $projectId)
+    {
+      $project = $this->getSecureProjectById($projectId);
+
+      if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
+        
+        $startIndex = (int)$request->startindex;
+        $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
+        $skip = $startIndex * ($take);
+
+        
+        $totalCounter = $project->ordersAll()->where('state', Order::ORDER_STATE_PROJECT_PICK_CANCEL)->count();
+        
+        $orders = $project->ordersAll()->where('state', Order::ORDER_STATE_PROJECT_PICK_CANCEL)->skip($skip)->take($take)->get();
+
+        foreach($orders as $order)
+        {
+          $logMessage = $order->email;
+          if($order->is_pick === 'PICK')
+          {
+            //$this->sendMailPick("success", $project, $order);
+            //$this->saveLog($logMessage, Model::LOG_TYPE_SEND_PICK_SUCCESS_EMAIL);
           }
           else
           {
@@ -1442,19 +1564,11 @@ class ProjectController extends Controller
       {
         return ["state" => "error", "message" => "추첨형 이벤트 타입이 아닙니다."];
       }
-      
     }
 
     public function sendSMSAfterPickComplete(Request $request, $projectId)
     {
       $project = $this->getSecureProjectById($projectId);
-
-      /*
-      if($project->isPickedComplete())
-      {
-        return ["state" => "error", "message" => "이미 추첨이 완료되었습니다."];
-      }
-      */
 
       if ((int)$project->event_type === Project::EVENT_TYPE_PICK_EVENT) {
         
@@ -1462,11 +1576,10 @@ class ProjectController extends Controller
         $take = Project::DATA_CALL_ONETIME_MAX_COUNTER;
         $skip = $startIndex * ($take);
 
-        //$totalCounter = $project->getOrdersOnlyPick()->count();
-        $totalCounter = $project->ordersAll()->count();
+        //$totalCounter = $project->ordersAll()->count();
+        $totalCounter = $project->ordersWithoutError()->withTrashed()->where('is_pick', 'PICK')->count();
 
-        //$orders = $project->getOrdersOnlyPick()->skip($skip)->take($take)->get();
-        $orders = $project->ordersAll()->skip($skip)->take($take)->get();
+        $orders = $project->ordersWithoutError()->withTrashed()->where('is_pick', 'PICK')->skip($skip)->take($take)->get();
         foreach($orders as $order)
         {
           if($order->state >= Order::ORDER_STATE_CANCEL_START)
