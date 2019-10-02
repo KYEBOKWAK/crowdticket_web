@@ -243,6 +243,7 @@ var url_pick = '/picking/' + projectId + '/excel/picked';
   var url = '/picking/' + projectId + '/excel';
   var method = 'post';
 
+  var index = Number(index);
 
   var isLast = 'FALSE';
   var dataArray = new Array();
