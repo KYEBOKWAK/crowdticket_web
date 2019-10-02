@@ -194,7 +194,8 @@ class Order extends Model
     {
       if($this->isDeliveryOrder())
       {
-        return $this->postcode."&ensp;".$this->address_main."&ensp;".$this->address_detail;
+        //return $this->postcode."&ensp;".$this->address_main."&ensp;".$this->address_detail;
+        return $this->postcode.' '.$this->address_main.' '.$this->address_detail;
       }
 
       if($this->getIsGoodsCount() === 0)
