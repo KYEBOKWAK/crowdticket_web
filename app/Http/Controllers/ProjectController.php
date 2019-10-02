@@ -1385,9 +1385,26 @@ class ProjectController extends Controller
       foreach($request->list as $localData)
       {
         //$object['ccc'] = $object['email'].'dfdf';
+        $email = '';
+        $name = '';
+        $contact = '';
+        if(isset($localData['email']))
+        {
+          $email = $localData['email'];
+        }
 
-        
-        $order = Order::where('project_id', $projectId)->where('email', $localData['email'])->where('name', $localData['name'])->where('contact', $localData['contact'])->first();
+        if(isset($localData['name']))
+        {
+          $name = $localData['name'];
+        }
+
+        if(isset($localData['contact']))
+        {
+          $contact = $localData['contact'];
+        }
+
+        //$order = Order::where('project_id', $projectId)->where('email', $localData['email'])->where('name', $localData['name'])->where('contact', $localData['contact'])->first();v
+        $order = Order::where('project_id', $projectId)->where('email', $email)->where('name', $name)->where('contact', $contact)->first();
         if(count($order) > 0)
         {
           $order->is_pick = "PICK";
