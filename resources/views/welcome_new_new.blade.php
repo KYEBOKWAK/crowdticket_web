@@ -691,6 +691,64 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
       </div>
     </div>
+
+    <div class="welcome_content_container">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            오픈된 이벤트
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/projects')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($projects) ; $j++)
+                {
+                  ?>
+                  @include('template.thumb_project', ['project' => $projects[$projectIndex], 'index' => $projectIndex])
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
+      </div>
+    </div>
+    
     @if(count($thumbEventProjects) > 0)
       <div class="welcome_content_container">
         <div class="welcome_content_wrapper">
@@ -749,63 +807,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         </div>
       </div>
     @endif
-
-    <div class="welcome_content_container">
-      <div class="welcome_content_wrapper">
-        <div class="flex_layer">
-          <div class="welcome_content_title">
-            오픈된 이벤트
-          </div>
-          <div class="welcome_content_more_wrapper">
-            <a href="{{url('/projects')}}">
-              <div class="welcome_content_more">
-                <div class="flex_layer">
-                  <span style="height:21px;">더보기</span>
-                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-
-        <!-- 썸네일 테스트 START -->
-        <div class="welcome_thumb_projects_wrapper">
-          <div class="flex_layer_thumb">
-            <?php
-            $projectIndex = 0;
-            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
-            {
-              $itemCount = 0;
-              ?>
-              @if($projectIndex === 0)
-              <div class="flex_layer thumb_container_is_mobile">
-              @else
-              <div class="flex_layer">
-              @endif
-              <?php
-                for($j = $i ; $j < count($projects) ; $j++)
-                {
-                  ?>
-                  @include('template.thumb_project', ['project' => $projects[$projectIndex], 'index' => $projectIndex])
-                  <?php
-                  $projectIndex++;
-                  $itemCount++;
-                  if($itemCount >= $mobileOneLineItemCount)
-                  {
-                    break;
-                  }
-                }
-              ?>
-              </div>
-              <?php
-            }             
-            ?>           
-          </div>
-        </div>
-        <!-- 썸네일 테스트 END -->
-      </div>
-    </div>
 
     <div class="welcome_content_wrapper">
         <div class="welcome_meetup_banner_wrapper">
