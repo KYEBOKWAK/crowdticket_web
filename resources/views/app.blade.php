@@ -373,7 +373,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="col-md-3">
             <h2>address</h2>
-            <h4>서울특별시 관악구 봉천로 545 4층<br>
+            <h4>서울시 마포구 백범로 31길 21 서울창업허브 본관 611호<br>
              (주)나인에이엠</h4>
         </div>
         <div class="col-md-12 ct-info">
