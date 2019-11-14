@@ -187,7 +187,7 @@ $selectedTicket = "";
                 <a href="#tab-news" aria-controls="default" role="tab" data-toggle="tab">업데이트<span class="count">{{ $project->news_count }}</span></a>
                 </li>
                 <li role="presentation" class="">
-                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->getCommentCount() }}</span></a>
+                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count"></span></a>
                 </li>
                 <li id="tabTicketMD" role="presentation" class="">
                 <a href="#tab-md" aria-controls="default" role="tab" data-toggle="tab">티켓&amp;MD정보</a>
