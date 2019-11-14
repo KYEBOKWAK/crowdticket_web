@@ -625,20 +625,6 @@ class ProjectController extends Controller
 
     private function getProjectDetailView($project)
     {
-      $project->load(['category', 'city', 'tickets']);
-        $project->countSessionDependentViewNum();
-        $posterJson = $this->getPosterUrl($project);
-        $ticketsCountInfoListJson = $project->getAmountTicketCountInfoList();
-        return view('project.detail_test', [
-            'project' => $project,
-            'posters' =>$posterJson,
-            //'ticketsCountInfoJson' => $ticketsCountInfoListJson,
-            'ticketsCountInfoJson' => $ticketsCountInfoListJson,
-            'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
-            'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
-        ]);
-
-      /*
         $project->load(['category', 'city', 'tickets']);
         $project->countSessionDependentViewNum();
         $posterJson = $this->getPosterUrl($project);
@@ -651,7 +637,6 @@ class ProjectController extends Controller
             'categories_ticket' => Categories_ticket::whereNotIn('order_number', [0])->orderBy('order_number')->get(),
             'is_master' => \Auth::check() && \Auth::user()->isOwnerOf($project)
         ]);
-        */
     }
 
     //티켓별로 남은 수량

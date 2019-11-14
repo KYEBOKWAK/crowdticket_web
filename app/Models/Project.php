@@ -924,6 +924,11 @@ class Project extends Model
 
     public function getCommentCount()
     {
+      //임시로 댓글 개수만 나온다. 대댓글은 빠짐. 속도 이슈가 있음.
+      $totalCommentCount = Comment::where('commentable_id', '=', $this->id)->where('commentable_type', '=', 'App\Models\Project')->count();
+
+      return $totalCommentCount;
+      /*
       $totalCommentCount = 0;
       $comments = Comment::where('commentable_id', '=', $this->id)->where('commentable_type', '=', 'App\Models\Project')->get();
 
@@ -936,6 +941,7 @@ class Project extends Model
       }
 
       return $totalCommentCount;
+      */
     }
 
     public function getFundingOrderConcludeAtBeforeOneday()
