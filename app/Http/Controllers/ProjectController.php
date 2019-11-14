@@ -354,7 +354,8 @@ class ProjectController extends Controller
           $mcn = Mcn::where('url', $request->company)->first();
           if($mcn)
           {
-            $projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+            //$projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+            $projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->where('event_type_sub', '!=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
           }
           else
           {
@@ -363,7 +364,8 @@ class ProjectController extends Controller
         }
         else
         {
-          $projects = Project::where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+          //$projects = Project::where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+          $projects = Project::where('state', Project::STATE_APPROVED)->where('event_type_sub', '!=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
         }
 
         foreach($projects as $project)
