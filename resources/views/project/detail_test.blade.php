@@ -216,42 +216,7 @@ $selectedTicket = "";
       <div class="detail_contant_wrapper">
         <div class="detail_width_wrapper">
           <div class="detail_content_calendar_container_grid">
-            <div class="tab-content">
-              <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
-                @include('template.picking_list', ['project' => $project])
-                <div class="detail_story_wrapper">
-                 {!! html_entity_decode($project->story) !!}
-                </div>
-              </div>
-
-              <div id="tab-news" role="tabpanel" class="tab-pane loadable">
-                <ul id="news-container" class="list-group"></ul>
-                  @if ($is_master)
-                      <div class="text-center">
-                          <a href="{{ url('/projects') }}/{{ $project->id }}/news/form"
-                             class="btn btn-success">업데이트 작성</a>
-                      </div>
-                  @endif
-                  <div class="tab-pane" style="margin-bottom:0px; margin-top:50px;">
-
-                  </div>
-              </div>
-
-              <div id="tab-comments" role="tabpanel" class="tab-pane loadable">
-                <form id="addComment" action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
-                      data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
-                    <textarea id="input_comment" name="contents" class="form-control" rows="3"
-                              placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
-                    <button type="button" class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
-                    <div class="clear"></div>
-                    @include('csrf_field')
-                </form>
-                <ul id="comments-container"></ul>
-              </div>
-
-              <div id="tab-md" role="tabpanel" class="tab-pane loadable">
-              </div>
-            </div>
+            
 
             @if($project->isOldProject())
               <div id="old_ticket_list" data-tickets="{{ $project->tickets }}"></div>
