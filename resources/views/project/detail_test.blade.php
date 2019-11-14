@@ -290,19 +290,10 @@ $selectedTicket = "";
 @endsection
 
 @section('js')
-    @include('template.comment')
-    @include('template.news')
-    @include('template.supporter')
-    @include('template.detail_ticket_time')
-    @include('template.detail_ticket_seat')
-    @include('template.shareForm')
-    @include('template.fbForm', ['project' => $project])
-    @include('template.goods_container', ['isForm' => 'false'])
-    @include('template.goods', ['isForm' => 'false'])
-    @include('template.ticket_old')
+    
     <script src="{{ asset('/js/lib/clipboard.min.js') }}"></script>
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-    
+    <script src="{{ asset('/js/project/detail.js?version=21') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
     <script src="{{ asset('/js/calendar/calendar.js?version=22') }}"></script>
     <script>
