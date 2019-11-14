@@ -218,7 +218,7 @@ $selectedTicket = "";
           <div class="detail_content_calendar_container_grid">
             <div class="tab-content">
               <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
-                @include('template.picking_list', ['project' => $project])
+               
                 <div class="detail_story_wrapper">
                  {!! html_entity_decode($project->story) !!}
                 </div>
