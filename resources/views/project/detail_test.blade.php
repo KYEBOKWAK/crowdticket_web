@@ -156,7 +156,177 @@
 @endsection
 
 @section('content')
-테스트
+<?php
+$posters = json_decode($posters, true);
+$channels = $project->user->channels()->get();
+$tickets = $project->tickets()->get();
+$discounts = $project->discounts()->get();
+$selectedTicket = "";
+?>
+<input type="hidden" id="isFinished" value="{{ $project->isFinished() }}">
+<input type="hidden" id="isWaitSaleTime" value="{{ $project->isWaitSaling() }}" time-value="{{ $project->getStartSaleTime() }}">
+<input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
+<input type="hidden" id="isPickingFinished" value="{{ $project->isFinishedAndPickingFinished() }}">
+<input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
+<input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
+
+    @include('helper.btn_admin', ['project' => $project])
+    <div class="basecontainer">
+      
+
+      <div class="detail_creator_container">
+        <div class="detail_width_wrapper">
+          <div class="flex_layer_mobile detail_creator_container_grid">
+            <!-- creator 소개란  -->
+            <div class="detail_creator_creator_grid">
+              <div class="flex_layer_mobile">
+                <img src="{{ $project->user->getPhotoUrl() }}" class="detail_creator_creator_thumb">
+                <div class="detail_creator_info_container">
+                  <h5 class="detail_creator_info_title">
+                    <span class="detail_creator_info_type">
+                      @if($project->project_type == 'creator')
+                        CREATOR
+                      @elseif($project->project_type == 'culture')
+                        CULTURE
+                      @else
+                        ARTISTS
+                      @endif
+
+                    </span>&nbsp;|&nbsp;
+                    {{ $project->user->name }}
+                  </h5>
+                      <h5 class="detail_creator_info_introduce">
+                        {{ $project->user->introduce }}
+                      </h5>
+                </div>
+              </div>
+            </div>
+            <!-- 활동채널란 -->
+            <div class="detail_creator_info_channel">
+              <h5 class="detail_creator_info_channel_title">활동채널</h5>
+              <ul class="detail_creator_info_channel_channels">
+                @foreach($channels as $channel)
+                  <li class="detail_creator_info_channel_channels_thumb">
+                    <a href="{{ $channel->url }}" target="_blank"><img src="{{ $channel->categories_channel->img_url }}"></a>
+                  </li>
+                @endforeach
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="stickoffset"></div>
+      <div id="sticky" class="container-fluid middle-tap-menu">
+        <div class="detail_width_wrapper">
+          <div class="detail_tab_container">
+            <ul role="tablist" class="nav nav-tabs">
+                <li role="presentation" class="active">
+                <a href="#tab-story" aria-controls="default" role="tab" data-toggle="tab" class="first-navmenu--margin-top">스토리</a>
+                </li>
+                <li role="presentation" class="">
+                <a href="#tab-news" aria-controls="default" role="tab" data-toggle="tab">업데이트<span class="count">{{ $project->news_count }}</span></a>
+                </li>
+                <li role="presentation" class="">
+                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->getCommentCount() }}</span></a>
+                </li>
+                <li id="tabTicketMD" role="presentation" class="">
+                <a href="#tab-md" aria-controls="default" role="tab" data-toggle="tab">티켓&amp;MD정보</a>
+                </li>
+            </ul>
+          </div>
+
+          <!-- 중간 네비게이션에 스크롤링에 의해 노출되는 크라우드 티켓팅 버튼 -->
+          <div class="nav-ticketing-btn">
+
+               @if($project->isEventTypeCrawlingEvent())
+                <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+               @else
+                <button id="detail_tab_cw_btn" type="button" class="btn btn-primary btn-block ticketing-btn">
+                @if(env('REVIEW_ON'))
+                티켓팅
+                @else
+                이벤트 참여신청
+                @endif
+                </button>
+               @endif
+           </div>
+        </div>
+      </div>
+
+      <div class="detail_contant_wrapper">
+        <div class="detail_width_wrapper">
+          <div class="detail_content_calendar_container_grid">
+            <div class="tab-content">
+              <div id="tab-story" role="tabpanel" class="tab-pane active detail_remove_bottom_border">
+                @include('template.picking_list', ['project' => $project])
+                <div class="detail_story_wrapper">
+                 {!! html_entity_decode($project->story) !!}
+                </div>
+              </div>
+
+              <div id="tab-news" role="tabpanel" class="tab-pane loadable">
+                <ul id="news-container" class="list-group"></ul>
+                  @if ($is_master)
+                      <div class="text-center">
+                          <a href="{{ url('/projects') }}/{{ $project->id }}/news/form"
+                             class="btn btn-success">업데이트 작성</a>
+                      </div>
+                  @endif
+                  <div class="tab-pane" style="margin-bottom:0px; margin-top:50px;">
+
+                  </div>
+              </div>
+
+              <div id="tab-comments" role="tabpanel" class="tab-pane loadable">
+                <form id="addComment" action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
+                      data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
+                    <textarea id="input_comment" name="contents" class="form-control" rows="3"
+                              placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                    <button type="button" class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
+                    <div class="clear"></div>
+                    @include('csrf_field')
+                </form>
+                <ul id="comments-container"></ul>
+              </div>
+
+              <div id="tab-md" role="tabpanel" class="tab-pane loadable">
+              </div>
+            </div>
+
+            @if($project->isOldProject())
+              <div id="old_ticket_list" data-tickets="{{ $project->tickets }}"></div>
+            @else
+              @include('template.detail_ticket_md')
+            @endif
+
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-ticketing-btn-mobile">
+        @if($project->isEventTypeCrawlingEvent())
+          <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
+        @else
+         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">이벤트 참여신청</button>
+        @endif
+       </div>
+
+      <input type="hidden" id="buyable" value="{{ $project->canOrder() ? 1 : 0 }}"/>
+      <input type="hidden" id="project_type" value="{{ $project->type }}"/>
+      <input type="hidden" id="project_saleType" value="{{ $project->type }}"/>
+      <input type="hidden" id="project_id" value="{{ $project->id }}"/>
+      <input type="hidden" id="goods_json" value="{{ $project->goods }}"/>
+
+      <input type="hidden" id="isMaster" value="{{ $is_master }}"/>
+
+      <input type="hidden" id="introduce_input_row" value="{{ $project->user->introduce }}">
+
+      <!--baseContainer end-->
+    </div>
+
+    <div class="col-md-3 ps-detail-share-facebook" id="BtnFBshare" style="display:none;">
+                        <span class="btn">페이스북 공유하기</span>
+    </div>
 @endsection
 
 @section('js')
