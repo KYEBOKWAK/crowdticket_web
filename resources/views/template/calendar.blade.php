@@ -37,7 +37,7 @@
 					<span style="font-size:11px;"> |
             @if($project->isEventSubTypeSandBox())
               {{ $project->getConcertDateFormatted() }}
-						@else if($project->isEventTypeInvitationEvent())
+						@elseif($project->isEventTypeInvitationEvent())
 							신청 가능날짜: {{ $project->getConcertDateFormatted() }}
 						@elseif($project->isPlace == "TRUE")
 							티켓팅 가능날짜: {{ $project->getConcertDateFormatted() }}
