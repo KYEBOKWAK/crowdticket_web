@@ -568,7 +568,7 @@
           this.data = data, this.height = data.length * 40;
           this.completeCallback = completeCallback;
           this.speed = 1;
-          this.duration = 10000;
+          this.duration = 100;
           this.reel;
           this.start;
           this.init();
