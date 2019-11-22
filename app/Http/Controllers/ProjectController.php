@@ -1438,8 +1438,8 @@ class ProjectController extends Controller
     {
       $project = $this->getSecureProjectById($projectId);
 
-      $orders = $project->getOrdersWithPickY();
-      //$orders = $project->getOrdersWithoutPick();
+      //$orders = $project->getOrdersWithPickY();
+      $orders = $project->getOrdersWithoutPick();
 
       $ordersLength = sizeof($orders);
 
