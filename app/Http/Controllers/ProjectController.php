@@ -1285,8 +1285,8 @@ class ProjectController extends Controller
     public function getPicking($projectId)
     {
       $project = $this->getSecureProjectById($projectId);
-      //$orders = $project->getOrdersWithoutPick();
-      $orders = '';
+      $orders = $project->getOrdersWithoutPick();
+      //$orders = '';
 
       //주문자 정보 START
       $pickingArray = $project->getOrdersOnlyPick()->get();
