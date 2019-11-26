@@ -234,7 +234,11 @@
 				<tr>
 					<td class="m_-2939684631252506459stb-text-box" style="padding:0px 10px;line-height:1.8;word-break:break-word;font-size:14px;font-family:AppleSDGothic,apple sd gothic neo,noto sans korean,noto sans korean regular,noto sans cjk kr,noto sans cjk,nanum gothic,malgun gothic,dotum,arial,helvetica,MS Gothic,sans-serif!important" width="100%">
 						<div style="text-align:left">
-							크라우드티켓에서는 플랫폼을 통한 결제금액의 5%를 수수료를 받고 있습니다. 여기에 카드결제사 pg수수료 3.5%가 별도로 부과되며, 티켓을 구매하는 분들로부터는 티켓 1매 당 500원의 수수료를 받고 있습니다.
+              @if(env('ORDER_TYPE_COMMISION') === 0)
+                크라우드티켓에서는 플랫폼을 통한 결제금액의 5%를 수수료를 받고 있습니다. 여기에 카드결제사 pg수수료 3.5%가 별도로 부과되며, 티켓을 구매하는 분들로부터는 티켓 1매 당 500원의 수수료를 받고 있습니다.
+              @else
+                크라우드티켓에서는 티켓팅 및 이벤트 참가자 모집 서비스를 무료로 제공해드리고 있습니다. 유료티켓 판매 시에만 카드대행 수수료 3.5%가 발생합니다.
+              @endif
 						</div>
 						<br>
 						<div style="text-align:left">

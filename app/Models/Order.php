@@ -41,6 +41,9 @@ class Order extends Model
     //const ORDER_PROCESS_STATE_INIT = 1;
     //const ORDER_PROCESS_STATE_ = 2;
 
+    const ORDER_TYPE_COMMISION_WITH_COMMISION = 0;  //커미션이 있는 오더 //env값으로 뺌
+    const ORDER_TYPE_COMMISION_WITHOUT_COMMISION = 1; //커미션이 없는 오더
+
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
 
@@ -289,6 +292,26 @@ class Order extends Model
       $commission = 0;
       if($totalPrice >= 500)
       {
+        if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+          $commission = 0;
+        }else{
+          $commission = $this->count * 500;
+        }
+        
+        //티켓가격 자체가 없다면 커미션은 0
+        if($this->price == 0)
+        {
+          $commission = 0;
+        }
+      }
+
+      return $totalPrice - $commission;
+
+      /*
+      $totalPrice = $this->total_price;
+      $commission = 0;
+      if($totalPrice >= 500)
+      {
         $commission = $this->count * 500;
         //티켓가격 자체가 없다면 커미션은 0
         if($this->price == 0)
@@ -298,6 +321,7 @@ class Order extends Model
       }
 
       return $totalPrice - $commission;
+      */
     }
 
     public function getCommission()
@@ -306,10 +330,26 @@ class Order extends Model
       $commission = 0;
       if($totalPrice >= 500)
       {
+        if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+          $commission = 0;
+        }else{
+          $commission = $this->count * 500;
+        }
+        
+      }
+
+      return $commission;
+
+      /*
+      $totalPrice = $this->total_price;
+      $commission = 0;
+      if($totalPrice >= 500)
+      {
         $commission = $this->count * 500;
       }
 
       return $commission;
+      */
     }
 
     public function setState($state)
@@ -459,6 +499,28 @@ class Order extends Model
       }
 
       return false;
+    }
+
+    public function setOrderTypeCommision($type_commision)
+    {
+      $this->type_commision = (int)$type_commision;
+    }
+    
+    /*
+    public function getOrderTypeCommisionInServer()
+    {
+      //현재의 주문 타입을 확인한다.
+      //return self::ORDER_TYPE_COMMISION_IN_SERVER;
+      return env('ORDER_TYPE_COMMISION');
+    }
+    */
+
+    public function isOrderTypeCommisionWithOutCommision()
+    {
+      if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION)
+        return 'TRUE';
+      else
+        return 'FALSE';
     }
 
     /**

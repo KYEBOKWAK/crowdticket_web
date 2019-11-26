@@ -165,6 +165,9 @@
     <input id="isEventTypeInvitation" type="hidden" value="{{ $project->isEventTypeInvitationEvent() }}">
 
     <input id="project_question_json" type="hidden" value="{{$project->questions}}"/>
+    
+    <input id="order_type_commision_in_server" type="hidden" value="{{env('ORDER_TYPE_COMMISION')}}"/>
+    <input id="order_type_widthout_commision" type="hidden" value="@if($order){{$order->isOrderTypeCommisionWithOutCommision()}}@endif"/>
 
 <div class="form_main_container">
   <div class="form_main_head_container">
@@ -828,6 +831,10 @@
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
+        //서버와 코드 동일 START//
+        const ORDER_TYPE_COMMISION_WITH_COMMISION = '0';  //커미션이 있는 오더
+        const ORDER_TYPE_COMMISION_WITHOUT_COMMISION = '1'; //커미션이 없는 오더
+        //서버와 코드 동일 END//
         $(document).ready(function () {
           var g_ticketPrice = 0;
           var g_discoutPrice = 0;
@@ -1010,6 +1017,53 @@
             var discountTicketPrice = g_ticketPrice - g_discoutPrice;
             if(ticketCount > 0 && g_ticketPrice > 0 && discountTicketPrice > 0)
             {
+              var commisionContent = "매당 500원";
+              if(g_isGetOrderForm){
+                //order일 경우 order의 현재 type_commision 을 가져온다.
+                if($('#order_type_widthout_commision').val() === 'TRUE'){
+                  g_commission = 0 * ticketCount;
+                  commisionContent = "수수료 무료 프로모션 이벤트";
+                }else{
+                  g_commission = 500 * ticketCount;
+                }
+              }
+              else{
+                //주문중일 경우
+                if($('#order_type_commision_in_server').val() === ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+                  g_commission = 0 * ticketCount;
+                  commisionContent = "수수료 무료 프로모션 이벤트";
+                }else{
+                  g_commission = 500 * ticketCount;
+                  commisionContent = "매당 500원";
+                }
+              }
+              
+              var fullCommission = addComma(g_commission)+"원";
+              $('.order_form_commission_price').text(fullCommission);
+              $('.order_form_commission_contant').text(commisionContent);
+            }
+            else
+            {
+              if(g_ticketPrice == 0 && ticketCount > 0)
+              {
+                $('.order_form_commission_contant').text("수수료 없음");
+              }
+              else if(discountTicketPrice <= 0)
+              {
+                $('.order_form_commission_contant').text("수수료 없음");
+              }
+              else
+              {
+                $('.order_form_commission_contant').text("티켓 없음");
+              }
+            }
+
+            /*
+            var ticketCount = Number($('#ticket_count').val());
+
+            var discountTicketPrice = g_ticketPrice - g_discoutPrice;
+            if(ticketCount > 0 && g_ticketPrice > 0 && discountTicketPrice > 0)
+            {
               g_commission = 500 * ticketCount;
               var fullCommission = addComma(g_commission)+"원";
               $('.order_form_commission_price').text(fullCommission);
@@ -1030,6 +1084,7 @@
                 $('.order_form_commission_contant').text("티켓 없음");
               }
             }
+            */
           };
 
           var setSupportInfo = function(){
@@ -1090,7 +1145,6 @@
 
             //후원추가
             totalPrice = totalPrice + g_supportPrice;
-            //var supportPrice = $('#supportPrice').val();
             //총 가격에서 마지막 커미션을 넣어준다.
             totalPrice = totalPrice + g_commission;
 

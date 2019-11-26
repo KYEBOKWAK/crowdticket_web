@@ -102,6 +102,7 @@ class OrderController extends Controller
         $order->discount()->associate($discount);
       }
       $order->setState(Order::ORDER_STATE_STANDBY_START);
+      $order->setOrderTypeCommision(env('ORDER_TYPE_COMMISION'));
       $order->save();
 
       $g_order = $order;
@@ -722,6 +723,7 @@ class OrderController extends Controller
 
     private function getTotalPrice($ticket)
     {
+      //예전 총구매량 구하는 함수 지금은 getNewTotalPrice 로 바뀜
         if ($this->isPaymentProcess()) {
             $orderPrice = $this->getOrderPrice();
             $count = $this->getOrderCount();
@@ -741,7 +743,14 @@ class OrderController extends Controller
 
           if($this->getOrderUnitPrice() > 0)
           {
-            $commission = $count * 500;
+            if(env('ORDER_TYPE_COMMISION') === (string)Order::ORDER_TYPE_COMMISION_WITHOUT_COMMISION)
+            {
+              $commission = 0;//수수료 프로모션
+            }
+            else
+            {
+              $commission = $count * 500; //수수료 프로모션
+            }
           }
 
           $totalPrice = $orderPrice + $commission;
@@ -749,16 +758,6 @@ class OrderController extends Controller
           return $totalPrice;
       }
       return 0;
-
-      /*
-        if ($this->isPaymentProcess()) {
-            $orderPrice = $this->getOrderPrice();
-            $count = $this->getOrderCount();
-            $commission = $count * 500;
-            return $orderPrice + $commission;
-        }
-        return 0;
-        */
     }
 
     private function getOrderableTicket($ticketId)

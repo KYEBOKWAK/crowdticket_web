@@ -950,7 +950,6 @@ class ProjectController extends Controller
         $order['attended'] = false;
       }
 
-      //$totalPriceWithoutCommission = number_format($order->getTotalPriceWithoutCommission());
       $totalPriceWithoutCommission = $order->getTotalPriceWithoutCommission();
 
       $order['totalPriceWithoutCommission'] = $totalPriceWithoutCommission;
@@ -1692,8 +1691,8 @@ class ProjectController extends Controller
         'title' => $project->title,
         'name' => $order->name,
         'payDate' => $project->getFundingOrderConcludeAt(),
-        'gotoPayPageURL' => url('orders/'.$order->id),
-        'gotoProjectURL' => url('projects/'.$project->id),
+        'gotoPayPageURL' => 'https://crowdticket.kr/orders/'.$order->id,
+        'gotoProjectURL' => 'https://crowdticket.kr/projects/'.$project->id,
       ];
 
 
