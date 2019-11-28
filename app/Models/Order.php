@@ -517,7 +517,7 @@ class Order extends Model
 
     public function isOrderTypeCommisionWithOutCommision()
     {
-      if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+      if((int)$this->type_commision === (int)self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
         return 'TRUE';
       }
       else{
