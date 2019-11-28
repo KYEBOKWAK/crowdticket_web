@@ -1022,7 +1022,7 @@
                 //order일 경우 order의 현재 type_commision 을 가져온다.
                 if($('#order_type_widthout_commision').val() === 'TRUE'){
                   g_commission = 0 * ticketCount;
-                  commisionContent = "수수료 무료 프로모션 이벤트";
+                  commisionContent = "수수료 무료 프로모션";
                 }else{
                   g_commission = 500 * ticketCount;
                 }
@@ -1031,7 +1031,7 @@
                 //주문중일 경우
                 if($('#order_type_commision_in_server').val() === ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
                   g_commission = 0 * ticketCount;
-                  commisionContent = "수수료 무료 프로모션 이벤트";
+                  commisionContent = "수수료 무료 프로모션";
                 }else{
                   g_commission = 500 * ticketCount;
                   commisionContent = "매당 500원";
