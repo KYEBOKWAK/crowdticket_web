@@ -911,7 +911,7 @@ class Project extends Model
           {
             if($order->ticket->price > 0)
             {
-              if($order->type_commision === Order::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+              if((int)$order->type_commision === (int)Order::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
                 $commission = 0;
               }else{
                 $commission = $order->count * 500;

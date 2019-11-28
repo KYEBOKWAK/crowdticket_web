@@ -292,7 +292,7 @@ class Order extends Model
       $commission = 0;
       if($totalPrice >= 500)
       {
-        if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+        if((int)$this->type_commision === (int)self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
           $commission = 0;
         }else{
           $commission = $this->count * 500;
@@ -330,7 +330,7 @@ class Order extends Model
       $commission = 0;
       if($totalPrice >= 500)
       {
-        if($this->type_commision === self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
+        if((int)$this->type_commision === (int)self::ORDER_TYPE_COMMISION_WITHOUT_COMMISION){
           $commission = 0;
         }else{
           $commission = $this->count * 500;
