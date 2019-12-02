@@ -445,7 +445,7 @@ $selectedTicket = "";
     <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
     <script src="{{ asset('/js/project/detail.js?version=21') }}"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-    <script src="{{ asset('/js/calendar/calendar.js?version=22') }}"></script>
+    <script src="{{ asset('/js/calendar/calendar.js?version=23') }}"></script>
     <script>
     $(document).ready(function() {
       if($("#g_app_type").val() === 'qa')
