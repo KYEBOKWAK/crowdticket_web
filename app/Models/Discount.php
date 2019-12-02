@@ -9,7 +9,7 @@ class Discount extends Model
     ];
 
     protected static $typeRules = [
-        'percent_value' => 'integer|min:0',
+        //'percent_value' => 'float|min:0',
         'limite_count' => 'integer|min:0',
         'content' => 'string|min:0',
         'submit_check' => 'string|min:0'
@@ -39,7 +39,7 @@ class Discount extends Model
     ];
 */
     protected $casts = [
-        'percent_value' => 'integer',
+        //'percent_value' => 'integer',
         'limite_count' => 'integer'
         //'audiences_count' => 'integer',
         //'real_ticket_count' => 'integer',

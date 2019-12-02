@@ -74,7 +74,7 @@
               <div class="order_no_discount_goods"><p>선택 가능한 할인이 없습니다.</p></div>
             @else
             @foreach ($project->discounts as $discount)
-              @include('template.order.discount', ['discount' => $discount])
+              @include('template.order.discount', ['discount' => $discount, 'project' => $project])
             @endforeach
             @endif
 
@@ -209,7 +209,9 @@
               {
                 //alert("discount value : " + discountValue);
                 var discoutPrice = ticketTotalPrice * (discountValue/100);
-                ticketTotalPrice = ticketTotalPrice - discoutPrice;
+                //ticketTotalPrice = ticketTotalPrice - discoutPrice;
+                //아프리카티비 이슈
+                ticketTotalPrice = ticketTotalPrice - Math.ceil(discoutPrice);
               }
 
               //추가된 md가 있는지 확인

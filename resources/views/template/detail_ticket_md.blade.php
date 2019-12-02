@@ -23,7 +23,7 @@
         <h4 style="font-weight:600;">할인정보</h4>
         <div class="detail_discount_contant_container">
           @foreach($discounts as $discount)
-            @include('template.detail_discount', ['discount' => $discount])
+            @include('template.detail_discount', ['discount' => $discount, 'project' => $project])
           @endforeach
         </div>
     </div>

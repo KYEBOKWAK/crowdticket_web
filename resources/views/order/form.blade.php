@@ -169,6 +169,8 @@
     <input id="order_type_commision_in_server" type="hidden" value="{{env('ORDER_TYPE_COMMISION')}}"/>
     <input id="order_type_widthout_commision" type="hidden" value="@if($order){{$order->isOrderTypeCommisionWithOutCommision()}}@endif"/>
 
+    <input id="project_alias" type="hidden" value="{{$project->alias}}">
+
 <div class="form_main_container">
   <div class="form_main_head_container">
     @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
@@ -945,8 +947,10 @@
               discount = $.parseJSON(discount);
 
               //할인율 찾기
-              //var discoutPrice = g_ticketPrice * (discount.percent_value/100);
               g_discoutPrice = g_ticketPrice * (discount.percent_value/100);
+
+              //할인율 소수점시 올림 //아프리카티비 bj대상 할인율 이슈로 추가
+              g_discoutPrice = Math.ceil(g_discoutPrice);
 
               fullDiscountInfo = discount.content + ' ' + discount.percent_value + '%';
               var fullDiscountPriceInfo = "-"+addComma(g_discoutPrice)+"원";
@@ -954,6 +958,11 @@
               $(".order_form_discount_price").text(fullDiscountPriceInfo);
 
               docDiscountId.val(discount.id);
+            }
+
+            //아프리카티비 이슈
+            if($('#project_alias').val() === 'bjawards2019'){
+              fullDiscountInfo = '청소년 할인';
             }
 
             $(".order_form_discount_contant").text(fullDiscountInfo);
@@ -1142,7 +1151,7 @@
             }
 
             totalPrice = totalPrice + totalGoodsPrice - totalGoodsDiscount;
-
+            
             //후원추가
             totalPrice = totalPrice + g_supportPrice;
             //총 가격에서 마지막 커미션을 넣어준다.

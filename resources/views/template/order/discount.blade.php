@@ -5,7 +5,11 @@
         {{ $discount->content }}
       </div>
       <div class="order_ticket_discount_content_wrapper">
+        @if($project->alias === 'bjawards2019')
+        <p class="order_ticket_discount_percent_text"> 청소년 할인가 8000원</p>
+        @else
         <p class="order_ticket_discount_percent_text"> 할인율:{{ $discount->percent_value }}%</p>
+        @endif
         <p class="order_ticket_discount_submit_text" >{{ $discount->submit_check }}</p>
       </div>
     </div>

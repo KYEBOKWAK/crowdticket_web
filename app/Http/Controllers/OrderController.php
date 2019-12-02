@@ -648,7 +648,7 @@ class OrderController extends Controller
       $goodsTotalTicketDiscountPrice = $this->getGoodsTotalTicketDiscountPrice($project->goods);
 
       $discountValue = $ticketPrice * ($percent_value/100);
-
+      
       //티켓 가격 - 할인이 적용된 가격
       $ticketTotalPrice = $ticketPrice - $discountValue;
 
