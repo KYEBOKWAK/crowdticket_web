@@ -55,6 +55,8 @@
 @endsection
 
 @section('content')
+<input type="hidden" id="isWaitSaleTime" value="{{ $project->isWaitSaling() }}" time-value="{{ $project->getStartSaleTime() }}">
+
 <div class="project-form-container">
   @include ('order.header', ['project' => $project, 'step' => 1])
 
@@ -288,6 +290,14 @@
               if(!$('#ticket_select_id_input').val()) {
                 //티켓이 없다면, 최종확인시 카운트 값을 0으로 정해준다.
                 $("#ticket_count_input").val(0);
+              }
+
+              if($("#isWaitSaleTime").val() == true)
+              {
+                var waitTimeWord = $("#isWaitSaleTime").attr("time-value") + " 에 오픈 예정입니다.";//오픈예정 진짜코드
+                //var waitTimeWord = "COMING SOON";//오픈예정 임시
+                swal(waitTimeWord, "", "info");
+                return;
               }
 
               var ticketCountDom = $( "#ticket_count_input" );
