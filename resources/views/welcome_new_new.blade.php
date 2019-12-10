@@ -308,13 +308,13 @@
 
         .welcome_banner_1{
           width: 520px;
-          height: 128px;
+          /*height: 128px;*/
           border-radius: 10px;
         }
 
         .welcome_banner_2{
           width: 520px;
-          height: 128px;
+          /*height: 128px;*/
           border-radius: 10px;
           margin-left: 20px;
         }
@@ -486,6 +486,36 @@
           .welcome_meetup_banner_title_mobile{
             display: none;
           }
+        
+        .welcome_event_banner_img_container{
+          display: none;
+          width: 100%;
+          height: 72px;
+        }
+
+        .welcome_event_banner_img{
+          width: 100%;
+          height: 72px;
+        }
+
+        .welcome_event_banner_img_content_pc{
+          position: absolute;
+          top: 15px;
+          left: 50%;
+          width: 393px;
+          height: 40px;
+          transform: translateX(-50%);
+        }
+
+        .welcome_event_banner_img_content_mobile{
+          display: none;
+          position: absolute;
+          top: 15px;
+          left: 50%;
+          width: 208px;
+          height: 41.5px;
+          transform: translateX(-50%);
+        }
 
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
@@ -557,7 +587,7 @@
           .welcome_banner_mobile{
             width: 100%;
             /*height: 78px;*/
-            height: 100%;
+            /*height: 100%;*/
             border-radius: 0px;
             margin-left: 0px;
             margin-right: 0px;
@@ -627,7 +657,15 @@
         @media (max-width:650px) {
           .welcome_meetup_under_title{
             margin-top: -40px;
-          } 
+          }
+
+          .welcome_event_banner_img_content_pc{
+            display: none;
+          }
+
+          .welcome_event_banner_img_content_mobile{
+            display: block;
+          }
         }
 
         @media (max-width:320px) {
@@ -656,6 +694,14 @@
     <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}"/>
 
 @endsection
+
+<div class='welcome_event_banner_img_container'>
+  <a href="{{url('/projects/bjawards2019')}}">
+    <img class='welcome_event_banner_img' src="">
+    <img class='welcome_event_banner_img_content_pc' src="">
+    <img class='welcome_event_banner_img_content_mobile' src="">
+  </a>
+</div>
 
 @section('content')
 @if (Auth::guest())
@@ -3605,6 +3651,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           //resizeTitleImg();
         });
         */
+      if($('.welcome_event_banner_img_container').length > 0){
+        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_bg.png');
+        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_text_pc.png');
+        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_text_m.png');
+        $('.welcome_event_banner_img_container').show();
+      }
     </script>
     
 @endsection
