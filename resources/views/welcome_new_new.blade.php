@@ -500,10 +500,9 @@
 
         .welcome_event_banner_img_content_pc{
           position: absolute;
-          top: 15px;
+          top: 12px;
           left: 50%;
           width: 464px;
-          height: 41.5px;
           transform: translateX(-50%);
         }
 
