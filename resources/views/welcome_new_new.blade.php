@@ -491,6 +491,7 @@
           display: none;
           width: 100%;
           height: 72px;
+          cursor:pointer;
         }
 
         .welcome_event_banner_img{
