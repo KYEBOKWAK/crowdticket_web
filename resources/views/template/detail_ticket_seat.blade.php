@@ -16,7 +16,10 @@
       <% }else{ %>
         <p style="margin: 0px;">
           @if($project->isEventTypeDefault())
-            구매 가능한 수량 <%= addComma(amountTicketCount) %> 매
+            @if($project->alias === 'DOA_meetup')
+            @else
+              구매 가능한 수량 <%= addComma(amountTicketCount) %> 매
+            @endif
           @elseif($project->isEventTypeInvitationEvent())
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
           @elseif($project->isPickType())
