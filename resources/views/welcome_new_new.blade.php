@@ -742,7 +742,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
-            오픈된 이벤트
+            오픈된 밋업
           </div>
           <div class="welcome_content_more_wrapper">
             <a href="{{url('/projects')}}">
