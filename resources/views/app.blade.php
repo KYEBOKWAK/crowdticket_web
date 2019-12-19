@@ -285,13 +285,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         @if(env('REVIEW_ON'))
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @else
-          <!-- <li><a href="{{ url('/projects') }}">전체보기</a></li> -->
-          <li><a href="{{ url('/magazine') }}">매거진</a></li>
-          <li><a href="{{ url('/blueprints/welcome') }}">프로젝트 만들기</a></li>
           <li>
               <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
               <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
           </li>
+          <li><a href="{{ url('/projects') }}">밋업</a></li>
+          <li><a href="{{ url('/blueprints/welcome') }}">밋업 만들기</a></li>
+          <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @endif
         </ul>
 
