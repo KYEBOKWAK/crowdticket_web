@@ -36,6 +36,17 @@ function loginAjaxSuccess(request){
   {
     reStartDocumentScroll();
     setLoginID(request.user_id);
+
+    //데이터 수집 코드 START
+    window.dataLayer = window.dataLayer || []
+    dataLayer.push({
+      memberType: request.user_id,
+      memberAge: '',
+      memberGender: '',
+      event: 'loginComplete'
+    });
+    //데이터 수집 코드 END
+
     if(loginCallback)
     {
       loginCallback();
@@ -232,7 +243,7 @@ function loginPopup(successFunc, closeFunc){
   //{
     loginCallback = successFunc;
   //}
-
+  
   if(isLogin())
   {
     if(loginCallback)

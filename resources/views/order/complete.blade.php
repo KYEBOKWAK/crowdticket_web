@@ -92,6 +92,16 @@
       swal("등록 성공!", "프로젝트 응원&후기 에서 확인 할 수 있습니다.", "success");
     </script>
     @endif
+    <!-- 데이터 수집 코드 START  -->
+    <input id="data_project_title" type="hidden" value="{{$project->title}}">
+    <input id="data_project_project_type" type="hidden" value="{{$project->project_type}}">
+    <input id="data_order_id" type="hidden" value="@if($order!=''){{$order->id}}@endif">
+    <input id="data_order_total_price" type="hidden" value="@if($order!=''){{$order->total_price}}@endif">
+    <input id="data_order_supporter_id" type="hidden" value="@if($order!=''){{$order->supporter_id}}@endif">
+    <input id="data_order_counter" type="hidden" value="@if($order!=''){{$order->count}}@endif">
+    <input id="data_order_price" type="hidden" value="@if($order!=''){{$order->price}}@endif">
+    <!-- 데이터 수집 코드 END  -->
+
     <div class="container first-container">
         @include ('order.header', ['project' => $project, 'step' => 3])
         <div class="row ps-box">
@@ -197,4 +207,39 @@
 
 @section('js')
 @include('template.fbForm', ['project' => $project])
+<script>
+//데이터 수집 코드 START
+$(document).ready(function () {
+  if($('#data_order_id').val() === ''){
+    return;
+  }
+
+  var isSupport = 'Y';
+  if($('#data_order_supporter_id').val() === ''){
+    isSupport = 'N'
+  }
+
+  dataLayer.push({
+    event: 'purchase',
+    ecommerce: {
+      purchase: { 
+        actionField: {
+          id: Number($('#data_order_id').val()), // 주문번호 { 구매정보 내 수집하는 id (서버변수 : id) }
+          revenue: Number($('#data_order_total_price').val()), // 총 결제 금액 { 구매정보시 수집하는 가격정보 (서버변수 : total_price) 
+        },
+
+        dimension4: isSupport, // 후원여부 { 후원id (서버변수 : supporter_id) 존재 시 “Y”},
+        products: [{
+          name: $('#data_project_title').val(), 
+          price: Number($('#data_order_price').val()),
+          quantity: Number($('#data_order_counter').val()),
+          category: $('#data_project_project_type').val()
+        }]
+      }
+    }
+  });
+});
+
+//데이터 수집 코드 END
+</script>
 @endsection

@@ -171,6 +171,11 @@
 
     <input id="project_alias" type="hidden" value="{{$project->alias}}">
 
+    <!-- 데이터 수집 코드 START  -->
+    <input id="data_project_title" type="hidden" value="{{$project->title}}">
+    <input id="data_project_project_type" type="hidden" value="{{$project->project_type}}">
+    <!-- 데이터 수집 코드 END  -->
+
 <div class="form_main_container">
   <div class="form_main_head_container">
     @include ('order.header', ['project' => $project, 'step' => $order ? 0 : 2])
@@ -1667,6 +1672,31 @@
 
               });
           });
+          
+          //데이터 수집 코드 START
+          var onCheckout = function(){
+            dataLayer.push({
+              event: 'checkout',
+              checkout: {
+                'actionField': {
+                  step: 1, 
+                  option: '결제시도'
+                },
+                products: [{
+                  name: $('#data_project_title').val(), // 상품명
+                  price: getTitalPrice(), // 상품 가격
+                  quantity: Number($('#ticket_count').val()), // 수량 (서버변수 : count)
+                  category:$('#data_project_project_type').val() // 카테고리 (CREATOR 또는 CULTURE)
+                }]
+              },
+              eventCallback: function() {
+                //document.location = 'checkout.html'; 
+              }
+            })
+          };
+
+          onCheckout();
+          //데이터 수집 코드 END
       });
     </script>
 @endsection
