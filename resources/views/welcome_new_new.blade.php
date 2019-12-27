@@ -501,19 +501,21 @@
 
         .welcome_event_banner_img_content_pc{
           position: absolute;
-          top: 12px;
+          top: 0px;
           left: 50%;
-          width: 464px;
+          /*width: 464px;*/
+          height: 72px;
           transform: translateX(-50%);
         }
 
         .welcome_event_banner_img_content_mobile{
           display: none;
           position: absolute;
-          top: 15px;
+          top: 0px;
           left: 50%;
-          width: 208px;
-          height: 41.5px;
+          /*width: 208px;
+          height: 41.5px;*/
+          height: 72px;
           transform: translateX(-50%);
         }
 
@@ -696,7 +698,7 @@
 @endsection
 
 <div class='welcome_event_banner_img_container'>
-  <a href="{{url('/projects/bjawards2019')}}">
+  <a href="{{url('/projects/rudyfestival2020')}}">
     <img class='welcome_event_banner_img' src="">
     <img class='welcome_event_banner_img_content_pc' src="">
     <img class='welcome_event_banner_img_content_mobile' src="">
@@ -3652,9 +3654,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         });
         */
       if($('.welcome_event_banner_img_container').length > 0){
-        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_bg_ver1.png');
-        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_text_pc.png');
-        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191210_banner_africabj_text_m.png');
+        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_bg.png');
+        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_pc_1.png');
+        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_m_1.png');
         $('.welcome_event_banner_img_container').show();
       }
     </script>
