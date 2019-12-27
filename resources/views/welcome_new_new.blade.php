@@ -3626,36 +3626,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         window.onbeforeunload = function(e) {
         }
 
-/*
-        var resizeTitleImg = function(){
-          var parentData = $('.welcome_meetup_banner_img_container')[0];
-          var imgData = $('.welcome_meetup_banner_img')[0];
-
-          var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
-
-          if(targetWidth <= window.innerWidth)
-          {
-            $('.welcome_meetup_banner_img').css('width', '100%');
-            $('.welcome_meetup_banner_img').css('height', 'auto');
-          }
-          else
-          {
-            $('.welcome_meetup_banner_img').css('width', targetWidth);
-            //$('.welcome_meetup_banner_img').css('width', '1920px');
-            $('.welcome_meetup_banner_img').css('height', parentData.clientHeight);
-          }
-        };
-
-        //resizeTitleImg();
-
-        $(window).resize(function() {
-          //console.error("adf");
-          //resizeTitleImg();
-        });
-        */
       if($('.welcome_event_banner_img_container').length > 0){
         $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_bg.png');
-        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_pc_1.png');
+        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_pc_2.png');
         $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_m_1.png');
         $('.welcome_event_banner_img_container').show();
       }
