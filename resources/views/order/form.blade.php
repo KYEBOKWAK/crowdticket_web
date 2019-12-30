@@ -547,7 +547,7 @@
               <p class="order_form_title" style="margin-top: 10px; height:30px;">추첨 프로젝트에 관하여</p>
               <div class="order_form_conform_container_grid_rows" style="padding-left:10px;">
                 @if($project->isEventSubTypeSandBox())
-                  <p style="margin-top:6px">1. 당첨자는 {{$project->getPickStartTime()}} ~ {{$pickingEndTime}} 중에 확정 됩니다. 더 정확한 발표 시간은 이벤트 메인 페이지의 소개란을 참고해주세요.</p>
+                  <p style="margin-top:6px">1. 당첨자는 {{$pickingEndTime}} 중에 확정 됩니다. 더 정확한 발표 시간은 이벤트 메인 페이지의 소개란을 참고해주세요.</p>
                   <p>2. 당첨 여부는 사이트 우측상단의 ‘결제확인’ 메뉴를 확인해주세요.</p>
                   <p>3. 연락처 정보가 정확한지 다시 한 번 확인해주세요. 잘못된 정보로 인해 연락이 되지 않을 경우 당첨 내역이 취소될 수 있습니다.</p>
                   <p>4. 당첨자에 한하여 별도의 문자로 안내를 드리겠습니다.</p>
