@@ -990,7 +990,10 @@
                     @if ($project->type === 'funding')
                         <button class="btn btn-danger">취소하기</button>
                     @else
+                      @if($order->isAccountOrder())
+                      @else
                         <button class="btn btn-danger">환불하기</button>
+                      @endif
                         @if ($order->hasCancellationFees())
                             <p class="ps-tooltip text-danger">
                               환불 정책에 따라 취소 수수료 {{ number_format($order->getCancellationFees()) }}원이 차감된 {{ number_format($order->getRefundAmount()) }}원이 환불됩니다.<br/>
@@ -999,7 +1002,7 @@
                         @endif
                         @if($order->isAccountOrder())
                         <p class="ps-tooltip text-danger">
-                          이미 계좌이체를 하셨을 경우, 크라우드티켓(070-8819-4308)으로 문의 바랍니다.
+                          계좌이체 후 환불을 원하실 경우, 크라우드티켓(070-8819-4308)으로 문의 바랍니다.
                         </p>
                         @endif
                     @endif
