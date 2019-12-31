@@ -954,10 +954,14 @@
           @else
             @if ($order->getIsCancel())
                 @if($project->isEventTypeDefault())
-                  @if ($project->type === 'funding')
-                      <button class="btn btn-muted" disabled="disabled">취소됨</button>
+                  @if($order->isAccountOrder())
+                    <button class="btn btn-muted" disabled="disabled">{{$order->getStateStringAttribute()}}</button>
                   @else
-                      <button class="btn btn-muted" disabled="disabled">환불됨</button>
+                    @if ($project->type === 'funding')
+                        <button class="btn btn-muted" disabled="disabled">취소됨</button>
+                    @else
+                        <button class="btn btn-muted" disabled="disabled">환불됨</button>
+                    @endif
                   @endif
                 @elseif($project->isEventTypeInvitationEvent())
                   <button class="btn btn-muted" disabled="disabled">취소됨</button>
@@ -991,6 +995,7 @@
                         <button class="btn btn-danger">취소하기</button>
                     @else
                       @if($order->isAccountOrder())
+                        <button class="btn btn-muted" disabled="disabled">{{$order->getStateStringAttribute()}}</button>
                       @else
                         <button class="btn btn-danger">환불하기</button>
                       @endif
