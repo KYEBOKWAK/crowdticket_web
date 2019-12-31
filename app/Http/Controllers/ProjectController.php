@@ -1026,6 +1026,13 @@ class ProjectController extends Controller
         $order['totalPriceWithoutCommission'] = 0;
       }
 
+      if($order->isStatePayAccountStandby())
+      {
+        $order['count'] = 0;
+        $order['supporterPrice'] = 0;
+        $order['totalPriceWithoutCommission'] = 0;
+      }
+
       return $order;
     }
 

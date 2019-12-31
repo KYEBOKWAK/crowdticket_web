@@ -381,6 +381,11 @@ class Order extends Model
       return false;
     }
 
+    public function isStatePayAccountStandby()
+    {
+      return $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_STANDBY;
+    }
+
     public function isAccountOrder()
     {
       if(
