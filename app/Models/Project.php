@@ -20,11 +20,14 @@ class Project extends Model
     const PICK_STATE_NONE = 0;  //pick 상태
     const PICK_STATE_PICKED = 1;  //pick 완료 상태
 
+    const IS_PAY_DEFAULT = 0; //기본값
+    const IS_PAY_ACCOUNT = 1; //무통장 계좌이체 추가 옵션(루디 이슈)
+
     protected static $fillableByState = [
         Project::STATE_READY => [
             'type', 'project_type', 'project_target', 'isDelivery', 'isPlace', 'title', 'alias', 'poster_renew_url', 'poster_sub_renew_url', 'description', 'video_url', 'story', 'ticket_notice',
             'detailed_address', 'concert_hall', 'temporary_date', 'hash_tag1', 'hash_tag2', 'pledged_amount', 'audiences_limit',
-            'sale_start_at', 'funding_closing_at', 'picking_closing_at', 'event_type', 'event_type_sub', 'pick_state'
+            'sale_start_at', 'funding_closing_at', 'picking_closing_at', 'event_type', 'event_type_sub', 'pick_state', 'is_pay_account'
         ],
 
         Project::STATE_READY_AFTER_FUNDING => [
@@ -37,7 +40,7 @@ class Project extends Model
         ],
 
         Project::STATE_APPROVED => [
-          'description', 'video_url', 'story', 'ticket_notice', 'event_type', 'event_type_sub', 'pick_state'
+          'description', 'video_url', 'story', 'ticket_notice', 'event_type', 'event_type_sub', 'pick_state', 'is_pay_account'
         ]
     ];
 
@@ -62,6 +65,7 @@ class Project extends Model
         'audiences_limit' => 'integer|min:0',
         'event_type' => 'integer|min:0',
         'event_type_sub' => 'integer|min:0',
+        'is_pay_account' => 'integer|min:0',
         'funding_closing_at' => 'date_format:Y-m-d H:i:s',
         'performance_opening_at' => 'date_format:Y-m-d',
         'pick_state' => 'integer|min:0'
@@ -1055,6 +1059,19 @@ class Project extends Model
       }
 
       return false;
+    }
+
+    public function isPayAccount()
+    {
+      return (int)$this->is_pay_account === Project::IS_PAY_ACCOUNT;
+      /*
+      if((int)$this->is_pay_account === self::IS_PAY_ACCOUNT)
+      {
+        return true;
+      }
+
+      return false;
+      */
     }
 
 }

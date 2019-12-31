@@ -17,6 +17,8 @@ class Order extends Model
     const ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL = 4;
     const ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT = 5; //98번 오더인데 결제 떨어짐.
     //const ORDER_STATE_PAY_SUCCESS_SCHEDULE_NINETY_EIGHT = 6;
+    const ORDER_STATE_PAY_ACCOUNT_STANDBY = 6;
+    const ORDER_STATE_PAY_ACCOUNT_SUCCESS = 7;
     const ORDER_STATE_STANDBY_START = 98;
     const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
@@ -24,6 +26,8 @@ class Order extends Model
     const ORDER_STATE_CANCEL_START = 100; //취소사유는 100~200
     const ORDER_STATE_PROJECT_CANCEL = 102;   //프로젝트 중도 취소
     const ORDER_STATE_PROJECT_PICK_CANCEL = 103;  //추첨 안됨.
+    const ORDER_STATE_PAY_ACCOUNT_NO_PAY = 104;  //미입금으로 취소
+    const ORDER_STATE_CANCEL_ACCOUNT_PAY = 105; //계좌이체인데 고객이 취소누름.
     const ORDER_STATE_CANCEL = 199;//고객취소는 맨 마지막
 
     const ORDER_STATE_HOST_SHOW_ORDER_END = 200;
@@ -43,6 +47,9 @@ class Order extends Model
 
     const ORDER_TYPE_COMMISION_WITH_COMMISION = 0;  //커미션이 있는 오더 //env값으로 뺌
     const ORDER_TYPE_COMMISION_WITHOUT_COMMISION = 1; //커미션이 없는 오더
+
+    const ORDER_PAY_TYPE_CARD = 0;
+    const ORDER_PAY_TYPE_ACCOUNT = 1;
 
     protected $guarded = ['id', 'project_id', 'ticket_id', 'user_id','state', 'confirmed', 'created_at', 'updated_at', 'deleted_at'];
     protected $dates = ['deleted_at'];
@@ -362,6 +369,32 @@ class Order extends Model
       return $this->state;
     }
 
+    public function isAccountCancelOrder()
+    {
+      if(
+        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function isAccountOrder()
+    {
+      if(
+        $this->state === self::ORDER_STATE_PAY_ACCOUNT_STANDBY || 
+        $this->state === self::ORDER_STATE_PAY_ACCOUNT_SUCCESS ||
+        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
     public function getStateStringAttribute()
     {
       if (isset($this->deleted_at) && $this->deleted_at) {
@@ -425,6 +458,22 @@ class Order extends Model
       else if($this->getState() == self::ORDER_STATE_PROJECT_PICK_CANCEL)
       {
         return '미당첨';
+      }
+      else if($this->getState() === self::ORDER_STATE_PAY_ACCOUNT_STANDBY)
+      {
+        return '입금대기';
+      }
+      else if($this->getState() === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY)
+      {
+        return '미입금 취소됨';
+      }
+      else if($this->getState() === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+      {
+        return '입금 취소함';
+      }
+      else if($this->getState() === self::ORDER_STATE_PAY_ACCOUNT_SUCCESS)
+      {
+        return '결제완료(입금확인)';
       }
 
 
@@ -492,8 +541,10 @@ class Order extends Model
       }
 
       if(
-        $this->state == self::ORDER_STATE_CANCEL ||
-        $this->state == self::ORDER_STATE_PROJECT_CANCEL)
+        $this->state === self::ORDER_STATE_CANCEL ||
+        $this->state === self::ORDER_STATE_PROJECT_CANCEL ||
+        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
       {
         return true;
       }

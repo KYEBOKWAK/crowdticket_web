@@ -2,7 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
-    <link href="{{ asset('/css/order/ticket.css?version=9') }}" rel="stylesheet">
+    <link href="{{ asset('/css/order/ticket.css?version=10') }}" rel="stylesheet">
     <style>
         body {
           padding-right: 0 !important;
@@ -147,9 +147,92 @@
           margin-top: 0px;
         }
 
+        .pay_type_select_radio[type="radio"]{
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+          position: relative;
+          opacity: 0;
+        }
+
+        .pay_radio_wrapper{
+          position: relative;
+          margin-right: 20px;
+        }
+
+        .pay_word{
+          font-size: 14px;
+          color: #4d4d4d;
+          margin-top: 3px;
+        }
+
+        .pay_radio_img{
+          display: none;
+          position: absolute;
+          top: 3px;
+          left: 0px;
+        }
+
+        .pay_radio_img_unselect{
+          display: block;
+        }
+
+        input[type="radio"]{
+          zoom: 1;
+        }
+
+        .pay_form_container{
+          width: 100%;
+          height: 68px;
+          background-color: white;
+          padding-top: 5px;
+        }
+
+        .pay_info_word{
+          text-align: center;
+          font-size: 14px;
+          margin-top: 8px;
+          margin-bottom: 28px;
+        }
+
+        .pay_info_line{
+          width: 100%;
+          height: 1px;
+          background-color: #cccccc;
+          margin-bottom: 28px;
+        }
+
+        .pay_more_info_container{
+          display: none;
+          width: 100%;
+          height: 80px;
+          background-color: white;
+          margin-top: 28px;
+        }
+
+        .pay_more_info_wrapper{
+          padding-left: 20px;
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+
         @media (max-width:768px){
           #postcodify_search_button_fake{
             margin-top: 5px;
+          }
+        }
+
+        @media (max-width:396px){
+          .pay_form_container{
+            height: 100%;
+          }
+
+          .mobile_pay_radio{
+            display: block !important;
+          }
+
+          .pay_more_info_container{
+            height: 100%;
           }
         }
     </style>
@@ -190,6 +273,8 @@
         <input id="supportPrice" type="hidden" name="supportPrice" value="{{ $supportPrice }}"/>
         <input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
         <input id="ticket_id" type="hidden" name="ticket_id" value="@if($ticket){{ $ticket->id }}@endif"/>
+
+        <input id="pay_type" type="hidden" name="pay_type" value="card"/>
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -574,8 +659,42 @@
           @endif
         </div>
 
+        @if (!$order)
+          @if($project->isPayAccount())
+          <div class="pay_form_container">
+            <div class="order_form_user_container_grid_two_columns">
+              <div class="flex_layer">
+                <p class="order_form_title order_form_user_title">결제수단</p>
+                <div class='flex_layer mobile_pay_radio' style="padding-top: 5px">
+                  <div class='pay_radio_wrapper'>
+                    <img class='pay_radio_img pay_radio_img_select pay_radio_type_card_select' src="{{ asset('/img/icons/svg/radio-btn-s.svg') }}"/>
+                    <img class='pay_radio_img pay_radio_img_unselect pay_radio_type_card_unselect' src="{{ asset('/img/icons/svg/radio-btn-n.svg') }}"/>
+                    <div class='flex_layer'>
+                      <input class='pay_type_select_radio' type='radio' name='paytype' value='card'/>
+                      <p class='pay_word'>
+                        신용카드
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class='pay_radio_wrapper'>
+                    <img class='pay_radio_img pay_radio_img_select pay_radio_type_account_select' src="{{ asset('/img/icons/svg/radio-btn-s.svg') }}"/>
+                    <img class='pay_radio_img pay_radio_img_unselect pay_radio_type_account_unselect' src="{{ asset('/img/icons/svg/radio-btn-n.svg') }}"/>
+                    <div class='flex_layer'>
+                      <input class='pay_type_select_radio' type='radio' name='paytype' value='account'/>
+                      <p class='pay_word'>
+                        무통장입금
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @else
+            
+          @endif
         <div class="order_user_info_container">
-          @if (!$order)
             <div id="order_card_number_container" class="order_form_user_container_grid_two_columns">
               <div class="flex_layer">
                 <p class="order_form_title order_form_user_title">카드번호</p>
@@ -638,8 +757,86 @@
                 </div>
               </div>
             </div>
-          @endif
         </div>
+
+        <div class="order_user_info_container_account">
+          <p class="pay_info_word">24시간내 크티 가상계좌로 입금해주시면 확인 후 참여 확정처리 해드립니다.</p>
+          <div class="pay_info_line">
+          </div>
+          <div class="order_form_user_container_grid_two_columns">
+            <div class="flex_layer">
+              <p class="order_form_title order_form_user_title">입금자명</p>
+              <div style="width: 100%;">
+                <input id="order-pay-account-name" name="account_name" type="text"
+                        class="form-control" autocomplete="off" required="required"
+                        placeholder="입금자명"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pay_more_info_container">
+          <div class="pay_more_info_wrapper">
+            <p style="margin-bottom: 5px;">
+              - 연락처가 정확하지 않은 경우, 결제 확인 및 환불 처리가 어렵습니다.
+            </p>
+            <p>
+              - 현금영수증이 필요하신 분은 070-8819-4308로 문의부탁드립니다.
+            </p>
+          </div>
+        </div>
+        @else
+          <!-- 결제확인창 -->
+          @if($order->isAccountOrder())
+            <div class="order_form_conform_container_grid_rows">
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">입금계좌번호</p>
+                <div class="flex_layer">
+                  <div class="order_form_text">
+                    우리은행 1005-903-653846 (주)나인에이엠
+                  </div>
+                </div>
+              </div>
+
+              @if($project->isEventTypeDefault())
+                <div class="order_form_conform_container_grid_columns">
+                  <p class="order_form_title">입금자명</p>
+                  <div class="flex_layer">
+                    <div class="order_form_text">
+                      {{$order->account_name}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="order_form_conform_container_grid_columns">
+                  <p class="order_form_title">입금 금액</p>
+                  <div class="flex_layer">
+                    <div class="order_form_text">
+                    </div>
+                    <div class="order_form_align_right order_form_ticket_price order_form_text">
+                    </div>
+                  </div>
+                </div>                
+              @endif
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">결제 상태</p>
+                <div class="flex_layer">
+                  <div class="order_form_text">
+                    {{$order->getStateStringAttribute()}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; margin-bottom: 20px;">
+              <p style="margin-bottom: 2px;">
+                - 연락처가 정확하지 않은 경우, 결제 확인 및 환불 처리가 어렵습니다.
+              </p>
+              <p>
+                - 현금영수증이 필요하신 분은 070-8819-4308로 문의부탁드립니다.
+              </p>
+            </div>
+          @endif
+        @endif
 
         <div class="order_form_conform_container">
           <div class='order_form_conform_title'>
@@ -800,6 +997,11 @@
                                 환불은 2~3일 정도 소요될 수 있습니다.
                             </p>
                         @endif
+                        @if($order->isAccountOrder())
+                        <p class="ps-tooltip text-danger">
+                          이미 계좌이체를 하셨을 경우, 크라우드티켓(070-8819-4308)으로 문의 바랍니다.
+                        </p>
+                        @endif
                     @endif
                   @elseif($project->isEventTypeInvitationEvent())
                     <button class="btn btn-danger">취소하기</button>
@@ -842,12 +1044,17 @@
         const ORDER_TYPE_COMMISION_WITH_COMMISION = '0';  //커미션이 있는 오더
         const ORDER_TYPE_COMMISION_WITHOUT_COMMISION = '1'; //커미션이 없는 오더
         //서버와 코드 동일 END//
+
+        const PAY_TYPE_CARD = 'card';
+        const PAY_TYPE_ACCOUNT = 'account';
         $(document).ready(function () {
           var g_ticketPrice = 0;
           var g_discoutPrice = 0;
           var g_goodsArray = new Array();
           var g_commission = 0;
           var g_supportPrice = 0;
+
+          var g_payType = PAY_TYPE_CARD;
 
           var ticketsCategoryJson = $('#tickets_json_category_info').val();
         	var ticketsCategory = '';
@@ -1185,8 +1392,10 @@
             //action에 걸어주었던 링크로 가기전에 실행 ex)로딩중 표시를 넣을수도 있다.
             },
 
-            success : function(data) {
+            success : function(data) {              
                //컨트롤러 실행 후 성공시 넘어옴
+               console.log(data);
+
                if(data.orderResultType == "orderResultSuccess")
                {
                 //console.error("등록완료 ! " + data.isSuccess + "//"+ data.orderId);
@@ -1358,8 +1567,52 @@
 
             if(getTitalPrice() > 0)
             {
-              //구매 가격이 있을때만 체크한다.
+              if($('#pay_type').val() === PAY_TYPE_ACCOUNT){
+                if(!$('#order-pay-account-name').val()){
+                  alert('입금자명을 입력해주세요');
+                  return;
+                }
+              }else{
+                //구매 가격이 있을때만 체크한다.
+                if(!isCheckOnlyNumber($('#order-card-number').val()))
+                {
+                  //alert("카드 번호를 입력해주세요.");
+                  alert("카드 번호가 잘못 입력되었습니다.");
+                  return;
+                }
 
+                if(!$('#expiry_month').val())
+                {
+                  alert("유효 기간을 선택해주세요");
+                  return;
+                }
+
+                if(!$('#expiry_year').val())
+                {
+                  alert("유효 기간을 선택해주세요");
+                  return;
+                }
+
+                if(!isCheckOnlyNumber($('#order-birth').val()))
+                {
+                  alert("생년월일(법인등록번호)가 잘못 입력되었습니다.");
+                  return;
+                }
+
+                if(!$('#order-card-password').val())
+                {
+                  alert("카드 비밀번호 앞2자리를 입력해주세요.");
+                  return;
+                }
+                else{
+                  if(isNaN( $('#order-card-password').val() ) == true) {
+                        alert("비밀번호는 숫자만 입력 가능합니다.");
+                        return;
+                  }
+                }
+              }
+              /*
+              //구매 가격이 있을때만 체크한다.
               if(!isCheckOnlyNumber($('#order-card-number').val()))
               {
                 //alert("카드 번호를 입력해주세요.");
@@ -1396,6 +1649,7 @@
                       return;
   			        }
               }
+              */
             }
 
             if(!$('#refund_apply').is(":checked"))
@@ -1697,6 +1951,49 @@
 
           onCheckout();
           //데이터 수집 코드 END
+
+          //계좌입금 코드 START
+          
+          $('.pay_type_select_radio').click(function(e){
+            if(e.currentTarget.value === 'card'){
+              $('.order_user_info_container').show();
+              $('.pay_more_info_container').hide();
+              $('.order_user_info_container_account').hide();
+            } else {
+              $('.order_user_info_container').hide();
+              $('.pay_more_info_container').show();
+              $('.order_user_info_container_account').show();
+            }
+
+            //g_payType = e.currentTarget.value;
+            $('#pay_type').val(e.currentTarget.value);
+            setRadioInputImg();
+            //console.log(e.currentTarget.value);
+          });
+
+          var setRadioInputImg = function(){
+            if($('input:radio[name=paytype]:checked').val() === 'card'){
+              $('.pay_radio_type_card_select').show();
+              $('.pay_radio_type_card_unselect').hide();
+
+              $('.pay_radio_type_account_select').hide();
+              $('.pay_radio_type_account_unselect').show();
+            }
+            else{
+              $('.pay_radio_type_card_select').hide();
+              $('.pay_radio_type_card_unselect').show();
+
+              $('.pay_radio_type_account_select').show();
+              $('.pay_radio_type_account_unselect').hide();
+            }
+          }
+
+          if($("#pay_type").val())
+          {
+            $('input:radio[name=paytype]:input[value=' + $("#pay_type").val() + ']').attr("checked", true); 
+            setRadioInputImg();
+          }
+          //계좌입금 코드 END
       });
     </script>
 @endsection

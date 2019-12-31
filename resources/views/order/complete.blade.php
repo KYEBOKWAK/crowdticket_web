@@ -60,6 +60,57 @@
           display: none;
         }
 
+        .complete_account_info_container{
+          text-align: center;
+          font-size: 14px;
+          margin-top: 32px;
+          margin-bottom: 40px;
+        }
+
+        .pay_info_label{
+          width: 100px;
+          margin-right: 20px;
+          text-align: right;
+          margin-left: auto;
+        }
+
+        .pay_info_container{
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .pay_account_wrapper{
+          width: 355px;
+          height: 64px;
+          background-color: #f7f7f7;
+          border-radius: 5px;
+          text-align: center;
+          margin-right: auto;
+        }
+
+        .pay_info_wrapper{
+          margin-bottom: 12px;
+        }
+
+        .pay_info_wrapper_padding{
+          padding-top: 20px;
+          padding-bottom: 20px;
+        }
+
+        .pay_info_line{
+          width: 100%;
+          height: 1px;
+          background-color: #cccccc;
+          margin-top: 40px;
+          margin-bottom: 20px;
+        }
+
+        .pay_info_bottom_label{
+          text-align: center;
+          font-size: 12px;
+          color: #333333;
+        }
+
         @media (max-width:1030px) {
           .mannayo_banner_container{
             width: 100%;
@@ -81,6 +132,12 @@
           }
           .mannayo_banner_img_mobile{
             display: block;
+          }
+        }
+
+        @media (max-width:525px){
+          .pay_account_wrapper{
+            height: 100%;
           }
         }
     </style>
@@ -149,18 +206,82 @@
                 @else
                     <h3 class="text-center">
                       <strong>
-                        @if($project->isEventTypeDefault())
-                          결제가 완료되었습니다.
-                        @elseif($project->isEventTypeInvitationEvent())
-                          초대권 신청이 완료되었습니다.
+                        @if($isComment === TRUE)
+                          댓글 등록 완료!
+                        @else
+                          @if($order->isAccountOrder())
+                            입금대기 상태입니다.
+                          @elseif($project->isEventTypeDefault())
+                            결제가 완료되었습니다.
+                          @elseif($project->isEventTypeInvitationEvent())
+                            초대권 신청이 완료되었습니다.
+                          @endif
                         @endif
                       </strong>
                     </h3>
-                    <p class="text-center ps-text-detail">
-                        <strong>
-                            오른쪽 상단 '결제확인' 탭에서 확인해보세요!
-                        </strong>
-                    </p>
+                    @if($isComment === FALSE)
+                      @if($order->isAccountOrder())
+                      <div class="complete_account_info_container">
+                        <p style="margin-bottom: 5px;">
+                          <b>아래 계좌로 24시간내</b> 입금해주세요. 크티에서 확인 후 결제완료 처리해드립니다.
+                        </p>
+                        <p>
+                          입금 계좌번호 및 결제 진행 상태는 오른쪽 상단 ‘결제확인’ 탭에서 확인가능해요!
+                        </p>
+                      </div>
+                      
+                      <div class="pay_info_container">
+                        <div class='flex_layer pay_info_wrapper'>
+                          <p class="pay_info_label pay_info_wrapper_padding">
+                            입금 계좌번호
+                          </p>
+                          <div class="pay_account_wrapper pay_info_wrapper_padding">
+                            <p>
+                              우리은행 1005-903-653846 (주)나인에이엠
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class='flex_layer pay_info_wrapper'>
+                          <p class="pay_info_label pay_info_wrapper_padding">
+                            입금자명
+                          </p>
+                          <div class="pay_account_wrapper pay_info_wrapper_padding">
+                            <p>
+                              {{$order->account_name}}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class='flex_layer pay_info_wrapper'>
+                          <p class="pay_info_label pay_info_wrapper_padding">
+                            입금금액
+                          </p>
+                          <div class="pay_account_wrapper pay_info_wrapper_padding">
+                            <p>
+                            {{number_format($order->total_price)}}원
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="pay_info_line">
+                      </div>
+                      <div class="pay_info_bottom_label">
+                        <p style="margin-bottom: 2px;">
+                          - 연락처가 정확하지 않은 경우, 결제 확인 및 환불 처리가 어렵습니다.
+                        </p>
+                        <p>
+                          - 현금영수증이 필요하신 분은 070-8819-4308로 문의부탁드립니다.
+                        </p>
+                      </div>
+                      @else
+                      <p class="text-center ps-text-detail">
+                          <strong>
+                              오른쪽 상단 '결제확인' 탭에서 확인해보세요!
+                          </strong>
+                      </p>
+                      @endif
+                    @endif
                 @endif
             </div>
         </div>

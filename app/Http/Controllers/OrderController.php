@@ -26,6 +26,12 @@ class OrderController extends Controller
     $projectId = '';
     $ticketId = '';
     $ticket = '';
+    $payType = 'card';
+
+    if($request->has('pay_type')){
+      $payType = \Input::get('pay_type');
+    }
+
     if($request->has('project_id'))
     {
       $projectId = \Input::get('project_id');
@@ -50,12 +56,6 @@ class OrderController extends Controller
     {
       //티켓 정보가 있을때 저장한다.
       $ticket = $this->getOrderableTicket($ticketId);
-
-      //if($this->getAmountTicketWithTicketId($ticketId, $project->orders) <= 0)
-      //{
-      //  return view('test', ['project' => '수량이 매진되었습니다.']);
-      //}
-
     }
     //구매 가능한 수량이 있는지 체크
 
@@ -119,8 +119,6 @@ class OrderController extends Controller
 
           DB::commit();
 
-          //return view('errors.overcounter_ticket');
-          //return ["isSuccess" => false, "orderId" => $orderId, "eMessage" => $e->getMessage()];
           return ["orderResultType" => "orderResultFailOverCount", "orderId" => $order->id, "projectId" => $projectId, "eMessage" => "해당 상품이 매진되었습니다."];
         }
       }
@@ -161,19 +159,31 @@ class OrderController extends Controller
       if ($this->isPaymentProcess()) {
         $info = $this->buildPaymentNewInfo($user, $project);
 
-        if($info->getAmount() >  0)
+        if($payType === 'card')
         {
-          $paymentService = new PaymentService();
-          if ($project->type === 'funding') {
-              $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
-              $order->setState(Order::ORDER_STATE_PAY_SCHEDULE);
-          } else {
-              $payment = $paymentService->rightNow($info);
-              $order->setState(Order::ORDER_STATE_PAY);
+          if($info->getAmount() >  0)
+          {
+            $paymentService = new PaymentService();
+            if ($project->type === 'funding') {
+                $payment = $paymentService->schedule($info, $project->getFundingOrderConcludeAt());
+                $order->setState(Order::ORDER_STATE_PAY_SCHEDULE);
+            } else {
+                $payment = $paymentService->rightNow($info);
+                $order->setState(Order::ORDER_STATE_PAY);
+            }
+
+            $order->imp_meta = $payment ? $payment->toJson() : '{}';
+          }
+        }
+        else
+        {
+          $account_name = '';
+          if($request->has('account_name')){
+            $account_name = \Input::get('account_name');
           }
 
-          $order->imp_meta = $payment ? $payment->toJson() : '{}';
-
+          $order->account_name = $account_name;
+          $order->setState(Order::ORDER_STATE_PAY_ACCOUNT_STANDBY);
         }
       }
 
@@ -182,10 +192,13 @@ class OrderController extends Controller
       //하단에 정보 전송 전에 결제 진행한다.
       if($project->isEventTypeDefault()){
         //기본 이벤트 형태일 경우만 문자 메일을 보낸다.
-        $this->sendSMS($project, $order);
-
-        $emailTo = $order->email;
-        $this->sendMail($emailTo, $project, $order);
+        if($payType === 'card'){
+          $this->sendSMS($project, $order);
+          $emailTo = $order->email;
+          $this->sendMail($emailTo, $project, $order);
+        }else if($payType === 'account'){
+          $this->sendAccountSMS($project, $order);
+        }
       }
 
       return ["orderResultType" => "orderResultSuccess", "orderId" => $order->id, "eMessage" => ""];
@@ -333,6 +346,32 @@ class OrderController extends Controller
         $msg = sprintf('%s %s원 결제 예약 완료', $titleLimit, $totalPrice);
       }
     }
+
+    $sms->send([$contact], $msg);
+  }
+
+  public function sendAccountSMS($project, $order)
+  {
+    $sms = new SmsService();
+    $contact = $order->contact;
+    $limit = $project->type === 'funding' ? 10 : 14;
+    $titleLimit = str_limit($project->title, $limit, $end = '..');
+    $totalPrice = number_format($order->total_price);
+    //$totalRealTicket = $ticket->real_ticket_count * $order->count;
+    $totalRealTicket = $this->getOrderCount();
+
+    /*
+    아래 계좌로 24시간 내에 [결제금액]을 입금하시면
+    [이벤트제목]의 참여가 확정됩니다!
+    1005-
+    우리은행 (주)나인에이엠
+    입금자명: xxx
+    Jun 5:58 PM
+    */
+    
+    $msg = sprintf('아래 계좌로 24시간 내에 [%s원]을 입금하시면 [%s]의 참여가 확정됩니다!
+                    1005-903-653846 우리은행 (주)나인에이엠 입금자명: %s', $totalPrice, $titleLimit, $order->account_name);
+                    
 
     $sms->send([$contact], $msg);
   }
@@ -1080,6 +1119,11 @@ class OrderController extends Controller
 
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
+
+        if($order->state === Order::ORDER_STATE_PAY_ACCOUNT_STANDBY ||
+          $order->state === Order::ORDER_STATE_PAY_ACCOUNT_SUCCESS){
+            $stateCancel = Order::ORDER_STATE_CANCEL_ACCOUNT_PAY;
+        }
 
         if (!$bypass) {
             if (!$order->canCancel()) {
