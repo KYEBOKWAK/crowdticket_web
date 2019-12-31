@@ -226,7 +226,7 @@ class OrderController extends Controller
     return view('order.complete', [
         'project' => $project,
         'order' => $order,
-        'isComment' => FALSE
+        'isComment' => 'FALSE'
     ]);
   }
 
@@ -381,7 +381,7 @@ class OrderController extends Controller
       return view('order.complete', [
           'project' => $project,
           'order' => '',
-          'isComment' => TRUE
+          'isComment' => 'TRUE'
       ]);
     }
 
@@ -1120,8 +1120,8 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)->withTrashed()->first();
         Auth::user()->checkOwnership($order);
 
-        if($order->state === Order::ORDER_STATE_PAY_ACCOUNT_STANDBY ||
-          $order->state === Order::ORDER_STATE_PAY_ACCOUNT_SUCCESS){
+        if($order->getState() === Order::ORDER_STATE_PAY_ACCOUNT_STANDBY ||
+          $order->getState() === Order::ORDER_STATE_PAY_ACCOUNT_SUCCESS){
             $stateCancel = Order::ORDER_STATE_CANCEL_ACCOUNT_PAY;
         }
 

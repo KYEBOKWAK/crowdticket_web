@@ -366,14 +366,14 @@ class Order extends Model
 
     public function getState()
     {
-      return $this->state;
+      return (int)$this->state;
     }
 
     public function isAccountCancelOrder()
     {
       if(
-        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
-        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+        $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->getState() === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
       {
         return true;
       }
@@ -384,10 +384,10 @@ class Order extends Model
     public function isAccountOrder()
     {
       if(
-        $this->state === self::ORDER_STATE_PAY_ACCOUNT_STANDBY || 
-        $this->state === self::ORDER_STATE_PAY_ACCOUNT_SUCCESS ||
-        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
-        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+        $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_STANDBY || 
+        $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_SUCCESS ||
+        $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->getState() === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
       {
         return true;
       }
@@ -407,19 +407,19 @@ class Order extends Model
         return "프로젝트 에러";
       }
 
-      if($this->getState() == self::ORDER_STATE_CANCEL)
+      if($this->getState() === self::ORDER_STATE_CANCEL)
       {
         return '취소됨';
       }
-      else if($this->getState() == self::ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT)
+      else if($this->getState() === self::ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT)
       {
         return '결제실패(결제에러)';
       }
-      else if($this->getState() == self::ORDER_STATE_PROJECT_CANCEL)
+      else if($this->getState() === self::ORDER_STATE_PROJECT_CANCEL)
       {
         return '목표 도달 실패';
       }
-      else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE)
+      else if($this->getState() === self::ORDER_STATE_PAY_SCHEDULE)
       {
         if($project->isPickedComplete())
         {
@@ -434,7 +434,7 @@ class Order extends Model
           return '결제예약';
         }
       }
-      else if($this->getState() == self::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL)
+      else if($this->getState() === self::ORDER_STATE_PAY_SCHEDULE_RESULT_FAIL)
       {
         if($project->isPickedComplete())
         {
@@ -443,19 +443,19 @@ class Order extends Model
 
         return '결제실패(예약)';
       }
-      else if($this->getState() == self::ORDER_STATE_STANDBY_START)
+      else if($this->getState() === self::ORDER_STATE_STANDBY_START)
       {
         return '결제에러';
       }
-      else if($this->getState() == self::ORDER_STATE_ERROR_PAY)
+      else if($this->getState() === self::ORDER_STATE_ERROR_PAY)
       {
         return '결제 에러';
       }
-      else if($this->getState() == self::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT)
+      else if($this->getState() === self::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT)
       {
         return '결제완료';
       }
-      else if($this->getState() == self::ORDER_STATE_PROJECT_PICK_CANCEL)
+      else if($this->getState() === self::ORDER_STATE_PROJECT_PICK_CANCEL)
       {
         return '미당첨';
       }
@@ -484,7 +484,7 @@ class Order extends Model
         return '응모완료';
       }
 
-      if((int)$this->getState() == self::ORDER_STATE_PAY)
+      if((int)$this->getState() === self::ORDER_STATE_PAY)
       {
         if($project->isPickedComplete())
         {
@@ -541,10 +541,10 @@ class Order extends Model
       }
 
       if(
-        $this->state === self::ORDER_STATE_CANCEL ||
-        $this->state === self::ORDER_STATE_PROJECT_CANCEL ||
-        $this->state === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
-        $this->state === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
+        $this->getState() === self::ORDER_STATE_CANCEL ||
+        $this->getState() === self::ORDER_STATE_PROJECT_CANCEL ||
+        $this->getState() === self::ORDER_STATE_PAY_ACCOUNT_NO_PAY || 
+        $this->getState() === self::ORDER_STATE_CANCEL_ACCOUNT_PAY)
       {
         return true;
       }

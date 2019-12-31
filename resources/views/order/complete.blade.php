@@ -144,7 +144,7 @@
 @endsection
 
 @section('content')
-    @if($isComment == TRUE)
+    @if($isComment === 'TRUE')
     <script>
       swal("등록 성공!", "프로젝트 응원&후기 에서 확인 할 수 있습니다.", "success");
     </script>
@@ -206,7 +206,7 @@
                 @else
                     <h3 class="text-center">
                       <strong>
-                        @if($isComment === TRUE)
+                        @if($isComment === 'TRUE')
                           댓글 등록 완료!
                         @else
                           @if($order->isAccountOrder())
@@ -219,7 +219,7 @@
                         @endif
                       </strong>
                     </h3>
-                    @if($isComment === FALSE)
+                    @if($isComment === 'FALSE')
                       @if($order->isAccountOrder())
                       <div class="complete_account_info_container">
                         <p style="margin-bottom: 5px;">
