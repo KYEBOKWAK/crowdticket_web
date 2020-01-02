@@ -1026,12 +1026,14 @@ class ProjectController extends Controller
         $order['totalPriceWithoutCommission'] = 0;
       }
 
+      /*
       if($order->isStatePayAccountStandby())
       {
         $order['count'] = 0;
         $order['supporterPrice'] = 0;
         $order['totalPriceWithoutCommission'] = 0;
       }
+      */
 
       return $order;
     }
@@ -1093,10 +1095,12 @@ class ProjectController extends Controller
     {
       $project = Project::find($request->project_id);
       $orderAllCount = $project->ordersWithoutError()->withTrashed()->count();
-      //$orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('count');
-      $orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('state', '<>', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->sum('count');
+      $orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->sum('count');
+      //$orderBuyCount = $project->ordersWithoutError()->withTrashed()->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('state', '<>', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->sum('count');
       
       $orderTotalPrice = 0;
+
+      $orderWaitCount = $project->ordersWithoutError()->withTrashed()->where('state', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->sum('count');
       
       Order::where('project_id', $project->id)->where('state', '<=', Order::ORDER_STATE_PAY_END)->withTrashed()->chunk(100, function($orders) use(&$orderTotalPrice){
         foreach($orders as $order)
@@ -1105,11 +1109,25 @@ class ProjectController extends Controller
         }
       });
 
-      //$orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
-      $orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('state', '<>', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
+      $orderWaitTotalPrice = 0;
+      Order::where('project_id', $project->id)->where('state', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->withTrashed()->chunk(100, function($orders) use(&$orderWaitTotalPrice){
+        foreach($orders as $order)
+        {
+          $orderWaitTotalPrice += $order->getTotalPriceWithoutCommission();
+        }
+      });
+
+
+      $orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
+      //$orderSupportTotalPrice = $project->ordersWithoutError()->withTrashed()->whereNull('ticket_id')->where('state', '<=', Order::ORDER_STATE_PAY_END)->where('state', '<>', Order::ORDER_STATE_PAY_ACCOUNT_STANDBY)->where('supporter_id', '<>', '')->where('goods_meta', '{}')->sum('total_price');
       $orderCancelCount = $project->ordersWithoutError()->withTrashed()->where('state', '>', Order::ORDER_STATE_PAY_END)->count();
 
-      return ['state' => 'success', 'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];
+      $isPayAccount = 'false';
+      if($project->isPayAccount())
+      {
+        $isPayAccount = 'true';
+      }
+      return ['state' => 'success','is_pay_account' => $isPayAccount,'order_wait_count' => $orderWaitCount, 'order_wait_total_price' => $orderWaitTotalPrice ,'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];
     }
 
     public function getAttend($projectId)

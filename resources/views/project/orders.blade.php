@@ -1008,7 +1008,17 @@ $(document).ready(function () {
     }
     var success = function(request) {
       if(request.state === 'success'){
-        $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원');
+        if(request.is_pay_account === 'true'){
+          //var infoText = '총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 총 입금대기 : '+ request.order_wait_count +'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원' + ' / 입금 대기 금액 : ' + request.order_wait_total_price+'원';
+          //var result = infoText.value.replace(/(\n|\r\n)/g, '<br>');
+          //$('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 총 입금대기 : '+ request.order_wait_count +'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원' + ' / 입금 대기 금액 : ' + request.order_wait_total_price+'원');
+
+          var infoText = $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 총 입금대기 : '+ request.order_wait_count +'매 / 취소 수 : '+request.order_cancel_count+'매 \n 후원만한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원' + ' / 입금 대기 금액 : ' + request.order_wait_total_price+'원');
+          infoText.html(infoText.html().replace(/\n/g, '<br/>'));
+        }
+        else{
+          $('#order_light_info_label').text('총 참여자수: '+request.order_all_count+'명 / 총 티켓구매 : '+request.order_count+'매 / 취소 수 : '+request.order_cancel_count+'매 / 후원만한 금액 : '+request.order_support_total_price+'원 / 총 티켓 판매 금액 : '+request.order_total_price+'원');
+        }
       }
     };
     
