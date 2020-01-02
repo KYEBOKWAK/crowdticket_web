@@ -1127,7 +1127,11 @@ class ProjectController extends Controller
       {
         $isPayAccount = 'true';
       }
-      return ['state' => 'success','is_pay_account' => $isPayAccount,'order_wait_count' => $orderWaitCount, 'order_wait_total_price' => $orderWaitTotalPrice ,'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];
+
+      $nowTotalPay = $orderTotalPrice - $orderWaitTotalPrice;
+      $nowTotalCount = $orderBuyCount - $orderWaitCount;
+
+      return ['state' => 'success', 'now_total_count' => $nowTotalCount ,'now_total_pay' => $nowTotalPay,'is_pay_account' => $isPayAccount,'order_wait_count' => $orderWaitCount, 'order_wait_total_price' => $orderWaitTotalPrice ,'order_all_count' => $orderAllCount, 'order_count' => $orderBuyCount, 'order_cancel_count' => $orderCancelCount, 'order_total_price' => $orderTotalPrice, 'order_support_total_price' => $orderSupportTotalPrice];
     }
 
     public function getAttend($projectId)
