@@ -450,11 +450,11 @@ class Order extends Model
       }
       else if($this->getState() === self::ORDER_STATE_STANDBY_START)
       {
-        return '결제에러';
+        return '결제 에러(1)';
       }
       else if($this->getState() === self::ORDER_STATE_ERROR_PAY)
       {
-        return '결제 에러';
+        return '결제 에러(2)';
       }
       else if($this->getState() === self::ORDER_STATE_PAY_SUCCESS_NINETY_EIGHT)
       {

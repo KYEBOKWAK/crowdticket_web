@@ -1939,18 +1939,21 @@
           var onCheckout = function(){
             dataLayer.push({
               event: 'checkout',
-              checkout: {
-                'actionField': {
-                  step: 1, 
-                  option: '결제시도'
-                },
-                products: [{
-                  name: $('#data_project_title').val(), // 상품명
-                  price: getTitalPrice(), // 상품 가격
-                  quantity: Number($('#ticket_count').val()), // 수량 (서버변수 : count)
-                  category:$('#data_project_project_type').val() // 카테고리 (CREATOR 또는 CULTURE)
-                }]
+              ecommerce:{
+                checkout: {
+                  'actionField': {
+                    step: 1, 
+                    option: '결제시도'
+                  },
+                  products: [{
+                    name: $('#data_project_title').val(), // 상품명
+                    price: getTitalPrice(), // 상품 가격
+                    quantity: Number($('#ticket_count').val()), // 수량 (서버변수 : count)
+                    category:$('#data_project_project_type').val() // 카테고리 (CREATOR 또는 CULTURE)
+                  }]
+                },  
               },
+              
               eventCallback: function() {
                 //document.location = 'checkout.html'; 
               }
