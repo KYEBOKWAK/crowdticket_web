@@ -138,6 +138,8 @@ class Order extends Model
             if ($project->funding_closing_at) {
                 $refundDay = $project->funding_closing_at;
             }
+
+            $dday = strtotime('-1 days', strtotime($refundDay));
           }
           else
           {
@@ -157,9 +159,12 @@ class Order extends Model
             {
               $refundDay = $project->funding_closing_at;
             }
+
+            $refundDay = date("Y-m-d 00:00:00", strtotime($refundDay));
+            $dday = strtotime($refundDay);
           }
 
-          $dday = strtotime('-1 days', strtotime($refundDay));
+          //$dday = strtotime('-1 days', strtotime($refundDay));
         }
 
         return $dday - time() > 0;
