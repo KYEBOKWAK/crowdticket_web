@@ -369,7 +369,8 @@ class OrderController extends Controller
     Jun 5:58 PM
     */
     
-    $msg = sprintf('아래 계좌로 24시간 내에 [%s원]을 입금하시면 [%s]의 참여가 확정됩니다! 1005-903-653846 우리은행 (주)나인에이엠 입금자명: %s', $totalPrice, $titleLimit, $order->account_name);
+    //$msg = sprintf('아래 계좌로 24시간 내에 [%s원]을 입금하시면 [%s]의 참여가 확정됩니다! 1005-903-653846 우리은행 (주)나인에이엠 입금자명: %s', $totalPrice, $titleLimit, $order->account_name);
+    $msg = sprintf('아래 계좌로 24시간 내에 [%s원]을 입금해주세요. 1005-903-653846 우리은행 (주)나인에이엠 입금자명: %s', $totalPrice, $order->account_name);
                     
 
     $sms->send([$contact], $msg);
