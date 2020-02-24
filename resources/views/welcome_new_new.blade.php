@@ -698,7 +698,7 @@
 @endsection
 
 <div class='welcome_event_banner_img_container'>
-  <a href="{{url('/projects/rudyfestival2020')}}">
+  <a href="{{url('/magazine/38')}}">
     <img class='welcome_event_banner_img' src="">
     <img class='welcome_event_banner_img_content_pc' src="">
     <img class='welcome_event_banner_img_content_mobile' src="">
@@ -945,7 +945,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         <!-- 썸네일 테스트 END -->
       </div>
     </div>
-    
+
     <div class="welcome_content_container">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
@@ -3979,9 +3979,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         }
 
       if($('.welcome_event_banner_img_container').length > 0){
-        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_bg.png');
-        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_pc_2.png');
-        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/191227_rudy_float_m_1.png');
+        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_bg.png');
+        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_pc.png');
+        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_m.png');
         $('.welcome_event_banner_img_container').show();
       }
     </script>
