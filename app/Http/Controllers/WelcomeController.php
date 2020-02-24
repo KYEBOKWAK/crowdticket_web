@@ -106,6 +106,154 @@ class WelcomeController extends Controller
     return $ga_id;
   }
 
+  public function index()
+  {
+      $thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
+      //$thumbnailCrowdticketPicProject = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_CROLLING);
+
+      $thumbMagazines = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_MAGAZINE);
+
+      $thumbEventProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT);
+
+      $thumbPlayCreators = Main_thumb_play_creator::orderBy('order_number')->get();
+
+      ///////meetup start
+      $meetups = \DB::table('meetups')->whereNull('deleted_at')
+                      ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                      ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                              'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
+                              'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                      ->orderBy('meetups.meet_count', 'desc')->skip(0)->take(4)->get();
+      
+      $user = null;
+      if(\Auth::check() && \Auth::user())
+      {
+          $user = \Auth::user();
+      }
+      
+      foreach($meetups as $meetup)
+      {
+          $meetup->meetup_users = [];
+          $meetup->is_meetup = false;
+          if($user)
+          {
+              $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+              if($meetup_user_my)
+              {
+                  $userMyInfo = $meetup_user_my->user;
+                  $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                  $meetup_user_my->user_profile_url = $userMyProfileURL;
+                  $meetup_user_my->user_name = '나';
+
+                  array_push($meetup->meetup_users, $meetup_user_my);
+
+                  $meetup->is_meetup = true;
+              }
+          }
+
+          $meetup_users = null;
+
+          if($user)
+          {
+              $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+          }
+          else
+          {
+              $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+          }
+
+          foreach($meetup_users as $meetup_user)
+          {
+              $userInfo = $meetup_user->user;
+              //$userProfileURL = $userInfo->getPhotoUrl();
+              $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
+
+              $meetup_user->user_profile_url = $userProfileURL;
+              $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
+
+              array_push($meetup->meetup_users, $meetup_user);
+
+              if(count($meetup->meetup_users) >= 3)
+              {
+                  break;
+              }
+          }
+      }
+      ///////meetup end
+
+      ///////////////임시 최신 만나요 코드 START
+      ///////meetup start
+      $newMeetups = \DB::table('meetups')->whereNull('deleted_at')
+                      ->join('creators', 'meetups.creator_id', '=', 'creators.id')
+                      ->select('meetups.id', 'meetups.user_id', 'meetups.creator_id', 
+                              'meetups.what', 'meetups.where', 'meetups.meet_count', 'meetups.comments_count',
+                              'creators.channel_id', 'creators.title', 'creators.thumbnail_url')
+                      ->orderBy('meetups.id', 'desc')->skip(0)->take(4)->get();
+      
+      foreach($newMeetups as $meetup)
+      {
+          $meetup->meetup_users = [];
+          $meetup->is_meetup = false;
+          if($user)
+          {
+              $meetup_user_my = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', $user->id)->first();
+              if($meetup_user_my)
+              {
+                  $userMyInfo = $meetup_user_my->user;
+                  $userMyProfileURL = $userMyInfo->getPhotoUrl();
+
+                  $meetup_user_my->user_profile_url = $userMyProfileURL;
+                  $meetup_user_my->user_name = '나';
+
+                  array_push($meetup->meetup_users, $meetup_user_my);
+
+                  $meetup->is_meetup = true;
+              }
+          }
+
+          $meetup_users = null;
+
+          if($user)
+          {
+              $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->where('user_id', '<>', $user->id)->orderBy('id', 'desc')->take(3)->get();
+          }
+          else
+          {
+              $meetup_users = Meetup_user::where('meetup_id', $meetup->id)->orderBy('id', 'desc')->take(3)->get();
+          }
+
+          foreach($meetup_users as $meetup_user)
+          {
+              $userInfo = $meetup_user->user;
+              //$userProfileURL = $userInfo->getPhotoUrl();
+              $userProfileURL = $userInfo->getMannayoPhotoURL($meetup_user->anonymity);
+
+              $meetup_user->user_profile_url = $userProfileURL;
+              $meetup_user->user_name = $userInfo->getMannayoUserNickName($meetup_user->anonymity);
+
+              array_push($meetup->meetup_users, $meetup_user);
+
+              if(count($meetup->meetup_users) >= 3)
+              {
+                  break;
+              }
+          }
+      }
+      ///////meetup end
+      ///////////////임시 최신 만나요 코드 END
+
+      return view('welcome_new_new', [
+        'projects' => $thumbnailProjects,
+        'magazines' => $thumbMagazines,
+        'playedcreators' => $thumbPlayCreators,
+        'meetups' => $meetups,
+        'newMeetups' => $newMeetups,
+        'thumbEventProjects' => $thumbEventProjects
+    ]);
+  }
+
+  /*
     public function index()
     {
         $thumbnailProjects = $this->getThumbnailProject(Main_thumbnail::THUMBNAIL_TYPE_RECOMMEND);
@@ -190,6 +338,7 @@ class WelcomeController extends Controller
           'thumbEventProjects' => $thumbEventProjects
       ]);
     }
+    */
 
     public function getThumbnailProject($thumbnailType)
     {
