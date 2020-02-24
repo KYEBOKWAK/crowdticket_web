@@ -801,7 +801,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
-            인기있는 만나요
+            최신 만나요
           </div>
           <div class="welcome_content_more_wrapper">
             <a href="{{url('/mannayo')}}">
@@ -833,9 +833,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               <div class="flex_layer">
               @endif
               <?php
-                for($j = $i ; $j < count($meetups) ; $j++)
+                for($j = $i ; $j < count($newMeetups) ; $j++)
                 {
-                  $meetup = $meetups[$projectIndex];
+                  $meetup = $newMeetups[$projectIndex];
 
                   //만나요
                   ?>
@@ -945,12 +945,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         <!-- 썸네일 테스트 END -->
       </div>
     </div>
-
+    
     <div class="welcome_content_container">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">
-            최신 만나요
+            인기있는 만나요
           </div>
           <div class="welcome_content_more_wrapper">
             <a href="{{url('/mannayo')}}">
@@ -982,9 +982,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               <div class="flex_layer">
               @endif
               <?php
-                for($j = $i ; $j < count($newMeetups) ; $j++)
+                for($j = $i ; $j < count($meetups) ; $j++)
                 {
-                  $meetup = $newMeetups[$projectIndex];
+                  $meetup = $meetups[$projectIndex];
 
                   //만나요
                   ?>
