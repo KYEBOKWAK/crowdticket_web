@@ -8,6 +8,9 @@ use App\Models\Supporter as Supporter;
 use App\Models\Ticket as Ticket;
 use App\Models\Categories_ticket as Categories_ticket;
 use App\Models\Discount as Discount;
+
+use App\Models\Orders_goods as Orders_goods;
+
 use App\Services\Payment;
 use App\Services\PaymentInfo;
 use App\Services\PaymentService;
@@ -189,6 +192,8 @@ class OrderController extends Controller
 
       $order->save();
 
+      $this->createGoodsOrder($project, $order, $user, $goodsSelectArray);
+
       //하단에 정보 전송 전에 결제 진행한다.
       if($project->isEventTypeDefault()){
         //기본 이벤트 형태일 경우만 문자 메일을 보낸다.
@@ -216,6 +221,39 @@ class OrderController extends Controller
 
       return ["orderResultType" => "FALSE", "orderId" => $orderId, "eMessage" => $e->getMessage()];
     }
+  }
+
+  public function createGoodsOrder($project, $order, $user, $goodsSelectArray){
+    $goodsArrayCount = count($goodsSelectArray);
+    if($goodsArrayCount == 0)
+    {
+      return;
+    }
+
+    $goodsArray = [];
+    for($i = 0 ; $i < $goodsArrayCount ; ++$i)
+    {
+      $goodsId = $goodsSelectArray[$i]['info']->id;
+      $goodsCount = $goodsSelectArray[$i]['count'];
+      // $goodsInfo = ['project_id' => $project->id, 'order_id' => $order->id];
+
+      $goodsInfo = [
+        'project_id' => $project->id,
+        'order_id' => $order->id,
+        'user_id' => $user->id,
+        'goods_id' => $goodsId,
+        'count' => $goodsCount,
+        'created_at' => date('Y-m-d H:i:s', time())
+      ];
+
+      array_push($goodsArray, $goodsInfo);
+    }
+
+    DB::table('Orders_goods')->insert($goodsArray);
+  }
+
+  public function deleteGoodsOrder($order){
+    DB::table('Orders_goods')->where('order_id', '=', $order->id)->delete();
   }
 
   public function completeOrder($orderId)
@@ -909,6 +947,7 @@ class OrderController extends Controller
         array_push($goodsArray, $goodsInfo);
       }
 
+
       return json_encode($goodsArray);
       //return $goodsArray;
     }
@@ -1194,6 +1233,8 @@ class OrderController extends Controller
             }
 
             DB::commit();
+
+            $this->deleteGoodsOrder($order);
 
             if($project->isEventTypeDefault()){
               $this->sendCencelSMS($project, $order);

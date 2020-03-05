@@ -19,6 +19,7 @@ class Order extends Model
     //const ORDER_STATE_PAY_SUCCESS_SCHEDULE_NINETY_EIGHT = 6;
     const ORDER_STATE_PAY_ACCOUNT_STANDBY = 6;
     const ORDER_STATE_PAY_ACCOUNT_SUCCESS = 7;
+    const ORDER_STATE_APP_PAY_WAIT = 8; //모바일 앱에서 1차 티켓 확보
     const ORDER_STATE_STANDBY_START = 98;
     const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
