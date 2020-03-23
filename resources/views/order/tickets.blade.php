@@ -396,6 +396,9 @@
               var goodsAmount = $(this).attr('goods-amount');
               var goodsInputInfo = $("#goods_count_input"+goodsId);
 
+              var goodsBuyLimit = $(this).attr('goods-buy-limit');
+              goodsBuyLimit = Number(goodsBuyLimit);
+
               var goodsCount = goodsInputInfo.val();
 
               goodsCount++;
@@ -405,6 +408,13 @@
                 {
                   alert("보유 수량을 초과했습니다.");
                   goodsCount = goodsAmount;
+                }
+              }
+
+              if(goodsBuyLimit > 0){
+                if(goodsBuyLimit < Number(goodsCount)){
+                  alert("구매 횟수 초과!");
+                  goodsCount = goodsBuyLimit;
                 }
               }
 

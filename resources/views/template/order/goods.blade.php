@@ -22,7 +22,7 @@
             남은수량 {{ $goods->getAmountGoodsCount() }} 개
           @endif
         </p>
-        <button class="goods_count_up" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
+        <button class="goods_count_up" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" goods-buy-limit="{{$goods->buy_limit}}" type="button"></button>
         <button class="goods_count_down" goods-id="{{ $goods->id }}" goods-amount="{{ $goods->getAmountGoodsCount() }}" type="button"></button>
         <span class="goods_count_text goods_count_text{{ $goods->id }}">0개</span>
         <input id="goods_count_input{{ $goods->id }}" type="hidden" goods-id="{{ $goods->id }}" goods-price="{{ $goods->price }}" goods-ticket-discount-price="{{ $goods->ticket_discount }}" name="goods_count{{ $goods->id }}" type="number" class="ticket_goods_count_input form-control"

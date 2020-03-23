@@ -942,7 +942,7 @@ class OrderController extends Controller
       for($i = 0 ; $i < $goodsArrayCount ; ++$i)
       {
         $goodsInfo['id'] = $goodsSelectArray[$i]['info']->id;
-        $goodsInfo['count'] = $goodsSelectArray[$i]['count'];
+        $goodsInfo['count'] = (int)$goodsSelectArray[$i]['count'];
 
         array_push($goodsArray, $goodsInfo);
       }
