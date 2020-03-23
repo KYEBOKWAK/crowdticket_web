@@ -165,9 +165,21 @@ class UserController extends Controller
       }
 
       $user->update(\Input::all());
+
+      if ($request->has('modify_gender')) {
+        $gender = \Input::get('modify_gender');
+        $user->gender = $gender;
+      }
+
+      if ($request->has('modify_age_user')) {
+        $age = \Input::get('modify_age_user');
+        $user->age = $age;
+      }
+
       $user->save();
 
-      return $this->getUpdateView($user, $this->messageSuccess('변경되었습니다.'));
+      // return $this->getUpdateView($user, $this->messageSuccess('변경되었습니다.'));
+      return ['state' => 'success'];
       /*
         $user = $this->ensureLoginUser($id);
         if ($this->isTryChangePassword()) {

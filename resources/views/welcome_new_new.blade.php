@@ -706,15 +706,6 @@
 </div>
 
 @section('content')
-@if (Auth::guest())
-  <input id='user_nickname' type='hidden' value=''/>
-  <input id='user_age' type='hidden' value=''/>
-  <input id='user_gender' type='hidden' value=''/>
-@else
-  <input id='user_nickname' type='hidden' value='{{\Auth::user()->getUserNickName()}}'/>
-  <input id='user_age' type='hidden' value='{{\Auth::user()->getUserAge()}}'/>
-  <input id='user_gender' type='hidden' value='{{\Auth::user()->getUserGender()}}'/>
-@endif
 
 <?php
 $maxItemCountInLine = 4;  //한줄에 표시될 아이템 개수

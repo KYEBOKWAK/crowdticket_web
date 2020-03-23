@@ -60,6 +60,71 @@
       text-align: center;
     }
 
+    .register_popup_user_options_container{
+      text-align: left;
+    }
+
+    .register_popup_user_options_container>p{
+      font-size: 12px;
+      color: #808080;
+    }
+
+    .register_radio_wrapper{
+      position: relative;
+    }
+
+    .register_radio_img{
+      display: none;
+      position: absolute;
+      top: 3px;
+      left: 0px;
+    }
+
+    .register_radio_img_unselect{
+      display: block;
+    }
+
+    .register_popup_user_gender_input[type="radio"]{
+      width: 20px;
+      margin-right: 0px;
+      position: relative;
+      opacity: 0;
+      zoom: 1;
+    }
+
+    .register_popup_user_option_gender_text{
+      font-size: 18px !important;
+      margin-left: 12px;
+    }
+
+    .register_popup_user_age_container{
+      width: 160px;
+      height: 52px;
+      border-radius: 5px;
+      background-color: #f7f7f7;
+      position: relative;
+    }
+
+    .register_popup_city_text_container{
+      position: absolute;
+      width: 100%;
+      font-size: 16px;
+      color: #4d4d4d;
+      margin-top: 16px;
+    }
+
+    #register_popup_user_age_text{
+      margin-left: 16px;
+      margin-right: auto;
+      font-size: 14px;
+    }
+
+    .register_age_user_select{
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+
     @media (max-width:1030px){
       #isMobile{
         display: block;
@@ -319,6 +384,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 @show
 
 <div id="main">
+@if (Auth::guest())
+  <input id='user_nickname' type='hidden' value=''/>
+  <input id='user_age' type='hidden' value=''/>
+  <input id='user_gender' type='hidden' value=''/>
+@else
+  <input id='user_nickname' type='hidden' value='{{\Auth::user()->getUserNickName()}}'/>
+  <input id='user_age' type='hidden' value='{{\Auth::user()->getUserAge()}}'/>
+  <input id='user_gender' type='hidden' value='{{\Auth::user()->getUserGender()}}'/>
+@endif
     @yield('content')
 
       <div id="kakao_chat_ask" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
@@ -413,7 +487,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=14');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=15');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 

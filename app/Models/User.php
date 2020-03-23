@@ -34,7 +34,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'website' => 'url',
         'bank' => 'string',
         'account' => 'numeric',
-        'account_holder' => 'string'
+        'account_holder' => 'string',
+        'age' => 'string',
+        'gender' => 'string'
     ];
 
     public function user()

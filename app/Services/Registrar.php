@@ -48,6 +48,8 @@ class Registrar implements RegistrarContract
         return User::create([
             'name' => $data['name'],
             'nick_name' => $nickName,
+            'age' => $data['age'],
+            'gender' => $data['gender'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

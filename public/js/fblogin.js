@@ -14,6 +14,15 @@ var g_googleAccessId = params['ggid'];
 
 var googleLogoURL = $("#asset_url").val() + 'img/app/g-logo.png';
 
+var radioSelectImg = $("#asset_url").val() + 'img/icons/svg/radio-btn-s.svg';
+var radioUnSelectImg = $("#asset_url").val() + 'img/icons/svg/radio-btn-n.svg';
+
+var iconboxImg = $("#asset_url").val() + 'img/icons/svg/icon-box.svg';
+
+const REGISTER_AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
+
+//asset('/img/icons/svg/radio-btn-s.svg')
+//asset('/img/icons/svg/radio-btn-n.svg')
 var jQuery_loginPopup = null;
 var loginCallback = null;
 
@@ -388,6 +397,18 @@ function registerPopup(successFunc, closeFunc){
     loginCallback = successFunc;
   }
 
+  //option
+  var registerAgeOptions = '';
+  var nowYear = Number(new Date().getFullYear());
+  for(var i = 1900 ; i <= nowYear ; i++ )
+  {
+    registerAgeOptions += "<option value='"+ i +"'>" + i + "</option>";
+  }
+
+  //마지막 옵션은 나이 선택란.
+  registerAgeOptions += "<option value='"+ REGISTER_AGE_NONE_TYPE_OPTION +"' selected>" + "년도 선택" + "</option>";
+  ///////
+
   var elementPopup = document.createElement("div");
   elementPopup.innerHTML =
   "<div class='form-body-default-container'>" +
@@ -397,13 +418,46 @@ function registerPopup(successFunc, closeFunc){
     "<div class='project_form_content_container'>" +
       "<div id='login_error_message' class='alert alert-danger' style='display:none;'></div>" +
         "<div class='project_form_input_container'>" +
-          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이름(실명을 입력해주세요)*</p>" +
             "<div class='project-form-content'>" +
               "<input id='name' name='name' type='text' class='form-control' maxlength='255'/>" +
               "<div id='name-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          //"</div>" +
+        "</div>" +
+
+        "<div class='project_form_input_container'>" +
+            "<p class='project-form-content-title'>성별*</p>" +
+            "<div class='project-form-content'>" +
+              "<div class='register_popup_user_options_container flex_layer'>" + 
+                "<div class='register_radio_wrapper'>" +
+                  "<img src="+radioSelectImg+" class='register_radio_img register_radio_img_select register_radio_type_m_select' />" +
+                  "<img src="+radioUnSelectImg+" class='register_radio_img register_radio_img_unselect register_radio_type_m_unselect' />" +
+                  "<input class='register_popup_user_gender_input' type='radio' name='register_gender' value='m'/>" +
+                "</div>" +
+                "<p class='register_popup_user_option_gender_text' style='margin-right: 40px;'>남</p>" + 
+                "<div class='register_radio_wrapper'>" +
+                  "<img src="+radioSelectImg+" class='register_radio_img register_radio_img_select register_radio_type_f_select' />" +
+                  "<img src="+radioUnSelectImg+" class='register_radio_img register_radio_img_unselect register_radio_type_f_unselect' />" +
+                  "<input class='register_popup_user_gender_input' type='radio' name='register_gender' value='f'/>" +
+                "</div>" +
+                "<p class='register_popup_user_option_gender_text'>여</p>" + 
+              "</div>" +
+            "</div>" +
+        "</div>" +
+
+        "<div class='project_form_input_container'>" +
+            "<p class='project-form-content-title'>년생*</p>" +
+            "<div class='project-form-content'>" +
+              "<div class='register_popup_user_age_container'>" + 
+                "<div class='register_popup_city_text_container flex_layer'>" +
+                  "<p id='register_popup_user_age_text'>년도 선택</p>" +
+                  "<img src="+iconboxImg+" style='margin-right: 16px;'>" +
+                "</div>" +
+                "<select class='register_age_user_select' name='register_age_user'>" +
+                  registerAgeOptions +
+                "</select>" +
+              "</div>" +
+            "</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
@@ -416,13 +470,11 @@ function registerPopup(successFunc, closeFunc){
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-          //"<div class='flex_layer_project'>" +
             "<p class='project-form-content-title'>이메일*</p>" +
             "<div class='project-form-content'>" +
               "<input id='email' name='email' type='email' class='form-control' maxlength='255'/>" +
               "<div id='email-error' class='error' style='display:none;'></div>" +
             "</div>" +
-          //"</div>" +
         "</div>" +
 
         "<div class='project_form_input_container'>" +
@@ -628,6 +680,16 @@ function registerPopup(successFunc, closeFunc){
       return;
     }
 
+    if(!$('input:radio[name=register_gender]:checked').val()){
+      alert("성별을 선택해주세요.");
+      return;
+    };
+
+    if(Number($(".register_age_user_select").val()) === REGISTER_AGE_NONE_TYPE_OPTION){
+      alert("생년을 선택해주세요.");
+      return;
+    };
+
     loadingProcess($(".btn_register_wrapper"));
     $('.swal-button-container').hide();
     //ajax
@@ -642,6 +704,8 @@ function registerPopup(successFunc, closeFunc){
       "password" : $('#password').val(),
       "password_confirmation" : $('#password_confirmation').val(),
       "ispopup" : 'TRUE',
+      "gender" : $('input:radio[name=register_gender]:checked').val(),
+      "age" : $(".register_age_user_select").val(),
     }
 
     var success = function(result) {
@@ -683,6 +747,39 @@ function registerPopup(successFunc, closeFunc){
   });
 
   //회원가입 팝업 키 동작 END
+
+  var setRegisterRadioInputImg = function(){
+    if($('input:radio[name=register_gender]:checked').val() === 'm'){
+      $('.register_radio_type_m_select').show();
+      $('.register_radio_type_m_unselect').hide();
+
+      $('.register_radio_type_f_select').hide();
+      $('.register_radio_type_f_unselect').show();
+    }
+    else{
+      $('.register_radio_type_m_select').hide();
+      $('.register_radio_type_m_unselect').show();
+
+      $('.register_radio_type_f_select').show();
+      $('.register_radio_type_f_unselect').hide();
+    }
+  }
+
+  $('.register_popup_user_gender_input').click(function(){
+    setRegisterRadioInputImg();
+  });
+
+  $(".register_age_user_select").change(function(){
+    if(Number($(this).val()) === REGISTER_AGE_NONE_TYPE_OPTION)
+    {
+      $("#register_popup_user_age_text").text("년도 선택");
+    }
+    else
+    {
+      $("#register_popup_user_age_text").text($(this).val());
+    }
+    
+  });
 
   facebookLibInit();
   googleLibInit();
