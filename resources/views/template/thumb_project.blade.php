@@ -19,7 +19,7 @@
         </h4>
 
         <p class="welcome_thumb_content_date_place">
-            {{$project->getTicketDateFormattedSlash()}} · {{$project->thumb_place}}
+            {{$project->getTicketDateFormattedSlash()}} · @if($project->thumb_place === "온라인 이벤트")<span style="color:#43c9f0;font-weight: bold;">{{$project->thumb_place}}</span>@else{{$project->thumb_place}}@endif
         </p>
 
         <div class="welcome_thumb_content_type_wrapper isMobileDisable" style="@if($project->project_type === 'artist')width:54px;@endif">
