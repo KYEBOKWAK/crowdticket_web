@@ -78,6 +78,6 @@
 
 @section('js')
     <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>
-    <script src="{{ asset('/js/project/news/form.js?version=24') }}"></script>
+    <script src="{{ asset('/js/project/news/form.js?version=25') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=8') }}"></script>
 @endsection

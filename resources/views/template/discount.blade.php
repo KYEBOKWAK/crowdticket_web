@@ -2,7 +2,7 @@
   <div data-discount-id="<%= discount.id %>" class="discount ticket_mobile_align_right">
     <div class="flex_layer_most_mobile">
       <p class="text-primary ticket-delivery-date discount_input_wrapper"><%= discount.content %></p>
-      <p class="text-primary ticket-delivery-date"><%= discount.percent_value %>%</p>
+      <p class="text-primary ticket-delivery-date"><%= discount.percent_value %> 원</p>
       <p class="text-primary ticket-delivery-date ticket_slash_wrapper">/</p>
       <p class="text-primary ticket-delivery-date"><%= discount.submit_check %></p>
 

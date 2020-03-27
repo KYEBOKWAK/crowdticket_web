@@ -48,11 +48,11 @@
           <!-- 할인율 -->
           <div class="project_form_input_container">
             <div class="flex_layer_project">
-              <p class="project-form-content-title">할인율</p>
+              <p class="project-form-content-title">할인가(티켓당)</p>
               <div class="project-form-content">
                 <div class="flex_layer">
                   <input id="discount_percent_value_input" name="discount_percent_value_input" type="number" min="0" max="100" class="project_form_input_base project_form_discount_value_wrapper"/>
-                  <p style="margin-bottom: 0px; font-size: 21px; font-weight: bold; margin-left: 5px; margin-top: 3px;">%</p>
+                  <p style="margin-bottom: 0px; font-size: 21px; font-weight: bold; margin-left: 5px; margin-top: 3px;">원</p>
                 </div>
               </div>
             </div>

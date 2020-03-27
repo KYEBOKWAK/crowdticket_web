@@ -146,7 +146,7 @@
 
 @section('js')
 <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js'></script>
-<script src="{{ asset('/js/calendar/calendar.js?version=23') }}"></script>
+<script src="{{ asset('/js/calendar/calendar.js?version=24') }}"></script>
 
     <script>
         $(document).ready(function () {
@@ -196,8 +196,8 @@
 
             var setTotalPrice = function(){
               //
-              var ticketPrice = $('#ticket_select_price').val();
-              var ticketCount = $('#ticket_count_input').val();
+              var ticketPrice = Number($('#ticket_select_price').val());
+              var ticketCount = Number($('#ticket_count_input').val());
 
               var ticketTotalPrice = ticketPrice * ticketCount;
               var goodsTotalPrice = 0;
@@ -206,14 +206,13 @@
               $('#ticket_count').val(ticketCount);
 
               //할인율 적용
-              var discountValue = $('#discount_select_value').val();
+              var discountValue = Number($('#discount_select_value').val());
               if(discountValue)
               {
                 //alert("discount value : " + discountValue);
-                var discoutPrice = ticketTotalPrice * (discountValue/100);
-                //ticketTotalPrice = ticketTotalPrice - discoutPrice;
-                //아프리카티비 이슈
-                ticketTotalPrice = ticketTotalPrice - Math.ceil(discoutPrice);
+                // var discoutPrice = ticketTotalPrice * (discountValue/100);
+                var discoutPrice = (discountValue * ticketCount);
+                ticketTotalPrice = ticketTotalPrice - discoutPrice;
               }
 
               //추가된 md가 있는지 확인

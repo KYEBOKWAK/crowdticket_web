@@ -1163,16 +1163,19 @@
             var docDiscountId = $("#discountId");
             docDiscountId.val("");
 
+            var ticketCount = Number($('#ticket_count').val());
+
             if(discount) {
               discount = $.parseJSON(discount);
 
               //할인율 찾기
-              g_discoutPrice = g_ticketPrice * (discount.percent_value/100);
+              // g_discoutPrice = g_ticketPrice * (discount.percent_value/100);
+              g_discoutPrice = (discount.percent_value * ticketCount);
 
               //할인율 소수점시 올림 //아프리카티비 bj대상 할인율 이슈로 추가
-              g_discoutPrice = Math.ceil(g_discoutPrice);
+              // g_discoutPrice = Math.ceil(g_discoutPrice);
 
-              fullDiscountInfo = discount.content + ' ' + discount.percent_value + '%';
+              fullDiscountInfo = discount.content + ' ' + discount.percent_value + '원';
               var fullDiscountPriceInfo = "-"+addComma(g_discoutPrice)+"원";
 
               $(".order_form_discount_price").text(fullDiscountPriceInfo);

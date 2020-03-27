@@ -856,8 +856,8 @@ $(document).ready(function() {
     if(discountValue)
     {
       //alert("discount value : " + discountValue);
-      var discoutPrice = ticketTotalPrice * (discountValue/100);
-      ticketTotalPrice = ticketTotalPrice - Math.ceil(discoutPrice);
+      var discoutPrice = (discountValue*ticketCount);
+      ticketTotalPrice = ticketTotalPrice - discoutPrice;
     }
 
     //추가된 md가 있는지 확인

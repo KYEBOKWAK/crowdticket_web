@@ -2420,15 +2420,17 @@ $(document).ready(function() {
 
 		if(value < 0)
 		{
-			swal("할인율은 0보다 작을 수 없습니다.", "", "warning");
+			swal("할인가은 0보다 작을 수 없습니다.", "", "warning");
 			$(this).val(0);
 		}
 
+		/*
 		if(value > 100)
 		{
 			swal("할인율은 100보다 클 수 없습니다.", "", "warning");
 			$(this).val(100);
 		}
+		*/
 	});
 
 	var getPickStartDay = function(){

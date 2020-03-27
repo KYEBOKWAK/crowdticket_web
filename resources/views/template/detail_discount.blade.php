@@ -1,7 +1,7 @@
 @if($project->alias === 'bjawards2019')
 <h5>청소년 할인가 8000원</h5>
 @else
-<h5>{{ $discount->content }} {{ $discount->percent_value }}% 할인</h5>
+<h5>{{ $discount->content }} {{ $discount->percent_value }}원 할인</h5>
 @endif
 <h5 style="font-weight:400; color:#656969;">{{ $discount->submit_check }}</h5>
 
