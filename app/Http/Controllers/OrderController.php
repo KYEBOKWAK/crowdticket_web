@@ -1236,7 +1236,7 @@ class OrderController extends Controller
 
             DB::commit();
 
-            $this->deleteGoodsOrder($order);
+            // $this->deleteGoodsOrder($order);
 
             if($project->isEventTypeDefault()){
               $this->sendCencelSMS($project, $order);
