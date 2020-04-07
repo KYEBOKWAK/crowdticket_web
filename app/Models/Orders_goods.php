@@ -2,7 +2,7 @@
 
 class Orders_goods extends Model
 {
-    protected $table = 'Orders_goods';
+    protected $table = 'orders_goods';
 
     public function project()
     {

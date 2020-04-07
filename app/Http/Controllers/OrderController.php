@@ -249,11 +249,11 @@ class OrderController extends Controller
       array_push($goodsArray, $goodsInfo);
     }
 
-    DB::table('Orders_goods')->insert($goodsArray);
+    DB::table('orders_goods')->insert($goodsArray);
   }
 
-  public function deleteGoodsOrder($order){
-    DB::table('Orders_goods')->where('order_id', '=', $order->id)->delete();
+  public function deleteGoodsOrder($order){    
+    DB::table('orders_goods')->where('order_id', '=', $order->id)->delete();
   }
 
   public function completeOrder($orderId)
