@@ -35,7 +35,8 @@ class PaymentInfo
         $this->validateOrFail('user_id', $userId, 'integer');
         $this->validateOrFail('project_id', $projectId, 'integer');
         $this->customerUid = sprintf('user_%d%s', $userId, $appType);
-        $this->merchantUid = sprintf('project_%d_user_%d_%d%s', $projectId, $userId, time(), $appType);
+        // $this->merchantUid = sprintf('project_%d_user_%d_%d%s', $projectId, $userId, time(), $appType);
+        $this->merchantUid = sprintf('p_%d_u_%d_%d%s', $projectId, $userId, time(), $appType);
     }
 
     public function withCardNumber($cardNumber)
