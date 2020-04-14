@@ -283,7 +283,7 @@ class OrderController extends Controller
         }
       }
 
-      return json_encode($questionJson);
+      return json_encode($questionJson, JSON_UNESCAPED_UNICODE);
     }
     else
     {
