@@ -33,8 +33,8 @@
   </div>
 
   <div class='mannayo_banner_container'>
-    <a href="{{url('/mannayo')}}" target='_blank'>
-      <img class='mannayo_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190806_meet_banner.png'>
+    <a href="https://crowdticket.typeform.com/to/rRUBMA" target='_blank'>
+      <img class='mannayo_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200414_online_detail_page_banner.png'>
     </a>
   </div>
 </div>

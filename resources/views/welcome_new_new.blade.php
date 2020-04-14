@@ -698,7 +698,7 @@
 @endsection
 
 <div class='welcome_event_banner_img_container'>
-  <a href="{{url('/magazine/38')}}">
+  <a href="https://crowdticket.typeform.com/to/rRUBMA" target='_blank'>
     <img class='welcome_event_banner_img' src="">
     <img class='welcome_event_banner_img_content_pc' src="">
     <img class='welcome_event_banner_img_content_mobile' src="">
