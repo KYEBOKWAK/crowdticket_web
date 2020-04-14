@@ -4034,9 +4034,9 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         }
 
       if($('.welcome_event_banner_img_container').length > 0){
-        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_bg.png');
-        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_pc_2.png');
-        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200224_corona_m_3.png');
+        $('.welcome_event_banner_img').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200414_banner_bg_color.png');
+        $('.welcome_event_banner_img_content_pc').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200414_online_event_pc.png');
+        $('.welcome_event_banner_img_content_mobile').attr('src', 'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200414_online_event_m.png');
         $('.welcome_event_banner_img_container').show();
       }
     </script>
