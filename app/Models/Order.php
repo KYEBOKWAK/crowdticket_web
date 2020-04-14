@@ -20,6 +20,8 @@ class Order extends Model
     const ORDER_STATE_PAY_ACCOUNT_STANDBY = 6;
     const ORDER_STATE_PAY_ACCOUNT_SUCCESS = 7;
     const ORDER_STATE_APP_PAY_WAIT = 8; //모바일 앱에서 1차 티켓 확보
+    const ORDER_STATE_APP_PAY_COMPLITE = 9; //모바일 앱에서 결제 완료
+    const ORDER_STATE_APP_PAY_IAMPORT_WEBHOOK_VERIFY_COMPLITE = 10;  //앱 2차 iamport webhook 검증 완료
     const ORDER_STATE_STANDBY_START = 98;
     const ORDER_STATE_PAY_END = 99;
     //const ORDER_STATE_SCHEDULE_PAY = 2; //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
@@ -39,6 +41,8 @@ class Order extends Model
     const ORDER_STATE_ERROR_TICKET_OVER_COUNT = 503;
     const ORDER_STATE_ERROR_NO_PAY_NINETY_EIGHT = 504;  //98번 오더값인데 결제 정보가 없음(결제 안됨)
     const ORDER_STATE_ERROR_NO_PAY_NO_IMP_INFO_NINETY_EIGHT = 505;  //98번 오더값인데 결제 정보가 없음(결제 안됨)
+    const ORDER_STATE_ERROR_GOODS_OVER_COUNT = 506;
+    const ORDER_STATE_ERROR_IAMPORT_WEBHOOK_ERROR= 507;
     const ORDER_STATE_ERROR_END = 600;
 
     const ORDER_STATE_STANDBY = 999;

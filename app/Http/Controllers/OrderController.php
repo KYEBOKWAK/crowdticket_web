@@ -339,7 +339,7 @@ class OrderController extends Controller
       }
     }
 
-    $order->answer = json_encode($questionJson);
+    $order->answer = json_encode($questionJson, JSON_UNESCAPED_UNICODE);
     $order->save();    
   }
 
