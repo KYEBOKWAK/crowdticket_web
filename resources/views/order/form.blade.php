@@ -1373,7 +1373,13 @@
               }
             }
 
-            totalPrice = totalPrice + totalGoodsPrice - totalGoodsDiscount;
+            // totalPrice = totalPrice + totalGoodsPrice - totalGoodsDiscount;
+            totalPrice = totalPrice - totalGoodsDiscount;
+            if(totalPrice < 0){
+              totalPrice = 0;
+            }
+            
+            totalPrice = totalPrice + totalGoodsPrice;
             
             //후원추가
             totalPrice = totalPrice + g_supportPrice;
