@@ -670,6 +670,12 @@
           }
         }
 
+        @media (max-width:375px) {
+          .welcome_event_banner_img_content_mobile{
+            width: 100%;
+          }
+        }
+
         @media (max-width:320px) {
           /*
           .welcome_content_container{
