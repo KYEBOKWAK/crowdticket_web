@@ -396,7 +396,7 @@
                     {
                       foreach($orderAnswers as $orderAnswer)
                       {
-                        if($question->id === $orderAnswer["question_id"])
+                        if((int)$question->id === (int)$orderAnswer["question_id"])
                         {
                           $answer = $orderAnswer["value"];
                         }

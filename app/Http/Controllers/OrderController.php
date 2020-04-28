@@ -283,7 +283,7 @@ class OrderController extends Controller
         }
       }
 
-      return json_encode($questionJson, JSON_UNESCAPED_UNICODE);
+      return json_encode($questionJson);
     }
     else
     {
@@ -339,7 +339,8 @@ class OrderController extends Controller
       }
     }
 
-    $order->answer = json_encode($questionJson, JSON_UNESCAPED_UNICODE);
+    // $order->answer = json_encode($questionJson, JSON_UNESCAPED_UNICODE);
+    $order->answer = json_encode($questionJson);
     $order->save();    
   }
 
