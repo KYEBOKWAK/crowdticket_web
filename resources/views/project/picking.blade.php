@@ -243,9 +243,9 @@
         }},
 
         {title:"추첨하기", field:"pick", align:"center",formatter:pickIcon, width:103},
-        {title:"이름", field:"name", align:"center", width:103},
+        {title:"이름", field:"name", align:"center", width:103, headerFilter:"input"},
         {title:"티켓매수", field:"count", align:"right", width:88, sorter:"number"},
-        {title:"이메일", field:"email", align:"center", width:221},
+        {title:"이메일", field:"email", align:"center", width:221, headerFilter:"input"},
         {title:"전화번호", field:"contact", align:"center", width:151},
         //{title:"사연", field:"order_story", align:"center", width:151},
         {title:"사연", field:"answer", align:"center", width:151},
