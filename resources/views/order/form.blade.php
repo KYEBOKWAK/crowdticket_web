@@ -389,6 +389,11 @@
                 @if($order)
                   <?php
                     //JSON 형태로 수정
+                    $result = json_decode($order->answer, true);
+                    if($result == NULL){
+                      $order->answer = $order->answer."\"}]";
+                    }
+                    ///////
                     $orderAnswers = json_decode($order->answer, true);
                     $answer = '';
                     //$questionId = $question->id;

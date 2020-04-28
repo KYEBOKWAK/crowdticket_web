@@ -293,7 +293,11 @@
 
         var answerAndQuestion = '';
 
-        //orderObject.answer = 1;
+        let checkJsonIndex = orderObject.answer.indexOf(']');
+        if(checkJsonIndex === -1){
+          orderObject.answer = orderObject.answer+"\"}]";
+        }
+        
         var answerJson = $.parseJSON(orderObject.answer);
         for(var j = 0 ; j < answerJson.length ; j++)
         {
@@ -331,7 +335,11 @@
 
         var answerAndQuestion = '';
 
-        //orderObject.answer = 1;
+        let checkJsonIndex = orderObject.answer.indexOf(']');
+        if(checkJsonIndex === -1){
+          orderObject.answer = orderObject.answer+"\"}]";
+        }
+
         var answerJson = $.parseJSON(orderObject.answer);
         for(var j = 0 ; j < answerJson.length ; j++)
         {
