@@ -25,7 +25,7 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/img/icons/pavicon-v-2.png') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=7') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=8') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=20') }}" rel="stylesheet"/>
@@ -340,7 +340,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </button>
         @if(!env('REVIEW_ON'))
           <a class="navbar-brand" href="{{ url('/') }}">
-              <img src="{{ asset('/img/icons/svg/header-logo-color-v-1.svg') }}"/>
+              <img src="{{ asset('/img/icons/svg/header-logo-color-v-2.svg') }}"/>
           </a>
         @endif
     </div>
@@ -428,7 +428,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>
     <div class="container ct-res-text footer-top">
 	    <div class="col-md-3 footer_padding_left_remover">
-            <img src="{{ asset('/img/icons/svg/footer-logo-color-v-1.svg') }}" class="footer-logo">
+            <img src="{{ asset('/img/icons/svg/footer-logo-color-v-2.svg') }}" class="footer-logo">
         </div>
         <div class="col-md-3">
             <h2>social media</h2>
