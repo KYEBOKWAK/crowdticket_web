@@ -23,7 +23,7 @@
     @section('title')
         <title>크티 : 크라우드티켓 - 팬 중심 크리에이터 밋업 플랫폼</title>
     @show
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/base.css?version=9') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
