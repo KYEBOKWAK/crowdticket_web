@@ -186,8 +186,10 @@ class MagazineController extends Controller
     $base64Img = str_replace(' ', '+', $base64Img);
     $data = base64_decode($base64Img);
 
+    $nowTimeUnix = time();
+
     $originalName = \Input::get('image_name');
-    $hashedName = md5($originalName);
+    $hashedName = md5($originalName.$nowTimeUnix);
     $storyUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_STORY_DIRECTORY) . $hashedName . '.jpg';
 
     Storage::put(
