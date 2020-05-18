@@ -131,8 +131,10 @@ class ProjectController extends Controller
     	$base64Img = str_replace(' ', '+', $base64Img);
     	$data = base64_decode($base64Img);
 
+      $nowTimeUnix = time();
+
       $originalName = \Input::get('image_name');
-      $hashedName = md5($originalName);
+      $hashedName = md5($originalName.$nowTimeUnix);
       $storyUrlPartial = Model::getS3Directory(Model::S3_STORY_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
 
       Storage::put(
@@ -157,8 +159,10 @@ class ProjectController extends Controller
       $base64Img = str_replace(' ', '+', $base64Img);
       $data = base64_decode($base64Img);
 
+      $nowTimeUnix = time();
+
       $originalName = \Input::get('image_name');
-      $hashedName = md5($originalName);
+      $hashedName = md5($originalName.$nowTimeUnix);
       $storyUrlPartial = Model::getS3Directory(Model::S3_NEWS_DIRECTORY) . $project->id . '/' . $hashedName . '.jpg';
 
       Storage::put(

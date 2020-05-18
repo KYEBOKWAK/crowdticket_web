@@ -205,6 +205,7 @@ class MagazineController extends Controller
     $originalName = \Input::get('magazine_title_image_name');
     $hashedName = md5($originalName);
 
+    
     $posterUrlPartial = Model::getS3Directory(Model::S3_MAGAZINE_DIRECTORY) . $magazineId . '/' . 'title/' . $hashedName . '.jpg';
 
     Storage::put(
