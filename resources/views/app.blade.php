@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     @section('meta')
-      <meta name="description" content="공연 전문 크라우드펀딩 플랫폼. 연극, 뮤지컬, 콘서트, 파티, 페스티벌, 강연 등 펀딩 및 티켓팅."/>
+      <meta name="description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
     @show
 
     <!-- Google Tag Manager -->
