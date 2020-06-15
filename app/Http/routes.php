@@ -39,6 +39,21 @@ Route::get('help/', function () {
     return view('customer.help');
 });
 
+//mobile App 약관동의 start
+Route::get('privacy/app/', function () {
+    return view('customer.privacy_app');
+});
+
+Route::get('thirdterms/app/', function () {
+    return view('customer.thirdterms_app');
+});
+
+Route::get('terms/app/', function () {
+    return view('customer.terms_app');
+});
+
+//mobile App 약관동의 end
+
 //CREATOR Landing PAGE
 Route::get('creators/', function () {
     return view('landing/landing_creator');
@@ -86,12 +101,6 @@ Route::get('{entity}/{id}/comments', 'CommentController@getComments');
 
 Route::get('users/{id}', 'UserController@getUser');
 
-/*
-Route::get('order/error/overticketcount', function(){
-  return view('errors.overcounter_ticket');
-});
-*/
-
 //Mannayo START
 Route::get('mannayo', 'MannayoController@goMannayo');
 Route::get('mannayo/list', 'MannayoController@getMannayoList');
@@ -99,6 +108,16 @@ Route::post('get/creator/find/list', 'MannayoController@findCreatorList');
 Route::post('search/creator/api/list', 'MannayoController@callYoutubeSearch');
 Route::post('search/creator/find/crolling', 'MannayoController@callYoutubeSearchCrolling');
 Route::post('search/creator/find/crolling/channel', 'MannayoController@getCreatorInfoInCrollingWithChannel');
+
+///creator API START
+Route::get("api/search/creator/api/list", "MannayoController@callYoutubeSearchAPI");
+Route::get('api/search/creator/find/crolling', 'MannayoController@callYoutubeSearchCrollingAPI');
+Route::get('api/search/creator/find/crolling/channel', 'MannayoController@getCreatorInfoInCrollingWithChannelAPI');
+
+// Route::get('api/search/creator/find/crolling/{search_channel_id}/{channel_all_count}', 'MannayoController@callYoutubeSearchCrollingAPI');
+// Route::get('api/search/creator/find/crolling/{search_channel_id}/inchannel', 'MannayoController@getCreatorInfoInCrollingWithChannelAPI');
+
+///creator API END
 
 Route::get('mannayo/share/{channel_id}', 'MannayoController@goMannayoCreators');
 Route::get('mannayo/share/meetup/{meetup_id}', 'MannayoController@goMannayoMeetups');

@@ -31,6 +31,7 @@ class Order extends Model
     const ORDER_STATE_PROJECT_PICK_CANCEL = 103;  //추첨 안됨.
     const ORDER_STATE_PAY_ACCOUNT_NO_PAY = 104;  //미입금으로 취소
     const ORDER_STATE_CANCEL_ACCOUNT_PAY = 105; //계좌이체인데 고객이 취소누름.
+    const ORDER_STATE_CANCEL_WAIT_PAY= 106; //앱 결제 진행중 10분 초과로 인한 취소
     const ORDER_STATE_CANCEL = 199;//고객취소는 맨 마지막
 
     const ORDER_STATE_HOST_SHOW_ORDER_END = 200;

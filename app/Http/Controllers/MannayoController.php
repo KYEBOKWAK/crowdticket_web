@@ -482,10 +482,6 @@ class MannayoController extends Controller
 
             return ['state' => 'success', 'data' => $channelDataTempArray, 'search_type' => $youtubeSearchType];
         }
-        
-
-        //$objs = json_decode($content);
-        //return ['state' => 'success', 'data' => $objs->items, 'alldata' => $objs];
     }
 
     public function callYoutubeSearchCrolling(Request $request)
@@ -1092,4 +1088,363 @@ class MannayoController extends Controller
 
         $meetup->increment('comments_count');
     }
+
+    ///creator API START
+    // public function callYoutubeSearchAPI($search_value)
+    public function callYoutubeSearchAPI(Request $request)
+    {
+        // $searchValue = urlencode($request->searchvalue);
+        $search_value = $request->search_value;
+
+        $searchValue = urlencode($search_value);
+        // $searchValue = $search_value;
+        $referrer = url('/');
+        $api_key = env("GOOGLE_YOUTUBE_API_KEY");
+
+        $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_API;
+
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+
+        try{
+            $content = file_get_contents($url);
+            $objs = json_decode($content);
+            return ['state' => 'success', 'data' => $objs->items, 'search_type' => $youtubeSearchType];
+        }catch(\Exception $e){
+            //어떠한 오류, 리밋 카운트 초과시
+            $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_CROLLING;
+
+            include_once(__DIR__.'/../lib/simple_html_dom.php');
+            
+            $specialCharToSearch = strip_tags(htmlspecialchars($searchValue));
+            $html = file_get_html('https://www.youtube.com/results?search_query='.$specialCharToSearch);
+
+            //$html = file_get_html('https://www.youtube.com/channel/UC4sIlWphHSMk210xl74H3Wg');
+            $channelDataTempArray = [];
+            //좌측에 나오는 기본 채널들은 제외
+            //음악, 스포츠, 영화, 뉴스, 실시간, 가상현실
+                            
+            foreach($html->find('a') as $element)
+            {
+                $isPassChannel = false;
+                
+
+                if($isPassChannel)
+                {
+                    continue;
+                }
+
+                $channel = '';
+                $channelObject = '';
+                if(strpos($element->href, 'channel/'))
+                {
+                    $strPos = strpos($element->href, 'channel/');
+                    $channel = substr($element->href, $strPos);
+
+                    $channelTitle = $element->plaintext;
+
+                    if($channelTitle)
+                    {
+                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
+                        continue;
+                    }
+
+                    $channelObject['channel_id'] = $channel;
+                    $channelObject['title'] = $channelTitle;
+                }
+                else if(strpos($element->href, 'user/'))
+                {
+                    $strPos = strpos($element->href, 'user/');
+                    $channel = substr($element->href, $strPos);
+                    
+                    $channelTitle = $element->plaintext;
+                    if($channelTitle)
+                    {
+                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
+                        continue;
+                    }
+                    
+                    $channelObject['channel_id'] = $channel;
+                    $channelObject['title'] = $channelTitle;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if($channelObject['channel_id'] === '')
+                {
+                    continue;
+                }
+
+                $isHaveData = false;
+                //겹치는 채널을 제외해준다.
+                foreach($channelDataTempArray as $channelDataTemp)
+                {
+                    if($channelDataTemp['channel_id'] === $channelObject['channel_id'])
+                    {
+                        $isHaveData = true;
+                        break;
+                    }
+                }
+
+                if($isHaveData)
+                {
+                    continue;
+                }
+            
+                array_push($channelDataTempArray, $channelObject);
+            }
+
+            return ['state' => 'success', 'data' => $channelDataTempArray, 'search_type' => $youtubeSearchType];
+        }
+    }
+
+    /*
+    public function callYoutubeSearchAPIYoutubeApi($search_value)
+    {
+        $searchValue = urlencode($search_value);
+        $referrer = url('/');
+        $api_key = env("GOOGLE_YOUTUBE_API_KEY");
+
+        $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_API;
+
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+        try{
+            $content = file_get_contents($url);
+            $objs = json_decode($content);
+            return ['state' => 'success', 'data' => $objs->items, 'search_type' => $youtubeSearchType];
+        }catch(\Exception $e){
+            //어떠한 오류, 리밋 카운트 초과시
+            $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_CROLLING;
+
+            include_once(__DIR__.'/../lib/simple_html_dom.php');
+            
+            $specialCharToSearch = strip_tags(htmlspecialchars($searchValue));
+            $html = file_get_html('https://www.youtube.com/results?search_query='.$specialCharToSearch);
+
+            //$html = file_get_html('https://www.youtube.com/channel/UC4sIlWphHSMk210xl74H3Wg');
+            $channelDataTempArray = [];
+            //좌측에 나오는 기본 채널들은 제외
+            //음악, 스포츠, 영화, 뉴스, 실시간, 가상현실
+                            
+            foreach($html->find('a') as $element)
+            {
+                $isPassChannel = false;
+                
+
+                if($isPassChannel)
+                {
+                    continue;
+                }
+
+                $channel = '';
+                $channelObject = '';
+                if(strpos($element->href, 'channel/'))
+                {
+                    $strPos = strpos($element->href, 'channel/');
+                    $channel = substr($element->href, $strPos);
+
+                    $channelTitle = $element->plaintext;
+
+                    if($channelTitle)
+                    {
+                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
+                        continue;
+                    }
+
+                    $channelObject['channel_id'] = $channel;
+                    $channelObject['title'] = $channelTitle;
+                }
+                else if(strpos($element->href, 'user/'))
+                {
+                    $strPos = strpos($element->href, 'user/');
+                    $channel = substr($element->href, $strPos);
+                    
+                    $channelTitle = $element->plaintext;
+                    if($channelTitle)
+                    {
+                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
+                        continue;
+                    }
+                    
+                    $channelObject['channel_id'] = $channel;
+                    $channelObject['title'] = $channelTitle;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if($channelObject['channel_id'] === '')
+                {
+                    continue;
+                }
+
+                $isHaveData = false;
+                //겹치는 채널을 제외해준다.
+                foreach($channelDataTempArray as $channelDataTemp)
+                {
+                    if($channelDataTemp['channel_id'] === $channelObject['channel_id'])
+                    {
+                        $isHaveData = true;
+                        break;
+                    }
+                }
+
+                if($isHaveData)
+                {
+                    continue;
+                }
+            
+                array_push($channelDataTempArray, $channelObject);
+            }
+
+            return ['state' => 'success', 'data' => $channelDataTempArray, 'search_type' => $youtubeSearchType];
+        }
+    }
+    */
+
+    // public function callYoutubeSearchCrollingAPI($search_channel_id, $channel_all_count)
+    public function callYoutubeSearchCrollingAPI(Request $request)
+    {
+        try{
+            $search_channel_id = $request->search_channel_id;
+        
+            include_once(__DIR__.'/../lib/simple_html_dom.php');
+
+            if(!$search_channel_id)
+            {
+                return ['state' => 'error', 'message'=> '검색값이 없습니다.', 'channel' => '', 'channels' => ''];
+                // return ['state' => 'error', 'message'=> '검색값이 없습니다.', 'channel' => '', 'channels' => '', 'channel_all_count' => 0];
+            }
+            
+            $html_channel = file_get_html("https://www.youtube.com/".$search_channel_id);
+
+            $channelDataObject = '';
+
+            foreach($html_channel->find('img.channel-header-profile-image') as $e)
+            {
+                $channelDataObjectRow['channelTitle'] = $e->title;
+                $channelDataObjectRow['thumbnails']['high']['url'] = $e->src;
+                //$channelDataObjectRow['channelId'] = $channel[0]['channel_id'];
+                $channelDataObject['snippet'] = $channelDataObjectRow;
+                break;
+            }
+
+            //foreach($html_channel->find('button.yt-uix-subscription-button') as $e)//yt-uix-subscription-button 해당 클래스로 찾는건 위험해 보임
+            foreach($html_channel->find('button') as $e)
+            {
+                $eString = (string)$e;
+
+                //yt-uix-subscription-button 으로 안찾았기 때문에 해당 버튼이 채널 정보가 있는 버튼인지 파악해야 한다.
+                if(strpos($eString, 'data-style-type="branded"') <= 0)
+                {
+                    continue;
+                }
+                
+                //$cutString = 'data-channel-external-id="';
+                $channelCutString = 'data-channel-external-id="';
+                $channelIdPos = strpos($eString, $channelCutString);
+                $cutStr = substr($eString, $channelIdPos + strlen($channelCutString));//id의 앞을 찾는다
+                $lastCutStrPos = strpos($cutStr, '"');
+                $cutStr = substr($cutStr, 0, $lastCutStrPos);
+
+                $channelDataObject['snippet']['channelId'] = $cutStr;
+                break;
+            }       
+
+            $channelDataObject['snippet']['thumbnails']['high']['url'] = str_replace("=s100", "=s800", $channelDataObject['snippet']['thumbnails']['high']['url']);        
+            
+            return ['state' => 'success', 'channel' => $channelDataObject];
+        }catch(\Exception $e){
+            return ['state' => 'error', 'channel' => ''];
+        }
+    }
+
+    public function getCreatorInfoInCrollingWithChannelAPI(Request $request)
+    {
+        if(!strpos($request->url, 'youtube.com/channel/') && !strpos($request->url, 'youtube.com/user/')){
+            return ['state' => 'error', 'message' => '주소가 잘못 입력되었습니다. 다시 한번 확인 해주세요.'];
+        }
+
+        $strPos = strpos($request->url, 'channel/');
+        
+        $channel_id = '';
+        if($strPos <= 0)
+        {
+            $strPos = strpos($request->url, 'user/');
+            if($strPos <= 0)
+            {
+                return ['state' => 'error', 'message' => '주소가 잘못 입력되었습니다. 다시 한번 확인 해주세요.'];
+            }
+            $channel = substr($request->url, $strPos);
+        }
+        else
+        {
+            $channel = substr($request->url, $strPos);
+            $strPos = strpos($channel, '/');
+            $channel_id = substr($channel, $strPos+1);
+        }
+        
+        if($channel_id)
+        {
+             //동일한 채널이 있는지 DB에서 찾아본다.
+            $creators = Creator::where('channel_id', $channel_id)->get();
+            if(count($creators))
+            {
+                //동일한 채널이 있다면 채널 정보를 넘겨준다.
+                // $meetupsData = $this->getMeetupList($creators, null);
+                // return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
+                // $meetupsData = $this->getMeetupList($creators, null);
+                return ['state' => 'success', 'data' => $creators[0], 'meetups' => ''];
+            }
+        }
+
+
+        include_once(__DIR__.'/../lib/simple_html_dom.php');
+
+        $html_channel = file_get_html("https://www.youtube.com/".$channel);
+
+        $channelDataObject = '';
+
+        foreach($html_channel->find('img.channel-header-profile-image') as $e)
+        {
+            $channelDataObjectRow['channelTitle'] = $e->title;
+            $channelDataObjectRow['thumbnails']['high']['url'] = $e->src;
+            //$channelDataObjectRow['channelId'] = $channel[0]['channel_id'];
+            $channelDataObject['snippet'] = $channelDataObjectRow;
+            break;
+        }
+
+        //foreach($html_channel->find('button.yt-uix-subscription-button') as $e)//yt-uix-subscription-button 해당 클래스로 찾는건 위험해 보임
+        foreach($html_channel->find('button') as $e)
+        {
+            $eString = (string)$e;
+
+            //yt-uix-subscription-button 으로 안찾았기 때문에 해당 버튼이 채널 정보가 있는 버튼인지 파악해야 한다.
+            if(strpos($eString, 'data-style-type="branded"') <= 0)
+            {
+                continue;
+            }
+            
+            //$cutString = 'data-channel-external-id="';
+            $channelCutString = 'data-channel-external-id="';
+            $channelIdPos = strpos($eString, $channelCutString);
+            $cutStr = substr($eString, $channelIdPos + strlen($channelCutString));//id의 앞을 찾는다
+            $lastCutStrPos = strpos($cutStr, '"');
+            $cutStr = substr($cutStr, 0, $lastCutStrPos);
+
+            $channelDataObject['snippet']['channelId'] = $cutStr;
+            break;
+        }       
+        
+        $channelDataObject['snippet']['thumbnails']['high']['url'] = str_replace("=s100", "=s800", $channelDataObject['snippet']['thumbnails']['high']['url']);        
+
+        $channelArray = [];
+        array_push($channelArray, $channelDataObject);
+        
+        // return ['state' => 'success', 'data' => $channelArray];
+        return ['state' => 'success', 'data' => $channelDataObject];
+    }
+    ///creator API END
 }
