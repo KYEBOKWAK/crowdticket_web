@@ -195,7 +195,7 @@ class OrderController extends Controller
       $this->createGoodsOrder($project, $order, $user, $goodsSelectArray);
 
       //하단에 정보 전송 전에 결제 진행한다.
-      if($project->isEventTypeDefault()){
+      if($project->isEventTypeDefault() || $order->total_price > 0){
         //기본 이벤트 형태일 경우만 문자 메일을 보낸다.
         if($payType === 'card'){
           $this->sendSMS($project, $order);
