@@ -226,6 +226,12 @@
       }
     }
 
+    @media (max-width:1030px){
+      .kakao_chat_icon_wrapper{
+        margin-bottom: 66px;
+      }
+    }
+
     .ct-res-text h2{
       font-size: 14px;
       font-weight: normal;
@@ -262,7 +268,8 @@
 
       .kakao_chat_icon_wrapper{
         height:auto;
-        margin-bottom: 16px;
+        /* margin-bottom: 16px; */
+        margin-bottom: 80px;
         margin-right: 18px;
       }
 
