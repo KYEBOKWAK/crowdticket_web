@@ -321,7 +321,7 @@
         }
 
         .blueprint_played_tags_container{
-            width: 432px;
+            width: 518px;
             margin-left: auto;
             margin-right: auto;
             margin-top: 40px;
@@ -683,7 +683,7 @@
             }
 
             .blueprint_played_second{
-                width: 174px;
+                width: 258px;
                 margin-left: auto;
                 margin-right: auto;
                 margin-top: 16px;
@@ -908,8 +908,8 @@
                 내 콘텐츠의 새로운 가치
             </h4>
             <p>
-            지금 바로 이벤트 페이지를 개설하고<br>
-            팬들과 직접 만나 새로운 경험을 만들어 보세요
+            지금 바로 이벤트를 만들어서<br>
+            팬들을 위한 소중한 기억과 함께 채널도 성장시켜보세요!
             </p>
         </div>
 
@@ -1240,35 +1240,38 @@
             <div class="blueprint_container_title">
                 <h4>
                     이미 다양한 형태의 이벤트가<br>
-                    크라우드티켓에서 진행됐습니다
+                    크티를 통해 성공적으로 진행됐습니다
                 </h4>
             </div>
 
             <div class="bluprint_played_event_content">
-                세상을 즐겁게 바꿀 오프라인 콘텐츠를<br>
-                제한없이 마음껏 만들어주세요.
+                여러분만의 크리에이티브한 콘텐츠를<br>
+                온/오프라인 제한 없이 영상 밖으로 현실화해보세요
             </div>
 
             <div class="blueprint_played_tags_container">
                 <div class="flex_layer_thumb">
                     <div class="flex_layer blueprint_played_first">
                         <div class="blueprint_played_tag_bg">
+                            팬미팅
+                        </div>
+                        <div class="blueprint_played_tag_bg">
                             영화제
                         </div>
                         <div class="blueprint_played_tag_bg">
                             강의
                         </div>
-                        <div class="blueprint_played_tag_bg">
-                            팬미팅
-                        </div>
                     </div>
                     
                     <div class="flex_layer blueprint_played_second">
                         <div class="blueprint_played_tag_bg">
-                            콘서트
+                            페스티벌
                         </div>
                         <div class="blueprint_played_tag_bg">
-                            파티
+                            선물나눔
+                        </div>
+                        <div class="blueprint_played_tag_bg">
+                            공동구매
                         </div>
                     </div>
                 </div>
@@ -1279,8 +1282,8 @@
             <div class="flex_layer_thumb">
                 <div class="blueprint_how_to_start_container">
                     <div class="blueprint_how_to_start_title">
-                        화면 밖에서 나의 팬을 만나는<br>
-                        완전 쉬운 방법
+                        팬과 함께하는 이벤트 만들기<br>
+                        어렵지 않아요!
                     </div>
 
                     <button id="blueprint_start_up_button" class="blue_button" style="width: 154px; height: 56px; margin-top: 40px" type="button">시작하기</button>
@@ -1306,14 +1309,14 @@
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">3</div>
                             </div>
-                            <p>이벤트 소개 내용을 직접 쓰거나 크라우드티켓에게 맡긴다</p>
+                            <p>직접 이벤트를 기획, 또는 크티와 함께 이벤트를 기획하고 페이지를 준비한다</p>
                         </div>
 
                         <div class="flex_layer blueprint_how_to_number_background_container">
                             <div class="blueprint_how_to_number_background_wrapper">
                                 <div class="blueprint_how_to_number_background">4</div>
                             </div>
-                            <p>티켓팅 페이지가 오픈 되면 곧바로 나의 이벤트를 팬들에게 알린다!</p>
+                            <p>이벤트 신청 페이지를 오픈하고 곧바로 나의 팬들에게 알린다!</p>
                         </div>
                     </div>
                 </div>
@@ -1329,19 +1332,19 @@
             <form id="blueprint_form_start" action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
                 <div class="form-group">
                     <label class="cr_label">크리에이터 이름</label>
-                    <input id="input-user-intro" name="user_introduction" class="form-control cr_input" placeholder="뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’">
+                    <input id="input-user-intro" name="user_introduction" class="form-control cr_input" placeholder="유튜브 채널명, 먹방 BJ ‘000’, 게임 스트리머 ‘000’ 등">
                 </div>
                 <div class="form-group">
                     <label class="cr_label">만들고 싶은 이벤트</label>
-                    <input id="input-project-intro" name="project_introduction" class="form-control cr_input" placeholder="팬미팅, 팬들과 함께하는 먹방 투어">
+                    <input id="input-project-intro" name="project_introduction" class="form-control cr_input" placeholder="팬미팅, 강연, 온라인 선물나눔, 랜선사인회 등">
                 </div>
                 <div class="form-group">
                     <label class="cr_label">이메일 주소</label>
-                    <input id="input-email" name="contact"  class="form-control cr_input">
+                    <input id="input-email" name="contact"  class="form-control cr_input" placeholder="example@email.com">
                 </div>
                 <div class="form-group">
                     <label class="cr_label">전화번호</label>
-                    <input id="input-phone" type="tel" name="tel" class="form-control cr_input" placeholder="-없이 숫자만 입력"/>
+                    <input id="input-phone" type="tel" name="tel" class="form-control cr_input" placeholder="'-' 없이 숫자만 입력"/>
                     <p style="font-size: 12px; color: #acacac; margin-top: 8px;">프로젝트 개설을 위한 연락 목적 외에는 절.대. 다른 용도로 사용되지 않습니다. 안심하세요</p>
                 </div>
 

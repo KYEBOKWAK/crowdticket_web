@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
-    <!-- <meta name="description" content="오직 공연 예술인을 위한 크라우드 펀딩"/> -->
 
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     @section('meta')
@@ -21,7 +20,7 @@
     <!-- End Google Tag Manager -->
 
     @section('title')
-        <title>크티 : 크라우드티켓 - 팬 중심 크리에이터 밋업 플랫폼</title>
+        <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>

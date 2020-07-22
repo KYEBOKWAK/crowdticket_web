@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="크티 : 크라우드티켓"/>
-    <meta property="og:description" content="팬중심 크리에이터 밋업 플랫폼"/>
+    <meta property="og:description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_2.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/"/>
 @endsection
@@ -725,7 +725,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
           <div class="welcome_start_content_container">
             <div class="welcome_start_banner_content_container">
-              <b>온라인으로만 보던 크리에이터를<br> 이제는 만나보세요!</b>
+              <b>구독, 좋아요, 크티!<br>크리에이터와 이벤트로 소통해보세요</b>
             </div>
 
             <div class="welcome_start_button_container">
@@ -1275,23 +1275,23 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
 
           <div class="welcome_meetup_banner_title welcome_meetup_banner_title_pc">
-            내가 좋아하는 사람을 화면 밖에서 만나는 인생경험
+            진짜 소통으로 팬과 크리에이터가 더 가까워집니다
           </div>
 
           <div class="welcome_meetup_banner_title welcome_meetup_banner_title_mobile">
-            내가 좋아하는 사람을<br> 화면 밖에서 만나는 인생경험
+            진짜 소통으로 팬과<br>크리에이터가 더 가까워집니다
           </div>
 
           <div class="welcome_meetup_banner_subtitle">
-          온라인으로만 소통할 수 있었던 크리에이터와 팬.<br>
-          이제는 크라우드티켓을 통해 더욱 쉽고 즐겁게 오프라인에서 만나고 가까워지세요!
+          영상으로만 연결이 됐었던 크리에이터와 팬<br>
+          이제는 크티에서 더 다양하게 소통하고 공감하세요
           </div>
 
           <div class="carousel_creator_container">
               @include('template.carousel_creator', ['project' => ''])
           </div>
           
-          <p class="welcome_meetup_under_title">크라우드티켓과 함께한 크리에이터들</p>
+          <p class="welcome_meetup_under_title">크티와 함께한 크리에이터들</p>
 
         </div>
     </div>
