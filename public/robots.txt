@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /users/
 Allow: /
-Sitemap: https://crowdticket.kr/sitemap.xml

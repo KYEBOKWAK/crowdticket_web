@@ -1,16 +1,6 @@
 @extends('app')
-
-@section('title')
-    <title>크티 : 이벤트 만들기</title>
-@endsection
-
 @section('meta')
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:title" content="크티 : 이벤트 만들기"/>
-    <meta property="og:description" content="팬을 위한 크리에이터 이벤트를 만들어보세요!"/>
-    <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
-    <meta property="og:url" content="https://crowdticket.kr/blueprints/welcome"/>
+   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 @endsection
 @section('css')
     <style>
@@ -1547,7 +1537,7 @@
             });
             
             $("#blueprint_show_event_service_button").click(function(){
-                window.open('https://drive.google.com/file/d/1HxBc2_xpokZJBPrYnxeBzxQGbuIjYf1M/view?usp=sharing', '_blank');
+                window.open('https://drive.google.com/a/crowdticket.kr/file/d/1PrPkLN96ltdjgPHzGpZz_yHoB7vkgbJ5/view?usp=sharing', '_blank');
             });
 
             var contactPopup = function(){

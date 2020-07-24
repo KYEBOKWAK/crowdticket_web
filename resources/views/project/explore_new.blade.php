@@ -1,9 +1,5 @@
 @extends('app')
 
-@section('title')
-    <title>크티 : 다양한 크리에이터 이벤트를 만나보세요!</title>
-@endsection
-
 @section('css')
     <style>
     @keyframes blink {

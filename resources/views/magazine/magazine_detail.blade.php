@@ -1,9 +1,5 @@
 @extends('app')
 
-@section('title')
-  <title>{{ $magazine->title }}</title>
-@endsection
-
 @section('meta')
   <meta property="og:image" content="{{ $magazine->thumb_img_url }}"/>
   <meta property="og:title" content="크티 : 크라우드티켓 매거진"/>
