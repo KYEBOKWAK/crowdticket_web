@@ -6,6 +6,10 @@
   <meta property="og:description" content="{{ $magazine->title }}"/>
 @endsection
 
+@section('title')
+  <title>{{ $magazine->title }}</title>
+@endsection
+
 @section('css')
     <style>
     .magazine_title_wrapper{

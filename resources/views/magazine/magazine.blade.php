@@ -2,8 +2,12 @@
 
 @section('meta')
   <meta property="og:title" content="크티 : 크라우드티켓 매거진"/>
-  <meta property="og:description" content="팬중심 크리에이터 밋업 플랫폼"/>
-  <meta property="og:image" content="{{ asset('/img/app/og_image_2.png') }}"/>
+  <meta property="og:description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
+  <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+@endsection
+
+@section('title')
+  <title>크티 : 크라우드티켓 매거진</title>
 @endsection
 
 @section('css')
