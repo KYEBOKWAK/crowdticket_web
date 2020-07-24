@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    @section('title')
+    <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
+
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
-
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    @section('meta')
-      <meta name="description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
+    <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 더 다양하게 소통하고 공감해보세요!"/>
     @show
 
     <!-- Google Tag Manager -->
@@ -19,8 +20,6 @@
     })(window,document,'script','dataLayer','GTM-T94QPRD');</script>
     <!-- End Google Tag Manager -->
 
-    @section('title')
-        <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
