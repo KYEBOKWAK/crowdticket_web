@@ -1703,13 +1703,13 @@ class ProjectController extends Controller
 
       if ($state === 'success')
       {
-        $mailForm = 'template.emailform.email_pick_success';
-        $subject = '(크라우드티켓) 축하드립니다! 이벤트에 당첨되셨습니다!';
+        $mailForm = 'template.emailform.email_pick_success_new';
+        $subject = '[크티] 축하합니다! 이벤트에 당첨되셨습니다!';
       }
       else
       {
-        $mailForm = 'template.emailform.email_pick_fail';
-        $subject = "(크라우드티켓) 죄송합니다. "."'".$project->title."'"."에 당첨되지 못하셨습니다.";
+        $mailForm = 'template.emailform.email_pick_fail_new';
+        $subject = "[크티] 죄송합니다 ".$project->title."에 당첨되지 못하셨습니다.";
       }
 
       $data = [
@@ -1739,7 +1739,7 @@ class ProjectController extends Controller
       //$totalPrice = number_format($order->total_price);
 
       //[크라우드티켓] 사랑해 엄마 ‘결제 총액’원 결제 예약 완료
-      $msg = sprintf('(당첨!) %s 당첨 되었습니다.', $titleLimit);
+      $msg = sprintf('축하합니다! %s 당첨 되셨습니다!', $titleLimit);
 
       $sms->send([$contact], $msg);
     }

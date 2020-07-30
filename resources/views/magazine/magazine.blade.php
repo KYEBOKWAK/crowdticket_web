@@ -4,6 +4,7 @@
   <meta property="og:title" content="크티 : 크라우드티켓 매거진"/>
   <meta property="og:description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
   <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+  <meta name="description" content="지금 크티에서 일어나고 있는 일을 전합니다!"/>
 @endsection
 
 @section('title')

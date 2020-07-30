@@ -1,7 +1,17 @@
 @extends('app')
 
+@section('meta')
+  <meta property="og:title" content="크티 : 이벤트"/>
+  <meta property="og:description" content="다양한 크리에이터 이벤트를 만나보세요!"/>
+  <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+  <meta name="description" content="다양한 크리에이터 이벤트를 만나보세요!"/>
+@endsection
+
 @section('title')
     <title>크티 : 다양한 크리에이터 이벤트를 만나보세요!</title>
+@endsection
+
+
 
 @section('css')
     <style>

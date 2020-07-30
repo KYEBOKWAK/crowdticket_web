@@ -95,9 +95,9 @@ class MailSendController extends Controller {
 		$fromName = '크라우드티켓';
 		$to = \Input::get('email'); // 받는 측의 이메일 주소를 기입하는 부분
 		$redirectPath = \Input::get('redirectPath');
-		$email_subject = "크라우드티켓 회원이 되어 주셔서 감사합니다!"; // 메일 제목에 해당하는 부분
+		$email_subject = "크티 회원이 되어 주셔서 감사합니다!"; // 메일 제목에 해당하는 부분
 		$email_body = [];
-		Mail::send('template.emailform.email_register', $email_body, function ($m) use ($email_subject, $to, $from, $fromName)
+		Mail::send('template.emailform.email_register_new', $email_body, function ($m) use ($email_subject, $to, $from, $fromName)
 		{
 							$m->from($from, $fromName);
 							$m->to($to)->subject($email_subject);

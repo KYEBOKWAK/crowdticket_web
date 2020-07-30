@@ -42,7 +42,7 @@ class PasswordController extends Controller
     {
       $this->validate($request, array('email' => 'required|email'));
         $response = $this->passwords->sendResetLink($request->only('email'), function ($m) {
-            $m->subject('크라우드티켓 비밀번호 재설정');
+            $m->subject('[크티] 비밀번호 재설정 안내');
         });
         switch ($response) {
             case PasswordBroker::RESET_LINK_SENT:

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body style="margin:0%">
@@ -20,33 +20,17 @@
                 </table>
                 <table class="email-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
-                    <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
-                      <div style="text-align:left">비밀번호 재설정 안내</div>
+                    <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
+                      <div style="text-align:left">크티 회원이 되신 것을<br/>환영합니다</div>
                     </td>
                   </tr></tbody>
                 </table>
-                <table class="email-content" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:32px 0px;width:100%;max-width:630px;clear:both;background:none">
-                  <tr>
-                    <td>
-                      <table class="attention" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:24px;padding:12px;margin-bottom:20px;align:left;background-color:#ecf9fd">
-                        <tr>
-                          <td height="24px" width="24px" style="padding:0px;border:0px">
-                            <img src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/admin/mail/rebrand/ic-circle-error-fill-24@3x.png" alt="!" style="width:24px;height:24px;margin-right:8px;display:block;border-width:0px"/>
-                          </td>
-                          <td style="vertical-align:middle;padding:3px 0px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121;word-break:keep-all">
-                            비밀번호를 재설정 하시려면 아래 버튼을 눌러주세요.
-                          </td>
-                        </tr>
-                      </table>
-                      <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
-                        <tr>
-                          <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">링크를 통해 비밀번호를 변경하실 수 있는 페이지로 이동되며, 입력하신 비밀번호는 암호화되어 저장되므로 크라우드티켓 운영진에게도 공개되지 않습니다.</div>
-                          </td>
-                        </tr>
-                      </table>
+                <table class="email-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:32px 0px;width:100%;max-width:630px;clear:both;background:none">
+                  <tbody><tr>
+                    <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
+                      <div style="text-align:left">크티에서는 여러분이 가장 좋아하는 크리에이터의 이벤트를 만나볼 수 있습니다. 온라인 선물나눔부터 팬미팅까지! 어떤 이벤트가 여러분의 참여를 기다리고 있는지 지금 바로 확인해보세요!</div>
                     </td>
-                  </tr>
+                  </tr></tbody>
                 </table>
                 <table class="button-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
@@ -54,7 +38,7 @@
                       <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
                         <tbody><tr>
                           <td style="padding:12px 20px" align="center">
-                            <a href="{{ url('password/reset/'.$token) }}" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">비밀번호 재설정하기</a>
+                            <a href="https://crowdticket.kr" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">지금 바로 구경가기</a>
                           </td>
                         </tr></tbody>
                       </table>

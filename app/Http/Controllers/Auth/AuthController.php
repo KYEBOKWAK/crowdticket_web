@@ -57,9 +57,9 @@ class AuthController extends Controller
       $from = 'contact@crowdticket.kr';
       $fromName = '크라우드티켓';
       $to = $email;
-      $email_subject = "크라우드티켓 회원이 되어 주셔서 감사합니다!"; // 메일 제목에 해당하는 부분
+      $email_subject = "크티 회원이 되어 주셔서 감사합니다!"; // 메일 제목에 해당하는 부분
       $email_body = [];
-      Mail::send('template.emailform.email_register', $email_body, function ($m) use ($email_subject, $to, $from, $fromName)
+      Mail::send('template.emailform.email_register_new', $email_body, function ($m) use ($email_subject, $to, $from, $fromName)
       {
                 $m->from($from, $fromName);
                 $m->to($to)->subject($email_subject);

@@ -1,10 +1,12 @@
 @extends('app')
 @section('meta')
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="크티 : 크라우드티켓"/>
     <meta property="og:description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/"/>
+    <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 더 다양하게 소통하고 공감해보세요!"/>
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>

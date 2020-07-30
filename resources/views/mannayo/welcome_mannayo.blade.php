@@ -2,9 +2,10 @@
 @section('meta')
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="크티 : aksskdy"/>
+    <meta property="og:title" content="크티 : 만나요"/>
     <meta property="og:description" content="'만나요'로 크리에이터 이벤트를 요청해보세요!"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+    <meta name="description" content="'만나요'로 크리에이터 이벤트를 요청해보세요!"/>
     <!-- <meta property="og:url" content="https://crowdticket.kr/"/> -->
 @endsection
 @section('title')

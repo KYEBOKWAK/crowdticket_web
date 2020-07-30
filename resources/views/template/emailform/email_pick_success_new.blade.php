@@ -21,27 +21,36 @@
                 <table class="email-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
                     <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
-                      <div style="text-align:left">비밀번호 재설정 안내</div>
+                      <div style="text-align:left">축하합니다!<br/>이벤트에 당첨되셨어요!</div>
                     </td>
                   </tr></tbody>
                 </table>
                 <table class="email-content" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:32px 0px;width:100%;max-width:630px;clear:both;background:none">
                   <tr>
                     <td>
-                      <table class="attention" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:24px;padding:12px;margin-bottom:20px;align:left;background-color:#ecf9fd">
+                      <table class="info-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:60px;padding:0px;margin:0 0 24px 0;align:center;background-color:#f9f9f9">
+                        <tr>
+                          <td style="padding:20px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#262626;word-break:keep-all">
+                          &#x1F389; <span style="font-weight:900;color:#43c9f0">{{$name}}</span>님은 <span style="font-weight:900;color:#43c9f0">{{$title}}</span>의 당첨자로 선정되셨습니다!
+                          </td>
+                        </tr>
+                      </table>
+                      <!-- 예약결제가 붙어있는 이벤트일 경우 아래 내용 표시 필요
+                      <table class="attention" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:24px;padding:12px;margin:8px 0 24px auto;align:left;background-color:#ecf9fd;border-left:4px solid #43c9f0">
                         <tr>
                           <td height="24px" width="24px" style="padding:0px;border:0px">
                             <img src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/admin/mail/rebrand/ic-circle-error-fill-24@3x.png" alt="!" style="width:24px;height:24px;margin-right:8px;display:block;border-width:0px"/>
                           </td>
-                          <td style="vertical-align:middle;padding:3px 0px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121;word-break:keep-all">
-                            비밀번호를 재설정 하시려면 아래 버튼을 눌러주세요.
+                          <td style="align:left;vertical-align:middle;padding:3px 0px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121;word-break:keep-all">
+                            티켓금액 결제가 {{$payDate}} <b>오후 1시</b>에 진행됩니다
                           </td>
                         </tr>
                       </table>
+                      -->
                       <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                         <tr>
                           <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">링크를 통해 비밀번호를 변경하실 수 있는 페이지로 이동되며, 입력하신 비밀번호는 암호화되어 저장되므로 크라우드티켓 운영진에게도 공개되지 않습니다.</div>
+                            <div style="text-align:left">당첨자 명단이 크티 이벤트 페이지에 공지되었습니다.<br/>자세한 이벤트 참여내역과 진행결과는 크티 로그인 후 회원 메뉴에서 '결제확인' 탭으로 들어가거나 아래 버튼을 클릭해서 확인해주세요.</div>
                           </td>
                         </tr>
                       </table>
@@ -54,10 +63,32 @@
                       <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
                         <tbody><tr>
                           <td style="padding:12px 20px" align="center">
-                            <a href="{{ url('password/reset/'.$token) }}" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">비밀번호 재설정하기</a>
+                            <a href="{{ $gotoPayPageURL }}" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">이벤트 참여내역 확인하기</a>
                           </td>
                         </tr></tbody>
                       </table>
+                    </td>
+                  </tr></tbody>
+                </table>
+                <hr width="100%" size="1px" align="center" color="#ebebeb" style="margin:24px 0px 24px 0px"/>
+                <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
+                  <tr>
+                    <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
+                      <div style="text-align:left">별도 결제가 필요하거나 이벤트 관련 특이사항 및 요청사항이 있을 경우 신청 당시 입력해주신 연락처로 크티가 문자 또는 전화를 드립니다. 궁금한 사항이 있을 경우 이메일 하단의 연락처를 참고해주세요.</div>
+                    </td>
+                  </tr>
+                </table>
+                <table class="paragraph-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:24px 0 32px 0;width:100%;max-width:630px;clear:both;background:none">
+                  <tbody><tr>
+                    <td style="font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#575757">
+                      <div style="text-align:left">크리에이터와 다른 팬들에게 당첨의 기쁨을 알려주세요!</div>
+                    </td>
+                  </tr></tbody>
+                </table>
+                <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
+                  <tbody><tr>
+                    <td style="padding:12px 20px" align="center">
+                      <a href="{{$gotoProjectURL}}" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">이벤트 댓글 남기러 가기</a>
                     </td>
                   </tr></tbody>
                 </table>
