@@ -268,6 +268,10 @@ var url_pick = '/picking/' + projectId + '/excel/picked';
 
     index++;
   }
+  if(dataArray.length === 0){
+    window.location.reload();
+    return;
+  }
 
   var jsonString = JSON.stringify(dataArray);
   //var data = JSON.parse(jsonString);

@@ -1400,39 +1400,31 @@ class ProjectController extends Controller
     public function pickingExcel(Request $request, $projectId)
     {
       $project = $this->getSecureProjectById($projectId);
-
-      /*
-      $isPick = Order::where('project_id', $projectId)->where('is_pick', 'PICK')->count();
-      if($isPick > 0)
-      {
-        return ['state' => 'error', 'message' => '추첨된 인원이 있습니다. 추첨 취소 후 진행 해주세요.'];
-      }
-      */
-
       $dataArray = [];
       foreach($request->list as $localData)
       {
-        //$object['ccc'] = $object['email'].'dfdf';
         $email = '';
         $name = '';
         $contact = '';
         if(isset($localData['email']))
         {
-          $email = $localData['email'];
+          $email = trim($localData['email']);
         }
 
         if(isset($localData['name']))
         {
-          $name = $localData['name'];
+          $name = trim($localData['name']);
         }
 
         if(isset($localData['contact']))
         {
-          $contact = $localData['contact'];
+          $contact = trim($localData['contact']);
         }
 
-        //$order = Order::where('project_id', $projectId)->where('email', $localData['email'])->where('name', $localData['name'])->where('contact', $localData['contact'])->first();v
-        $order = Order::where('project_id', $projectId)->where('email', $email)->where('name', $name)->where('contact', $contact)->first();
+      
+        //$order = Order::where('project_id', $projectId)->where('email', $email)->where('name', $name)->where('contact', $contact)->first();
+        $order = Order::where('project_id', $projectId)->where('email', $email)->where('contact', $contact)->first();
+      
         if(count($order) > 0)
         {
           $order->is_pick = "PICK";
