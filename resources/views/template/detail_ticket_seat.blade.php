@@ -24,6 +24,8 @@
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
           @elseif($project->isPickType())
             &nbsp
+          @elseif($project->isEventCustomType())
+            &nbsp
           @else
             신청 가능한 인원 <%= addComma(amountTicketCount) %> 명
           @endif
