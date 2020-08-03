@@ -924,9 +924,9 @@
                 <p>2. 초대권 신청 내역 확인 및 취소는 오른쪽 상단 '결제확인' 탭에서 하실 수 있습니다.</p>
                 <p>3. 초대권의 판매, 양도, 및 교환은 금지되어 있으며 이를 위반하여 발생하는 불이익에 대하여 크라우드티켓에서는 책임을 지지 않습니다.</p>
               @elseif($project->isEventCustomType())
-              <p style="margin-top:10px;">1. 초대권 신청은 티켓 예매가 아닙니다. <b>신청 후 당첨이 되어야만 티켓을 받으실 수 있습니다.</b></p>
-                <p>2. zxxx </p>
-                <p>3. xxx</p>
+              <p style="margin-top:10px;">1. 제출해주시는 정보는 이벤트 주관사 측으로 전달되며 추후 이벤트 진행을 위해 연락을 드릴 수 있습니다.</p>
+                <p>2. 제출해주시는 정보는 이벤트 진행 목적 외의 용도로 사용되지 않습니다.</p>
+                <p>3. 잘못된 정보를 기재하실 경우, 선정 대상에서 제외될 수 있으니 해당 부분 참고 부탁드립니다.</p>
               @elseif($project->isPickType())
               <?php
               $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
