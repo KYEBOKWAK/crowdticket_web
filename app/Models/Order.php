@@ -500,6 +500,10 @@ class Order extends Model
         return '응모완료';
       }
 
+      if($project->isEventCustomType()){
+        return '신청완료';
+      }
+
       if((int)$this->getState() === self::ORDER_STATE_PAY)
       {
         if($project->isPickedComplete())

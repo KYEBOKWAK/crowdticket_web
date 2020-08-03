@@ -215,6 +215,8 @@
                             결제가 완료되었습니다.
                           @elseif($project->isEventTypeInvitationEvent())
                             초대권 신청이 완료되었습니다.
+                          @elseif($project->isEventCustomType())
+                            이벤트 신청이 완료되었습니다.
                           @endif
                         @endif
                       </strong>
@@ -277,7 +279,11 @@
                       @else
                       <p class="text-center ps-text-detail">
                           <strong>
+                            @if($project->isEventCustomType())
+                              적어주신 내용 확인 후, 담당자가 연락드리도록 하겠습니다!
+                            @else
                               오른쪽 상단 '결제확인' 탭에서 확인해보세요!
+                            @endif  
                           </strong>
                       </p>
                       @endif
@@ -297,6 +303,8 @@
                 @endif
               @elseif($project->isEventTypeInvitationEvent())
                 잠깐! 여러분의 기대평이 프로젝트 진행자에게 큰 힘이 됩니다!
+              @elseif($project->isEventCustomType())
+                잠깐! 여러분의 기대평이 이벤트 진행자에게 큰 힘이 됩니다!
               @endif
             </strong>
           </p>

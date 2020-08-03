@@ -13,6 +13,7 @@ class Project extends Model
     const EVENT_TYPE_INVITATION_EVENT = 1;   //이벤트 타입(초대권)
     const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
     const EVENT_TYPE_PICK_EVENT = 3;  //pick 이벤트
+    const EVENT_TYPE_CUSTOM = 4;  //커스텀하게 특정 alias 프로젝트로 구분해서 사용한다.
 
     const EVENT_TYPE_SUB_SANDBOX_PICK = 1;  //샌드박스 전용 pick 이벤트
     const EVENT_TYPE_SUB_SECRET_PROJECT = 2;//URL 통해서만 들어올 수 있는 프로젝트. 더보기에 공개 안됨
@@ -702,6 +703,10 @@ class Project extends Model
     public function isEventSubTypeSecretProject()
     {
       return (int)$this->event_type_sub === Project::EVENT_TYPE_SUB_SECRET_PROJECT;
+    }
+
+    public function isEventCustomType(){
+      return (int)$this->event_type === Project::EVENT_TYPE_CUSTOM;
     }
 
     public function isSuccess()

@@ -246,6 +246,7 @@
     <input id="project_type" type="hidden" value="{{ $project->type }}"/>
     <input id="orderId" type="hidden" value="@if($order){{ $order->id }}@endif"/>
     <input id="isEventTypeInvitation" type="hidden" value="{{ $project->isEventTypeInvitationEvent() }}">
+    <input id="isEventTypeCustom" type="hidden" value="{{ $project->isEventCustomType() }}">
 
     <input id="project_question_json" type="hidden" value="{{$project->questions}}"/>
     
@@ -619,6 +620,8 @@
                 @endif
               @elseif($project->isEventTypeInvitationEvent())
                 신청자 정보 입력
+              @elseif($project->isEventCustomType())
+                신청자 정보 입력
               @endif
             </h3>
           </div>
@@ -848,6 +851,8 @@
             <p class="order_form_title">
               @if(env('REVIEW_ON'))
               이용 정책 동의
+              @elseif($project->isEventCustomType())
+              이용 정책 동의
               @else
               크라우드티켓 이용 정책 동의
               @endif
@@ -864,6 +869,8 @@
                 @endif
               @elseif($project->isEventTypeInvitationEvent())
                 초대권 신청 정책
+              @elseif($project->isEventCustomType())
+                이벤트 신청 정책
               @else
                 @if(env('REVIEW_ON'))
                 [취소/환불 규정]
@@ -916,6 +923,10 @@
                 <p style="margin-top:10px;">1. 초대권 신청은 티켓 예매가 아닙니다. <b>신청 후 당첨이 되어야만 티켓을 받으실 수 있습니다.</b></p>
                 <p>2. 초대권 신청 내역 확인 및 취소는 오른쪽 상단 '결제확인' 탭에서 하실 수 있습니다.</p>
                 <p>3. 초대권의 판매, 양도, 및 교환은 금지되어 있으며 이를 위반하여 발생하는 불이익에 대하여 크라우드티켓에서는 책임을 지지 않습니다.</p>
+              @elseif($project->isEventCustomType())
+              <p style="margin-top:10px;">1. 초대권 신청은 티켓 예매가 아닙니다. <b>신청 후 당첨이 되어야만 티켓을 받으실 수 있습니다.</b></p>
+                <p>2. zxxx </p>
+                <p>3. xxx</p>
               @elseif($project->isPickType())
               <?php
               $funding_closing_date_without_time = new DateTime($project->funding_closing_at);
@@ -939,6 +950,8 @@
                 환불
               @elseif($project->isEventTypeInvitationEvent())
                 초대권 신청
+              @elseif($project->isEventCustomType())
+                이벤트 신청
               @endif
               정책에 동의 <input id="refund_apply" type="checkbox" required="required">
             </div>
@@ -969,6 +982,8 @@
                     @endif
                   @endif
                 @elseif($project->isEventTypeInvitationEvent())
+                  <button class="btn btn-muted" disabled="disabled">취소됨</button>
+                @elseif($project->isEventCustomType())
                   <button class="btn btn-muted" disabled="disabled">취소됨</button>
                 @else
                   <button class="btn btn-muted" disabled="disabled">취소됨</button>
@@ -1018,6 +1033,8 @@
                     @endif
                   @elseif($project->isEventTypeInvitationEvent())
                     <button class="btn btn-danger">취소하기</button>
+                  @elseif($project->isEventCustomType())
+                    <button class="btn btn-danger">취소하기</button>
                   @endif
                 @else
                   @if($project->isEventTypeDefault() || $project->isPickType())
@@ -1029,6 +1046,9 @@
                         <p class="ps-tooltip text-danger">환불 가능 일자가 만료되었습니다.</p>
                     @endif
                   @elseif($project->isEventTypeInvitationEvent())
+                    <button class="btn btn-muted" disabled="disabled">취소불가</button>
+                    <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
+                  @elseif($project->isEventCustomType())
                     <button class="btn btn-muted" disabled="disabled">취소불가</button>
                     <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
                   @endif
@@ -1159,6 +1179,11 @@
             {
                 //초대권 이벤트 중이면, 가격을 초대권으로 변경한다.
                 $('.order_form_ticket_price').text("");
+            }
+
+            if($('#isEventTypeCustom').val() == true)
+            {
+              $('.order_form_ticket_price').text("");
             }
           };
 
@@ -1358,6 +1383,8 @@
 
             if($('#isEventTypeInvitation').val() == true){
               $('#ticketing-btn-payment').text("초대권 신청하기");
+            }else if($('#isEventTypeCustom').val() == true){
+              $('#ticketing-btn-payment').text("이벤트 신청하기");
             }
 
           };
@@ -1416,20 +1443,24 @@
 
             success : function(data) {              
                //컨트롤러 실행 후 성공시 넘어옴
-               console.log(data);
 
                if(data.orderResultType == "orderResultSuccess")
                {
                 //console.error("등록완료 ! " + data.isSuccess + "//"+ data.orderId);
                 var base_url = window.location.origin;
 
-              	var url = base_url+'/tickets/'+data.orderId+'/completeorder';
+                var url = base_url+'/tickets/'+data.orderId+'/completeorder';
+                
+                var _titleSuccess = "결제 성공!"
+                if($('#isEventTypeCustom').val() == true){
+                  _titleSuccess = "신청 성공!"
+                }
 
                 Swal.close();
                 Swal.fire({
                   type: 'success',
-                  title: '결제 성공!',
-                  html: '결제가 정상적으로 처리되었습니다. <br> 잠시만 기다려주세요.',
+                  title: _titleSuccess,
+                  html: '정상적으로 처리되었습니다. <br> 잠시만 기다려주세요.',
                   allowOutsideClick: false,
                   allowEscapeKey: false,
                   timer: 3000,
@@ -1473,7 +1504,7 @@
                  //console.error("등록실패!! ! " + data.isSuccess + "//"+ data.orderId);
                  Swal.close();
                  Swal.fire({
-                   title: '결제 실패',
+                   title: '실패',
                    html: data.eMessage,
                  });
                }
@@ -1484,9 +1515,14 @@
           });
 
           var showPayingAlert = function(){
-            //var timerInterval;
+            
+            var _title = "결제 진행중"
+            if($('#isEventTypeCustom').val() == true){
+              _title = "신청 진행중"
+            }
+
             Swal.fire({
-              title: "결제 진행중",
+              title: _title,
               html: '최대 30초 정도 소요 됩니다.<br>페이지를 닫거나 새로고침시 오류가 발생할 수 있습니다.',
               allowOutsideClick: false,
               allowEscapeKey: false,
@@ -1525,8 +1561,8 @@
                 //window.location.href = baseUrl + '/projects/' + projectId + '/admin/test';
                 Swal.close();
                 Swal.fire({
-                  title: '결제 시간 초과',
-                  html: '인터넷 오류로 인해 결제가 비정상적으로 처리되었습니다.<br> 결제 확인란에서 결제 상태를 확인해주세요.',
+                  title: '시간 초과',
+                  html: '인터넷 오류로 인해 결제가 비정상적으로 처리되었습니다.<br> 결제 확인란에서 상태를 확인해주세요.',
                   allowOutsideClick: false,
                   allowEscapeKey: false,
                 }).then(function(){

@@ -127,6 +127,8 @@
             결제 예정 금액: <span id="order_price_text">0</span>원
           @elseif($project->isEventTypeInvitationEvent())
             초대권 신청중
+          @elseif($project->isEventCustomType())
+            이벤트 신청중
           @endif
          </p>
          <p class="order_pay_next_btn_next_text">다음 단계로</p>

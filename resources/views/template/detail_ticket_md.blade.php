@@ -3,7 +3,9 @@
     @if(!$project->isEventTypeCrawlingEvent())
       <div class="detail_calender_container">
         <h4 style="font-weight:600; margin-top:0px">
+          @if(!$project->isEventCustomType())
           TICKET <span class="detail_date_sub_title"> | @if($project->isEventSubTypeSandBox()) @elseif($project->isEventTypeInvitationEvent()) 신청 가능날짜 @else 티켓팅 가능날짜 @endif @if(!$project->isEventSubTypeSandBox()): {{ $project->getConcertDateFormatted() }} @endif</span>
+          @endif
         </h4>
         <div class="detail_ticket_container">
           @include('template.calendar', ['isDetail' => 'TRUE'])

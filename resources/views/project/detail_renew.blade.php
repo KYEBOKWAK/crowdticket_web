@@ -239,6 +239,8 @@ $selectedTicket = "";
                 <div class="detail_main_guide_funding_explain">
                   @if($project->isEventTypeCrawlingEvent())
                     본 이벤트는 크라우드티켓이 아닌 외부에서 진행 중인 이벤트 입니다.
+                  @elseif($project->isEventCustomType())
+                    본 이벤트는 크티와 하늘안과가 진행하는 이벤트 입니다.
                   @else
                     {{ $project->getMainExplain() }}
                   @endif
