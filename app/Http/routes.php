@@ -25,6 +25,11 @@ Route::post('ping', 'WelcomeController@ping');
 
 Route::get('/', 'WelcomeController@index');
 Route::get('/home', 'WelcomeController@index');
+
+Route::get('kakao/chat', function () {
+    return view('kakao_channel_connect');
+});
+
 Route::get('terms/', function () {
     return view('customer.terms');
 });
