@@ -26,7 +26,7 @@
       });
     }
 
-    plusFriendChat();
+    // plusFriendChat();
 </script>
 
 </body>
