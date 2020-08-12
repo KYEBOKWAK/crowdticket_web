@@ -13,7 +13,10 @@
 </head>
 <body>
 
-카카오톡 채널과 연결합니다...
+카카오톡 채널과 연결합니다... 하단의 상담 시작하기 버튼을 눌러주세요.
+<a href="javascript:void plusFriendChat()">
+  <button id="kakao_talk">상담 시작하기</button>
+</a>
 
 <script type='text/javascript'>
     Kakao.init('0e5457b479dfe84c5e52e6de84d6d684');
@@ -23,7 +26,9 @@
       });
     }
 
-    plusFriendChat();
+
+
+    // plusFriendChat();
 </script>
 
 </body>
