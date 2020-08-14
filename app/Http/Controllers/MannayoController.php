@@ -1386,19 +1386,19 @@ class MannayoController extends Controller
             $channel_id = substr($channel, $strPos+1);
         }
         
-        if($channel_id)
-        {
-             //동일한 채널이 있는지 DB에서 찾아본다.
-            $creators = Creator::where('channel_id', $channel_id)->get();
-            if(count($creators))
-            {
-                //동일한 채널이 있다면 채널 정보를 넘겨준다.
-                // $meetupsData = $this->getMeetupList($creators, null);
-                // return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
-                // $meetupsData = $this->getMeetupList($creators, null);
-                return ['state' => 'success', 'data' => $creators[0], 'meetups' => ''];
-            }
-        }
+        // if($channel_id)
+        // {
+        //      //동일한 채널이 있는지 DB에서 찾아본다.
+        //     $creators = Creator::where('channel_id', $channel_id)->get();
+        //     if(count($creators))
+        //     {
+        //         //동일한 채널이 있다면 채널 정보를 넘겨준다.
+        //         // $meetupsData = $this->getMeetupList($creators, null);
+        //         // return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
+        //         // $meetupsData = $this->getMeetupList($creators, null);
+        //         return ['state' => 'success', 'data' => $creators[0], 'meetups' => ''];
+        //     }
+        // }
         
         $searchValue = $channel_id;
         $referrer = url('/');
