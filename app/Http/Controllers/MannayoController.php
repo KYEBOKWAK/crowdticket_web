@@ -1399,6 +1399,78 @@ class MannayoController extends Controller
                 return ['state' => 'success', 'data' => $creators[0], 'meetups' => ''];
             }
         }
+        
+        $searchValue = $channel_id;
+        $referrer = url('/');
+        $api_key = env("GOOGLE_YOUTUBE_API_KEY");
+
+        $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_API;
+
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+
+        try{
+            $content = file_get_contents($url);
+            $objs = json_decode($content);
+            return ['state' => 'success', 'data' => $objs->items, 'search_type' => $youtubeSearchType];
+        }catch(\Exception $e){
+            //어떠한 오류, 리밋 카운트 초과시
+            return ['state' => 'error', 'message' => "채널을 찾지 못했습니다."];
+        }
+
+        // $search_value = $request->search_value;
+
+        // $searchValue = urlencode($search_value);
+        // // $searchValue = $search_value;
+        // $referrer = url('/');
+        // $api_key = env("GOOGLE_YOUTUBE_API_KEY");
+
+        // $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_API;
+
+        // $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+
+        // try{
+        //     $content = file_get_contents($url);
+        //     $objs = json_decode($content);
+        //     return ['state' => 'success', 'data' => $objs->items, 'search_type' => $youtubeSearchType];
+        // }catch(\Exception $e){
+
+        /*
+        if(!strpos($request->url, 'youtube.com/channel/') && !strpos($request->url, 'youtube.com/user/')){
+            return ['state' => 'error', 'message' => '주소가 잘못 입력되었습니다. 다시 한번 확인 해주세요.'];
+        }
+
+        $strPos = strpos($request->url, 'channel/');
+        
+        $channel_id = '';
+        if($strPos <= 0)
+        {
+            $strPos = strpos($request->url, 'user/');
+            if($strPos <= 0)
+            {
+                return ['state' => 'error', 'message' => '주소가 잘못 입력되었습니다. 다시 한번 확인 해주세요.'];
+            }
+            $channel = substr($request->url, $strPos);
+        }
+        else
+        {
+            $channel = substr($request->url, $strPos);
+            $strPos = strpos($channel, '/');
+            $channel_id = substr($channel, $strPos+1);
+        }
+        
+        if($channel_id)
+        {
+             //동일한 채널이 있는지 DB에서 찾아본다.
+            $creators = Creator::where('channel_id', $channel_id)->get();
+            if(count($creators))
+            {
+                //동일한 채널이 있다면 채널 정보를 넘겨준다.
+                // $meetupsData = $this->getMeetupList($creators, null);
+                // return ['state' => 'success', 'data' => $creators, 'meetups' => $meetupsData];
+                // $meetupsData = $this->getMeetupList($creators, null);
+                return ['state' => 'success', 'data' => $creators[0], 'meetups' => ''];
+            }
+        }
 
 
         include_once(__DIR__.'/../lib/simple_html_dom.php');
@@ -1445,6 +1517,8 @@ class MannayoController extends Controller
         
         // return ['state' => 'success', 'data' => $channelArray];
         return ['state' => 'success', 'data' => $channelDataObject];
+        */
     }
+    
     ///creator API END
 }
