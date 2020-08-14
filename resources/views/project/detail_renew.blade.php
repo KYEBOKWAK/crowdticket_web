@@ -2,11 +2,13 @@
 
 @section('meta')
     <meta property="og:image" content="{{ $project->getPosterUrl() }}"/>
+    <meta property="og:title" content="{{ $project->title }} | 크티"/>
+    <meta property="og:description" content="{{ $project->description }}"/>
     <meta name="description" content="{{ $project->description }}"/>
 @endsection
 
 @section('title')
-    <title>{{ $project->title }}</title>
+    <title>{{ $project->title }} | 크티</title>
 @endsection
 
 @section('css')

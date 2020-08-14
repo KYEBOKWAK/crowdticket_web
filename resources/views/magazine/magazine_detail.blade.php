@@ -2,12 +2,12 @@
 
 @section('meta')
   <meta property="og:image" content="{{ $magazine->thumb_img_url }}"/>
-  <meta property="og:title" content="크티 : 크라우드티켓 매거진"/>
-  <meta property="og:description" content="{{ $magazine->title }}"/>
+  <meta property="og:title" content="{{ $magazine->title }} | 크티"/>
+  <meta property="og:description" content="지금 크티에서 일어나고 있는 일들을 소개합니다"/>
 @endsection
 
 @section('title')
-  <title>{{ $magazine->title }}</title>
+  <title>{{ $magazine->title }} | 크티</title>
 @endsection
 
 @section('css')

@@ -2,11 +2,12 @@
 @section('meta')
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="크티 : 크라우드티켓"/>
-    <meta property="og:description" content="팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
+    <meta property="og:title" content="크티 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
+    <meta property="og:description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/"/>
-    <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 더 다양하게 소통하고 공감해보세요!"/>
+    <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
+    <link rel="canonical" href="https://crowdticket.kr"/> 
 @endsection
 @section('css')
     <link href="{{ asset('/css/simple-scrollbar.css?version=1') }}" rel="stylesheet"/>
@@ -248,7 +249,7 @@
           margin-right: auto;*/
           position: relative;
           top: 82px;
-          font-size: 32px;
+          font-size: 28px;
           font-weight: 500;
           font-style: normal;
           font-stretch: normal;
@@ -704,6 +705,7 @@
 
 @endsection
 
+@section('event_banner')
 <div class='welcome_event_banner_img_container'>
   <a href="https://bit.ly/2Xu4jZ0" target='_blank'>
     <img class='welcome_event_banner_img' src="">
@@ -711,6 +713,7 @@
     <img class='welcome_event_banner_img_content_mobile' src="">
   </a>
 </div>
+@endsection
 
 @section('content')
 
@@ -726,7 +729,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
           <div class="welcome_start_content_container">
             <div class="welcome_start_banner_content_container">
-              <b>구독, 좋아요, 크티!<br>크리에이터와 이벤트로 소통해보세요</b>
+              <b>구독, 좋아요, 크티!<br>크리에이터 이벤트는 크티에서 만나요!</b>
             </div>
 
             <div class="welcome_start_button_container">

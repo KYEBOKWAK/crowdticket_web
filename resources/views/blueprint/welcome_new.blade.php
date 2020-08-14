@@ -1,14 +1,14 @@
 @extends('app')
 @section('meta')
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="크티 : 이벤트 만들기"/>
+    <meta property="og:title" content="이벤트 만들기 | 크티"/>
     <meta property="og:description" content="팬을 위한 크리에이터 이벤트를 만들어보세요!"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/blueprints/welcome"/>
     <meta property="description" content="팬을 위한 크리에이터 이벤트를 만들어보세요!"/>
 @endsection
 @section('title')
-    <title>크티 : 이벤트 만들기</title>
+    <title>이벤트 만들기 | 크티</title>
 @endsection
 @section('css')
     <style>

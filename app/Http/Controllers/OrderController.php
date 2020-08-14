@@ -368,7 +368,7 @@ class OrderController extends Controller
       }
       else
       {
-        $msg = sprintf('%s %s %s %d매 예매 완료', $titleLimit, $datetime, $seatName, $totalRealTicket);
+        $msg = sprintf('%s %s %s %d매 결제 완료', $titleLimit, $datetime, $seatName, $totalRealTicket);
 
         if($project->type == 'funding')
         {
@@ -482,13 +482,13 @@ class OrderController extends Controller
 
       if ($project->type === 'funding')
       {
-        $mailForm = 'template.emailform.email_complite_schedule';
-        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+        $mailForm = 'template.emailform.email_complete_schedule';
+        $subject = '[크티] 이벤트 참여신청이 완료되었습니다.';
       }
       else
       {
-        $mailForm = 'template.emailform.email_complite_onetime';
-        $subject = '(크라우드티켓) 프로젝트에 참여했습니다.';
+        $mailForm = 'template.emailform.email_complete_onetime';
+        $subject = '[크티] 이벤트 참여신청이 완료되었습니다';
       }
 
       $data = [
@@ -500,7 +500,9 @@ class OrderController extends Controller
         'commission' => number_format($commission),
         'totalPrice' => number_format($order->total_price),
         'payDate' => $project->getFundingOrderConcludeAt(),
-        'gotoPayPageURL' => url('orders/'.$order->id)
+        'gotoPayPageURL' => url('orders/'.$order->id),
+        'name' => $order->name,
+        'createdAt' => $order->created_at
       ];
 
       Mail::send($mailForm, $data, function ($m) use ($subject, $to) {
@@ -521,13 +523,13 @@ class OrderController extends Controller
 
       if ($project->type === 'funding')
       {
-        $mailForm = 'template.emailform.email_complite_schedule_cancel';
-        $subject = '(크라우드티켓) 프로젝트 참여를 취소했습니다.';
+        $mailForm = 'template.emailform.email_complete_schedule_cancel';
+        $subject = '[크티] 이벤트 참여가 취소되었습니다';
       }
       else
       {
-        $mailForm = 'template.emailform.email_complite_onetime_cancel';
-        $subject = '(크라우드티켓) 프로젝트 참여를 취소했습니다.';
+        $mailForm = 'template.emailform.email_complete_onetime_cancel';
+        $subject = '[크티] 이벤트 참여가 취소되었습니다';
       }
 
       $data = [
@@ -535,7 +537,8 @@ class OrderController extends Controller
         'totalPrice' => number_format($totalPrice),
         'refundAmount' => number_format($refundAmount),
         'cancellationFees' => number_format($cancellationFees),
-
+        'updatedAt' => $order->updated_at,
+        'name' => $order->name,
         'gotoPayPageURL' => url('orders/'.$order->id)
       ];
 

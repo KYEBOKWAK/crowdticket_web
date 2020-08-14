@@ -7,7 +7,7 @@
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     @section('meta')
-      <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 더 다양하게 소통하고 공감해보세요!"/>
+      <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     @show
 
     <!-- Google Tag Manager -->
@@ -332,6 +332,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 <input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif"/>
 
+@yield('event_banner')
 
 @section('navbar')
 <nav class="navbar navbar-default">
