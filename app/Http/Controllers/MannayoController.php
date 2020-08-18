@@ -1111,91 +1111,7 @@ class MannayoController extends Controller
             return ['state' => 'success', 'data' => $objs->items, 'search_type' => $youtubeSearchType];
         }catch(\Exception $e){
             //어떠한 오류, 리밋 카운트 초과시
-            $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_CROLLING;
-
-            include_once(__DIR__.'/../lib/simple_html_dom.php');
-            
-            $specialCharToSearch = strip_tags(htmlspecialchars($searchValue));
-            $html = file_get_html('https://www.youtube.com/results?search_query='.$specialCharToSearch);
-
-            //$html = file_get_html('https://www.youtube.com/channel/UC4sIlWphHSMk210xl74H3Wg');
-            $channelDataTempArray = [];
-            //좌측에 나오는 기본 채널들은 제외
-            //음악, 스포츠, 영화, 뉴스, 실시간, 가상현실
-                            
-            foreach($html->find('a') as $element)
-            {
-                $isPassChannel = false;
-                
-
-                if($isPassChannel)
-                {
-                    continue;
-                }
-
-                $channel = '';
-                $channelObject = '';
-                if(strpos($element->href, 'channel/'))
-                {
-                    $strPos = strpos($element->href, 'channel/');
-                    $channel = substr($element->href, $strPos);
-
-                    $channelTitle = $element->plaintext;
-
-                    if($channelTitle)
-                    {
-                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
-                        continue;
-                    }
-
-                    $channelObject['channel_id'] = $channel;
-                    $channelObject['title'] = $channelTitle;
-                }
-                else if(strpos($element->href, 'user/'))
-                {
-                    $strPos = strpos($element->href, 'user/');
-                    $channel = substr($element->href, $strPos);
-                    
-                    $channelTitle = $element->plaintext;
-                    if($channelTitle)
-                    {
-                        //채널 타이틀값이 있으면 플레이 리스트의 채널이다.
-                        continue;
-                    }
-                    
-                    $channelObject['channel_id'] = $channel;
-                    $channelObject['title'] = $channelTitle;
-                }
-                else
-                {
-                    continue;
-                }
-
-                if($channelObject['channel_id'] === '')
-                {
-                    continue;
-                }
-
-                $isHaveData = false;
-                //겹치는 채널을 제외해준다.
-                foreach($channelDataTempArray as $channelDataTemp)
-                {
-                    if($channelDataTemp['channel_id'] === $channelObject['channel_id'])
-                    {
-                        $isHaveData = true;
-                        break;
-                    }
-                }
-
-                if($isHaveData)
-                {
-                    continue;
-                }
-            
-                array_push($channelDataTempArray, $channelObject);
-            }
-
-            return ['state' => 'success', 'data' => $channelDataTempArray, 'search_type' => $youtubeSearchType];
+            return ['state' => 'error', 'message' => "채널을 찾지 못했습니다."];
         }
     }
 
@@ -1406,7 +1322,9 @@ class MannayoController extends Controller
 
         $youtubeSearchType = self::YOUTUBE_SEARCH_TYPE_API;
 
-        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+        // $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
+
+        $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&channelId=".$searchValue."&maxResults=50&key=".$api_key."&referrer=".$referrer;
 
         try{
             $content = file_get_contents($url);
