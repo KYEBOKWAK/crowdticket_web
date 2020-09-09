@@ -109,6 +109,26 @@ class Order extends Model
       return false;
     }
 
+    public function isWaitCancel()
+    {
+      if($this->getState() === self::ORDER_STATE_CANCEL_WAIT_PAY)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
+    public function isWait()
+    {
+      if($this->getState() === self::ORDER_STATE_APP_PAY_WAIT)
+      {
+        return true;
+      }
+
+      return false;
+    }
+
     public function canCancel()
     {
         //if ($this->deleted_at) {
@@ -423,7 +443,13 @@ class Order extends Model
         return "프로젝트 에러";
       }
 
-      if($this->getState() === self::ORDER_STATE_CANCEL)
+      if($this->getState() === self::ORDER_STATE_APP_PAY_WAIT){
+        return '결제대기';
+      }
+      else if($this->getState() === self::ORDER_STATE_CANCEL_WAIT_PAY){
+        return '자동취소됨';
+      }
+      else if($this->getState() === self::ORDER_STATE_CANCEL)
       {
         return '취소됨';
       }

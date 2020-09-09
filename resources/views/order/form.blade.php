@@ -967,7 +967,13 @@
 
         @if ($order)
         <div style="text-align: center">
-          @if($order->isErrorOrder())
+          @if($order->isWait())
+            <button class="btn btn-muted" disabled="disabled">결제대기중</button>
+            <p class="ps-tooltip text-danger">현재 앱에서만 동작하는 기능입니다.</p>
+          @elseif($order->isWaitCancel())
+            <button class="btn btn-muted" disabled="disabled">자동취소됨</button>
+            <p class="ps-tooltip text-danger">결제 대기 시간 초과로 자동 취소됨.(현재 앱에서만 가능)</p>
+          @elseif($order->isErrorOrder())
             <button class="btn btn-muted" disabled="disabled">결제에러</button>
           @else
             @if ($order->getIsCancel())
