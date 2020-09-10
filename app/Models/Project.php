@@ -190,6 +190,11 @@ class Project extends Model
         return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END);
     }
 
+    public function getOrderWithOutCancel()
+    {
+      return $this->hasMany('App\Models\Order')->where('state', '<', Order::ORDER_STATE_CANCEL_START);
+    }
+
     public function getOrdersWithPickCancel()
     {
       //return $this->hasMany('App\Models\Order')->where('state', '<=', Order::ORDER_STATE_PAY_END)->orWhere('state', '=', Order::ORDER_STATE_PROJECT_PICK_CANCEL)->get();
@@ -795,7 +800,7 @@ class Project extends Model
     public function getTotalTicketOrderCount()
     {
       //$orders = $this->orders;
-      $orders = $this->ordersWithoutUserCancel;
+      $orders = $this->getOrderWithOutCancel;
       $totalBuyCount = 0;
       foreach($orders as $order){
         $totalBuyCount += $order->count;
@@ -901,7 +906,7 @@ class Project extends Model
 
     public function getTotalFundingAmount()
     {
-      $orders = $this->ordersWithoutUserCancel;
+      $orders = $this->getOrderWithOutCancel;
       $totalFundingAmount = 0;
 
       if($this->project_target == "people")
