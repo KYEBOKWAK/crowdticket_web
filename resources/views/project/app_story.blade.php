@@ -423,7 +423,12 @@
 
     <style>
     .tab-pane{
-      padding: 0 !important;          
+      padding: 0px !important;
+      /* padding-bottom: 10 !important; */
+    }
+    .tab-content{
+      margin-bottom: 0px;
+      padding-bottom: 10px;
     }
     </style>
 </head>
