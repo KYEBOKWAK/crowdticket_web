@@ -13,6 +13,7 @@ use App\Models\Poster as Poster;
 use App\Models\Mcn as Mcn;
 use App\Models\Main_thumbnail as Main_thumbnail;
 use App\Models\Test as Test;
+use App\Models\Magazine as Magazine;
 use App\Services\SmsService;
 
 use Illuminate\Http\Request as Request;
@@ -1833,5 +1834,31 @@ class ProjectController extends Controller
       
       //Save string to log, use FILE_APPEND to append.
       Storage::disk('s3-log')->append($logURL, $log);
+    }
+
+    public function getAppStory($target, $id){
+
+      $project = null;
+      $magazine = null;
+      if($target === 'project'){
+        $project = Project::findOrFail($id);
+
+        return view('project.app_story', [
+          'project' => $project,
+        ]);
+      }else if($target === 'magazine'){
+        $magazine = Magazine::findOrFail($id);
+
+        return view('project.app_magazine_story', [
+          'magazine' => $magazine
+        ]);
+      }else{
+        return view('project.app_story', [
+          'project' => $project,
+          'magazine' => $magazine
+        ]);
+      }
+
+      
     }
 }

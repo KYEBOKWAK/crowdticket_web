@@ -132,6 +132,8 @@ Route::get('mannayo/users/list', 'MannayoController@getMannayoUsers');
 Route::get('mannayo/comments/list', 'MannayoController@getComments');
 //Mannayo END
 
+Route::get('app/story/{target}/{id}', 'ProjectController@getAppStory');
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');
