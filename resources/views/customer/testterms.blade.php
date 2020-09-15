@@ -19,10 +19,10 @@
             </div>
         </div>
         <div class='privacyterms_v2'>
-            @include ('helper.privacy_content_v2')
+            @include ('helper.testterms_content')
         </div>
-        <div class='privacyterms_v1' style = "display:none;">
-            @include ('helper.privacy_content_v1')
+        <div class='privacyterms_v1'>
+            @include ('helper.thirdterms_content')
         </div>
     </div>
 @endsection

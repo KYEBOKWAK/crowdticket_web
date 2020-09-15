@@ -39,26 +39,51 @@ Route::get('privacy/', function () {
 Route::get('thirdterms/', function () {
     return view('customer.thirdterms');
 });
+Route::get('join_agree/', function () {
+    return view('customer.join_agree');
+});
+Route::get('marketing_agree/', function () {
+    return view('customer.marketing_agree');
+});
+Route::get('creator_agree/', function () {
+    return view('customer.creator_agree');
+});
+Route::get('project_agree/', function () {
+    return view('customer.project_agree');
+});
+Route::get('cs_agree/', function () {
+    return view('customer.cs_agree');
+});
 
+/*
+Route::get('testterms/', function () {
+    return view('customer.testterms');
+});
 Route::get('help/', function () {
     return view('customer.help');
 });
+*/
 
 //mobile App 약관동의 start
 Route::get('privacy/app/', function () {
     return view('customer.privacy_app');
 });
-
+Route::get('terms/app/', function () {
+    return view('customer.terms_app');
+});
 Route::get('thirdterms/app/', function () {
     return view('customer.thirdterms_app');
 });
-
-Route::get('terms/app/', function () {
-    return view('customer.terms_app');
+Route::get('join_agree/app/', function () {
+    return view('customer.join_agree_app');
+});
+Route::get('marketing_agree/app/', function () {
+    return view('customer.marketing_agree_app');
 });
 
 //mobile App 약관동의 end
 
+/*
 //CREATOR Landing PAGE
 Route::get('creators/', function () {
     return view('landing/landing_creator');
@@ -68,6 +93,7 @@ Route::get('creators/', function () {
 Route::get('landing/form', function () {
     return view('landing/landing_creator_form');
 });
+*/
 
 Route::post('landing/sendmail', 'MailSendController@sendEmail');
 Route::post('question/sendmail', 'MailSendController@sendQuestionEmail');

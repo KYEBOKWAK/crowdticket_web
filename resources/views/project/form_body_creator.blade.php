@@ -88,14 +88,28 @@
           <p class="project-form-content-title">정산 유의사항</p>
           <div class="project-form-content">
             <div class="project_form_calcul_notice">
-              <p>1. 크라우드티켓 수수료는 5%이며, PG사 수수료는 3.5%입니다.(총 8.5%)</p>
+              <p>1. 크라우드티켓 이벤트 개설 수수료는 5%이며, PG사 수수료는 3.5%입니다.(총 8.5%)</p>
               <p>2. 결제가 완료된 건에 한하여 총 결제 금액에서 수수료를 제외한 금액을 정산하여 드립니다.</p>
               <p>3. 모든 프로젝트는 티켓팅이 마감된 익일부터 업무일 7일 뒤에 정산됩니다.</p>
-              <p>4. 프로젝트 진행자는 크라우드티켓 플랫폼에 올린 대로 프로젝트를 진행할 의무가 있습니다.
-                정산을 받은 후 프로젝트를 진행하지 않거나 MD미지급 등, 구매자와의 문제 발생시 크라우드티켓에서는 책임지지 않습니다.</p>
+              <p>4. 이벤트 개설자는 크티 플랫폼에 올린 대로 이벤트를 진행해야 할 의무가 있습니다. 정산을 받은 후 이벤트를 진행하지 않거나 굿즈 또는 이벤트 상품 미지급 등, 의무를 이행하지 않아 발생하는 참가자와의 문제에 대해 크라우드티켓에서는 책임을 지지 않습니다.</p>
               <p>5. 사업자일 경우 정산 받은 금액에 대한 세금 신고를 성실히 하셔야 합니다.</p>
             </div>
-            <p class="project_form_calcul_notice_check_text">내용을 읽고 확인 했습니다.<input style="margin-left:5px;" id="calcul_notice_check" type="checkbox"/></p>
+            <div class='flex_layer'>
+              <div class='meetup_checkbox_wrapper project_form_calcul_notice_check_text'>
+                <input id='project_agree_check' type='checkbox' class='agreement_inputbox' value=''/>
+                <img class='project_checkbox_img project_checkbox_img_select' src='../../img/icons/svg/ic-checkbox-btn-s.svg'>
+                <img class='project_checkbox_img project_checkbox_img_unselect' src="../../img/icons/svg/ic-checkbox-btn-n.svg">
+                이벤트 개설을 위한 <a href='../../project_agree' onClick="window.open(this.href,'_blank','resizable,height=750,width=580');return false;"><u>개인정보수집이용</u></a>에 동의합니다. (필수)
+              </div>
+            </div>
+            <div class='flex_layer'>
+              <div class='meetup_checkbox_wrapper project_form_calcul_notice_check_text'>
+                <input id='calcul_notice_check' type='checkbox' class='agreement_inputbox' value=''/>
+                <img class='calcul_checkbox_img calcul_checkbox_img_select' src='../../img/icons/svg/ic-checkbox-btn-s.svg'>
+                <img class='calcul_checkbox_img calcul_checkbox_img_unselect' src="../../img/icons/svg/ic-checkbox-btn-n.svg">
+                내용을 읽고 확인 했습니다.
+              </div>
+            </div>
           </div>
         </div>
       </div>

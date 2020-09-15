@@ -1,0 +1,28 @@
+diff a/resources/views/blueprint/welcome_new.blade.php b/resources/views/blueprint/welcome_new.blade.php	(rejected hunks)
+@@ -1548,6 +1548,26 @@
+                 window.open('https://drive.google.com/file/d/1B7SC2NWxVDCakYSK001bD6AS5Ho5pDuM/view?usp=sharing', '_blank');
+             });
+ 
++            var csCheckboxImgToggle = function(isChecked){
++                if(isChecked){
++                    $(".cs_checkbox_img_select").show();
++                    $(".cs_checkbox_img_unselect").hide();
++                }
++                else{
++                    $(".cs_checkbox_img_select").hide();
++                    $(".cs_checkbox_img_unselect").show();
++                }
++            };
++
++            $("#cs_agreement").change(function(){
++                if($(this).is(":checked")){
++                    csCheckboxImgToggle(true);
++                }
++                else{
++                    csCheckboxImgToggle(false);
++                }
++            });
++
+             var contactPopup = function(){
+                 var elementPopup = document.createElement("div");
+                 elementPopup.innerHTML = 

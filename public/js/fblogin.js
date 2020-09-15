@@ -17,6 +17,9 @@ var googleLogoURL = $("#asset_url").val() + 'img/app/g-logo.png';
 var radioSelectImg = $("#asset_url").val() + 'img/icons/svg/radio-btn-s.svg';
 var radioUnSelectImg = $("#asset_url").val() + 'img/icons/svg/radio-btn-n.svg';
 
+var checkboxSelectImg = $("#asset_url").val() + 'img/icons/svg/ic-checkbox-btn-s.svg';
+var checkboxUnSelectImg = $("#asset_url").val() + 'img/icons/svg/ic-checkbox-btn-n.svg';
+
 var iconboxImg = $("#asset_url").val() + 'img/icons/svg/icon-box.svg';
 
 const REGISTER_AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
@@ -409,11 +412,13 @@ function registerPopup(successFunc, closeFunc){
   registerAgeOptions += "<option value='"+ REGISTER_AGE_NONE_TYPE_OPTION +"' selected>" + "년도 선택" + "</option>";
   ///////
 
+  var registerAgeUnderage = nowYear - 14;
+
   var elementPopup = document.createElement("div");
   elementPopup.innerHTML =
   "<div class='form-body-default-container'>" +
     "<div class='project_form_title_wrapper'>" +
-      "<h1>회원 가입</h1>" +
+      "<h1 style='font-size:32px; font-weight:500;'>회원가입</h1>" +
     "</div>" +
     "<div class='project_form_content_container'>" +
       "<div id='login_error_message' class='alert alert-danger' style='display:none;'></div>" +
@@ -425,7 +430,7 @@ function registerPopup(successFunc, closeFunc){
             "</div>" +
         "</div>" +
 
-        "<div class='project_form_input_container'>" +
+        "<div class='project_form_input_container_nm'>" +
             "<p class='project-form-content-title'>성별*</p>" +
             "<div class='project-form-content'>" +
               "<div class='register_popup_user_options_container flex_layer'>" + 
@@ -446,12 +451,12 @@ function registerPopup(successFunc, closeFunc){
         "</div>" +
 
         "<div class='project_form_input_container'>" +
-            "<p class='project-form-content-title'>년생*</p>" +
+            "<p class='project-form-content-title'>출생 연도*</p>" +
             "<div class='project-form-content'>" +
               "<div class='register_popup_user_age_container'>" + 
                 "<div class='register_popup_city_text_container flex_layer'>" +
-                  "<p id='register_popup_user_age_text'>년도 선택</p>" +
-                  "<img src="+iconboxImg+" style='margin-right: 16px;'>" +
+                  "<p id='register_popup_user_age_text'>연도 선택</p>" +
+                  "<img src="+iconboxImg+" style='margin-right: 16px; padding-bottom: 8px'>" +
                 "</div>" +
                 "<select class='register_age_user_select' name='register_age_user'>" +
                   registerAgeOptions +
@@ -497,6 +502,44 @@ function registerPopup(successFunc, closeFunc){
           //"</div>" +
         "</div>" +
 
+        "<div class='project_form_input_container'>" +
+          "<div class='login-form-checklist flex_layer'>" +
+            "<div class='meetup_checkbox_wrapper'>" +
+              "<input id='overage_agreement' style='zoom: 1' type='checkbox' class='agreement_inputbox' value=''/>" +
+              "<img class='overage_checkbox_img overage_checkbox_img_select' src="+checkboxSelectImg+">" +
+              "<img class='overage_checkbox_img overage_checkbox_img_unselect' src="+checkboxUnSelectImg+">" +
+              "만 14세 이상입니다 (필수)" +
+          "</div>" +
+          "</div>" +
+          "<div class='login-form-checklist flex_layer'>" +
+            "<div class='meetup_checkbox_wrapper'>" +
+              "<input id='policy_agreement' style='zoom: 1' type='checkbox' class='agreement_inputbox' value=''/>" +
+              "<img class='policy_checkbox_img policy_checkbox_img_select' src="+checkboxSelectImg+">" +
+              "<img class='policy_checkbox_img policy_checkbox_img_unselect' src="+checkboxUnSelectImg+">" +
+              "<a href='/terms' target='_blank'><u>크라우드티켓 이용약관</u></a> 동의 (필수)" +
+            "</div>" +
+          "</div>" +
+          "<div class='login-form-checklist flex_layer'>" +
+            "<div class='meetup_checkbox_wrapper'>" +
+              "<input id='privacy_agreement' style='zoom: 1' type='checkbox' class='agreement_inputbox' value=''/>" +
+              "<img class='privacy_checkbox_img privacy_checkbox_img_select' src="+checkboxSelectImg+">" +
+              "<img class='privacy_checkbox_img privacy_checkbox_img_unselect' src="+checkboxUnSelectImg+">" +
+              "<a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a> 동의 (필수)" +
+            "</div>" +
+          "</div>" +
+
+          /* 추후 적용예정
+          "<div class='login-form-checklist flex_layer'>" +
+            "<div class='meetup_checkbox_wrapper'>" +
+              "<input id='marketing_agreement' style='zoom: 1' type='checkbox' class='agreement_inputbox' value=''/>" +
+              "<img class='marketing_checkbox_img marketing_checkbox_img_select' src="+checkboxSelectImg+">" +
+              "<img class='marketing_checkbox_img marketing_checkbox_img_unselect' src="+checkboxUnSelectImg+">" +
+              "<a href='/marketing_agree' target='_blank'><u>광고성 정보 수신</u></a> 동의 (선택)" +
+            "</div>" +
+          "</div>" +
+          */
+        "</div>" +
+
         "<div style='width: 100%; text-align: center;'>" +
           "<div class='btn_register_wrapper'>" +
             "<button id='register_button' type='button' class='btn btn_register'>가입</button>" +
@@ -515,6 +558,10 @@ function registerPopup(successFunc, closeFunc){
             //"<span class='icon'></span>" +
             "<span style='font-weight:500;margin-right:5px;'>" + "구글 로그인" + "</span>" +
           "</button>" +
+        "</div>" +
+
+        "<div class='agreement-SNS'>" +
+          "SNS 가입시 <a href='/terms' target='_blank'><u>크라우드티켓 이용약관</u></a>, <a href='/privacy' target='_blank'><u>개인정보 수집이용에</u></a> 동의한 것으로 간주합니다" +
         "</div>" +
 
 
@@ -543,6 +590,86 @@ function registerPopup(successFunc, closeFunc){
     if(closeFunc)
     {
       closeFunc();
+    }
+  });
+  
+  var overageCheckboxImgToggle = function(isChecked){
+    if(isChecked){
+      $(".overage_checkbox_img_select").show();
+      $(".overage_checkbox_img_unselect").hide();
+    }
+    else{
+      $(".overage_checkbox_img_select").hide();
+      $(".overage_checkbox_img_unselect").show();
+    }
+  }
+
+  var policyCheckboxImgToggle = function(isChecked){
+    if(isChecked){
+      $(".policy_checkbox_img_select").show();
+      $(".policy_checkbox_img_unselect").hide();
+    }
+    else{
+      $(".policy_checkbox_img_select").hide();
+      $(".policy_checkbox_img_unselect").show();
+    }
+  }
+
+  var privacyCheckboxImgToggle = function(isChecked){
+    if(isChecked){
+      $(".privacy_checkbox_img_select").show();
+      $(".privacy_checkbox_img_unselect").hide();
+    }
+    else{
+      $(".privacy_checkbox_img_select").hide();
+      $(".privacy_checkbox_img_unselect").show();
+    }
+  }
+
+  var marketingCheckboxImgToggle = function(isChecked){
+    if(isChecked){
+      $(".marketing_checkbox_img_select").show();
+      $(".marketing_checkbox_img_unselect").hide();
+    }
+    else{
+      $(".marketing_checkbox_img_select").hide();
+      $(".marketing_checkbox_img_unselect").show();
+    }
+  }
+
+  $("#overage_agreement").change(function(){
+    if($(this).is(":checked")){
+      overageCheckboxImgToggle(true);
+    }
+    else{
+      overageCheckboxImgToggle(false);
+    }
+  });
+
+  $("#policy_agreement").change(function(){
+    if($(this).is(":checked")){
+      policyCheckboxImgToggle(true);
+    }
+    else{
+      policyCheckboxImgToggle(false);
+    }
+  });
+
+  $("#privacy_agreement").change(function(){
+    if($(this).is(":checked")){
+      privacyCheckboxImgToggle(true);
+    }
+    else{
+      privacyCheckboxImgToggle(false);
+    }
+  });
+
+  $("#marketing_agreement").change(function(){
+    if($(this).is(":checked")){
+      marketingCheckboxImgToggle(true);
+    }
+    else{
+      marketingCheckboxImgToggle(false);
     }
   });
 
@@ -687,6 +814,26 @@ function registerPopup(successFunc, closeFunc){
 
     if(Number($(".register_age_user_select").val()) === REGISTER_AGE_NONE_TYPE_OPTION){
       alert("생년을 선택해주세요.");
+      return;
+    };
+
+    if(Number($(".register_age_user_select").val()) > registerAgeUnderage){
+      alert("만 14세 이상부터 가입하실 수 있습니다.");
+      return;
+    };
+
+    if(!$("#overage_agreement").is(":checked")){
+      alert("만 14세 이상 확인이 필요합니다.");
+      return;
+    };
+
+    if(!$("#policy_agreement").is(":checked")){
+      alert("이용약관에 동의해주세요.");
+      return;
+    };
+
+    if(!$("#privacy_agreement").is(":checked")){
+      alert("개인정보 수집이용에 동의해주세요.");
       return;
     };
 

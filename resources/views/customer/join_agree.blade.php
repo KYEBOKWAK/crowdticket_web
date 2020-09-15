@@ -6,8 +6,8 @@
     <link href="{{ asset('/css/terms.css') }}" rel="stylesheet"/>
 </head>
 <body>
-    <div class='agreement_container_app'>
-        @include ('helper.thirdterms_content_v2')
+    <div class='agreement_container'>
+        @include ('helper.join_agree_content')
     </div>
 </body>
 </html>

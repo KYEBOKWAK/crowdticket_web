@@ -2317,10 +2317,8 @@ label {
 input[type="search"] {
   box-sizing: border-box;
 }
-input[type="radio"],
-input[type="checkbox"] {
+input[type="radio"] {
   margin: 4px 0 0;
-  margin-top: 1px \9;
   line-height: normal;
 }
 input[type="file"] {
@@ -6244,16 +6242,17 @@ button.close {
     display: none !important;
   }
 }
+/*
 body,
 label,
 .checkbox label {
   font-weight: 300;
 }
-
+*/
 /* 체크박스 START*/
 @supports (zoom:2) {
 	input[type="radio"],  input[type=checkbox]{
-	zoom: 2;
+	zoom: 1.5;
 	}
 }
 @supports not (zoom:2) {

@@ -1567,6 +1567,21 @@ $(document).ready(function() {
 			return;
 		}
 
+		var project_agree = $('#project_agree_check').is(':checked');
+		if(project_agree == false)
+		{
+			swal('개인정보 수집이용에 동의해주세요', '', 'warning');
+			return;
+		}
+
+		var calcul_notice = $('#calcul_notice_check').is(':checked');
+		if(calcul_notice == false)
+		{
+			swal('유의사항을 읽고 체크 해주세요.', '', 'warning');
+			return;
+		}
+		//calcul_notice_check
+
 		if(!$('#bank').val()){
 			swal("은행 정보를 입력해주세요.(필수입력)", "", "warning");
 			return;
@@ -1581,14 +1596,6 @@ $(document).ready(function() {
 			swal("예금주 정보를 입력해주세요.(필수입력)", "", "warning");
 			return;
 		}
-
-		var calcul_notice = $('#calcul_notice_check').is(':checked');
-		if(calcul_notice == false)
-		{
-			swal('유의사항을 읽고 체크 해주세요.', '', 'warning');
-			return;
-		}
-		//calcul_notice_check
 
 		$('#creator_form').submit();
 	};
@@ -2721,3 +2728,45 @@ function requiredSavedCheck(){
 	loadingProcessStop($(".project_form_button_wrapper"));
 	return false;
 }
+
+
+//개설자 정보 체크박스 동작용
+var calculCheckboxImgToggle = function(isChecked){
+	if(isChecked){
+	  $(".calcul_checkbox_img_select").show();
+	  $(".calcul_checkbox_img_unselect").hide();
+	}
+	else{
+	  $(".calcul_checkbox_img_select").hide();
+	  $(".calcul_checkbox_img_unselect").show();
+	}
+}
+
+$("#calcul_notice_check").change(function(){
+	if($(this).is(":checked")){
+	  calculCheckboxImgToggle(true);
+	}
+	else{
+	  calculCheckboxImgToggle(false);
+	}
+  });
+
+var projectCheckboxImgToggle = function(isChecked){
+	if(isChecked){
+		$(".project_checkbox_img_select").show();
+		$(".project_checkbox_img_unselect").hide();
+	}
+	else{
+		$(".project_checkbox_img_select").hide();
+		$(".project_checkbox_img_unselect").show();
+	}
+}
+
+$("#project_agree_check").change(function(){
+	if($(this).is(":checked")){
+	  projectCheckboxImgToggle(true);
+	}
+	else{
+	  projectCheckboxImgToggle(false);
+	}
+  });

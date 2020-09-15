@@ -215,7 +215,7 @@
           padding-top: 20px;
           padding-bottom: 20px;
         }
-
+        
         @media (max-width:768px){
           #postcodify_search_button_fake{
             margin-top: 5px;
@@ -944,7 +944,7 @@
               @endif
             </div>
           </div>
-          <div style="text-align:right; margin-top:10px; margin-bottom:10px;">
+          <div style="text-align:right; font-size: 13px; margin-top:12px; margin-bottom:20px; margin-right:12px;">
             <div>
               @if($project->isEventTypeDefault() || $project->isPickType())
                 환불
@@ -953,13 +953,12 @@
               @elseif($project->isEventCustomType())
                 이벤트 신청
               @endif
-              정책에 동의 <input id="refund_apply" type="checkbox" required="required">
+              정책에 동의   <input id="refund_apply" type="checkbox" required="required">
             </div>
             <div>
-              <p style='margin-bottom:0px;'><a href="{{url('/terms')}}" target="_blank"><u>이용약관</u></a> / <a href="{{url('/privacy')}}" target="_blank"><u>정보이용정책</u></a> 동의 <input id="policy_apply" type="checkbox" required="required"></p>
-              <p style='margin-bottom:0px;'><a href="{{url('/thirdterms')}}" target="_blank"><u>제3자 정보제공정책</u></a> 동의 <input id="third_policy_apply" type="checkbox" required="required"></p>
+              <p style='margin-bottom:6px; margin-top: 6px;'><a href="{{url('/thirdterms')}}" onClick="window.open(this.href,'_blank','resizable,height=750,width=580');return false;"><u>개인정보 제3자 제공</u></a> 동의   <input id="third_policy_apply" type="checkbox" required="required"></p>
               @if($project->shooting_agreement)
-                <p style='margin-bottom:0px;'><b><u class='shooting_agreement_apply_text'>이벤트 참가자 초상권</u> 활용 동의</b><input id="shooting_agreement_apply" type="checkbox" required="required"></p>
+                <p style='margin-bottom:0px;'>이벤트 참가자 <u class='shooting_agreement_apply_text'>초상권 활용</u> 동의   <input id="shooting_agreement_apply" type="checkbox" required="required"></p>
               @endif
             </div>
           </div>
@@ -1721,13 +1720,7 @@
               Swal.fire("이용 정책에 동의 해주세요.", "", "warning");
               return;
             }
-
-            if(!$('#policy_apply').is(":checked"))
-            {
-              Swal.fire("이용 약관에 동의 해주세요.", "", "warning");
-              return;
-            }
-
+            
             if(!$('#third_policy_apply').is(":checked"))
             {
               Swal.fire("제3자 정보제공 이용 약관 동의 해주세요.", "", "warning");

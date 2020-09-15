@@ -729,12 +729,14 @@ p{
 
   .meetup_checkbox_wrapper{
     position: relative;
+    font-size: 13px;
+    color: #4d4d4d;
   }
 
   .meetup_checkbox_img{
     display: none;
     position: absolute;
-    top: 3px;
+    top: 6px;
     left: 0px;
   }
 
@@ -746,7 +748,7 @@ p{
     opacity: 0;
     position: relative;
     z-index: 100;
-    bottom: 4px;
+    top: 5px;
   }
 
   .meetup_radio_wrapper{
@@ -767,8 +769,8 @@ p{
   .meetup_popup_user_anonymous_inputbox[type="checkbox"]{
     /*display: none;*/
     width: 16px;
+    height: 16px;
     margin-right: 8px;
-    margin-top: 2px;
   }
 
   .meetup_popup_user_gender_input[type="radio"]{

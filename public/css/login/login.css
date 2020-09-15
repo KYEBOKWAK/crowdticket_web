@@ -88,6 +88,10 @@
   margin-bottom: 18px;
 }
 
+.project_form_input_container_nm{
+  margin: 0px
+}
+
 .error{
   font-size: 14px;
   color: red;
@@ -184,4 +188,113 @@
 
 #forget_password{
   color: black;
+}
+
+.agreement_inputbox{
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  opacity: 0;
+  position: relative;
+  z-index: 100;
+  top: 5px;
+}
+
+.overage_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.overage_checkbox_img_unselect{
+  display: block;
+}
+
+.policy_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.policy_checkbox_img_unselect{
+  display: block;
+}
+
+.privacy_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.privacy_checkbox_img_unselect{
+  display: block;
+}
+
+.marketing_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.marketing_checkbox_img_unselect{
+  display: block;
+}
+
+.calcul_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.calcul_checkbox_img_unselect{
+  display: block;
+}
+
+.project_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.project_checkbox_img_unselect{
+  display: block;
+}
+
+.agreement-SNS{
+  max-width: 300px;
+  margin: 0 auto;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.5;
+  text-align: center;
+  color: #44c8f0;
+}
+
+.meetup_checkbox_wrapper{
+  position: relative;
+  font-size: 13px;
+  color: #4d4d4d;
+}
+
+.meetup_checkbox_img{
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 0px;
+}
+
+.meetup_checkbox_img_unselect{
+  display: block;
+}
+
+.login-form-checklist{
+  width: 100%;
+  margin-left: 0px;
+  padding-bottom: 8px;
 }

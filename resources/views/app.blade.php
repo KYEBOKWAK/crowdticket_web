@@ -53,7 +53,7 @@
 
     .ct-info{
       margin-top: 40px;
-      font-size: 10px;
+      font-size: 11px;
       color: #acacac;
       text-align: center;
     }
@@ -108,7 +108,7 @@
       width: 100%;
       font-size: 16px;
       color: #4d4d4d;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
     #register_popup_user_age_text{
@@ -441,8 +441,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h2 class="footer-social">
             <li>
             <a href="https://www.facebook.com/crowdticket/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-01-facebook.svg') }}"></a></li>
-            <li><a href="https://www.instagram.com/crowdticket/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-02-instagram.svg') }}"></a></li>
+            <li><a href="https://www.instagram.com/k.haem/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-02-instagram.svg') }}"></a></li>
             <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-03-naver.svg') }}"></a></li>
+            <li><a href="https://www.youtube.com/channel/UCrZuTkc1H8w7d2nLoRE-e5g" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-04-youtube.svg') }}"></a></li>
             </h2>
         </div>
         <div class="col-md-3">
@@ -458,7 +459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="col-md-12 ct-info">
             <p style="margin-bottom: 8px;">
-                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}">이용약관</a> / <a href="{{ url('/privacy') }}">개인정보취급방침</a> / <a href="{{ url('/thirdterms') }}">제3자 정보제공 약관</a>
+                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}" style="font-weight:bold; color:#888888">이용약관</a> / <a href="{{ url('/privacy') }}" style="font-weight:bold; color:#888888">개인정보취급방침</a>
             </p>
         </div>
     </div>

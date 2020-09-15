@@ -27,14 +27,14 @@ class BlueprintController extends Controller
         $blueprint->save();
 
         //host 가입 메일 보내기
-        $subject = "(크라우드티켓) 프로젝트 개설이 시작되었습니다!";
+        $subject = "[크티] 이벤트 개설을 신청해주셔서 감사합니다";
         $to = \Input::get('contact');
         $data = [
           'name' => \Input::get('user_introduction'),
           'goCreateProjectURL' => url("/projects/form/".$blueprint['code'])
         ];
 
-        Mail::send('template.emailform.email_create_project', $data, function ($m) use ($subject, $to) {
+        Mail::send('template.emailform.email_create_project_new', $data, function ($m) use ($subject, $to) {
             $m->from('contact@crowdticket.kr', '크라우드티켓');
             $m->to($to)->subject($subject);
         });
