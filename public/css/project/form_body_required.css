@@ -525,8 +525,16 @@
 
 .project_form_calcul_notice_check_text{
   font-size: 14px;
-  margin-top: 12px;
-  padding-top: 2px;
+  margin-top: 6px;
+}
+
+.project_inputbox{
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  position: relative;
+  z-index: 100;
+  top: 5px;
 }
 
 .order_form_conform_title{

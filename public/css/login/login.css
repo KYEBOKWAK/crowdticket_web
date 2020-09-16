@@ -247,7 +247,7 @@
 .calcul_checkbox_img{
   display: none;
   position: absolute;
-  top: 6px;
+  top: 10px;
   left: 0px;
 }
 
@@ -258,7 +258,7 @@
 .project_checkbox_img{
   display: none;
   position: absolute;
-  top: 6px;
+  top: 10px;
   left: 0px;
 }
 

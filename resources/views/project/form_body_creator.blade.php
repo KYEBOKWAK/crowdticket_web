@@ -96,7 +96,7 @@
             </div>
             <div class='flex_layer'>
               <div class='meetup_checkbox_wrapper project_form_calcul_notice_check_text'>
-                <input id='project_agree_check' type='checkbox' class='agreement_inputbox' value=''/>
+                <input id='project_agree_check' type='checkbox' class='project_inputbox' value=''/>
                 <img class='project_checkbox_img project_checkbox_img_select' src='../../img/icons/svg/ic-checkbox-btn-s.svg'>
                 <img class='project_checkbox_img project_checkbox_img_unselect' src="../../img/icons/svg/ic-checkbox-btn-n.svg">
                 이벤트 개설을 위한 <a href='../../project_agree' onClick="window.open(this.href,'_blank','resizable,height=750,width=580');return false;"><u>개인정보수집이용</u></a>에 동의합니다. (필수)
@@ -104,7 +104,7 @@
             </div>
             <div class='flex_layer'>
               <div class='meetup_checkbox_wrapper project_form_calcul_notice_check_text'>
-                <input id='calcul_notice_check' type='checkbox' class='agreement_inputbox' value=''/>
+                <input id='calcul_notice_check' type='checkbox' class='project_inputbox' value=''/>
                 <img class='calcul_checkbox_img calcul_checkbox_img_select' src='../../img/icons/svg/ic-checkbox-btn-s.svg'>
                 <img class='calcul_checkbox_img calcul_checkbox_img_unselect' src="../../img/icons/svg/ic-checkbox-btn-n.svg">
                 내용을 읽고 확인 했습니다.
