@@ -22,8 +22,8 @@
             </tr>
             <tr class='terms_table_body'>
                 <td class='terms_table_text_category'>회원가입 및 고객관리</td>
-                <td class='terms_table_text'>회원가입 및 고객관리, 자체서비스 회원가입, Facebook 간편로그인, Google 간편로그인, Apple 간편로그인, 카카오 간편로그인</td>
-                <td class='terms_table_text'>이름, 이메일, 성별, 출생 연도, 비밀번호</td>
+                <td class='terms_table_text'>회원가입 및 고객관리, 자체서비스 회원가입, Facebook 간편로그인, Google 간편로그인, Apple 간편로그인, 카카오 간편로그인<br/><br/>(*연령제한이 있거나 참가자의 성별 구분을 필요로 하는 이벤트의 참가자 구분을 위해 출생 연도와 성별을 수집하고 있습니다.)</td>
+                <td class='terms_table_text'>이름, 이메일, <u>성별, 출생 연도</u>, 비밀번호</td>
                 <td class='terms_table_text'>닉네임, 프로필사진</td>
                 <td class='terms_table_text_due'>회원 탈퇴 시 3개월 후 삭제</td>
             </tr>
