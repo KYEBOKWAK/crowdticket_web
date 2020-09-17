@@ -271,7 +271,7 @@
     </style>
     <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/goods.css?version=6') }}"/>
-    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=12') }}"/>
+    <link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=13') }}"/>
     <link rel="stylesheet" href="{{ asset('/css/welcome.css?version=13') }}"/>
 
     <link rel="stylesheet" href="{{ asset('/css/tooltip/google.css?version=2') }}"/>
@@ -405,7 +405,7 @@ array_push($tabs, [
     @include('template.goods', ['isForm' => 'true'])
     @include('template.goods_container', ['isForm' => 'true'])
     @include('template.channel_category_url')
-    <script src="{{ asset('/js/project/form.js?version=25') }}"></script>
+    <script src="{{ asset('/js/project/form.js?version=26') }}"></script>
     <script src="{{ asset('/js/tooltip/tippy.min.js?version=2') }}"></script>
     <script src="{{ asset('/js/tooltip/tooltip.js?version=3') }}"></script>
     <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>

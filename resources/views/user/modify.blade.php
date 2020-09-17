@@ -2,7 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('/css/project/form.css?version=8') }}"/>
-<link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=12') }}"/>
+<link rel="stylesheet" href="{{ asset('/css/project/form_body_required.css?version=13') }}"/>
     <style>
     /*
         #main {

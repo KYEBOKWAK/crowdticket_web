@@ -23,14 +23,14 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=9') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=10') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=6') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=20') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="{{ asset('/css/login/login.css?version=4') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -494,7 +494,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=15');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=16');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
