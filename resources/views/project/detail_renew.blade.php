@@ -332,7 +332,11 @@ $selectedTicket = "";
                 <a href="#tab-news" aria-controls="default" role="tab" data-toggle="tab">업데이트<span class="count">{{ $project->news_count }}</span></a>
                 </li>
                 <li role="presentation" class="">
+                @if($project->isEventTypeGroupBuy())
+                <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">문의<span class="count">{{ $project->getCommentCount() }}</span></a>
+                @else
                 <a href="#tab-comments" aria-controls="default" role="tab" data-toggle="tab">댓글<span class="count">{{ $project->getCommentCount() }}</span></a>
+                @endif
                 </li>
                 <li id="tabTicketMD" role="presentation" class="">
                 <a href="#tab-md" aria-controls="default" role="tab" data-toggle="tab">티켓&amp;MD정보</a>
@@ -385,9 +389,15 @@ $selectedTicket = "";
               <div id="tab-comments" role="tabpanel" class="tab-pane loadable">
                 <form id="addComment" action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
                       data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
+                    @if($project->isEventTypeGroupBuy())
                     <textarea id="input_comment" name="contents" class="form-control" rows="3"
-                              placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                              placeholder="이벤트에 관하여 궁금한 사항이 있다면 댓글 문의를 남겨주세요!" required></textarea>
+                    <button type="button" class="btn btn-success pull-right detail_comment_add_btn">문의하기</button>
+                    @else
+                    <textarea id="input_comment" name="contents" class="form-control" rows="3"
+                              placeholder="이벤트에 대해 궁금한 점이나 크리에이터를 위한 응원의 댓글을 남겨주세요!" required></textarea>
                     <button type="button" class="btn btn-success pull-right detail_comment_add_btn">댓글달기</button>
+                    @endif
                     <div class="clear"></div>
                     @include('csrf_field')
                 </form>

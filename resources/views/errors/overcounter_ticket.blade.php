@@ -69,7 +69,7 @@
             <form id="overcounter_addcomment" action="{{ url('/overcount') }}/{{ $project->id }}/comments" method="post"
                   data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
                 <textarea id="input_comment" name="contents" class="form-control" rows="3"
-                          placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                          placeholder="이벤트에 대해 궁금한 점이나 크리에이터를 위한 응원의 댓글을 남겨주세요!" required></textarea>
                 <button id="overcounter_addcomment_button" type="button" class="btn btn-success pull-right">등록하기</button>
                 <div class="clear"></div>
                 @include('csrf_field')
@@ -95,7 +95,7 @@ $(document).ready(function() {
 		},
 		'success': function(result) {
 			//alert(result);
-      swal("등록 성공!", "프로젝트 응원&후기 에서 확인 할 수 있습니다.", "success");
+      swal("등록 성공!", "이벤트 페이지의 '댓글' 탭에서 등록된 댓글 확인이 가능합니다", "success");
 		},
 		'error': function(data) {
 			alert("저장에 실패하였습니다.");

@@ -14,9 +14,12 @@ class Project extends Model
     const EVENT_TYPE_CRAWLING = 2;  //크롤링된 이벤트
     const EVENT_TYPE_PICK_EVENT = 3;  //pick 이벤트
     const EVENT_TYPE_CUSTOM = 4;  //커스텀하게 특정 alias 프로젝트로 구분해서 사용한다.
+    const EVENT_TYPE_GROUP_BUY = 5;
 
     const EVENT_TYPE_SUB_SANDBOX_PICK = 1;  //샌드박스 전용 pick 이벤트
+    //2번은 급하게 만들었는데, 어쩔 수 없이 냅둬야함. 1,3번처럼 활용하는게 맞음.
     const EVENT_TYPE_SUB_SECRET_PROJECT = 2;//URL 통해서만 들어올 수 있는 프로젝트. 더보기에 공개 안됨
+    const EVENT_TYPE_SUB_Woongjin_play_city = 3;
 
     const PICK_STATE_NONE = 0;  //pick 상태
     const PICK_STATE_PICKED = 1;  //pick 완료 상태
@@ -710,8 +713,17 @@ class Project extends Model
       return (int)$this->event_type_sub === Project::EVENT_TYPE_SUB_SECRET_PROJECT;
     }
 
+    public function isEventTypeGroupBuy()
+    {
+      return (int)$this->event_type === Project::EVENT_TYPE_GROUP_BUY;
+    }
+
     public function isEventCustomType(){
       return (int)$this->event_type === Project::EVENT_TYPE_CUSTOM;
+    }
+
+    public function isEventSubTypeWoongjinPlayCity(){
+      return (int)$this->event_type_sub === Project::EVENT_TYPE_SUB_Woongjin_play_city; 
     }
 
     public function isSuccess()

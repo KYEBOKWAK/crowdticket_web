@@ -35,6 +35,17 @@
         .project_form_poster_origin_size_ratio{
           padding-bottom: 0px !important;
         }
+        .total_order_text{
+
+        }
+        .total_order_button{
+            margin-top: 62px;
+            margin-bottom: 15px;
+
+            border-radius: 14px;
+            border: solid 1px #b3b3b3;
+            text-align: center;
+        }
     </style>
     <link href="{{ asset('/css/welcome.css?version=13') }}" rel="stylesheet">
 @endsection
@@ -50,7 +61,15 @@
     <div class="container">
 
         @if (sizeof($super_projects) > 0)
-            <h3 class="ps-detail-title"><strong>관여하는 이벤트</strong></h3>
+            <div class="flex_layer" style="justify-content: space-between">
+                <h3 class="ps-detail-title"><strong>관여하는 이벤트</strong></h3>
+                
+                <a href="{{ url('/superadmin/totalmanager') }}">
+                <div class="total_order_button">
+                    <p class="total_order_text"><strong>통합 티켓 관리</strong></p>
+                </div>
+                </a>
+            </div>
             @include('template.carousel_new_main', ['projects' => $super_projects])
         @endif
 
@@ -73,4 +92,11 @@
 @endsection
 
 @section('js')
+<script>
+$(document).ready(function () {
+    $('.total_order_button').click(function(){
+        
+    })
+});
+</script>
 @endsection

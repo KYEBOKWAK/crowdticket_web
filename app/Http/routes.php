@@ -325,6 +325,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //test URL
     Route::get('projects/{id}/admin/test', 'ProjectController@test');
+
+    Route::get('superadmin/totalmanager', 'ProjectController@totalmanager');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

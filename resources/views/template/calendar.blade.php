@@ -24,7 +24,7 @@
 				'compact': compact
 			}">
       
-      @if(!$project->isEventSubTypeSandBox() && !$project->isEventCustomType())
+      @if(!$project->isEventSubTypeSandBox() && !$project->isEventCustomType() && !$project->isEventTypeGroupBuy())
       <div class="datepicker-header">
 				<div class="datepicker-title" ng-if="datepicker_title">
 					@if($project->isPlace == "TRUE")

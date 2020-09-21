@@ -145,9 +145,15 @@
 
 @section('content')
     @if($isComment === 'TRUE')
-    <script>
-      swal("등록 성공!", "프로젝트 응원&후기 에서 확인 할 수 있습니다.", "success");
-    </script>
+      @if($project->isEventTypeGroupBuy())
+        <script>
+          swal("등록 성공!", "이벤트 페이지의 '문의' 탭에서 등록된 문의 확인이 가능합니다", "success");
+        </script>
+      @else
+        <script>
+          swal("등록 성공!", "이벤트 페이지의 '댓글' 탭에서 등록된 댓글 확인이 가능합니다", "success");
+        </script>
+      @endif
     @endif
     <!-- 데이터 수집 코드 START  -->
     <input id="data_project_title" type="hidden" value="{{$project->title}}">
@@ -207,7 +213,11 @@
                     <h3 class="text-center">
                       <strong>
                         @if($isComment === 'TRUE')
-                          댓글 등록 완료!
+                          @if($project->isEventTypeGroupBuy())
+                            문의 등록 완료!
+                          @else
+                            댓글 등록 완료!
+                          @endif
                         @else
                           @if($order->isAccountOrder())
                             입금대기 상태입니다.
@@ -217,6 +227,8 @@
                             초대권 신청이 완료되었습니다.
                           @elseif($project->isEventCustomType())
                             이벤트 신청이 완료되었습니다.
+                          @else
+                            결제가 완료되었습니다.
                           @endif
                         @endif
                       </strong>
@@ -310,9 +322,15 @@
           </p>
             <form action="{{ url('/tickets') }}/{{ $project->id }}/comments" method="post"
                   data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
+                @if($project->isEventTypeGroupBuy())
                 <textarea id="input_comment" name="contents" class="form-control" rows="3"
-                          placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                          placeholder="이벤트에 관하여 궁금한 사항이 있다면 댓글 문의를 남겨주세요!" required></textarea>
+                <button class="btn btn-success pull-right">문의하기</button>
+                @else
+                <textarea id="input_comment" name="contents" class="form-control" rows="3"
+                          placeholder="이벤트에 대해 궁금한 점이나 크리에이터를 위한 응원의 댓글을 남겨주세요!" required></textarea>
                 <button class="btn btn-success pull-right">등록하기</button>
+                @endif
                 <div class="clear"></div>
                 @include('csrf_field')
             </form>

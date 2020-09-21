@@ -360,7 +360,7 @@ class ProjectController extends Controller
           if($mcn)
           {
             //$projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-            $projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->where('event_type_sub', '!=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+            $projects = Project::where('super_user_id', $mcn->user_id)->where('state', Project::STATE_APPROVED)->where('event_type_sub', '=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->where('is_secret', '!=', false)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
           }
           else
           {
@@ -370,7 +370,7 @@ class ProjectController extends Controller
         else
         {
           //$projects = Project::where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-          $projects = Project::where('state', Project::STATE_APPROVED)->where('event_type_sub', '!=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
+          $projects = Project::where('state', Project::STATE_APPROVED)->where('event_type_sub', '!=', Project::EVENT_TYPE_SUB_SECRET_PROJECT)->where('is_secret', '=', false)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
         }
 
         foreach($projects as $project)
@@ -1860,5 +1860,33 @@ class ProjectController extends Controller
       }
 
       
+    }
+
+    public function totalmanager(){
+      $user = null;
+      if(\Auth::check() && \Auth::user())
+      {
+          $user = \Auth::user();
+      }
+
+      // \Log::info($user->id);
+      $superUserProjects = $this->getSuperUserProjects($user);
+
+      if(sizeof($superUserProjects) === 0)
+      {
+        throw new \App\Exceptions\OwnershipException();
+      }
+
+      return view('project.total_manager');
+    }
+
+    public function getSuperUserProjects($user)
+    {
+      if (\Auth::check()) {
+        // if ($user->id === \Auth::user()->id) {
+            return Project::where('super_user_id', $user->id)->orderBy('id', 'desc')->get();
+        // }
+      }
+      return [];
     }
 }

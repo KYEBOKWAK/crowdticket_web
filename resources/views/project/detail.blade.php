@@ -243,7 +243,7 @@
                             <form action="{{ url('/projects') }}/{{ $project->id }}/comments" method="post"
                                   data-toggle="validator" role="form" class="ps-detail-comment-wrapper">
                                 <textarea id="input_comment" name="contents" class="form-control" rows="3"
-                                          placeholder="프로젝트 진행자에게 궁금한 사항, 혹은 응원의 한마디를 남겨주세요!" required></textarea>
+                                          placeholder="이벤트에 대해 궁금한 점이나 크리에이터를 위한 응원의 댓글을 남겨주세요!" required></textarea>
                                 <button class="btn btn-success pull-right">댓글달기</button>
                                 <div class="clear"></div>
                                 @include('csrf_field')
