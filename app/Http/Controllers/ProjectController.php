@@ -1274,7 +1274,7 @@ class ProjectController extends Controller
         {
           $sms = new SmsService();
           $contact = $order->contact;
-          $sms->send([$contact], '[크티] 구매한 티켓이 발급처리 됐습니다. 발급요청을 안 하셨다면 고객센터로 문의주세요.');
+          $sms->send([$contact], '구매한 티켓이 발급처리 됐습니다. 발급요청을 안 하셨다면 고객센터로 문의주세요.');
         }
       }
 
@@ -1322,7 +1322,7 @@ class ProjectController extends Controller
         {
           $sms = new SmsService();
           $contact = $order->contact;
-          $sms->send([$contact], '[크티] 티켓 발급이 취소됐습니다. 발급되지 않은 티켓은 다시 발급을 요청하실 수 있습니다.');
+          $sms->send([$contact], '티켓 발급이 취소됐습니다. 발급되지 않은 티켓은 다시 발급을 요청하실 수 있습니다.');
         }
       }
 

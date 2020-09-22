@@ -21,7 +21,7 @@ class SmsService
         foreach ($recipients as $recipient) {
             $sms = new EmmaSMS();
             $sms->login(env('SMS_ID'), env('SMS_PASSWORD'));
-            $sms->send($recipient, env('SMS_SENDER'), '[크라우드티켓] ' . $message, $date, self::SMS_TYPE);
+            $sms->send($recipient, env('SMS_SENDER'), '[크티] ' . $message, $date, self::SMS_TYPE);
         }
     }
 
