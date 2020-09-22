@@ -1268,6 +1268,16 @@ class ProjectController extends Controller
       $order->attended = "ATTENDED";
       $order->save();
 
+      if($project->isEventTypeGroupBuy())
+      {
+        if($project->isEventSubTypeWoongjinPlayCity())
+        {
+          $sms = new SmsService();
+          $contact = $order->contact;
+          $sms->send([$contact], '[크티] 구매한 티켓이 발급처리 됐습니다. 발급요청을 안 하셨다면 고객센터로 문의주세요.');
+        }
+      }
+
       /*
       $YYYY = date('Y');
       $mm = date('m');
@@ -1299,10 +1309,22 @@ class ProjectController extends Controller
 
     public function unAttendedOrder($projectId, $orderId)
     {
+      $project = $this->getSecureProjectById($projectId);
+
       $order = Order::findOrFail($orderId);
 
       $order->attended = "";
       $order->save();
+
+      if($project->isEventTypeGroupBuy())
+      {
+        if($project->isEventSubTypeWoongjinPlayCity())
+        {
+          $sms = new SmsService();
+          $contact = $order->contact;
+          $sms->send([$contact], '[크티] 티켓 발급이 취소됐습니다. 발급되지 않은 티켓은 다시 발급을 요청하실 수 있습니다.');
+        }
+      }
 
       //return "unAttended";
     }

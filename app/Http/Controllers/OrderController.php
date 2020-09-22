@@ -362,7 +362,12 @@ class OrderController extends Controller
     {
       $seatName = str_limit($ticket->getSeatCategory(), 2, $end = '..');
       $datetime = date('Y/m/d H:i', strtotime($ticket->show_date));
-      if($ticket->isPlaceTicket() == false)
+
+      if($project->isEventTypeGroupBuy()){
+        $datetime = $ticket->getSeatCategory();
+        $msg = sprintf('%s %s %d매 결제 완료', $titleLimit, $datetime, $totalRealTicket);
+      }
+      else if($ticket->isPlaceTicket() == false)
       {
         $datetime = $ticket->getSeatCategory();
         $msg = sprintf('%s %s %d매 결제 예약 완료', $titleLimit, $datetime, $totalRealTicket);
@@ -1243,7 +1248,8 @@ class OrderController extends Controller
 
             $this->deleteGoodsOrder($order);
 
-            if($project->isEventTypeDefault()){
+            if($project->isEventTypeDefault() ||
+              $project->isEventTypeGroupBuy()){
               $this->sendCencelSMS($project, $order);
 
               if($stateCancel != Order::ORDER_STATE_PROJECT_CANCEL)
