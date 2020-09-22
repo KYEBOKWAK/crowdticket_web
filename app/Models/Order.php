@@ -638,4 +638,9 @@ class Order extends Model
         return $this->requiredGet('ticket');
     }
 
+    public function getMerchant_uid()
+    {
+      return $this->merchant_uid;
+    }
+
 }

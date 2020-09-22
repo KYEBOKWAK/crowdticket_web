@@ -326,7 +326,10 @@ Route::group(['middleware' => 'auth'], function () {
     //test URL
     Route::get('projects/{id}/admin/test', 'ProjectController@test');
 
+    //구매 관리 매니저 start
     Route::get('superadmin/totalmanager', 'ProjectController@totalmanager');
+    Route::post('orders/super/find', 'OrderController@getOrdersSuperFind');
+    //구매 관리 매니저 end
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

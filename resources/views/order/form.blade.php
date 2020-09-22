@@ -283,6 +283,19 @@
           </div>
 
           <div class="order_form_conform_container_grid_rows">
+            @if($order)
+              @if($order->getMerchant_uid())
+              <div class="order_form_conform_container_grid_columns">
+                <p class="order_form_title">주문번호</p>
+                <div class="flex_layer">
+                  <span class="order_form_id_contant order_form_text">
+                    {{$order->getMerchant_uid()}}
+                  </span>
+                </div>
+              </div>
+              @endif
+            @endif
+
             <div class="order_form_conform_container_grid_columns">
               <p class="order_form_title">티켓</p>
               <div class="flex_layer">
@@ -1046,6 +1059,8 @@
                   @elseif($project->isEventTypeInvitationEvent())
                     <button class="btn btn-danger">취소하기</button>
                   @elseif($project->isEventCustomType())
+                    <button class="btn btn-danger">취소하기</button>
+                  @else
                     <button class="btn btn-danger">취소하기</button>
                   @endif
                 @else

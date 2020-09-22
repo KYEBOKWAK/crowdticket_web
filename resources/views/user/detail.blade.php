@@ -66,7 +66,7 @@
                 
                 <a href="{{ url('/superadmin/totalmanager') }}">
                 <div class="total_order_button">
-                    <p class="total_order_text"><strong>통합 티켓 관리</strong></p>
+                    <span class="total_order_text" style="padding: 10px">통합 티켓 관리</span>
                 </div>
                 </a>
             </div>

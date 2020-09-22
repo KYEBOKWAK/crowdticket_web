@@ -1301,4 +1301,71 @@ class OrderController extends Controller
         \Auth::user()->checkOwnership($order);
         return $order;
     }
+
+    public function getOrdersSuperFind(Request $request)
+    {
+      if($request->merchant_uid === ''){
+        if($request->name === '' || $request->phoneNumber === ''){
+          return ['state' => 'error', 'message' => '이름, 전화번호가 입력이 안됐습니다.'];
+        }
+      }
+      
+
+      $user = \Auth::user();
+
+      $super_projects = $this->getSuperUserProjects($user);
+
+      if(sizeof($super_projects) === 0){
+        return ['state' => 'error', 'message' => '슈퍼개설자가 아닙니다.'];
+      }
+
+      $super_project_ids = [];
+      foreach($super_projects as $super_project)
+      {
+          array_push($super_project_ids, $super_project->id);
+      }
+
+      $name = $request->name;
+      $phoneNumber = $request->phoneNumber;
+      $merchant_uid = $request->merchant_uid;
+
+      $orders = [];
+      if($request->merchant_uid === ''){
+        $orders = Order::whereIn('project_id', $super_project_ids)->where('state', '<', Order::ORDER_STATE_PAY_END)->where('name', $name)->where('contact', 'LIKE', '%'.$phoneNumber)->get();
+      }else{
+        $orders = Order::whereIn('project_id', $super_project_ids)->where('merchant_uid', $merchant_uid)->get();
+      }
+      
+
+      foreach($orders as $order)
+      {
+        if($order->state < Order::ORDER_STATE_PAY_END){
+          $order->state = '결제완료';
+        }else if($order->state < Order::ORDER_STATE_CANCEL){
+          $order->state = '결제취소';
+        }else{
+          $order->state = '결제에러';
+        }
+
+        $attendedText = '미발급';
+        if($order->attended === 'ATTENDED'){
+          $attendedText = '발급완료';
+        }
+        
+        $order->title = $order->project->title;
+        $order->attendedText = $attendedText;
+      }
+
+      return ['state' => 'success', 'orders' => $orders];
+    }
+
+    public function getSuperUserProjects($user)
+    {
+      if (\Auth::check()) {
+        if ($user->id === \Auth::user()->id) {
+            return Project::where('super_user_id', $user->id)->orderBy('id', 'desc')->get();
+        }
+      }
+      return [];
+    }
 }
