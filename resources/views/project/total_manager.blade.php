@@ -141,7 +141,7 @@
 
     function findMerchant_uid(){
       loadingProcessWithSize($("#button_order_merchant_uid_data"), 20, 20);
-      
+
       const merchant_uid = $("#form_merchant_uid").val();
       if(merchant_uid === ''){
         alert("주문번호를 입력해주세요");
@@ -280,7 +280,6 @@
       {title:"상태", field:"state", align:"center", sorter:"string", headerFilter:"input"},
 
       {title:"발급 상태", field:"attendedText", align:"center", sorter:"string", headerFilter:"input"},
-      {title:"ID", field:"id", align:"center", sorter:"string", headerFilter:"input"},
       // {title:"닉네임", field:"nick_name", align:"center", sorter:"string"},
       // {title:"페이스북ID", field:"facebook_id", align:"center", sorter:"string", headerFilter:"input"},
       // {title:"구글ID", field:"google_id", align:"center", sorter:"string", headerFilter:"input"},

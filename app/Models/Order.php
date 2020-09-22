@@ -199,6 +199,10 @@ class Order extends Model
     public function hasCancellationFees()
     {
         $project = $this->getProject();
+        if($project->isEventTypeGroupBuy()){
+          return false;
+        }
+        
         if ($project->isSaleType()) {
             $ticket = $this->getTicket();
             if($ticket)

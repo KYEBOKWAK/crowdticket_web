@@ -176,6 +176,7 @@ class OrderController extends Controller
             }
 
             $order->imp_meta = $payment ? $payment->toJson() : '{}';
+            $order->merchant_uid = $info->getMerchantUid();
           }
         }
         else
