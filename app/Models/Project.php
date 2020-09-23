@@ -559,6 +559,11 @@ class Project extends Model
         return $mainExplain;
       }
 
+      if($this->isEventTypeGroupBuy())
+      {
+        return $fundingEndTime . '까지 구매 가능합니다.';
+      }
+
       //오픈예정 임시코드
       if($this->isWaitSaling())
       {
@@ -604,10 +609,20 @@ class Project extends Model
           if($this->type == 'sale')
           {
             /*$nowAmount = "현재 ". number_format($this->getAmountTicketCount()) ."명 참여 가능";*/
-            $nowAmount = "현재 참여 가능";
-            if($this->isFinished())
+            
+            if($this->isEventTypeGroupBuy())
             {
-              $nowAmount = "티켓팅이 마감되었습니다.";
+              $nowAmount = "현재 구매 가능";
+              if($this->isFinished())
+              {
+                $nowAmount = "판매가 종료되었습니다.";
+              }
+            }else{
+              $nowAmount = "현재 참여 가능";
+              if($this->isFinished())
+              {
+                $nowAmount = "티켓팅이 마감되었습니다.";
+              }
             }
           }
           else if($this->isPickType())

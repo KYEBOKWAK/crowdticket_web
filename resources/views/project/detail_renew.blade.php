@@ -233,7 +233,11 @@ $selectedTicket = "";
                       @if($project->isFinished())
                           종료됨
                       @else
+                        @if($project->isEventTypeGroupBuy())
+                          공동구매 진행중
+                        @else
                           진행중
+                        @endif
                       @endif
                     @endif
                   @endif
@@ -269,7 +273,11 @@ $selectedTicket = "";
                     @if(env('REVIEW_ON'))
                     티켓팅
                     @else
-                    이벤트 참여신청
+                      @if($project->isEventTypeGroupBuy())
+                        구매하기
+                      @else
+                        이벤트 참여신청
+                      @endif
                     @endif
                     </button>
                   @endif
@@ -354,7 +362,11 @@ $selectedTicket = "";
                 @if(env('REVIEW_ON'))
                 티켓팅
                 @else
-                이벤트 참여신청
+                  @if($project->isEventTypeGroupBuy())
+                    구매하기
+                  @else
+                    이벤트 참여신청
+                  @endif
                 @endif
                 </button>
                @endif
@@ -422,7 +434,11 @@ $selectedTicket = "";
         @if($project->isEventTypeCrawlingEvent())
           <a href="@if($project->url_crawlings()) {{$project->url_crawlings()->url}} @endif" target="_blank"><button type="button" class="btn btn-primary btn-block ticketing-btn">외부페이지로 이동</button></a>
         @else
-         <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">이벤트 참여신청</button>
+          @if($project->isEventTypeGroupBuy())
+            <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">구매하기</button>
+          @else
+            <button id="detail_tab_cw_btn_mobile" type="button" class="btn btn-primary btn-block ticketing-btn">이벤트 참여신청</button>
+          @endif
         @endif
        </div>
 
