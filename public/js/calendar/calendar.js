@@ -842,8 +842,8 @@ $(document).ready(function() {
 
   var setTotalPrice = function(){
     //
-    var ticketPrice = $('#ticket_select_price').val();
-    var ticketCount = $('#ticket_count_input').val();
+    var ticketPrice = Number($('#ticket_select_price').val());
+    var ticketCount = Number($('#ticket_count_input').val());
 
     var ticketTotalPrice = ticketPrice * ticketCount;
     var goodsTotalPrice = 0;
@@ -900,7 +900,12 @@ $(document).ready(function() {
     }
 
     //추가 후원이 있는지 확인
-    var supportPrice = Number($('#order_support_price_input').val());
+    var supportPrice = 0;
+    if($('#order_support_price_input').val()){
+      supportPrice = Number($('#order_support_price_input').val());
+    }
+    
+    // var supportPrice = Number($('#order_support_price_input').val());
 
     var totalPrice = ticketTotalPrice + goodsTotalPrice + supportPrice;
 
