@@ -1454,14 +1454,14 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
         <div class="welcome_banner_container">
           <div class="flex_layer_thumb">
               <div class="welcome_banner_1 welcome_banner_mobile">
-                <a href='{{url("/magazine/12")}}'>
-                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190718_banner_1.png'>
+                <a href='{{url("/magazine/58")}}'>
+                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200924_banner_2.jpg'>
                 </a>
               </div>
             
               <div class="welcome_banner_2 welcome_banner_mobile">
-                <a href='{{url("/magazine/13")}}'>
-                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190718_1357_banner_2.png'>
+                <a href='{{url("/magazine/59")}}'>
+                  <img class='welcome_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200924_banner_1.jpg'>
                 </a>
               </div>
           </div>
