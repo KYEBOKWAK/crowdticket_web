@@ -483,6 +483,8 @@ $selectedTicket = "";
         //$("footer").css( "border", "9px solid red" );
         $("footer").show();
       }
+
+      // location.href = 'crowdticketapp://project/237'
     });
     </script>
 @endsection

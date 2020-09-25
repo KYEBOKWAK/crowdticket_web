@@ -47,7 +47,7 @@
             text-align: center;
         }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=13') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=14') }}" rel="stylesheet">
 @endsection
 
 @section('content')

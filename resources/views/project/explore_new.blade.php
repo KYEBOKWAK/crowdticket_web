@@ -92,12 +92,18 @@
     /*썸네일 CSS START*/
     .welcome_thumb_img_wrapper{
       width: 100%;
+
+      position: relative;
+      overflow: hidden;
+
+      border-radius: 10px;
     }
 
     .welcome_thumb_img_resize{
       position: relative;
       width: 100%;
-      padding-top: 64%;
+      /* padding-top: 64%; */
+      padding-top: 100%;
       overflow: hidden;
       border-radius: 10px;
     }
@@ -110,8 +116,35 @@
         bottom:0;
         max-width:100%;
         margin: auto;
+        border-radius: 10px;
     }
     /*썸네일 CSS END*/
+
+    /* 새로운 썸네일 bg START */
+    .project-img-bg-blur {
+      /* width: 100%; */
+      width: 160%;
+      /* height: 100%; */
+      height: 105%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform:translateX(-50%);
+      /*bottom: 0px;*/
+      bottom: 50%;
+      right: 0px;
+      margin: auto;
+      background-color: #37343A;
+      border-radius: 10px;
+
+      -webkit-filter:blur(5px);
+      -moz-filter:blur(5px);
+      -o-filter:blur(5px);
+      -ms-filter:blur(5px);
+      filter:blur(5px);
+    }
+    /* 새로운 썸네일 bg END */
+
 
     .welcome_thumb_container{
       width: 250px;
@@ -224,7 +257,7 @@
       }
     }
     </style>
-    <link href="{{ asset('/css/welcome.css?version=13') }}" rel="stylesheet">
+    <link href="{{ asset('/css/welcome.css?version=14') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -343,6 +376,7 @@ $(document).ready(function () {
     mannayoObject.className = containerClassName;
     mannayoObject.innerHTML = "<a href='"+projectLink+"'>" +
         "<div class='welcome_thumb_img_wrapper'>" +
+          "<img src='"+project.poster_url+"' class='project-img-bg-blur'/>" +
             "<div class='welcome_thumb_img_resize'>" +
                 //"<img src='"+project.poster_url+"' onload='imageResize_new($('.welcome_thumb_img_resize')[0], this);' class='project-img'/>" +
                 "<img class='"+projectImgClass+" project-img' src='"+project.poster_url+"'/>" +

@@ -393,12 +393,18 @@
         /*썸네일 CSS START*/
         .welcome_thumb_img_wrapper{
           width: 100%;
+
+          position: relative;
+          overflow: hidden;
+
+          border-radius: 10px;
         }
 
         .welcome_thumb_img_resize{
           position: relative;
           width: 100%;
-          padding-top: 64%;
+          /* padding-top: 64%; */
+          padding-top: 100%;
           overflow: hidden;
           border-radius: 10px;
         }
@@ -411,8 +417,34 @@
             bottom:0;
             max-width:100%;
             margin: auto;
+            border-radius: 10px;
         }
         /*썸네일 CSS END*/
+
+        /* 새로운 썸네일 bg START */
+        .project-img-bg-blur {
+          /* width: 100%; */
+          width: 160%;
+          height: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform:translateX(-50%);
+          /*bottom: 0px;*/
+          bottom: 50%;
+          right: 0px;
+          margin: auto;
+          background-color: #37343A;
+          border-radius: 10px;
+
+          -webkit-filter:blur(5px);
+          -moz-filter:blur(5px);
+          -o-filter:blur(5px);
+          -ms-filter:blur(5px);
+          filter:blur(5px);
+        }
+        /* 새로운 썸네일 bg END */
+
 
         .isMobileDisable{
           display: block;
@@ -741,7 +773,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
     </div>
 
-    <div class="welcome_content_container" style="display:black">
+    <div class="welcome_content_container" style="display:block">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
           <div class="welcome_content_title">

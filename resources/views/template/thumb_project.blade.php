@@ -5,6 +5,7 @@
 @endif
 <a href="{{ $project->getProjectURLWithIdOrAlias() }}">
     <div class="welcome_thumb_img_wrapper">
+        <img src="{{ $project->getPosterUrl() }}" class='project-img-bg-blur'/>
         <div class="welcome_thumb_img_resize">
             <img src="{{ $project->getPosterUrl() }}" onload="imageResize_new($('.welcome_thumb_img_resize')[0], this);" class="project-img"/>
         </div>

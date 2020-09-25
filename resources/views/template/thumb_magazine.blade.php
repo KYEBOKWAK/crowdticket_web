@@ -5,6 +5,7 @@
 @endif
 <a href="{{ $magazine->getMagazineLinkURL() }}">
     <div class="welcome_thumb_img_wrapper">
+        <img src="{{ $magazine->thumb_img_url }}" class="project-img-bg-blur"/>
         <div class="welcome_thumb_img_resize">
             <img src="{{ $magazine->thumb_img_url }}" onload="imageResize_new($('.welcome_thumb_img_resize')[0], this);" class="project-img"/>
         </div>

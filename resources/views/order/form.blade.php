@@ -1078,6 +1078,9 @@
                   @elseif($project->isEventCustomType())
                     <button class="btn btn-muted" disabled="disabled">취소불가</button>
                     <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
+                  @else
+                    <button class="btn btn-muted" disabled="disabled">취소불가</button>
+                    <p class="ps-tooltip text-danger">취소 가능 일자가 만료되었습니다.</p>
                   @endif
                 @endif
             @endif

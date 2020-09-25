@@ -46,7 +46,8 @@
       margin-right: auto;
       position: relative;
       top: 290px;
-      margin-bottom: 290px;
+      /* margin-bottom: 290px; */
+      margin-bottom: 360px;
     }
     .magazine_thumbnail_container{
       /*width: 90%;*/
@@ -129,24 +130,101 @@
       margin-top: 15px;
       font-weight: 400;
     }
-/*
-    @media (max-width:720px) {
-    	.magazine_container{
-    		width: 100%;
-        padding: 0px 20px;
-    	}
 
-      .magazine_thumb_content_title{
-        font-size: 17px;
+        /*썸네일 CSS START*/
+    .welcome_thumb_img_wrapper{
+      width: 100%;
+      
+      position: relative;
+      overflow: hidden;
+
+      border-radius: 10px;
+      
+    }
+
+    .welcome_thumb_img_resize{
+      position: relative;
+      width: 100%;
+      /* padding-top: 64%; */
+      padding-top: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .project-img {
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      max-width:100%;
+      margin: auto;
+      border-radius: 10px;
+    }
+    /*썸네일 CSS END*/
+
+    .welcome_thumb_container{
+      width: 250px;
+    }
+    .thumb_container_right_is_mobile{
+      margin-right: 20px;
+    }
+    /* 새로운 썸네일 bg START */
+    .project-img-bg-blur {
+      /* width: 100%; */
+      width: 160%;
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform:translateX(-50%);
+      /*bottom: 0px;*/
+      bottom: 50%;
+      right: 0px;
+      margin: auto;
+      background-color: #37343A;
+      border-radius: 10px;
+
+      -webkit-filter:blur(5px);
+      -moz-filter:blur(5px);
+      -o-filter:blur(5px);
+      -ms-filter:blur(5px);
+      filter:blur(5px);
+    }
+    /* 새로운 썸네일 bg END */
+
+    .welcome_thumb_content_disc{
+      font-size: 12px;
+      color: #808080;
+      margin-top: 0px;
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
+    .thumb_container_is_mobile{
+      margin-right: 20px;
+    }
+
+    .welcome_thumb_projects_wrapper{
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 1060px) {
+      .thumb_container_is_mobile{
+        margin-right: 0px;
+        margin-bottom: 24px;
       }
-
-      .magazine_thumb_content_content{
-        margin-top: 7%;
-        font-size: 12px;
+      .welcome_thumb_content_disc{
+        margin-bottom: 5px;
+      }
+      .welcome_thumb_container{
+        width: 145px;
+        flex: 1;
+      }
+      .thumb_container_right_is_mobile{
+        margin-right: 10px;
       }
     }
-*/
-
     @media (max-width:720px) {
       .magazine_container{
         width: 100%;
@@ -262,6 +340,11 @@
 
 @section('content')
 
+<?php
+$maxItemCountInLine = 4;  //한줄에 표시될 아이템 개수
+$mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이템 개수
+?>
+
 <div class="magazine_title_wrapper">
   <div class="magazine_title_image_container">
     <div class="bg-base magazine_title_img_wrapper">
@@ -274,14 +357,74 @@
 
 <div class="magazine_container">
   <p class="magazine_title">크라우드티켓 매거진</p>
-
-  @foreach($magazines as $magazine)
-    @include('template.magazine_thumb', ['magazine' => $magazine])
-  @endforeach
-
+  
   @if (\Auth::check() && \Auth::user()->isAdmin())
     <button id="go_write_magazine" class="btn btn-success center-block project_form_button">글쓰기</button>
   @endif
+</div>
+
+<div class="welcome_content_container" style="margin-top: 10px;">
+<?php
+  $row = count($magazines) / $maxItemCountInLine;
+  $projectIndex = 0;
+  for($i = 0 ; $i < $row ; $i++)
+  {
+    $isEnd = false;
+    ?>
+    <div class="welcome_thumb_projects_wrapper">
+      <div class="flex_layer_thumb">
+    <?php
+
+    for($j = 0 ; $j < 2 ; $j++)
+    {
+      if($j === 0)
+      {
+        ?>
+        <div class="flex_layer thumb_container_is_mobile">
+        <?php
+      }
+      else
+      {
+        ?>
+        <div class="flex_layer">
+        <?php
+      }
+
+      for($k = 0 ; $k < 2 ; $k++)
+      {
+        ?>
+        @include('template.thumb_magazine', ['magazine' => $magazines[$projectIndex], 'index' => $projectIndex])
+        <?php
+        $projectIndex++;
+        
+        if($projectIndex >= count($magazines))
+        {
+          $isEnd = true;
+          break;
+        }
+      }
+
+        ?>
+        </div>
+        <?php
+
+      if($isEnd)
+      {
+        break;
+      }
+    }
+
+    ?>
+      </div>
+    </div>
+    <?php
+
+    if($isEnd)
+    {
+      break;
+    }
+  }
+?>
 </div>
 
 @endsection

@@ -11,6 +11,7 @@
           </div>
         </div>
       @else
+      <!-- 6 -->
         @for($i = 0 ; $i < 6 ; $i++)
           <?php
             $imgNum = $i+1;

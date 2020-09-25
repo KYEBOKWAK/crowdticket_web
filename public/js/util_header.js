@@ -5,6 +5,7 @@ function imageResize(imgWrapDiv, img){
   //var img = image // 이미지
   //오차범위 0.01
   var divAspect = (90 / 120) + 0.01; // div의 가로세로비는 알고 있는 값이다
+  // var divAspect = 0;
   var imgAspect = img.height / img.width;
   if(img.height == 0 || img.width == 0)
   {
@@ -30,7 +31,8 @@ function imageResize_new(imgWrapDiv, img){
   var div = imgWrapDiv; // 이미지를 감싸는 div
   //var img = image // 이미지
   //오차범위 0.01
-  var divAspect = (160 / 250) + 0.01; // div의 가로세로비는 알고 있는 값이다
+  // var divAspect = (160 / 250) + 0.01; // div의 가로세로비는 알고 있는 값이다
+  var divAspect = 0;
   var imgAspect = img.height / img.width;
   if(img.height == 0 || img.width == 0)
   {
