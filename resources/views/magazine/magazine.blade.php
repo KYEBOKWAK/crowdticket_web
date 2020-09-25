@@ -209,6 +209,10 @@
       margin-bottom: 40px;
     }
 
+    .welcome_thumb_content_container{
+      margin-top: 20px;
+    }
+
     @media (max-width: 1060px) {
       .thumb_container_is_mobile{
         margin-right: 0px;
@@ -223,6 +227,9 @@
       }
       .thumb_container_right_is_mobile{
         margin-right: 10px;
+      }
+      .welcome_thumb_content_container{
+        margin-top: 12px;
       }
     }
     @media (max-width:720px) {

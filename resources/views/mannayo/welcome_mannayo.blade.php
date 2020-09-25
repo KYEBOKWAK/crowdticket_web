@@ -147,6 +147,10 @@
           box-shadow: 4px 4px 30px 0 rgba(0, 0, 0, 0.1);
         }
 
+        .welcome_thumb_content_container{
+          margin-top: 20px;
+        }
+
 
 
         @keyframes blink {
@@ -1837,6 +1841,10 @@
 
           .mannayo_search_result_find_button_fix{
             width: 100px;
+          }
+
+          .welcome_thumb_content_container{
+            margin-top: 12px;
           }
         }
 
