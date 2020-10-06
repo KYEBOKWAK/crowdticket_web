@@ -178,7 +178,6 @@
       @include('template.carousel_main')
     <!-- first section 끝 -->
     <!-- second section 시작 -->
-
       <div class="welcome_main_thumb_container">
 
         @if($magazines)
