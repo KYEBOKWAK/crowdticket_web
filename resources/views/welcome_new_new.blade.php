@@ -762,7 +762,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
           <div class="welcome_start_content_container">
             <div class="welcome_start_banner_content_container">
-              <b>내가 좋아하는 크리에이터의<br>나만을 위한 콘텐츠, 콘텐츠상점 오픈!</b>
+              <b>세상에 없던<br>맞춤형 콘텐츠 커머스, 콘텐츠 상점 오픈!</b>
             </div>
 
             <div class="welcome_start_button_container">
