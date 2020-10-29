@@ -69,7 +69,7 @@ class StoreOrderComplitePage extends Component{
         </div>
         <div className={"container_box"}>
           <div className={"how_ask_text"}>
-            🤔 콘텐츠는 언제, 어떻게 받아 볼 수 있나요?
+            🤔 콘텐츠는 언제, 어떻게 받나요?
           </div>
           <div className={"under_line"}>
           </div>
