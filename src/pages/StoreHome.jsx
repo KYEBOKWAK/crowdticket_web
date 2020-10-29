@@ -177,7 +177,7 @@ class StoreHome extends Component {
           </div>
         </div>
         <div className={'contents_container flex_layer flex_direction_column'}>
-          <div className={'contents_list_title'}>콘텐츠 리스트</div>
+          <div className={'contents_list_title'}>콘텐츠 리스트(테스트)</div>
           <StoreHomeContentList></StoreHomeContentList>
         </div>
       </div>
