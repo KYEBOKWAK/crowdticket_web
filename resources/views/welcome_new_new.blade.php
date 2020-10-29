@@ -748,6 +748,7 @@
 @endsection
 
 @section('content')
+<input id='app_page_key' type='hidden' value='WEB_PAGE_KEY_HOME'/>
 
 <?php
 $maxItemCountInLine = 4;  //한줄에 표시될 아이템 개수
@@ -773,7 +774,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
     </div>
 
-    <!-- <div id="like_button_container"></div> -->
     <div class="welcome_content_container" style="display:block">
       <div class="welcome_content_wrapper">
         <div class="flex_layer">
@@ -1568,7 +1568,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
 @section('js')
 
-<!-- <script src="/dist/App.js"></script> -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
     <script src="{{ asset('/js/jquery.counterup.min.js') }}"></script>
 

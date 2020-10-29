@@ -1,0 +1,26 @@
+.login_react {
+  display: none;
+}
+
+.login_react_callback{
+  display: none;
+}
+
+.logout_react{
+  display: none;
+}
+
+button{
+  background-color: white;
+  padding: 0;
+  border: 0;
+  outline: none;
+}
+
+a{
+  cursor: pointer;
+}
+
+.fileUploader{
+  display: none;
+}

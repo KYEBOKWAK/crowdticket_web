@@ -279,4 +279,14 @@ class UserController extends Controller
         }
         throw new \App\Exceptions\OwnershipException;
     }
+
+    public function getMyContents($id)
+    {
+        $user = $this->ensureLoginUser($id);
+        // $orders = $this->getFullOrders($user);
+        // $orders->load('project');
+        return view('store.my_contents', [
+            'user' => $user
+        ]);
+    }
 }

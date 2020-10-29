@@ -1,0 +1,52 @@
+$item_width: 80px;
+
+.StoreOrderItem {
+  // padding: 20px;
+
+  .item_img_wrapper {
+    width: $item_width;
+    height: $item_width; 
+  }
+
+  .item_img {
+    width: $item_width;
+    height: $item_width;
+    border-radius: 12px;
+  }
+
+  .item_content_container {
+    padding-left: 20px;
+  }
+
+  .item_name {
+    font-size: 12px;
+    color: #808080;
+    margin-bottom: 4px;
+  }
+  
+  .item_title {
+    font-size: 16px;
+    color: #1a1a1a;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .item_price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00bfff;
+  }
+
+  .item_under_line {
+    width: 100%;
+    height: 1px;
+    background-color: #f4f4f4;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 520px){
+    /*모바일일때*/
+    
+  }
+}

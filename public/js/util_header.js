@@ -190,3 +190,21 @@ var resizeMagazineTitleImgOnLoad = function(){
     $('.magazine_title_img').css('height', parentData.clientHeight);
   }
 };
+
+function FindIE() {
+  
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) 
+  {
+    alert("크티는 더이상 Internet Explorer를 지원하지 않습니다. 타 브라우저, Edge, 모바일을 이용해주세요. Edge로 자동 이동합니다.");
+    window.location.href = 'microsoft-edge:https://crowdticket.kr/'
+    // document.write("The Internet Explorer browser is not supported by this site. We suggest you visit the site using supported browsers." + "<A HREF='microsoft-edge:http://<<Your site address..........>>'>Click here to launch the site in the MS Edge browser</A>");
+      
+  }
+
+  return false;
+}
+
+FindIE();

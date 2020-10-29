@@ -160,12 +160,33 @@ Route::get('mannayo/comments/list', 'MannayoController@getComments');
 
 Route::get('app/story/{target}/{id}', 'ProjectController@getAppStory');
 
+
+//상점
+Route::get('store/', function () {
+    return view('store.store_home');
+});
+
+Route::get('store/{id}', 'ProjectController@getStoreDetailByID');
+Route::get('store/{alias}', 'ProjectController@getStoreDetailByAlias');
+
+Route::get('review/store/write/{id}', 'ProjectController@getWriteReviewPage');
+Route::get('review/store/{store_id}/edit/{comment_id}', 'ProjectController@getEditReviewPage');
+
+
+Route::get('item/store/{id}', 'ProjectController@getStoreItemDetail');
+// Route::get('order/store/{id}', 'ProjectController@getOrderStore');
+
+// Route::get('complite/store/{id}', 'ProjectController@getOrderStoreComplite');
+
+/////
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');
     Route::put('users/{id}', 'UserController@updateUser');
     Route::get('users/{id}/orders', 'UserController@getUserOrders');
     Route::get('users/{id}/mannayo', 'UserController@getUserMannayo');
+    Route::get('users/store/{id}/orders', 'UserController@getMyContents');
 
     Route::post('blueprints', 'BlueprintController@createBlueprint');
     Route::get('blueprints/form', 'BlueprintController@getCreateForm');
@@ -330,6 +351,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('superadmin/totalmanager', 'ProjectController@totalmanager');
     Route::post('orders/super/find', 'OrderController@getOrdersSuperFind');
     //구매 관리 매니저 end
+
+    Route::get('manager/store/', 'ProjectController@getStoreManager');
+
+    Route::get('store/{id}/item/addpage', 'ProjectController@getStoreAddItemPage');
+
+    Route::get('order/store/{id}', 'ProjectController@getOrderStore');
+    Route::get('complite/store/{id}', 'ProjectController@getOrderStoreComplite');
+    Route::get('receipt/detail/store/{store_order_id}', 'ProjectController@getStoreDetailReceipt');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {

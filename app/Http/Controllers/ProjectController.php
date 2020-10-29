@@ -1911,4 +1911,95 @@ class ProjectController extends Controller
       }
       return [];
     }
+
+    public function getStoreDetailByID(Request $request, $id)
+    {
+      //id로 alias를 찾아서 보내줌
+      $tabMenu = null;
+      if($request->has('menu')){
+        $tabMenu = $request->menu;
+      }
+
+      return view('store.store_detail', [
+        'store_id' => $id,
+        'store_alias' => null,
+        'tabmenu' => $tabMenu
+      ]);
+    }
+
+    public function getStoreDetailByAlias(Request $request, $alias)
+    {
+      // const MENU_STATE_CONTENTS = 'MENU_STATE_CONTENTS';
+      // const MENU_STATE_REVIEW = 'MENU_STATE_REVIEW';
+      $tabMenu = null;
+      if($request->has('menu')){
+        $tabMenu = $request->menu;
+      }
+      return view('store.store_detail', [
+        'store_id' => null,
+        'store_alias' => $alias,
+        'tabmenu' => $tabMenu
+      ]);
+    }
+
+    public function getWriteReviewPage($id)
+    {
+      return view('store.store_review_write', [
+        'store_id' => $id,
+        'comment_id' => null,
+        'comment_write_state' => 'WRITE'
+      ]);
+    }
+
+    public function getEditReviewPage($store_id, $comment_id)
+    {
+      return view('store.store_review_write', [
+        'store_id' => $store_id,
+        'comment_id' => $comment_id,
+        'comment_write_state' => 'EDIT'
+      ]);
+    }
+
+    public function getStoreItemDetail($id)
+    {
+      return view('store.store_item_detail', [
+        'store_item_id' => $id
+      ]);
+    }
+
+    public function getOrderStore($id)
+    {
+      return view('store.store_order', [
+        'store_item_id' => $id
+      ]);
+      // return ['abc' => 'ㅠㅠㅠ'];
+      // return view('store.store_detail', [
+      //   'store_id' => 5,
+      //   'store_alias' => 'abcddef'
+      // ]);
+    }
+
+    public function getOrderStoreComplite($id)
+    {
+      return view('store.store_order_complite', [
+        'store_order_id' => $id
+      ]);
+    }
+
+    public function getStoreManager()
+    {
+      return view('store.store_manager');
+    }
+
+    public function getStoreAddItemPage()
+    {
+      return view('store.store_add_item');
+    }
+
+    public function getStoreDetailReceipt($store_order_id)
+    {
+      return view('store.store_detail_receipt', [
+        'store_order_id' => $store_order_id
+      ]);
+    }
 }

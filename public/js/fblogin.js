@@ -1,4 +1,3 @@
-
 var scripts = document.getElementsByTagName('script');
 
 var myScript = scripts[ scripts.length - 1 ];
@@ -29,9 +28,17 @@ const REGISTER_AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option �
 var jQuery_loginPopup = null;
 var loginCallback = null;
 
+// 'id' : socialId,
+//         'name' : socialName,
+//         'email' : socialEmail,
+//         'profile_photo_url' : socialPhotoUrl,
+//         'type' : 'FACEBOOK'
 //Login Javascript
-$(document).ready(function() {
-  jQuery_loginPopup = $;
+jQuery_loginPopup = $;
+
+$(document).ready(function() {  
+  // jQuery_loginPopup = $;
+
   $('#g_login').click(function(){
     loginPopup(null, null);
   });
@@ -61,11 +68,13 @@ function loginAjaxSuccess(request){
 
     if(loginCallback)
     {
-      loginCallback();
+      // loginCallback();
+      $('.login_react_callback').trigger('click');
     }
     else
     {
-      window.location.reload();
+      // window.location.reload();
+      $('.login_react').trigger('click');
     }
   }
   else if(request.state == 'fail')
@@ -93,7 +102,7 @@ function goSocialLogin(data){
   };
 
   var error = function(request, status) {
-    swal("로그인 실패", "", "error");
+    swal("로그인 실패", "", "error")
   };
 
   if(jQuery_loginPopup)
@@ -216,6 +225,34 @@ function attachSignin(element) {
 }
 
 function googleLibInit(){
+  setTimeout(function(){
+    gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+        client_id: g_googleAccessId,
+        cookiepolicy: 'single_host_origin',
+        // Request scopes in addition to 'profile' and 'email'
+        //scope: 'additional_scope'
+      });
+  
+      var userAgent = window.navigator.userAgent;
+      var isKakao = userAgent.indexOf('KAKAOTALK');
+      //alert(isKakao);
+      if(isKakao > 0)
+      {
+        $('#login_social_google_button_wrapper').click(function(){
+          alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
+        });
+      }
+      else
+      {
+        attachSignin(document.getElementById('login_social_google_button_wrapper'));
+      }
+    });
+  }, 100);
+    
+  
+  /*
   gapi.load('auth2', function(){
     // Retrieve the singleton for the GoogleAuth library and set up the client.
     auth2 = gapi.auth2.init({
@@ -239,6 +276,7 @@ function googleLibInit(){
       attachSignin(document.getElementById('login_social_google_button_wrapper'));
     }
   });
+  */
 };
 
 //google login end
@@ -246,6 +284,7 @@ function googleLibInit(){
 
 //로그인 팝업 생성
 function loginPopup(successFunc, closeFunc){
+  console.log("loginPOP!!");
   if(jQuery_loginPopup == null)
   {
     return;
@@ -357,7 +396,8 @@ function loginPopup(successFunc, closeFunc){
     }
 
     var success = function(result) {
-      //console.error("로그인완료 !" + result);
+      console.error("로그인완료 !" + result);
+      // $(".login_react").trigger('click');
       loginAjaxSuccess(result);
     };
 

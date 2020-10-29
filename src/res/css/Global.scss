@@ -1,0 +1,36 @@
+
+#react_root{
+  background-color: #fafafa;
+  white-space: pre-line;
+}
+
+.pageController {
+  width: 100%;
+  
+  .paddingContainer {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .flex_layer {
+    display: flex;
+  }
+
+  .flex_direction_row {
+    flex-direction: row;
+  }
+
+  .flex_direction_column {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 520px){
+  .pageController{
+    display: flex;
+    width: 520px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

@@ -31,6 +31,8 @@
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('/dist/css/Global.css?version=0') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -315,7 +317,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=11') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=12') }}"></script>
 
     <!-- 카카오톡 sdk -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -357,7 +359,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @else
           <li>
-              <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a>
+            <a href="{{ url('/store') }}" style="display: inline-block;">상점</a>
+              <!-- <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a> -->
               <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
           </li>
           <li><a href="{{ url('/projects') }}">이벤트</a></li>
@@ -378,6 +381,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/mannayo">내 만나요</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
+                        <li><a href="{{ url('/users/store/') }}/{{ Auth::user()->id }}/orders">나의 컨텐츠</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                         <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
                     </ul>
@@ -430,6 +434,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <div id="isMobile"></div>
+
+<div id="react_root"></div>
 
 <footer>
     <div class="container ct-res-text footer-top">
@@ -494,32 +500,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=16');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=17');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
+<!-- <script src="/dist/App.js"></script> -->
+
 <script>
 function logout(){
-  /*
-      FB.getLoginStatus(function(response) {
-        console.log(JSON.stringify(response));
-        if (response.status === 'connected') {
-          //페이스북이 연동된 상태에서 로그아웃 들어오면, 페북 로그 아웃 후 페이지 로그아웃 진행
-          FB.logout(function(response) {
-            console.error("FB Logout : " + response);
-              //var baseUrl = $('#base_url').val();
-              //window.location.assign(baseUrl+'/auth/logout');
-          });
-        }
-        else {
-          //페이스북 연동 안된 상태에서 로그아웃시
-          //var baseUrl = $('#base_url').val();
-          //window.location.assign(baseUrl+'/auth/logout');
-        }
-      });
-*/
-      var baseUrl = $('#base_url').val();
-      window.location.assign(baseUrl+'/auth/logout');
+      // var baseUrl = $('#base_url').val();
+      // window.location.assign(baseUrl+'/auth/logout');
+
+      $('.logout_react').trigger('click');
     }
 
     if($('#notification').val())
@@ -622,6 +614,8 @@ function logout(){
       });
     }
 </script>
+
+<script src="/dist/App.js"></script>
 
 </body>
 </html>
