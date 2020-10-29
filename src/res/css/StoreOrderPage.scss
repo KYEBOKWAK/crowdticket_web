@@ -30,6 +30,7 @@
   }
 
   .request_label {
+    font-weight: bold;
     font-size: 14px;
     color: #1a1a1a;
   }
@@ -177,6 +178,11 @@
     color: #ffffff;
     margin-top: 20px;
     margin-bottom: 64px;
+  }
+
+  .ask_container {
+    margin-top: 8px;
+    line-height: 2;
   }
   
   @media (max-width: 520px){

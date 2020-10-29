@@ -58,6 +58,7 @@ class StoreOrderPage extends Component{
       item_content: '',
       item_thumb_img_url: '',
       item_nick_name: '',
+      item_ask: '',
 
       isInitDeriveStateFromProps: false,
       name: '',
@@ -222,7 +223,8 @@ class StoreOrderPage extends Component{
         item_thumb_img_url: data.img_url,
         total_price: data.price,
         store_id: data.store_id,
-        item_nick_name: data.nick_name
+        item_nick_name: data.nick_name,
+        item_ask: data.ask
       })
     }, (error) => {
 
@@ -588,10 +590,13 @@ class StoreOrderPage extends Component{
           <div className={'request_label'}>
             컨텐츠 요청
           </div>
-          
+
+          <div className={'ask_container'}>
+            {this.state.item_ask}
+          </div>
+
           <div className={'request_content_box'}>
             <textarea className={'textArea'} value={this.state.requestContent} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_REQUEST_CONTENTS)}} placeholder={"요청사항을 작성해주세요!"}></textarea>
-            테스트용 문자 길이{this.state.requestContent.length}
           </div>
         </div>
 
