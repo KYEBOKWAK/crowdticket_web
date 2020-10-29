@@ -762,12 +762,12 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
 
           <div class="welcome_start_content_container">
             <div class="welcome_start_banner_content_container">
-              <b>구독, 좋아요, 크티!<br>크리에이터 이벤트는 크티에서 만나요!</b>
+              <b>내가 좋아하는 크리에이터의<br>나만을 위한 콘텐츠, 콘텐츠상점 오픈!</b>
             </div>
 
             <div class="welcome_start_button_container">
-              <a href="{{url('/mannayo')}}">
-                <button type="button" class="welcome_start_button">시작하기</button>
+              <a href="{{url('/store')}}">
+                <button type="button" class="welcome_start_button">바로가기</button>
               </a>
             </div>
           </div>
