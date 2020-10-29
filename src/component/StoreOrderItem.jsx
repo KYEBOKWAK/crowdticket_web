@@ -56,7 +56,7 @@ class StoreOrderItem extends Component{
             </div>
             <div className={'item_content_container'}>
               <div className={'item_name'}>{this.props.name}</div>
-              <div className={'item_title'}>{this.props.title + ' '+ this.props.id}</div>
+              <div className={'item_title'}>{this.props.title}</div>
               <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
             </div>
         </div>
