@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('title')
-    <title>크티 | 나의 컨텐츠</title>
+    <title>크티 | 나의 콘텐츠</title>
 @endsection
 
 @section('css')

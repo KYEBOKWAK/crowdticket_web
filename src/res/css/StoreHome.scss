@@ -1,7 +1,7 @@
 
 
-$thumb_item_width: 55px;
-$thumb_item_height: 82px;
+$thumb_item_width: 65px;
+$thumb_item_height: 95px;
 
 #react_root{
   background-color: white;
@@ -44,7 +44,7 @@ $thumb_item_height: 82px;
   .shopThumbContainer {
     width: 100%;
     margin-top: 40px;
-    overflow: 'hidden';
+    overflow: hidden;
   }
 
   .thumb_title_label{
@@ -75,7 +75,7 @@ $thumb_item_height: 82px;
   }
 
   .contents_container {
-    margin-top: 40px;
+    margin-top: 35px;
   }
 
   .contents_list_title {

@@ -108,7 +108,7 @@ class MyContentsPage extends Component{
     return(
       <div className={'MyContentsPage'}>
         <div className={'myContentsTitle'}>
-          나의 컨텐츠
+          나의 콘텐츠
         </div>
         
         {this.state.orders_item_doms}

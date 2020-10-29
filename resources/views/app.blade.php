@@ -359,7 +359,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @else
           <li>
-            <a href="{{ url('/store') }}" style="display: inline-block;">컨텐츠 상점</a>
+            <a href="{{ url('/store') }}" style="display: inline-block;">콘텐츠 상점</a>
               <!-- <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a> -->
               <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
           </li>
@@ -381,7 +381,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/mannayo">내 만나요</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보수정</a></li>
-                        <li><a href="{{ url('/users/store/') }}/{{ Auth::user()->id }}/orders">나의 컨텐츠</a></li>
+                        <li><a href="{{ url('/users/store/') }}/{{ Auth::user()->id }}/orders">나의 콘텐츠</a></li>
                         <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">결제확인</a></li>
                         <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
                     </ul>

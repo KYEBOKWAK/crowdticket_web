@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 
-// import '../res/css/StoreHome.css';
-
 import InfiniteScroll from 'react-infinite-scroll-component';
 import StoreContentsListItem from '../component/StoreContentsListItem';
 

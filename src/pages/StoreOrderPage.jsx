@@ -593,7 +593,7 @@ class StoreOrderPage extends Component{
           ></StoreOrderItem>
           
           <div className={'request_label'}>
-            컨텐츠 요청
+            콘텐츠 요청
           </div>
 
           <div className={'ask_container'}>

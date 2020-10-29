@@ -29,7 +29,7 @@ const tabInfo = [
   },
   {
     key: TAB_ASK_LIST,
-    name: '요청된 컨텐츠',
+    name: '요청된 콘텐츠',
   },
   {
     key: TAB_REVIEW_LIST,

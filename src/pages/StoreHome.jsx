@@ -3,9 +3,6 @@
 import React, { Component } from 'react';
 
 
-// import '../res/css/StoreHome.css';
-
-
 import StoreHomeContentList from '../component/StoreHomeContentList';
 
 // import ScrollBooster from 'scrollbooster';
@@ -176,7 +173,7 @@ class StoreHome extends Component {
             </div>
           </div>
         </div>
-        <div className={'contents_container flex_layer flex_direction_column'}>
+        <div className={'contents_container flex_layer flex_direction_column paddingContainer'}>
           <div className={'contents_list_title'}>판매중인 콘텐츠</div>
           <StoreHomeContentList></StoreHomeContentList>
         </div>
