@@ -11,9 +11,9 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreOrderComplitePage.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreOrderItem.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderComplitePage.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=1') }}" rel="stylesheet"/>
 
 @endsection
 

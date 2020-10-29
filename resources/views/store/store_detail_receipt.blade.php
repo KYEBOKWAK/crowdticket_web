@@ -11,11 +11,11 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreDetailReceipt.css?version=0') }}" 
+<link href="{{ asset('/dist/css/StoreDetailReceipt.css?version=1') }}" 
 rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreOrderItem.css?version=0') }}" 
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
 rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=0') }}" 
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=1') }}" 
 rel="stylesheet"/>
 
 @endsection

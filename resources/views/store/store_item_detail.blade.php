@@ -11,7 +11,7 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=1') }}" rel="stylesheet"/>
 @endsection
 
 @section('content')
