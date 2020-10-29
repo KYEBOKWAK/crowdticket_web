@@ -461,9 +461,9 @@ class StoreDetailPage extends Component {
 
     let managerButton = <></>;
     if(Util.isAdmin(this.state.store_user_id)){
-      managerButton = <button onClick={(e) => {this.clickManagerPage(e)}}>
-                        관리자 페이지 접속쓰
-                      </button>
+      // managerButton = <button onClick={(e) => {this.clickManagerPage(e)}}>
+      //                   관리자 페이지 접속쓰
+      //                 </button>
     }
 
     return (
