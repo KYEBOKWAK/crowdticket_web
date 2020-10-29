@@ -28,11 +28,11 @@ class StoreItemDetailPage extends Component{
 
     this.state = {
       store_item_id: 0,
-      typeContent: '분류?',
-      title: '컨텐츠명',
-      price: 10000,
-      content: '이거슨 컨텐츠 내용입니다요요요요요오',
-      thumb_img_url: 'https://yt3.ggpht.com/a/AGF-l7-d5lvs0qqvvoUJiOGmRfrY17AI-gj7vmtM=s800-mo-c-c0xffffffff-rj-k-no'
+      typeContent: '',
+      title: '',
+      price: 0,
+      content: '',
+      thumb_img_url: ''
     }
   };
 
