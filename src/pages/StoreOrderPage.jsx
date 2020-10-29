@@ -94,13 +94,13 @@ class StoreOrderPage extends Component{
           type: Types.agree.refund,
           name: '환불 정책',
           isCheck: false,
-          link: 'https://crowdticket.kr/thirdterms/app'
+          link: ''
         }, 
         {
           type: Types.agree.terms_useInfo,
-          name: '이용약관 / 정보이용정책',
+          name: '크티 이용약관',
           isCheck: false,
-          link: 'https://crowdticket.kr/thirdterms/app'
+          link: 'https://crowdticket.kr/terms/app'
         }, 
         {
           type: Types.agree.third,
@@ -502,12 +502,17 @@ class StoreOrderPage extends Component{
         agreeSelectImg = <img className={'agreeImg'} src={ic_checkbox_btn_s} />
       }
 
+      let linkTextDom = <a href={agreeData.link} target={'_blank'}><u>{agreeData.name}</u></a>;
+      if(agreeData.type === Types.agree.refund){
+        linkTextDom = agreeData.name;
+      }
+
       let agreeButtonDom = <div className={'agree_button'} key={i}>
                               <button onClick={(e) => {this.clickAgree(e, agreeData.type)}}>
                                 {agreeSelectImg}
                               </button>
                               <div className={'agree_text'}>
-                                <a href={agreeData.link} target={'_blank'}><u>{agreeData.name}</u></a> 동의
+                                {linkTextDom} 동의
                               </div>
                             </div>
 
@@ -643,11 +648,26 @@ class StoreOrderPage extends Component{
         
         {payDom}
 
+
+        <div className={'policy_container'}>
+          <div className={'policy_title'}>
+            크티 취소/환불 규정
+          </div>
+          <div className={'policy_content'}>
+            1. 모든 콘텐츠 주문은 크리에이터의 승인이 필요합니다.<br/>
+            2. 크리에이터의 의사에 따라 콘텐츠 주문이 반려될 수 있습니다.<br/>
+            3. 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.<br/>
+            4. 주문이 승인되기 전 구매자에 의한 주문 취소 및 환불이 가능합니다.<br/>
+            5. 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단, 주문 날짜로부터 최대 14일 이내에 콘텐츠를 제공받지 못한 경우에는 결제 금액을 전액 환불해드립니다.<br/>
+            6. 콘텐츠를 제공 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.
+          </div>
+        </div>
+
         <div className={'container_box'}>
           <div className={'container_label'}>
             크티 이용 정책 동의
           </div>
-          
+
           <button onClick={(e) => {this.clickAllAgree(e)}} style={{marginTop: 22}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
               {allAgreeImage}

@@ -6,6 +6,8 @@
   width: 100%;
   padding-left: 10px;
   padding-right: 10px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 
   .titleText {
     display: flex;
@@ -13,7 +15,6 @@
     font-size: 32px;
     font-weight: bold;
     color: #1a1a1a;
-    margin-top: 64px;
   }
 
   .titleLabelText {
@@ -54,5 +55,20 @@
   }
   @media (max-width: 520px){
     /*모바일일때*/  
+    .titleText {
+      font-size: 24px;
+    }
+
+    .titleLabelText {
+      margin-top: 20px;
+    }
+  }
+}
+
+@media (max-width: 520px){
+  /*모바일일때*/  
+  .ReviewWritePage {
+    padding-top: 40px;
+    padding-bottom: 40px;
   }
 }

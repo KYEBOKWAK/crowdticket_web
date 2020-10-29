@@ -160,8 +160,8 @@ class StoreHome extends Component {
             ✍️
             </div>
             <div className={'notice_content'}>
-              크리에이터 인증하고 컨텐츠 상점
-              개설해보세요!
+              나의 모든 콘텐츠가 상품이 된다!<br/>
+              크리에이터라면 지금 상점을 개설하세요!
             </div>
           </button>
         </div>        
@@ -177,7 +177,7 @@ class StoreHome extends Component {
           </div>
         </div>
         <div className={'contents_container flex_layer flex_direction_column'}>
-          <div className={'contents_list_title'}>콘텐츠 리스트</div>
+          <div className={'contents_list_title'}>판매중인 콘텐츠</div>
           <StoreHomeContentList></StoreHomeContentList>
         </div>
       </div>

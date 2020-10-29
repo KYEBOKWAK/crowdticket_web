@@ -69,12 +69,12 @@ class StoreOrderComplitePage extends Component{
         </div>
         <div className={"container_box"}>
           <div className={"how_ask_text"}>
-            🤔 컨텐츠는 어떻게 받아 볼 수 있나요?
+            🤔 콘텐츠는 언제, 어떻게 받아 볼 수 있나요?
           </div>
           <div className={"under_line"}>
           </div>
           <div className={"how_answer_text"}>
-            크티가 입력해주신 연락처를 통해 오픈 카톡방으로 컨텐츠를 전달드려요. :)
+            크리에이터가 주문을 승인하고 콘텐츠를 준비하면 크티가 입력해주신 연락처로 완성된 콘텐츠를 전달해드립니다. 잠시만 기다려주세요!
           </div>
         </div>
 

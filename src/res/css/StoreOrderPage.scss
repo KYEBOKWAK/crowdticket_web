@@ -1,11 +1,11 @@
 .StoreOrderPage {
   width: 100%;
-  
+  padding-top: 64px;
+  padding-bottom: 64px;
   .title_label {
     font-size: 32px;
     font-weight: bold;
     color: #1a1a1a;
-    margin-top: 64px;
     margin-bottom: 20px;
   }
 
@@ -17,7 +17,7 @@
   }
 
   .container_box {
-    margin-top: 20px;
+    margin-top: 40px;
     padding: 32px;
     border-radius: 20px;
     background-color: #ffffff;
@@ -177,7 +177,6 @@
     font-weight: 500;
     color: #ffffff;
     margin-top: 20px;
-    margin-bottom: 64px;
   }
 
   .ask_container {
@@ -185,7 +184,51 @@
     line-height: 2;
   }
   
+  .policy_container {
+    font-size: 12px;
+    font-weight: 500;
+    color: #999999;
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .policy_title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 8px;
+  }
+
+  .policy_content{
+    line-height: 1.8;
+  }
+
   @media (max-width: 520px){
-    /*모바일일때*/  
+    /*모바일일때*/
+    .title_label{
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .sub_title_label{
+      font-size: 18px;
+    }
+
+    .container_box{
+      margin-top: 20px;
+      padding: 20px;
+    }
+    
+  }
+}
+
+@media (max-width: 520px){
+  /*모바일일때*/
+  .StoreOrderPage{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

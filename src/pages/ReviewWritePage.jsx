@@ -13,7 +13,7 @@ class ReviewWritePage extends Component {
       commentValue: '',
       alias: null,
       comment_write_state: null,
-      maxLength: 255,
+      maxLength: 1000,
       myID: null,
       user_id: null
     };
@@ -201,7 +201,7 @@ class ReviewWritePage extends Component {
           {titleText}
         </div>
         
-        <textarea className={'textArea'} value={this.state.commentValue} onChange={this.handleChange} maxLength={255} placeholder={"리뷰를 작성해주세요"}></textarea>
+        <textarea className={'textArea'} value={this.state.commentValue} onChange={this.handleChange} maxLength={this.state.maxLength} placeholder={"콘텐츠 후기 및 크리에이터를 위한 감사 인사를 남겨보세요!"}></textarea>
 
         <div className={'nowCount'}>
           {this.state.commentValue.length}/{this.state.maxLength}

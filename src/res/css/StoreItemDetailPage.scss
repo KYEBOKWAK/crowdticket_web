@@ -55,6 +55,20 @@ $img_width: 520px;
 
   @media (max-width: 520px){
     /*모바일일때*/
+    .content_title{
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .content_price{
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+
+    .content_text{
+      margin-bottom: 24px;
+    }
+
     .item_img {
       width: 100%;
       // min-width: 320px;
@@ -67,6 +81,10 @@ $img_width: 520px;
       border-radius: 0px;
       margin-top: 0px;
       margin-bottom: 0px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 20px;
+      padding-bottom: 11px;
     }
   }
 }

@@ -33,6 +33,8 @@ $thumb_item_height: 82px;
   .notice_content {
     display: flex;
     align-items: center;
+    text-align: left;
+    width: 100%;
     height: 45px;
     font-size: 14px;
     font-weight: bold;
@@ -102,6 +104,10 @@ $thumb_item_height: 82px;
 
     .contents_list_title{
       display: none;
+    }
+
+    .notice_content{
+      font-size: 12px;
     }
   }
 }

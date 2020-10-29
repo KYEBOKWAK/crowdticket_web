@@ -38,9 +38,30 @@
     height: 1px;
     opacity: 0.5;
     background-color: #cccccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   @media (max-width: 520px){
-    /*모바일일때*/  
+    /*모바일일때*/
+    .container_box{
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    .label_title_text{
+      text-align: center;
+      font-size: 24px;
+    }
+  }
+}
+
+@media (max-width: 520px){
+  /*모바일일때*/
+  .StoreOrderComplitePage{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
