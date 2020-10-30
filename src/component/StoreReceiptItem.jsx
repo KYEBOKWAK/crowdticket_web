@@ -420,12 +420,17 @@ class StoreReceiptItem extends Component{
     let order_id_dom = <></>;
     let state_container_marginTop = 0;
 
-    let refundStateContainer = <></>
+    let refundStateContainer = <></>;
+    let orderNameDom = <></>;
 
     
     let refundExpDate = moment(this.state.created_at).add(7, 'd').format('YYYY.MM.DD');
     if(this.props.isManager){
       order_id_dom = <div style={{marginBottom: 5}}>주문번호 {this.props.store_order_id}</div>;
+
+      orderNameDom = <div className={'order_user_name'}>
+                      구매자 이름:<span style={{marginLeft:2}}>{this.state.order_user_name}</span>
+                    </div>;
 
       state_container_marginTop = 8;
       if(this.state.state === Types.order.ORDER_STATE_APP_STORE_PAYMENT){
@@ -516,9 +521,7 @@ class StoreReceiptItem extends Component{
         {order_id_dom}
         {_storeOrderItemDom}
 
-        <div className={'order_user_name'}>
-          구매자:<span style={{marginLeft:2}}>{this.state.order_user_name}</span>
-        </div>
+        {orderNameDom}
         <div className={'request_content'}>
           {this.state.requestContent}
         </div>
