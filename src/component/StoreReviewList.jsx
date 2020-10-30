@@ -203,7 +203,7 @@ class StoreReviewList extends Component{
       <div className={'StoreReviewList'}>
         <div style={{paddingLeft: 10, paddingRight: 10, width: '100%'}}>
           <button onClick={(e) => {this.clickWriteReview(e)}} className={'reviewButton'}>
-            리뷰작성
+            작성하기
           </button>
         </div>
         <InfiniteScroll

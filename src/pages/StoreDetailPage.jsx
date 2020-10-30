@@ -491,7 +491,7 @@ class StoreDetailPage extends Component {
               {contentsUnderLine}
             </button>
             <button onClick={(e) => {this.clickMenu(e, MENU_STATE_REVIEW)}} style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-              <div style={menuReviewTextStyle}>리뷰 {this.state.commentCount}</div>
+              <div style={menuReviewTextStyle}>리뷰 & 기대평 {this.state.commentCount}</div>
               {reviewUnderLine}
             </button>
           </div>

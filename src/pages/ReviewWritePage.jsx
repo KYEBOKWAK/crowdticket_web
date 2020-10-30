@@ -143,16 +143,13 @@ class ReviewWritePage extends Component {
         commentType: Types.comment.commentType.store,
         target_id: this.state.store_id,
         comment_value: this.state.commentValue
-      }
+      }      
       
-      // console.log(_data);
-  
       axios.post("/comments/add", {
         ..._data 
       }, (result) => {
         alert('작성 완료!');
         this.goBackStore();
-  
       }, (error) => {
   
       })
@@ -183,8 +180,8 @@ class ReviewWritePage extends Component {
     let titleText = '';
     let buttonText = '';
     if(this.state.comment_write_state === Types.comment.commentState.write){
-      titleText = '리뷰작성';
-      buttonText = '리뷰등록';
+      titleText = '작성하기';
+      buttonText = '등록';
     }else{
       titleText = '리뷰수정';
       buttonText = '리뷰수정';
@@ -198,7 +195,7 @@ class ReviewWritePage extends Component {
 
         
         <div className={'titleLabelText'}>
-          {titleText}
+          
         </div>
         
         <textarea className={'textArea'} value={this.state.commentValue} onChange={this.handleChange} maxLength={this.state.maxLength} placeholder={"콘텐츠 후기 및 크리에이터를 위한 감사 인사를 남겨보세요!"}></textarea>

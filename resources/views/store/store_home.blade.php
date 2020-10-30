@@ -1,7 +1,11 @@
 @extends('app')
 
+@section('meta')
+    <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+@endsection
+
 @section('title')
-    <title>크티 | 상점</title>
+    <title>크티 | 콘텐츠 상점</title>
 @endsection
 
 @section('css')
