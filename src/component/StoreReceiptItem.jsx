@@ -504,7 +504,7 @@ class StoreReceiptItem extends Component{
     let refund_reason_dom = <></>;
     if(this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_RETURN){
       refund_reason_dom = <div className={'order_refund_reason'}>
-                            사유: {this.state.order_refund_reason}
+                            사유: {this.state.order_refund_reason} xxxxx
                           </div>
     }
 
