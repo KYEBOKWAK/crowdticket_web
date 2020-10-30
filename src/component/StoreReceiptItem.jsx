@@ -80,8 +80,8 @@ class StoreReceiptItem extends Component{
         }
       ],
 
-      order_refund_reason: ''
-
+      order_refund_reason: '',
+      order_user_id: null
     }
 
     // this.requestMoreData = this.requestMoreData.bind(this);
@@ -138,7 +138,8 @@ class StoreReceiptItem extends Component{
         card_state_text: data.card_state_text,
         requestContent: data.requestContent,
         created_at: data.created_at,
-        order_refund_reason: data.refund_reason
+        order_refund_reason: data.refund_reason,
+        order_user_id: data.order_user_id
       }, () => {
         this.requestItemInfo();
       })
@@ -364,7 +365,8 @@ class StoreReceiptItem extends Component{
   requestRefund(refund_reason){
     showLoadingPopup('반려중입니다..');
     axios.post("/orders/store/cancel", {
-      store_order_id: this.props.store_order_id
+      store_order_id: this.props.store_order_id,
+      order_user_id: this.state.order_user_id
     }, (result) => {
       axios.post("/orders/store/state/refund", {
         store_order_id: this.props.store_order_id,
