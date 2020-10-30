@@ -240,8 +240,10 @@ const Types = {
     ORDER_STATE_APP_PAY_WAIT_VBANK: 11, //앱 결제 진행시, 스탠바이. //30분 동안 결제 처리가 되지 않으면 자동 취소
     // ORDER_STATE_APP_PAY_COMPLITE_WAIT_SURVEY: 12, //결제는 끝났는데, 설문이 아직남음.
     // ORDER_STATE_APP_PAY_COMPLITE_AND_SURVEY_COMPLITE: 13, //결제도 끝나고 설문도 끝남.
-    ORDER_STATE_APP_STORE_READY: 12,  //컨텐츠 상점 준비단계
-    ORDER_STATE_APP_STORE_SUCCESS: 13,  //컨텐츠 상점 제품 제공 완료
+    ORDER_STATE_APP_STORE_PAYMENT: 12,    //컨텐츠 상점 결제 완료 및 대기
+    ORDER_STATE_APP_STORE_READY: 13,  //컨텐츠 상점 준비단계
+    ORDER_STATE_APP_STORE_SUCCESS: 14,  //컨텐츠 상점 컨텐츠 완성. 크티에 보냄
+    ORDER_STATE_APP_STORE_RELAY_CUSTOMER: 15,  //컨텐츠 크티에서 고객에게 보냄
 
     ORDER_STATE_STANDBY_START: 98,
     ORDER_STATE_PAY_END: 99,
@@ -255,6 +257,7 @@ const Types = {
     ORDER_STATE_CANCEL_WAIT_PAY: 106, //앱 결제 진행중 10분 초과로 인한 취소
 
     ORDER_STATE_CANCEL_STORE_RETURN: 107, //스토어 반려
+    ORDER_STATE_CANCEL_STORE_WAIT_OVER: 108, //스토어 승인기간 만료됨
 
     ORDER_STATE_CANCEL: 199,//고객취소는 맨 마지막
 

@@ -3,6 +3,7 @@ $bgImageHeightMax: 280px;
 
 .StoreDetailPage {
   width: 100%;
+  position: relative;
 
   .bg_img_container {
     width: 100%;
@@ -69,6 +70,24 @@ $bgImageHeightMax: 280px;
     border-radius: 50px;
     background-color: #00bfff;
     margin-top: 8px;
+  }
+  
+  .admin_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 35px;
+    border-radius: 12px;
+    background-color: #00bfff;
+    font-size: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-left: auto;
   }
 
   @media (max-width: 520px){

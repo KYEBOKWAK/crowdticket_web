@@ -40,6 +40,142 @@
     background-color: #f4f4f4;
   }
 
+  .state_container{
+    display: flex;
+    justify-content: space-between;
+    // margin-top: 8px;
+  }
+
+  .state_button_container {
+    display: flex;
+  }
+
+  .state_button_refund {
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #191919;
+    width: 74px;
+    height: 36px;
+    border-radius: 12px;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+
+  .state_button_ok {
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #ffffff;
+    width: 74px;
+    height: 36px;
+    border-radius: 12px;
+    background-color: #00bfff;
+    margin-left: 4px;
+  }
+
+  .state_button_refund_label_container {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4d4d4d;
+    width: 100%;
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(191, 238, 255, 0.4);
+    margin-top: 16px;
+    border-radius: 12px;
+  }
+
+  .state_button_refund_label_point_color {
+    color: #00bfff;
+  }
+
+  .stateRefundButtonSubLabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color: #808080;
+    margin-top: 8px;
+  }
+
+  .state_button_relay {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    background-color: #00bfff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 12px;
+  }
+
+  .radio_list_container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 17px;
+  }
+
+  .radio_list_item_container {
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .radio_list_item_value {
+    display: flex;
+    justify-content: center;
+    margin-left: 12px;
+    font-size: 14px;
+    color: #4d4d4d;
+  }
+
+  .refund_etc_textarea{
+    width: 100%;
+    height: 72px;
+    border-radius: 5px;
+    border: solid 1px #e6e6e6;
+    font-size: 14px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+
+  .refund_etc_length {
+    text-align: end;
+    font-size: 12px;
+    color: #acacac;
+  }
+
+  .refund_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    background-color: #00bfff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 12px;
+  }
+
+  .order_refund_reason {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #7f7f7f;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
   }

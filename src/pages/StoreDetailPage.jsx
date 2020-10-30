@@ -459,13 +459,14 @@ class StoreDetailPage extends Component {
 
     let managerButton = <></>;
     if(Util.isAdmin(this.state.store_user_id)){
-      // managerButton = <button onClick={(e) => {this.clickManagerPage(e)}}>
-      //                   관리자 페이지 접속쓰
-      //                 </button>
+      managerButton = <button className={'admin_button'} onClick={(e) => {this.clickManagerPage(e)}}>
+                        관리자 페이지
+                      </button>
     }
 
     return (
       <div className={'StoreDetailPage'}>
+        {managerButton}
         <div className={'bg_img_container'} ref={this.thumb_parent_ref}>
             <img className={'bg_img'} src={this.state.thumb_img_url}/>
             <div className={'black-mask'} style={{backgroundColor: 'rgba(0,0,0,0.6)'}}>
@@ -482,7 +483,6 @@ class StoreDetailPage extends Component {
               <img className={'user_img'} src={this.state.profile_photo_url} />
             </div>
         </div>
-        {managerButton}
 
         <div className={'contentsContainer flex_layer flex_direction_column'}>
           <div className={'contentsMenuContainer flex_layer flex_direction_row'}>

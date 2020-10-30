@@ -40,6 +40,8 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreReceiptItem.scss', 'dist/css/')
 .sass('src/res/css/StoreDetailReceipt.scss', 'dist/css/')
 .sass('src/res/css/MyContentsPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManager.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabAskOrderListPage.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv(),

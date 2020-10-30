@@ -10,6 +10,15 @@
     display: none;
   }
   </style>
+
+<link href="{{ asset('/dist/css/StoreManager.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/StoreManagerTabAskOrderListPage.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
+rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=2') }}" 
+rel="stylesheet"/>
+
 @endsection
 
 @section('content')
