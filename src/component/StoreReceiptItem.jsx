@@ -81,7 +81,9 @@ class StoreReceiptItem extends Component{
       ],
 
       order_refund_reason: '',
-      order_user_id: null
+      order_user_id: null,
+
+      order_user_name: ''
     }
 
     // this.requestMoreData = this.requestMoreData.bind(this);
@@ -139,7 +141,8 @@ class StoreReceiptItem extends Component{
         requestContent: data.requestContent,
         created_at: data.created_at,
         order_refund_reason: data.refund_reason,
-        order_user_id: data.order_user_id
+        order_user_id: data.order_user_id,
+        order_user_name: data.name
       }, () => {
         this.requestItemInfo();
       })
@@ -504,7 +507,7 @@ class StoreReceiptItem extends Component{
     let refund_reason_dom = <></>;
     if(this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_RETURN){
       refund_reason_dom = <div className={'order_refund_reason'}>
-                            사유: {this.state.order_refund_reason} xxxxx
+                            사유: {this.state.order_refund_reason}
                           </div>
     }
 
@@ -512,6 +515,10 @@ class StoreReceiptItem extends Component{
       <div className={'StoreReceiptItem'}>
         {order_id_dom}
         {_storeOrderItemDom}
+
+        <div className={'order_user_name'}>
+          구매자:<span style={{marginLeft:2}}>{this.state.order_user_name}</span>
+        </div>
         <div className={'request_content'}>
           {this.state.requestContent}
         </div>
