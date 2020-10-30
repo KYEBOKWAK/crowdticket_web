@@ -165,7 +165,7 @@ class StoreHomeContentList extends Component{
         }
       >
         {this.state.items.map((data) => {
-          return <StoreContentsListItem key={data.id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price}></StoreContentsListItem>
+          return <StoreContentsListItem key={data.id} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isHomeList={true} store_alias={data.alias}></StoreContentsListItem>
         })}
       </InfiniteScroll>
     )

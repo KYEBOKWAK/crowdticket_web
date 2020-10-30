@@ -41,7 +41,19 @@ class StoreContentsListItem extends Component{
       baseURL = baseURLDom.value;
     }
 
-    let goURL = baseURL + '/item/store/' + this.props.store_item_id;
+    let goURL = '';
+    if(this.props.isHomeList){
+      if(!this.props.store_alias || this.props.store_alias === ''){
+        goURL = baseURL + '/store/' + this.props.store_id;
+      }else{
+        goURL = baseURL + '/store/' + this.props.store_alias;
+      }
+      
+    }else {
+      goURL = baseURL + '/item/store/' + this.props.store_item_id;
+    }
+
+    
 
     window.location.href = goURL;
   }
@@ -93,7 +105,9 @@ StoreContentsListItem.defaultProps = {
   thumbUrl: '',
   name: '',
   title: '',
-  price: 0
+  price: 0,
+  isHomeList: false,
+  store_alias: ''
 }
 
 
