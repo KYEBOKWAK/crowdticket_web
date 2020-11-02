@@ -12,6 +12,7 @@ use App\Models\Order as Order;
 use App\Models\Poster as Poster;
 use App\Models\Mcn as Mcn;
 use App\Models\Main_thumbnail as Main_thumbnail;
+use App\Models\Store as Store;
 use App\Models\Test as Test;
 use App\Models\Magazine as Magazine;
 use App\Services\SmsService;
@@ -1920,10 +1921,24 @@ class ProjectController extends Controller
         $tabMenu = $request->menu;
       }
 
+      $nick_name = '';
+      $store_content = '';
+      $store = Store::where('id', '=', $id)->firstOrFail();
+
+      if(asset($store->user)){
+        $nick_name = $store->user->nick_name;
+      }
+
+      if(asset($store->content)){
+        $store_content = $store->content;
+      }
+
       return view('store.store_detail', [
         'store_id' => $id,
         'store_alias' => null,
-        'tabmenu' => $tabMenu
+        'tabmenu' => $tabMenu,
+        'store_user_nick_name' => $nick_name,
+        'store_content' => $store_content
       ]);
     }
 
@@ -1935,10 +1950,25 @@ class ProjectController extends Controller
       if($request->has('menu')){
         $tabMenu = $request->menu;
       }
+
+      $nick_name = '';
+      $store_content = '';
+      $store = Store::where('alias', '=', $alias)->firstOrFail();
+
+      if(asset($store->user)){
+        $nick_name = $store->user->nick_name;
+      }
+
+      if(asset($store->content)){
+        $store_content = $store->content;
+      }
+
       return view('store.store_detail', [
         'store_id' => null,
         'store_alias' => $alias,
-        'tabmenu' => $tabMenu
+        'tabmenu' => $tabMenu,
+        'store_user_nick_name' => $nick_name,
+        'store_content' => $store_content
       ]);
     }
 
