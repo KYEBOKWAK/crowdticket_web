@@ -8,7 +8,7 @@
         font-weight: 900;
         color: #43c9f0;
       }
-
+      
       emphasize{
         font-weight: bold;
       }
@@ -31,7 +31,7 @@
                 <table class="email-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
                     <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
-                      <div style="text-align:left"><span style="font-weight:900;color:#43c9f0">{{$title}}</span>에<br/>참여해주셔서 감사합니다</div>
+                      <div style="text-align:left">요청하신 콘텐츠가<br/>반려됐습니다</div>
                     </td>
                   </tr></tbody>
                 </table>
@@ -41,7 +41,7 @@
                       <table class="info-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:60px;padding:0px;align:center;background-color:#f9f9f9">
                         <tr>
                           <td style="padding:20px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#262626;word-break:keep-all">
-                            <span style="font-weight:900;color:#43c9f0">{{$name}}</span>님은 아쉽지만 당첨되지 못하셨어요 &#x1F622;
+                            죄송합니다, <span style="font-weight:900;color:#43c9f0">[크리에이터 이름]</span>에게 보낸 콘텐츠 요청이 반려되었어요 &#x1F622;
                           </td>
                         </tr>
                       </table>
@@ -51,21 +51,22 @@
                             <img src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/admin/mail/rebrand/ic-circle-error-fill-24@3x.png" alt="!" style="width:24px;height:24px;margin-right:8px;display:block;border-width:0px"/>
                           </td>
                           <td style="align:left;vertical-align:middle;padding:3px 0px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121;word-break:keep-all">
-                            이벤트 참여 관련 결제 내용은 모두 자동으로 취소됩니다!
+                            콘텐츠를 주문하며 결제하신 금액은 자동 환불처리됩니다. (최대 2~3일 소요)
                           </td>
                         </tr>
                       </table>
                       <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                         <tr>
                           <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">크티에서 이벤트에 참여해주셔서 감사합니다. 많은 분들이 관심을 가지고 참가신청을 해주셨으나, 아쉽게도 <b>{{$name}}</b>님은 이번 이벤트에서는 함께하실 수 없게 되었습니다.</div>
+                            <div style="text-align:left">크티 콘텐츠 상점을 이용해주셔서 감사합니다. 요청해주신 콘텐츠는 아쉽게도 <b>[크리에이터 이름]</b>님이 제작이 어렵다고 판단하여 반려되었습니다.<br/><br/><b>반려사유: [반려사유 상세 내용]</div>
                           </td>
                         </tr>
                       </table>
-                      <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:24px 0 0 0;width:100%;max-width:630px;clear:both;background:none">
+                      <hr width="100%" size="1px" align="center" color="#ebebeb" style="margin:24px 0px 24px 0px"/>
+                      <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0;width:100%;max-width:630px;clear:both;background:none">
                         <tr>
                           <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">이번에는 당첨이 안 되었지만 다음에 분명 더 좋은 이벤트로 함께 하실 수 있을거예요. 계속해서 크티에서 다양한 크리에이터들과 함께해보세요!</div>
+                            <div style="text-align:left">반려된 이유에 맞춰서 요청 내용을 수정해서 다시 보내주시면 다음에는 [이름]님을 위한 맞춤 콘텐츠를 받아보실 수 있을거예요. 콘텐츠 상점에는 다른 상품들도 있으니 다시한번 이용해주세요. &#x1F603;</div>
                           </td>
                         </tr>
                       </table>
@@ -78,7 +79,7 @@
                       <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
                         <tbody><tr>
                           <td style="padding:12px 20px" align="center">
-                            <a href="https://crowdticket.kr/projects" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">다른 이벤트 구경가기</a>
+                            <a href="https://crowdticket.kr/store" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">다시 콘텐츠 상점으로</a>
                           </td>
                         </tr></tbody>
                       </table>
