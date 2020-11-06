@@ -3,16 +3,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style>
-      event-emphasize{
-        font-weight: 900;
-        color: #43c9f0;
-      }
-
-      emphasize{
-        font-weight: bold;
-      }
-    </style>
   </head>
   <body style="margin:0%">
     <table class="full-container" cellpadding="0" cellspacing="0" align="center" border="0" style="margin:0;padding:0;width:100%;background:none">
@@ -31,57 +21,83 @@
                 <table class="email-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
                     <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
-                      <div style="text-align:left"><span style="font-weight:900;color:#43c9f0">{{$title}}</span>에<br/>참여해주셔서 감사합니다</div>
+                      <div style="text-align:left">팬으로부터의<br/>콘텐츠 주문이 도착했어요!</div>
                     </td>
                   </tr></tbody>
                 </table>
                 <table class="email-content" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:32px 0px;width:100%;max-width:630px;clear:both;background:none">
                   <tr>
                     <td>
-                      <table class="info-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:60px;padding:0px;align:center;background-color:#f9f9f9">
+                      <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                         <tr>
-                          <td style="padding:20px;text-align:center;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#262626;word-break:keep-all">
-                            <span style="font-weight:900;color:#43c9f0">{{$name}}</span>님은 아쉽지만 당첨되지 못하셨어요 &#x1F622;
+                          <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
+                            <div style="text-align:left">크티 콘텐츠 상점을 통해서<br/>[크리에이터 닉네임]님의 콘텐츠 구매요청이 들어왔습니다.</div>
                           </td>
                         </tr>
                       </table>
-                      <table class="attention" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;width:100%;height:24px;padding:12px;margin:8px 0 24px auto;align:left;background-color:#ecf9fd;border-left:4px solid #43c9f0">
-                        <tr>
-                          <td height="24px" width="24px" style="padding:0px;border:0px">
-                            <img src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/admin/mail/rebrand/ic-circle-error-fill-24@3x.png" alt="!" style="width:24px;height:24px;margin-right:8px;display:block;border-width:0px"/>
+                      <table class="paragraph-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:24px 0;width:100%;max-width:630px;clear:both;background:none">
+                        <tbody><tr>
+                          <td style="font-family:'Noto Sans KR','NotoSansCJKkr',sans-serif;font-size:16px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
+                            <div style="text-align:left">주문내역</div>
                           </td>
-                          <td style="align:left;vertical-align:middle;padding:3px 0px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121;word-break:keep-all">
-                            이벤트 참여 관련 결제 내용은 모두 자동으로 취소됩니다!
+                        </tr></tbody>
+                      </table>
+                      <table class="order-details" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin-bottom:24px;padding:24px 0;width:100%;max-width:590px;clear:both;background:none;border-collapse:collapse">
+                        <tr height="44px" style="border-top:2px solid #43c8ef; border-bottom:1px solid #e8e8e8">
+                          <td width="65px" style="background-color: rgba(67, 200, 239, 0.1); padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            상품명
+                          </td>
+                          <td style="padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            [item_title]
+                          </td>
+                        </tr>
+                        <tr height="44px" style="border-bottom:1px solid #e8e8e8">
+                          <td width="65px" style="background-color: rgba(67, 200, 239, 0.1); padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            구매금액
+                          </td>
+                          <td style="padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            [item_price]원
+                          </td>
+                        </tr>
+                        <tr height="44px" style="border-bottom:1px solid #e8e8e8">
+                          <td width="65px" style="background-color: rgba(67, 200, 239, 0.1); padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            구매자
+                          </td>
+                          <td style="padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                           [orders_items_name]
+                          </td>
+                        </tr>
+                        <tr height="44px" style="border-bottom:1px solid #e8e8e8">
+                          <td width="65px" style="background-color: rgba(67, 200, 239, 0.1); padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            신청일시
+                          </td>
+                          <td style="padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            [orders_items_created_at]
+                          </td>
+                        </tr>
+                        <tr height="44px" style="border-bottom:1px solid #e8e8e8">
+                          <td width="65px" style="background-color: rgba(67, 200, 239, 0.1); padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            요청사항
+                          </td>
+                          <td style="padding: 10px 16px 10px 16px; text-align:left; font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:500;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757">
+                            [orders_items_requestContent] 국가는 사회보장·사회복지의 증진에 노력할 의무를 진다. 모든 국민은 인간다운 생활을 할 권리를 가진다. 국가는 건전한 소비행위를 계도하고 생산품의 품질향상을 촉구하기 위한 소비자보호운동을 법률이 정하는 바에 의하여 보장한다. 대한민국의 국민이 되는 요건은 법률로 정한다. 사법권은 법관으로 구성된 법원에 속한다.
                           </td>
                         </tr>
                       </table>
                       <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                         <tr>
                           <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">크티에서 이벤트에 참여해주셔서 감사합니다. 많은 분들이 관심을 가지고 참가신청을 해주셨으나, 아쉽게도 <b>{{$name}}</b>님은 이번 이벤트에서는 함께하실 수 없게 되었습니다.</div>
-                          </td>
-                        </tr>
-                      </table>
-                      <table class="explain-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:24px 0 0 0;width:100%;max-width:630px;clear:both;background:none">
-                        <tr>
-                          <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                            <div style="text-align:left">이번에는 당첨이 안 되었지만 다음에 분명 더 좋은 이벤트로 함께 하실 수 있을거예요. 계속해서 크티에서 다양한 크리에이터들과 함께해보세요!</div>
+                            <div style="text-align:left">들어온 콘텐츠 요청에 대해 주문 승인 여부를 선택해주세요! 아래 버튼을 통해 상점 관리 페이지로 이동하여 지금까지 요청된 콘텐츠들을 관리할 수 있습니다.<br/><br/>이후 승인하신 콘텐츠를 전달하고 싶으시면 <b>event@crowdticket.kr</b>로 완성된 콘텐츠를 보내주세요. 크티가 대신하여 구매자에게 콘텐츠를 전달하고 정산을 진행해드립니다.</div>
                           </td>
                         </tr>
                       </table>
                     </td>
                   </tr>
                 </table>
-                <table class="button-block" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
+                <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
                   <tbody><tr>
-                    <td style="padding:0 0;border:0px" width="100%">
-                      <table class="cti-button" border="0" cellpadding="0" cellspacing="0" width="" style="border-collapse:separate!important;background:#43c9f0;border-radius:5px;border:0;margin:0 auto;table-layout:fixed" align="left">
-                        <tbody><tr>
-                          <td style="padding:12px 20px" align="center">
-                            <a href="https://crowdticket.kr/projects" target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">다른 이벤트 구경가기</a>
-                          </td>
-                        </tr></tbody>
-                      </table>
+                    <td style="padding:12px 20px" align="center">
+                      <a href=" " target="_blank" style="font-size:14px;display:block;color:#ffffff;text-decoration:none;font-family:'Noto Sans KR',sans-serif;text-align:center">상점 관리 페이지로 이동</a>
                     </td>
                   </tr></tbody>
                 </table>
