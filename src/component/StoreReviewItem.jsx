@@ -116,13 +116,21 @@ class StoreReviewItem extends Component{
                     </button>
                   </div>
     }
+
+    
+    let _name = this.props.nick_name;
+    if(this.props.nick_name === ''){
+      _name = this.props.name;
+    }
     return(
       <>
       <div className={'StoreReviewItem'}>
-        <img className={'user_thumb_img'} src={this.props.profile_photo_url}/>
+        <div className={'user_thumb_img_container'}>
+          <img className={'user_thumb_img'} src={this.props.profile_photo_url}/>
+        </div>
         <div className={'contentContainer'}>
           <div className={'name'}>
-            {this.props.name}
+            {_name}
           </div>
           <div className={'created_at_text'}>
             {moment(this.props.created_at).format('YYYY-MM-DD')}
@@ -164,6 +172,7 @@ StoreReviewItem.defaultProps = {
   store_id: null,
   // thumbUrl: '',
   name: '',
+  nick_name: '',
   // title: '',
   content: '',
 

@@ -101,7 +101,6 @@ class StoreReviewList extends Component{
       // lastID: 
     }, 
     (result) => {
-      console.log(result);
       let itemsData = result.list.concat();
       let _items = this.state.items.concat();
       
@@ -237,7 +236,7 @@ class StoreReviewList extends Component{
         >
           {this.state.items.map((data) => {
             return <div key={data.comment_id} style={{marginTop: 32}}>
-                    <StoreReviewItem user_id={data.user_id} created_at={data.created_at} id={data.comment_id} store_id={this.props.store_id} name={data.nick_name} content={data.contents} profile_photo_url={data.profile_photo_url}></StoreReviewItem>
+                    <StoreReviewItem user_id={data.user_id} created_at={data.created_at} id={data.comment_id} store_id={this.props.store_id} name={data.name} nick_name={data.nick_name} content={data.contents} profile_photo_url={data.profile_photo_url}></StoreReviewItem>
                   </div>
           })}
         </InfiniteScroll>

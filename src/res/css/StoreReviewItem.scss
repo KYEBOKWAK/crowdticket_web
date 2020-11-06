@@ -10,6 +10,10 @@
     border-radius: 50px;
   }
 
+  .user_thumb_img_container {
+    width: 36px;
+  }
+
   .contentContainer {
     display: flex;
     flex-direction: column;
@@ -25,6 +29,7 @@
   .contentText {
     font-size: 14px;
     color: #333333;
+    word-break: normal;
   }
 
   .created_at_text {
