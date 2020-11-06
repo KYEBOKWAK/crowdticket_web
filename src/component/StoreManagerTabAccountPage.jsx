@@ -28,6 +28,9 @@ const INPUT_STORE_MANAGER_ACCOUNT_NAME = "INPUT_STORE_MANAGER_ACCOUNT_NAME";
 const INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME = "INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME";
 const INPUT_STORE_MANAGER_ACCOUNT_NUMBER = "INPUT_STORE_MANAGER_ACCOUNT_NUMBER";
 
+const INPUT_STORE_MANAGER_CONTACT = 'INPUT_STORE_MANAGER_CONTACT';
+const INPUT_STORE_MANAGER_EMAIL = 'INPUT_STORE_MANAGER_EMAIL';
+
 const REQUEST_ONCE_ITME = 5;
 let isRequestInitData = false;
 
@@ -43,6 +46,9 @@ class StoreManagerTabAccountPage extends Component{
 
       items: [],
       hasMore: true,
+
+      contact: '',
+      email: '',
 
       policy: `1. 정산은 상품 결제가 진행된 후 구매자에게 콘텐츠 전달까지 모두 완료된 건들에 한하여 진행됩니다.
         2. 크티 '콘텐츠 상점 beta' 수수료는 현재 카드결제 수수료 3.5%를 포함하여 총 15%로, 총 결제 금액에서 수수료를 제외한 금액을 정산하여 입금해드립니다.
@@ -62,16 +68,28 @@ class StoreManagerTabAccountPage extends Component{
   componentDidMount(){
     this.requestMoreData();
     this.requestAccountInfo();
+    this.requestStoreInfo();
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
   }
 
   componentWillUnmount(){
-
-    // 
-    
   };
+
+  requestStoreInfo(){
+    axios.post("/store/info/userid", {
+
+    }, (result) => {
+      
+      this.setState({        
+        contact: result.data.contact,
+        email: result.data.email,
+      })
+    }, (error) => {
+
+    })
+  }
 
   requestAccountInfo(){
     //manager/account/info
@@ -153,6 +171,21 @@ class StoreManagerTabAccountPage extends Component{
         account_bank: e.target.value
       })
     }
+    else if(type === INPUT_STORE_MANAGER_EMAIL){
+      this.setState({
+        email: e.target.value
+      })
+    }
+    else if(type === INPUT_STORE_MANAGER_CONTACT){
+      if(e.target.value.length > 0 && !isCheckOnlyNumber(e.target.value)){
+        alert("숫자만 입력해주세요. (공백 혹은 - 이 입력되었습니다.)")
+        return;
+      }
+
+      this.setState({
+        contact: e.target.value
+      })
+    }
   }
 
   clickAccountChange(e){
@@ -167,6 +200,12 @@ class StoreManagerTabAccountPage extends Component{
     }else if(this.state.account_number === ''){
       alert('계좌번호를 입력해주세요');
       return;
+    }else if(this.state.contact === ''){
+      alert("비상 연락처를 반드시 입력해주세요.");
+      return;
+    }else if(this.state.email === ''){
+      alert("연락용 이메일을 반드시 입력해주세요.");
+      return;
     }
 
     if(!isCheckOnlyNumber(this.state.account_number)){
@@ -179,7 +218,10 @@ class StoreManagerTabAccountPage extends Component{
       store_id: this.props.store_id,
       account_name: this.state.account_name,
       account_number: this.state.account_number,
-      account_bank: this.state.account_bank
+      account_bank: this.state.account_bank,
+
+      email: this.state.email,
+      contact: this.state.contact
     }, (result) => {
       alert("저장완료!");
     }, (error) => {
@@ -212,6 +254,12 @@ class StoreManagerTabAccountPage extends Component{
 
           <div className={'input_label'}>예금주</div>
           <input className={'input_box'} type="name" name={'name'} placeholder={'이름을 입력해주세요'} value={this.state.account_name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_NAME)}}/>
+
+          <div className={'input_label'}>비상 연락처</div>
+          <input className={'input_box'} type="text" name={'contact'} placeholder={'-없이 입력해주세요.'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTACT)}}/>
+
+          <div className={'input_label'}>연락용 이메일</div>
+          <input className={'input_box'} type="text" name={'email'} placeholder={'연락용 이메일을 입력해주세요.'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_EMAIL)}}/>
 
           <div className={'input_label'}>은행</div>
           <input className={'input_box'} type="text" name={'account_bank'} placeholder={'은행명을 입력해주세요'} value={this.state.account_bank} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME)}}/>

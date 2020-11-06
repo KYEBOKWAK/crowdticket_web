@@ -16,7 +16,7 @@ rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
 rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=4') }}" 
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=5') }}" 
 rel="stylesheet"/>
 @endsection
 

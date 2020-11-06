@@ -278,7 +278,7 @@ class StoreManagerTabOrderListPage extends Component{
         <div className={'summary_container'}>
           <div className={'summary_content_container'}>
             <div className={'summary_content_label_text'}>
-              총 컨텐츠 구매
+              총 콘텐츠 구매
             </div>
             <div className={'summary_content_value_text'}>
               {this.state.total_buy_count}건

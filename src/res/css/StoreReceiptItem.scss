@@ -48,6 +48,8 @@
 
   .state_button_container {
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .state_button_refund {
@@ -137,6 +139,7 @@
     margin-left: 12px;
     font-size: 14px;
     color: #4d4d4d;
+    text-align: left;
   }
 
   .refund_etc_textarea{

@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import StoreReceiptItem from '../component/StoreReceiptItem';
 import axios from '../lib/Axios';
 
+import cryingHamImg from '../res/img/icCryingHamGray.png';
+
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -72,9 +74,24 @@ class StoreManagerTabAskOrderListPage extends Component{
   }
 
   render(){
+
+    let contentDom = [];
+    if(this.state.listDom.length === 0){
+      contentDom = <div> 
+                    <div className={'hamImg_container'}>
+                      <img className={'hamImg'} src={cryingHamImg}/>
+                      <div className={'no_contents_text'}>
+                        요청된 콘텐츠가 없어요!
+                      </div>
+                    </div>
+                    
+                  </div>
+    }else{
+      contentDom = this.state.listDom.concat();
+    }
     return(
       <div className={'StoreManagerTabAskOrderListPage'}>
-        {this.state.listDom}
+        {contentDom}
       </div>
     )
   }

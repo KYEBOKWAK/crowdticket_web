@@ -471,10 +471,10 @@ class StoreAddItemPage extends Component{
           <div className={'input_label'}>
             콘텐츠 설명
           </div>
-          <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} maxLength={this.state.maxLength} placeholder={"콘텐츠의 설명을 간단히 입력해주세요."}></textarea>
-          <div className={'input_length_text'}>
+          <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={"콘텐츠의 설명을 입력해주세요."}></textarea>
+          {/* <div className={'input_length_text'}>
             {this.state.item_content.length}/{this.state.maxLength}
-          </div>
+          </div> */}
         </div>
 
         <div className={'box_container'}>
@@ -483,7 +483,7 @@ class StoreAddItemPage extends Component{
           <div className={'input_label'}>
             구매자 요청사항
           </div>
-          <textarea className={'input_content_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={"예시: \n 1. 이름을 써주세요"}></textarea>
+          <textarea className={'input_content_ask_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={"예시: \n 1. 이름을 써주세요"}></textarea>
           <div className={'input_ask_explain'}>
             구매자가 콘텐츠 주문시 보게 될 콘텐츠 신청 양식 텍스트입니다
           </div>

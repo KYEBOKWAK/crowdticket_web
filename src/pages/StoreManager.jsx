@@ -22,6 +22,30 @@ const TAB_STORE_ACCOUNT = 'TAB_STORE_ACCOUNT';
 
 const tabInfo = [
   {
+    key: TAB_ASK_LIST,
+    name: '요청된 콘텐츠',
+  },
+  {
+    key: TAB_STORE_INFO,
+    name: '상점정보',
+  },
+  {
+    key: TAB_ITEM_MANAGER,
+    name: '상품관리',
+  },
+  {
+    key: TAB_ORDER_LIST,
+    name: '판매내역',
+  },
+  {
+    key: TAB_STORE_ACCOUNT,
+    name: '정산'
+  }
+]
+
+/*
+const tabInfo = [
+  {
     key: TAB_STORE_INFO,
     name: '상점정보',
   },
@@ -46,6 +70,7 @@ const tabInfo = [
     name: '정산'
   }
 ]
+*/
 class StoreManager extends Component {
   sb = null;
   constructor(props) {
@@ -53,13 +78,15 @@ class StoreManager extends Component {
     this.state = { 
       isLogin: false,
       title: '상점관리',
-      selectTabKey: TAB_STORE_INFO,
+      selectTabKey: TAB_ASK_LIST,
 
       store_id: null,
       store_user_id: null,
       nick_name: '',
 
-      isMenuScroll: true
+      isMenuScroll: true,
+
+      alias: ''
     };
 
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -123,7 +150,8 @@ class StoreManager extends Component {
           nick_name: result.data.nick_name,
           store_id: result.data.store_id,
           isLogin: true,
-          selectTabKey: _menuState
+          selectTabKey: _menuState,
+          alias: result.data.alias
         }, () => {
           this.requestOrderList();
           this.initScrollBooster();
@@ -151,7 +179,6 @@ class StoreManager extends Component {
   }
 
   updateDimensions(){
-    console.log(window.innerWidth);
     if(window.innerWidth > 520){
       //pc
       if(this.state.isMenuScroll){
@@ -359,6 +386,28 @@ class StoreManager extends Component {
     return contentPage;
   }
 
+  goStorePage(e){
+    e.preventDefault();
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      baseURL = baseURLDom.value;
+    }
+
+    let goTail = this.state.alias;
+
+    if(!this.state.alias){
+      goTail = this.state.store_id;
+    }
+
+    let goURL = baseURL + '/store/'+goTail;
+
+    // window.location.href = goURL;
+    window.open(goURL);
+
+  }
+
   render() {
     if(!this.state.isLogin){
       //로그인 안됐을때 접근시
@@ -372,8 +421,13 @@ class StoreManager extends Component {
     return (
       <div className={'StoreManager'}>
         <div className={'topContainer'}>
-          <div className={'title_text'}>
-            {this.state.nick_name} 상점 관리
+          <div className={'flex_layer'} style={{alignItems: 'center'}}>
+            <div className={'title_text'}>
+              {this.state.nick_name} 상점 관리 
+            </div>
+            <button className={'show_button'} onClick={(e) => {this.goStorePage(e)}}>
+                상점가기
+            </button>
           </div>
         </div>
 
