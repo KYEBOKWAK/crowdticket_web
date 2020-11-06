@@ -1,6 +1,6 @@
 $item_width: 80px;
 
-.StoreContentsListItemComponent {
+.StoreContentsListItem {
   padding: 20px;
 
   .item_img_wrapper {
@@ -35,6 +35,64 @@ $item_width: 80px;
     font-size: 14px;
     font-weight: bold;
     color: #00bfff;
+  }
+
+  .manager_buttons_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .manager_edit_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    border: solid 1px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #191919;
+  }
+
+  .manager_between {
+    width: 12px;
+    height: 48px;
+  }
+
+  .manager_delete_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    background-color: #f4f4f4;
+    font-size: 14px;
+    color: #191919;
+  }
+
+  .manager_reorder_container {
+    width: 100%;
+    height: 54px;
+    border-radius: 12px;
+    background-color: #00bfff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .manager_reorder_up_button {
+    width: 100%;
+    height: 54px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .manager_reorder_down_button {
+    width: 100%;
+    height: 54px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .manager_reorder_button_text {
+    margin-left: 16px;
+    font-size: 14px;
+    color: #ffffff;
   }
 
   @media (max-width: 520px){

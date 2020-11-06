@@ -21,6 +21,8 @@ import icon_box from '../res/img/icon-box.svg';
 import ic_checkbox_btn_s from '../res/img/ic-checkbox-btn-s.svg';
 import ic_checkbox_btn_n from '../res/img/ic-checkbox-btn-n.svg';
 
+// import FileUploader from '../component/FileUploader';
+
 // import * as GlobalKeys from '~/GlobalKeys';
 
 //redux START
@@ -44,6 +46,8 @@ const INPUT_STORE_ORDER_REQUEST_CONTENTS = "INPUT_STORE_ORDER_REQUEST_CONTENTS";
 // const INPUT_STORE_ORDER_CARD_PW_TWODIGIT = "";
 
 class StoreOrderPage extends Component{
+
+  fileInput = React.createRef();
 
   constructor(props){
     super(props);
@@ -603,6 +607,10 @@ class StoreOrderPage extends Component{
           <div className={'request_content_box'}>
             <textarea className={'textArea'} value={this.state.requestContent} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_REQUEST_CONTENTS)}} placeholder={"요청사항을 작성해주세요!"}></textarea>
           </div>
+
+          {/* 파일 input START */}
+          {/* <FileUploader></FileUploader> */}
+          {/* 파일 input END */}
         </div>
 
         <div className={'container_box'}>

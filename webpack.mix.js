@@ -42,9 +42,15 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/MyContentsPage.scss', 'dist/css/')
 .sass('src/res/css/StoreManager.scss', 'dist/css/')
 .sass('src/res/css/StoreManagerTabAskOrderListPage.scss', 'dist/css/')
+.sass('src/res/css/FileUploader.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabStoreInfoPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabItemPage.scss', 'dist/css/')
+.sass('src/res/css/StoreAddItemPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabOrderListPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabAccountPage.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
-    new Dotenv(),
+    new Dotenv()
   ]
 }).sourceMaps().version();
 

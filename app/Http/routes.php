@@ -354,7 +354,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('manager/store/', 'ProjectController@getStoreManager');
 
-    Route::get('store/{id}/item/addpage', 'ProjectController@getStoreAddItemPage');
+    Route::get('store/item/addpage', 'ProjectController@getStoreAddItemPage');
+    Route::get('store/item/{id}/editpage', 'ProjectController@getStoreEditItemPage');
 
     Route::get('order/store/{id}', 'ProjectController@getOrderStore');
     Route::get('complite/store/{id}', 'ProjectController@getOrderStoreComplite');

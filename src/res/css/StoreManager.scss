@@ -19,7 +19,14 @@
   .contentsContainer {
     padding: 20px;
     background-color: white;
-    border-radius: 20px;
+    // border-radius: 20px;
+  }
+
+  .contentPageContainer {
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .menuContainer {
@@ -29,16 +36,42 @@
   }
 
   .menu_temp_select {
-    padding-left: 20px;
-    padding-right: 20px;
+    // padding-left: 20px;
+    // padding-right: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     font-size: 14px;
     font-weight: bold;
     color: #222222;
+    width: 100%;
+  }
+
+  .viewport {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   @media (max-width: 520px){
     /*모바일일때*/  
     .topContainer{
-      height: 200px;
+      height: 150px;
+    }
+
+    .title_text {
+      font-size: 22px;
+    }
+
+    .contentsContainer{
+      padding: 10px;
+    }
+
+    .viewport {
+      display: block;
+      overflow: hidden;
     }
   }
+}
+
+.pageController {
+  width: 100%
 }

@@ -34,6 +34,27 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  save_img: {
+    user: 'SAVE_IMG_USER',
+    item: 'SAVE_IMG_ITEM',
+  },
+  add_page_state: {
+    ADD: 'ADD_PAGE_STATE_ADD',
+    EDIT: 'ADD_PAGE_STATE_EDIT'
+  },
+  store_manager_state_order: {
+    NONE: 'NONE',     //상점관리에서 상품 순서 state
+    REORDER: 'REORDER'
+  },
+
+  reorder_type: {
+    UP: 'UP',
+    DOWN: 'DOWN'
+  },
+  item_state: {
+    SALE: 0,
+    SALE_STOP: 1
+  },
   project: {
     STATE_READY: 1,
     STATE_READY_AFTER_FUNDING: 2,

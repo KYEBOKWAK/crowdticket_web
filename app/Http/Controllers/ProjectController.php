@@ -2016,14 +2016,32 @@ class ProjectController extends Controller
       ]);
     }
 
-    public function getStoreManager()
+    public function getStoreManager(Request $request)
     {
-      return view('store.store_manager');
+      $tabMenu = null;
+      if($request->has('menu')){
+        $tabMenu = $request->menu;
+      }
+
+      return view('store.store_manager', [
+        'tabmenu' => $tabMenu
+      ]);
     }
 
     public function getStoreAddItemPage()
     {
-      return view('store.store_add_item');
+      return view('store.store_add_item', [
+        'item_id' => null,
+        'add_item_page_state' => 'ADD_PAGE_STATE_ADD'
+      ]);
+    }
+
+    public function getStoreEditItemPage($id)
+    {
+      return view('store.store_add_item', [
+        'item_id' => $id,
+        'add_item_page_state' => 'ADD_PAGE_STATE_EDIT'
+      ]);
     }
 
     public function getStoreDetailReceipt($store_order_id)

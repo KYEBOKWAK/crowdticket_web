@@ -474,7 +474,8 @@ class StoreDetailPage extends Component {
             <div className={'user_img_container flex_layer flex_direction_row'}>
               <div>
                 <div className={'user_name'}>
-                  {this.state.name}
+                  {/* {this.state.name} */}
+                  {this.state.title}
                 </div>
                 <div className={'store_content'}>
                   {this.state.store_content}

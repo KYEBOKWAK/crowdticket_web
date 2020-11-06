@@ -3,7 +3,6 @@ import States from "../States";
 const Storage = {
   // save: (key, value, callback) => {
   save: (key, value, callback) => {
-    console.log("aaaa");
     const storagePromise = new Promise(function(resolve, reject){
       localStorage.setItem(key, value);
       resolve({

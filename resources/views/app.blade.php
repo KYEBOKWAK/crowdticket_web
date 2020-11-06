@@ -32,7 +32,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=2') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -615,7 +615,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=6') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=7') }}"></script>
 
 </body>
 </html>
