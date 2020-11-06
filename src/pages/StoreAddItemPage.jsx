@@ -283,6 +283,11 @@ class StoreAddItemPage extends Component{
           type: Types.save_img.item
         }, (result) => {
           stopLoadingPopup();
+
+
+          swal("등록완료!", '', 'success');
+
+          /*
           swal("등록완료!", {
             buttons: {
               nosave: {
@@ -308,6 +313,8 @@ class StoreAddItemPage extends Component{
                 }break;
             }
           });
+
+          */
         }, (error) => {
           stopLoadingPopup();
           alert("에러");
@@ -355,6 +362,8 @@ class StoreAddItemPage extends Component{
   }
 
   showEditPopup(){
+    swal("수정완료!", '', 'success');
+    /*
     swal("수정완료!", {
       buttons: {
         nosave: {
@@ -371,7 +380,7 @@ class StoreAddItemPage extends Component{
       switch (value) {
         case "back":
           {
-            this.goBack();
+            // this.goBack();
           }
           break;
         case "close":
@@ -380,8 +389,14 @@ class StoreAddItemPage extends Component{
           }break;
       }
     });
+    */
   }
 
+  clickBackButton(e){
+    e.preventDefault();
+
+    this.goBack();
+  }
   goBack(){
     let url_tail = '';
     if(this.state.alias){
@@ -502,9 +517,14 @@ class StoreAddItemPage extends Component{
           </div>
         </div>
 
-        <button className={'button_ok'} onClick={(e) => {this.clickContentsOk(e)}}>
-          {buttonText}
-        </button>
+        <div className={'button_container'}>
+          <button className={'button_back'} onClick={(e) => {this.clickBackButton(e)}}>
+            돌아가기
+          </button>
+          <button className={'button_ok'} onClick={(e) => {this.clickContentsOk(e)}}>
+            {buttonText}
+          </button>
+        </div>
 
       </div>
     )

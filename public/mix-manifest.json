@@ -1,5 +1,5 @@
 {
-    "/dist/App.js": "/dist/App.js?id=febc96df2390fce4678e",
+    "/dist/App.js": "/dist/App.js?id=484fafbcbbc7d8270d09",
     "/dist/css/Global.css": "/dist/css/Global.css?id=20c1fa7c3edebce691fc",
     "/dist/css/StoreHome.css": "/dist/css/StoreHome.css?id=f220ee1487ccf5a5aea9",
     "/dist/css/StoreContentsListItem.css": "/dist/css/StoreContentsListItem.css?id=3f5e557f88f468ff247e",
@@ -19,10 +19,10 @@
     "/dist/css/FileUploader.css": "/dist/css/FileUploader.css?id=07152cf693d64a209dc6",
     "/dist/css/StoreManagerTabStoreInfoPage.css": "/dist/css/StoreManagerTabStoreInfoPage.css?id=7f4f940dbc8ed4c6fbdd",
     "/dist/css/StoreManagerTabItemPage.css": "/dist/css/StoreManagerTabItemPage.css?id=3569e159160ae52aa31c",
-    "/dist/css/StoreAddItemPage.css": "/dist/css/StoreAddItemPage.css?id=46cac8de7425d617a8f3",
+    "/dist/css/StoreAddItemPage.css": "/dist/css/StoreAddItemPage.css?id=a8f0b85cfc180f6a09b4",
     "/dist/css/StoreManagerTabOrderListPage.css": "/dist/css/StoreManagerTabOrderListPage.css?id=3bb1c33faaa6d07eac88",
     "/dist/css/StoreManagerTabAccountPage.css": "/dist/css/StoreManagerTabAccountPage.css?id=165500d871a6d0454886",
-    "/dist/App.js.map": "/dist/App.js.map?id=1c4924e50e090541a9ec",
+    "/dist/App.js.map": "/dist/App.js.map?id=1420eeb3ee65eaeef67b",
     "/dist/css/Global.css.map": "/dist/css/Global.css.map?id=7f40c19dbe6834c8c9d7",
     "/dist/css/StoreHome.css.map": "/dist/css/StoreHome.css.map?id=90a9dbd291742064345e",
     "/dist/css/StoreContentsListItem.css.map": "/dist/css/StoreContentsListItem.css.map?id=91621c217fdaba29ecf2",
@@ -42,7 +42,7 @@
     "/dist/css/FileUploader.css.map": "/dist/css/FileUploader.css.map?id=d983087ead15bb604656",
     "/dist/css/StoreManagerTabStoreInfoPage.css.map": "/dist/css/StoreManagerTabStoreInfoPage.css.map?id=49a19b234491171ad672",
     "/dist/css/StoreManagerTabItemPage.css.map": "/dist/css/StoreManagerTabItemPage.css.map?id=0976e931250e049781ce",
-    "/dist/css/StoreAddItemPage.css.map": "/dist/css/StoreAddItemPage.css.map?id=1857b8d295c972cca5e2",
+    "/dist/css/StoreAddItemPage.css.map": "/dist/css/StoreAddItemPage.css.map?id=d14592cd0e60b1f66032",
     "/dist/css/StoreManagerTabOrderListPage.css.map": "/dist/css/StoreManagerTabOrderListPage.css.map?id=2c6cd3d5ebe2b4dd3be3",
     "/dist/css/StoreManagerTabAccountPage.css.map": "/dist/css/StoreManagerTabAccountPage.css.map?id=3bfa78b6d05b3beae274"
 }
