@@ -466,7 +466,6 @@ class StoreDetailPage extends Component {
 
     return (
       <div className={'StoreDetailPage'}>
-        {managerButton}
         <div className={'bg_img_container'} ref={this.thumb_parent_ref}>
             <img className={'bg_img'} src={this.state.thumb_img_url}/>
             <div className={'black-mask'} style={{backgroundColor: 'rgba(0,0,0,0.6)'}}>
@@ -475,7 +474,10 @@ class StoreDetailPage extends Component {
               <div>
                 <div className={'user_name'}>
                   {/* {this.state.name} */}
-                  {this.state.title}
+                  <div className={'flex_layer'} style={{alignItems: 'center'}}>
+                    {this.state.title}
+                    {managerButton}
+                  </div>
                 </div>
                 <div className={'store_content'}>
                   {this.state.store_content}

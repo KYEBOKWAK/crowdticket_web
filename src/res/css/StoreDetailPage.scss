@@ -73,20 +73,21 @@ $bgImageHeightMax: 280px;
   }
   
   .admin_button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    z-index: 9999;
+    // position: absolute;
+    // top: 5px;
+    // right: 5px;
+    // z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 35px;
+    width: 70px;
+    height: 25px;
     border-radius: 12px;
     background-color: #00bfff;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     color: #ffffff;
+    margin-left: 10px;
   }
 
   @media (max-width: 520px){

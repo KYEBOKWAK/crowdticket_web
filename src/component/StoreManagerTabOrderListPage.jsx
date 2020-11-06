@@ -140,7 +140,7 @@ class StoreManagerTabOrderListPage extends Component{
       store_id: this.props.store_id
     }, (result) => {
       let _options = [];
-      _options.push(<option key={-1} value={-1}>{'최신순'}</option>)
+      _options.push(<option key={-1} value={-1}>{'모두보기'}</option>)
       for(let i = 0 ; i < result.list.length ; i++){
         const data = result.list[i];
         const optionDom = <option key={data.id} value={data.id}>{data.title}</option>;
@@ -350,7 +350,7 @@ class StoreManagerTabOrderListPage extends Component{
               <img style={{width: 12, height: 8, marginLeft:2}} src={imgIconBox} />
               
               <select className={'select_tag'} value={this.state.sort_state} onChange={this.onChangeSelect}>
-                <option key={0} value={0}>{'최신순'}</option>;
+                <option key={0} value={0}>{'모두보기'}</option>;
                 <option key={1} value={Types.order.ORDER_STATE_APP_STORE_PAYMENT}>{'승인대기'}</option>;
                 <option key={2} value={Types.order.ORDER_STATE_APP_STORE_READY}>{'승인완료(콘텐츠 제작중)'}</option>;
                 <option key={3} value={Types.order.ORDER_STATE_APP_STORE_SUCCESS}>{'크티 전달완료'}</option>;

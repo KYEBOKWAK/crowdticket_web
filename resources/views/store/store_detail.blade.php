@@ -18,7 +18,7 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreDetailPage.css?version=4') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreDetailPage.css?version=5') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreReviewList.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreReviewItem.css?version=2') }}" rel="stylesheet"/>

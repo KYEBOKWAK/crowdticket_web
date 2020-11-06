@@ -504,8 +504,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
-<!-- <script src="/dist/App.js"></script> -->
-
 <script>
 function logout(){
       // var baseUrl = $('#base_url').val();
@@ -615,7 +613,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=8') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=9') }}"></script>
 
 </body>
 </html>
