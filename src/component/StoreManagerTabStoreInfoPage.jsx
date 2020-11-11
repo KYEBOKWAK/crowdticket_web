@@ -147,6 +147,10 @@ class StoreManagerTabStoreInfoPage extends Component{
       this.setState({
         channels: _channels.concat(),
         channel_ori_data: _channels.concat()
+      }, () => {
+        if(this.state.channels.length === 0){
+          this.addChannels();
+        }
       })
     }, (error) => {
 
@@ -227,6 +231,11 @@ class StoreManagerTabStoreInfoPage extends Component{
       if(!channelData){
         //삭제됨
         _removeChannelList.push(data);
+      }else {
+        if(channelData.channel_link_url === ''){
+          //빈칸이여도 삭제
+          _removeChannelList.push(data);
+        }
       }
     }
 
@@ -253,6 +262,10 @@ class StoreManagerTabStoreInfoPage extends Component{
     for(let i = 0 ; i < this.state.channels.length ; i++){
       let data = this.state.channels[i];
       if(data.channel_id === null){
+        if(data.channel_link_url === ''){
+          continue;
+        }
+
         _addChannelData.push(data);
       }
     }
@@ -344,9 +357,7 @@ class StoreManagerTabStoreInfoPage extends Component{
     })
   }
 
-  clickPlusButton(e){
-    e.preventDefault();
-
+  addChannels(){
     let _channels = this.state.channels.concat();
 
     if(_channels.length === MAX_CATEGORY_LENGTH){
@@ -366,6 +377,13 @@ class StoreManagerTabStoreInfoPage extends Component{
     this.setState({
       channels: _channels.concat()
     })
+  }
+
+  clickPlusButton(e){
+    e.preventDefault();
+
+    this.addChannels();
+    
   }
 
   clickSubButton(e, index){
