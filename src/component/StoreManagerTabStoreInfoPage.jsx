@@ -294,8 +294,9 @@ class StoreManagerTabStoreInfoPage extends Component{
       store_user_id: this.props.store_user_id,
       channels: this.state.channels
     }, (result) => {
+      this.requestStoreChannels()
       stopLoadingPopup();
-      swal("저장 성공!", "", "success");
+      swal("저장 성공!", "", "success");      
     }, (error) => {
       stopLoadingPopup();
     })
