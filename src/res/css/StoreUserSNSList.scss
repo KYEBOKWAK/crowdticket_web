@@ -1,0 +1,35 @@
+.StoreUserSNSList {
+  // position: absolute;
+  // bottom: 32px;
+  // right: 32px;
+  // width: 20px;
+  // height: 20px;
+
+  .sns_list_container {
+    display: flex;
+  }
+
+  .sns_img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sns_img_container {
+    margin-left: 30px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  @media (max-width: 520px){
+    /*모바일일때*/
+    // right: 24px;
+    // bottom: 77px;
+
+    .sns_img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .sns_img_container {
+      margin-left: 20px;
+    }
+  }
+}

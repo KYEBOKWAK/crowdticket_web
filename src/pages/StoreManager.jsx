@@ -368,16 +368,16 @@ class StoreManager extends Component {
       contentPage = <StoreManagerTabStoreInfoPage store_user_id={this.state.store_user_id}></StoreManagerTabStoreInfoPage>;
     }
     else if(this.state.selectTabKey === TAB_ITEM_MANAGER){
-      contentPage = <StoreManagerTabItemPage store_id={this.state.store_id}></StoreManagerTabItemPage>;
+      contentPage = <StoreManagerTabItemPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabItemPage>;
     }
     else if(this.state.selectTabKey === TAB_ORDER_LIST){
-      contentPage = <StoreManagerTabOrderListPage store_id={this.state.store_id}></StoreManagerTabOrderListPage>;
+      contentPage = <StoreManagerTabOrderListPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabOrderListPage>;
     }
     else if(this.state.selectTabKey === TAB_ASK_LIST){
-      contentPage = <StoreManagerTabAskOrderListPage store_id={this.state.store_id}></StoreManagerTabAskOrderListPage>;
+      contentPage = <StoreManagerTabAskOrderListPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabAskOrderListPage>;
     }
     else if(this.state.selectTabKey === TAB_STORE_ACCOUNT){
-      contentPage = <StoreManagerTabAccountPage store_id={this.state.store_id}></StoreManagerTabAccountPage>;
+      contentPage = <StoreManagerTabAccountPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabAccountPage>;
     }
     else{
       contentPage = <StoreManagerTabTestPage></StoreManagerTabTestPage>;

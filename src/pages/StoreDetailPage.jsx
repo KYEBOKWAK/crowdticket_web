@@ -20,6 +20,8 @@ import Types from '../Types';
 
 // import FlatList from 'flatlist-react';
 
+import StoreUserSNSList from '../component/StoreUserSNSList';
+
 const MENU_STATE_CONTENTS = 'MENU_STATE_CONTENTS';
 const MENU_STATE_REVIEW = 'MENU_STATE_REVIEW';
 
@@ -484,6 +486,7 @@ class StoreDetailPage extends Component {
                 </div>
               </div>
               <img className={'user_img'} src={this.state.profile_photo_url} />
+              <StoreUserSNSList store_id={this.state.store_id}></StoreUserSNSList>
             </div>
         </div>
 

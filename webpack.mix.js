@@ -48,6 +48,7 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreAddItemPage.scss', 'dist/css/')
 .sass('src/res/css/StoreManagerTabOrderListPage.scss', 'dist/css/')
 .sass('src/res/css/StoreManagerTabAccountPage.scss', 'dist/css/')
+.sass('src/res/css/StoreUserSNSList.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

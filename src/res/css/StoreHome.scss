@@ -45,6 +45,7 @@ $thumb_item_height: 95px;
     width: 100%;
     margin-top: 40px;
     overflow: hidden;
+    padding-right: 0px;
   }
 
   .thumb_title_label{
@@ -81,6 +82,20 @@ $thumb_item_height: 95px;
   .contents_list_title {
     font-size: 20px;
     margin-bottom: 24px;
+  }
+
+  .blur_thumb_cover {
+    width: 80px;
+    height: 100%;
+    background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0) 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    pointer-events: none;
+  }
+
+  .viewport{
+    position: relative;
   }
   
 

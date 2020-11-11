@@ -123,6 +123,33 @@ class StoreHome extends Component {
   requestCreatorStore(){
     axios.post('/store/any/list', {}, 
     (result) => {
+
+      //test START
+      /*
+      console.log(result.list);
+      let testlist = [];
+      let index = 0;
+      for(let i = 0 ; i < 3 ; i++){
+        for(let j = 0 ; j < result.list.length ; j++){
+          // let test = result.list[j];
+          result.list[j].id = index;
+          let test = result.list[j];
+          // test.id = index;
+          index++;
+
+          console.log(test);
+          testlist.push(test);
+          
+        }
+      }
+
+      console.log(testlist);
+
+      const _galleryItems = testlist.map(item => this.storeItem(item));
+      */
+      //test END
+
+      // 원본코드
       const _galleryItems = result.list.map(item => this.storeItem(item));
     
       this.setState({
@@ -170,6 +197,8 @@ class StoreHome extends Component {
           <div className={'viewport'}>
             <div className={'scrollable-content'} style={{display: 'flex', flexDirection: 'row',}}>
               {this.state.galleryItems}
+            </div>
+            <div className={'blur_thumb_cover'}>
             </div>
           </div>
         </div>

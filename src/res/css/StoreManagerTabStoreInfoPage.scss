@@ -1,3 +1,5 @@
+$button_width: 35px;
+
 .StoreManagerTabStoreInfoPage {
   padding-top: 32px;
   padding-bottom: 64px;
@@ -39,8 +41,89 @@
     color: #ffffff;
     margin-top: 20px;
   }
+
+  .category_container {
+    display: flex;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  .select_box {
+    // width: 100%;
+    width: 40%;
+    height: 52px;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #4d4d4d;
+    padding-left: 16px;
+    padding-right: 12px;
+    position: relative;
+    min-width: 80px;
+    // margin-top: 16px;
+  }
+
+  .select_tag {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .category_input {
+    margin-left: 10px;
+  }
+
+  .category_button_container {
+    display: flex;
+    margin-left: 5px;
+  }
+  .plus_button {
+    border: 3px solid;
+    border-color: #00bfff;
+    width: $button_width;
+    height: $button_width;
+    font-weight: bold;
+    font-size: 20px;
+    color: #00bfff;
+    margin-right: 5px;
+  }
+
+  .sub_button {
+    border: 3px solid;
+    border-color: #e6e6e6;
+    width: $button_width;
+    height: $button_width;
+    font-weight: bold;
+    font-size: 20px;
+    color: #e6e6e6;
+    margin-right: 5px;
+  }
+
+  .fake_button {
+    width: $button_width;
+    height: $button_width;
+    margin-right: 5px;
+  }
+
+  .category_max_text {
+    font-size: 11px;
+    color: #000000;
+    margin-top: 5px;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
     padding-top: 0px;
+
+    .select_box {
+      padding-left: 3px;
+      padding-right: 3px;
+    }
   }
 }
