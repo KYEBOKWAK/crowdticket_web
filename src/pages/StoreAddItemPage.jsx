@@ -115,6 +115,34 @@ class StoreAddItemPage extends Component{
   // }
 
   componentDidMount(){
+
+    const myID = Number(document.querySelector('#myId').value);
+    if(myID === 0){
+      //ID값이 0이면 로그인 안함.
+      alert("관리자만 접근 가능합니다.");
+    }else{
+
+      let store_id = document.querySelector('#store_id').value;
+      if(store_id){
+        store_id = Number(store_id);
+        axios.post("/store/any/info/storeid", {
+          store_id: store_id
+        }, (result) => {
+          this.initAddItemPage(result.data.store_user_id);
+        }, (error) => {
+
+        })
+      }else{
+        this.initAddItemPage(myID);
+      }
+      // console.log(store_id);
+
+      // this.requestLoginToken(myID);
+      // store.dispatch(actions.setUserID(myID));
+      
+    }
+
+    /*
     const myID = Number(document.querySelector('#myId').value);
     if(myID === 0){
       //ID값이 0이면 로그인 안함.
@@ -122,7 +150,9 @@ class StoreAddItemPage extends Component{
     }else{
       // this.requestLoginToken(myID);
       // store.dispatch(actions.setUserID(myID));
-      axios.post("/store/info/userid", {}, 
+      axios.post("/store/info/userid", {
+        // store_user_id: this.props.store_user_id
+      }, 
       (result) => {
 
         const pageState = document.querySelector('#add_item_page_state').value;
@@ -144,12 +174,65 @@ class StoreAddItemPage extends Component{
 
       })
     }
+    */
   };
 
   componentWillUnmount(){
   };
 
   componentDidUpdate(){
+  }
+
+  initAddItemPage(store_user_id){
+    axios.post("/store/info/userid", {
+      store_user_id: store_user_id
+    }, 
+    (result) => {
+      const pageState = document.querySelector('#add_item_page_state').value;
+      let item_id = document.querySelector('#item_id').value;
+      if(item_id){
+        item_id = Number(item_id);
+      }
+      if(pageState === 'ADD_PAGE_STATE_EDIT'){
+        axios.post("/store/any/info/itemid", {
+          store_item_id: item_id
+        }, (result_item) => {
+          if(result_item.data.store_id !== result.data.store_id){
+            alert("주인장이 아닙니다!");
+            return;
+          }
+
+          this.setState({
+            store_user_id: store_user_id,
+            store_id: result.data.store_id,
+            item_id: item_id,
+            pageState: pageState,
+            isLogin: true
+          }, () => {
+            this.requestItemInfo();
+          })
+
+        }, (error_item) => {
+
+        });
+
+      }else{
+        this.setState({
+          store_user_id: store_user_id,
+          store_id: result.data.store_id,
+          item_id: item_id,
+          pageState: pageState,
+          isLogin: true
+        }, () => {
+          this.requestItemInfo();
+        })
+      }
+     
+
+      
+    }, (error) => {
+
+    })
   }
 
   getStateShow(item_state){
@@ -276,6 +359,12 @@ class StoreAddItemPage extends Component{
         content: this.state.item_content,
         ask: this.state.item_ask
       }, (result) => {
+        if(this.state.imageBinary === ''){
+          stopLoadingPopup();
+          swal("등록완료!", '', 'success');
+          return;
+        }
+
         axios.post("/uploader/save/img", {
           target_id: result.item_id,
           imageBinary: this.state.imageBinary,
@@ -286,35 +375,6 @@ class StoreAddItemPage extends Component{
 
 
           swal("등록완료!", '', 'success');
-
-          /*
-          swal("등록완료!", {
-            buttons: {
-              nosave: {
-                text: "더 추가하기",
-                value: "close",
-              },
-              save: {
-                text: "돌아가기",
-                value: "back",
-              },
-            },
-          })
-          .then((value) => {
-            switch (value) {
-              case "back":
-                {
-                  this.goBack();
-                }
-                break;
-              case "close":
-                {
-
-                }break;
-            }
-          });
-
-          */
         }, (error) => {
           stopLoadingPopup();
           alert("에러");
@@ -336,6 +396,12 @@ class StoreAddItemPage extends Component{
         item_id: this.state.item_id,
       }, (result_update) => {
         if(!this.state.isChangeImg){
+          stopLoadingPopup();
+          this.showEditPopup();
+          return;
+        }
+
+        if(this.state.imageBinary === ''){
           stopLoadingPopup();
           this.showEditPopup();
           return;
@@ -412,6 +478,10 @@ class StoreAddItemPage extends Component{
     }
     
     let hrefURL = baseURL+'/manager/store/?menu=TAB_ITEM_MANAGER';
+    const isAdmin = document.querySelector('#isAdmin').value;
+    if(isAdmin){
+      hrefURL = baseURL+'/admin/manager/store/'+this.state.store_id+'/?menu=TAB_ITEM_MANAGER';
+    }
     
     window.location.href = hrefURL;
   }

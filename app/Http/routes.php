@@ -388,4 +388,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //오더 98번 체크
     Route::get('projects/{id}/orderinitstatecheck', 'AdminController@getOrderStateInitCheck');
+
+    Route::get('manager/store/{id}', 'ProjectController@getStoreCTAdminManager');
+
+    Route::get('manager/store/{id}/item/addpage', 'ProjectController@getStoreAdminAddItemPage');
+
+    Route::get('manager/store/{store_id}/item/{item_id}/editpage', 'ProjectController@getStoreAdminEditItemPage');
 });

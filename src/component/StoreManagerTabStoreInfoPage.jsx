@@ -58,27 +58,6 @@ class StoreManagerTabStoreInfoPage extends Component{
   componentDidMount(){
     this.requestStoreInfo();
     this.requestStoreChannelCategory();
-    // const myID = Number(document.querySelector('#myId').value);
-    // if(myID === 0){
-    //   alert('로그인을 해주세요');
-    //   return;
-    // }else{
-    //   // this.requestLoginToken(myID, true);
-    //   this.setState({
-    //     myID: myID
-    //   }, () => {
-    //     this.requestStoreInfo();
-    //   })
-    // }
-
-    // <div className={'select_box'}>
-    //         {this.state.item_state_show}
-    //         <img src={icon_box} />
-
-    //         <select className={'select_tag'} value={this.state.item_state} onChange={this.onChangeSelect}>
-    //           {this.state.item_state_list}
-    //         </select>
-    //       </div>
   };
 
   componentWillUnmount(){
@@ -89,7 +68,7 @@ class StoreManagerTabStoreInfoPage extends Component{
 
   requestStoreInfo(){
     axios.post("/store/info/userid", {
-
+      store_user_id: this.props.store_user_id
     }, (result) => {
       
       this.setState({

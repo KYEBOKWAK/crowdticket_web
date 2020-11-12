@@ -79,7 +79,7 @@ class StoreManagerTabAccountPage extends Component{
 
   requestStoreInfo(){
     axios.post("/store/info/userid", {
-
+      store_user_id: this.props.store_user_id
     }, (result) => {
       
       this.setState({        

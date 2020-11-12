@@ -66,8 +66,16 @@ class StoreManagerTabItemPage extends Component{
       baseURL = baseURLDom.value;
     }
 
-    // let goURL = baseURL + 'store/'+this.props.store_id+'/item/addpage';
+
     let goURL = baseURL + '/store/item/addpage';
+    // let goURL = baseURL + '/store/item/'+this.props.store_id+'/addpage';
+
+    const isAdmin = document.querySelector('#isAdmin').value;
+    if(isAdmin){
+      goURL = baseURL + '/admin/manager/store/'+this.props.store_id+'/item/addpage';
+    }
+
+    // console.log(goURL);
 
     window.location.href = goURL;
 
@@ -258,7 +266,7 @@ class StoreManagerTabItemPage extends Component{
       }
 
       const itemDom = <div key={data.id} className={'item_box'}>
-                        <StoreContentsListItem state={data.state} store_id={this.state.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.deleteItem(item_id, title)}}></StoreContentsListItem>
+                        <StoreContentsListItem state={data.state} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.deleteItem(item_id, title)}}></StoreContentsListItem>
                       </div>
 
       itemListDom.push(itemDom);

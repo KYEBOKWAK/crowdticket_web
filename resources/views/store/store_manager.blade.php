@@ -31,6 +31,9 @@ rel="stylesheet"/>
 <input id='app_page_key' type='hidden' value='WEB_STORE_PAGE_MANAGER'/>
 <input id='store_manager_tabmenu' type='hidden' value='{{$tabmenu}}'/>
 
+<input id='isAdmin' type='hidden' value='{{$isAdmin}}'/>
+<input id='store_id' type='hidden' value='{{$store_id}}'/>
+
 @endsection
 
 @section('js')

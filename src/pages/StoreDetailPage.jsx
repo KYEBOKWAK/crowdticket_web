@@ -52,7 +52,9 @@ class StoreDetailPage extends Component {
       name: '',
       store_content: '',
 
-      commentCount: 0
+      commentCount: 0,
+
+      isAdmin: false
 
       // window_width: window.innerWidth,
       // window_height: window.innerHeight,
@@ -112,6 +114,10 @@ class StoreDetailPage extends Component {
       menuState: _menuState
     }, function(){
       this.requestStoreInfo();
+
+      if(isLogin()){
+        this.requestIsAdmin();
+      }
     });
 
     window.addEventListener('resize', this.updateDimensions);
@@ -153,6 +159,18 @@ class StoreDetailPage extends Component {
               <img style={{width: 100, height: 100, borderRadius: 50}} draggable='false' src={data.img}/>
               {data.title+data.id}
             </div>
+  }
+
+  requestIsAdmin(){
+    axios.post("/user/isadmin", {},
+    (result) => {
+      console.log(result);
+      this.setState({
+        isAdmin: result.isAdmin
+      })
+    }, (error) => {
+
+    })
   }
 
   requestStoreInfo(){
@@ -298,6 +316,22 @@ class StoreDetailPage extends Component {
     }
 
     let goURL = baseURL + '/manager/store';
+
+    window.location.href = goURL;
+  }
+
+  clickCTAdmin(e){
+    e.preventDefault();
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    //manager/store/{id}/admin
+    let goURL = baseURL + '/admin/manager/store/' + this.state.store_id;
 
     window.location.href = goURL;
   }
@@ -460,10 +494,17 @@ class StoreDetailPage extends Component {
     }
 
     let managerButton = <></>;
+    let adminManagerButton = <></>;
     if(Util.isAdmin(this.state.store_user_id)){
       managerButton = <button className={'admin_button'} onClick={(e) => {this.clickManagerPage(e)}}>
                         관리자 페이지
                       </button>
+    }
+
+    if(this.state.isAdmin){
+      adminManagerButton = <button className={'ct_admin_button'} onClick={(e) => {this.clickCTAdmin(e)}}>
+                              크티 관리자
+                            </button>
     }
 
     return (
@@ -479,6 +520,7 @@ class StoreDetailPage extends Component {
                   <div className={'flex_layer'} style={{alignItems: 'center'}}>
                     {this.state.title}
                     {managerButton}
+                    {adminManagerButton}
                   </div>
                 </div>
                 <div className={'store_content'}>

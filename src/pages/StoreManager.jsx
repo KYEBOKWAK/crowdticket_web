@@ -92,19 +92,7 @@ class StoreManager extends Component {
     this.updateDimensions = this.updateDimensions.bind(this);
   }
 
-  componentDidMount(){
-    // history.pushState(null, null, location.href);
-    // window.onpopstate = function(event) {
-    //   console.log("sdfsdfasdf");
-    //   history.go(1);
-    // };
-    // const pageKeyDom = document.querySelector('#app_page_key');
-    // if(pageKeyDom){
-    //   console.log(pageKeyDom.value);
-    // }
-
-    // console.log(isLogin());
-    
+  componentDidMount(){    
     if(!isLogin())
     {
       // loginPopup(null, null);
@@ -120,48 +108,70 @@ class StoreManager extends Component {
       }, null);
       return;
     }else{
-      // this.setState({
-      //   isLogin: true
-      // })
     }
     
-
-    const myID = Number(document.querySelector('#myId').value);
-    if(myID === 0){
-      //ID값이 0이면 로그인 안함.
-      alert("관리자만 접근 가능합니다.");
-    }else{
-      // this.requestLoginToken(myID);
-      // store.dispatch(actions.setUserID(myID));
-
-      let _menuState = this.state.selectTabKey;
-      const store_manager_tabmenu_dom = document.querySelector('#store_manager_tabmenu');
-      if(store_manager_tabmenu_dom){
-        // console.log(store_alias_dom.value);
-        if(store_manager_tabmenu_dom.value){
-          _menuState = store_manager_tabmenu_dom.value;
-        }
-      }
-
-      axios.post("/store/info/userid", {}, 
-      (result) => {
-        this.setState({
-          store_user_id: myID,
-          nick_name: result.data.nick_name,
-          store_id: result.data.store_id,
-          isLogin: true,
-          selectTabKey: _menuState,
-          alias: result.data.alias
-        }, () => {
-          this.requestOrderList();
-          this.initScrollBooster();
-        })
+    const isAdmin = document.querySelector('#isAdmin').value;
+    if(isAdmin){
+      const store_id = Number(document.querySelector('#store_id').value);
+      axios.post("/store/any/info/storeid", {
+        store_id: store_id
+      }, (result) => {
+        this.initStoreManager(result.data.store_user_id);
       }, (error) => {
 
       })
+    }else{
+      const myID = Number(document.querySelector('#myId').value);
+      if(myID === 0){
+        //ID값이 0이면 로그인 안함.
+        alert("관리자만 접근 가능합니다.");
+        return;
+      }else{
+        this.initStoreManager(myID);
+      }
     }
+    // console.log(document.querySelector('#isAdmin').value);
+
+    
 
     window.addEventListener('resize', this.updateDimensions);
+  }
+
+  initStoreManager(user_id){
+    if(user_id === 0){
+      return;
+    }
+    // this.requestLoginToken(myID);
+    // store.dispatch(actions.setUserID(myID));
+
+    let _menuState = this.state.selectTabKey;
+    const store_manager_tabmenu_dom = document.querySelector('#store_manager_tabmenu');
+    if(store_manager_tabmenu_dom){
+      // console.log(store_alias_dom.value);
+      if(store_manager_tabmenu_dom.value){
+        _menuState = store_manager_tabmenu_dom.value;
+      }
+    }
+
+    axios.post("/store/info/userid", {
+      store_user_id: user_id
+    }, 
+    (result) => {
+      this.setState({
+        store_user_id: user_id,
+        nick_name: result.data.nick_name,
+        store_id: result.data.store_id,
+        isLogin: true,
+        selectTabKey: _menuState,
+        alias: result.data.alias
+      }, () => {
+        this.requestOrderList();
+        this.initScrollBooster();
+      })
+    }, (error) => {
+
+    })
+    
   }
 
   initScrollBooster(){

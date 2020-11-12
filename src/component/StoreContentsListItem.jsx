@@ -88,8 +88,14 @@ class StoreContentsListItem extends Component{
       baseURL = baseURLDom.value;
     }
 
-    // let goURL = baseURL + 'store/'+this.props.store_id+'/item/addpage';
+    
     let goURL = baseURL + '/store/item/'+this.props.store_item_id+'/editpage';
+    const isAdmin = document.querySelector('#isAdmin').value;
+    if(isAdmin){
+      //여기에 store_id가 undefind임...
+      goURL = baseURL + '/admin/manager/store/'+this.props.store_id+'/item/'+this.props.store_item_id+'/editpage';
+    }
+    // console.log(goURL);
     window.location.href = goURL;
   }
 

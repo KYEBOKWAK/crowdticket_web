@@ -2024,7 +2024,23 @@ class ProjectController extends Controller
       }
 
       return view('store.store_manager', [
-        'tabmenu' => $tabMenu
+        'tabmenu' => $tabMenu,
+        'isAdmin' => false,
+        'store_id' => null
+      ]);
+    }
+
+    public function getStoreCTAdminManager(Request $request, $id)
+    {
+      $tabMenu = null;
+      if($request->has('menu')){
+        $tabMenu = $request->menu;
+      }
+
+      return view('store.store_manager', [
+        'tabmenu' => $tabMenu,
+        'isAdmin' => true,
+        'store_id' => $id
       ]);
     }
 
@@ -2032,7 +2048,9 @@ class ProjectController extends Controller
     {
       return view('store.store_add_item', [
         'item_id' => null,
-        'add_item_page_state' => 'ADD_PAGE_STATE_ADD'
+        'add_item_page_state' => 'ADD_PAGE_STATE_ADD',
+        'store_id' => null,
+        'isAdmin' => false
       ]);
     }
 
@@ -2040,7 +2058,29 @@ class ProjectController extends Controller
     {
       return view('store.store_add_item', [
         'item_id' => $id,
-        'add_item_page_state' => 'ADD_PAGE_STATE_EDIT'
+        'add_item_page_state' => 'ADD_PAGE_STATE_EDIT',
+        'store_id' => null,
+        'isAdmin' => false
+      ]);
+    }
+
+    public function getStoreAdminAddItemPage($store_id)
+    {
+      return view('store.store_add_item', [
+        'item_id' => null,
+        'add_item_page_state' => 'ADD_PAGE_STATE_ADD',
+        'store_id' => $store_id,
+        'isAdmin' => true
+      ]);
+    }
+
+    public function getStoreAdminEditItemPage($store_id, $id)
+    {
+      return view('store.store_add_item', [
+        'item_id' => $id,
+        'add_item_page_state' => 'ADD_PAGE_STATE_EDIT',
+        'store_id' => $store_id,
+        'isAdmin' => true
       ]);
     }
 
