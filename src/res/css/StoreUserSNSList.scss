@@ -18,6 +18,11 @@
     margin-left: 30px;
     background-color: rgba(0, 0, 0, 0);
   }
+
+  .sns_img_item_detail_container {
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0);
+  }
   @media (max-width: 520px){
     /*모바일일때*/
     // right: 24px;
@@ -30,6 +35,11 @@
 
     .sns_img_container {
       margin-left: 20px;
+    }
+
+    .sns_img_item_detail_container {
+      margin-bottom: 16px;
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 }

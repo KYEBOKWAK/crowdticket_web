@@ -30,6 +30,7 @@ class StoreItemDetailPage extends Component{
     this.state = {
       store_item_id: null,
       store_id: null,
+      store_alias: '',
       typeContent: '',
       title: '',
       price: 0,
@@ -103,6 +104,7 @@ class StoreItemDetailPage extends Component{
     }, (result) => {
       this.setState({
         store_id: result.data.store_id,
+        store_alias: result.data.alias,
         store_title: result.data.title,
         store_content: result.data.content,
         store_user_profile_photo_url: result.data.profile_photo_url,
@@ -113,24 +115,6 @@ class StoreItemDetailPage extends Component{
   }
 
   clickOrder(e){
-
-    // window.$.ajax({
-		// 	'url': 'http://localhost:8000/order/store',
-		// 	'method': 'get',
-		// 	'data': {abc: 'aaa'},
-		// 	'success': function(result){console.log(result)},
-		// 	'error': function(){console.log('error')}
-		// })
-    /*
-    axios.post('http://localhost:8000/order/store', {
-      test: 'abc'
-    }, (function(result){
-      console.log(result);
-    }), function(error){
-      console.log(error);
-    })
-    */
-
    e.preventDefault();
 
    let baseURL = 'https://crowdticket.kr'
@@ -146,6 +130,25 @@ class StoreItemDetailPage extends Component{
 
   }
 
+  clickGoStore(e){
+    e.preventDefault();
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+    
+    let tailUrl = this.state.store_alias;
+    if(tailUrl === ''){
+      tailUrl = this.state.store_id;
+    }
+    let hrefURL = baseURL+'/store/'+tailUrl;
+    
+    window.location.href = hrefURL;
+  }
+
   render(){
     if(this.state.store_item_id === null){
       return(
@@ -156,21 +159,41 @@ class StoreItemDetailPage extends Component{
     let store_user_dom = <></>;
     if(this.state.store_id){
       store_user_dom = <div className={'user_info_container'}>
-                          <div style={{display: 'flex', alignItems: 'center'}}>
-                            <img className={'user_img'} src={this.state.store_user_profile_photo_url} />
-                            <div className={'store_contents_container'}>
-                              <div className={'store_contents_title'}>
-                                {this.state.store_title}
+                          <div className={'user_info_wrapper'}>
+                            <div style={{display: 'flex', alignItems: 'center'}}>
+                              <div style={{}}>
+                                <img className={'user_img'} src={this.state.store_user_profile_photo_url} />
                               </div>
-                              <div className={'store_contents_content'}>
-                                {this.state.store_content}
+                              <div className={'store_contents_container'}>
+                                <div className={'store_contents_title'}>
+                                  {this.state.store_title}
+                                </div>
+                                <div className={'store_contents_content'}>
+                                  {this.state.store_content}
+                                </div>
                               </div>
                             </div>
                           </div>
-                          <div style={{display: "flex", alignItems: 'flex-end'}}>
-                            <StoreUserSNSList store_id={this.state.store_id} isPositionNone={true}></StoreUserSNSList>
+                          <div style={{display: "flex", alignItems: 'flex-start'}}>
+                            <StoreUserSNSList store_id={this.state.store_id} inItemDetailPage={true}></StoreUserSNSList>
                           </div>
                         </div>
+      // store_user_dom = <div className={'user_info_container'}>
+      //                     <div style={{display: 'flex', alignItems: 'center'}}>
+      //                       <img className={'user_img'} src={this.state.store_user_profile_photo_url} />
+      //                       <div className={'store_contents_container'}>
+      //                         <div className={'store_contents_title'}>
+      //                           {this.state.store_title}
+      //                         </div>
+      //                         <div className={'store_contents_content'}>
+      //                           {this.state.store_content}
+      //                         </div>
+      //                       </div>
+      //                     </div>
+      //                     <div style={{display: "flex", alignItems: 'flex-end'}}>
+      //                       <StoreUserSNSList store_id={this.state.store_id} inItemDetailPage={true}></StoreUserSNSList>
+      //                     </div>
+      //                   </div>
     }
 
     return(
@@ -192,9 +215,16 @@ class StoreItemDetailPage extends Component{
             {this.state.content}
           </div>
 
-          <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'}>
-            주문하기
-          </button>
+          <div className={'flex_layer'}>
+            <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'}>
+              주문하기
+            </button>
+            <div className={'button_gap'}>
+            </div>
+            <button onClick={(e) => {this.clickGoStore(e)}} className={'button_go_store'}>
+              상점가기
+            </button>
+          </div>
         </div>
       </div>
     )

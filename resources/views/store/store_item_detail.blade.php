@@ -11,9 +11,9 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=4') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=5') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreUserSNSList.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreUserSNSList.css?version=1') }}" rel="stylesheet"/>
 
 @endsection
 

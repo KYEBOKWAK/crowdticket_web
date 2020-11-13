@@ -162,24 +162,32 @@ class StoreUserSNSList extends Component{
   }
 
   render(){
-    let snsList = [];
-    snsList = this.state.snsInfoList.map((item) => {
-      return <button className={'sns_img_container'} key={item.id} onClick={(e) => {this.clickSNS(e, item.link_url)}}>
-              <img className={'sns_img'} src={item.img_store_url} />
-            </button>
-    })
-
 
     let StoreUserSNSListStyle = {
       
     }
-    if(this.props.isPositionNone){
+
+    let storeListContainerStyle = {
+
+    }
+
+    let buttonClassName = '';
+
+    if(this.props.inItemDetailPage){
+      storeListContainerStyle = {
+        flexDirection: 'column'
+      }
+
+      buttonClassName = 'sns_img_item_detail_container';
       // StoreUserSNSListStyle = {
       //   position: 'relative', 
       //   // bottom: 32, 
       //   // right: 32
       // }
     }else {
+
+      buttonClassName = 'sns_img_container';
+
       StoreUserSNSListStyle = {
         position: 'absolute', 
         bottom: this.state.bottom, 
@@ -187,9 +195,17 @@ class StoreUserSNSList extends Component{
       }
     }
 
+
+    let snsList = [];
+    snsList = this.state.snsInfoList.map((item) => {
+      return <button className={buttonClassName} key={item.id} onClick={(e) => {this.clickSNS(e, item.link_url)}}>
+              <img className={'sns_img'} src={item.img_store_url} />
+            </button>
+    })
+
     return(
       <div className={'StoreUserSNSList'} style={StoreUserSNSListStyle}>
-        <div className={'sns_list_container'}>
+        <div className={'sns_list_container'} style={storeListContainerStyle}>
           {snsList}
         </div>
       </div>
@@ -219,7 +235,7 @@ class StoreUserSNSList extends Component{
 // export default connect(mapStateToProps, mapDispatchToProps)(StoreItemDetailPage);
 
 StoreUserSNSList.defaultProps = {
-  isPositionNone: false
+  inItemDetailPage: false
 }
 
 export default StoreUserSNSList;

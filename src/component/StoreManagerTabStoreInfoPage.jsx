@@ -25,6 +25,7 @@ const INPUT_STORE_MANAGER_TITLE = 'INPUT_STORE_MANAGER_TITLE';
 const INPUT_STORE_MANAGER_CONTENT = 'INPUT_STORE_MANAGER_CONTENT';
 
 const MAX_CATEGORY_LENGTH = 6;
+const MAX_CONTENT_LENGTH = 45;
 
 class StoreManagerTabStoreInfoPage extends Component{
 
@@ -470,7 +471,10 @@ class StoreManagerTabStoreInfoPage extends Component{
         <input className={'input_box'} type="text" name={'email'} placeholder={'상점 이메일을 입력해주세요.'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_EMAIL)}}/> */}
 
         <div className={'input_label'}>상점 소개글</div>
-        <textarea className={'textarea_box'} value={this.state.content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTENT)}} maxLength={255} placeholder={"상점 소개글을 입력해주세요"}></textarea>
+        <textarea className={'textarea_box'} value={this.state.content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTENT)}} maxLength={MAX_CONTENT_LENGTH} placeholder={"상점 소개글을 입력해주세요"}></textarea>
+        <div className={'content_length_container'}>
+          {this.state.content.length}/{MAX_CONTENT_LENGTH}
+        </div>
 
         <div className={'input_label'}>소셜미디어 채널</div>
         <div>

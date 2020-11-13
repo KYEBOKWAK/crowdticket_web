@@ -23,7 +23,7 @@
   <link href="{{ asset('/dist/css/StoreReviewList.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreReviewItem.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/StoreUserSNSList.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreUserSNSList.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 
