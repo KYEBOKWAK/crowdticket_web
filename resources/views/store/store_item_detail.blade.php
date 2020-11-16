@@ -13,7 +13,7 @@
 
 <link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=7') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreUserSNSList.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreUserSNSList.css?version=2') }}" rel="stylesheet"/>
 
 @endsection
 
