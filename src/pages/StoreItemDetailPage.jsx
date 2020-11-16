@@ -214,7 +214,7 @@ class StoreItemDetailPage extends Component{
           pauseText = "판매가 중지되었습니다.";
           buttonText = "판매중지";
         }else if(this.state.item_state === Types.item_state.SALE_PAUSE){
-          pauseText = "콘텐츠 재 입고 준비 중입니다. \n 다음에 다시 찾아주세요!";
+          pauseText = "콘텐츠 재 입고 준비 중입니다. 다음에 다시 찾아주세요!";
 
           buttonText = "준비 중";
         }
