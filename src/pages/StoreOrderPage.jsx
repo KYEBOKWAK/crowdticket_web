@@ -298,8 +298,25 @@ class StoreOrderPage extends Component{
 
     let isOrder = this.isPassableOrder();
     if(isOrder){
-      this.requsetOrder();
+      // 
+      this.requestCheckState();
     }
+  }
+
+  requestCheckState(){
+    axios.post("/store/item/state/check", {
+      store_item_id: this.state.store_item_id
+    }, (result) => {
+      // console.log(result);
+      if(result.item_state !== Types.item_state.SALE){
+        swal("판매중인 상품이 아닙니다.", '', 'error');
+        return;
+      }
+
+      this.requsetOrder();
+    }, (error) => {
+
+    })
   }
 
   requsetOrder(){
@@ -697,71 +714,6 @@ class StoreOrderPage extends Component{
 
       </div>
     )
-    /*
-    return(
-      <>
-      <div>
-        주문하기
-      </div>
-
-      <div>
-        이건 아이템 정보입니다.
-        <div>{this.state.item_title}</div>
-        <img style={{width: 100, height: 100}} src={this.state.item_thumb_img_url} />
-        <div>{Util.getNumberWithCommas(this.state.item_price)}원</div>
-      </div>
-      <div>
-        신청자 정보
-      </div>
-      
-      <div>
-        <p>이름</p>
-        <input type="text" value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
-      </div>
-
-      <div>
-        <p>전화번호</p>
-        <input type="text" value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/>
-      </div>
-
-      <div>
-        <p>이메일</p>
-        <input type="text" value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/>
-      </div>
-
-      <div>
-        결제
-      </div>
-      
-      <div>
-        <p>카드번호</p>
-        <input type="text" value={this.state.card_number} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_NUMBER)}}/>
-      </div>
-
-      <div>
-        <p>카드년도(2020)</p>
-        <input type="text" value={this.state.card_yy} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_YY)}}/>
-      </div>
-      <div>
-        <p>카드 월</p>
-        <input type="text" value={this.state.card_mm} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_MM)}}/>
-      </div>
-      <div>
-        <p>생년월일(법인번호)</p>
-        <input type="text" value={this.state.card_birth} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_BIRTH)}}/>
-      </div>
-      <div>
-        <p>비번 앞2자리</p>
-        <input type="text" value={this.state.card_pw_2digit} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_PW_TWODIGIT)}}/>
-      </div>
-      
-      
-      <button onClick={(e) => {this.clickOrder(e)}}>
-        {Util.getNumberWithCommas(this.state.item_price)}원 주문하기
-      </button>
-      </>
-    )
-    */
   }
   
 };

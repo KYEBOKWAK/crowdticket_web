@@ -53,7 +53,8 @@ const Types = {
   },
   item_state: {
     SALE: 0,
-    SALE_STOP: 1
+    SALE_STOP: 1,
+    SALE_PAUSE: 2
   },
   project: {
     STATE_READY: 1,

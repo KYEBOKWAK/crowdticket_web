@@ -2,6 +2,11 @@
 #react_root{
   background-color: #fafafa;
   white-space: pre-line;
+
+  button:disabled {
+    background-color: rgb(204, 204, 204);
+    color: rgb(255, 255, 255);
+  }
 }
 
 .pageController {
@@ -37,4 +42,9 @@
 
 input::placeholder {
   color: #acacac;
+}
+
+.button_disabled {
+  background-color: rgb(204, 204, 204);
+  color: rgb(255, 255, 255);
 }

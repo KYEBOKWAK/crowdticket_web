@@ -5,6 +5,7 @@ import axios from '../lib/Axios';
 import Util from '../lib/Util';
 
 import StoreUserSNSList from '../component/StoreUserSNSList';
+import Types from '../Types';
 
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
@@ -40,6 +41,8 @@ class StoreItemDetailPage extends Component{
       store_title: '',
       store_content: '',
       store_user_profile_photo_url: '',
+
+      item_state: Types.item_state.SALE
     }
   };
 
@@ -87,11 +90,14 @@ class StoreItemDetailPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       const data = result.data;
+      
       this.setState({
         title: data.title,
         price: data.price,
         content: data.content,
-        thumb_img_url: data.img_url
+        thumb_img_url: data.img_url,
+
+        item_state: data.state
       })
     }, (error) => {
 
@@ -178,23 +184,29 @@ class StoreItemDetailPage extends Component{
                             <StoreUserSNSList store_id={this.state.store_id} inItemDetailPage={true}></StoreUserSNSList>
                           </div>
                         </div>
-      // store_user_dom = <div className={'user_info_container'}>
-      //                     <div style={{display: 'flex', alignItems: 'center'}}>
-      //                       <img className={'user_img'} src={this.state.store_user_profile_photo_url} />
-      //                       <div className={'store_contents_container'}>
-      //                         <div className={'store_contents_title'}>
-      //                           {this.state.store_title}
-      //                         </div>
-      //                         <div className={'store_contents_content'}>
-      //                           {this.state.store_content}
-      //                         </div>
-      //                       </div>
-      //                     </div>
-      //                     <div style={{display: "flex", alignItems: 'flex-end'}}>
-      //                       <StoreUserSNSList store_id={this.state.store_id} inItemDetailPage={true}></StoreUserSNSList>
-      //                     </div>
-      //                   </div>
     }
+
+    let isButtonDisabel = false;
+    let buttonText = '주문하기';
+    let pauseTextDom = <></>;
+    if(this.state.item_state === Types.item_state.SALE_STOP ||
+      this.state.item_state === Types.item_state.SALE_PAUSE){
+        isButtonDisabel = true;
+        buttonText = '';
+
+        let pauseText = "";
+        if(this.state.item_state === Types.item_state.SALE_STOP){
+          pauseText = "판매가 중지되었습니다.";
+          buttonText = "판매중지";
+        }else if(this.state.item_state === Types.item_state.SALE_PAUSE){
+          pauseText = "지금은 크리에이터의 사정으로 잠시 해당 상품 주문을 받을 수 없습니다. \n 다음에 다시 찾아주세요!";
+
+          buttonText = "준비 중";
+        }
+
+        pauseTextDom = <div className={'item_state_disabled_text'}>{pauseText}</div>
+      }
+      // console.log(this.state.item_state)
 
     return(
       <div className={'StoreItemDetailPage'}>
@@ -215,9 +227,10 @@ class StoreItemDetailPage extends Component{
             {this.state.content}
           </div>
 
+          {pauseTextDom}
           <div className={'flex_layer'}>
-            <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'}>
-              주문하기
+            <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'} disabled={isButtonDisabel}>
+              {buttonText}
             </button>
             <div className={'button_gap'}>
             </div>
