@@ -60,7 +60,7 @@ class StoreAddItemPage extends Component{
       item_state_show: '판매중',
       item_state_list: [
         <option key={Types.item_state.SALE} value={Types.item_state.SALE}>{'판매 중'}</option>,
-        <option key={Types.item_state.SALE_PAUSE} value={Types.item_state.SALE_PAUSE}>{'판매 일시중단'}</option>,
+        <option key={Types.item_state.SALE_PAUSE} value={Types.item_state.SALE_PAUSE}>{'판매 일시중지'}</option>,
         <option key={Types.item_state.SALE_STOP} value={Types.item_state.SALE_STOP}>{'판매 중단 및 비공개'}</option>
       ],
 
@@ -241,7 +241,7 @@ class StoreAddItemPage extends Component{
       return '판매 중';
     }
     else if(item_state === Types.item_state.SALE_PAUSE){
-      return '판매 일시중단';
+      return '판매 일시중지';
     }
     else{
       return '판매 중단 및 비공개';
