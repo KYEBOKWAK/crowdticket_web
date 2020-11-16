@@ -42,9 +42,18 @@ class StoreItemDetailPage extends Component{
       store_content: '',
       store_user_profile_photo_url: '',
 
-      item_state: Types.item_state.SALE
+      item_state: Types.item_state.SALE,
+      innerWidth: window.innerWidth
     }
+
+    this.updateDimensions = this.updateDimensions.bind(this);
   };
+
+  updateDimensions(){
+    this.setState({
+      innerWidth: window.innerWidth
+    })
+  }
 
   // shouldComponentUpdate(nextProps: any, nextState: any) {
   //   return true;
@@ -53,8 +62,6 @@ class StoreItemDetailPage extends Component{
   componentDidMount(){
     const storeItemIDDom = document.querySelector('#store_item_id');
     if(storeItemIDDom){
-      console.log(storeItemIDDom.value);
-
       this.setState({
         store_item_id: Number(storeItemIDDom.value)
       }, function(){
@@ -63,6 +70,8 @@ class StoreItemDetailPage extends Component{
         this.requestStoreInfo();
       })
     }
+
+    window.addEventListener('resize', this.updateDimensions);
 
     // history.pushState(null, null, location.href);
     // window.onpageshow = function(event){
@@ -188,7 +197,13 @@ class StoreItemDetailPage extends Component{
 
     let isButtonDisabel = false;
     let buttonText = '주문하기';
-    let pauseTextDom = <></>;
+    let warningNoticeDom = <></>;
+    let isMobile = false;
+
+    if(this.state.innerWidth < 520){
+      isMobile = true;
+    }
+
     if(this.state.item_state === Types.item_state.SALE_STOP ||
       this.state.item_state === Types.item_state.SALE_PAUSE){
         isButtonDisabel = true;
@@ -204,7 +219,7 @@ class StoreItemDetailPage extends Component{
           buttonText = "준비 중";
         }
 
-        pauseTextDom = <div className={'item_state_disabled_text'}>{pauseText}</div>
+        warningNoticeDom = <div className={'warning_notice_dom_container'}>{pauseText}</div>
       }
       // console.log(this.state.item_state)
 
@@ -227,7 +242,6 @@ class StoreItemDetailPage extends Component{
             {this.state.content}
           </div>
 
-          {pauseTextDom}
           <div className={'flex_layer'}>
             <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'} disabled={isButtonDisabel}>
               {buttonText}
@@ -239,6 +253,7 @@ class StoreItemDetailPage extends Component{
             </button>
           </div>
         </div>
+        {warningNoticeDom}
       </div>
     )
 
