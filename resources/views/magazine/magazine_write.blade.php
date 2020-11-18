@@ -323,7 +323,7 @@
 
 @section('js')
   <script src="{{ asset('/js/editor/summernote-lite.js?version=5') }}"></script>
-  <script src="{{ asset('/js/editor/summernote-lite-crowdticket.js?version=8') }}"></script>
+  <script src="{{ asset('/js/editor/summernote-lite-crowdticket-magazine.js?version=0') }}"></script>
 <script>
 $(document).ready(function () {
 
