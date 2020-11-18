@@ -365,6 +365,16 @@ class StoreReceiptItem extends Component{
     });
   }
 
+  compliteRefund(state){
+    stopLoadingPopup();
+
+    this.setState({
+      state: state
+    }, () => {
+      this.requestOrderInfo();
+    })
+  }
+
   requestRefund(refund_reason){
     showLoadingPopup('반려중입니다..');
     axios.post("/orders/store/cancel", {
@@ -375,13 +385,16 @@ class StoreReceiptItem extends Component{
         store_order_id: this.props.store_order_id,
         refund_reason: refund_reason
       }, (result) => {
-        stopLoadingPopup();
 
-        this.setState({
-          state: result.data.state
-        }, () => {
-          this.requestOrderInfo();
+        axios.post("/store/item/order/quantity", {
+          item_id: this.state.store_item_id
+        }, (result_quantity) => {
+          this.compliteRefund(result.data.state);
+        }, (error_quantity) => {
+          this.compliteRefund(result.data.state);
         })
+
+        
       }, (error) => {
         stopLoadingPopup();  
       })
