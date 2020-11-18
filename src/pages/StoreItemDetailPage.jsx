@@ -231,9 +231,9 @@ class StoreItemDetailPage extends Component{
     }
     else if(this.state.item_state === Types.item_state.SALE_LIMIT){
       isButtonDisabel = true;
-      buttonText = '품절됨';
+      buttonText = '준비 중';
 
-      warningNoticeDom = <div className={'warning_notice_dom_container'}>해당 상품은 품절되었습니다.</div>
+      warningNoticeDom = <div className={'warning_notice_dom_container'}>지금은 콘텐츠 요청이 너무 많아 잠시 주문을 마감합니다. 다음에 다시 찾아주세요!</div>
 
       resetDateDom = <div className={'reset_container'}>
                       재오픈 예정일
