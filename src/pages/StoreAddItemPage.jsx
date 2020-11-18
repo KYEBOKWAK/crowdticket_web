@@ -358,7 +358,8 @@ class StoreAddItemPage extends Component{
     _item_state_show = this.getStateShow(value);
 
     if(this.state.item_state === Types.item_state.SALE_LIMIT){
-      if(value === Types.item_state.SALE){
+
+      if(this.state.item_state_limit === Types.item_limit_state.LIMIT && value === Types.item_state.SALE){
         // alert('[품절] 상태에선 [판매중] 변경이 불가능합니다. 판매를 원하시면 [판매 수량 제한 옵션]을 변경해주세요.');
         axios.post("/store/item/soldout/check", {
           order_limit_count: this.state.order_limit_count,
