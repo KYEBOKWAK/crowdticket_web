@@ -28,6 +28,7 @@ class StoreDetailReceipt extends Component{
 
     this.state = {
       store_order_id: null,
+      store_item_id: null,
 
       name: '',
       contact: '',
@@ -57,7 +58,6 @@ class StoreDetailReceipt extends Component{
       }, function(){
         //아이템 정보 가져오기
         this.requestOrderInfo();
-        // console.log(this.state.store_order_id);
       })
     }
   };
@@ -88,7 +88,9 @@ class StoreDetailReceipt extends Component{
         refundButtonText: data.refundButtonText,
 
         isRefund: data.isRefund,
-        refundPolicyText: data.refundPolicyText
+        refundPolicyText: data.refundPolicyText,
+
+        store_item_id: data.item_id
       }, () => {
       })
     }, (error) => {
@@ -128,13 +130,25 @@ class StoreDetailReceipt extends Component{
     axios.post("/orders/store/cancel", {
       store_order_id: this.state.store_order_id
     }, (result) => {
-      stopLoadingPopup();
-      swal("주문 취소 성공!", 'success').then(() => {
-        window.location.reload();
+
+      axios.post("/store/item/order/quantity", {
+        item_id: this.state.store_item_id
+      }, (result_quantity) => {
+        this.successCancelPopup();
+      }, (error_quantity) => {
+        this.successCancelPopup();
       })
+
     }, (error) => {
       stopLoadingPopup();
       alert("취소 에러");
+    })
+  }
+
+  successCancelPopup(){
+    stopLoadingPopup();
+    swal("주문 취소 성공!", 'success').then(() => {
+      window.location.reload();
     })
   }
 
@@ -145,7 +159,7 @@ class StoreDetailReceipt extends Component{
     }
 
     let isRefundDisable = true;
-    let refundBackgroundColor = '#FAFAFA';
+    let refundBackgroundColor = '#cccccc';
     if(this.state.isRefund){
       isRefundDisable = false; 
       refundBackgroundColor = '#ffffff';
