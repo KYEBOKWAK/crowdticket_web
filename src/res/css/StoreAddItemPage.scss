@@ -170,6 +170,12 @@ $img_width: 100px;
     display: none;
   }
 
+  .limit_explain_text {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #acacac;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/
     padding-top: 32px;

@@ -308,6 +308,11 @@ class StoreOrderPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       // console.log(result);
+      if(result.item_state === Types.item_state.SALE_LIMIT){
+        swal("품절된 상품입니다.", '', 'error');
+        return;
+      }
+
       if(result.item_state !== Types.item_state.SALE){
         swal("판매중인 상품이 아닙니다.", '', 'error');
         return;
@@ -317,6 +322,18 @@ class StoreOrderPage extends Component{
     }, (error) => {
 
     })
+  }
+
+  goOrderComplite(order_id){
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      baseURL = baseURLDom.value;
+    }
+
+    let goURL = baseURL + '/complite/store/'+order_id;
+
+    window.location.href = goURL;
   }
 
   requsetOrder(){
@@ -349,20 +366,17 @@ class StoreOrderPage extends Component{
     }
 
     axios.post('/pay/store/onetime', {..._data}, 
-    (result) => {      
-      stopLoadingPopup();
-
-      //order_id
-      let baseURL = 'https://crowdticket.kr'
-      const baseURLDom = document.querySelector('#base_url');
-      if(baseURLDom){
-        baseURL = baseURLDom.value;
-      }
-
-      let goURL = baseURL + '/complite/store/'+result.order_id;
-
-      window.location.href = goURL;
-      
+    (result) => {
+      axios.post("/store/item/order/islast", {
+        item_id: this.state.store_item_id,
+        store_item_order_id: result.order_id
+      }, (result_last_order) => {
+        stopLoadingPopup();
+        this.goOrderComplite(result.order_id)
+      }, (error) => {
+        stopLoadingPopup();
+        this.goOrderComplite(result.order_id)
+      })      
     },
     (error) => {
       stopLoadingPopup();

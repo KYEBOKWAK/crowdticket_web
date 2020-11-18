@@ -34,6 +34,10 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  item_limit_state: {
+    UNLIMIT: 'UNLIMIT',
+    LIMIT: 'LIMIT'
+  },
   save_img: {
     user: 'SAVE_IMG_USER',
     item: 'SAVE_IMG_ITEM',
@@ -54,7 +58,8 @@ const Types = {
   item_state: {
     SALE: 0,
     SALE_STOP: 1,
-    SALE_PAUSE: 2
+    SALE_PAUSE: 2,
+    SALE_LIMIT: 3
   },
   project: {
     STATE_READY: 1,

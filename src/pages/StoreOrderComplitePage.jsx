@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import StoreReceiptItem from '../component/StoreReceiptItem';
+import axios from '../lib/Axios';
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -43,8 +44,7 @@ class StoreOrderComplitePage extends Component{
       }, function(){
         //아이템 정보 가져오기
       })
-    }
-    
+    }    
     // store_order_id
   };
 

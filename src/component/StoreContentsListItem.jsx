@@ -100,10 +100,18 @@ class StoreContentsListItem extends Component{
   }
 
   getStateShow(item_state){
+    console.log(item_state);
     if(item_state === Types.item_state.SALE){
       return '';
-    }else{
-      return '(판매중지)'
+    }
+    else if(item_state === Types.item_state.SALE_LIMIT){
+      return '(품절)';
+    }
+    else if(item_state === Types.item_state.SALE_PAUSE){
+      return '(판매 일시중지)';
+    }
+    else{
+      return '(판매중단 및 비공개)'
     }
   }
 

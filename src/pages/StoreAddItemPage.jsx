@@ -33,6 +33,7 @@ const INPUT_STORE_MANAGER_ADD_ITEM_TITLE = "INPUT_STORE_MANAGER_ADD_ITEM_TITLE";
 const INPUT_STORE_MANAGER_ADD_ITEM_CONTENT = "INPUT_STORE_MANAGER_ADD_ITEM_CONTENT";
 const INPUT_STORE_MANAGER_ADD_ITEM_PRICE = "INPUT_STORE_MANAGER_ADD_ITEM_PRICE";
 const INPUT_STORE_MANAGER_ADD_ITEM_ASK = "INPUT_STORE_MANAGER_ADD_ITEM_ASK";
+const INPUT_STORE_MANAGER_LIMIT_COUNT = "INPUT_STORE_MANAGER_LIMIT_COUNT";
 
 class StoreAddItemPage extends Component{
 
@@ -61,8 +62,19 @@ class StoreAddItemPage extends Component{
       item_state_list: [
         <option key={Types.item_state.SALE} value={Types.item_state.SALE}>{'판매 중'}</option>,
         <option key={Types.item_state.SALE_PAUSE} value={Types.item_state.SALE_PAUSE}>{'판매 일시중지'}</option>,
-        <option key={Types.item_state.SALE_STOP} value={Types.item_state.SALE_STOP}>{'판매 중단 및 비공개'}</option>
+        <option key={Types.item_state.SALE_STOP} value={Types.item_state.SALE_STOP}>{'판매 중단 및 비공개'}</option>,
+        <option key={Types.item_state.SALE_LIMIT} value={Types.item_state.SALE_LIMIT}>{'품절(강제 선택 불가)'}</option>
       ],
+
+      item_state_limit: Types.item_limit_state.UNLIMIT,
+      item_state_limit_show: '무제한',
+      item_state_limit_list: [
+        <option key={Types.item_limit_state.UNLIMIT} value={Types.item_limit_state.UNLIMIT}>{'무제한'}</option>,
+        <option key={Types.item_limit_state.LIMIT} value={Types.item_limit_state.LIMIT}>{'한주간 한정 수량 판매'}</option>
+      ],
+
+      order_limit_count: 0,
+      ori_order_limit_count: 0,
 
       contentType: '',
       imageBinary: '',
@@ -73,6 +85,7 @@ class StoreAddItemPage extends Component{
 
     this.onDrop = this.onDrop.bind(this);
     this.onChangeSelect = this.onChangeSelect.bind(this);
+    this.onChangeSelectLimit = this.onChangeSelectLimit.bind(this);
   };
 
   onDrop(pictureFiles, pictureDataURLs) {
@@ -203,6 +216,8 @@ class StoreAddItemPage extends Component{
             return;
           }
 
+          
+
           this.setState({
             store_user_id: store_user_id,
             store_id: result.data.store_id,
@@ -228,9 +243,6 @@ class StoreAddItemPage extends Component{
           this.requestItemInfo();
         })
       }
-     
-
-      
     }, (error) => {
 
     })
@@ -243,8 +255,24 @@ class StoreAddItemPage extends Component{
     else if(item_state === Types.item_state.SALE_PAUSE){
       return '판매 일시중지';
     }
+    else if(item_state === Types.item_state.SALE_LIMIT){
+      return '품절(강제 선택 불가)';
+    }
     else{
       return '판매 중단 및 비공개';
+    }
+  }
+
+  getLimitStateShow(item_state_limit){
+    console.log(item_state_limit);
+    if(item_state_limit === Types.item_limit_state.UNLIMIT){
+      return '무제한';
+    }
+    else if(item_state_limit === Types.item_limit_state.LIMIT){
+      return '한주간 한정 수량 판매';
+    }
+    else{
+      return '무제한';
     }
   }
 
@@ -261,6 +289,13 @@ class StoreAddItemPage extends Component{
     axios.post('/store/any/item/info', {
       store_item_id: this.state.item_id
     }, (result) => {
+
+      let limitType = Types.item_limit_state.UNLIMIT;
+      console.log(result);
+      if(result.data.order_limit_count > 0){
+        // item_state_limit
+        limitType = Types.item_limit_state.LIMIT;
+      }
       
       this.setState({
         item_title: result.data.title,
@@ -269,7 +304,12 @@ class StoreAddItemPage extends Component{
         item_price: result.data.price,
         item_ask: result.data.ask,
         item_state: result.data.state,
-        item_state_show: this.getStateShow(result.data.state)
+        item_state_show: this.getStateShow(result.data.state),
+
+        item_state_limit: limitType,
+        item_state_limit_show: this.getLimitStateShow(limitType),
+        order_limit_count: result.data.order_limit_count,
+        ori_order_limit_count: result.data.order_limit_count,
       })
     }, (error) => {
 
@@ -302,6 +342,11 @@ class StoreAddItemPage extends Component{
         item_ask: e.target.value
       })
     }
+    else if(type === INPUT_STORE_MANAGER_LIMIT_COUNT){
+      this.setState({
+        order_limit_count: e.target.value
+      })
+    }
   }
 
   onChangeSelect(event){
@@ -312,9 +357,45 @@ class StoreAddItemPage extends Component{
 
     _item_state_show = this.getStateShow(value);
 
+    if(this.state.item_state === Types.item_state.SALE_LIMIT){
+      if(value === Types.item_state.SALE){
+        // alert('[품절] 상태에선 [판매중] 변경이 불가능합니다. 판매를 원하시면 [판매 수량 제한 옵션]을 변경해주세요.');
+        axios.post("/store/item/soldout/check", {
+          order_limit_count: this.state.order_limit_count,
+          item_id: this.state.item_id
+        }, (result) => {
+          if(result.isSoldOut){
+            alert('품절된 상품입니다. 판매하기 원하시면 제한 수를 늘려주세요.');
+            return;
+          }
+
+          this.setState({
+            item_state: value,
+            item_state_show: _item_state_show
+          })
+        }, (error) => {
+
+        })
+
+        return;
+      }
+    }
+
+    if(value === Types.item_state.SALE_LIMIT){
+      alert("[품절] 상태론 변경이 불가능합니다.");
+      return;
+    }
+
     this.setState({
       item_state: value,
       item_state_show: _item_state_show
+    })
+  }
+
+  onChangeSelectLimit(event){
+    this.setState({
+      item_state_limit: event.target.value,
+      item_state_limit_show: this.getLimitStateShow(event.target.value)
     })
   }
 
@@ -344,6 +425,17 @@ class StoreAddItemPage extends Component{
       return;
     }
 
+    let order_limit_count = this.state.order_limit_count;
+    if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
+      if(!this.state.order_limit_count || this.state.order_limit_count <= 0){
+        alert("판매 수량을 1개 이상 입력해주세요. 판매를 중단 하고 싶으시면 하단의 판매상태 옵션을 이용해주세요.");
+        return;
+      }
+    }
+    else{
+      order_limit_count = 0;
+    }
+
     
     if(this.state.pageState === Types.add_page_state.ADD){
       showLoadingPopup('등록중입니다..');
@@ -355,7 +447,9 @@ class StoreAddItemPage extends Component{
         title: this.state.item_title,
         img_url: this.state.item_img_url,
         content: this.state.item_content,
-        ask: this.state.item_ask
+        ask: this.state.item_ask,
+
+        order_limit_count: order_limit_count
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -375,13 +469,19 @@ class StoreAddItemPage extends Component{
           swal("등록완료!", '', 'success');
         }, (error) => {
           stopLoadingPopup();
-          alert("에러");
+          // alert("에러");
         })
       }, (error) => {
         stopLoadingPopup();
-        alert("에러");
+        // alert("에러");
       })
     }else if(this.state.pageState === Types.add_page_state.EDIT){
+
+      let isChangeLimitCount = false;
+      if(this.state.order_limit_count !== this.state.ori_order_limit_count){
+        isChangeLimitCount = true;
+      }
+
       showLoadingPopup('수정중입니다..');
       axios.post('/store/item/update', {
         store_id: this.state.store_id,
@@ -392,6 +492,9 @@ class StoreAddItemPage extends Component{
         content: this.state.item_content,
         ask: this.state.item_ask,
         item_id: this.state.item_id,
+
+        order_limit_count: order_limit_count,
+        isChangeLimitCount: isChangeLimitCount
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -415,12 +518,12 @@ class StoreAddItemPage extends Component{
           this.showEditPopup();
         }, (error) => {
           stopLoadingPopup();
-          alert("에러");
+          // alert("에러");
         })
 
       }, (error_update) => {
         stopLoadingPopup();
-        alert("에러");
+        // alert("에러");
       })
     }
   }
@@ -507,6 +610,19 @@ class StoreAddItemPage extends Component{
     if(this.state.item_img_url){
       photoThumbImg = <img className={'camera_img'} src={this.state.item_img_url} />;
     }
+
+    let limitCountDom = <></>;
+    if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
+      limitCountDom = <div>
+                        <div className={'input_label'} style={{marginTop: 20}}>
+                          주간 판매 제한 수
+                        </div>
+                        <input className={'input_box'} type="number" name={'limit_count'} placeholder={'일주일에 판매 가능한 수량을 입력해주세요.'} value={this.state.order_limit_count} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_LIMIT_COUNT)}}/>
+                        <div className={'limit_explain_text'}>
+                          일주일에 판매 가능한 수 입니다. 최대 수량에 도달하면 자동으로 판매가 일시중지되며, 판매 수량은 매주 월요일 0시에 초기화되어 다시 주문이 가능해집니다.
+                        </div>
+                      </div>
+    }
     return (
       <div className={'StoreAddItemPage'}>
         <div className={'page_title_text'}>
@@ -573,6 +689,21 @@ class StoreAddItemPage extends Component{
         </div>
 
         <div className={'box_container'}>
+          <div className={'box_label'}>판매 수량 제한 옵션</div>
+
+          <div className={'select_box'}>
+            {this.state.item_state_limit_show}
+            <img src={icon_box} />
+
+            <select className={'select_tag'} value={this.state.item_state_limit} onChange={this.onChangeSelectLimit}>
+              {this.state.item_state_limit_list}
+            </select>
+          </div>
+
+          {limitCountDom}
+        </div>
+
+        <div className={'box_container'}>
           <div className={'box_label'}>판매상태</div>
 
           <div className={'select_box'}>
@@ -582,6 +713,9 @@ class StoreAddItemPage extends Component{
             <select className={'select_tag'} value={this.state.item_state} onChange={this.onChangeSelect}>
               {this.state.item_state_list}
             </select>
+          </div>
+          <div className={'limit_explain_text'}>
+            일주일 이상 콘텐츠 요청을 받기 어려울 때는 판매 일시중지를 해주세요.
           </div>
         </div>
 

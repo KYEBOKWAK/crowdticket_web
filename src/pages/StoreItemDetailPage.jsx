@@ -7,6 +7,7 @@ import Util from '../lib/Util';
 import StoreUserSNSList from '../component/StoreUserSNSList';
 import Types from '../Types';
 
+import moment from 'moment';
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -43,7 +44,9 @@ class StoreItemDetailPage extends Component{
       store_user_profile_photo_url: '',
 
       item_state: Types.item_state.SALE,
-      innerWidth: window.innerWidth
+      innerWidth: window.innerWidth,
+
+      re_set_at: null
     }
 
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -99,6 +102,8 @@ class StoreItemDetailPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       const data = result.data;
+
+      console.log(data);
       
       this.setState({
         title: data.title,
@@ -106,7 +111,8 @@ class StoreItemDetailPage extends Component{
         content: data.content,
         thumb_img_url: data.img_url,
 
-        item_state: data.state
+        item_state: data.state,
+        re_set_at: data.re_set_at
       })
     }, (error) => {
 
@@ -198,11 +204,13 @@ class StoreItemDetailPage extends Component{
     let isButtonDisabel = false;
     let buttonText = '주문하기';
     let warningNoticeDom = <></>;
+    let resetDateDom = <></>;
     let isMobile = false;
 
-    if(this.state.innerWidth < 520){
-      isMobile = true;
-    }
+    let contentButtomOut = <></>;
+    let contentButtomIn = <></>;
+
+    
 
     if(this.state.item_state === Types.item_state.SALE_STOP ||
       this.state.item_state === Types.item_state.SALE_PAUSE){
@@ -220,8 +228,32 @@ class StoreItemDetailPage extends Component{
         }
 
         warningNoticeDom = <div className={'warning_notice_dom_container'}>{pauseText}</div>
-      }
-      // console.log(this.state.item_state)
+    }
+    else if(this.state.item_state === Types.item_state.SALE_LIMIT){
+      isButtonDisabel = true;
+      buttonText = '품절됨';
+
+      warningNoticeDom = <div className={'warning_notice_dom_container'}>해당 상품은 품절되었습니다.</div>
+
+      resetDateDom = <div className={'reset_container'}>
+                      재오픈 예정일
+                      <span className={'reset_date_text'}>{moment(this.state.re_set_at).format('YYYY.MM.DD')}</span>
+                    </div>
+    }
+
+    if(this.state.innerWidth < 520){
+      isMobile = true;
+      contentButtomIn = <div>
+                          {warningNoticeDom}
+                          {resetDateDom}
+                        </div>
+
+    }else{
+      contentButtomOut = <div>
+                          {warningNoticeDom}
+                          {resetDateDom}
+                        </div>
+    }
 
     return(
       <div className={'StoreItemDetailPage'}>
@@ -252,8 +284,10 @@ class StoreItemDetailPage extends Component{
               상점가기
             </button>
           </div>
+
+          {contentButtomIn}
         </div>
-        {warningNoticeDom}
+        {contentButtomOut}
       </div>
     )
 
