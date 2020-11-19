@@ -460,7 +460,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="col-md-3">
             <h2>address</h2>
-            <h4>서울시 마포구 백범로 31길 21 서울창업허브 본관 611호<br>
+            <h4>서울시 마포구 독막로 331 마스터즈타워 2501호<br>
              (주)나인에이엠</h4>
         </div>
         <div class="col-md-12 ct-info">
