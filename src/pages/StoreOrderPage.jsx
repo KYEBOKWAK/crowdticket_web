@@ -314,7 +314,8 @@ class StoreOrderPage extends Component{
       }
 
       if(Number(result.item_state) !== Types.item_state.SALE){
-        swal("판매중인 상품이 아닙니다.", '', 'error');
+        alert(result.item_state);
+        // swal("판매중인 상품이 아닙니다.", '', 'error');
         return;
       }
 
