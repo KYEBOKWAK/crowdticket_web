@@ -28,6 +28,13 @@
     margin-top: 24px;
   }
 
+  .tip_text {
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #7f7f7f;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
     .container_box{

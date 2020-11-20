@@ -91,6 +91,9 @@ class StoreManagerTabAskOrderListPage extends Component{
     }
     return(
       <div className={'StoreManagerTabAskOrderListPage'}>
+        <div className={'tip_text'}>
+          요청된 콘텐츠의 알림을 받으려면 [정산] 탭의 비상용 연락처와 이메일을 반드시 적어주세요.
+        </div>
         {contentDom}
       </div>
     )
