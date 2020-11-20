@@ -255,7 +255,7 @@ class StoreManagerTabAccountPage extends Component{
           <div className={'input_label'}>예금주</div>
           <input className={'input_box'} type="name" name={'name'} placeholder={'이름을 입력해주세요'} value={this.state.account_name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_NAME)}}/>
 
-          <div className={'input_label'}>비상 연락처(핸드폰)</div>
+          <div className={'input_label'}>비상 연락처(휴대전화)</div>
           <input className={'input_box'} type="text" name={'contact'} placeholder={'-없이 입력해주세요.'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTACT)}}/>
 
           <div className={'input_label'}>연락용 이메일</div>
