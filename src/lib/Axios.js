@@ -17,7 +17,10 @@ function postCall(url, data, callback, errorCallback) {
   if(process.env.NODE_ENV === 'development'){
     apiURL = process.env.REACT_APP_API_SERVER_URL_LOCAL;
   }
-  
+
+  if(process.env.APP_TYPE && process.env.APP_TYPE === 'qa'){
+    apiURL = process.env.REACT_APP_API_SERVER_URL_QA;
+  }  
 
   _axios.post(apiURL+url,{
     data: data
