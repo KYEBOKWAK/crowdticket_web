@@ -298,15 +298,16 @@ class WelcomeController extends Controller
 
       if((int)$thumbnailType === Main_thumbnail::THUMBNAIL_TYPE_STORE_ITEM)
       {
-        $item = Item::where('id', $target_id)->first();
-        $mainThumb['item'] = $item;
+        $store = Store::where('id', $target_id)->first();
+        $mainThumb['store'] = $store;       
 
-        $store = Store::where('id', $item->store_id)->first();
-        $mainThumb['store'] = $store;
+        // $item = Item::where('id', $target_id)->first();
+        // $mainThumb['item'] = $item;
+
+        // $store = Store::where('id', $item->store_id)->first();
+        // $mainThumb['store'] = $store;
       }
     }
-
-    // \Log::info($mainThumbs);
 
     return $mainThumbs;
   }
