@@ -774,66 +774,64 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
     </div>
 
-    @if(count($thumb_store_items) > 0)
-      <div class="welcome_content_container" style="display:block">
-        <div class="welcome_content_wrapper">
-          <div class="flex_layer">
-            <div class="welcome_content_title">
-              인기 TOP4! 콘텐츠 상품
-            </div>
-            <div class="welcome_content_more_wrapper">
-              <a href="{{url('/projects')}}">
-                <div class="welcome_content_more">
-                  <div class="flex_layer">
-                    <span style="height:21px;">더보기</span>
-                    <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
-                  </div>
-                </div>
-              </a>
-            </div>
+    <div class="welcome_content_container" style="display:none">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            오픈된 이벤트
           </div>
-
-          <div class="welcome_thumb_projects_wrapper">
-            <div class="flex_layer_thumb">
-              <?php
-              $projectIndex = 0;
-              for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
-              {
-                $itemCount = 0;
-                ?>
-                @if($projectIndex === 0)
-                <div class="flex_layer thumb_container_is_mobile">
-                @else
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/projects')}}">
+              <div class="welcome_content_more">
                 <div class="flex_layer">
-                @endif
-                <?php
-                  for($j = $i ; $j < count($thumb_store_items) ; $j++)
-                  {
-                    
-                    if((int)$projectIndex >= count($thumb_store_items)){
-                      break;
-                    }
-                    
-                    ?>
-                    @include('template.thumb_store_item', ['item' => $thumb_store_items[$projectIndex], 'index' => $projectIndex])
-                    <?php
-                    $projectIndex++;
-                    $itemCount++;
-                    if($itemCount >= $mobileOneLineItemCount)
-                    {
-                      break;
-                    }
-                  }
-                ?>
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
                 </div>
-                <?php
-              }             
-              ?>           
-            </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($projects) ; $j++)
+                {
+                  
+                  if((int)$projectIndex >= count($projects)){
+                    break;
+                  }
+                  
+                  ?>
+                  @include('template.thumb_project', ['project' => $projects[$projectIndex], 'index' => $projectIndex])
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+            }             
+            ?>           
           </div>
         </div>
       </div>
-    @endif
+    </div>
 
     <div class="welcome_content_container">
       <div class="welcome_content_wrapper">
@@ -889,6 +887,363 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
         </div>
         <!-- 썸네일 테스트 END -->
+      </div>
+    </div>
+
+    <div class="welcome_content_container" style="display:none">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            최신 만나요
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/mannayo')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              $isEnd = false;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($newMeetups) ; $j++)
+                {
+                  $meetup = $newMeetups[$projectIndex];
+
+                  //만나요
+                  ?>
+                  <div class='mannayo_thumb_object_container_in_main'>
+                    @if($itemCount === 0)
+                    <div class='mannayo_thumb_container' style='margin-right: 20px'>
+                    @else
+                    <div class='mannayo_thumb_container'>
+                    @endif
+                      <div class='mannayo_thumb_img_wrapper'>
+                        <div class='mannayo_thumb_img_resize'>
+                          <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
+                          <div class='thumb-black-mask'>
+                          </div>
+                          <div class='mannayo_thumb_meet_count'>
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
+                          </div>
+
+                          <div class='mannayo_thumb_meet_users_container'>
+                            <?php
+                            $zIndex = count($meetup->meetup_users);
+                            ?>
+                            @foreach($meetup->meetup_users as $meetup_user)
+                            <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            <?php
+                              $zIndex--;
+                            ?>
+                            @endforeach
+
+                            @if($meetup->meet_count >= 4)
+                              <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            @endif
+                          <!--meetupUsersElement-->
+                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                          <div class='mannayo_thumb_user_container_arrow'>
+                          </div>
+                          <div class='mannayo_thumb_user_name_ul_container'>
+                            <ul>
+                              @foreach($meetup->meetup_users as $meetup_user)
+                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              @endforeach
+                              @if($meetup->meet_count >= 4)
+                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                              @endif
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='mannayo_thumb_title_wrapper'>
+                        {{$meetup->title}}
+                      </div>
+                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
+                        {{$meetup->where}} 에서 · {{$meetup->what}}
+                      </div>
+                      <div class='mannayo_thumb_button_wrapper'>
+                        @if($meetup->is_meetup)
+                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
+                            만나요 요청됨
+                          </button>
+                        @else
+                          <button class='mannayo_thumb_meetup_button_fake'>
+                            만나요
+                          </button>
+                        @endif
+                      </div>
+                      @if($meetup->is_meetup)
+                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @else
+                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  
+                  if(count($meetups) < $projectIndex + 1)
+                  {
+                    $isEnd = true;
+                    break;
+                  }
+
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+              if($isEnd)
+              {
+                break;
+              }
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
+      </div>
+    </div>
+
+    <div class="welcome_content_container" style="display:none">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            인기있는 만나요
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/mannayo')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              $isEnd = false;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($meetups) ; $j++)
+                {
+                  $meetup = $meetups[$projectIndex];
+
+                  //만나요
+                  ?>
+                  <div class='mannayo_thumb_object_container_in_main'>
+                    @if($itemCount === 0)
+                    <div class='mannayo_thumb_container' style='margin-right: 20px'>
+                    @else
+                    <div class='mannayo_thumb_container'>
+                    @endif
+                      <div class='mannayo_thumb_img_wrapper'>
+                        <div class='mannayo_thumb_img_resize'>
+                          <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
+                          <div class='thumb-black-mask'>
+                          </div>
+                          <div class='mannayo_thumb_meet_count'>
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
+                          </div>
+
+                          <div class='mannayo_thumb_meet_users_container'>
+                            <?php
+                            $zIndex = count($meetup->meetup_users);
+                            ?>
+                            @foreach($meetup->meetup_users as $meetup_user)
+                            <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            <?php
+                              $zIndex--;
+                            ?>
+                            @endforeach
+
+                            @if($meetup->meet_count >= 4)
+                              <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            @endif
+                          <!--meetupUsersElement-->
+                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                          <div class='mannayo_thumb_user_container_arrow'>
+                          </div>
+                          <div class='mannayo_thumb_user_name_ul_container'>
+                            <ul>
+                              @foreach($meetup->meetup_users as $meetup_user)
+                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              @endforeach
+                              @if($meetup->meet_count >= 4)
+                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                              @endif
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='mannayo_thumb_title_wrapper'>
+                        {{$meetup->title}}
+                      </div>
+                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
+                        {{$meetup->where}} 에서 · {{$meetup->what}}
+                      </div>
+                      <div class='mannayo_thumb_button_wrapper'>
+                        @if($meetup->is_meetup)
+                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
+                            만나요 요청됨
+                          </button>
+                        @else
+                          <button class='mannayo_thumb_meetup_button_fake'>
+                            만나요
+                          </button>
+                        @endif
+                      </div>
+                      @if($meetup->is_meetup)
+                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @else
+                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  
+                  if(count($meetups) < $projectIndex + 1)
+                  {
+                    $isEnd = true;
+                    break;
+                  }
+
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+              if($isEnd)
+              {
+                break;
+              }
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
+      </div>
+    </div>
+    
+    <div class="welcome_content_container" style="display:none">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            오픈된 밋업
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/projects')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($projects) ; $j++)
+                {
+                  
+                  if((int)$projectIndex >= count($projects)){
+                    break;
+                  }
+                  
+                  ?>
+                  @include('template.thumb_project', ['project' => $projects[$projectIndex], 'index' => $projectIndex])
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+            }             
+            ?>           
+          </div>
+        </div>
       </div>
     </div>
     
@@ -976,6 +1331,155 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           <p class="welcome_meetup_under_title">크티와 함께한 크리에이터들</p>
 
         </div>
+    </div>
+
+    <div class="welcome_content_container" style="display:none">
+      <div class="welcome_content_wrapper">
+        <div class="flex_layer">
+          <div class="welcome_content_title">
+            인기있는 만나요
+          </div>
+          <div class="welcome_content_more_wrapper">
+            <a href="{{url('/mannayo')}}">
+              <div class="welcome_content_more">
+                <div class="flex_layer">
+                  <span style="height:21px;">더보기</span>
+                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- 썸네일 테스트 START -->
+        <div class="welcome_thumb_projects_wrapper">
+          <div class="flex_layer_thumb">
+            <?php
+            $projectIndex = 0;
+            
+            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
+            {
+              $itemCount = 0;
+              $isEnd = false;
+              ?>
+              @if($projectIndex === 0)
+              <div class="flex_layer thumb_container_is_mobile">
+              @else
+              <div class="flex_layer">
+              @endif
+              <?php
+                for($j = $i ; $j < count($meetups) ; $j++)
+                {
+                  $meetup = $meetups[$projectIndex];
+
+                  //만나요
+                  ?>
+                  <div class='mannayo_thumb_object_container_in_main'>
+                    @if($itemCount === 0)
+                    <div class='mannayo_thumb_container' style='margin-right: 20px'>
+                    @else
+                    <div class='mannayo_thumb_container'>
+                    @endif
+                      <div class='mannayo_thumb_img_wrapper'>
+                        <div class='mannayo_thumb_img_resize'>
+                          <img class='mannayo_thumb_img project-img' src="{{$meetup->thumbnail_url}}">
+                          <div class='thumb-black-mask'>
+                          </div>
+                          <div class='mannayo_thumb_meet_count'>
+                            <img src='{{ asset("/img/icons/svg/ic-meet-join-member-wh.svg") }}' style='margin-right: 4px; margin-bottom: 3px;'/> {{$meetup->meet_count}}명 요청중
+                          </div>
+
+                          <div class='mannayo_thumb_meet_users_container'>
+                            <?php
+                            $zIndex = count($meetup->meetup_users);
+                            ?>
+                            @foreach($meetup->meetup_users as $meetup_user)
+                            <img src="{{$meetup_user->user_profile_url}}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            <?php
+                              $zIndex--;
+                            ?>
+                            @endforeach
+
+                            @if($meetup->meet_count >= 4)
+                              <img src="{{ asset('/img/icons/ic-profile-more-512.png') }}" class='meetup_users_profile_img' style='z-index:{{$zIndex}}'/>
+                            @endif
+                          <!--meetupUsersElement-->
+                            <button class='mannayo_thumb_user_list_thumb_button' data_meetup_id="{{$meetup->id}}">
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class='mannayo_thumb_user_name_container mannayo_thumb_user_name_container_{{$meetup->id}}'>
+                          <div class='mannayo_thumb_user_container_arrow'>
+                          </div>
+                          <div class='mannayo_thumb_user_name_ul_container'>
+                            <ul>
+                              @foreach($meetup->meetup_users as $meetup_user)
+                                <li class='text-ellipsize'>{{$meetup_user->user_name}}</li>
+                              @endforeach
+                              @if($meetup->meet_count >= 4)
+                                <li>외 {{(int)$meetup->meet_count - count($meetup->meetup_users)}}명</li>
+                              @endif
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class='mannayo_thumb_title_wrapper'>
+                        {{$meetup->title}}
+                      </div>
+                      <div class='text-ellipsize-2 mannayo_thumb_content_container'>
+                        {{$meetup->where}} 에서 · {{$meetup->what}}
+                      </div>
+                      <div class='mannayo_thumb_button_wrapper'>
+                        @if($meetup->is_meetup)
+                          <button class='mannayo_thumb_meetup_cancel_button_fake'>
+                            만나요 요청됨
+                          </button>
+                        @else
+                          <button class='mannayo_thumb_meetup_button_fake'>
+                            만나요
+                          </button>
+                        @endif
+                      </div>
+                      @if($meetup->is_meetup)
+                        <button class='mannayo_thumb_meetup_cancel_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @else
+                        <button class='mannayo_thumb_meetup_button' data_meetup_channel_id="{{$meetup->channel_id}}" data_meetup_id="{{$meetup->id}}" data_meetup_title="{{$meetup->title}}" data_meetup_where="{{$meetup->where}}" data_meetup_what="{{$meetup->what}}" data_meetup_img_url="{{$meetup->thumbnail_url}}" data_meetup_count="{{$meetup->meet_count}}" data_comments_count="{{$meetup->comments_count}}">
+                        </button>
+                      @endif
+                    </div>
+                  </div>
+                  <?php
+                  $projectIndex++;
+                  $itemCount++;
+                  
+                  if(count($meetups) < $projectIndex + 1)
+                  {
+                    $isEnd = true;
+                    break;
+                  }
+
+                  if($itemCount >= $mobileOneLineItemCount)
+                  {
+                    break;
+                  }
+                }
+              ?>
+              </div>
+              <?php
+              if($isEnd)
+              {
+                break;
+              }
+            }             
+            ?>           
+          </div>
+        </div>
+        <!-- 썸네일 테스트 END -->
+      </div>
     </div>
     
     <div class="welcome_content_container welcome_content_container_banner">
