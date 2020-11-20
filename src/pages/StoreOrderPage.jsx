@@ -308,12 +308,12 @@ class StoreOrderPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       // console.log(result);
-      if(result.item_state === Types.item_state.SALE_LIMIT){
+      if(Number(result.item_state) === Types.item_state.SALE_LIMIT){
         swal("품절된 상품입니다.", '', 'error');
         return;
       }
 
-      if(result.item_state !== Types.item_state.SALE){
+      if(Number(result.item_state) !== Types.item_state.SALE){
         swal("판매중인 상품이 아닙니다.", '', 'error');
         return;
       }
