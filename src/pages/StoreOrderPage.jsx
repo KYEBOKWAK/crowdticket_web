@@ -313,9 +313,14 @@ class StoreOrderPage extends Component{
         return;
       }
 
+      if(!result.item_state){
+        swal("** 구매오류. 죄송합니다. 재로그인(로그아웃->로그인) 후 이용해주세요.. 빠른 시일내에 수정하겠습니다. **", '', 'error');
+        return;
+      }
+
       if(Number(result.item_state) !== Types.item_state.SALE){
-        alert(result.item_state + '///' + Types.item_state.SALE + '///' + result + '##'+this.state.store_item_id);
-        // swal("판매중인 상품이 아닙니다.", '', 'error');
+        // alert(result.item_state + '///' + Types.item_state.SALE + '///' + result + '##'+this.state.store_item_id);
+        swal("판매중인 상품이 아닙니다.", '', 'error');
         return;
       }
 
