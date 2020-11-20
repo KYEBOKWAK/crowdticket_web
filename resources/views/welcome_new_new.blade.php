@@ -869,7 +869,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       
       <a href="{{url('/store')}}">
         <div class="welcome_content_store_banner_bg">
-          <img class="welcome_content_store_banner_img" src="{{ asset('/img/app/content_banner_img.svg') }}" />
+          <img class="welcome_content_store_banner_img" src="{{ asset('/img/app/content_banner_img_v02.svg') }}" />
         </div>
       </a>
       
