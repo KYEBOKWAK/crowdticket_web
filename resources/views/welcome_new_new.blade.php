@@ -553,8 +553,36 @@
           transform: translateX(-50%);
         }
 
+        .welcome_content_store_banner_img {
+          width: 347px;
+          /* height: 208px; */
+        }
+
+        .welcome_content_store_banner_bg {
+          margin-top: 64px;
+          width: 100%;
+          max-width: 1060px;
+          height: 300px;
+          border-radius: 24px;
+          background-color: rgba(0, 0, 0, 0.05);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
         /*@media (max-width:320px) {*/
         @media (max-width:1060px) {
+          .welcome_content_store_banner_bg {
+            border-radius: 0px;
+            height: 150px;
+          }
+
+          .welcome_content_store_banner_img {
+            width: 174px;
+          }
+
           .welcome_meetup_banner_title_pc{
             display: none;
           }
@@ -833,6 +861,14 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
           </div>
         </div>
       </div>
+
+      
+      <a href="{{url('/store')}}">
+        <div class="welcome_content_store_banner_bg">
+          <img class="welcome_content_store_banner_img" src="{{ asset('/img/app/content_banner_img.svg') }}" />
+        </div>
+      </a>
+      
     @endif
 
     <div class="welcome_content_container">
@@ -995,64 +1031,6 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               </div>
           </div>
         </div>
-      </div>
-    </div>
-    
-
-    <div class="welcome_content_container" style="display:none">
-      <div class="welcome_content_wrapper">
-        <div class="flex_layer">
-          <div class="welcome_content_title">
-            크라우드티켓 매거진
-          </div>
-          <div class="welcome_content_more_wrapper">
-            <a href="{{url('/magazine')}}">
-              <div class="welcome_content_more">
-                <div class="flex_layer">
-                  <span style="height:21px;">더보기</span>
-                  <img src="{{ asset('/img/icons/svg/ic-more-line-7-x-13.svg') }}" style="margin-left:8px; margin-top:1px;"/>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-
-        <!-- 썸네일 테스트 START -->
-        <div class="welcome_thumb_projects_wrapper">
-          <div class="flex_layer_thumb">
-            <?php
-            $projectIndex = 0;
-            for($i = 0 ; $i < $mobileOneLineItemCount ; $i++)
-            {
-              $itemCount = 0;
-              ?>
-              @if($projectIndex === 0)
-              <div class="flex_layer thumb_container_is_mobile">
-              @else
-              <div class="flex_layer">
-              @endif
-              <?php
-                for($j = $i ; $j < count($magazines) ; $j++)
-                {
-                  ?>
-                  @include('template.thumb_magazine', ['magazine' => $magazines[$projectIndex], 'index' => $projectIndex])
-                  <?php
-                  $projectIndex++;
-                  $itemCount++;
-                  if($itemCount >= $mobileOneLineItemCount)
-                  {
-                    break;
-                  }
-                }
-              ?>
-              </div>
-              <?php
-            }             
-            ?>           
-          </div>
-        </div>
-        <!-- 썸네일 테스트 END -->
       </div>
     </div>
 
