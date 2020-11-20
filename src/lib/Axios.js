@@ -18,6 +18,8 @@ function postCall(url, data, callback, errorCallback) {
     apiURL = process.env.REACT_APP_API_SERVER_URL_LOCAL;
   }
 
+  console.log(process.env.APP_TYPE);
+
   if(process.env.APP_TYPE && process.env.APP_TYPE === 'qa'){
     apiURL = process.env.REACT_APP_API_SERVER_URL_QA;
   }  
