@@ -313,7 +313,7 @@ class StoreOrderPage extends Component{
         return;
       }
 
-      if(!result.item_state){
+      if(result.item_state === undefined){
         swal("** 구매오류. 죄송합니다. 재로그인(로그아웃->로그인) 후 이용해주세요.. 빠른 시일내에 수정하겠습니다. **", '', 'error');
         return;
       }
