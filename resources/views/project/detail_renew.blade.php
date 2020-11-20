@@ -170,7 +170,6 @@ $selectedTicket = "";
 <input id="isEventTypeCrawlingEvent" type="hidden" value="{{ $project->isEventTypeCrawlingEvent() }}">
 <input type="hidden" id="isPickingFinished" value="{{ $project->isFinishedAndPickingFinished() }}">
 <input id="isPickType" type="hidden" value="{{ $project->isPickType() }}">
-<input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
 <input id='app_page_key' type='hidden' value='PAGE_KEY_DETAIL_PAGE'/>
 
     @include('helper.btn_admin', ['project' => $project])

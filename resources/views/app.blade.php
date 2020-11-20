@@ -333,6 +333,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <input type="hidden" id="myId" value="@if(Auth::user()){{Auth::user()->id}}@else{{0}}@endif"/>
 <input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif"/>
+<input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
 
 @yield('event_banner')
 
@@ -613,7 +614,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=28') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=29') }}"></script>
 
 </body>
 </html>
