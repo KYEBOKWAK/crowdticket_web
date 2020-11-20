@@ -27,11 +27,11 @@
             {{$item->second_text}}
         </h4>
 
-        <!-- <p class="welcome_thumb_content_date_place">
+        <p class="welcome_thumb_content_date_place">
           <span style="color:#00bfff;font-weight: bold;font-size: 16px;">
-           {{number_format($item->item->price)}}원 
+           {{$item->third_text}}
           </span>
-        </p> -->
+        </p>
     </div>
 </a>
 </div>
