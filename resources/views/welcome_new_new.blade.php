@@ -419,6 +419,10 @@
             margin: auto;
             border-radius: 10px;
         }
+
+        .project-img-border-radius-zero {
+            border-radius: 0px;
+        }
         /*썸네일 CSS END*/
 
         /* 새로운 썸네일 bg START */

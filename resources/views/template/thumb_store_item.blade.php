@@ -14,8 +14,8 @@
 ?>
 <a href="{{ $link_url }}">
     <div class="welcome_thumb_img_wrapper" style="border-radius: 24px 24px 0 24px;">
-        <div class="welcome_thumb_img_resize">
-            <img src="{{ $item->thumb_img_url }}" onload="imageResize_new($('.welcome_thumb_img_resize')[0], this);" class="project-img"/>
+        <div class="welcome_thumb_img_resize" style="border-radius: 0px;">
+            <img src="{{ $item->thumb_img_url }}" onload="imageResize_new($('.welcome_thumb_img_resize')[0], this);" class="project-img project-img-border-radius-zero" style="border-radius: 0px;"/>
         </div>
     </div>
     <div class="welcome_thumb_content_container">
@@ -27,11 +27,11 @@
             {{$item->second_text}}
         </h4>
 
-        <p class="welcome_thumb_content_date_place">
+        <!-- <p class="welcome_thumb_content_date_place">
           <span style="color:#00bfff;font-weight: bold;font-size: 16px;">
            {{number_format($item->item->price)}}원 
           </span>
-        </p>
+        </p> -->
     </div>
 </a>
 </div>
