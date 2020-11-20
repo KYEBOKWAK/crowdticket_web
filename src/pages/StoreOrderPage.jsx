@@ -314,7 +314,7 @@ class StoreOrderPage extends Component{
       }
 
       if(Number(result.item_state) !== Types.item_state.SALE){
-        alert(result.item_state);
+        alert(result.item_state + '///' + Types.item_state.SALE + '///' + result + '##'+this.state.store_item_id);
         // swal("판매중인 상품이 아닙니다.", '', 'error');
         return;
       }
