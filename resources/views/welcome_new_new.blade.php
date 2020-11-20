@@ -810,7 +810,7 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
               인기 TOP4! 콘텐츠 상품
             </div>
             <div class="welcome_content_more_wrapper">
-              <a href="{{url('/projects')}}">
+              <a href="{{url('/store')}}">
                 <div class="welcome_content_more">
                   <div class="flex_layer">
                     <span style="height:21px;">더보기</span>
