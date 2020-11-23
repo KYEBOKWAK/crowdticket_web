@@ -7,9 +7,9 @@ import StoreContentsListItem from '../component/StoreContentsListItem';
 
 import StoreReviewList from '../component/StoreReviewList';
 import axios from '../lib/Axios';
-import random from 'array-random';
+// import random from 'array-random';
 
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import Util from '../lib/Util';
 

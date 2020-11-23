@@ -34,6 +34,11 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  store_home_item_list: {
+    POPUALER: 'POPUALER',
+    NEW_UPDATE: 'NEW_UPDATE',
+    IN_ITEM: 'IN_ITEM'
+  },
   item_limit_state: {
     UNLIMIT: 'UNLIMIT',
     LIMIT: 'LIMIT'

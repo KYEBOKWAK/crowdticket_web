@@ -152,16 +152,47 @@ class StoreContentsListItem extends Component{
                                   </div>
       }
     }
+
+    let nick_name_dom = <></>;
+    let inItemContentContainerStyle = {};
+    let inItemContainerStyle = {};
+    let inItemImgStyle = {};
+    let imgWarpperClassName = 'item_img_wrapper';
+    if(this.props.type === Types.store_home_item_list.IN_ITEM){
+      inItemContentContainerStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
+
+      inItemContainerStyle = {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 15,
+        marginTop: 10
+      }
+
+      inItemImgStyle = {
+        width: 63,
+        height: 63
+      }
+
+      imgWarpperClassName = '';
+    }else{
+      nick_name_dom = <div className={'item_name'}>{this.props.name}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div>;
+    }
+
     return(
       <>
-        <div className={'StoreContentsListItem'}>
+        <div className={'StoreContentsListItem'} style={inItemContainerStyle}>
           <a onClick={(e) => {this.itemClick(e)}}>
             <div className={'flex_layer flex_direction_row'}>
-                <div className={'item_img_wrapper'}>
-                  <img className={'item_img'} src={this.props.thumbUrl}/>
+                <div className={imgWarpperClassName}>
+                  <img className={'item_img'} src={this.props.thumbUrl} style={inItemImgStyle}/>
                 </div>
-                <div className={'item_content_container'}>
-                  <div className={'item_name'}>{this.props.name}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div>
+                <div className={'item_content_container'} style={inItemContentContainerStyle}>
+                  {/* <div className={'item_name'}>{this.props.name}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div> */}
+                  {nick_name_dom}
                   <div className={'item_title'}>{this.props.title}</div>
                   <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원
                   </div>
@@ -192,6 +223,7 @@ StoreContentsListItem.defaultProps = {
   isManager: false,
   state_re_order: Types.store_manager_state_order.NONE,
   state: 0,
+  type: Types.store_home_item_list.POPUALER,
   reOrderCallback: (index, item_id, reorder_type) => {},
   deleteItemCallback: (item_id, item_title) => {}
 }

@@ -4,11 +4,15 @@ import React, { Component } from 'react';
 
 
 import StoreHomeContentList from '../component/StoreHomeContentList';
+import StoreHomeStoreList from '../component/StoreHomeStoreList';
 
 // import ScrollBooster from 'scrollbooster';
 
 import ScrollBooster from 'scrollbooster';
 import axios from '../lib/Axios';
+
+import store_home_title_img from '../res/img/store-home-title.svg';
+import Types from '../Types';
 
 let isStoreHomeSliding = false;
 
@@ -178,18 +182,9 @@ class StoreHome extends Component {
   
     return (
       <div className={'StoreHomeComponent'}>
-        <div className={'paddingContainer'}>
-          <button onClick={(e) => {this.clickCreateStore(e)}} className={'notice-bg'}>
-            <div className={'notice_icon'}>
-            ✍️
-            </div>
-            <div className={'notice_content'}>
-              나의 모든 콘텐츠가 상품이 된다!<br/>
-              크리에이터라면 지금 상점을 개설하세요!
-            </div>
-          </button>
-        </div>        
-
+        <div className={'title_img_container'}>
+          <img className={'title_img'} src={store_home_title_img} />
+        </div>
         <div className={'paddingContainer shopThumbContainer'}>
           <div className={'thumb_title_label'}>
             크리에이터별 상점
@@ -202,9 +197,34 @@ class StoreHome extends Component {
             </div>
           </div>
         </div>
-        <div className={'contents_container flex_layer flex_direction_column paddingContainer'}>
-          <div className={'contents_list_title'}>판매중인 콘텐츠</div>
-          <StoreHomeContentList></StoreHomeContentList>
+
+        <div className={'paddingContainer'}>
+          <button onClick={(e) => {this.clickCreateStore(e)}} className={'notice-bg'}>
+            <div className={'notice_icon'}>
+            ✍️
+            </div>
+            <div className={'notice_content'}>
+              나의 모든 콘텐츠가 상품이 된다!<br/>
+              크리에이터라면 지금 상점을 개설하세요!
+            </div>
+          </button>
+        </div>        
+
+        <div className={'contents_container flex_layer flex_direction_column paddingContainer conteint_mobile_full_size'}>
+          <div className={'contents_list_title'}>현재 인기 콘텐츠</div>
+          <StoreHomeContentList type={Types.store_home_item_list.POPUALER}></StoreHomeContentList>
+        </div>
+
+        <div className={'contents_container flex_layer flex_direction_column paddingContainer conteint_mobile_full_size'}>
+          <div className={'contents_list_title'}>신규 업데이트 콘텐츠</div>
+          <StoreHomeContentList type={Types.store_home_item_list.NEW_UPDATE}></StoreHomeContentList>
+        </div>
+
+        <div className={'contents_container flex_layer flex_direction_column paddingContainer conteint_mobile_full_size'}>
+          <div className={'contents_list_title'} style={{marginBottom: 0}}>상점 별 콘텐츠</div>
+          <div>
+            <StoreHomeStoreList></StoreHomeStoreList>
+          </div>
         </div>
       </div>
     );

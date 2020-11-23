@@ -18,8 +18,11 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreHome.css?version=3') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreHome.css?version=4') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=0') }}" rel="stylesheet"/>
+  
 @endsection
 
 @section('content')
