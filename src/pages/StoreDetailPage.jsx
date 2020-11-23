@@ -574,25 +574,6 @@ class StoreDetailPage extends Component {
   }
 }
 
-// props 로 넣어줄 스토어 상태값
-const mapStateToProps = (state) => {
-  // console.log("detail redux props");
-  // console.log(state);
-  return {
-    user_id: state.user.user_id
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // handleAddPageViewKey: (pageKey: string, data: any) => {
-    //   dispatch(actions.addPageViewKey(pageKey, data));
-    // },
-    // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-    //   dispatch(actions.addToastMessage(toastType, message, data));
-    // }
-  }
-};
 
 // StoreDetailPage.defaultProps = {
 //   thumbImgUrl: '',
@@ -601,6 +582,4 @@ const mapDispatchToProps = (dispatch) => {
 //   // ]
 // }
 
-export default connect(mapStateToProps, null)(StoreDetailPage);
-
-// export default StoreDetailPage;
+export default StoreDetailPage;

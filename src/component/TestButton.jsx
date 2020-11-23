@@ -35,25 +35,6 @@ class TestButton extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log("리덕스 정상동작쓰!!?");
-  console.log(state);
-  return {
-    name: state.user.name
-    // isBackKey: state.backKey.isBackKey
-  }
-};
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // handleSetUserName: (name) => {
-    //   dispatch(actions.setUserName(name));
-    // }
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TestButton);
-
-// export default TestButton;
+export default TestButton;
 // export default TestButton;

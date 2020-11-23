@@ -68,25 +68,6 @@ class StoreOrderItem extends Component{
   }
 };
 
-// props 로 넣어줄 스토어 상태값
-// const mapStateToProps = (state) => {
-//   // console.log(state);
-//   return {
-//     // pageViewKeys: state.page.pageViewKeys.concat()
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // handleAddPageViewKey: (pageKey: string, data: any) => {
-//     //   dispatch(actions.addPageViewKey(pageKey, data));
-//     // },
-//     // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-//     //   dispatch(actions.addToastMessage(toastType, message, data));
-//     // }
-//   }
-// };
-
 StoreOrderItem.defaultProps = {
   id: -1,
   store_item_id: -1,
@@ -96,6 +77,4 @@ StoreOrderItem.defaultProps = {
   price: 0
 }
 
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Templite);
 export default StoreOrderItem;

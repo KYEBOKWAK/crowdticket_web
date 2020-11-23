@@ -100,7 +100,6 @@ class StoreContentsListItem extends Component{
   }
 
   getStateShow(item_state){
-    console.log(item_state);
     if(item_state === Types.item_state.SALE){
       return '';
     }
@@ -180,25 +179,6 @@ class StoreContentsListItem extends Component{
   }
 };
 
-// props 로 넣어줄 스토어 상태값
-// const mapStateToProps = (state) => {
-//   // console.log(state);
-//   return {
-//     // pageViewKeys: state.page.pageViewKeys.concat()
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // handleAddPageViewKey: (pageKey: string, data: any) => {
-//     //   dispatch(actions.addPageViewKey(pageKey, data));
-//     // },
-//     // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-//     //   dispatch(actions.addToastMessage(toastType, message, data));
-//     // }
-//   }
-// };
-
 StoreContentsListItem.defaultProps = {
   id: -1,
   index: -1,  //array 에 셋팅될때 index
@@ -217,5 +197,4 @@ StoreContentsListItem.defaultProps = {
 }
 
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Templite);
 export default StoreContentsListItem;

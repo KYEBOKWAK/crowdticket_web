@@ -241,24 +241,4 @@ class StoreDetailReceipt extends Component{
   }
 };
 
-// props 로 넣어줄 스토어 상태값
-// const mapStateToProps = (state) => {
-//   // console.log(state);
-//   return {
-//     // pageViewKeys: state.page.pageViewKeys.concat()
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // handleAddPageViewKey: (pageKey: string, data: any) => {
-//     //   dispatch(actions.addPageViewKey(pageKey, data));
-//     // },
-//     // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-//     //   dispatch(actions.addToastMessage(toastType, message, data));
-//     // }
-//   }
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(StoreItemDetailPage);
 export default StoreDetailReceipt;

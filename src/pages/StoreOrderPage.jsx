@@ -126,22 +126,22 @@ class StoreOrderPage extends Component{
   };
 
   
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if(!prevState.isInitDeriveStateFromProps)
-    {
-      if(nextProps.name !== prevState.name || nextProps.contact !== nextProps.contact ||
-        nextProps.email !== prevState.email){
-        return {
-          name: nextProps.name,
-          contact: nextProps.contact,
-          email: nextProps.email,
-          isInitDeriveStateFromProps: true
-        }
-      }
-    }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if(!prevState.isInitDeriveStateFromProps)
+  //   {
+  //     if(nextProps.name !== prevState.name || nextProps.contact !== nextProps.contact ||
+  //       nextProps.email !== prevState.email){
+  //       return {
+  //         name: nextProps.name,
+  //         contact: nextProps.contact,
+  //         email: nextProps.email,
+  //         isInitDeriveStateFromProps: true
+  //       }
+  //     }
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
   
 
   // shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -156,11 +156,45 @@ class StoreOrderPage extends Component{
         store_item_id: Number(storeItemIDDom.value)
       }, function(){
         //아이템 정보 가져오기
-        this.requestItemInfo()
+        if(!isLogin())
+        {
+          // loginPopup(null, null);
+          loginPopup(() => {
+            if(isLogin()){
+              swal.close();
+              window.location.reload();
+              // this.setState({
+              //   isLogin: true
+              // }, function(){
+              //   swal.close();
+              //   window.location.reload();
+              // })
+            }
+          }, null);
+          return;
+        }else{
+          axios.post("/user/info", {}, 
+          (result) => {
+            let name = result.userInfo.nick_name;
+            if(!result.userInfo.nick_name || result.userInfo.nick_name === ''){
+              name = result.userInfo.name
+            }
+            this.setState({
+              name: name,
+              email: result.userInfo.email,
+              contact: result.userInfo.contact
+            }, () => {
+              this.requestItemInfo()
+            })
+            
+
+          }, (error) => {
+            alert("로그인 정보가 없습니다. 다시 로그인 후 이용 부탁드립니다.");
+            return;
+          })
+        }
       })
     }
-
-    // showLoadingPopup('dddd');
 
     if (document.addEventListener) {
       window.addEventListener('pageshow', function (event) {
@@ -241,6 +275,12 @@ class StoreOrderPage extends Component{
 
   isPassableOrder(){
     // let isOrder = true;
+
+    if(this.state.store_item_id === null || this.state.store_item_id === undefined){
+      alert("아이템 정보가 없습니다. 자동으로 새로고침 됩니다. 해당 이슈가 반복되는 경우 크티에 연락 바랍니다.");
+      window.location.reload();
+      return false
+    }
 
     if(this.state.name === ''){
       // isOrder = false;
@@ -739,14 +779,13 @@ class StoreOrderPage extends Component{
 };
 
 // props 로 넣어줄 스토어 상태값
-const mapStateToProps = (state) => {
-  return {
-    name: state.user.name,
-    email: state.user.email,
-    contact: state.user.contact
-    // pageViewKeys: state.page.pageViewKeys.concat()
-  }
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     name: state.user.name,
+//     email: state.user.email,
+//     contact: state.user.contact
+//   }
+// };
 
 // const mapDispatchToProps = (dispatch) => {
 //   return {
@@ -766,5 +805,5 @@ StoreOrderPage.defaultProps = {
 }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(StoreItemDetailPage);
-export default connect(mapStateToProps, null)(StoreOrderPage);
-// export default StoreOrderPage;
+// export default connect(mapStateToProps, null)(StoreOrderPage);
+export default StoreOrderPage;

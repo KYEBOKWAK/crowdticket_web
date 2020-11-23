@@ -54,18 +54,16 @@ class App extends Component {
         }        
       })      
     }else{
-      // this.requestLoginToken(myID);
-      // store.dispatch(actions.setUserID(myID));
-      axios.post("/user/info", {}, 
-      (result) => {
-        const data = {
-          ...result.userInfo
-        }
+      // axios.post("/user/info", {}, 
+      // (result) => {
+      //   const data = {
+      //     ...result.userInfo
+      //   }
 
-        store.dispatch(actions.setUserInfo(data.name, data.nick_name, data.contact, data.email, data.user_id));
-      }, (error) => {
+      //   store.dispatch(actions.setUserInfo(data.name, data.nick_name, data.contact, data.email, data.user_id));
+      // }, (error) => {
 
-      })
+      // })
     }
   }
   

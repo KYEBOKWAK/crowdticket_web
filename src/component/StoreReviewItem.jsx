@@ -148,25 +148,6 @@ class StoreReviewItem extends Component{
   }
 };
 
-// props 로 넣어줄 스토어 상태값
-// const mapStateToProps = (state) => {
-//   // console.log(state);
-//   return {
-//     // pageViewKeys: state.page.pageViewKeys.concat()
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // handleAddPageViewKey: (pageKey: string, data: any) => {
-//     //   dispatch(actions.addPageViewKey(pageKey, data));
-//     // },
-//     // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-//     //   dispatch(actions.addToastMessage(toastType, message, data));
-//     // }
-//   }
-// };
-
 StoreReviewItem.defaultProps = {
   id: -1,
   store_id: null,
@@ -182,6 +163,4 @@ StoreReviewItem.defaultProps = {
   // price: 0
 }
 
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Templite);
 export default StoreReviewItem;

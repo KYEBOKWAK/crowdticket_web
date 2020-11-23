@@ -31,7 +31,6 @@ class PageController extends Component {
   componentDidMount(){
     const pageKeyDom = document.querySelector('#app_page_key');
     if(pageKeyDom){
-      // console.log(pageKeyDom.value);
       this.setState({
         pageKey: pageKeyDom.value
       })
@@ -39,7 +38,7 @@ class PageController extends Component {
   }
 
   render() {
-    // console.log(this.state.pageKey);
+    
     let pageView = <></>;
     const _pageKey = this.state.pageKey
     if(_pageKey === AppKeys.WEB_PAGE_KEY_HOME){
@@ -76,25 +75,4 @@ class PageController extends Component {
   }
 }
 
-
-
-const mapStateToProps = (state) => {
-  return {
-    pageKey: state.page.pageKey
-  }
-};
-
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     handleSetUserName: (name) => {
-//       dispatch(actions.setUserName(name));
-//     }
-//   }
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(PageController);
-export default connect(mapStateToProps, null)(PageController);
-
-// export default PageController;
-// export default TestButton;
+export default PageController;
