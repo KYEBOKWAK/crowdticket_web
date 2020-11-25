@@ -266,21 +266,11 @@ class StoreManagerTabItemPage extends Component{
       }
 
       const itemDom = <div key={data.id} className={'item_box'}>
-                        <StoreContentsListItem state={data.state} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.deleteItem(item_id, title)}}></StoreContentsListItem>
+                        <StoreContentsListItem state={data.state} store_title={data.store_title} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.deleteItem(item_id, title)}}></StoreContentsListItem>
                       </div>
 
       itemListDom.push(itemDom);
     }
-    /*
-    for(let i = 0 ; i < this.state.itemDatas.length ; i++){
-      const data = this.state.itemDatas[i];
-      const itemDom = <div key={data.id} className={'item_box'}>
-                        <StoreContentsListItem store_id={this.state.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i}></StoreContentsListItem>
-                      </div>
-
-      itemListDom.push(itemDom);
-    }
-    */
 
     let reOrderButtonContainer = <></>;
     if(this.state.state_re_order === Types.store_manager_state_order.NONE){

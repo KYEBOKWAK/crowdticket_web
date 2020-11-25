@@ -392,8 +392,6 @@ class StoreManagerTabOrderListPage extends Component{
             }
           >
             {this.state.items.map((data) => {
-              // return <StoreContentsListItem key={data.id} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isHomeList={true} store_alias={data.alias}></StoreContentsListItem>
-
               return <div key={data.id} className={'order_list_title_container order_list_item_container'}>
                       <div className={'order_title_date order_list_item_text'}>
                         {moment(data.created_at).format('YYYY-MM-DD')}

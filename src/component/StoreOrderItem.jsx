@@ -55,7 +55,7 @@ class StoreOrderItem extends Component{
               <img className={'item_img'} src={this.props.thumbUrl}/>
             </div>
             <div className={'item_content_container'}>
-              <div className={'item_name'}>{this.props.name}</div>
+              <div className={'item_name'}>{this.props.store_title}</div>
               <div className={'item_title'}>{this.props.title}</div>
               <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
             </div>
@@ -71,6 +71,7 @@ class StoreOrderItem extends Component{
 StoreOrderItem.defaultProps = {
   id: -1,
   store_item_id: -1,
+  store_title: '',
   thumbUrl: '',
   name: '',
   title: '',

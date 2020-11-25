@@ -8,6 +8,8 @@ import moment from 'moment';
 import axios from '../lib/Axios';
 import { shallowEqual } from 'react-redux';
 
+import default_user_img from '../res/img/default-user-image.png';
+
 
 class StoreReviewItem extends Component{
 
@@ -122,11 +124,17 @@ class StoreReviewItem extends Component{
     if(this.props.nick_name === ''){
       _name = this.props.name;
     }
+
+    let user_img = this.props.profile_photo_url;
+    if(!this.props.profile_photo_url || this.props.profile_photo_url === ''){
+      user_img = default_user_img;
+    }
+    
     return(
       <>
       <div className={'StoreReviewItem'}>
         <div className={'user_thumb_img_container'}>
-          <img className={'user_thumb_img'} src={this.props.profile_photo_url}/>
+          <img className={'user_thumb_img'} src={user_img}/>
         </div>
         <div className={'contentContainer'}>
           <div className={'name'}>

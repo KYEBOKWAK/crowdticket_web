@@ -179,7 +179,7 @@ class StoreContentsListItem extends Component{
 
       imgWarpperClassName = '';
     }else{
-      nick_name_dom = <div className={'item_name'}>{this.props.name}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div>;
+      nick_name_dom = <div className={'item_name'}>{this.props.store_title}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div>;
     }
 
     return(
@@ -214,6 +214,7 @@ StoreContentsListItem.defaultProps = {
   id: -1,
   index: -1,  //array 에 셋팅될때 index
   store_item_id: -1,
+  store_title: '',
   thumbUrl: '',
   name: '',
   title: '',

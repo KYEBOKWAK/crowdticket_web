@@ -39,6 +39,7 @@ class StoreReceiptItem extends Component{
       item_nick_name: '',
 
       store_item_id: null,
+      store_title: '',
       state_string: '',
       state: 0,
       card_state_text: '',
@@ -117,7 +118,9 @@ class StoreReceiptItem extends Component{
         item_thumb_img_url: data.img_url,
         // total_price: data.price,
         store_id: data.store_id,
-        item_nick_name: data.nick_name
+        item_nick_name: data.nick_name,
+
+        store_title: data.store_title
       })
     }, (error) => {
 
@@ -413,6 +416,7 @@ class StoreReceiptItem extends Component{
                               name={this.state.item_nick_name}
                               title={this.state.item_title}
                               price={this.state.item_price}
+                              store_title={this.state.store_title}
                             ></StoreOrderItem>
     }
 

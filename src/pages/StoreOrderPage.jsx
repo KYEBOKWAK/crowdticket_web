@@ -56,6 +56,7 @@ class StoreOrderPage extends Component{
       store_id: null,
       store_item_id: null,
       store_order_id: null,
+      store_title: '',
 
       item_title: '',
       item_price: 0,
@@ -262,7 +263,8 @@ class StoreOrderPage extends Component{
         total_price: data.price,
         store_id: data.store_id,
         item_nick_name: data.nick_name,
-        item_ask: data.ask
+        item_ask: data.ask,
+        store_title: data.store_title
       })
     }, (error) => {
 
@@ -671,6 +673,7 @@ class StoreOrderPage extends Component{
             name={this.state.item_nick_name}
             title={this.state.item_title}
             price={this.state.item_price}
+            store_title={this.state.store_title}
           ></StoreOrderItem>
           
           <div className={'request_label'}>
