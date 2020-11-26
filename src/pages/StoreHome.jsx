@@ -181,7 +181,11 @@ class StoreHome extends Component {
   clickCreateStore(e){
     e.preventDefault();
     
-    window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9')
+    // window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9')
+    _axios.post(process.env.REACT_APP_UPLOAD_API_SERVER_QA, {}
+      ).then((res) => {
+        console.log(res.data);
+      })
     
   }
 
@@ -208,7 +212,8 @@ class StoreHome extends Component {
   
     return (
       <div className={'StoreHomeComponent'}>
-        <input type="file" className={'form-control'} onChange={this.uploadFile}/>
+        {/* <input type="file" className={'form-control'} onChange={this.uploadFile}/>
+        <a target="_blank" rel="noopener noreferrer" href={'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/qa/test/MVI_0374.MP4'} download>다운로드 테스트</a> */}
         <div className={'title_img_container'}>
           <img className={'title_img'} src={store_home_title_img} />
         </div>
