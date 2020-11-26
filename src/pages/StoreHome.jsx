@@ -14,6 +14,10 @@ import axios from '../lib/Axios';
 import store_home_title_img from '../res/img/store-home-title.svg';
 import Types from '../Types';
 
+//test
+import _axios from 'axios';
+//////
+
 let isStoreHomeSliding = false;
 
 class StoreHome extends Component {
@@ -23,7 +27,9 @@ class StoreHome extends Component {
     this.state = { 
       storeThumbListComponent: <></>,
       items: [],
-      galleryItems: []
+      galleryItems: [],
+
+      testPercent: 0
     };
   }
 
@@ -174,7 +180,27 @@ class StoreHome extends Component {
 
   clickCreateStore(e){
     e.preventDefault();
+    
     window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9')
+    
+  }
+
+  uploadFile = ({target: {files}}) => {
+    console.log(files[0])
+    let data = new FormData();
+    data.append('file', files[0]);
+
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const {loaded, total} = progressEvent;
+        let percent = Math.floor( (loaded * 100) / total);
+        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+      }
+    }
+    
+    _axios.post("http://54.250.22.93:3000/uploader/any/test", data, options).then((res) => {
+      console.log(res);
+    })
   }
 
   //
@@ -182,6 +208,7 @@ class StoreHome extends Component {
   
     return (
       <div className={'StoreHomeComponent'}>
+        <input type="file" className={'form-control'} onChange={this.uploadFile}/>
         <div className={'title_img_container'}>
           <img className={'title_img'} src={store_home_title_img} />
         </div>
