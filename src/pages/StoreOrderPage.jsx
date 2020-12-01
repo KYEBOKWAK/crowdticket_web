@@ -21,7 +21,7 @@ import icon_box from '../res/img/icon-box.svg';
 import ic_checkbox_btn_s from '../res/img/ic-checkbox-btn-s.svg';
 import ic_checkbox_btn_n from '../res/img/ic-checkbox-btn-n.svg';
 
-// import FileUploader from '../component/FileUploader';
+import FileUploader from '../component/FileUploader';
 
 // import * as GlobalKeys from '~/GlobalKeys';
 
@@ -47,7 +47,8 @@ const INPUT_STORE_ORDER_REQUEST_CONTENTS = "INPUT_STORE_ORDER_REQUEST_CONTENTS";
 
 class StoreOrderPage extends Component{
 
-  fileInput = React.createRef();
+  // fileInput = React.createRef();
+  fileUploaderRef = React.createRef();
 
   constructor(props){
     super(props);
@@ -64,8 +65,10 @@ class StoreOrderPage extends Component{
       item_thumb_img_url: '',
       item_nick_name: '',
       item_ask: '',
+      item_file_upload_state: Types.file_upload_state.NONE,
 
       isInitDeriveStateFromProps: false,
+      user_id: null,
       name: '',
       contact: '',
       email: '',
@@ -183,7 +186,8 @@ class StoreOrderPage extends Component{
             this.setState({
               name: name,
               email: result.userInfo.email,
-              contact: result.userInfo.contact
+              contact: result.userInfo.contact,
+              user_id: result.userInfo.user_id
             }, () => {
               this.requestItemInfo()
             })
@@ -264,7 +268,9 @@ class StoreOrderPage extends Component{
         store_id: data.store_id,
         item_nick_name: data.nick_name,
         item_ask: data.ask,
-        store_title: data.store_title
+        store_title: data.store_title,
+
+        item_file_upload_state: data.file_upload_state
       })
     }, (error) => {
 
@@ -420,10 +426,16 @@ class StoreOrderPage extends Component{
         store_item_order_id: result.order_id
       }, (result_last_order) => {
         stopLoadingPopup();
-        this.goOrderComplite(result.order_id)
+
+        this.fileUploaderRef.uploadFiles(result.order_id, Types.file_upload_target_type.orders_items, () => {
+          this.goOrderComplite(result.order_id)
+        });
       }, (error) => {
         stopLoadingPopup();
-        this.goOrderComplite(result.order_id)
+
+        this.fileUploaderRef.uploadFiles(result.order_id, Types.file_upload_target_type.orders_items, () => {
+          this.goOrderComplite(result.order_id)
+        });
       })      
     },
     (error) => {
@@ -689,7 +701,7 @@ class StoreOrderPage extends Component{
           </div>
 
           {/* 파일 input START */}
-          {/* <FileUploader></FileUploader> */}
+          <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}></FileUploader>
           {/* 파일 input END */}
         </div>
 
@@ -774,7 +786,6 @@ class StoreOrderPage extends Component{
         <button className={'order_button'} onClick={(e) => {this.clickOrder(e)}}>
           {Util.getNumberWithCommas(this.state.item_price)}원 주문하기
         </button>
-
       </div>
     )
   }

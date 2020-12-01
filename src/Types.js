@@ -34,6 +34,14 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  file_upload_target_type: {
+    orders_items: 'orders_items'
+  },
+  file_upload_state: {
+    NONE: 0,
+    IMAGE: 1,
+    FILES: 2
+  },
   store_home_item_list: {
     POPUALER: 'POPUALER',
     NEW_UPDATE: 'NEW_UPDATE',

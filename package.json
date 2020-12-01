@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/KYEBOKWAK/crowdticket_web#readme",
   "dependencies": {
+    "@ramonak/react-progress-bar": "^1.1.1",
     "array-random": "0.0.1",
     "axios": "^0.20.0",
     "moment": "^2.29.1",

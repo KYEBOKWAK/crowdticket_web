@@ -22,6 +22,8 @@
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=1') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
   
 @endsection
 

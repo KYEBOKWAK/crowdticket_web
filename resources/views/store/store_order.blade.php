@@ -11,12 +11,14 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreOrderPage.css?version=1') }}" 
-rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
-rel="stylesheet"/>
-<link href="{{ asset('/dist/css/FileUploader.css?version=0') }}" 
-rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderPage.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/FileUploader.css?version=1') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
+
 
 @endsection
 

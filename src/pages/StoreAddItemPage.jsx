@@ -73,6 +73,14 @@ class StoreAddItemPage extends Component{
         <option key={Types.item_limit_state.LIMIT} value={Types.item_limit_state.LIMIT}>{'한주간 한정 수량 판매'}</option>
       ],
 
+      item_file_upload_state: Types.file_upload_state.NONE,
+      item_file_upload_state_show: '없음',
+      item_file_upload_state_list: [
+        <option key={Types.file_upload_state.NONE} value={Types.file_upload_state.NONE}>{'없음'}</option>,
+        <option key={Types.file_upload_state.IMAGE} value={Types.file_upload_state.IMAGE}>{'이미지'}</option>,
+        <option key={Types.file_upload_state.FILES} value={Types.file_upload_state.FILES}>{'영상, 사운드, 기타 파일'}</option>,
+      ],
+
       order_limit_count: 0,
       ori_order_limit_count: 0,
 
@@ -86,6 +94,7 @@ class StoreAddItemPage extends Component{
     this.onDrop = this.onDrop.bind(this);
     this.onChangeSelect = this.onChangeSelect.bind(this);
     this.onChangeSelectLimit = this.onChangeSelectLimit.bind(this);
+    this.onChangeFileupload = this.onChangeFileupload.bind(this);
   };
 
   onDrop(pictureFiles, pictureDataURLs) {
@@ -264,7 +273,6 @@ class StoreAddItemPage extends Component{
   }
 
   getLimitStateShow(item_state_limit){
-    console.log(item_state_limit);
     if(item_state_limit === Types.item_limit_state.UNLIMIT){
       return '무제한';
     }
@@ -273,6 +281,21 @@ class StoreAddItemPage extends Component{
     }
     else{
       return '무제한';
+    }
+  }
+
+  getFileUploadStateShow(state){
+    if(state === Types.file_upload_state.NONE){
+      return '없음';
+    }
+    else if(state === Types.file_upload_state.IMAGE){
+      return '이미지';
+    }
+    else if(state === Types.file_upload_state.FILES){
+      return '영상, 사운드, 기타 파일';
+    }
+    else{
+      return '없음';
     }
   }
 
@@ -291,11 +314,13 @@ class StoreAddItemPage extends Component{
     }, (result) => {
 
       let limitType = Types.item_limit_state.UNLIMIT;
-      console.log(result);
+      
       if(result.data.order_limit_count > 0){
         // item_state_limit
         limitType = Types.item_limit_state.LIMIT;
       }
+
+      // let file_upload_state = result.data.file_upload_state
       
       this.setState({
         item_title: result.data.title,
@@ -310,6 +335,9 @@ class StoreAddItemPage extends Component{
         item_state_limit_show: this.getLimitStateShow(limitType),
         order_limit_count: result.data.order_limit_count,
         ori_order_limit_count: result.data.order_limit_count,
+
+        item_file_upload_state: result.data.file_upload_state,
+        item_file_upload_state_show: this.getFileUploadStateShow(result.data.file_upload_state)
       })
     }, (error) => {
 
@@ -400,6 +428,14 @@ class StoreAddItemPage extends Component{
     })
   }
 
+  onChangeFileupload(event){
+    const value = Number(event.target.value);
+    this.setState({
+      item_file_upload_state: value,
+      item_file_upload_state_show: this.getFileUploadStateShow(value)
+    })
+  }
+
   clickPhotoAdd(e){
     e.preventDefault();
 
@@ -450,7 +486,9 @@ class StoreAddItemPage extends Component{
         content: this.state.item_content,
         ask: this.state.item_ask,
 
-        order_limit_count: order_limit_count
+        order_limit_count: order_limit_count,
+
+        file_upload_state: this.state.item_file_upload_state
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -495,7 +533,9 @@ class StoreAddItemPage extends Component{
         item_id: this.state.item_id,
 
         order_limit_count: order_limit_count,
-        isChangeLimitCount: isChangeLimitCount
+        isChangeLimitCount: isChangeLimitCount,
+
+        file_upload_state: this.state.item_file_upload_state
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -686,6 +726,23 @@ class StoreAddItemPage extends Component{
           <textarea className={'input_content_ask_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={"예시: \n 1. 이름을 써주세요"}></textarea>
           <div className={'input_ask_explain'}>
             구매자가 콘텐츠 주문시 보게 될 콘텐츠 신청 양식 텍스트입니다
+          </div>
+        </div>
+
+        <div className={'box_container'}>
+          <div className={'box_label'}>파일 업로드 옵션</div>
+
+          <div className={'select_box'}>
+            {this.state.item_file_upload_state_show}
+            <img src={icon_box} />
+
+            <select className={'select_tag'} value={this.state.item_file_upload_state} onChange={this.onChangeFileupload}>
+              {this.state.item_file_upload_state_list}
+            </select>
+          </div>
+
+          <div className={'limit_explain_text'}>
+            구매자가 업로드 해야만 하는 파일 종류를 선택해주세요
           </div>
         </div>
 

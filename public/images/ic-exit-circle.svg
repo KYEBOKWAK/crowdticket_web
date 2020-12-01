@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="_03_ic_01_system_01_S_ic_exit_circle_20" width="20" height="20" viewBox="0 0 20 20">
+    <defs>
+        <style>
+            .cls-3{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}
+        </style>
+    </defs>
+    <g id="_03_ic_01_system_ic_exit_circle_20">
+        <path id="icon_box" fill="none" d="M0 0H20V20H0z"/>
+        <g id="exit">
+            <circle id="Oval" cx="10" cy="10" r="10" fill="#e6e6e6"/>
+            <path id="Path" d="M0 0l6 6" class="cls-3" transform="translate(7 7)"/>
+            <path id="Path-2" d="M0 0l-6 6" class="cls-3" transform="translate(13 7)"/>
+        </g>
+    </g>
+</svg>

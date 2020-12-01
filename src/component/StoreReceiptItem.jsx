@@ -12,6 +12,8 @@ import Types from '../Types';
 
 import radio_button_img_n from '../res/img/radio-btn-n.svg';
 import radio_button_img_s from '../res/img/radio-btn-s.svg';
+
+import FileUploader from '../component/FileUploader';
 // import moment_timezone from 'moment-timezone';
 // moment_timezone.tz.setDefault("Asia/Seoul");
 // const moment_timezone = require('moment-timezone');
@@ -545,6 +547,9 @@ class StoreReceiptItem extends Component{
 
         <div className={'under_line'}>
         </div>
+
+        <FileUploader state={Types.file_upload_state.FILES} isUploader={false} store_order_id={this.props.store_order_id}></FileUploader>
+
         <div className={'pay_state_text_container'}>
           <div>
             {Util.getNumberWithCommas(this.state.total_price)}원 {this.state.card_state_text}

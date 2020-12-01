@@ -14,6 +14,7 @@
 <link href="{{ asset('/dist/css/StoreOrderComplitePage.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=7') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/FileUploader.css?version=1') }}" rel="stylesheet"/>
 
 @endsection
 

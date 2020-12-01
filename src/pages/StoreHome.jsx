@@ -15,7 +15,8 @@ import store_home_title_img from '../res/img/store-home-title.svg';
 import Types from '../Types';
 
 //test
-import _axios from 'axios';
+// import _axios from 'axios';
+// import Popup_progress from '../component/Popup_progress';
 //////
 
 let isStoreHomeSliding = false;
@@ -181,39 +182,14 @@ class StoreHome extends Component {
   clickCreateStore(e){
     e.preventDefault();
     
-    // window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9')
-    _axios.post(process.env.REACT_APP_UPLOAD_API_SERVER_QA, {}
-      ).then((res) => {
-        console.log(res.data);
-      })
-    
+    window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9');    
   }
-
-  uploadFile = ({target: {files}}) => {
-    console.log(files[0])
-    let data = new FormData();
-    data.append('file', files[0]);
-
-    const options = {
-      onUploadProgress: (progressEvent) => {
-        const {loaded, total} = progressEvent;
-        let percent = Math.floor( (loaded * 100) / total);
-        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-      }
-    }
-    
-    _axios.post("http://54.250.22.93:3000/uploader/any/test", data, options).then((res) => {
-      console.log(res);
-    })
-  }
-
+  
   //
   render() {
   
     return (
       <div className={'StoreHomeComponent'}>
-        {/* <input type="file" className={'form-control'} onChange={this.uploadFile}/>
-        <a target="_blank" rel="noopener noreferrer" href={'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/qa/test/MVI_0374.MP4'} download>다운로드 테스트</a> */}
         <div className={'title_img_container'}>
           <img className={'title_img'} src={store_home_title_img} />
         </div>

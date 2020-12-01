@@ -50,6 +50,8 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreManagerTabAccountPage.scss', 'dist/css/')
 .sass('src/res/css/StoreUserSNSList.scss', 'dist/css/')
 .sass('src/res/css/StoreHomeStoreListItem.scss', 'dist/css/')
+.sass('src/res/css/Popup_progress.scss', 'dist/css/')
+.sass('src/res/css/Popup_image_preview.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

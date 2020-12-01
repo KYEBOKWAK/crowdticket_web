@@ -71,7 +71,6 @@ class MyContentsPage extends Component{
   requestMyStoreOrder(){
     axios.post("/orders/store/item/list", {}, 
     (result) => {
-      console.log(result);
       this.setState({
         order_datas: result.list.concat()
       }, () => {

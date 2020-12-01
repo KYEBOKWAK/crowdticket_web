@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="구성_요소_2_1" width="58" height="40.079" viewBox="0 0 58 40.079">
+    <defs>
+        <clipPath id="clip-path">
+            <path id="Shape" fill="#4d4d4d" stroke="#4d4d4d" d="M8.939 4.726a.3.3 0 0 1-.384.035l-.042-.035-3.7-3.7v9.5a.3.3 0 1 1-.6 0v-9.5l-3.7 3.7a.3.3 0 0 1-.384.035l-.041-.035a.3.3 0 0 1-.035-.384L.088 4.3 4.3.088l.026-.022.037-.026L4.4.023 4.436.01 4.469 0h.089-.044.032l.045.01.038.013.056.031.034.028L8.939 4.3a.3.3 0 0 1 0 .426z"/>
+        </clipPath>
+        <style>
+        </style>
+    </defs>
+    <text id="더보기" fill="#4d4d4d" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12px" transform="translate(29 36.079)">
+        <tspan x="-28.944" y="0">파일 올리기</tspan>
+    </text>
+    <g id="그룹_5" transform="translate(19)">
+        <g id="그룹_8">
+            <g id="사각형_2" fill="none" stroke="#4d4d4d">
+                <rect width="20" height="20" stroke="none" rx="6"/>
+                <rect width="19" height="19" x=".5" y=".5" rx="5.5"/>
+            </g>
+            <g id="_03_ic_00_system_24_regular_ic_arrow_up_24" transform="translate(5.5 5)">
+                <g id="outline">
+                    <path id="Shape-2" fill="#4d4d4d" stroke="#4d4d4d" stroke-width="0.5px" d="M8.939 4.726a.3.3 0 0 1-.384.035l-.042-.035-3.7-3.7v9.5a.3.3 0 1 1-.6 0v-9.5l-3.7 3.7a.3.3 0 0 1-.384.035l-.041-.035a.3.3 0 0 1-.035-.384L.088 4.3 4.3.088l.026-.022.037-.026L4.4.023 4.436.01 4.469 0h.089-.044.032l.045.01.038.013.056.031.034.028L8.939 4.3a.3.3 0 0 1 0 .426z"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
