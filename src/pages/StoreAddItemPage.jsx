@@ -105,6 +105,11 @@ class StoreAddItemPage extends Component{
     // console.log(pictureFiles);
     // console.log(pictureDataURLs);
 
+    if(pictureFiles.length === 0){
+      alert('잘못된 이미지 파일. (5MB 이하의 이미지만 사용 가능합니다.)');
+      return;
+    }
+
     let imgIndex = pictureDataURLs.length - 1;
     if(imgIndex < 0){
       imgIndex = 0;
@@ -724,7 +729,11 @@ class StoreAddItemPage extends Component{
               onChange={this.onDrop}
               imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
               maxFileSize={5242880}
+              fileSizeError={'5MB 이하의 사이즈만 가능합니다.'}
             />
+          </div>
+          <div className={'limit_explain_text'}>
+          5MB 이하의 이미지만 등록 가능합니다.
           </div>
         </div>
 
