@@ -18,7 +18,7 @@ rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=7') }}" 
 rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/FileUploader.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/FileUploader.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
 
