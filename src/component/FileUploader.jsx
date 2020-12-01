@@ -310,68 +310,6 @@ class FileUploader extends Component{
         files: _files.concat()
       })
     }
-
-    /*
-    const _files = this.state.files.concat();
-    const _show_images = this.state.show_images.concat();
-
-    let index = _files.length;
-
-    for(let i = 0 ; i < files.length ; i++){
-      index++;
-      const file = files[i];
-
-      const data = {
-        key: index,
-        file: file
-      }
-  
-      _files.push(data);
-    }
-
-
-    const isImage = file.type.indexOf('image');
-    if(isImage >= 0){
-      // centerImage
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        const imagePreview = e.target.result;
-
-        const imgData = {
-          key: index,
-          image: e.target.result
-        }
-        
-        _show_images.push(imgData);
-
-        this.setState({
-          files: _files.concat(),
-          show_images: _show_images.concat()
-        })
-      };
-      reader.readAsDataURL(file);
-    }else{
-      this.setState({
-        files: _files.concat()
-      })
-    }
-    */
-
-    // let data = new FormData();
-    // data.append('file', files[0]);
-
-    // const options = {
-    //   header: { "content-type": "multipart/form-data" },
-    //   onUploadProgress: (progressEvent) => {
-    //     const {loaded, total} = progressEvent;
-    //     let percent = Math.floor( (loaded * 100) / total);
-    //     console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-    //   }
-    // }
-    
-    // _axios.post("http://54.250.22.93:3000/uploader/any/test", data, options).then((res) => {
-    //   console.log(res);
-    // })
   }
 
   removeItem = (e, key) => {

@@ -36,6 +36,7 @@ const INPUT_STORE_MANAGER_ADD_ITEM_ASK = "INPUT_STORE_MANAGER_ADD_ITEM_ASK";
 const INPUT_STORE_MANAGER_LIMIT_COUNT = "INPUT_STORE_MANAGER_LIMIT_COUNT";
 
 class StoreAddItemPage extends Component{
+  fileInputRef = React.createRef();
 
   constructor(props){
     super(props);
@@ -87,7 +88,10 @@ class StoreAddItemPage extends Component{
       contentType: '',
       imageBinary: '',
 
-      isChangeImg: false
+      isChangeImg: false,
+
+      file: '',
+      show_image: ''
 
     }
 
@@ -337,7 +341,9 @@ class StoreAddItemPage extends Component{
         ori_order_limit_count: result.data.order_limit_count,
 
         item_file_upload_state: result.data.file_upload_state,
-        item_file_upload_state_show: this.getFileUploadStateShow(result.data.file_upload_state)
+        item_file_upload_state_show: this.getFileUploadStateShow(result.data.file_upload_state),
+
+        show_image: result.data.img_url
       })
     }, (error) => {
 
@@ -439,6 +445,7 @@ class StoreAddItemPage extends Component{
   clickPhotoAdd(e){
     e.preventDefault();
 
+    // this.fileInputRef.click();
     document.querySelector('.chooseFileButton').click();
   }
 
@@ -628,6 +635,29 @@ class StoreAddItemPage extends Component{
     window.location.href = hrefURL;
   }
 
+  onInputClick = (event) => {
+    event.target.value = ''
+  }
+
+  uploadFile = ({target: {files}}) => {
+    // console.log(files)
+
+    const file = files[0];
+
+    // centerImage
+    var reader = new FileReader();
+    reader.onload = (e) => {
+      const imagePreview = e.target.result;
+
+      this.setState({
+        file: file,
+        show_image: imagePreview
+      })
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   render(){
     if(!this.state.isLogin){
       return(
@@ -686,6 +716,8 @@ class StoreAddItemPage extends Component{
               {photoThumbImg}
             </div>
 
+            {/* <input onClick={this.onInputClick} accept={'image/*'} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/> */}
+
             <ImageUploader
               withIcon={false}
               buttonText="Choose images"
@@ -729,7 +761,7 @@ class StoreAddItemPage extends Component{
           </div>
         </div>
 
-        <div className={'box_container'}>
+        {/* <div className={'box_container'}>
           <div className={'box_label'}>파일 업로드 옵션</div>
 
           <div className={'select_box'}>
@@ -744,7 +776,7 @@ class StoreAddItemPage extends Component{
           <div className={'limit_explain_text'}>
             구매자가 업로드 해야만 하는 파일 종류를 선택해주세요
           </div>
-        </div>
+        </div> */}
 
         <div className={'box_container'}>
           <div className={'box_label'}>판매 수량 제한 옵션</div>

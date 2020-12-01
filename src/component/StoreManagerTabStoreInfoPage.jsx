@@ -445,7 +445,7 @@ class StoreManagerTabStoreInfoPage extends Component{
                             </select>
                           </div>
 
-                          <input className={'input_box category_input'} type="text" name={'channel_url'} placeholder={'채녈 주소를 입력해주세요.'} value={data.channel_link_url} onChange={(e) => {this.onChangeCategoryInput(e, data.index)}}/>
+                          <input className={'input_box category_input'} type="text" name={'channel_url'} placeholder={'채널 주소를 입력해주세요.'} value={data.channel_link_url} onChange={(e) => {this.onChangeCategoryInput(e, data.index)}}/>
 
                           <div className={'category_button_container'}>
                             {plusButton}
