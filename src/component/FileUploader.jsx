@@ -416,6 +416,10 @@ class FileUploader extends Component{
     })
   }
 
+  onInputClick = (event) => {
+    event.target.value = ''
+  }
+
   render(){
     if(this.props.state === Types.file_upload_state.NONE){
       return (
@@ -548,7 +552,7 @@ class FileUploader extends Component{
     
     return(
       <div className={'FileUploader'}>
-        <input accept={inputAccept} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/>
+        <input onClick={this.onInputClick} accept={inputAccept} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/>
         <div className={'file_uploader_container'} style={containerStyle}>
           {uploadButtonDom}
           <div className={'viewport_container'}>
