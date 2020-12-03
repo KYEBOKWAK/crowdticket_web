@@ -391,7 +391,84 @@ class StoreOrderPage extends Component{
   }
 
   requsetOrder(){
-    //pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT;
+
+    let pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT;
+    
+    if(!this.state.store_id){
+      alert("스토어 정보가 없습니다. 새로고침 해주세요.");
+      return;
+    }
+
+    this.fileUploaderRef.uploadFiles(this.state.user_id, Types.file_upload_target_type.orders_items, 
+    (result_upload_files) => {
+      let filesInsertID = [];
+      for(let i = 0 ; i < result_upload_files.list.length ; i++){
+        const data = result_upload_files.list[i];
+        let _data = {
+          file_id: data.insertId
+        }
+        
+        filesInsertID.push(_data);
+      }
+
+      showLoadingPopup('결제가 진행중입니다..');
+
+      let _data = {
+        store_id: this.state.store_id,
+        item_id: this.state.store_item_id,
+        card_number : this.state.card_number,
+        card_yy: this.state.card_yy,
+        card_mm: this.state.card_mm,
+        card_birth: this.state.card_birth,
+        card_pw_2digit: this.state.card_pw_2digit,
+        total_price: this.state.total_price, //로컬에서 보내는 토탈 가격 정보와 서버 db 조회후 결제될 가격 정보가 일치하는지 체크한다
+        title: this.state.item_title,
+        contact: this.state.contact,
+        email: this.state.email,
+        name: this.state.name,
+        requestContent: this.state.requestContent,
+        pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD
+        // merchant_uid: merchant_uid
+      }
+
+      axios.post('/pay/store/onetime', {..._data}, 
+      (result) => {
+        axios.post("/store/item/order/islast", {
+          item_id: this.state.store_item_id,
+          store_item_order_id: result.order_id
+        }, (result_last_order) => {
+
+          if(filesInsertID.length === 0){
+            stopLoadingPopup();
+            this.goOrderComplite(result.order_id);  
+          }else{
+            axios.post("/store/file/set/orderid", {
+              store_order_id: result.order_id,
+              filesInsertID: filesInsertID.concat()
+            }, (result_files) => {
+              stopLoadingPopup();
+              this.goOrderComplite(result.order_id);
+            }, (error_files) => {
+              stopLoadingPopup();
+            })
+          }
+
+          // stopLoadingPopup();
+          // this.goOrderComplite(result.order_id);
+        }, (error) => {
+          stopLoadingPopup();
+        })      
+      },
+      (error) => {
+        stopLoadingPopup();
+      });
+
+    }, (error_upload_files) => {
+      alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+      return;
+    });
+
+    /*
     let pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT;
     
     if(!this.state.store_id){
@@ -441,6 +518,7 @@ class StoreOrderPage extends Component{
     (error) => {
       stopLoadingPopup();
     });
+    */
   }
 
   onChangeInput(e, type){

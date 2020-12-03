@@ -142,6 +142,75 @@ class FileUploader extends Component{
     return this.state.files;
   }
 
+  uploadFiles = (user_id, target_type, successCallback, errorCallback) => {
+    if(!target_type){
+      return;
+    }
+
+    let _files = this.state.files.concat();
+    if(_files.length === 0){
+      successCallback({
+        list: []
+      });
+      return;
+    }
+
+
+    let data = new FormData();
+    data.append('target_id', user_id);
+    data.append('target_type', target_type);
+    // data.append('file', _files[0].file);
+    for(let i = 0 ; i < _files.length ; i++){
+      data.append('file', _files[i].file);
+    }
+    
+    const options = {
+      header: { "content-type": "multipart/form-data" },
+      onUploadProgress: (progressEvent) => {
+        const {loaded, total} = progressEvent;
+        let percent = Math.floor( (loaded * 100) / total);
+        // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+        this.setState({
+          uploading_progress: percent
+        })
+      }
+    }
+    
+    let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
+    const app_type_key = document.querySelector('#g_app_type');
+    if(app_type_key){
+      if(app_type_key.value === 'local'){
+        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
+      }else if(app_type_key.value === 'qa'){
+        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
+      }
+    }
+
+    this.setState({
+      isFileUploading: true
+    }, () => {
+      _axios.post(`${apiURL}/uploader/files`, data, options).then((res) => {
+        // console.log(res);
+        this.setState({
+          isFileUploading: false,
+          uploading_progress: 0
+        }, () => {
+          successCallback({
+            list: res.data.result.list
+          });
+        })
+      }).catch((error) => {
+        this.setState({
+          isFileUploading: false,
+          uploading_progress: 0
+        }, () => {
+          errorCallback();
+        })
+      })
+    })
+  }
+
+  /*
   uploadFiles = (target_id, target_type, callback) => {
     if(!target_id || !target_type){
       return;
@@ -185,20 +254,28 @@ class FileUploader extends Component{
       }
     }
 
-    _axios.post(`${apiURL}/uploader/files`, data, options).then((res) => {
-      // console.log(res);
-      this.setState({
-        isFileUploading: false,
-        uploading_progress: 0
-      }, () => {
-        callback();
-      })
-    })
-
     this.setState({
       isFileUploading: true
+    }, () => {
+      _axios.post(`${apiURL}/uploader/files`, data, options).then((res) => {
+        // console.log(res);
+        this.setState({
+          isFileUploading: false,
+          uploading_progress: 0
+        }, () => {
+          callback();
+        })
+      }).catch((error) => {
+        this.setState({
+          isFileUploading: false,
+          uploading_progress: 0
+        }, () => {
+          callback();
+        })
+      })
     })
   }
+  */
 
   setScrollAction(){
     let viewport = document.querySelector('.FileUploader .viewport');

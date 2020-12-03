@@ -102,8 +102,6 @@ class StoreItemDetailPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       const data = result.data;
-
-      console.log(data);
       
       this.setState({
         title: data.title,
