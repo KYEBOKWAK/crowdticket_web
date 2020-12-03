@@ -770,7 +770,7 @@ class StoreAddItemPage extends Component{
           </div>
         </div>
 
-        {/* <div className={'box_container'}>
+        <div className={'box_container'}>
           <div className={'box_label'}>파일 업로드 옵션</div>
 
           <div className={'select_box'}>
@@ -785,7 +785,7 @@ class StoreAddItemPage extends Component{
           <div className={'limit_explain_text'}>
             구매자가 업로드 해야만 하는 파일 종류를 선택해주세요
           </div>
-        </div> */}
+        </div>
 
         <div className={'box_container'}>
           <div className={'box_label'}>판매 수량 제한 옵션</div>
