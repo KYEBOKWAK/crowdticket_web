@@ -290,6 +290,22 @@ class StoreOrderPage extends Component{
       return false
     }
 
+    if(this.state.requestContent === ''){
+      alert('요청사항을 필수로 적어주세요');
+      return false;
+    }
+
+    if(this.fileUploaderRef.getData().length === 0){
+      if(this.state.item_file_upload_state === Types.file_upload_state.IMAGE){
+        alert('이미지가 필수인 상품입니다. 상단의 콘텐츠 설명란을 참고해주세요.');
+        return false;
+      }else if(this.state.item_file_upload_state === Types.file_upload_state.FILES){
+        alert('파일 혹은 이미지가 필수인 상품입니다. 상단의 콘텐츠 설명란을 참고해주세요.');
+        return false;
+      }
+    }
+    
+
     if(this.state.name === ''){
       // isOrder = false;
       alert('이름을 적어주세요');

@@ -60,27 +60,36 @@ class StoreAddItemPage extends Component{
       item_ask: '',
       item_state: Types.item_state.SALE,
 
-      item_state_show: '판매중',
+      // item_state_show: '판매중',
+      item_state_show: this.getStateShow(Types.item_state.SALE),
       item_state_list: [
-        <option key={Types.item_state.SALE} value={Types.item_state.SALE}>{'판매 중'}</option>,
-        <option key={Types.item_state.SALE_PAUSE} value={Types.item_state.SALE_PAUSE}>{'판매 일시중지'}</option>,
-        <option key={Types.item_state.SALE_STOP} value={Types.item_state.SALE_STOP}>{'판매 중단 및 비공개'}</option>,
-        <option key={Types.item_state.SALE_LIMIT} value={Types.item_state.SALE_LIMIT}>{'품절(강제 선택 불가)'}</option>
+        <option key={Types.item_state.SALE} value={Types.item_state.SALE}>{this.getStateShow(Types.item_state.SALE)}</option>,
+        <option key={Types.item_state.SALE_PAUSE} value={Types.item_state.SALE_PAUSE}>{this.getStateShow(Types.item_state.SALE_PAUSE)}</option>,
+        <option key={Types.item_state.SALE_STOP} value={Types.item_state.SALE_STOP}>{this.getStateShow(Types.item_state.SALE_STOP)}</option>,
+        <option key={Types.item_state.SALE_LIMIT} value={Types.item_state.SALE_LIMIT}>{this.getStateShow(Types.item_state.SALE_LIMIT)}</option>
       ],
 
       item_state_limit: Types.item_limit_state.UNLIMIT,
-      item_state_limit_show: '무제한',
+      item_state_limit_show: this.getLimitStateShow(Types.item_limit_state.UNLIMIT),
       item_state_limit_list: [
-        <option key={Types.item_limit_state.UNLIMIT} value={Types.item_limit_state.UNLIMIT}>{'무제한'}</option>,
-        <option key={Types.item_limit_state.LIMIT} value={Types.item_limit_state.LIMIT}>{'한주간 한정 수량 판매'}</option>
+        <option key={Types.item_limit_state.UNLIMIT} value={Types.item_limit_state.UNLIMIT}>{this.getLimitStateShow(Types.item_limit_state.UNLIMIT)}</option>,
+        <option key={Types.item_limit_state.LIMIT} value={Types.item_limit_state.LIMIT}>{this.getLimitStateShow(Types.item_limit_state.LIMIT)}</option>
       ],
 
       item_file_upload_state: Types.file_upload_state.NONE,
-      item_file_upload_state_show: '없음',
+      item_file_upload_state_show: this.getFileUploadStateShow(Types.file_upload_state.NONE),
       item_file_upload_state_list: [
-        <option key={Types.file_upload_state.NONE} value={Types.file_upload_state.NONE}>{'없음'}</option>,
-        <option key={Types.file_upload_state.IMAGE} value={Types.file_upload_state.IMAGE}>{'이미지'}</option>,
-        <option key={Types.file_upload_state.FILES} value={Types.file_upload_state.FILES}>{'영상, 사운드, 기타 파일'}</option>,
+        <option key={Types.file_upload_state.NONE} value={Types.file_upload_state.NONE}>{this.getFileUploadStateShow(Types.file_upload_state.NONE)}</option>,
+        <option key={Types.file_upload_state.IMAGE} value={Types.file_upload_state.IMAGE}>{this.getFileUploadStateShow(Types.file_upload_state.IMAGE)}</option>,
+        <option key={Types.file_upload_state.FILES} value={Types.file_upload_state.FILES}>{this.getFileUploadStateShow(Types.file_upload_state.FILES)}</option>,
+      ],
+
+      item_product_state: Types.product_state.TEXT,
+      item_product_state_show: this.getProductStateShow(Types.product_state.TEXT),
+      item_product_state_list: [
+        <option key={Types.product_state.TEXT} value={Types.product_state.TEXT}>{this.getProductStateShow(Types.product_state.TEXT)}</option>,
+        <option key={Types.product_state.TEXT_FILE} value={Types.product_state.TEXT_FILE}>{this.getProductStateShow(Types.product_state.TEXT_FILE)}</option>,
+        <option key={Types.product_state.ONE_TO_ONE} value={Types.product_state.ONE_TO_ONE}>{this.getProductStateShow(Types.product_state.ONE_TO_ONE)}</option>,
       ],
 
       order_limit_count: 0,
@@ -102,6 +111,7 @@ class StoreAddItemPage extends Component{
     this.onChangeSelect = this.onChangeSelect.bind(this);
     this.onChangeSelectLimit = this.onChangeSelectLimit.bind(this);
     this.onChangeFileupload = this.onChangeFileupload.bind(this);
+    this.onChangeProductState = this.onChangeProductState.bind(this);
 
     this.handleImageUpload = this.handleImageUpload.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
@@ -314,6 +324,21 @@ class StoreAddItemPage extends Component{
     }
   }
 
+  getProductStateShow(state){
+    if(state === Types.product_state.TEXT){
+      return '텍스트';
+    }
+    else if(state === Types.product_state.TEXT_FILE){
+      return '텍스트+파일(영상, 이미지등)';
+    }
+    else if(state === Types.product_state.ONE_TO_ONE){
+      return '1:1 실시간 콘텐츠';
+    }
+    else{
+      return '텍스트';
+    }
+  }
+
   requestItemInfo(){
     if(this.state.pageState === Types.add_page_state.ADD){
       return;
@@ -353,6 +378,9 @@ class StoreAddItemPage extends Component{
 
         item_file_upload_state: result.data.file_upload_state,
         item_file_upload_state_show: this.getFileUploadStateShow(result.data.file_upload_state),
+
+        // item_product_state: result.data.product_state,
+        // item_product_state_show: this.getProductStateShow(result.data.product_state),
 
         show_image: result.data.img_url
       })
@@ -453,6 +481,14 @@ class StoreAddItemPage extends Component{
     })
   }
 
+  onChangeProductState(event){
+    const value = Number(event.target.value);
+    this.setState({
+      item_product_state: value,
+      item_product_state_show: this.getProductStateShow(value)
+    })
+  }
+
   clickPhotoAdd(e){
     e.preventDefault();
 
@@ -506,7 +542,9 @@ class StoreAddItemPage extends Component{
 
         order_limit_count: order_limit_count,
 
-        file_upload_state: this.state.item_file_upload_state
+        file_upload_state: this.state.item_file_upload_state,
+
+        // product_state: this.state.item_product_state
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -515,7 +553,7 @@ class StoreAddItemPage extends Component{
         }
 
         this.uploadFiles(result.item_id, Types.file_upload_target_type.items);
-        
+
       }, (error) => {
         stopLoadingPopup();
         // alert("에러");
@@ -541,7 +579,8 @@ class StoreAddItemPage extends Component{
         order_limit_count: order_limit_count,
         isChangeLimitCount: isChangeLimitCount,
 
-        file_upload_state: this.state.item_file_upload_state
+        file_upload_state: this.state.item_file_upload_state,
+        // product_state: this.state.item_product_state
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -857,9 +896,19 @@ class StoreAddItemPage extends Component{
             콘텐츠 설명
           </div>
           <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={"콘텐츠의 설명을 입력해주세요."}></textarea>
-          {/* <div className={'input_length_text'}>
-            {this.state.item_content.length}/{this.state.maxLength}
+
+          {/* <div className={'input_label'}>
+            상품 타입 (고객에게 전달해줄 상품 타입입니다.)
+          </div>
+          <div className={'select_box'}>
+            {this.state.item_product_state_show}
+            <img src={icon_box} />
+
+            <select className={'select_tag'} value={this.state.item_product_state} onChange={this.onChangeProductState}>
+              {this.state.item_product_state_list}
+            </select>
           </div> */}
+
         </div>
 
         <div className={'box_container'}>

@@ -87,9 +87,7 @@ class StoreManagerTabStoreInfoPage extends Component{
   requestStoreChannelCategory(){
     axios.post("/store/sns/channel/category/list", {
 
-    }, (result) => {
-      console.log(result);
-      
+    }, (result) => {      
       let _channel_category_select_options = [];
       for(let i = 0 ; i < result.list.length ; i++){
         const data = result.list[i];
@@ -138,7 +136,6 @@ class StoreManagerTabStoreInfoPage extends Component{
   }
 
   findCategoryTitle(category_id){
-    console.log('asdf');
     if(this.state.channel_categorys_data.length === 0){
       return '';
     }

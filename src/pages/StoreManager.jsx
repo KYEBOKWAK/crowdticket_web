@@ -214,12 +214,16 @@ class StoreManager extends Component {
   }
 
   scrollBoosterDestory(){
+    if(this.sb === null){
+      return;
+    }
+    
     this.sb.destroy();
     this.sb = null;
   }
 
   componentWillUnmount(){
-    scrollBoosterDestory();
+    this.scrollBoosterDestory();
   }
 
   setScrollAction(){
