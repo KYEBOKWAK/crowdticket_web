@@ -35,7 +35,8 @@ import * as GlobalTypes from "./GlobalKeys";
 
 const Types = {
   file_upload_target_type: {
-    orders_items: 'orders_items'
+    orders_items: 'orders_items',
+    items: 'items'
   },
   file_upload_state: {
     NONE: 0,

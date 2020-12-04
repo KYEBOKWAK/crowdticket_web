@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 
-import ImageUploader from "react-images-upload";
-
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -19,10 +17,13 @@ import ImageUploader from "react-images-upload";
 // import Types from '~/Types';
 
 import axios from '../lib/Axios';
+import _axios from 'axios';
 import Types from '../Types';
 
 import icon_box from '../res/img/icon-box.svg';
 import icon_camera from '../res/img/ic-camera-fill.svg';
+
+import imageCompression from 'browser-image-compression';
 
 
 //add_item_page_state
@@ -91,7 +92,9 @@ class StoreAddItemPage extends Component{
       isChangeImg: false,
 
       file: '',
-      show_image: ''
+      show_image: '',
+
+      img_compress_progress: 0
 
     }
 
@@ -99,6 +102,9 @@ class StoreAddItemPage extends Component{
     this.onChangeSelect = this.onChangeSelect.bind(this);
     this.onChangeSelectLimit = this.onChangeSelectLimit.bind(this);
     this.onChangeFileupload = this.onChangeFileupload.bind(this);
+
+    this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.uploadFiles = this.uploadFiles.bind(this);
   };
 
   onDrop(pictureFiles, pictureDataURLs) {
@@ -450,8 +456,8 @@ class StoreAddItemPage extends Component{
   clickPhotoAdd(e){
     e.preventDefault();
 
-    // this.fileInputRef.click();
-    document.querySelector('.chooseFileButton').click();
+    this.fileInputRef.click();
+    // document.querySelector('.chooseFileButton').click();
   }
 
   clickContentsOk(e){
@@ -561,6 +567,12 @@ class StoreAddItemPage extends Component{
           return;
         }
 
+        this.uploadFiles(this.state.item_id, Types.file_upload_target_type.items);
+        /*
+        let data = new FormData();
+        data.append('target_id', this.state.item_id);
+        data.append('target_type', Types.file_upload_target_type.items);
+
         axios.post("/uploader/save/img", {
           target_id: this.state.item_id,
           imageBinary: this.state.imageBinary,
@@ -573,12 +585,60 @@ class StoreAddItemPage extends Component{
           stopLoadingPopup();
           // alert("에러");
         })
+        */
 
       }, (error_update) => {
         stopLoadingPopup();
         // alert("에러");
       })
     }
+  }
+
+  uploadFiles = (item_id, target_type) => {
+    if(!target_type){
+      return;
+    }
+
+    const file = this.state.imageBinary;
+    let data = new FormData();
+    data.append('target_id', item_id);
+    data.append('target_type', target_type);
+
+    data.append("blob", file, file.name);
+    
+    console.log(file);
+    // return;
+    
+    const options = {
+      header: { "content-type": "multipart/form-data" },
+      // onUploadProgress: (progressEvent) => {
+      //   const {loaded, total} = progressEvent;
+      //   let percent = Math.floor( (loaded * 100) / total);
+      //   // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+      //   this.setState({
+      //     uploading_progress: percent
+      //   })
+      // }
+    }
+    
+    let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
+    const app_type_key = document.querySelector('#g_app_type');
+    if(app_type_key){
+      if(app_type_key.value === 'local'){
+        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
+      }else if(app_type_key.value === 'qa'){
+        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
+      }
+    }
+
+    _axios.post(`${apiURL}/uploader/files/item/img`, data, options).then((res) => {
+      // console.log(res);
+      stopLoadingPopup();
+      this.showEditPopup();
+    }).catch((error) => {
+      stopLoadingPopup();
+      alert('이미지 저장 에러');
+    })
   }
 
   showEditPopup(){
@@ -663,6 +723,61 @@ class StoreAddItemPage extends Component{
     reader.readAsDataURL(file);
   }
 
+  handleImageUpload = (event) => {
+ 
+    var imageFile = event.target.files[0];
+    // console.log(imageFile);
+    // console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+    // console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
+    let contentType = imageFile.type;
+   
+    var options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+
+      onProgress: (value) => {
+        let _value = value;
+        if(value === 100){
+          _value = 0
+        }
+
+        this.setState({
+          img_compress_progress: _value
+        })
+      } 
+    }
+    imageCompression(imageFile, options)
+      .then( (compressedFile) => {
+        // console.log("compresssss");
+        // console.log(compressedFile);
+        // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+   
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          const imagePreview = e.target.result;
+
+          this.setState({
+            // file: compressedFile,
+            show_image: imagePreview,
+            imageBinary: compressedFile,
+            contentType: contentType,
+            isChangeImg: true
+          })
+        };
+
+        reader.readAsDataURL(compressedFile);
+        // return uploadToServer(compressedFile); // write your own logic
+      })
+      .catch( (error) => {
+        alert(error.message);
+        return;
+        // console.log(error.message);
+      });
+  }
+
   render(){
     if(!this.state.isLogin){
       return(
@@ -683,8 +798,8 @@ class StoreAddItemPage extends Component{
     }
 
     let photoThumbImg = <></>;
-    if(this.state.item_img_url){
-      photoThumbImg = <img className={'camera_img'} src={this.state.item_img_url} />;
+    if(this.state.show_image){
+      photoThumbImg = <img className={'camera_img'} src={this.state.show_image} />;
     }
 
     let limitCountDom = <></>;
@@ -698,6 +813,11 @@ class StoreAddItemPage extends Component{
                           일주일에 판매 가능한 수 입니다. 최대 수량에 도달하면 자동으로 판매가 일시중지되며, 판매 수량은 매주 월요일 0시에 초기화되어 다시 주문이 가능해집니다.
                         </div>
                       </div>
+    }
+
+    let imgCompressValueText = '';
+    if(this.state.img_compress_progress > 0){
+      imgCompressValueText = this.state.img_compress_progress + '%';
     }
     return (
       <div className={'StoreAddItemPage'}>
@@ -721,19 +841,10 @@ class StoreAddItemPage extends Component{
               {photoThumbImg}
             </div>
 
-            {/* <input onClick={this.onInputClick} accept={'image/*'} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/> */}
-
-            <ImageUploader
-              withIcon={false}
-              buttonText="Choose images"
-              onChange={this.onDrop}
-              imgExtension={[".jpg", ".gif", ".png", ".gif", ".jpeg"]}
-              maxFileSize={5242880}
-              fileSizeError={'5MB 이하의 사이즈만 가능합니다.'}
-            />
+            <input onClick={this.onInputClick} accept={'image/*'} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.handleImageUpload} style={{display: 'none'}}/>
           </div>
           <div className={'limit_explain_text'}>
-          5MB 이하의 이미지만 등록 가능합니다.
+          {imgCompressValueText}
           </div>
         </div>
 
