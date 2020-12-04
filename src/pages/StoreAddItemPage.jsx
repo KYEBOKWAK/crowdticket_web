@@ -514,20 +514,8 @@ class StoreAddItemPage extends Component{
           return;
         }
 
-        axios.post("/uploader/save/img", {
-          target_id: result.item_id,
-          imageBinary: this.state.imageBinary,
-          contentType: this.state.contentType,
-          type: Types.save_img.item
-        }, (result) => {
-          stopLoadingPopup();
-
-
-          swal("등록완료!", '', 'success');
-        }, (error) => {
-          stopLoadingPopup();
-          // alert("에러");
-        })
+        this.uploadFiles(result.item_id, Types.file_upload_target_type.items);
+        
       }, (error) => {
         stopLoadingPopup();
         // alert("에러");
@@ -634,7 +622,12 @@ class StoreAddItemPage extends Component{
     _axios.post(`${apiURL}/uploader/files/item/img`, data, options).then((res) => {
       // console.log(res);
       stopLoadingPopup();
-      this.showEditPopup();
+      if(this.state.pageState === Types.add_page_state.ADD){
+        swal("등록완료!", '', 'success');
+      }else{
+        this.showEditPopup();
+      }
+      
     }).catch((error) => {
       stopLoadingPopup();
       alert('이미지 저장 에러');
