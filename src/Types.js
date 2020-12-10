@@ -34,6 +34,11 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  store_ready_state: {
+    none: 0,
+    default: 1,
+    product_upload: 2
+  },
   product_state: {
     TEXT: 0,
     TEXT_FILE: 1,
@@ -41,7 +46,8 @@ const Types = {
   },
   file_upload_target_type: {
     orders_items: 'orders_items',
-    items: 'items'
+    items: 'items',
+    product_file: 'product_file'
   },
   file_upload_state: {
     NONE: 0,
@@ -175,6 +181,9 @@ const Types = {
       mannayo: 'mannayo',
       store: 'store'
     },
+    secondTargetType: {
+      store_order: 'store_order'
+    },
     commentState: {
       write: 'WRITE',
       edit: 'EDIT'
@@ -290,6 +299,7 @@ const Types = {
     ORDER_STATE_APP_STORE_READY: 13,  //컨텐츠 상점 준비단계
     ORDER_STATE_APP_STORE_SUCCESS: 14,  //컨텐츠 상점 컨텐츠 완성. 크티에 보냄
     ORDER_STATE_APP_STORE_RELAY_CUSTOMER: 15,  //컨텐츠 크티에서 고객에게 보냄
+    ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE: 16,  //고객 콘텐츠 확인함.
 
     ORDER_STATE_STANDBY_START: 98,
     ORDER_STATE_PAY_END: 99,

@@ -2090,4 +2090,11 @@ class ProjectController extends Controller
         'store_order_id' => $store_order_id
       ]);
     }
+
+    public function getStoreContent($store_order_id)
+    {
+      return view('store.store_content_confirm', [
+        'store_order_id' => $store_order_id
+      ]);
+    }
 }

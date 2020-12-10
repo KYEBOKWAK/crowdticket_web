@@ -16,6 +16,7 @@ import StoreOrderComplitePage from '../pages/StoreOrderComplitePage';
 import MyContentsPage from '../pages/MyContentsPage';
 import StoreAddItemPage from '../pages/StoreAddItemPage';
 import StoreDetailReceipt from '../pages/StoreDetailReceipt';
+import StoreContentConfirm from '../pages/StoreContentConfirm';
 
 'use strict';
 
@@ -63,6 +64,8 @@ class PageController extends Component {
       pageView = <StoreAddItemPage></StoreAddItemPage>;
     }else if(_pageKey === AppKeys.WEB_STORE_DETAIL_RECEIPT){
       pageView = <StoreDetailReceipt></StoreDetailReceipt>;
+    }else if(_pageKey === AppKeys.WEB_STORE_CONTENT_CONFIRM){
+      pageView = <StoreContentConfirm></StoreContentConfirm>;
     }
 
     return (

@@ -1,4 +1,12 @@
 const Util = {
+  getUserName: (user) => {
+    if(user.nick_name === ''){
+      return user.name;
+    }
+
+    return user.nick_name;
+  },
+
   getNumberWithCommas: (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   },

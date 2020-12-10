@@ -38,6 +38,10 @@ class StoreContentsListItem extends Component{
 
   itemClick(e){
     e.preventDefault();
+
+    if(!this.props.isLink){
+      return;
+    }
     
     let baseURL = 'https://crowdticket.kr'
     const baseURLDom = document.querySelector('#base_url');
@@ -225,6 +229,7 @@ StoreContentsListItem.defaultProps = {
   state_re_order: Types.store_manager_state_order.NONE,
   state: 0,
   type: Types.store_home_item_list.POPUALER,
+  isLink: true,
   reOrderCallback: (index, item_id, reorder_type) => {},
   deleteItemCallback: (item_id, item_title) => {}
 }

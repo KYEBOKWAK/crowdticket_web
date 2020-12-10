@@ -42,7 +42,9 @@ class StoreDetailReceipt extends Component{
       refundButtonText: '',
 
       isRefund: false,
-      refundPolicyText: ''
+      refundPolicyText: '',
+
+      is_owner: false
     }
   };
 
@@ -57,7 +59,18 @@ class StoreDetailReceipt extends Component{
         store_order_id: Number(storeOrderIDDom.value)
       }, function(){
         //아이템 정보 가져오기
-        this.requestOrderInfo();
+        axios.post("/orders/store/owner/check", {
+          store_order_id: this.state.store_order_id
+        }, (result) => {
+          this.setState({
+            is_owner: true
+          }, () => {
+            this.requestOrderInfo();
+          })
+          
+        }, (error) => {
+
+        })
       })
     }
   };
@@ -153,6 +166,10 @@ class StoreDetailReceipt extends Component{
   }
 
   render(){
+    if(!this.state.is_owner){
+      return <>접근 불가능한 페이지 입니다.</>;
+    }
+
     let storeReceiptItemDom = <></>;
     if(this.state.store_order_id){
       storeReceiptItemDom = <StoreReceiptItem store_order_id={this.state.store_order_id} isGoDetailButton={false}></StoreReceiptItem>

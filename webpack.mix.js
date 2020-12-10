@@ -25,7 +25,6 @@ const Dotenv = require('dotenv-webpack');
 // mix.sass('src/res/css/Test.scss', 'dist/css/')
 
 mix.react('src/App.jsx', 'dist/')
-// .sass('src/res/css/Test.scss', 'dist/css/')
 .sass('src/res/css/Global.scss', 'dist/css/')
 .sass('src/res/css/StoreHome.scss', 'dist/css/')
 .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -52,6 +51,9 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreHomeStoreListItem.scss', 'dist/css/')
 .sass('src/res/css/Popup_progress.scss', 'dist/css/')
 .sass('src/res/css/Popup_image_preview.scss', 'dist/css/')
+.sass('src/res/css/Popup_text_editor.scss', 'dist/css/')
+.sass('src/res/css/StoreContentConfirm.scss', 'dist/css/')
+.sass('src/res/css/Popup_text_viewer.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()
@@ -59,12 +61,41 @@ mix.react('src/App.jsx', 'dist/')
 }).sourceMaps().version();
 
 /*
-mix.react('src/App.jsx', 'dist/').webpackConfig({
+mix.react('src/App.jsx', 'dist/')
+.sass('src/res/css/Global.scss', 'dist/css/')
+.sass('src/res/css/StoreHome.scss', 'dist/css/')
+.sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
+.sass('src/res/css/StoreDetailPage.scss', 'dist/css/')
+.sass('src/res/css/StoreReviewList.scss', 'dist/css/')
+.sass('src/res/css/StoreReviewItem.scss', 'dist/css/')
+.sass('src/res/css/ReviewWritePage.scss', 'dist/css/')
+.sass('src/res/css/StoreItemDetailPage.scss', 'dist/css/')
+.sass('src/res/css/StoreOrderPage.scss', 'dist/css/')
+.sass('src/res/css/StoreOrderItem.scss', 'dist/css/')
+.sass('src/res/css/StoreOrderComplitePage.scss', 'dist/css/')
+.sass('src/res/css/StoreReceiptItem.scss', 'dist/css/')
+.sass('src/res/css/StoreDetailReceipt.scss', 'dist/css/')
+.sass('src/res/css/MyContentsPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManager.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabAskOrderListPage.scss', 'dist/css/')
+.sass('src/res/css/FileUploader.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabStoreInfoPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabItemPage.scss', 'dist/css/')
+.sass('src/res/css/StoreAddItemPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabOrderListPage.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabAccountPage.scss', 'dist/css/')
+.sass('src/res/css/StoreUserSNSList.scss', 'dist/css/')
+.sass('src/res/css/StoreHomeStoreListItem.scss', 'dist/css/')
+.sass('src/res/css/Popup_progress.scss', 'dist/css/')
+.sass('src/res/css/Popup_image_preview.scss', 'dist/css/')
+.sass('src/res/css/Popup_text_editor.scss', 'dist/css/')
+.webpackConfig({
   plugins: [
-    new Dotenv(),
+    new Dotenv()
   ]
-}).sourceMaps();
+}).sourceMaps().version();
 */
+
 // mix.react('src/App.jsx', 'dist/').version();
 
 // Full API

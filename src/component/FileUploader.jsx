@@ -16,6 +16,8 @@ import ic_file_icon_img from '../res/img/ic-file-icon.png';
 
 import ic_exit_circle from '../res/img/ic-exit-circle.svg';
 
+import ic_file_download_img from '../res/img/ic-file-download-icon.svg';
+
 import ScrollBooster from 'scrollbooster';
 
 import Popup_progress from '../component/Popup_progress';
@@ -85,12 +87,14 @@ class FileUploader extends Component{
     }
 
     axios.post('/store/file/order/list', {
-      store_order_id: this.props.store_order_id
+      store_order_id: this.props.store_order_id,
+      file_upload_target_type: this.props.file_upload_target_type
     }, (result) => {
       let _files = [];
       let _show_images = [];
 
       if(result.list.length === 0){
+        this.setScrollAction();
         return;
       }
 
@@ -285,8 +289,20 @@ class FileUploader extends Component{
       viewport = document.querySelector('.FileUploader .viewport');
       content = document.querySelector('.FileUploader .scrollable-content');
     }else{
-      viewport = document.querySelector('.FileUploader .viewport_'+this.props.store_order_id);
-      content = document.querySelector('.FileUploader .scrollable-content-'+this.props.store_order_id);
+      if(this.props.isUploader){
+        viewport = document.querySelector('.FileUploader .viewport_uploader_'+this.props.store_order_id);
+        content = document.querySelector('.FileUploader .scrollable-content-uploader-'+this.props.store_order_id);
+      }else{
+        // viewport = document.querySelector('.FileUploader .viewport_'+this.props.store_order_id);
+        // content = document.querySelector('.FileUploader .scrollable-content-'+this.props.store_order_id);
+
+        viewport = document.querySelector(`.FileUploader .viewport_${this.props.file_upload_target_type}_${this.props.store_order_id}`);
+        content = document.querySelector(`.FileUploader .scrollable-content-${this.props.file_upload_target_type}-${this.props.store_order_id}`);
+      }
+    }
+
+    if(viewport === null){
+      return;
     }
 
     const sb = new ScrollBooster({
@@ -444,7 +460,8 @@ class FileUploader extends Component{
 
     if(!this.props.isUploader && this.state.files.length === 0){
       return (
-        <></>
+        // <></>
+        <div style={{color: '#808080'}}>파일이 없습니다.</div>
       )
     }
 
@@ -496,7 +513,7 @@ class FileUploader extends Component{
       else{
         bottomDom = <div className={'download_text'}>
                       <a href={data.downloadURL} download={data.file.name}>
-                        다운로드
+                        <img src={ic_file_download_img} />
                       </a>
                     </div>
       }
@@ -529,7 +546,9 @@ class FileUploader extends Component{
 
     let uploadButtonDom = <></>;
     let containerStyle = {};
-    let viewPortStyle = {};
+    let viewPortStyle = {
+      justifyContent: 'flex-start'
+    };
     
     if(this.props.isUploader){
       uploadButtonDom = <div className={'button_wrapper'}>
@@ -539,23 +558,48 @@ class FileUploader extends Component{
                           <div className={'file_count_text'}>
                             {this.state.files.length}/{this.state.MAX_FILES_COUNT}
                           </div>
-                        </div>
+                        </div>;
+
     }else{
       containerStyle = {
         marginTop: 0
       }
 
-      viewPortStyle = {
-        justifyContent: 'flex-start'
-      }
+      // viewPortStyle = {
+      //   justifyContent: 'flex-start'
+      // }
     }
 
     let viewportClassName = '';
     let scrollContentClassname = ''
     let expired_at_dom = <></>;
+    // if(this.props.store_order_id){
     if(this.props.store_order_id){
-      viewportClassName = 'viewport viewport_'+this.props.store_order_id;
-      scrollContentClassname = 'scrollable-content scrollable-content-'+this.props.store_order_id;
+      // if(this.props.isUploader){
+      //   viewportClassName = 'viewport viewport_uploader_'+this.props.store_order_id;
+      //   scrollContentClassname = 'scrollable-content scrollable-content-uploader-'+this.props.store_order_id;
+      // }else{
+      //   viewportClassName = 'viewport viewport_'+this.props.store_order_id;
+      //   scrollContentClassname = 'scrollable-content scrollable-content-'+this.props.store_order_id;
+      // }
+
+      if(this.props.isUploader){
+        viewportClassName = 'viewport viewport_uploader_'+this.props.store_order_id;
+        scrollContentClassname = 'scrollable-content scrollable-content-uploader-'+this.props.store_order_id;
+      }else{
+        // if(this.props.file_upload_target_type === Types.file_upload_target_type.product_file){
+        //   viewportClassName = 'viewport viewport_'+this.props.store_order_id;
+        //   scrollContentClassname = 'scrollable-content scrollable-content-'+this.props.store_order_id;
+        // }else{
+        //   viewportClassName = 'viewport viewport_'+this.props.store_order_id;
+        //   scrollContentClassname = 'scrollable-content scrollable-content-'+this.props.store_order_id;
+        // }
+
+        viewportClassName = `viewport viewport_${this.props.file_upload_target_type}_${this.props.store_order_id}`;
+        scrollContentClassname = `scrollable-content scrollable-content-${this.props.file_upload_target_type}-${this.props.store_order_id}`;
+        
+      }
+      
 
       expired_at_dom = <div className={'explain_text'}>
                           파일은 30일동안 보관됩니다. [파일만료: {this.state.expired_at}]
@@ -563,6 +607,11 @@ class FileUploader extends Component{
     }else{
       viewportClassName = 'viewport';
       scrollContentClassname = 'scrollable-content';
+    }
+
+    let blur_thumb_cover_dom = <></>;
+    if(this.props.isListEndBlurCover){
+      blur_thumb_cover_dom = <div className={'blur_thumb_cover'}></div>
     }
     
     return(
@@ -575,8 +624,9 @@ class FileUploader extends Component{
               <div className={scrollContentClassname} style={{display: 'flex', flexDirection: 'row',}}>
                 {file_show_list}
               </div>
-              <div className={'blur_thumb_cover'}>
-              </div>
+              {blur_thumb_cover_dom}
+              {/* <div className={'blur_thumb_cover'}>
+              </div> */}
             </div>
           </div>
         </div>
@@ -593,8 +643,11 @@ class FileUploader extends Component{
 FileUploader.defaultProps = {
   state: Types.file_upload_state.NONE,
 
+  file_upload_target_type: Types.file_upload_target_type.orders_items,
   isUploader: true,
-  store_order_id: null
+  store_order_id: null,
+
+  isListEndBlurCover: true
   // id: -1,
   // store_item_id: -1,
   // thumbUrl: '',

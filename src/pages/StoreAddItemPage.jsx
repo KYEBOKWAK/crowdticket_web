@@ -379,8 +379,8 @@ class StoreAddItemPage extends Component{
         item_file_upload_state: result.data.file_upload_state,
         item_file_upload_state_show: this.getFileUploadStateShow(result.data.file_upload_state),
 
-        // item_product_state: result.data.product_state,
-        // item_product_state_show: this.getProductStateShow(result.data.product_state),
+        item_product_state: result.data.product_state,
+        item_product_state_show: this.getProductStateShow(result.data.product_state),
 
         show_image: result.data.img_url
       })
@@ -544,7 +544,7 @@ class StoreAddItemPage extends Component{
 
         file_upload_state: this.state.item_file_upload_state,
 
-        // product_state: this.state.item_product_state
+        product_state: this.state.item_product_state
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -580,7 +580,7 @@ class StoreAddItemPage extends Component{
         isChangeLimitCount: isChangeLimitCount,
 
         file_upload_state: this.state.item_file_upload_state,
-        // product_state: this.state.item_product_state
+        product_state: this.state.item_product_state
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -595,25 +595,6 @@ class StoreAddItemPage extends Component{
         }
 
         this.uploadFiles(this.state.item_id, Types.file_upload_target_type.items);
-        /*
-        let data = new FormData();
-        data.append('target_id', this.state.item_id);
-        data.append('target_type', Types.file_upload_target_type.items);
-
-        axios.post("/uploader/save/img", {
-          target_id: this.state.item_id,
-          imageBinary: this.state.imageBinary,
-          contentType: this.state.contentType,
-          type: Types.save_img.item
-        }, (result) => {
-          stopLoadingPopup();
-          this.showEditPopup();
-        }, (error) => {
-          stopLoadingPopup();
-          // alert("에러");
-        })
-        */
-
       }, (error_update) => {
         stopLoadingPopup();
         // alert("에러");
@@ -897,7 +878,7 @@ class StoreAddItemPage extends Component{
           </div>
           <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={"콘텐츠의 설명을 입력해주세요."}></textarea>
 
-          {/* <div className={'input_label'}>
+          <div className={'input_label'}>
             상품 타입 (고객에게 전달해줄 상품 타입입니다.)
           </div>
           <div className={'select_box'}>
@@ -907,7 +888,7 @@ class StoreAddItemPage extends Component{
             <select className={'select_tag'} value={this.state.item_product_state} onChange={this.onChangeProductState}>
               {this.state.item_product_state_list}
             </select>
-          </div> */}
+          </div>
 
         </div>
 

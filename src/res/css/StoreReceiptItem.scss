@@ -7,17 +7,21 @@
 
   .pay_state_text_container {
     font-size: 12px;
-    font-weight: 500;
+    // font-weight: 500;
     color: #7f7f7f;
-    margin-top: 20px;
+    margin-top: 8px;
     display: flex;
     justify-content: space-between;
   }
   .state_text {
-    font-size: 12px;
+    // font-size: 12px;
+    // font-weight: bold;
+    // color: #7f7f7f;
+    // margin-top: 8px;
+    font-size: 14px;
     font-weight: bold;
-    color: #7f7f7f;
-    margin-top: 8px;
+    color: #00bfff;
+    margin-top: 20px;
   }
 
   .detail_receipt_button {
@@ -51,6 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
   }
 
   .state_button_refund {
@@ -184,6 +189,137 @@
     margin-bottom: 5px;
     font-weight: bold;
     color: #7f7f7f;
+  }
+
+  .thank_text_area {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 19px;
+    padding-bottom: 19px;
+
+    border-radius: 5px;
+    border: solid 1px #e6e6e6;
+    background-color: #ffffff;
+    margin-top: 20px;
+  }
+
+  .thank_text_area::placeholder {
+    font-size: 12px;
+    color: #acacac;
+  }
+
+  .product_container {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: left;
+  }
+
+  .product_upload_container {
+    margin-top: 20px;
+  }
+
+  .product_button {
+    width: 100%;
+  }
+
+  .product_title_text {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .product_text_text {
+    font-size: 12px;
+    display: inline-block; 
+    width: 100%; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
+
+  .file_label_button {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    align-items: center;
+    // margin-right: 10px;
+  }
+
+  .file_label_arrow_img {
+    margin-left: 10px;
+  }
+
+  .files_container_wrapper {
+    margin-top: 20px;
+  }
+
+  .files_container {
+    margin-top: 10px;
+  }
+
+  /*대화창*/
+  .product_answer_wrapper {
+    margin-top: 20px;
+  }
+  .product_answer_container {
+    display: flex;
+    // margin-top: 40px;
+  }
+
+  .product_answer_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+  }
+
+  .product_answer_content_container {
+    margin-left: 8px;
+  }
+
+  .product_answer_name {
+    font-size: 12px;
+    color: #7f7f7f;
+  }
+
+  .product_answer_content {
+    background-color: #f4f4f4;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 10px;
+    margin-top: 5px;
+  }
+
+  .receipt_button_container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .receipt_contents_ok_button {
+    background-color: #00bfff;
+    border-radius: 12px;
+
+    width: 100%;
+    height: 48px;
+
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff; 
+  }
+
+  /*리뷰*/
+  .review_container {
+    justify-content: flex-end;
+  }
+
+  .review_answer_content_container {
+    margin-left: 0px;
+    margin-right: 8px;
+  }
+
+  .review_answer_name {
+    text-align: end;
   }
 
   @media (max-width: 520px){

@@ -21,12 +21,19 @@
 
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
 rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=7') }}" 
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=8') }}" 
 rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/FileUploader.css?version=2') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/Popup_text_editor.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/quill.snow.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/Popup_text_viewer.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 

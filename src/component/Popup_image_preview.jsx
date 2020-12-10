@@ -6,7 +6,6 @@ import Types from '../Types';
 
 import ic_exit_circle from '../res/img/ic-exit-circle.svg';
 
-
 class Popup_image_preview extends Component{
 
   constructor(props){
@@ -24,7 +23,6 @@ class Popup_image_preview extends Component{
   };
 
   componentWillUnmount(){
-    
   };
 
   componentDidUpdate(){

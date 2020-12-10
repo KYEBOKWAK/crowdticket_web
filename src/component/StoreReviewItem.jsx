@@ -6,7 +6,6 @@ import Util from '../lib/Util';
 
 import moment from 'moment';
 import axios from '../lib/Axios';
-import { shallowEqual } from 'react-redux';
 
 import default_user_img from '../res/img/default-user-image.png';
 
