@@ -41,7 +41,7 @@ const Types = {
   },
   product_state: {
     TEXT: 0,
-    TEXT_FILE: 1,
+    FILE: 1,
     ONE_TO_ONE: 2
   },
   file_upload_target_type: {

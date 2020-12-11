@@ -383,7 +383,7 @@ class StoreReceiptItem extends Component{
   }
 
   requestSendCustomer = (e) => {
-    if(this.state.item_product_state === Types.product_state.TEXT_FILE){
+    if(this.state.item_product_state !== Types.product_state.ONE_TO_ONE){
       this.fileUploaderRef.uploadFiles(this.state.order_user_id, Types.file_upload_target_type.product_file, 
         (result_upload_files) => {
           let filesInsertID = [];
@@ -839,6 +839,7 @@ class StoreReceiptItem extends Component{
           }else if(this.state.store_ready_state === Types.store_ready_state.product_upload){
   
             let product_content_dom = <></>;
+            let product_content_container_dom = <></>;
             if(this.state.product_text) {
               product_content_dom = <div className={'product_container'}>
                                       <div className={'product_title_text'}>
@@ -853,22 +854,29 @@ class StoreReceiptItem extends Component{
                                       <u style={{fontSize: 15}}>콘텐츠 작성하기</u>
                                     </div>
             }
+
+            if(this.state.item_product_state === Types.product_state.TEXT){
+              product_content_container_dom = <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
+                                                {product_content_dom}
+                                              </button>
+            }
   
             bottomLongButtonDom = <button onClick={(e) => {this.clickRelayCustomer(e)}} className={'state_button_relay'}>
                                     콘텐츠 전달하기
                                   </button>
   
             let fileUploadDom = <></>;
-            if(this.state.item_product_state === Types.product_state.TEXT_FILE){
-              fileUploadDom = <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>;
-            }
+            
+            fileUploadDom = <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>;
+            
 
             store_ready_state_dom = <div className={'product_upload_container'}>
                                       <div className={'under_line'}>
                                       </div>
-                                      <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
+                                      {product_content_container_dom}
+                                      {/* <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
                                         {product_content_dom}
-                                      </button>
+                                      </button> */}
                                       <div className={'under_line'}>
                                       </div>
                                       {fileUploadDom}
@@ -975,8 +983,7 @@ class StoreReceiptItem extends Component{
     }
 
     if(this.props.isManager){
-      if(this.state.state >= Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER && this.state.item_product_state === Types.product_state.TEXT_FILE){
-
+      if(this.state.state >= Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER && this.state.item_product_state !== Types.product_state.ONE_TO_ONE){
       
         let arrowImg = ic_up_arrow_img;
         let filesListDom = <></>;

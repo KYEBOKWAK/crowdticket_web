@@ -48,6 +48,7 @@ class StoreContentConfirm extends Component{
       item_img_url: '',
       item_title: '',
       item_price: 0,
+      item_product_state: Types.product_state.TEXT,
 
       store_user_profile_photo_url: '',
 
@@ -208,7 +209,7 @@ class StoreContentConfirm extends Component{
 
         // store_title: data.store_title,
 
-        // item_product_state: data.product_state,
+        item_product_state: data.product_state,
         // item_file_upload_state: data.file_upload_state,
 
         store_user_profile_photo_url: data.profile_photo_url
@@ -433,7 +434,7 @@ class StoreContentConfirm extends Component{
     }
 
     let product_after_confirm_content_dom = <></>;
-    if(this.state.product_text) {
+    if(this.state.item_product_state === Types.product_state.TEXT && this.state.product_text) {
       product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_container'}>
                                             <div className={'product_title_text'}>
                                               {this.state.product_title}

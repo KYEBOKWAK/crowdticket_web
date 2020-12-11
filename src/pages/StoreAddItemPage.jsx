@@ -87,8 +87,8 @@ class StoreAddItemPage extends Component{
       item_product_state: Types.product_state.TEXT,
       item_product_state_show: this.getProductStateShow(Types.product_state.TEXT),
       item_product_state_list: [
+        <option key={Types.product_state.FILE} value={Types.product_state.FILE}>{this.getProductStateShow(Types.product_state.FILE)}</option>,
         <option key={Types.product_state.TEXT} value={Types.product_state.TEXT}>{this.getProductStateShow(Types.product_state.TEXT)}</option>,
-        <option key={Types.product_state.TEXT_FILE} value={Types.product_state.TEXT_FILE}>{this.getProductStateShow(Types.product_state.TEXT_FILE)}</option>,
         <option key={Types.product_state.ONE_TO_ONE} value={Types.product_state.ONE_TO_ONE}>{this.getProductStateShow(Types.product_state.ONE_TO_ONE)}</option>,
       ],
 
@@ -326,16 +326,16 @@ class StoreAddItemPage extends Component{
 
   getProductStateShow(state){
     if(state === Types.product_state.TEXT){
-      return '텍스트';
+      return '텍스트 상품';
     }
-    else if(state === Types.product_state.TEXT_FILE){
-      return '텍스트+파일(영상, 이미지등)';
+    else if(state === Types.product_state.FILE){
+      return '영상 및 이미지 상품';
     }
     else if(state === Types.product_state.ONE_TO_ONE){
-      return '1:1 실시간 콘텐츠';
+      return '1:1 채팅 및 통화 등 실시간 상품';
     }
     else{
-      return '텍스트';
+      return '텍스트 상품';
     }
   }
 
