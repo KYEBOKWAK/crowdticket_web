@@ -108,7 +108,7 @@ class StoreReceiptItem extends Component{
       product_title: null,
       product_text: null,
 
-      files_customer_hide: true,
+      files_customer_hide: false,
       files_product_hide: true,
 
       store_user_profile_photo_url: '',
@@ -823,6 +823,11 @@ class StoreReceiptItem extends Component{
                                     콘텐츠 전달하기
                                   </button>
   
+            let fileUploadDom = <></>;
+            if(this.state.item_product_state === Types.product_state.TEXT_FILE){
+              fileUploadDom = <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>;
+            }
+
             store_ready_state_dom = <div className={'product_upload_container'}>
                                       <div className={'under_line'}>
                                       </div>
@@ -831,7 +836,8 @@ class StoreReceiptItem extends Component{
                                       </button>
                                       <div className={'under_line'}>
                                       </div>
-                                      <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>
+                                      {fileUploadDom}
+                                      {/* <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader> */}
   
                                       <textarea className={'thank_text_area'} value={this.state.thanks_text} onChange={(e) => {this.onChangeInput(e)}} placeholder={"구매자를 위한 감사인사를 간단하게 적어주세요!\n예: 구매해 주셔서 감사합니다."}></textarea>
                                     </div>                                  
