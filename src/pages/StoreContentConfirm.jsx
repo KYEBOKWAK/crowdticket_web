@@ -435,14 +435,20 @@ class StoreContentConfirm extends Component{
 
     let product_after_confirm_content_dom = <></>;
     if(this.state.item_product_state === Types.product_state.TEXT && this.state.product_text) {
-      product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_container'}>
-                                            <div className={'product_title_text'}>
-                                              {this.state.product_title}
+      product_after_confirm_content_dom = <div>
+                                            <div className={'product_container'}>
+                                              <div className={'product_title_text'}>
+                                                {this.state.product_title}
+                                              </div>
+                                              <div className={'product_text_text'}>
+                                                {this.state.product_text}
+                                              </div>
                                             </div>
-                                            <div className={'product_text_text'}>
-                                              {this.state.product_text}
-                                            </div>
-                                          </button>
+                                            <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_show_text'}>
+                                              {`전체보기 >`}
+                                            </button>
+                                          </div>
+      
     }
 
     let openProductTextView = <></>;
@@ -469,6 +475,10 @@ class StoreContentConfirm extends Component{
         </div>
 
         {product_after_confirm_content_dom}
+
+        <div className={'under_line'}>
+
+        </div>
 
         <div className={'file_upload_container'}>
           <FileUploader file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>

@@ -1,8 +1,12 @@
 .FileUploader {
   
+  .file_uploader_container_wrapper {
+    margin-top: 15px;
+    width: 100%;
+  }
+
   .file_uploader_container {
     width: 100%;
-    margin-top: 32px;
     display: flex;
   }
 
@@ -119,6 +123,12 @@
     color: #808080;
     margin-top: 5px;
     text-align: end;
+  }
+
+  .option_font_text {
+    font-size: 12px;
+    color: #999999;
+    margin-bottom: 2px;
   }
 
   @media (max-width: 520px){

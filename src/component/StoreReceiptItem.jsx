@@ -855,7 +855,9 @@ class StoreReceiptItem extends Component{
                                     </div>
             }
 
+            let isOptionTitleText = false;
             if(this.state.item_product_state === Types.product_state.TEXT){
+              isOptionTitleText = true;
               product_content_container_dom = <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
                                                 {product_content_dom}
                                               </button>
@@ -867,20 +869,18 @@ class StoreReceiptItem extends Component{
   
             let fileUploadDom = <></>;
             
-            fileUploadDom = <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>;
+            fileUploadDom = <FileUploader isOptionTitleText={isOptionTitleText} ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>;
             
 
             store_ready_state_dom = <div className={'product_upload_container'}>
                                       <div className={'under_line'}>
                                       </div>
                                       {product_content_container_dom}
-                                      {/* <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
-                                        {product_content_dom}
-                                      </button> */}
+                                      
                                       <div className={'under_line'}>
                                       </div>
+
                                       {fileUploadDom}
-                                      {/* <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader> */}
   
                                       <textarea className={'thank_text_area'} value={this.state.thanks_text} onChange={(e) => {this.onChangeInput(e)}} placeholder={"구매자를 위한 감사인사를 간단하게 적어주세요!\n예: 구매해 주셔서 감사합니다."}></textarea>
                                     </div>                                  
@@ -984,6 +984,18 @@ class StoreReceiptItem extends Component{
 
     if(this.props.isManager){
       if(this.state.state >= Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER && this.state.item_product_state !== Types.product_state.ONE_TO_ONE){
+
+        let product_after_confirm_content_dom = <></>;
+        if(this.state.product_text) {
+          product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 5, paddingTop: 5}} className={'product_container'}>
+                                                <div className={'product_title_text'}>
+                                                  {this.state.product_title}
+                                                </div>
+                                                <div className={'product_text_text'}>
+                                                  {this.state.product_text}
+                                                </div>
+                                              </button>
+        }
       
         let arrowImg = ic_up_arrow_img;
         let filesListDom = <></>;
@@ -991,6 +1003,7 @@ class StoreReceiptItem extends Component{
           arrowImg = ic_down_arrow_img;
         }else{
           filesListDom = <div className={'files_container'}>
+                            {product_after_confirm_content_dom}
                             <FileUploader file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={false} store_order_id={this.props.store_order_id}></FileUploader>
                           </div>
         }
@@ -1011,7 +1024,6 @@ class StoreReceiptItem extends Component{
 
     let product_answer_dom = <></>;
     let review_dom = <></>;
-    let product_after_confirm_content_dom = <></>;
 
     let openProductTextView = <></>;
     if(this.props.isManager){
@@ -1053,16 +1065,16 @@ class StoreReceiptItem extends Component{
         }
 
         
-        if(this.state.product_text) {
-          product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_container'}>
-                                                <div className={'product_title_text'}>
-                                                  {this.state.product_title}
-                                                </div>
-                                                <div className={'product_text_text'}>
-                                                  {this.state.product_text}
-                                                </div>
-                                              </button>
-        }
+        // if(this.state.product_text) {
+        //   product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_container'}>
+        //                                         <div className={'product_title_text'}>
+        //                                           {this.state.product_title}
+        //                                         </div>
+        //                                         <div className={'product_text_text'}>
+        //                                           {this.state.product_text}
+        //                                         </div>
+        //                                       </button>
+        // }
       }
     }
 
@@ -1106,7 +1118,7 @@ class StoreReceiptItem extends Component{
         <div className={'under_line'}>
         </div>
         
-        {product_after_confirm_content_dom}
+        {/* {product_after_confirm_content_dom} */}
         {customer_files_dom}
         {product_files_dom}
         

@@ -25,7 +25,7 @@ rel="stylesheet"/>
 rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/FileUploader.css?version=2') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_text_editor.css?version=0') }}" rel="stylesheet"/>

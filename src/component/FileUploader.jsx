@@ -613,28 +613,39 @@ class FileUploader extends Component{
     if(this.props.isListEndBlurCover){
       blur_thumb_cover_dom = <div className={'blur_thumb_cover'}></div>
     }
+
+    let optionTitleTextDom = <></>;
+    if(this.props.isOptionTitleText){
+      optionTitleTextDom = <div className={'option_font_text'}>
+                            옵션*
+                          </div>
+    }
     
     return(
       <div className={'FileUploader'}>
         <input onClick={this.onInputClick} accept={inputAccept} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/>
-        <div className={'file_uploader_container'} style={containerStyle}>
-          {uploadButtonDom}
-          <div className={'viewport_container'}>
-            <div className={viewportClassName} style={viewPortStyle}>
-              <div className={scrollContentClassname} style={{display: 'flex', flexDirection: 'row',}}>
-                {file_show_list}
+          <div className={'file_uploader_container_wrapper'}>
+          {optionTitleTextDom}
+          <div className={'file_uploader_container'} style={containerStyle}>
+            {uploadButtonDom}
+            <div className={'viewport_container'}>
+              <div className={viewportClassName} style={viewPortStyle}>
+                <div className={scrollContentClassname} style={{display: 'flex', flexDirection: 'row',}}>
+                  {file_show_list}
+                </div>
+                {blur_thumb_cover_dom}
+                {/* <div className={'blur_thumb_cover'}>
+                </div> */}
               </div>
-              {blur_thumb_cover_dom}
-              {/* <div className={'blur_thumb_cover'}>
-              </div> */}
             </div>
           </div>
+
+          {fileUploadingPopup}
+          {popupPreviewPopup}
+
+          {expired_at_dom}
         </div>
-
-        {fileUploadingPopup}
-        {popupPreviewPopup}
-
-        {expired_at_dom}
+        
       </div>
     )
   }
@@ -647,7 +658,9 @@ FileUploader.defaultProps = {
   isUploader: true,
   store_order_id: null,
 
-  isListEndBlurCover: true
+  isListEndBlurCover: true,
+
+  isOptionTitleText: false
   // id: -1,
   // store_item_id: -1,
   // thumbUrl: '',
