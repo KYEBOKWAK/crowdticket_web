@@ -33,7 +33,7 @@ rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/Popup_text_viewer.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/Popup_text_viewer.css?version=3') }}" rel="stylesheet"/>
 
 @endsection
 
