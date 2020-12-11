@@ -383,36 +383,71 @@ class StoreReceiptItem extends Component{
   }
 
   requestSendCustomer = (e) => {
-    this.fileUploaderRef.uploadFiles(this.state.order_user_id, Types.file_upload_target_type.product_file, 
-    (result_upload_files) => {
-      let filesInsertID = [];
-      for(let i = 0 ; i < result_upload_files.list.length ; i++){
-        const data = result_upload_files.list[i];
-        let _data = {
-          file_id: data.insertId
-        }
-        
-        filesInsertID.push(_data);
-      }
-
-      if(filesInsertID.length === 0){
-        this.requestStoreRelayCustomer();
-      }else{
-        axios.post("/store/file/set/orderid", {
-          store_order_id: this.props.store_order_id,
-          filesInsertID: filesInsertID.concat()
-        }, (result_files) => {
-          this.requestStoreRelayCustomer();
-        }, (error_files) => {
-          alert("파일 ORDER ID 셋팅 에러");
+    if(this.state.item_product_state === Types.product_state.TEXT_FILE){
+      this.fileUploaderRef.uploadFiles(this.state.order_user_id, Types.file_upload_target_type.product_file, 
+        (result_upload_files) => {
+          let filesInsertID = [];
+          for(let i = 0 ; i < result_upload_files.list.length ; i++){
+            const data = result_upload_files.list[i];
+            let _data = {
+              file_id: data.insertId
+            }
+            
+            filesInsertID.push(_data);
+          }
+    
+          if(filesInsertID.length === 0){
+            this.requestStoreRelayCustomer();
+          }else{
+            axios.post("/store/file/set/orderid", {
+              store_order_id: this.props.store_order_id,
+              filesInsertID: filesInsertID.concat()
+            }, (result_files) => {
+              this.requestStoreRelayCustomer();
+            }, (error_files) => {
+              alert("파일 ORDER ID 셋팅 에러");
+              return;
+            })
+          }
+    
+        }, (error_upload_files) => {
+          alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
           return;
-        })
-      }
+        });
+    }else{
+      this.requestStoreRelayCustomer();
+    }
 
-    }, (error_upload_files) => {
-      alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
-      return;
-    });
+    // this.fileUploaderRef.uploadFiles(this.state.order_user_id, Types.file_upload_target_type.product_file, 
+    // (result_upload_files) => {
+    //   let filesInsertID = [];
+    //   for(let i = 0 ; i < result_upload_files.list.length ; i++){
+    //     const data = result_upload_files.list[i];
+    //     let _data = {
+    //       file_id: data.insertId
+    //     }
+        
+    //     filesInsertID.push(_data);
+    //   }
+
+    //   if(filesInsertID.length === 0){
+    //     this.requestStoreRelayCustomer();
+    //   }else{
+    //     axios.post("/store/file/set/orderid", {
+    //       store_order_id: this.props.store_order_id,
+    //       filesInsertID: filesInsertID.concat()
+    //     }, (result_files) => {
+    //       this.requestStoreRelayCustomer();
+    //     }, (error_files) => {
+    //       alert("파일 ORDER ID 셋팅 에러");
+    //       return;
+    //     })
+    //   }
+
+    // }, (error_upload_files) => {
+    //   alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+    //   return;
+    // });
   }
 
   requsetStoreOrderOk(){
@@ -815,7 +850,7 @@ class StoreReceiptItem extends Component{
                                     </div>
             }else{
               product_content_dom = <div className={'product_container'}>
-                                      텍스트 콘텐츠 작성하기
+                                      <u style={{fontSize: 15}}>콘텐츠 작성하기</u>
                                     </div>
             }
   
@@ -955,7 +990,7 @@ class StoreReceiptItem extends Component{
   
         product_files_dom = <div className={'files_container_wrapper'}>
                               <button onClick={(e) => {this.onClickProductArrow(e)}} className={'file_label_button'}>
-                                업로드 파일
+                                완성된 콘텐츠 상품
                                 <img className={'file_label_arrow_img'} src={arrowImg} />
                               </button>
   
