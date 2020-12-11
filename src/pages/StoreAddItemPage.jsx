@@ -84,8 +84,8 @@ class StoreAddItemPage extends Component{
         <option key={Types.file_upload_state.FILES} value={Types.file_upload_state.FILES}>{this.getFileUploadStateShow(Types.file_upload_state.FILES)}</option>,
       ],
 
-      item_product_state: Types.product_state.TEXT,
-      item_product_state_show: this.getProductStateShow(Types.product_state.TEXT),
+      item_product_state: Types.product_state.FILE,
+      item_product_state_show: this.getProductStateShow(Types.product_state.FILE),
       item_product_state_list: [
         <option key={Types.product_state.FILE} value={Types.product_state.FILE}>{this.getProductStateShow(Types.product_state.FILE)}</option>,
         <option key={Types.product_state.TEXT} value={Types.product_state.TEXT}>{this.getProductStateShow(Types.product_state.TEXT)}</option>,
