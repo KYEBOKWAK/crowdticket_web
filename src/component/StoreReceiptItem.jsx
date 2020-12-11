@@ -359,7 +359,7 @@ class StoreReceiptItem extends Component{
   clickRelayCustomer = (e) => {
     e.preventDefault();
 
-    swal("해당 상품을 고객에게 전달하셨습니까? (주문번호: "+this.props.store_order_id+" )", {
+    swal("해당 상품을 고객에게 전달하시겠습니까? (주문번호: "+this.props.store_order_id+" )", {
       buttons: {
         nosave: {
           text: "아니오",
