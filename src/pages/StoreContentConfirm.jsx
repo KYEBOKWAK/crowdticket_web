@@ -328,6 +328,7 @@ class StoreContentConfirm extends Component{
           this.setState({
             state: result.data.state
           }, () => {
+            this.requestAnswerComment();
             this.successAlert();
           })
         }, (error_comment) => {
