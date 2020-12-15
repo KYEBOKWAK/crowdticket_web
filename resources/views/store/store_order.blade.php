@@ -11,7 +11,7 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreOrderPage.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderPage.css?version=2') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 
@@ -29,4 +29,5 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 @endsection

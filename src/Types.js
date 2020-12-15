@@ -349,7 +349,7 @@ const Types = {
   },
   pay_method : {
     PAY_METHOD_TYPE_CARD: "card", //신용카드
-    PAY_METHOD_TYPE_CARD_INPUT: "card", //신용카드 input인데 실제론 안씀
+    PAY_METHOD_TYPE_CARD_INPUT: "card_input", //신용카드 input인데 실제론 안씀
     PAY_METHOD_TYPE_VBANK: "vbank", //가상계좌
     PAY_METHOD_TYPE_PHONE: "phone", //휴대폰소액결제
     PAY_METHOD_TYPE_FREE: "free" //휴대폰소액결제

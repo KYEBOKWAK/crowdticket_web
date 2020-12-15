@@ -204,6 +204,21 @@
     line-height: 1.8;
   }
 
+  .pay_method_container {
+    margin-top: 28px;
+  }
+
+  .pay_method_button {
+    display: flex;
+    margin-top: 20px;
+  }
+
+  .pay_method_text {
+    margin-left: 16px;
+    font-size: 11pt;
+
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/
     .title_label{

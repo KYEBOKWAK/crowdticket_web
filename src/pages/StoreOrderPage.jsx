@@ -23,6 +23,9 @@ import ic_checkbox_btn_n from '../res/img/ic-checkbox-btn-n.svg';
 
 import FileUploader from '../component/FileUploader';
 
+import ic_radio_btn_n from '../res/img/radio-btn-n.svg'
+import ic_radio_btn_s from '../res/img/radio-btn-s.svg'
+
 // import * as GlobalKeys from '~/GlobalKeys';
 
 //redux START
@@ -50,10 +53,14 @@ class StoreOrderPage extends Component{
   // fileInput = React.createRef();
   fileUploaderRef = React.createRef();
 
+  IMP = null;
+
   constructor(props){
     super(props);
 
     this.state = {
+      pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
+
       store_id: null,
       store_item_id: null,
       store_order_id: null,
@@ -115,14 +122,19 @@ class StoreOrderPage extends Component{
           name: '제3자 정보제공정책',
           isCheck: false,
           link: 'https://crowdticket.kr/thirdterms/app'
-        }],
+        }
+      ],
 
-      //밑에는 다 있음.
-      // title: this.props.data.title,
-      // contact: this.state.contact,
-      // email: this.state.email,
-      // name: this.state.name,
-      // order_id: order_id,
+      payMethodArray: [
+        {
+          pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
+          text: '신용카드 (ISP)'
+        },
+        {
+          pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT,
+          text: '신용카드 (직접입력)'
+        }
+      ]
     }
 
     this.handleSelectChangeYear = this.handleSelectChangeYear.bind(this);
@@ -153,6 +165,9 @@ class StoreOrderPage extends Component{
   // }
 
   componentDidMount(){
+    this.IMP = window.IMP; // 생략가능
+    this.IMP.init(process.env.REACT_APP_IAMPORT_CODE); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
     const storeItemIDDom = document.querySelector('#store_item_id');
     if(storeItemIDDom){
 
@@ -248,7 +263,7 @@ class StoreOrderPage extends Component{
   };
 
   componentWillUnmount(){
-    
+    this.IMP = null;
   };
 
   componentDidUpdate(){
@@ -323,26 +338,28 @@ class StoreOrderPage extends Component{
     if(this.state.total_price === 0){
 
     }else{
-      if(this.state.card_number === ''){
-        // isOrder = false;
-        alert("카드번호를 적어주세요");
-        return false;
-      }else if(this.state.card_yy === ''){
-        // isOrder = false;
-        alert("유효기간을 선택해주세요(년도)");
-        return false;
-      }else if(this.state.card_mm === ''){
-        // isOrder = false;
-        alert("유효기간을 선택해주세요(월)");
-        return false;
-      }else if(this.state.card_birth === ''){
-        // isOrder = false;
-        alert("생년월일 및 법인등록번호를 입력해주세요");
-        return false;
-      }else if(this.state.card_pw_2digit === ''){
-        // isOrder = false;
-        alert("카드 비밀번호 앞2자리를 입력해주세요");
-        return false;
+      if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+        if(this.state.card_number === ''){
+          // isOrder = false;
+          alert("카드번호를 적어주세요");
+          return false;
+        }else if(this.state.card_yy === ''){
+          // isOrder = false;
+          alert("유효기간을 선택해주세요(년도)");
+          return false;
+        }else if(this.state.card_mm === ''){
+          // isOrder = false;
+          alert("유효기간을 선택해주세요(월)");
+          return false;
+        }else if(this.state.card_birth === ''){
+          // isOrder = false;
+          alert("생년월일 및 법인등록번호를 입력해주세요");
+          return false;
+        }else if(this.state.card_pw_2digit === ''){
+          // isOrder = false;
+          alert("카드 비밀번호 앞2자리를 입력해주세요");
+          return false;
+        }
       }
     }
 
@@ -362,9 +379,9 @@ class StoreOrderPage extends Component{
 
     let isOrder = this.isPassableOrder();
     if(isOrder){
-      // 
       this.requestCheckState();
     }
+    
   }
 
   requestCheckState(){
@@ -388,9 +405,119 @@ class StoreOrderPage extends Component{
         return;
       }
 
-      this.requsetOrder();
+      if(this.state.total_price === 0){
+        this.requsetOrder();
+      }else{
+        if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+          this.requsetOrder();
+        }else{
+          this.showIamportPayView();
+        }
+      }
+      
+      
     }, (error) => {
 
+    })
+  }
+
+  showIamportPayView = () => {
+    if(this.IMP === null){
+      alert("결제모듈 초기화 오류. 새로고침 후 이용해주세요.");
+      return;
+    }
+
+    this.IMP.request_pay({
+      pg : 'nice', // version 1.1.0부터 지원.
+      pay_method : Types.pay_method.PAY_METHOD_TYPE_CARD,
+      merchant_uid : Util.getPayStoreNewMerchant_uid(this.state.store_id, this.state.user_id),
+      name : this.state.item_title,
+      amount : this.state.item_price,
+      buyer_email : this.state.email,
+      buyer_name : this.state.name,
+      buyer_tel : this.state.contact,
+    }, (rsp) => {
+        if ( rsp.success ) {
+
+          if(rsp.paid_amount !== this.state.total_price){
+            alert("(에러)결제 가격과 구매 가격이 다릅니다.");
+            return;
+          }
+
+          this.requestAfterISPPay(rsp.imp_uid, rsp.merchant_uid);
+        } else {
+            swal("결제 실패", rsp.error_msg, 'error');
+        }
+    });
+  }
+
+  requestAfterISPPay = (imp_uid, merchant_uid) => {
+    showLoadingPopup('완료중입니다..');  
+
+    axios.post("/pay/store/iamport", {
+      merchant_uid: merchant_uid,
+      imp_uid: imp_uid,
+
+      store_id: this.state.store_id,
+      item_id: this.state.store_item_id,
+      
+      total_price: this.state.total_price, //로컬에서 보내는 토탈 가격 정보와 서버 db 조회후 결제될 가격 정보가 일치하는지 체크한다
+      title: this.state.item_title,
+      contact: this.state.contact,
+      email: this.state.email,
+      name: this.state.name,
+      requestContent: this.state.requestContent,
+      pay_method: this.state.pay_method
+    }, (result) => {
+      // console.log(result);
+
+      stopLoadingPopup();
+
+      this.fileUploaderRef.uploadFiles(this.state.user_id, Types.file_upload_target_type.orders_items, 
+      (result_upload_files) => {
+
+        showLoadingPopup('완료중입니다..');  
+
+        let filesInsertID = [];
+        for(let i = 0 ; i < result_upload_files.list.length ; i++){
+          const data = result_upload_files.list[i];
+          let _data = {
+            file_id: data.insertId
+          }
+          
+          filesInsertID.push(_data);
+        }
+        
+        axios.post("/store/item/order/islast", {
+          item_id: this.state.store_item_id,
+          store_item_order_id: result.order_id
+        }, (result_last_order) => {
+
+          if(filesInsertID.length === 0){
+            stopLoadingPopup();
+            this.goOrderComplite(result.order_id);  
+          }else{
+            axios.post("/store/file/set/orderid", {
+              store_order_id: result.order_id,
+              filesInsertID: filesInsertID.concat()
+            }, (result_files) => {
+              stopLoadingPopup();
+              this.goOrderComplite(result.order_id);
+            }, (error_files) => {
+              stopLoadingPopup();
+            })
+          }
+        }, (error) => {
+          stopLoadingPopup();
+        })      
+  
+      }, (error_upload_files) => {
+        alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+        return;
+      });
+
+    }, (error) => {
+      stopLoadingPopup();
     })
   }
 
@@ -443,7 +570,7 @@ class StoreOrderPage extends Component{
         email: this.state.email,
         name: this.state.name,
         requestContent: this.state.requestContent,
-        pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD
+        pay_method: this.state.pay_method
         // merchant_uid: merchant_uid
       }
 
@@ -483,63 +610,11 @@ class StoreOrderPage extends Component{
       alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
       return;
     });
-
-    /*
-    let pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT;
-    
-    if(!this.state.store_id){
-      alert("스토어 정보가 없습니다. 새로고침 해주세요.");
-      return;
-    }
-
-    showLoadingPopup('결제가 진행중입니다..');
-
-    let _data = {
-      store_id: this.state.store_id,
-      item_id: this.state.store_item_id,
-      card_number : this.state.card_number,
-      card_yy: this.state.card_yy,
-      card_mm: this.state.card_mm,
-      card_birth: this.state.card_birth,
-      card_pw_2digit: this.state.card_pw_2digit,
-      total_price: this.state.total_price, //로컬에서 보내는 토탈 가격 정보와 서버 db 조회후 결제될 가격 정보가 일치하는지 체크한다
-      title: this.state.item_title,
-      contact: this.state.contact,
-      email: this.state.email,
-      name: this.state.name,
-      requestContent: this.state.requestContent,
-      pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD
-      // merchant_uid: merchant_uid
-    }
-
-    axios.post('/pay/store/onetime', {..._data}, 
-    (result) => {
-      axios.post("/store/item/order/islast", {
-        item_id: this.state.store_item_id,
-        store_item_order_id: result.order_id
-      }, (result_last_order) => {
-        stopLoadingPopup();
-
-        this.fileUploaderRef.uploadFiles(result.order_id, Types.file_upload_target_type.orders_items, () => {
-          this.goOrderComplite(result.order_id)
-        });
-      }, (error) => {
-        stopLoadingPopup();
-
-        this.fileUploaderRef.uploadFiles(result.order_id, Types.file_upload_target_type.orders_items, () => {
-          this.goOrderComplite(result.order_id)
-        });
-      })      
-    },
-    (error) => {
-      stopLoadingPopup();
-    });
-    */
   }
 
   onChangeInput(e, type){
     e.preventDefault();
-
+    
     if(type === INPUT_STORE_ORDER_CARD_NUMBER){
       if(e.target.value.length > 0 && !isCheckOnlyNumber(e.target.value)){
         alert("숫자만 입력해주세요. (공백 혹은 - 이 입력되었습니다.)")
@@ -675,6 +750,14 @@ class StoreOrderPage extends Component{
     })
   }
 
+  onClickMethod = (e, method_type) => {
+    e.preventDefault();
+
+    this.setState({
+      pay_method: method_type
+    })
+  }
+
   render(){
 
     let isAllAgree = this.isAllAgree();
@@ -710,54 +793,78 @@ class StoreOrderPage extends Component{
 
     let payDom = <></>;
     if(this.state.total_price > 0){
+
+      let payFormDom = <></>;
+      if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+        payFormDom = <div className={'card_info_container'}>
+                      <p className={'input_label'}>카드번호</p>
+                      <input className={'input_box'} placeholder={'- 없이 숫자만 입력'} type="text" name="cc-number" autoComplete="off" value={this.state.card_number} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_NUMBER)}}/>
+
+                      <div>
+                        <p className={'input_label'}>유효기간</p>
+
+                        <div className={'flex_layer'}>
+                          <div className={'select_box'}>
+                            {this.state.selectShowMonthValue}
+                            <img src={icon_box} />
+
+                            <select className={'select_tag'} value={this.state.selectMonthValue} onChange={this.handleSelectChangeMonth}>
+                              {this.state.optionMonth}
+                            </select>
+                          </div>
+
+                          <div className={'select_box'} style={{marginLeft: 8}}>
+                            {this.state.selectShowYearValue}
+                            <img src={icon_box} />
+
+                            <select className={'select_tag'}  value={this.state.selectYearValue} onChange={this.handleSelectChangeYear}>
+                              {this.state.optionYears}
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <p className={'input_label'}>카드 소유자 생년월일 (법인등록번호)</p>
+                      <input className={'input_box'} type="text" name="bday" autoComplete="off" placeholder='주민번호 앞 6자리(법인등록번호 7자리)'value={this.state.card_birth} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_BIRTH)}}/>
+
+                      <p className={'input_label'}>카드 비밀번호 앞2자리</p>
+                      <div className={'flex_layer'}>
+                        <input className={'input_box'} maxLength={2} autoComplete={"new-password"} style={{width: 100}} type={"password"} value={this.state.card_pw_2digit} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_PW_TWODIGIT)}}/>
+                        <div className={'password_back_bod'}>
+                          **
+                        </div>
+                      </div>
+                    </div>
+      }
+
+      let payMethodDoms = [];
+      for(let i=0 ; i < this.state.payMethodArray.length ; i++){
+        const data = this.state.payMethodArray[i];
+
+        let imgRadioImg = <></>;
+        if(this.state.pay_method === data.pay_method){
+          imgRadioImg = <img src={ic_radio_btn_s} />
+        }else{
+          imgRadioImg = <img src={ic_radio_btn_n} />
+        }
+
+        let payMethodDom = <button key={i} className={'pay_method_button'} onClick={(e) => {this.onClickMethod(e, data.pay_method)}}>
+                            {imgRadioImg}
+                            <div className={'pay_method_text'}>
+                              {data.text}
+                            </div>
+                          </button>;
+
+        payMethodDoms.push(payMethodDom);
+      }
+
       payDom = <div className={'container_box'}>
                   <div className={'container_label'}>
                     결제방법
                   </div>
-
-                  <div className={'card_info_container'}>
-                    <p className={'input_label'}>카드번호</p>
-                    <input className={'input_box'} placeholder={'- 없이 숫자만 입력'} type="text" name="cc-number" autoComplete="off" value={this.state.card_number} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_NUMBER)}}/>
-
-                    <div>
-                      <p className={'input_label'}>유효기간</p>
-
-                      <div className={'flex_layer'}>
-                        <div className={'select_box'}>
-                          {this.state.selectShowMonthValue}
-                          <img src={icon_box} />
-
-                          <select className={'select_tag'} value={this.state.selectMonthValue} onChange={this.handleSelectChangeMonth}>
-                            {this.state.optionMonth}
-                          </select>
-                        </div>
-
-                        <div className={'select_box'} style={{marginLeft: 8}}>
-                          {this.state.selectShowYearValue}
-                          <img src={icon_box} />
-
-                          <select className={'select_tag'}  value={this.state.selectYearValue} onChange={this.handleSelectChangeYear}>
-                            {this.state.optionYears}
-                          </select>
-                        </div>
-                      </div>
-
-                      {/* <input className={'input_box'} type="text" value={this.state.card_yy} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_YY)}}/> */}
-                    
-                      {/* <p className={'input_label'}>카드 월</p>
-                      <input className={'input_box'} type="text" value={this.state.card_mm} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_MM)}}/> */}
-                    </div>
-                  
-                    <p className={'input_label'}>카드 소유자 생년월일 (법인등록번호)</p>
-                    <input className={'input_box'} type="text" name="bday" autoComplete="off" placeholder='주민번호 앞 6자리(법인등록번호 7자리)'value={this.state.card_birth} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_BIRTH)}}/>
-
-                    <p className={'input_label'}>카드 비밀번호 앞2자리</p>
-                    <div className={'flex_layer'}>
-                      <input className={'input_box'} maxLength={2} autoComplete={"new-password"} style={{width: 100}} type={"password"} value={this.state.card_pw_2digit} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_PW_TWODIGIT)}}/>
-                      <div className={'password_back_bod'}>
-                        **
-                      </div>
-                    </div>
+                  <div className={'pay_method_container'}>
+                    {payMethodDoms}
+                    {payFormDom}
                   </div>
                 </div>
     }
