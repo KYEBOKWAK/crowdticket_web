@@ -17,6 +17,8 @@
   <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Popup_text_viewer.css?version=3') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
   
 @endsection
 
