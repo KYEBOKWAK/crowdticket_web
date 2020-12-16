@@ -473,8 +473,18 @@ class StoreOrderPage extends Component{
       order_id: store_order_id,
       pay_method: this.state.pay_method
     }, (result) => {
-      stopLoadingPopup();
-      this.goOrderComplite(result.order_id);
+      // stopLoadingPopup();
+      // this.goOrderComplite(result.order_id);
+      axios.post("/pay/store/send/message", {
+        store_order_id: store_order_id
+      }, (result_message) => {
+        stopLoadingPopup();
+        this.goOrderComplite(result.order_id);
+      }, (error_message) => {
+        stopLoadingPopup();
+        this.goOrderComplite(result.order_id);
+      })
+      
     }, (error) => {
       stopLoadingPopup();
       swal("결제 DB 에러", '결제 DB STATE 상태 변경 실패', 'error');
