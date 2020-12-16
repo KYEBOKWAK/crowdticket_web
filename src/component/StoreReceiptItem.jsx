@@ -1063,18 +1063,6 @@ class StoreReceiptItem extends Component{
                         </div>
                       </div>
         }
-
-        
-        // if(this.state.product_text) {
-        //   product_after_confirm_content_dom = <button onClick={(e) => {this.clickProductText(e)}} style={{paddingBottom: 0}} className={'product_container'}>
-        //                                         <div className={'product_title_text'}>
-        //                                           {this.state.product_title}
-        //                                         </div>
-        //                                         <div className={'product_text_text'}>
-        //                                           {this.state.product_text}
-        //                                         </div>
-        //                                       </button>
-        // }
       }
     }
 
@@ -1084,6 +1072,16 @@ class StoreReceiptItem extends Component{
           isOpenProductText: false
         })
       }}></Popup_text_viewer>
+    }
+
+    if(this.state.state === Types.order.ORDER_STATE_APP_STORE_STANBY){
+      customer_files_dom = <></>;
+      product_files_dom = <></>;
+      
+      product_answer_dom = <></>;
+      review_dom = <></>;
+
+      stateButtonDom = <></>;
     }
     
 

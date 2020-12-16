@@ -411,7 +411,9 @@ class StoreOrderPage extends Component{
         if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
           this.requsetOrder();
         }else{
-          this.showIamportPayView();
+          // this.showIamportPayView();
+          //isp는 모바일때문에 우선 order를 다셋팅 한 후 결제 시스템으로 들어간다.
+          this.requestISPInsertStoreOrder();
         }
       }
       
@@ -421,21 +423,33 @@ class StoreOrderPage extends Component{
     })
   }
 
-  showIamportPayView = () => {
+  showIamportPayView = (merchant_uid, store_order_id) => {
     if(this.IMP === null){
       alert("결제모듈 초기화 오류. 새로고침 후 이용해주세요.");
       return;
     }
 
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    const m_redirect_url = baseURL+'/store/isp/'+store_order_id+'/complite';
+    console.log(m_redirect_url);
+
     this.IMP.request_pay({
       pg : 'nice', // version 1.1.0부터 지원.
       pay_method : Types.pay_method.PAY_METHOD_TYPE_CARD,
-      merchant_uid : Util.getPayStoreNewMerchant_uid(this.state.store_id, this.state.user_id),
+      merchant_uid : merchant_uid,
       name : this.state.item_title,
       amount : this.state.item_price,
       buyer_email : this.state.email,
       buyer_name : this.state.name,
       buyer_tel : this.state.contact,
+      niceMobileV2 : true,
+      m_redirect_url: m_redirect_url
     }, (rsp) => {
         if ( rsp.success ) {
 
@@ -444,11 +458,118 @@ class StoreOrderPage extends Component{
             return;
           }
 
-          this.requestAfterISPPay(rsp.imp_uid, rsp.merchant_uid);
+          this.requestISPSuccess(rsp.imp_uid, rsp.merchant_uid, store_order_id);
         } else {
-            swal("결제 실패", rsp.error_msg, 'error');
+          this.requestISPError(rsp.imp_uid, rsp.merchant_uid, rsp.error_msg);
         }
     });
+  }
+
+  requestISPSuccess = (imp_uid, merchant_uid, store_order_id) => {
+    showLoadingPopup('결제 완료중..');
+    axios.post("/pay/store/isp/success", {
+      imp_uid: imp_uid,
+      merchant_uid: merchant_uid,
+      order_id: store_order_id,
+      pay_method: this.state.pay_method
+    }, (result) => {
+      stopLoadingPopup();
+      this.goOrderComplite(result.order_id);
+    }, (error) => {
+      stopLoadingPopup();
+      swal("결제 DB 에러", '결제 DB STATE 상태 변경 실패', 'error');
+    })
+  }
+
+  requestISPError = (imp_uid, merchant_uid, error_msg) => {
+    axios.post("/pay/store/isp/error", {
+      imp_uid: imp_uid,
+      merchant_uid: merchant_uid
+    }, (result) => {
+      swal("결제 실패", error_msg, 'error');
+    }, (error) => {
+      swal("결제 실패", error_msg, 'error');
+    })
+  }
+
+  requestISPInsertStoreOrder = () => {
+    if(this.IMP === null){
+      alert("결제모듈 초기화 오류. 새로고침 후 이용해주세요.");
+      return;
+    }
+
+    showLoadingPopup('결제창 요청중..');
+
+    const merchant_uid = Util.getPayStoreNewMerchant_uid(this.state.store_id, this.state.user_id);
+
+    axios.post("/pay/store/isp/iamport", {
+      merchant_uid: merchant_uid,
+      // imp_uid: imp_uid,
+
+      store_id: this.state.store_id,
+      item_id: this.state.store_item_id,
+      
+      total_price: this.state.total_price, //로컬에서 보내는 토탈 가격 정보와 서버 db 조회후 결제될 가격 정보가 일치하는지 체크한다
+      title: this.state.item_title,
+      contact: this.state.contact,
+      email: this.state.email,
+      name: this.state.name,
+      requestContent: this.state.requestContent,
+      pay_method: this.state.pay_method
+    }, (result) => {
+      // console.log(result);
+
+      stopLoadingPopup();
+
+      this.fileUploaderRef.uploadFiles(this.state.user_id, Types.file_upload_target_type.orders_items, 
+      (result_upload_files) => {
+
+        showLoadingPopup('결제창 요청중..');  
+
+        let filesInsertID = [];
+        for(let i = 0 ; i < result_upload_files.list.length ; i++){
+          const data = result_upload_files.list[i];
+          let _data = {
+            file_id: data.insertId
+          }
+          
+          filesInsertID.push(_data);
+        }
+        
+        axios.post("/store/item/order/islast", {
+          item_id: this.state.store_item_id,
+          store_item_order_id: result.order_id
+        }, (result_last_order) => {
+
+          if(filesInsertID.length === 0){
+            stopLoadingPopup();
+            this.showIamportPayView(merchant_uid, result.order_id);
+            // this.goOrderComplite(result.order_id);
+            console.log("dsfasdf");
+          }else{
+            axios.post("/store/file/set/orderid", {
+              store_order_id: result.order_id,
+              filesInsertID: filesInsertID.concat()
+            }, (result_files) => {
+              stopLoadingPopup();
+              // this.goOrderComplite(result.order_id);
+              this.showIamportPayView(merchant_uid, result.order_id);
+            }, (error_files) => {
+              stopLoadingPopup();
+            })
+          }
+        }, (error) => {
+          stopLoadingPopup();
+        })
+  
+      }, (error_upload_files) => {
+        alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+        return;
+      });
+
+    }, (error) => {
+      stopLoadingPopup();
+    })
   }
 
   requestAfterISPPay = (imp_uid, merchant_uid) => {

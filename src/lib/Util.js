@@ -3,10 +3,17 @@ const Util = {
     //이 함수를 수정하려면 서버쪽 코드와 동일 해아함.
     const timestamp = Math.floor(new Date().getTime() / 1000)
 
-    let _appType = '';
-    if(process.env.APP_TYPE !== ''){
-      _appType = '_'+process.env.APP_TYPE;
+    let type_tail = 'r';
+    const app_type_key = document.querySelector('#g_app_type');
+    if(app_type_key){
+      if(app_type_key.value === 'local'){
+        type_tail = 'local';
+      }else if(app_type_key.value === 'qa'){
+        type_tail = 'qa';
+      }
     }
+
+    let _appType = '_'+type_tail;;
 
     return 's_'+store_id+'_u_'+user_id+'_'+timestamp+_appType;
   },

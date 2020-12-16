@@ -128,37 +128,6 @@ class StoreUserSNSList extends Component{
     }
 
     window.open(link_url);
-
-    // window.$.ajax({
-		// 	'url': 'http://localhost:8000/order/store',
-		// 	'method': 'get',
-		// 	'data': {abc: 'aaa'},
-		// 	'success': function(result){console.log(result)},
-		// 	'error': function(){console.log('error')}
-		// })
-    /*
-    axios.post('http://localhost:8000/order/store', {
-      test: 'abc'
-    }, (function(result){
-      console.log(result);
-    }), function(error){
-      console.log(error);
-    })
-    */
-
-   
-
-  //  let baseURL = 'https://crowdticket.kr'
-  //  const baseURLDom = document.querySelector('#base_url');
-  //  if(baseURLDom){
-  //    // console.log(baseURLDom.value);
-  //    baseURL = baseURLDom.value;
-  //  }
-   
-  //  let hrefURL = baseURL+'/order/store/'+this.state.store_item_id;
-   
-  //  window.location.href = hrefURL;
-
   }
 
   render(){

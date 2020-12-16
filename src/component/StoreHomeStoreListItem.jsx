@@ -141,6 +141,16 @@ class StoreHomeStoreListItem extends Component{
     window.location.href = goURL;
   }
 
+  clickSNS(e, link_url){
+    e.preventDefault();
+
+    if(link_url === ''){
+      return;
+    }
+
+    window.open(link_url);
+  }
+
   render(){
     let snsList = [];
 
@@ -170,14 +180,6 @@ class StoreHomeStoreListItem extends Component{
 
       _contentList.push(domObject);
     }
-
-    /*
-    snsList = this.state.snsInfoList.map((item) => {
-      return <button className={'sns_img_button'} key={item.id} onClick={(e) => {this.clickSNS(e, item.link_url)}}>
-              <img className={'sns_img'} src={item.img_store_url} />
-            </button>
-    })
-    */
 
     return(
       <div className={'StoreHomeStoreListItem'}>

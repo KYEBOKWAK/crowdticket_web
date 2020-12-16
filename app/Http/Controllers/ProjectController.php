@@ -2097,4 +2097,30 @@ class ProjectController extends Controller
         'store_order_id' => $store_order_id
       ]);
     }
+
+    public function getStoreISPOrderComplite(Request $request, $store_order_id)
+    {
+      $imp_success = false;
+      $imp_uid = '';
+      $merchant_uid = '';
+
+      if($request->has('imp_success')){
+        $imp_success = $request->imp_success;
+      }
+
+      if($request->has('imp_uid')){
+        $imp_uid = $request->imp_uid;
+      }
+
+      if($request->has('merchant_uid')){
+        $merchant_uid = $request->merchant_uid;
+      }
+
+      return view('store.store_isp_order_complite', [
+        'imp_uid' => $imp_uid,
+        'imp_success' => $imp_success,
+        'merchant_uid' => $merchant_uid,
+        'store_order_id' => $store_order_id
+      ]);
+    }
 }

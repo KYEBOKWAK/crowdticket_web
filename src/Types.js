@@ -301,6 +301,8 @@ const Types = {
     ORDER_STATE_APP_STORE_RELAY_CUSTOMER: 15,  //컨텐츠 크티에서 고객에게 보냄
     ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE: 16,  //고객 콘텐츠 확인함.
 
+    ORDER_STATE_APP_STORE_STANBY: 17, //isp 결제 대기 상태 24시간 뒤에도 ORDER_STATE_APP_STORE_STANBY 라면 취소된다.
+
     ORDER_STATE_STANDBY_START: 98,
     ORDER_STATE_PAY_END: 99,
     //ORDER_STATE_SCHEDULE_PAY: 2, //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.
@@ -314,6 +316,8 @@ const Types = {
 
     ORDER_STATE_CANCEL_STORE_RETURN: 107, //스토어 반려
     ORDER_STATE_CANCEL_STORE_WAIT_OVER: 108, //스토어 승인기간 만료됨
+
+    ORDER_STATE_APP_STORE_STANBY_AUTO_CANCEL: 109,  //24시간이 지나면 취소처리 됨.
 
     ORDER_STATE_CANCEL: 199,//고객취소는 맨 마지막
 
@@ -329,6 +333,8 @@ const Types = {
 
     ORDER_STATE_ERROR_IAMPORT_WEBHOOK_ERROR: 507,
     ORDER_STATE_ERROR_IAMPORT_WEBHOOK_NONE: 508,  //iamport 웹훅 state가 아무값도 아닐때
+
+    ORDER_STATE_APP_STORE_STANBY_FAIL: 509,
 
     ORDER_STATE_ERROR_END: 600,
 

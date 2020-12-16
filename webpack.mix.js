@@ -54,6 +54,7 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/Popup_text_editor.scss', 'dist/css/')
 .sass('src/res/css/StoreContentConfirm.scss', 'dist/css/')
 .sass('src/res/css/Popup_text_viewer.scss', 'dist/css/')
+.sass('src/res/css/StoreISPOrderComplitePage.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

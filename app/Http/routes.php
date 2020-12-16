@@ -362,6 +362,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('receipt/detail/store/{store_order_id}', 'ProjectController@getStoreDetailReceipt');
 
     Route::get('store/content/{store_order_id}', 'ProjectController@getStoreContent');
+
+    Route::get('store/isp/{store_order_id}/complite', 'ProjectController@getStoreISPOrderComplite');
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
