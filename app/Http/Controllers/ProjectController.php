@@ -2123,4 +2123,14 @@ class ProjectController extends Controller
         'store_order_id' => $store_order_id
       ]);
     }
+
+    public function getEventPage($alias)
+    {
+      // storeplanning
+      if($alias === 'storeplanning'){
+        return view('events.event_store_planning');
+      }
+      
+      return view('events.event_store_planning');
+    }
 }

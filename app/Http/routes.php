@@ -180,6 +180,11 @@ Route::get('item/store/{id}', 'ProjectController@getStoreItemDetail');
 
 /////
 
+//event start
+//기획전으로 우선 개발
+Route::get('event/{alias}', 'ProjectController@getEventPage');
+//event end
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');

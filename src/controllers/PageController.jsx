@@ -20,6 +20,8 @@ import StoreContentConfirm from '../pages/StoreContentConfirm';
 
 import StoreISPOrderComplitePage from '../pages/StoreISPOrderComplitePage';
 
+import EventStorePlanning from '../pages/EventStorePlanning';
+
 'use strict';
 
 class PageController extends Component {
@@ -70,6 +72,8 @@ class PageController extends Component {
       pageView = <StoreContentConfirm></StoreContentConfirm>;
     }else if(_pageKey === AppKeys.WEB_STORE_ISP_ORDER_COMPLITE_PAGE){
       pageView = <StoreISPOrderComplitePage></StoreISPOrderComplitePage>;
+    }else if(_pageKey === AppKeys.WEB_EVENT_STORE_PLANNING){
+      pageView = <EventStorePlanning></EventStorePlanning>;
     }
 
     return (
