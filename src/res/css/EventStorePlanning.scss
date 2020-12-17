@@ -3,11 +3,31 @@
   // padding-bottom: 64px;
 
   width: 100%;
+  overflow: hidden;
+
+  .layer_1_container {
+    width: 100%;
+    // max-width: 500px;
+    // max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .layer_1_img {
+    // width: 100%;
+  }
 
   .layer_container {
     
-    // max-width: 520px;
-    max-width: 400px;
+    width: 100%;
+    max-width: 500px;
+    // max-width: 400px;
     margin-left: auto;
     margin-right: auto;
     position: absolute;
@@ -27,6 +47,8 @@
     margin-right: auto;
     display: flex;
     justify-content: center;
+    align-items: center;
+    position: relative;
     // position: absolute;
   }
 
