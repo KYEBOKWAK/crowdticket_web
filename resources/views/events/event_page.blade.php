@@ -5,6 +5,7 @@
     <meta property="og:title" content="크티 | 이벤트"/>
     <meta property="og:description" content="내가 좋아하는 크리에이터의 나만을 위한 콘텐츠, 콘텐츠 상점"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
+    <meta name="description" content="내가 좋아하는 크리에이터의 나만을 위한 콘텐츠, 콘텐츠 상점"/>
 @endsection
 
 @section('title')
