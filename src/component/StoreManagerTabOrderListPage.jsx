@@ -250,7 +250,11 @@ class StoreManagerTabOrderListPage extends Component{
     }
     else if(state === Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER)
     {
-      return '고객 전달완료'
+      return '고객 전달완료';
+    }
+    else if(state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE)
+    {
+      return '고객 확인완료';
     }
     else if(state === Types.order.ORDER_STATE_CANCEL_STORE_RETURN)
     {
