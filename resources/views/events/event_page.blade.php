@@ -12,7 +12,7 @@
   </style>
 
 
-  <link href="{{ asset('/dist/css/EventPage.css?version=3') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/EventPage.css?version=4') }}" rel="stylesheet"/>
 
 @endsection
 
