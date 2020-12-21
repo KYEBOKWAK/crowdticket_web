@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 // import Colors from '@lib/colors';
 // import Types from '~/Types';
 
-import event_timer_layer from '../res/img/event_timer_layer.jpg';
+import event_timer_layer from '../res/img/event_timer_layer_1.png';
 
 import moment_timezone from 'moment-timezone';
 import axios from '../lib/Axios';
