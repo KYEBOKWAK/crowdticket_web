@@ -1,11 +1,12 @@
-.EventStorePlanning {
+.EventPage {
   // padding-top: 64px;
-  // padding-bottom: 64px;
+  padding-bottom: 64px;
 
   width: 100%;
   overflow: hidden;
+  background-color: white;
 
-  .layer_1_container {
+  .layer_2_container {
     width: 100%;
     // max-width: 500px;
     // max-width: 400px;
@@ -19,7 +20,7 @@
     overflow: hidden;
   }
 
-  .layer_1_img {
+  .layer_2_img {
     // width: 100%;
   }
 
@@ -89,8 +90,74 @@
     height: 100%;
   }
   */
+
+  .item_list_gap_dom {
+    width: 10px;
+  }
+
+  .item_list_container {
+    width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+
+  .item_container {
+    width: 49%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+
+  .item_img {
+    width: 100%;
+    border-radius: 24px 24px 0 24px;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    // right: 0;
+    // bottom: 0;
+    // max-width: 100%;
+    // margin: auto;
+    // // border-radius: 10px;
+    // border-radius: 0px;
+  }
+
+  .item_first_text {
+    width: 100%;
+    font-size: 12px;
+    color: #808080;
+    font-weight: normal;
+    margin-bottom: 5px;
+  }
+
+  .item_second_text {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.29;
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: black;
+  }
+
+  .item_third_text {
+    width: 100%;
+    color: #00bfff;
+    font-weight: bold;
+    font-size: 16px;
+  }
   @media (max-width: 520px){
     /*모바일일때*/  
+
+    .item_list_container {
+      width: 100%;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
 }
 

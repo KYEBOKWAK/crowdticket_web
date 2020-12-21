@@ -34,6 +34,9 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  event_target_type: {
+    store_item: 'store_item'
+  },
   store_ready_state: {
     none: 0,
     default: 1,

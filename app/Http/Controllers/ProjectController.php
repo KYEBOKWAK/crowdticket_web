@@ -2128,9 +2128,13 @@ class ProjectController extends Controller
     {
       // storeplanning
       if($alias === 'storeplanning'){
-        return view('events.event_store_planning');
+        return view('events.event_page', [
+          'alias' => $alias
+        ]);
       }
       
-      return view('events.event_store_planning');
+      return view('events.event_page', [
+        'alias' => $alias
+      ]);
     }
 }
