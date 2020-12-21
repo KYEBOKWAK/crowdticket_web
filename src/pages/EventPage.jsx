@@ -18,7 +18,7 @@ import React, { Component } from 'react';
 // import Colors from '@lib/colors';
 // import Types from '~/Types';
 
-// import test_bland from '../res/img/test_bland.png';
+import event_timer_layer from '../res/img/event_timer_layer.jpg';
 
 import moment_timezone from 'moment-timezone';
 import axios from '../lib/Axios';
@@ -36,7 +36,7 @@ class EventPage extends Component{
     super(props);
 
     this.state = {
-      untilTime: moment_timezone('2021-01-10 18:00:00'),
+      untilTime: moment_timezone('2021-01-08 23:59:59'),
       durationMomentTime: null,
       
       heights: [],//layer 1의 height 를 저장한다.
@@ -348,8 +348,13 @@ class EventPage extends Component{
     let untilTimeDom = <></>;
     let durationTimerDom = <></>;
     if(this.state.durationMomentTime !== null){
-      untilTimeDom = <div>
-                      {moment_timezone(this.state.untilTime).format("YYYY년 MM월 DD일 HH:mm 까지")}
+      untilTimeDom = <div className={'time_until_container'}>
+                      <div className={'time_until_label_text'}>
+                        진행 기간
+                      </div>
+                      <div className={'time_until_text'}>
+                        {moment_timezone(this.state.untilTime).format("YYYY. MM. DD 까지")}
+                      </div>
                     </div>
       
       let hour = this.state.durationMomentTime.hours();
@@ -365,13 +370,19 @@ class EventPage extends Component{
         sec = '0'+sec;
       }
 
-      durationTimerDom = <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                          남은시간
-                          <div style={{display: 'flex'}}>
-                            {this.state.durationMomentTime.days()}일 
-                            {hour}:
-                            {min}:
-                            {sec}
+      durationTimerDom = <div className={'time_duration_container'}>
+                          <div className={'time_until_label_text'}>
+                            남은시간
+                          </div>
+                          <div className={'time_duration_text_container'}>
+                            <div className={'time_duration_day_text'}>
+                              {this.state.durationMomentTime.days()}일 
+                            </div>
+                            <div className={'time_duration_timer_text'}>
+                              {hour}:
+                              {min}:
+                              {sec}
+                            </div>
                           </div>
                         </div>
     }
@@ -379,12 +390,17 @@ class EventPage extends Component{
     return(
       <div className={'EventPage'}>
         {contents_array}
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: 20, paddingTop: 40, paddingBottom: 40}}>
-          {untilTimeDom}
-          {durationTimerDom}
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#910000', fontSize: 20, paddingTop: 40, paddingBottom: 40, height: 440, position: 'relative', justifyContent: 'center'}}>
+          <img style={{position: 'absolute', top: 0}} src={event_timer_layer} />
+          <div className={'timer_container'}>
+            {untilTimeDom}
+            {durationTimerDom}
+          </div>
         </div>
 
-        {item_list_array}        
+        <div className={'item_list_container_warpper'}>
+          {item_list_array}
+        </div>
       </div>
     )
   }
