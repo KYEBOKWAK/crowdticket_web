@@ -148,7 +148,18 @@ class EventPage extends Component{
   setDurationTimer = () => {
     let nowTime_moment = moment_timezone();
 
-    let durationMomentTime = moment_timezone.duration(this.state.untilTime.diff(nowTime_moment));
+    let timeDiff = this.state.untilTime.diff(nowTime_moment);
+    if(timeDiff < 0){
+      timeDiff = 0;
+      let durationMomentTime = moment_timezone.duration(timeDiff);
+      this.setState({
+        durationMomentTime: durationMomentTime
+      })
+      this.stopTimer();
+      return;
+    }
+
+    let durationMomentTime = moment_timezone.duration(timeDiff);
 
     this.setState({
       durationMomentTime: durationMomentTime
@@ -309,41 +320,7 @@ class EventPage extends Component{
                           </div>
 
       item_list_array.push(container_dom)
-    }
-
-    
-
-    /*
-    let items_array = [];
-    for(let i = 0 ; i < this.state.itemDatas.length ; i++){
-
-      // const itemListContainerClassName = 'item_list_container_flex';
-      // if(i % 2 === 0 ){
-
-      // }
-
-      const data = this.state.itemDatas[i];
-      console.log(data);
-
-      
-      const dom = <div key={i}>
-                    <img className={'item_img'} src={data.thumb_img_url} />
-
-                    <div className={'item_first_text text-ellipsize'}>
-                      {data.first_text}
-                    </div>
-                    <div className={'item_second_text text-ellipsize-2'}>
-                      {data.second_text}
-                    </div>
-                    <div className={'item_third_text text-ellipsize'}>
-                      {data.third_text}
-                    </div>
-                  </div>;
-      
-      items_array.push(dom);
-    }
-    */
-    
+    }    
 
     let untilTimeDom = <></>;
     let durationTimerDom = <></>;
