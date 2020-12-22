@@ -19,7 +19,7 @@
 <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreStateProcess.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreStateProcess.css?version=2') }}" rel="stylesheet"/>
 
 @endsection
 

@@ -46,6 +46,10 @@ class StoreStateProcess extends Component{
           key: Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE,
           text: '콘텐츠 확인'
         },
+        {
+          key: Types.order.ORDER_STATE_APP_STORE_SUCCESS,
+          text: '크티 전달'
+        }
       ],
       processData: 
       [
@@ -73,7 +77,8 @@ class StoreStateProcess extends Component{
           product_state: Types.product_state.ONE_TO_ONE,
           process: [
             Types.order.ORDER_STATE_APP_STORE_PAYMENT, 
-            Types.order.ORDER_STATE_APP_STORE_READY, 
+            Types.order.ORDER_STATE_APP_STORE_READY,
+            Types.order.ORDER_STATE_APP_STORE_SUCCESS,
             Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER,
             Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE
           ]
@@ -137,9 +142,14 @@ class StoreStateProcess extends Component{
       processItemArrayDom.push(dom);
     }
 
+    let container_wrapper_className = 'process_container_wrapper';
+    if(_processData.process.length >= 5){
+      container_wrapper_className = 'process_container_wrapper_over_five';
+    }
+
     return(
       <div className={'StoreStateProcess'}>
-        <div className={'process_container_wrapper'}>
+        <div className={container_wrapper_className}>
           <div className={'dot_line'}>
           </div>
           <div className={'process_container'}>
