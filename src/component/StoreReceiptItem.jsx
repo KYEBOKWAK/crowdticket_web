@@ -1047,9 +1047,9 @@ class StoreReceiptItem extends Component{
         {order_id_dom}
         {_storeOrderItemDom}
 
-        {/* <div className={'StoreStateProcess_container'}>
+        <div className={'StoreStateProcess_container'}>
           <StoreStateProcess product_state={this.state.item_product_state} order_state={this.state.state}></StoreStateProcess>
-        </div> */}
+        </div>
 
         {orderNameDom}
         <div className={'request_content'}>

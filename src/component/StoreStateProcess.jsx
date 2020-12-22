@@ -36,15 +36,15 @@ class StoreStateProcess extends Component{
         },
         {
           key: Types.order.ORDER_STATE_APP_STORE_READY,
-          text: '콘텐츠 준비중'
+          text: '콘텐츠 준비'
         },
         {
           key: Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER,
-          text: '콘텐츠 전달 완료'
+          text: '콘텐츠 전달'
         },
         {
           key: Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE,
-          text: '콘텐츠 확인 완료'
+          text: '콘텐츠 확인'
         },
       ],
       processData: 
@@ -124,11 +124,11 @@ class StoreStateProcess extends Component{
       let colorRGB = '#00a2d9';
       if(!isCheck){
         imgSrc = ic_checkbox_btn_circle_n;
-        colorRGB = '#4c4c4c';
+        colorRGB = '#e3e3e3';
       }
 
       const dom = <div key={i} className={'process_item_container'}>
-                    <img src={imgSrc}/>
+                    <img style={{backgroundColor: 'white'}} src={imgSrc}/>
                     <div className={'process_item_text'} style={{color: colorRGB}}>
                       {textData.text}
                     </div>
@@ -139,8 +139,12 @@ class StoreStateProcess extends Component{
 
     return(
       <div className={'StoreStateProcess'}>
-        <div className={'process_container'}>
-          {processItemArrayDom}
+        <div className={'process_container_wrapper'}>
+          <div className={'dot_line'}>
+          </div>
+          <div className={'process_container'}>
+            {processItemArrayDom}
+          </div>
         </div>
       </div>
     )

@@ -327,6 +327,10 @@
   }
 
   @media (max-width: 520px){
-    /*모바일일때*/  
+    /*모바일일때*/
+    .StoreStateProcess_container {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
   }
 }

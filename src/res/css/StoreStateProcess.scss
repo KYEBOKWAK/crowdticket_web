@@ -1,11 +1,19 @@
 .StoreStateProcess {
   
-  .process_container {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
+  .process_container_wrapper {
+    width: 60%;
+    position: relative;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .process_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-left: auto;
+    // margin-right: auto;
   }
 
   .process_item_container {
@@ -13,6 +21,7 @@
     flex-direction: column;
     position: relative;
     align-items: center;
+    height: 50px;
   }
 
   .process_item_text {
@@ -21,8 +30,32 @@
     text-align: center;
     font-size: 12px;
     bottom: 0;
+    font-weight: 500;
+    letter-spacing: -0.3px;
   }
+
+  .dot_line {
+    width: 99%;
+    height: 1px;
+    border-style: dotted;
+    border-width: 2px;
+    border-bottom: 0px;
+    color: #808080;
+    position: absolute;
+    top: 10px;
+    opacity: 0.3;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
+    .process_container_wrapper {
+      width: 85%;
+    }
+  }
+
+  @media (max-width: 320px){
+    .process_item_text {
+      font-size: 11px;
+    }
   }
 }
