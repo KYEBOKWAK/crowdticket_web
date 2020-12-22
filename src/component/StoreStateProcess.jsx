@@ -105,6 +105,12 @@ class StoreStateProcess extends Component{
       )
     }
 
+    if(this.props.order_state > Types.order.ORDER_STATE_PAY_END){
+      return (
+        <></>
+      )
+    }
+
     let processItemArrayDom = [];
     let isLastState = false;
     for(let i = 0 ; i < _processData.process.length ; i++){
