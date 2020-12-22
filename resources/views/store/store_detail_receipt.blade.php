@@ -15,12 +15,14 @@
 rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" 
 rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=8') }}" 
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=9') }}" 
 rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/StoreStateProcess.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 

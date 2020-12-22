@@ -21,6 +21,8 @@ import FileUploader from '../component/FileUploader';
 import Popup_text_editor from '../component/Popup_text_editor';
 
 import Popup_text_viewer from '../component/Popup_text_viewer';
+
+import StoreStateProcess from '../component/StoreStateProcess';
 // import moment_timezone from 'moment-timezone';
 // moment_timezone.tz.setDefault("Asia/Seoul");
 // const moment_timezone = require('moment-timezone');
@@ -725,6 +727,7 @@ class StoreReceiptItem extends Component{
       }else{
         _goDetailButtonDom = <div className={'receipt_button_container'}>
                                 <button 
+                                  style={{marginTop: 12}}
                                   className={'detail_receipt_button'} 
                                   onClick={(e) => {this.clikcDetailReceipt(e)}}
                                   >
@@ -886,52 +889,6 @@ class StoreReceiptItem extends Component{
                                     </div>                                  
           }
         }
-        //콘텐츠 제작중
-        // bottomLongButtonDom = <button onClick={(e) => {this.clickRelay(e)}} className={'state_button_relay'}>
-        //                         콘텐츠 전달하기
-        //                       </button>
-
-        /*
-        if(this.state.store_ready_state === Types.store_ready_state.default){
-          bottomLongButtonDom = <button onClick={(e) => {this.clickContentsUpload(e)}} className={'state_button_relay'}>
-                                  콘텐츠 올리기
-                                </button>
-        }else if(this.state.store_ready_state === Types.store_ready_state.product_upload){
-
-          let product_content_dom = <></>;
-          if(this.state.product_text) {
-            product_content_dom = <div className={'product_container'}>
-                                    <div className={'product_title_text'}>
-                                      {this.state.product_title}
-                                    </div>
-                                    <div className={'product_text_text'}>
-                                      {this.state.product_text}
-                                    </div>
-                                  </div>
-          }else{
-            product_content_dom = <div className={'product_container'}>
-                                    텍스트 콘텐츠 작성하기
-                                  </div>
-          }
-
-          bottomLongButtonDom = <button onClick={(e) => {this.clickRelay(e)}} className={'state_button_relay'}>
-                                  콘텐츠 전달하기
-                                </button>
-
-          store_ready_state_dom = <div className={'product_upload_container'}>
-                                    <div className={'under_line'}>
-                                    </div>
-                                    <button className={'product_button'} onClick={(e) => {this.onClickEditPopup(e)}}>
-                                      {product_content_dom}
-                                    </button>
-                                    <div className={'under_line'}>
-                                    </div>
-                                    <FileUploader state={Types.file_upload_state.FILES} isUploader={true} store_order_id={this.props.store_order_id}></FileUploader>
-
-                                    <textarea className={'thank_text_area'} value={this.state.thanks_text} onChange={(e) => {this.onChangeInput(e)}} placeholder={"구매자를 위한 감사인사를 간단하게 적어주세요!\n예: 구매해 주셔서 감사합니다."}></textarea>
-                                  </div>                                  
-        }
-        */
       }
     }
     
@@ -1089,6 +1046,10 @@ class StoreReceiptItem extends Component{
       <div className={'StoreReceiptItem'}>
         {order_id_dom}
         {_storeOrderItemDom}
+
+        {/* <div className={'StoreStateProcess_container'}>
+          <StoreStateProcess product_state={this.state.item_product_state} order_state={this.state.state}></StoreStateProcess>
+        </div> */}
 
         {orderNameDom}
         <div className={'request_content'}>

@@ -164,7 +164,6 @@ class StoreDetailPage extends Component {
   requestIsAdmin(){
     axios.post("/user/isadmin", {},
     (result) => {
-      console.log(result);
       this.setState({
         isAdmin: result.isAdmin
       })
@@ -334,6 +333,23 @@ class StoreDetailPage extends Component {
     let goURL = baseURL + '/admin/manager/store/' + this.state.store_id;
 
     window.location.href = goURL;
+  }
+
+  clickEvent = (e) => {
+    e.preventDefault();
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    //manager/store/{id}/admin
+    let goURL = baseURL + '/event/2020';
+
+    // window.location.href = goURL;
+    window.open(goURL);
   }
 
   updateDimensions(){
@@ -547,29 +563,10 @@ class StoreDetailPage extends Component {
 
         </div>
 
+        <button onClick={(e) => {this.clickEvent(e)}} className={'event_container'}>
+          <img className={'event_img'} src={'https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/%E1%84%8F%E1%85%B3%E1%84%92%E1%85%A2%E1%86%B7_%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%86%E1%85%A1%E1%86%AF%E1%84%80%E1%85%B5%E1%84%92%E1%85%AC%E1%86%A8%E1%84%8C%E1%85%A5%E1%86%AB_m%402x.png'} />
+        </button>
       </div>
-      // <>
-      //   <div style={{width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', paddingLeft: 10, paddingRight: 10, marginTop: 20}}>
-      //     <img style={{width: 100, height: 100, borderRadius: 50}} src={this.state.thumb_img_url}/>  
-      //     <div style={{fontSize: 30, marginTop: 30}}>{this.state.title}</div>
-      //     {managerButton}
-      //   </div>
-
-      //   <div style={{display: 'flex', marginTop: 50}}>
-          
-      //     <button onClick={(e) => {this.clickMenu(e, MENU_STATE_CONTENTS)}} style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      //       <div style={{fontSize: 20, marginBottom: 10}}>콘텐츠</div>
-      //       {contentsUnderLine}
-      //     </button>
-      //     <button onClick={(e) => {this.clickMenu(e, MENU_STATE_REVIEW)}} style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      //       <div style={{fontSize: 20, marginBottom: 10}}>리뷰 00</div>
-      //       {reviewUnderLine}
-      //     </button>
-      //   </div>
-
-      //   {mainContent}
-
-      // </>
     );
   }
 }

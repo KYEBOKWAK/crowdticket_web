@@ -558,8 +558,15 @@
         }
 
         .welcome_content_store_banner_img {
-          width: 347px;
-          /* height: 208px; */
+          /* width: 347px; */
+        }
+
+        .welcome_content_store_banner_img_m_middle {
+          display: none;
+        }
+
+        .welcome_content_store_banner_img_m_little {
+          display: none;
         }
 
         .welcome_content_store_banner_bg {
@@ -568,7 +575,8 @@
           max-width: 1060px;
           height: 300px;
           border-radius: 24px;
-          background-color: rgba(0, 0, 0, 0.05);
+          /* background-color: rgba(0, 0, 0, 0.05); */
+          background-color: #f4eddd;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -580,11 +588,16 @@
         @media (max-width:1060px) {
           .welcome_content_store_banner_bg {
             border-radius: 0px;
-            height: 150px;
+            /* height: 150px; */
           }
 
           .welcome_content_store_banner_img {
-            width: 174px;
+            /* width: 174px; */
+            display: none;
+          }
+
+          .welcome_content_store_banner_img_m_middle {
+            display: block;
           }
 
           .welcome_meetup_banner_title_pc{
@@ -734,6 +747,16 @@
           .welcome_event_banner_img_content_mobile{
             display: block;
           }
+
+          .welcome_content_store_banner_bg {
+            height: 130px;
+          }
+          .welcome_content_store_banner_img_m_middle {
+            display: none;
+          }
+          .welcome_content_store_banner_img_m_little {
+            display: block;
+          }
         }
 
         @media (max-width:375px) {
@@ -867,9 +890,19 @@ $mobileOneLineItemCount = 2;  //모바일일때 한 라인에 보여질 아이�
       </div>
 
       
-      <a href="{{url('/store')}}">
+      <!-- <a href="{{url('/store')}}">
         <div class="welcome_content_store_banner_bg">
           <img class="welcome_content_store_banner_img" src="{{ asset('/img/app/content_banner_img_v02.svg') }}" />
+        </div>
+      </a> -->
+
+      <a href="{{url('/event/2020')}}">
+        <div class="welcome_content_store_banner_bg">
+          <img class="welcome_content_store_banner_img" src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/%E1%84%8F%E1%85%B3%E1%84%92%E1%85%A2%E1%86%B7_%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%86%E1%85%A1%E1%86%AF%E1%84%80%E1%85%B5%E1%84%92%E1%85%AC%E1%86%A8%E1%84%8C%E1%85%A5%E1%86%AB_pc.png" />
+
+          <img class="welcome_content_store_banner_img_m_middle" src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/%E1%84%8F%E1%85%B3%E1%84%92%E1%85%A2%E1%86%B7_%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%86%E1%85%A1%E1%86%AF%E1%84%80%E1%85%B5%E1%84%92%E1%85%AC%E1%86%A8%E1%84%8C%E1%85%A5%E1%86%AB_m_1.png">
+
+          <img class="welcome_content_store_banner_img_m_little" src="https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/%E1%84%8F%E1%85%B3%E1%84%92%E1%85%A2%E1%86%B7_%E1%84%8B%E1%85%A7%E1%86%AB%E1%84%86%E1%85%A1%E1%86%AF%E1%84%80%E1%85%B5%E1%84%92%E1%85%AC%E1%86%A8%E1%84%8C%E1%85%A5%E1%86%AB_m.png">
         </div>
       </a>
       

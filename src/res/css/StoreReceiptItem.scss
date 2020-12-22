@@ -27,7 +27,7 @@
   .detail_receipt_button {
     width: 100%;
     height: 48px;
-    margin-top: 12px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -320,6 +320,10 @@
 
   .review_answer_name {
     text-align: end;
+  }
+
+  .StoreStateProcess_container {
+    margin-bottom: 20px;
   }
 
   @media (max-width: 520px){

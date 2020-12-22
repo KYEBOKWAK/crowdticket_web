@@ -301,7 +301,7 @@ const Types = {
     ORDER_STATE_APP_STORE_PAYMENT: 12,    //컨텐츠 상점 결제 완료 및 대기
     ORDER_STATE_APP_STORE_READY: 13,  //컨텐츠 상점 준비단계
     ORDER_STATE_APP_STORE_SUCCESS: 14,  //컨텐츠 상점 컨텐츠 완성. 크티에 보냄
-    ORDER_STATE_APP_STORE_RELAY_CUSTOMER: 15,  //컨텐츠 크티에서 고객에게 보냄
+    ORDER_STATE_APP_STORE_RELAY_CUSTOMER: 15,  //컨텐츠 고객에게 보냄
     ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE: 16,  //고객 콘텐츠 확인함.
 
     ORDER_STATE_APP_STORE_STANBY: 17, //isp 결제 대기 상태 24시간 뒤에도 ORDER_STATE_APP_STORE_STANBY 라면 취소된다.

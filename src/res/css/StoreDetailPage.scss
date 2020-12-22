@@ -5,6 +5,8 @@ $bgImageHeightMax: 280px;
   width: 100%;
   position: relative;
 
+  padding-bottom: 64px;
+
   .bg_img_container {
     width: 100%;
     height: $bgImageHeightMax;
@@ -54,7 +56,7 @@ $bgImageHeightMax: 280px;
 
   .contentsContainer {
     margin-top: 50px;
-    margin-bottom: 64px;
+    // margin-bottom: 64px;
     background-color: #ffffff;
     border-radius: 20px;
   }
@@ -100,8 +102,25 @@ $bgImageHeightMax: 280px;
     margin-left: 10px;
   }
 
+  .event_container {
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 16px;
+    background-color: #f4eddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .event_img {
+    width: 420px;
+    height: 116px;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
+    padding-bottom: 40px;
+
     .bg_img_container{
       border-radius: 0px;
       margin-top: 0px;
@@ -139,5 +158,20 @@ $bgImageHeightMax: 280px;
       position: relative;
     }
 
+    .event_container {
+      border-radius: 0px;
+    }
+
+    .event_img {
+      width: 318px;
+      height: 88px;
+    }
+  }
+
+  @media (max-width: 350px){
+    .event_img {
+      width: 265px;
+      height: 80px;
+    }
   }
 }
