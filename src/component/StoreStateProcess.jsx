@@ -111,6 +111,12 @@ class StoreStateProcess extends Component{
       )
     }
 
+    if(this.props.product_state === Types.product_state.ONE_TO_ONE){
+      return (
+        <></>
+      )
+    }
+
     let processItemArrayDom = [];
     let isLastState = false;
     for(let i = 0 ; i < _processData.process.length ; i++){
