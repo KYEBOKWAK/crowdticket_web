@@ -23,7 +23,7 @@ class Popup_SelectTime extends Component{
     super(props);
 
     let nowTimeMoment = moment_timezone();
-    let endTimeMoment = moment_timezone(nowTimeMoment).add(90, 'days');
+    let endTimeMoment = moment_timezone(nowTimeMoment).add(30, 'days');
 
     this.state = {
       start_time: null,
