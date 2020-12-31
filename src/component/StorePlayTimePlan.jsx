@@ -616,6 +616,7 @@ class StorePlayTimePlan extends Component{
 
         if(isMidnightEndTime){
           endHour = '자정';
+          end_at = '';
         }
 
         let selectDayText = startDay + ' (' + dayOfWeekWord + ')';
