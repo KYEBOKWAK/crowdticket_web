@@ -362,7 +362,7 @@ class Popup_SelectTime extends Component{
     }
 
     let start_at = 'AM';
-    if(startTimeStart > 12){
+    if(startTimeStart >= 12){
       start_at = 'PM';
       // startTimeStart = startTimeStart - 12;
     }
@@ -416,7 +416,7 @@ class Popup_SelectTime extends Component{
     for(let i = startTimeStart ; i <= endTimeStart ; i++){
       let _time = i;
       let start_at = 'AM';
-      if(_time > 12){
+      if(_time >= 12){
         start_at = 'PM';
       }
 
@@ -508,7 +508,7 @@ class Popup_SelectTime extends Component{
     let startTimeEnd = hourValue;
 
     let start_at = 'AM';
-    if(startTimeEnd > 12){
+    if(startTimeEnd >= 12){
       start_at = 'PM';
       // startTimeEnd = startTimeEnd - 12;
     }
@@ -539,7 +539,7 @@ class Popup_SelectTime extends Component{
     for(let i = startTimeEnd ; i <= endTimeEnd ; i++){
       let _time = i;
       let start_at = 'AM';
-      if(_time > 12){
+      if(_time >= 12){
         start_at = 'PM';
         // _time = _time - 12;
       }
@@ -622,7 +622,7 @@ class Popup_SelectTime extends Component{
     let value = event.target.value;
     
     let start_at = 'AM';
-    if(value > 12){
+    if(value >= 12){
       start_at = 'PM';
       // value = value - 12;
     }
@@ -643,7 +643,7 @@ class Popup_SelectTime extends Component{
     let value = Number(event.target.value);
     
     let start_at = 'AM';
-    if(value > 12){
+    if(value >= 12){
       start_at = 'PM';
       // value = value - 12;
     }
@@ -712,7 +712,7 @@ class Popup_SelectTime extends Component{
     let _start_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_start_time+':00:00';
     let _end_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_end_time+':00:00';
 
-    if(_end_time === 24){
+    if(Number(this.state.select_hour_end_value) === 24){
       _end_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+23+':59:59';
     }
 

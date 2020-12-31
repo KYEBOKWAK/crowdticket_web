@@ -327,7 +327,7 @@ class StorePlayTimePlan extends Component{
     let startTimeEnd = Number(this.state.select_detail_hour_value);
 
     let start_at = 'AM';
-    if(startTimeEnd > 12){
+    if(startTimeEnd >= 12){
       start_at = 'PM';
       // startTimeEnd = startTimeEnd - 12;
     }
@@ -369,7 +369,7 @@ class StorePlayTimePlan extends Component{
     for(let i = startTimeStart ; i < endTimeStart ; i++){
       let _time = i;
       let start_at = 'AM';
-      if(_time > 12){
+      if(_time >= 12){
         start_at = 'PM';
         // _time = _time - 12;
       }
@@ -452,19 +452,6 @@ class StorePlayTimePlan extends Component{
 
     let selectDayText = startDay + ' (' + dayOfWeekWord + ')';
     if(this.state.select_detail_hour){
-      // let time_at = '오전';
-      // let time_hour = this.state.select_detail_hour;
-      // if(time_hour > 12){
-      //   time_at = '오후';
-      //   time_hour = time_hour - 12;
-      // }
-
-      // if(time_hour < 10){
-      //   time_hour = '0'+time_hour;
-      // }
-
-      // let selectHourText = ' ' + time_at + ' ' + time_hour + '시 시작';
-
       selectDayText = selectDayText + this.state.select_detail_hour;
     }
     
@@ -486,7 +473,7 @@ class StorePlayTimePlan extends Component{
 
     let time_at = 'AM';
     let time_hour = startHour;
-    if(time_hour > 12){
+    if(time_hour >= 12){
       time_at = 'PM';
       // time_hour = time_hour - 12;
     }
@@ -602,12 +589,12 @@ class StorePlayTimePlan extends Component{
 
         let start_at = 'AM';
         let end_at = 'AM';
-        if(startHour > 12){
+        if(startHour >= 12){
           start_at = 'PM';
           // startHour = startHour - 12;
         }
 
-        if(endHour > 12){
+        if(endHour >= 12){
           end_at = 'PM';
           // endHour = endHour - 12;
         }
