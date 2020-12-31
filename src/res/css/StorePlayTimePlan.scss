@@ -1,7 +1,7 @@
 .StorePlayTimePlan {
   
   .play_time_item_container_wrapper {
-    margin-top: 35px;
+    margin-top: 30px;
     margin-bottom: 30px;
   }
   .play_time_item_container {
@@ -24,7 +24,7 @@
   .play_time_item_under_line {
     width: 95%;
     height: 1px;
-    background-color: #cccccc;
+    background-color: #f4f4f4;
     margin-left: auto;
     margin-right: auto;
   }
@@ -75,9 +75,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 35px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    // height: 35px;
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
 
   .play_time_text_edit_button {

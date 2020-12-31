@@ -52,6 +52,8 @@ class Popup_SelectTime extends Component{
       select_hour_end_show: '시',
       select_hour_end_value: '',
       select_hour_end_options: [],
+
+      isInitSetData: false  //수정 눌렀을때 모든 데이터 셋팅 후 최종 넘어온 값 셋팅 boolean
     }
 
     // this.handleChange = this.handleChange.bind(this)
@@ -64,8 +66,35 @@ class Popup_SelectTime extends Component{
   // }
 
   componentDidMount(){
-    console.log(this.props.selectTimeData);
+    // console.log(this.props.selectTimeData);
 
+    // if(this.props.selectTimeData.start_time === null){
+      //null이면 현재 시간 기준임.
+      const nowYear = this.state.now_time_moment.year();
+      this.setState({
+        select_year_show: nowYear + '년',
+        select_year_value: nowYear,
+      }, () => {
+        this.setMonthValue();
+      })
+    // }else{
+      // let nowTimeMoment = moment_timezone(this.props.selectTimeData.start_time);
+      // let endTimeMoment = moment_timezone(this.props.selectTimeData.end_time);
+
+      // const nowYear = nowTimeMoment.year();
+      // this.setState({
+      //   now_time_moment: nowTimeMoment,
+      //   end_time_moment: endTimeMoment,
+
+      //   select_year_show: nowYear + '년',
+      //   select_year_value: nowYear,
+      //   select_year_options: this.getYearOptionDom(nowTimeMoment, endTimeMoment),
+      // }, () => {
+      //   this.setMonthValue();
+      // })
+    // }
+    
+    /*
     if(this.props.selectTimeData.start_time === null){
       //null이면 현재 시간 기준임.
       const nowYear = this.state.now_time_moment.year();
@@ -91,6 +120,8 @@ class Popup_SelectTime extends Component{
         this.setMonthValue();
       })
     }
+
+    */
     // this.requestProductText();
 
     // let nowTimeMoment = moment_timezone().format("YYYY-MM-DD HH:mm:ss");
@@ -321,23 +352,26 @@ class Popup_SelectTime extends Component{
     const nowDay = this.state.now_time_moment.date();
     const nowHour = this.state.now_time_moment.hour();
 
-    let startTimeStart = 1;
-    let endTimeStart = 23;
+    let startTimeStart = 0;
     if(selectYear === nowYear && selectMonth === nowMonth && selectDay === nowDay){
       startTimeStart = nowHour;
     }
 
-    let start_at = '오전';
+    if(startTimeStart < 13){
+      startTimeStart = 13;
+    }
+
+    let start_at = 'AM';
     if(startTimeStart > 12){
-      start_at = '오후';
-      startTimeStart = startTimeStart - 12;
+      start_at = 'PM';
+      // startTimeStart = startTimeStart - 12;
     }
 
     if(startTimeStart < 10){
       startTimeStart = '0'+startTimeStart;
     }
 
-    return start_at + ' ' + startTimeStart + '시';
+    return  ' ' + startTimeStart + ':00' + ' ' + start_at;
   }
 
   getTimeStartValue = () => {
@@ -350,9 +384,13 @@ class Popup_SelectTime extends Component{
     const nowDay = this.state.now_time_moment.date();
     const nowHour = this.state.now_time_moment.hour();
 
-    let startTimeStart = 1;
+    let startTimeStart = 0;
     if(selectYear === nowYear && selectMonth === nowMonth && selectDay === nowDay){
       startTimeStart = nowHour;
+    }
+
+    if(startTimeStart < 13){
+      startTimeStart = 13;
     }
 
     return startTimeStart;
@@ -368,7 +406,7 @@ class Popup_SelectTime extends Component{
     const nowDay = this.state.now_time_moment.date();
     const nowHour = this.state.now_time_moment.hour();
 
-    let startTimeStart = 1;
+    let startTimeStart = 0;
     let endTimeStart = 23;
     if(selectYear === nowYear && selectMonth === nowMonth && selectDay === nowDay){
       startTimeStart = nowHour;
@@ -377,17 +415,16 @@ class Popup_SelectTime extends Component{
     let time_start_options_dom = [];
     for(let i = startTimeStart ; i <= endTimeStart ; i++){
       let _time = i;
-      let start_at = '오전';
+      let start_at = 'AM';
       if(_time > 12){
-        start_at = '오후';
-        _time = _time - 12;
+        start_at = 'PM';
       }
 
       if(_time < 10){
         _time = '0'+_time;
       }
 
-      _time = start_at + ' ' + _time;
+      _time = ' ' + _time + ':00' + ' ' + start_at;
 
       time_start_options_dom.push(<option key={i} value={i}>{_time}</option>);
     }
@@ -400,23 +437,92 @@ class Popup_SelectTime extends Component{
       select_hour_end_show: this.getTimeEndShow(),
       select_hour_end_value: this.getTimeEndValue(),
       select_hour_end_options: this.getTimeEndOptionDom()
+    }, () => {
+      if(this.props.selectTimeData.start_time !== null && !this.state.isInitSetData){
+        //넘어온 데이터 값이 있으면 초기화 해준다.
+        let startTimeMoment = moment_timezone(this.props.selectTimeData.start_time);
+        let endTimeMoment = moment_timezone(this.props.selectTimeData.end_time);
+
+        const selectYear = startTimeMoment.year() + '년';
+        let selectMonth = startTimeMoment.month() + 1;
+        selectMonth = selectMonth + '월';
+
+        const selectDay = startTimeMoment.date() + '일';
+
+        let select_hour_start = startTimeMoment.hours();
+        let start_at = 'PM';
+        if(select_hour_start < 12){
+          start_at = 'AM';
+        }
+        select_hour_start = select_hour_start + ':00' + ' ' + start_at;
+        
+        let select_hour_end = endTimeMoment.hours();
+        let end_at = 'PM';
+        if(select_hour_end < 12){
+          end_at = 'AM';
+        }
+        select_hour_end = select_hour_end + ':00' + ' ' + end_at;
+
+        let select_hour_end_value = endTimeMoment.hours();
+        if(endTimeMoment.hours() === 23 && endTimeMoment.second() === 59){
+          select_hour_end = '자정';
+          select_hour_end_value = 24;
+        }
+        
+
+        this.setState({
+          isInitSetData: true,
+
+          select_year_show: selectYear,
+          select_year_value: startTimeMoment.year(),
+
+          select_month_show: selectMonth,
+          select_month_value: startTimeMoment.month() + 1,
+
+          select_day_show: selectDay,
+          select_day_value: startTimeMoment.date(),
+
+          select_hour_start_show: select_hour_start,
+          select_hour_start_value: startTimeMoment.hours(),
+
+          select_hour_end_show: select_hour_end,
+          select_hour_end_value: select_hour_end_value
+        }, () => {
+          this.setState({
+            // select_year_options: this.getYearOptionDom(),
+            select_month_options: this.getMonthOptionDom(),
+            select_day_options: this.getDaysOptionDom(),
+
+            select_hour_start_options: this.getTimeStartOptionDom(),
+            select_hour_end_options: this.getTimeEndOptionDom()
+          })
+        })
+      }
+      
+      // if(this.state.)
     })
   }
 
   getTimeEndShow = () => {
-    let startTimeEnd = Number(this.state.select_hour_start_value) + 1;
+    let hourValue = Number(this.state.select_hour_start_value) + 1;
+    let startTimeEnd = hourValue;
 
-    let start_at = '오전';
+    let start_at = 'AM';
     if(startTimeEnd > 12){
-      start_at = '오후';
-      startTimeEnd = startTimeEnd - 12;
+      start_at = 'PM';
+      // startTimeEnd = startTimeEnd - 12;
     }
 
     if(startTimeEnd < 10){
       startTimeEnd = '0'+startTimeEnd;
     }
 
-    return start_at + ' ' + startTimeEnd + '시';
+    let fullText = startTimeEnd + ':00' + ' ' + start_at;
+    if(hourValue === 24){
+      fullText = '자정'
+    }
+
+    return fullText;
   }
 
   getTimeEndValue = () => {
@@ -426,23 +532,27 @@ class Popup_SelectTime extends Component{
   }
 
   getTimeEndOptionDom = () => {
-    let startTimeEnd = Number(this.state.select_hour_start_value);
-    let endTimeEnd = 23;
+    let startTimeEnd = Number(this.state.select_hour_start_value) + 1;
+    let endTimeEnd = 24;
 
     let time_end_options_dom = [];
     for(let i = startTimeEnd ; i <= endTimeEnd ; i++){
       let _time = i;
-      let start_at = '오전';
+      let start_at = 'AM';
       if(_time > 12){
-        start_at = '오후';
-        _time = _time - 12;
+        start_at = 'PM';
+        // _time = _time - 12;
       }
 
       if(_time < 10){
         _time = '0'+_time;
       }
 
-      _time = start_at + ' ' + _time;
+      _time = _time + ':00' + ' ' + start_at;
+
+      if(i === 24){
+        _time = '자정';
+      }
 
       time_end_options_dom.push(<option key={i} value={i}>{_time}</option>);
     }
@@ -511,10 +621,10 @@ class Popup_SelectTime extends Component{
 
     let value = event.target.value;
     
-    let start_at = '오전';
+    let start_at = 'AM';
     if(value > 12){
-      start_at = '오후';
-      value = value - 12;
+      start_at = 'PM';
+      // value = value - 12;
     }
 
     if(value < 10){
@@ -523,28 +633,34 @@ class Popup_SelectTime extends Component{
 
     this.setState({
       select_hour_start_value: event.target.value,
-      select_hour_start_show: start_at + ' ' + value + '시'
+      select_hour_start_show: value + ':00 ' + start_at
     }, () => {
       this.setTimeEndValue();
     })
   }
 
   onChangeTimeEndChange = (event) => {
-    let value = event.target.value;
+    let value = Number(event.target.value);
     
-    let start_at = '오전';
+    let start_at = 'AM';
     if(value > 12){
-      start_at = '오후';
-      value = value - 12;
+      start_at = 'PM';
+      // value = value - 12;
     }
 
     if(value < 10){
       value = '0'+value;
     }
 
+    let fullText = value + ':00 ' + start_at;
+
+    if(Number(event.target.value) === 24){
+      fullText = '자정';
+    }
+
     this.setState({
       select_hour_end_value: event.target.value,
-      select_hour_end_show: start_at + ' ' + value + '시'
+      select_hour_end_show: fullText
     })
   }
 
@@ -593,8 +709,12 @@ class Popup_SelectTime extends Component{
     }
 
 
-    let _start_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_start_time+':00';
-    let _end_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_end_time+':00';
+    let _start_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_start_time+':00:00';
+    let _end_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+_end_time+':00:00';
+
+    if(_end_time === 24){
+      _end_full_time = this.state.select_year_value+'-'+_month+'-'+_day+' '+23+':59:59';
+    }
 
     const selectTimeData = {
       key: this.props.selectTimeData.key,

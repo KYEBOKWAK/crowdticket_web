@@ -19,8 +19,8 @@
 
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StorePlayTimePlan.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/Popup_SelectTime.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StorePlayTimePlan.css?version=1') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/Popup_SelectTime.css?version=1') }}" rel="stylesheet"/>
 
 @endsection
 

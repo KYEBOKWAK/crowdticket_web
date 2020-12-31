@@ -326,17 +326,17 @@ class StorePlayTimePlan extends Component{
   getDetailHourTimeShow = () => {
     let startTimeEnd = Number(this.state.select_detail_hour_value);
 
-    let start_at = '오전';
+    let start_at = 'AM';
     if(startTimeEnd > 12){
-      start_at = '오후';
-      startTimeEnd = startTimeEnd - 12;
+      start_at = 'PM';
+      // startTimeEnd = startTimeEnd - 12;
     }
 
     if(startTimeEnd < 10){
       startTimeEnd = '0'+startTimeEnd;
     }
 
-    return start_at + ' ' + startTimeEnd + '시';
+    return startTimeEnd + ':00' + ' ' + start_at;
   }
 
   setSelectDetailHourOptions = (selectKey) => {
@@ -355,24 +355,30 @@ class StorePlayTimePlan extends Component{
 
     let startTimeStart = start_time_moment.hour();
     let endTimeStart = end_time_moment.hour();
+
+    //자정 확인
+    let endTimeSecond = end_time_moment.second();
+    if(endTimeStart === 23 && endTimeSecond === 59){
+      endTimeStart = 24;
+    }
     ///////   
 
     let selectShow = '';
 
     let select_detail_hour_options = [];
-    for(let i = startTimeStart ; i <= endTimeStart ; i++){
+    for(let i = startTimeStart ; i < endTimeStart ; i++){
       let _time = i;
-      let start_at = '오전';
+      let start_at = 'AM';
       if(_time > 12){
-        start_at = '오후';
-        _time = _time - 12;
+        start_at = 'PM';
+        // _time = _time - 12;
       }
 
       if(_time < 10){
         _time = '0'+_time;
       }
 
-      _time = start_at + ' ' + _time;
+      _time = _time + ':00' + ' ' + start_at;
 
       select_detail_hour_options.push(<option key={i} value={i}>{_time}</option>);
 
@@ -382,9 +388,9 @@ class StorePlayTimePlan extends Component{
     }
 
     this.setState({
-      select_detail_hour_show: selectShow+'시',
+      select_detail_hour_show: selectShow,
       select_detail_hour_value: startTimeStart,
-      select_detail_hour: selectShow +'시' + ' 시작',
+      select_detail_hour: ' ' + selectShow + ' 시작',
       select_detail_hour_options: select_detail_hour_options.concat()
     }, () => {
       this.setSelectTime();
@@ -478,18 +484,20 @@ class StorePlayTimePlan extends Component{
     let selectDayText = startDay + ' (' + dayOfWeekWord + ')';
     // if(this.state.select_detail_hour){
 
-    let time_at = '오전';
+    let time_at = 'AM';
     let time_hour = startHour;
     if(time_hour > 12){
-      time_at = '오후';
-      time_hour = time_hour - 12;
+      time_at = 'PM';
+      // time_hour = time_hour - 12;
     }
 
     if(time_hour < 10){
       time_hour = '0'+time_hour;
     }
 
-    selectDayText = selectDayText + ' ' + time_at + ' ' + time_hour + '시 시작';
+    time_hour = time_hour + ':00'
+
+    selectDayText = selectDayText + ' ' + time_at + ' ' + time_hour + ' 시작';
 
     return selectDayText;
   }
@@ -500,7 +508,7 @@ class StorePlayTimePlan extends Component{
     }, () => {
       this.setState({
         select_detail_hour_show: this.getDetailHourTimeShow(),
-        select_detail_hour: this.getDetailHourTimeShow() + ' 시작'
+        select_detail_hour: ' ' + this.getDetailHourTimeShow() + ' 시작'
       }, () => {
         this.setSelectTime();
       })
@@ -584,16 +592,24 @@ class StorePlayTimePlan extends Component{
         let endHour = moment_timezone(data.end_time).hour();
         let dayOfWeekWord = this.state.dayOfWeekData[moment_timezone(data.start_time).day()];
 
-        let start_at = '오전';
-        let end_at = '오전';
+        let endSec = moment_timezone(data.end_time).second();
+        let isMidnightEndTime = false;
+        if(endHour === 23 && endSec === 59){
+          //자정이다.
+          isMidnightEndTime = true;
+        }
+        //자정인지 확인한다.
+
+        let start_at = 'AM';
+        let end_at = 'AM';
         if(startHour > 12){
-          start_at = '오후';
-          startHour = startHour - 12;
+          start_at = 'PM';
+          // startHour = startHour - 12;
         }
 
         if(endHour > 12){
-          end_at = '오후';
-          endHour = endHour - 12;
+          end_at = 'PM';
+          // endHour = endHour - 12;
         }
 
         if(startHour < 10){
@@ -606,6 +622,13 @@ class StorePlayTimePlan extends Component{
 
         if(start_at === end_at){
           end_at = '';
+        }
+
+        startHour = startHour+":00";
+        endHour = endHour+":00";
+
+        if(isMidnightEndTime){
+          endHour = '자정';
         }
 
         let selectDayText = startDay + ' (' + dayOfWeekWord + ')';
@@ -826,7 +849,7 @@ class StorePlayTimePlan extends Component{
       let contents_JustifyContent = 'unset';
       if(this.props.isManager || this.state.time_check_state){
         let time_check_word_manager_dom = <></>;
-        if(this.props.isManager){
+        if(this.props.isManager && this.state.time_check_state){
           time_check_word_manager_dom = <div style={{fontSize: 12}}>
                                           구매자 시간 확인 완료
                                         </div>
