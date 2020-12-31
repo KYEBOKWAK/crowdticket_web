@@ -306,6 +306,8 @@ const Types = {
 
     ORDER_STATE_APP_STORE_STANBY: 17, //isp 결제 대기 상태 24시간 뒤에도 ORDER_STATE_APP_STORE_STANBY 라면 취소된다.
 
+    ORDER_STATE_APP_STORE_PLAYING_CONTENTS: 18, //1:1 콘텐츠 진행중
+
     ORDER_STATE_STANDBY_START: 98,
     ORDER_STATE_PAY_END: 99,
     //ORDER_STATE_SCHEDULE_PAY: 2, //예약결제 //결제 상태는 하나로 통합. 프로젝트의 타입에 따라서 구분한다.

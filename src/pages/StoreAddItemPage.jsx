@@ -36,6 +36,8 @@ const INPUT_STORE_MANAGER_ADD_ITEM_PRICE = "INPUT_STORE_MANAGER_ADD_ITEM_PRICE";
 const INPUT_STORE_MANAGER_ADD_ITEM_ASK = "INPUT_STORE_MANAGER_ADD_ITEM_ASK";
 const INPUT_STORE_MANAGER_LIMIT_COUNT = "INPUT_STORE_MANAGER_LIMIT_COUNT";
 
+const INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME = "INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME";
+
 class StoreAddItemPage extends Component{
   fileInputRef = React.createRef();
 
@@ -59,6 +61,7 @@ class StoreAddItemPage extends Component{
       item_price: 0,
       item_ask: '',
       item_state: Types.item_state.SALE,
+      item_ask_play_time: '',
 
       // item_state_show: '판매중',
       item_state_show: this.getStateShow(Types.item_state.SALE),
@@ -360,9 +363,13 @@ class StoreAddItemPage extends Component{
         limitType = Types.item_limit_state.LIMIT;
       }
 
-      // let file_upload_state = result.data.file_upload_state
+      let _ask_play_time = result.data.ask_play_time;
+      if(_ask_play_time === null){
+        _ask_play_time = '';
+      }
       
       this.setState({
+        item_ask_play_time: _ask_play_time,
         item_title: result.data.title,
         item_content: result.data.content,
         item_img_url: result.data.img_url,
@@ -418,6 +425,10 @@ class StoreAddItemPage extends Component{
     else if(type === INPUT_STORE_MANAGER_LIMIT_COUNT){
       this.setState({
         order_limit_count: e.target.value
+      })
+    }else if(type === INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME){
+      this.setState({
+        item_ask_play_time: e.target.value
       })
     }
   }
@@ -516,6 +527,13 @@ class StoreAddItemPage extends Component{
       return;
     }
 
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      if(this.state.item_ask_play_time === null || this.state.item_ask_play_time === ''){
+        alert("1:1 상품은 반드시 진행 가능 시간을 작성해야 합니다.");
+        return;
+      }
+    }
+
     let order_limit_count = this.state.order_limit_count;
     if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
       if(!this.state.order_limit_count || this.state.order_limit_count <= 0){
@@ -544,7 +562,9 @@ class StoreAddItemPage extends Component{
 
         file_upload_state: this.state.item_file_upload_state,
 
-        product_state: this.state.item_product_state
+        product_state: this.state.item_product_state,
+
+        ask_play_time: this.state.item_ask_play_time
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -580,7 +600,9 @@ class StoreAddItemPage extends Component{
         isChangeLimitCount: isChangeLimitCount,
 
         file_upload_state: this.state.item_file_upload_state,
-        product_state: this.state.item_product_state
+        product_state: this.state.item_product_state,
+
+        ask_play_time: this.state.item_ask_play_time
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -832,6 +854,17 @@ class StoreAddItemPage extends Component{
     if(this.state.img_compress_progress > 0){
       imgCompressValueText = this.state.img_compress_progress + '%';
     }
+
+    let playNoticeTextarea = <></>;
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      playNoticeTextarea = <div>
+                            <div className={'input_label'}>
+                              진행 가능 시간
+                            </div>
+                            <textarea className={'ask_play_time_textarea'} value={this.state.item_ask_play_time} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME)}} placeholder={"1:1 콘텐츠 진행 예상 가능 시간을 적어주세요 \nex) 안녕하세요 구매자님! 저는 다음주 수요일 오후 7시부터 괜찮아요!"}></textarea>
+                          </div>
+    }
+
     return (
       <div className={'StoreAddItemPage'}>
         <div className={'page_title_text'}>
@@ -889,6 +922,8 @@ class StoreAddItemPage extends Component{
               {this.state.item_product_state_list}
             </select>
           </div>
+
+          {playNoticeTextarea}
 
         </div>
 

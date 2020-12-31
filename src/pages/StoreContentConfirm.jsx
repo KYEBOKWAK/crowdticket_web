@@ -369,10 +369,13 @@ class StoreContentConfirm extends Component{
       return <>취소 | 결제된 주문입니다.</>;
     }
 
-    if(this.state.state < Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER ||
-      this.state.state > Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
-        return <>아직 완성이 안된 콘텐츠 입니다.</>
+    if(this.state.state !== Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS){
+      if(this.state.state < Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER ||
+        this.state.state > Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+          return <>아직 완성이 안된 콘텐츠 입니다.</>
       }
+    }
+    
 
     let product_answer_dom = <></>;
     let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';

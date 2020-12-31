@@ -26,6 +26,9 @@ import FileUploader from '../component/FileUploader';
 import ic_radio_btn_n from '../res/img/radio-btn-n.svg'
 import ic_radio_btn_s from '../res/img/radio-btn-s.svg'
 
+import StorePlayTimePlan from '../component/StorePlayTimePlan';
+
+
 // import * as GlobalKeys from '~/GlobalKeys';
 
 //redux START
@@ -53,6 +56,8 @@ class StoreOrderPage extends Component{
   // fileInput = React.createRef();
   fileUploaderRef = React.createRef();
 
+  storePlayTimePlanRef = React.createRef();
+
   IMP = null;
 
   constructor(props){
@@ -73,6 +78,8 @@ class StoreOrderPage extends Component{
       item_nick_name: '',
       item_ask: '',
       item_file_upload_state: Types.file_upload_state.NONE,
+      item_product_state: Types.product_state.TEXT,
+      item_ask_play_time: '',
 
       isInitDeriveStateFromProps: false,
       user_id: null,
@@ -140,29 +147,6 @@ class StoreOrderPage extends Component{
     this.handleSelectChangeYear = this.handleSelectChangeYear.bind(this);
     this.handleSelectChangeMonth = this.handleSelectChangeMonth.bind(this);
   };
-
-  
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if(!prevState.isInitDeriveStateFromProps)
-  //   {
-  //     if(nextProps.name !== prevState.name || nextProps.contact !== nextProps.contact ||
-  //       nextProps.email !== prevState.email){
-  //       return {
-  //         name: nextProps.name,
-  //         contact: nextProps.contact,
-  //         email: nextProps.email,
-  //         isInitDeriveStateFromProps: true
-  //       }
-  //     }
-  //   }
-
-  //   return null;
-  // }
-  
-
-  // shouldComponentUpdate(nextProps: any, nextState: any) {
-  //   return true;
-  // }
 
   componentDidMount(){
     this.IMP = window.IMP; // 생략가능
@@ -274,6 +258,12 @@ class StoreOrderPage extends Component{
       store_item_id: this.state.store_item_id
     }, (result) => {
       const data = result.data;
+
+      let ask_play_time = data.ask_play_time;
+      if(ask_play_time === null){
+        ask_play_time = '';
+      }
+
       this.setState({
         item_title: data.title,
         item_price: data.price,
@@ -285,7 +275,10 @@ class StoreOrderPage extends Component{
         item_ask: data.ask,
         store_title: data.store_title,
 
-        item_file_upload_state: data.file_upload_state
+        item_file_upload_state: data.file_upload_state,
+
+        item_ask_play_time: ask_play_time,
+        item_product_state: data.product_state
       })
     }, (error) => {
 
@@ -303,6 +296,13 @@ class StoreOrderPage extends Component{
       alert("아이템 정보가 없습니다. 자동으로 새로고침 됩니다. 해당 이슈가 반복되는 경우 크티에 연락 바랍니다.");
       window.location.reload();
       return false
+    }
+
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      if(!this.storePlayTimePlanRef.isPassSelectTime()){
+        alert("콘텐츠 진행 가능한 시간 최소 3개 이상을 선택해주세요");
+        return false;
+      }
     }
 
     if(this.state.requestContent === ''){
@@ -473,16 +473,14 @@ class StoreOrderPage extends Component{
       order_id: store_order_id,
       pay_method: this.state.pay_method
     }, (result) => {
-      // stopLoadingPopup();
-      // this.goOrderComplite(result.order_id);
       axios.post("/pay/store/send/message", {
         store_order_id: store_order_id
       }, (result_message) => {
         stopLoadingPopup();
-        this.goOrderComplite(result.order_id);
+        this.nextOrderComplite(result.order_id);
       }, (error_message) => {
         stopLoadingPopup();
-        this.goOrderComplite(result.order_id);
+        this.nextOrderComplite(result.order_id);
       })
       
     }, (error) => {
@@ -554,15 +552,12 @@ class StoreOrderPage extends Component{
           if(filesInsertID.length === 0){
             stopLoadingPopup();
             this.showIamportPayView(merchant_uid, result.order_id);
-            // this.goOrderComplite(result.order_id);
-            console.log("dsfasdf");
           }else{
             axios.post("/store/file/set/orderid", {
               store_order_id: result.order_id,
               filesInsertID: filesInsertID.concat()
             }, (result_files) => {
               stopLoadingPopup();
-              // this.goOrderComplite(result.order_id);
               this.showIamportPayView(merchant_uid, result.order_id);
             }, (error_files) => {
               stopLoadingPopup();
@@ -626,14 +621,14 @@ class StoreOrderPage extends Component{
 
           if(filesInsertID.length === 0){
             stopLoadingPopup();
-            this.goOrderComplite(result.order_id);  
+            this.nextOrderComplite(result.order_id);  
           }else{
             axios.post("/store/file/set/orderid", {
               store_order_id: result.order_id,
               filesInsertID: filesInsertID.concat()
             }, (result_files) => {
               stopLoadingPopup();
-              this.goOrderComplite(result.order_id);
+              this.nextOrderComplite(result.order_id);
             }, (error_files) => {
               stopLoadingPopup();
             })
@@ -650,6 +645,22 @@ class StoreOrderPage extends Component{
     }, (error) => {
       stopLoadingPopup();
     })
+  }
+
+  nextOrderComplite = (store_order_id) => {
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      const event_play_times = this.storePlayTimePlanRef.getSelectTimes();
+      axios.post("/store/eventplaytime/set", {
+        store_order_id: store_order_id,
+        event_play_times: event_play_times.concat()
+      }, (result) => {
+        this.goOrderComplite(store_order_id);
+      }, (error) => {
+        alert("시간 DB 셋팅 오류");
+      })
+    }else{
+      this.goOrderComplite(store_order_id);
+    }
   }
 
   goOrderComplite(order_id){
@@ -714,21 +725,18 @@ class StoreOrderPage extends Component{
 
           if(filesInsertID.length === 0){
             stopLoadingPopup();
-            this.goOrderComplite(result.order_id);  
+            this.nextOrderComplite(result.order_id);  
           }else{
             axios.post("/store/file/set/orderid", {
               store_order_id: result.order_id,
               filesInsertID: filesInsertID.concat()
             }, (result_files) => {
               stopLoadingPopup();
-              this.goOrderComplite(result.order_id);
+              this.nextOrderComplite(result.order_id);
             }, (error_files) => {
               stopLoadingPopup();
             })
           }
-
-          // stopLoadingPopup();
-          // this.goOrderComplite(result.order_id);
         }, (error) => {
           stopLoadingPopup();
         })      
@@ -890,7 +898,10 @@ class StoreOrderPage extends Component{
   }
 
   render(){
-
+    if(this.state.store_item_id === null){
+      return (<></>);
+    }
+    
     let isAllAgree = this.isAllAgree();
     let allAgreeImage = <img src={ic_checkbox_btn_n} />
     if(isAllAgree){
@@ -1000,6 +1011,23 @@ class StoreOrderPage extends Component{
                 </div>
     }
 
+    let oneTooneNoticeDom = <></>;
+    let oneTooneSelectDom = <></>;
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      oneTooneNoticeDom = <div className={'container_box'} style={{display:'flex', backgroundColor: '#feeff2'}}>
+                            <div className={'oneToone_notice_warning'}>
+                              !
+                            </div>
+                            <div className={'oneToone_notice_content'}>
+                              {'다음 1~2주 사이에 크리에이터와 실시간 콘텐츠 진행이 가능한 시간대를 \n아래에서 3개 이상 선택해주세요.\n\n크리에이터가 확인 후 선택한 시간대 안에서 최종 진행 시간을 결정하여 알려드립니다!'}
+                            </div>
+                          </div>
+
+      oneTooneSelectDom = <div className={'container_box'}>
+                            <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
+                          </div>
+    }
+
     return(
       <div className={'StoreOrderPage'}>
         <div className={'title_label'}>
@@ -1036,6 +1064,9 @@ class StoreOrderPage extends Component{
           <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}></FileUploader>
           {/* 파일 input END */}
         </div>
+
+        {oneTooneNoticeDom}
+        {oneTooneSelectDom}
 
         <div className={'container_box'}>
           <div className={'container_label'}>

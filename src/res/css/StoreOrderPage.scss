@@ -216,7 +216,26 @@
   .pay_method_text {
     margin-left: 16px;
     font-size: 11pt;
+  }
 
+  .oneToone_notice_warning {
+    width: 20px;
+    height: 20px;
+    background-color: #fc5e7c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .oneToone_notice_content {
+    font-size: 14px;
+    color: #fc5e7c;
+    margin-left: 12px;
+    width: 95%;
   }
 
   @media (max-width: 520px){

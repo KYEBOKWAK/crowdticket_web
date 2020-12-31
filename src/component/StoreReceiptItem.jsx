@@ -23,6 +23,8 @@ import Popup_text_editor from '../component/Popup_text_editor';
 import Popup_text_viewer from '../component/Popup_text_viewer';
 
 import StoreStateProcess from '../component/StoreStateProcess';
+
+import StorePlayTimePlan from '../component/StorePlayTimePlan';
 // import moment_timezone from 'moment-timezone';
 // moment_timezone.tz.setDefault("Asia/Seoul");
 // const moment_timezone = require('moment-timezone');
@@ -38,6 +40,7 @@ const MAX_TEXT_LENGTH = 255;
 class StoreReceiptItem extends Component{
 
   fileUploaderRef = React.createRef();
+  storePlayTimePlanRef = React.createRef();
 
   constructor(props){
     super(props);
@@ -195,6 +198,13 @@ class StoreReceiptItem extends Component{
         item_file_upload_state: data.file_upload_state,
 
         store_user_profile_photo_url: data.profile_photo_url
+      }, () => {
+        if(this.state.item_product_state === Types.product_state.ONE_TO_ONE &&
+          this.state.state === Types.order.ORDER_STATE_APP_STORE_READY){
+            this.setState({
+              state_string: '승인 완료(진행 준비)'
+            })
+        }
       })
     }, (error) => {
 
@@ -298,7 +308,18 @@ class StoreReceiptItem extends Component{
 
   clickOk(e){
     e.preventDefault();
+    // this.storePlayTimePlanRef.isPassSelectTime()
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      if(this.storePlayTimePlanRef.getSelectKey() === null){
+        alert("진행 가능 시간을 선택하셔야 합니다.");
+        return;
+      }
 
+      if(this.storePlayTimePlanRef.getProductDetailAsk() === ''){
+        alert("고객에게 디테일한 요청을 적어주세요.");
+        return;
+      }
+    }
     
     swal("해당 주문을 승인하시겠습니까? (주문번호: "+this.props.store_order_id+" )", {
       buttons: {
@@ -316,7 +337,8 @@ class StoreReceiptItem extends Component{
       switch (value) {
         case "ok":
         {
-          this.requsetStoreOrderOk();
+          // this.requsetStoreOrderOk();
+          this.requestStoreOrderNext();
         }
         break;
       }
@@ -360,6 +382,13 @@ class StoreReceiptItem extends Component{
 
   clickRelayCustomer = (e) => {
     e.preventDefault();
+
+    if(this.state.item_product_state === Types.product_state.TEXT){
+      if(this.state.product_text === null || this.state.product_text === undefined || this.state.product_text === ''){
+        alert("텍스트 콘텐츠가 필수인 상품입니다. 콘텐츠 작성하기에서 텍스트를 작성해주세요.");
+        return;
+      }
+    }
 
     swal("해당 상품을 고객에게 전달하시겠습니까? (주문번호: "+this.props.store_order_id+" )", {
       buttons: {
@@ -452,9 +481,35 @@ class StoreReceiptItem extends Component{
     // });
   }
 
-  requsetStoreOrderOk(){
+  requestStoreOrderNext = () => {
     showLoadingPopup('변경중입니다..');
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      axios.post("/store/order/detailask/set", {
+        store_order_id: this.props.store_order_id,
+        product_detail_ask: this.storePlayTimePlanRef.getProductDetailAsk(),
+      }, (result_detail_ask) => {
 
+        axios.post("/store/eventplaytime/select", {
+          store_order_id: this.props.store_order_id,
+          event_play_time_id: this.storePlayTimePlanRef.getSelectTimeId(),
+          select_time: this.storePlayTimePlanRef.getSelectTime()
+        }, (result) => {
+          this.requsetStoreOrderOk();
+        }, (error) => {
+          stopLoadingPopup();
+        })
+
+      }, (error_detail_ask) => {
+        stopLoadingPopup();
+      })
+
+      
+    }else{
+      this.requsetStoreOrderOk();
+    }
+  }
+
+  requsetStoreOrderOk(){
     axios.post("/orders/store/state/ok", {
       store_order_id: this.props.store_order_id
     }, (result) => {
@@ -712,7 +767,8 @@ class StoreReceiptItem extends Component{
     if(this.props.isGoDetailButton){
 
       if(this.state.state === Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER ||
-        this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+        this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE ||
+        this.state.state === Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS){
         _goDetailButtonDom = <div className={'receipt_button_container'}>
                                 <button onClick={(e) => {this.clickContentsOk(e)}} className={'receipt_contents_ok_button'}>
                                   콘텐츠 확인하기
@@ -753,6 +809,8 @@ class StoreReceiptItem extends Component{
     let store_editor_popup_dom = <></>;
     
     let refundExpDate = moment(this.state.created_at).add(7, 'd').format('YYYY.MM.DD');
+
+    let oneTooneSelectDom = <></>;//1:1 선택 dom
     if(this.props.isManager){
       order_id_dom = <div style={{marginBottom: 5}}>주문번호 {this.props.store_order_id}</div>;
 
@@ -831,8 +889,8 @@ class StoreReceiptItem extends Component{
       else if(this.state.state === Types.order.ORDER_STATE_APP_STORE_READY){
 
         if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-          bottomLongButtonDom = <button onClick={(e) => {this.clickRelay(e)}} className={'state_button_relay'}>
-                                  콘텐츠 전달하기
+          bottomLongButtonDom = <button style={{backgroundColor: '#f4f4f4', color: '#4c4c4c'}} className={'state_button_relay'}>
+                                  콘텐츠 진행 대기
                                 </button>
         }else{
           if(this.state.store_ready_state === Types.store_ready_state.default){
@@ -890,6 +948,25 @@ class StoreReceiptItem extends Component{
           }
         }
       }
+
+      if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+        oneTooneSelectDom = <div className={'play_time_container_box'}>
+                              <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} isManager={this.props.isManager} store_order_id={this.props.store_order_id} store_order_state={this.state.state} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
+                            </div>
+      }
+    }else{
+      //구매자 화면
+      if(this.state.state === Types.order.ORDER_STATE_APP_STORE_PAYMENT ||
+        this.state.state === Types.order.ORDER_STATE_APP_STORE_READY ||
+        this.state.state === Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS){
+        //승인 대기
+        if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+          oneTooneSelectDom = <div className={'play_time_container_box'}>
+                                <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} isManager={this.props.isManager} store_order_id={this.props.store_order_id} store_order_state={this.state.state} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
+                              </div>
+        }
+      }
+      
     }
     
 
@@ -1039,8 +1116,7 @@ class StoreReceiptItem extends Component{
       review_dom = <></>;
 
       stateButtonDom = <></>;
-    }
-    
+    }    
 
     return(
       <div className={'StoreReceiptItem'}>
@@ -1077,10 +1153,11 @@ class StoreReceiptItem extends Component{
         <div className={'under_line'}>
         </div>
         
-        {/* {product_after_confirm_content_dom} */}
         {customer_files_dom}
         {product_files_dom}
-        
+
+        {oneTooneSelectDom}
+
         {product_answer_dom}
         {review_dom}
 

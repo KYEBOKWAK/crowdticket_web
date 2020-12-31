@@ -7,8 +7,6 @@ import ProgressBar from '@ramonak/react-progress-bar';
 
 
 class Popup_progress extends Component{
-  fileInputRef = React.createRef();
-
   constructor(props){
     super(props);
 

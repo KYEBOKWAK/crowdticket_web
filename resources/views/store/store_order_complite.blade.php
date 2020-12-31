@@ -20,6 +20,8 @@
 
 <link href="{{ asset('/dist/css/StoreStateProcess.css?version=2') }}" rel="stylesheet"/>
 
+<link href="{{ asset('/dist/css/StorePlayTimePlan.css?version=0') }}" rel="stylesheet"/>
+
 @endsection
 
 @section('content')

@@ -62,6 +62,10 @@ $img_width: 100px;
     font-size: 14px;
   }
 
+  .input_content_ask_textarea::placeholder {
+    color: #acacac;
+  }
+
   .input_ask_textarea {
     width: 100%;
     height: 112px;
@@ -175,6 +179,21 @@ $img_width: 100px;
     font-size: 12px;
     color: #acacac;
     // margin-left: 35px;
+  }
+
+  .ask_play_time_textarea {
+    width: 100%;
+    height: 78px;
+    padding: 16px;
+    border-radius: 5px;
+    border: solid 1px #e6e6e6;
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .ask_play_time_textarea::placeholder {
+    font-size: 14px;
+    color: #acacac;
   }
 
   @media (max-width: 520px){

@@ -11,7 +11,7 @@
   }
   </style>
 
-<link href="{{ asset('/dist/css/StoreOrderPage.css?version=2') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderPage.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
 
@@ -19,6 +19,8 @@
 
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
 
+<link href="{{ asset('/dist/css/StorePlayTimePlan.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/Popup_SelectTime.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 

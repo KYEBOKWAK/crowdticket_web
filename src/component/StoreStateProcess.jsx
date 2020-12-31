@@ -49,6 +49,10 @@ class StoreStateProcess extends Component{
         {
           key: Types.order.ORDER_STATE_APP_STORE_SUCCESS,
           text: '크티 전달'
+        },
+        {
+          key: Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS,
+          text: '콘텐츠 진행'
         }
       ],
       processData: 
@@ -78,8 +82,8 @@ class StoreStateProcess extends Component{
           process: [
             Types.order.ORDER_STATE_APP_STORE_PAYMENT, 
             Types.order.ORDER_STATE_APP_STORE_READY,
-            Types.order.ORDER_STATE_APP_STORE_SUCCESS,
-            Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER,
+            Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS,
+            // Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER,
             Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE
           ]
         }
@@ -111,11 +115,11 @@ class StoreStateProcess extends Component{
       )
     }
 
-    if(this.props.product_state === Types.product_state.ONE_TO_ONE){
-      return (
-        <></>
-      )
-    }
+    // if(this.props.product_state === Types.product_state.ONE_TO_ONE){
+    //   return (
+    //     <></>
+    //   )
+    // }
 
     let processItemArrayDom = [];
     let isLastState = false;

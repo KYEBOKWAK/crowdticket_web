@@ -365,7 +365,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
           </li>
           <li><a href="{{ url('/projects') }}">이벤트</a></li>
-          <li><a href="{{ url('/blueprints/welcome') }}">이벤트 만들기</a></li>
+          <!-- <li><a href="{{ url('/blueprints/welcome') }}">이벤트 만들기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @endif
         </ul>
@@ -617,7 +617,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=75') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=76') }}"></script>
 
 </body>
 </html>
