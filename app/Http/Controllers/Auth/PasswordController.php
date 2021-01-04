@@ -39,7 +39,7 @@ class PasswordController extends Controller
     }
 
     public function postEmail(Request $request)
-    {
+    {        
       $this->validate($request, array('email' => 'required|email'));
         $response = $this->passwords->sendResetLink($request->only('email'), function ($m) {
             $m->subject('[크티] 비밀번호 재설정 안내');
@@ -51,5 +51,45 @@ class PasswordController extends Controller
                 return redirect()->back()->withErrors(array('email' => trans($response)));
         }
     }
+
+    /**
+	 * Reset the given user's password.
+	 *
+	 * @param  Request  $request
+	 * @return Response
+	 */
+	public function postReset(Request $request)
+	{
+		$this->validate($request, [
+			'token' => 'required',
+			'email' => 'required|email',
+			'password' => 'required|confirmed',
+		]);
+
+		$credentials = $request->only(
+			'email', 'password', 'password_confirmation', 'token'
+		);
+
+		$response = $this->passwords->reset($credentials, function($user, $password)
+		{
+			$user->password = bcrypt($password);
+
+			$user->save();
+
+			$this->auth->login($user);
+		});
+
+		switch ($response)
+		{
+            case PasswordBroker::PASSWORD_RESET:
+                return ['state' => 'success', 'user_id' => \Auth::user()->id ,'goDirect' => ''];
+				// return redirect($this->redirectPath());
+
+			default:
+				return redirect()->back()
+							->withInput($request->only('email'))
+							->withErrors(['email' => trans($response)]);
+		}
+	}
 
 }

@@ -26,9 +26,10 @@
                             </div>
                         @endif
 
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
+                        <form id="resetPasswordForm" class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="token" value="{{ $token }}">
+                            @include('form_method_spoofing', ['method' => 'post'])
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">이메일 주소</label>
@@ -53,9 +54,10 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <!-- <button type="submit" class="btn btn-primary">
                                         비밀번호 변경
-                                    </button>
+                                    </button> -->
+                                    <input id="password-reset-button" type="button" class="btn btn-primary" value="비밀번호 변경"/>
                                 </div>
                             </div>
                         </form>
@@ -64,4 +66,41 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+
+<script>
+  $(document).ready(function() {
+
+    var resetAjaxOption = {
+		'beforeSerialize': function($form, options) {
+			$goods_img_file = $('#goods_img_file');
+
+		},
+		'success': function(result) {
+            loginCallback = function(){
+                var base_url = window.location.origin;
+                window.location.href = base_url;
+            }
+            loginAjaxSuccess(result);
+			// loadingProcessStop($("#password-reset-button"));
+		},
+		'error': function(data) {
+            alert("비밀번호 초기화에 실패했습니다.");
+            loadingProcessStop($("#password-reset-button"));
+		}
+    };
+    
+    $('#resetPasswordForm').ajaxForm(resetAjaxOption);
+
+    $("#password-reset-button").click(function(){
+        loadingProcess($("#password-reset-button"));
+
+        $('#resetPasswordForm').submit();
+        
+    })
+  });
+</script>
+
 @endsection
