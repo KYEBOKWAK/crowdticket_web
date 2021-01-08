@@ -11,7 +11,7 @@ import StoreHomeStoreList from '../component/StoreHomeStoreList';
 import ScrollBooster from 'scrollbooster';
 import axios from '../lib/Axios';
 
-import store_home_title_img from '../res/img/store-home-title.svg';
+import store_home_title_img from '../res/img/main_store_title_img_1.svg';
 import Types from '../Types';
 
 //test
