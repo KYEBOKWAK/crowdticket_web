@@ -1128,6 +1128,8 @@ class StoreReceiptItem extends Component{
       review_dom = <></>;
 
       stateButtonDom = <></>;
+
+      oneTooneSelectDom = <></>;
     }
 
     return(
