@@ -971,7 +971,8 @@ class StoreReceiptItem extends Component{
     
 
     let refund_reason_dom = <></>;
-    if(this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_RETURN){
+    if(this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_RETURN ||
+      this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_WAIT_OVER){
       refund_reason_dom = <div className={'order_refund_reason'}>
                             사유: {this.state.order_refund_reason}
                           </div>
@@ -1108,6 +1109,8 @@ class StoreReceiptItem extends Component{
       }}></Popup_text_viewer>
     }
 
+
+    //최종 state에 따라서 삭제 되는 dom 결정
     if(this.state.state === Types.order.ORDER_STATE_APP_STORE_STANBY){
       customer_files_dom = <></>;
       product_files_dom = <></>;
@@ -1116,7 +1119,16 @@ class StoreReceiptItem extends Component{
       review_dom = <></>;
 
       stateButtonDom = <></>;
-    }    
+    }
+    else if(this.state.state === Types.order.ORDER_STATE_CANCEL_STORE_WAIT_OVER){
+      customer_files_dom = <></>;
+      product_files_dom = <></>;
+      
+      product_answer_dom = <></>;
+      review_dom = <></>;
+
+      stateButtonDom = <></>;
+    }
 
     return(
       <div className={'StoreReceiptItem'}>
