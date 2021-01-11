@@ -35,6 +35,10 @@
     color: #7f7f7f;
   }
 
+  .infinite-scroll-component {
+    overflow: unset !important;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
     .container_box{

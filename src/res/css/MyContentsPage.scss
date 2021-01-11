@@ -20,6 +20,11 @@
     display: flex;
     justify-content: center;
   }
+
+  .infinite-scroll-component {
+    overflow: unset !important;
+  }
+  
   @media (max-width: 520px){
     /*모바일일때*/  
     .myContentsTitle{

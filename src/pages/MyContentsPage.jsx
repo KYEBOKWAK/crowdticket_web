@@ -6,6 +6,8 @@ import StoreReceiptItem from '../component/StoreReceiptItem';
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
 
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -20,7 +22,8 @@ import axios from '../lib/Axios';
 // import Colors from '@lib/colors';
 // import Types from '~/Types';
 
-
+const REQUEST_ONCE_ITME = 3;
+let isRequestInitData = false;
 
 class MyContentsPage extends Component{
 
@@ -29,9 +32,14 @@ class MyContentsPage extends Component{
 
     this.state = {
       myID: null,
-      order_datas: [],
-      orders_item_doms: []
+      // order_datas: [],
+      // orders_item_doms: [],
+
+      items: [],
+      hasMore: true
     }
+
+    this.requestMoreData = this.requestMoreData.bind(this);
   };
 
   // shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -53,12 +61,6 @@ class MyContentsPage extends Component{
         this.requestMyStoreOrder();
       })
     }
-
-    // <StoreReceiptItem store_order_id={this.state.store_order_id} isGoDetailButton={false}></StoreReceiptItem>
-
-    // <div className={'container_box'}>
-    //       {storeReceiptItemDom}
-    //     </div>
   };
 
   componentWillUnmount(){
@@ -68,7 +70,10 @@ class MyContentsPage extends Component{
   componentDidUpdate(){
   }
 
-  requestMyStoreOrder(){
+  requestMyStoreOrder = () => {
+
+    this.requestMoreData();
+    /*
     axios.post("/orders/store/item/list", {}, 
     (result) => {
       this.setState({
@@ -79,8 +84,48 @@ class MyContentsPage extends Component{
     }, (error) => {
 
     })
+    */
   }
 
+  requestMoreData(){
+    
+    if(this.state.items.length === 0 && this.isRequestInitData){
+      return;
+    }
+
+    if(this.state.items.length === 0){
+      this.isRequestInitData = true;
+    }
+
+
+    axios.post('/orders/store/item/list/get', {
+      limit: REQUEST_ONCE_ITME,
+      skip: this.state.items.length
+    }, 
+    (result) => {
+      let _items = this.state.items.concat();      
+      let hasMore = true;
+      if(REQUEST_ONCE_ITME > result.list.length ){
+        hasMore = false;
+      }
+
+      for(let i = 0 ; i < result.list.length ; i++){
+        const data = result.list[i];
+        
+        _items.push(data);
+        // itemIndex++;
+      }
+      
+      this.setState({
+        items: _items.concat(),
+        hasMore: hasMore
+      });
+    }, (error) => {
+
+    })    
+  };
+
+  /*
   setOrderItem(){
     // console.log(this.state.order_datas);
     let _orders_item_doms = [];
@@ -96,6 +141,7 @@ class MyContentsPage extends Component{
       orders_item_doms: _orders_item_doms.concat()
     })
   }
+  */
 
   render(){
     if(!this.state.myID){
@@ -110,7 +156,42 @@ class MyContentsPage extends Component{
           나의 콘텐츠
         </div>
         
-        {this.state.orders_item_doms}
+        <InfiniteScroll
+          // style={{backgroundColor: 'red'}}
+          dataLength={this.state.items.length} //This is important field to render the next data
+          next={this.requestMoreData}
+          hasMore={this.state.hasMore}
+          loader=
+          {
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+              <h4>Loading...</h4>
+            </div>
+          }
+          endMessage={
+            <></>
+            // <p style={{ textAlign: 'center' }}>
+            //   <b>Yay! You have seen it all</b>
+            // </p>
+          }
+          // below props only if you need pull down functionality
+          // refreshFunction={this.refresh}
+          // pullDownToRefresh
+          pullDownToRefreshThreshold={50}
+          pullDownToRefreshContent={
+            <></>
+            // <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
+          }
+          releaseToRefreshContent={
+            <></>
+            // <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
+          }
+        >
+          {this.state.items.map((data) => {
+            return <div key={data.store_order_id} className={'container_box'}>
+                    <StoreReceiptItem store_order_id={data.store_order_id} isGoDetailButton={true}></StoreReceiptItem>
+                  </div>
+          })}
+        </InfiniteScroll>
       </div>
     )
   }
