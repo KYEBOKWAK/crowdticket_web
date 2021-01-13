@@ -48,17 +48,24 @@ class StoreManagerTabAccountPage extends Component{
       standard_payment_date_start: '',
       standard_payment_date_end: '',
 
-      policy: `1. 정산은 구매 요청 승인 후, 콘텐츠를 제공하여 구매자가 확인 완료까지 마쳐 판매가 완료된 내역에 한하여 진행됩니다.
+      policy: `1. 정산은 상품 결제가 진행된 후 구매자에게 콘텐츠 전달까지 모두 완료된 건들에 한하여 진행됩니다.
+      2. 크티 '콘텐츠 상점 beta' 수수료는 현재 카드결제 수수료 3.5%를 포함하여 총 15%로, 총 결제 금액에서 수수료를 제외한 금액을 정산하여 입금해드립니다.
+      3. 콘텐츠 상점 정산일은 매 달 15일과 30일입니다.
+      4. 매 달 1일~15일 사이에 판매가 완료된 건은 같은 달 30일에 정산이 진행되며, 16일~31일 사이에 판매가 완료된 건은 다음 달 15일에 정산됩니다.
+      5. 정산일이 주말 또는 공휴일인 경우 그 다음 평일에 정산이 진행됩니다.
+      6. 콘텐츠 판매자는 정산 받은 금액에 대해 부과되거나 의무가 있는 모든 세금을 성실하게 신고하고 납부할 의무가 있습니다.`,
 
-        2. 크티 콘텐츠 상점 수수료는 현재 카드결제 수수료 3.5%를 포함하여 총 15%로, 총 결제 금액에서 수수료를 제외한 금액을 정산하여 입금드립니다.
+      // policy: `1. 정산은 구매 요청 승인 후, 콘텐츠를 제공하여 구매자가 확인 완료까지 마쳐 판매가 완료된 내역에 한하여 진행됩니다.
 
-        3. 콘텐츠 상점 정산일은 매 달 1일과 16일입니다.
+      //   2. 크티 콘텐츠 상점 수수료는 현재 카드결제 수수료 3.5%를 포함하여 총 15%로, 총 결제 금액에서 수수료를 제외한 금액을 정산하여 입금드립니다.
 
-        4. 매 달 1일~15일 사이에 판매가 완료된 건은 다음 달 1일에 정산이 진행되며, 16일~31일 사이에 판매가 완료된 건은 다음 달 16일에 정산됩니다.
+      //   3. 콘텐츠 상점 정산일은 매 달 1일과 16일입니다.
 
-        5. 정산일이 주말 또는 공휴일인 경우 그 다음 평일에 정산이 진행됩니다.
+      //   4. 매 달 1일~15일 사이에 판매가 완료된 건은 다음 달 1일에 정산이 진행되며, 16일~31일 사이에 판매가 완료된 건은 다음 달 16일에 정산됩니다.
+
+      //   5. 정산일이 주말 또는 공휴일인 경우 그 다음 평일에 정산이 진행됩니다.
         
-        6. 콘텐츠 판매자는 정산 받은 금액에 대해 부과되거나 의무가 있는 모든 세금을 성실하게 신고하고 납부할 의무가 있습니다.`,
+      //   6. 콘텐츠 판매자는 정산 받은 금액에 대해 부과되거나 의무가 있는 모든 세금을 성실하게 신고하고 납부할 의무가 있습니다.`,
       
       payment_detail_datas: []
     }
@@ -66,17 +73,13 @@ class StoreManagerTabAccountPage extends Component{
     this.requestMoreData = this.requestMoreData.bind(this);
   };
 
-  // shouldComponentUpdate(nextProps: any, nextState: any) {
-  //   return true;
-  // }
-
   componentDidMount(){
-    // this.requestMoreData();
+    this.requestMoreData();
     // this.requestAccountInfo();
     this.requestStoreInfo();
 
-    this.requestPaidList();
-    this.requestPaymentInfo();
+    // this.requestPaidList();
+    // this.requestPaymentInfo();
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -234,6 +237,7 @@ class StoreManagerTabAccountPage extends Component{
     return(
       <div className={'StoreManagerTabAccountPage'}>
 
+        {/* //여기 주석처리 되어 있는건 2/2일에 업데이트 되어야 한다.
         <div className={'total_payment_box'}>
           <div className={'total_payment_container'}>
             <div className={'total_payment_title'}>
@@ -270,7 +274,9 @@ class StoreManagerTabAccountPage extends Component{
         <div className={'second_box_explain'}>
           수수료 프로모션이나 주문 상태 업데이트에 따라 실제 입금 금액은 바뀔 수 있습니다
         </div>
+        *}
 
+        {/*
         <div className={'box_container'}>
           <div className={'label_title'}>
             세부내역
@@ -290,6 +296,7 @@ class StoreManagerTabAccountPage extends Component{
             datas={this.state.payment_detail_datas}
           ></TableComponent>
         </div>
+        */}
 
         <div className={'box_container'}>
           <div className={'label_title'}>
@@ -315,6 +322,7 @@ class StoreManagerTabAccountPage extends Component{
           </div>
 
           <div className={'paid_list_container'}>
+            {/*
             <TableComponent
               columns={
                 [
@@ -325,7 +333,8 @@ class StoreManagerTabAccountPage extends Component{
               }
               datas={this.state.items}
             ></TableComponent>
-            {/*
+            */}
+            
             <InfiniteScroll
               // style={{backgroundColor: 'red'}}
               dataLength={this.state.items.length} //This is important field to render the next data
@@ -365,7 +374,6 @@ class StoreManagerTabAccountPage extends Component{
                       </div>
               })}
             </InfiniteScroll>
-            */}
             
           </div>
         </div>
