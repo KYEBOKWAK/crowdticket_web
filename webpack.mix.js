@@ -59,6 +59,7 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreStateProcess.scss', 'dist/css/')
 .sass('src/res/css/StorePlayTimePlan.scss', 'dist/css/')
 .sass('src/res/css/Popup_SelectTime.scss', 'dist/css/')
+.sass('src/res/css/TableComponent.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

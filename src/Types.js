@@ -34,6 +34,13 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  table_type: {
+    none: 'none',
+    total_payment: 'total_payment'  //하단에 총합계가 나오는 ui 구성
+  },
+  table_columns_type: {
+    price: 'price'
+  },
   event_target_type: {
     store_item: 'store_item'
   },

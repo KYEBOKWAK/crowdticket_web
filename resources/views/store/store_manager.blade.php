@@ -14,10 +14,10 @@
 <link href="{{ asset('/dist/css/StoreManager.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreManagerTabAskOrderListPage.css?version=3') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreManagerTabStoreInfoPage.css?version=2') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreManagerTabStoreInfoPage.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreManagerTabItemPage.css?version=0') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreManagerTabOrderListPage.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=1') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=10') }}" rel="stylesheet"/>
@@ -36,6 +36,8 @@
 <link href="{{ asset('/dist/css/StoreStateProcess.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StorePlayTimePlan.css?version=1') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/TableComponent.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 

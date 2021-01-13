@@ -24,6 +24,13 @@ import icon_box from '../res/img/icon-box.svg';
 const INPUT_STORE_MANAGER_TITLE = 'INPUT_STORE_MANAGER_TITLE';
 const INPUT_STORE_MANAGER_CONTENT = 'INPUT_STORE_MANAGER_CONTENT';
 
+const INPUT_STORE_MANAGER_ACCOUNT_NAME = "INPUT_STORE_MANAGER_ACCOUNT_NAME";
+const INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME = "INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME";
+const INPUT_STORE_MANAGER_ACCOUNT_NUMBER = "INPUT_STORE_MANAGER_ACCOUNT_NUMBER";
+
+const INPUT_STORE_MANAGER_CONTACT = 'INPUT_STORE_MANAGER_CONTACT';
+const INPUT_STORE_MANAGER_EMAIL = 'INPUT_STORE_MANAGER_EMAIL';
+
 const MAX_CATEGORY_LENGTH = 6;
 const MAX_CONTENT_LENGTH = 45;
 
@@ -46,7 +53,11 @@ class StoreManagerTabStoreInfoPage extends Component{
       channel_ori_data: [],
       channel_categorys_data: [],
 
-      channel_category_select_options: []
+      channel_category_select_options: [],
+
+      account_name: '',
+      account_number: '',
+      account_bank: '',
     }
 
     this.onChangeSelect = this.onChangeSelect.bind(this);
@@ -67,6 +78,21 @@ class StoreManagerTabStoreInfoPage extends Component{
   componentDidUpdate(){
   }
 
+  requestAccountInfo = () => {
+    //manager/account/info
+    axios.post("/store/manager/account/info", {
+      store_id: this.state.store_id
+    }, (result) => {
+      this.setState({
+        account_name: result.data.account_name,
+        account_number: result.data.account_number,
+        account_bank: result.data.account_bank,
+      })
+    }, (error) => {
+
+    })
+  }
+
   requestStoreInfo(){
     axios.post("/store/info/userid", {
       store_user_id: this.props.store_user_id
@@ -75,9 +101,11 @@ class StoreManagerTabStoreInfoPage extends Component{
       this.setState({
         store_id: result.data.store_id,
         title: result.data.title,
-        // contact: result.data.contact,
-        // email: result.data.email,
+        contact: result.data.contact,
+        email: result.data.email,
         content: result.data.content
+      }, () => {
+        this.requestAccountInfo();
       })
     }, (error) => {
 
@@ -156,16 +184,42 @@ class StoreManagerTabStoreInfoPage extends Component{
         title: e.target.value
       })
     }
-    // else if(type === INPUT_STORE_MANAGER_CONTACT){
-    //   this.setState({
-    //     contact: e.target.value
-    //   })
-    // }
-    // else if(type === INPUT_STORE_MANAGER_EMAIL){
-    //   this.setState({
-    //     email: e.target.value
-    //   })
-    // }
+    else if(type === INPUT_STORE_MANAGER_ACCOUNT_NAME){
+      this.setState({
+        account_name: e.target.value
+      })
+    }
+    else if(type === INPUT_STORE_MANAGER_ACCOUNT_NUMBER){
+
+      if(e.target.value.length > 0 && !isCheckOnlyNumber(e.target.value)){
+        alert("숫자만 입력해주세요. (공백 혹은 - 이 입력되었습니다.)")
+        return;
+      }
+
+      this.setState({
+        account_number: e.target.value
+      })
+    }
+    else if(type === INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME){
+      this.setState({
+        account_bank: e.target.value
+      })
+    }
+    else if(type === INPUT_STORE_MANAGER_EMAIL){
+      this.setState({
+        email: e.target.value
+      })
+    }
+    else if(type === INPUT_STORE_MANAGER_CONTACT){
+      if(e.target.value.length > 0 && !isCheckOnlyNumber(e.target.value)){
+        alert("숫자만 입력해주세요. (공백 혹은 - 이 입력되었습니다.)")
+        return;
+      }
+
+      this.setState({
+        contact: e.target.value
+      })
+    }
     else if(type === INPUT_STORE_MANAGER_CONTENT){
       this.setState({
         content: e.target.value
@@ -176,15 +230,50 @@ class StoreManagerTabStoreInfoPage extends Component{
   onClickSave(e){
     e.preventDefault();
 
+    if(this.state.account_name === ''){
+      alert("예금주명을 입력해주세요");
+      return;
+    }else if(this.state.account_bank === ''){
+      alert("은행명을 입력해주세요");
+      return;
+    }else if(this.state.account_number === ''){
+      alert('계좌번호를 입력해주세요');
+      return;
+    }else if(this.state.contact === ''){
+      alert("비상 연락처를 반드시 입력해주세요.");
+      return;
+    }else if(this.state.email === ''){
+      alert("연락용 이메일을 반드시 입력해주세요.");
+      return;
+    }
+
+    if(!isCheckOnlyNumber(this.state.account_number)){
+      alert("계좌번호에 (공백 혹은 - 이 입력되었습니다.)");
+      return;
+    }
+
     showLoadingPopup('저장중입니다..');
-    axios.post('/store/save/info', {
+
+    axios.post("/store/manager/account/info/set", {
       store_id: this.state.store_id,
-      title: this.state.title,
-      // contact: this.state.contact,
-      // email: this.state.email,
-      content: this.state.content
+      account_name: this.state.account_name,
+      account_number: this.state.account_number,
+      account_bank: this.state.account_bank,
+
+      email: this.state.email,
+      contact: this.state.contact
     }, (result) => {
-      this.queryChannelsRemove();
+      axios.post('/store/save/info', {
+        store_id: this.state.store_id,
+        title: this.state.title,
+        // contact: this.state.contact,
+        // email: this.state.email,
+        content: this.state.content
+      }, (result) => {
+        this.queryChannelsRemove();
+      }, (error) => {
+        stopLoadingPopup();
+      })
     }, (error) => {
       stopLoadingPopup();
     })
@@ -393,6 +482,47 @@ class StoreManagerTabStoreInfoPage extends Component{
     })
   }
 
+  clickAccountChange(e){
+    e.preventDefault();
+
+    if(this.state.account_name === ''){
+      alert("예금주명을 입력해주세요");
+      return;
+    }else if(this.state.account_bank === ''){
+      alert("은행명을 입력해주세요");
+      return;
+    }else if(this.state.account_number === ''){
+      alert('계좌번호를 입력해주세요');
+      return;
+    }else if(this.state.contact === ''){
+      alert("비상 연락처를 반드시 입력해주세요.");
+      return;
+    }else if(this.state.email === ''){
+      alert("연락용 이메일을 반드시 입력해주세요.");
+      return;
+    }
+
+    if(!isCheckOnlyNumber(this.state.account_number)){
+      alert("계좌번호에 (공백 혹은 - 이 입력되었습니다.)");
+      return;
+    }
+    // manager/account/info/set
+
+    axios.post("/store/manager/account/info/set", {
+      store_id: this.state.store_id,
+      account_name: this.state.account_name,
+      account_number: this.state.account_number,
+      account_bank: this.state.account_bank,
+
+      email: this.state.email,
+      contact: this.state.contact
+    }, (result) => {
+      alert("저장완료!");
+    }, (error) => {
+
+    })
+  }
+
   render(){
     // categories_channel_id
     let category_list = [];
@@ -458,27 +588,62 @@ class StoreManagerTabStoreInfoPage extends Component{
 
     return(
       <div className={'StoreManagerTabStoreInfoPage'}>
-        <div className={'input_label'}>상점명</div>
-        <input className={'input_box'} type="text" name={'title'} placeholder={'상점명을 입력해주세요.'} value={this.state.title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_TITLE)}}/>
 
-        {/* <div className={'input_label'}>상점 연락처</div>
-        <input className={'input_box'} type="text" name={'contact'} placeholder={'-없이 입력해주세요.'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTACT)}}/>
-
-        <div className={'input_label'}>상점 이메일</div>
-        <input className={'input_box'} type="text" name={'email'} placeholder={'상점 이메일을 입력해주세요.'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_EMAIL)}}/> */}
-
-        <div className={'input_label'}>상점 소개글</div>
-        <textarea className={'textarea_box'} value={this.state.content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTENT)}} maxLength={MAX_CONTENT_LENGTH} placeholder={"상점 소개글을 입력해주세요"}></textarea>
-        <div className={'content_length_container'}>
-          {this.state.content.length}/{MAX_CONTENT_LENGTH}
+        <div className={'input_container'}>
+          <div className={'input_label'}>상점명</div>
+          <input className={'input_box'} type="text" name={'title'} placeholder={'상점명을 입력해주세요.'} value={this.state.title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_TITLE)}}/>
         </div>
 
-        <div className={'input_label'}>소셜미디어 채널</div>
-        <div>
-          {category_list}
+        <div className={'input_container'}>
+          <div className={'input_label'}>상점 소개글</div>
+          <textarea className={'textarea_box'} value={this.state.content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTENT)}} maxLength={MAX_CONTENT_LENGTH} placeholder={"상점 소개글을 입력해주세요"}></textarea>
+          <div className={'content_length_container'}>
+            {this.state.content.length}/{MAX_CONTENT_LENGTH}
+          </div>
         </div>
-        <div className={'category_max_text'}>
-          최대 6개까지 등록 가능합니다.
+
+        <div className={'input_container'}>
+          <div className={'input_label'}>소셜미디어 채널</div>
+          <div>
+            {category_list}
+          </div>
+          <div className={'category_max_text'}>
+            최대 6개까지 등록 가능합니다.
+          </div>
+        </div>
+
+        <div className={'account_info_container'}>
+          <div className={'label_title'}>
+            정산정보
+          </div>
+          <div className={'category_max_text'}>
+            외부에 공개되지 않는 정보입니다
+          </div>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>예금주</div>
+            <input className={'input_box'} type="name" name={'name'} placeholder={'이름을 입력해주세요'} value={this.state.account_name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_NAME)}}/>
+          </div>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>휴대전화번호 (주문 알림 및 정산 안내 발송용)</div>
+            <input className={'input_box'} type="text" name={'contact'} placeholder={'-없이 입력해주세요.'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_CONTACT)}}/>
+          </div>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>연락용 이메일</div>
+            <input className={'input_box'} type="text" name={'email'} placeholder={'연락용 이메일을 입력해주세요.'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_EMAIL)}}/>
+          </div>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>은행</div>
+            <input className={'input_box'} type="text" name={'account_bank'} placeholder={'은행명을 입력해주세요'} value={this.state.account_bank} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_BANK_NAME)}}/>
+          </div>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>계좌번호</div>
+            <input className={'input_box'} type="text" name={'account_number'} placeholder={'- 없이 입력해주세요'} value={this.state.account_number} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ACCOUNT_NUMBER)}}/>
+          </div>
         </div>
 
 

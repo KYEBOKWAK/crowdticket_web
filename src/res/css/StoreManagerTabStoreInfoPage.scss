@@ -4,11 +4,15 @@ $button_width: 35px;
   padding-top: 32px;
   padding-bottom: 64px;
 
+  .input_container {
+    margin-top: 26px;
+  }
+
   .input_label {
     font-size: 12px;
     color: #000000;
     margin-bottom: 8px;
-    margin-top: 26px;
+    // margin-top: 26px;
   }
 
   .input_box{
@@ -113,7 +117,7 @@ $button_width: 35px;
 
   .category_max_text {
     font-size: 11px;
-    color: #000000;
+    color: #acacac;
     margin-top: 5px;
   }
 
@@ -121,6 +125,15 @@ $button_width: 35px;
     text-align: right;
     font-size: 12px;
     color: #acacac;
+  }
+
+  .label_title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .account_info_container {
+    margin-top: 60px;
   }
 
   @media (max-width: 520px){
