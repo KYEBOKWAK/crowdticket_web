@@ -858,7 +858,7 @@ class StoreAddItemPage extends Component{
   }
 
   nextFileCheck = (item_id) => {
-    this.imageFileUploaderRef.setItems_imgsData(() => {
+    this.imageFileUploaderRef.setItems_imgsData(item_id, () => {
       if(!this.state.isChangeImg){
         this.complitePopup();
         return;

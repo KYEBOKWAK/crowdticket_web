@@ -150,7 +150,7 @@ class ImageFileUploader extends Component{
     return this.state.files;
   }
 
-  setItems_imgsData = (successCallback, errorCallback) => {
+  setItems_imgsData = (store_item_id, successCallback, errorCallback) => {
     let _addFileIDs = this.state.addFileIDs.concat();
     if(_addFileIDs.length === 0){
       successCallback();
@@ -168,7 +168,7 @@ class ImageFileUploader extends Component{
     }
 
     axios.post("/store/file/set/itemsimgs/itemid", {
-      store_item_id: this.props.store_item_id,
+      store_item_id: store_item_id,
       filesInsertID: filesInsertID.concat()
     }, (result_files) => {
       console.log(result_files);
