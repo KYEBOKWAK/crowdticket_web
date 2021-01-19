@@ -13,7 +13,7 @@
 
 <link href="{{ asset('/dist/css/alice-carousel.css?version=0') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=10') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=11') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreUserSNSList.css?version=2') }}" rel="stylesheet"/>
 

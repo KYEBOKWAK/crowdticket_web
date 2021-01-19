@@ -508,13 +508,11 @@ class StoreItemDetailPage extends Component{
     let contentMoreExplainDom = <></>;
     if(this.state.isContentMoreExplain){
       contentMoreExplainDom = <div>
-    
                                 <div className={'under_line'}>
                                 </div>
-
                                 <div style={{marginBottom: 12}}>
                                   <ImageFileUploader store_item_id={this.state.store_item_id} isUploader={false} noDataCallback={(isNoData) => {
-                                    if(isNoData && this.state.youtube_url === ''){
+                                    if(isNoData && (this.state.youtube_url === null || this.state.youtube_url === '')){
                                       this.setState({
                                         isContentMoreExplain: false
                                       })

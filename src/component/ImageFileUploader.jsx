@@ -44,6 +44,8 @@ class ImageFileUploader extends Component{
 
       isRequestFile: false,
 
+      // isInitScrollAction: false,
+
       addFileIDs: []  //추가된 파일
     }
 
@@ -55,6 +57,7 @@ class ImageFileUploader extends Component{
       return;
     }
 
+    
     // this.requestFilesData();
   };
 
@@ -76,7 +79,7 @@ class ImageFileUploader extends Component{
       })
     }
 
-    /*
+    
     if(!this.state.isInitScrollAction){
       this.setState({
         isInitScrollAction: true
@@ -84,7 +87,7 @@ class ImageFileUploader extends Component{
         this.setScrollAction();
       })
     }
-    */
+    
     
     
   }
@@ -102,7 +105,7 @@ class ImageFileUploader extends Component{
       let _show_images = [];
 
       if(result.list.length === 0){
-        this.setScrollAction();
+        // this.setScrollAction();
         this.props.noDataCallback(true);
         return;
       }
@@ -136,7 +139,7 @@ class ImageFileUploader extends Component{
         files: _files.concat(),
         show_images: _show_images.concat(),
       }, () => {
-        this.setScrollAction();
+        // this.setScrollAction();
       })
     }, (error) => {
 
@@ -250,6 +253,7 @@ class ImageFileUploader extends Component{
     let viewport = document.querySelector('.ImageFileUploader .viewport');
     let content = document.querySelector('.ImageFileUploader .scrollable-content');
 
+    /*
     if(this.props.store_item_id === null || this.props.store_item_id === undefined){
       viewport = document.querySelector('.ImageFileUploader .viewport');
       content = document.querySelector('.ImageFileUploader .scrollable-content');
@@ -262,6 +266,7 @@ class ImageFileUploader extends Component{
         content = document.querySelector(`.ImageFileUploader .scrollable-content-${this.props.file_upload_target_type}-${this.props.store_item_id}`);
       }
     }
+    */
 
     if(viewport === null){
       return;

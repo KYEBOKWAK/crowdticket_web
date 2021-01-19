@@ -295,7 +295,7 @@ class StoreAddItemPage extends Component{
         this.setState({
           store_user_id: store_user_id,
           store_id: result.data.store_id,
-          item_id: item_id,
+          item_id: null,
           pageState: pageState,
           isLogin: true
         }, () => {
@@ -925,9 +925,13 @@ class StoreAddItemPage extends Component{
   complitePopup = () => {
     stopLoadingPopup();
     if(this.state.pageState === Types.add_page_state.ADD){
-      swal("등록완료!", '', 'success');
+      swal("등록완료", "", "success").then(() => {
+        this.goBack();
+      });
+
     }else{
-      swal("수정완료!", '', 'success');
+      swal("수정완료!", "", "success").then(function(){
+      });
     }
   }
 
