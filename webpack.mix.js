@@ -60,6 +60,11 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StorePlayTimePlan.scss', 'dist/css/')
 .sass('src/res/css/Popup_SelectTime.scss', 'dist/css/')
 .sass('src/res/css/TableComponent.scss', 'dist/css/')
+.sass('src/res/css/StoreOtherItems.scss', 'dist/css/')
+.sass('src/res/css/StoreReviewTalk.scss', 'dist/css/')
+.sass('src/res/css/StoreReviewTalkItem.scss', 'dist/css/')
+.sass('src/res/css/ImageFileUploader.scss', 'dist/css/')
+.sass('src/res/css/Popup_refund.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

@@ -1,0 +1,76 @@
+.StoreReviewTalk {
+  position: relative;
+
+  .carousel_buttons_container {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .alice-carousel__prev-btn {
+    display: none;
+  }
+  .alice-carousel__next-btn {
+    display: none;
+  }
+
+  .alice-carousel__dots {
+    display: none;
+  }
+
+  .title_label_text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #b3b3b3;
+  }
+
+  .title_text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .under_line {
+    width: 100%;
+    height: 1px;
+    background-color: #cccccc;
+    opacity: 0.5;
+
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .no_data_text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #b3b3b3;
+    text-align: center;
+  }
+
+  .no_data_text_point_color {
+    color: #00bfff;
+  }
+  @media (max-width: 520px){
+    /*모바일일때*/  
+
+    .carousel_buttons_container {
+      position: relative;
+      width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+      align-items: flex-end;
+      margin-top: 28px;
+      margin-bottom: 28px;
+    }
+
+    .title_label_text {
+      font-size: 12px;
+    }
+
+    .title_text {
+      font-size: 14px;
+    }
+  }
+}

@@ -2044,23 +2044,35 @@ class ProjectController extends Controller
       ]);
     }
 
-    public function getStoreAddItemPage()
+    public function getStoreAddItemPage(Request $request)
     {
+      $goBack = null;
+      if($request->has('back')){
+        $goBack = $request->back;
+      }
+
       return view('store.store_add_item', [
         'item_id' => null,
         'add_item_page_state' => 'ADD_PAGE_STATE_ADD',
         'store_id' => null,
-        'isAdmin' => false
+        'isAdmin' => false,
+        'goBack' => $goBack
       ]);
     }
 
-    public function getStoreEditItemPage($id)
+    public function getStoreEditItemPage(Request $request, $id)
     {
+      $goBack = null;
+      if($request->has('back')){
+        $goBack = $request->back;
+      }
+
       return view('store.store_add_item', [
         'item_id' => $id,
         'add_item_page_state' => 'ADD_PAGE_STATE_EDIT',
         'store_id' => null,
-        'isAdmin' => false
+        'isAdmin' => false,
+        'goBack' => $goBack
       ]);
     }
 
@@ -2070,7 +2082,8 @@ class ProjectController extends Controller
         'item_id' => null,
         'add_item_page_state' => 'ADD_PAGE_STATE_ADD',
         'store_id' => $store_id,
-        'isAdmin' => true
+        'isAdmin' => true,
+        'goBack' => null
       ]);
     }
 
@@ -2080,7 +2093,8 @@ class ProjectController extends Controller
         'item_id' => $id,
         'add_item_page_state' => 'ADD_PAGE_STATE_EDIT',
         'store_id' => $store_id,
-        'isAdmin' => true
+        'isAdmin' => true,
+        'goBack' => null
       ]);
     }
 

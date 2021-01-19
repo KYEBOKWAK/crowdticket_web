@@ -24,6 +24,9 @@ import icon_box from '../res/img/icon-box.svg';
 import icon_camera from '../res/img/ic-camera-fill.svg';
 
 import imageCompression from 'browser-image-compression';
+import Util from '../lib/Util';
+
+import ImageFileUploader from '../component/ImageFileUploader';
 
 
 //add_item_page_state
@@ -35,14 +38,27 @@ const INPUT_STORE_MANAGER_ADD_ITEM_CONTENT = "INPUT_STORE_MANAGER_ADD_ITEM_CONTE
 const INPUT_STORE_MANAGER_ADD_ITEM_PRICE = "INPUT_STORE_MANAGER_ADD_ITEM_PRICE";
 const INPUT_STORE_MANAGER_ADD_ITEM_ASK = "INPUT_STORE_MANAGER_ADD_ITEM_ASK";
 const INPUT_STORE_MANAGER_LIMIT_COUNT = "INPUT_STORE_MANAGER_LIMIT_COUNT";
+const INPUT_STORE_MANAGER_ADD_ITEM_NOTICE = "INPUT_STORE_MANAGER_ADD_ITEM_NOTICE";
 
 const INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME = "INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME";
 
+const INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL = "INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL";
+
 class StoreAddItemPage extends Component{
+  imageFileUploaderRef = React.createRef();
+
   fileInputRef = React.createRef();
 
   constructor(props){
     super(props);
+
+    let _item_product_category_type_list = [];
+    for(let i = 0 ; i < Types.product_categorys.length ; i++){
+      const data = Types.product_categorys[i];
+      const optionDom =  <option key={data.type} value={data.type}>{data.text}</option>;
+
+      _item_product_category_type_list.push(optionDom);
+    }
 
     this.state = {
       store_user_id: null,
@@ -95,6 +111,10 @@ class StoreAddItemPage extends Component{
         <option key={Types.product_state.ONE_TO_ONE} value={Types.product_state.ONE_TO_ONE}>{this.getProductStateShow(Types.product_state.ONE_TO_ONE)}</option>,
       ],
 
+      item_product_category_type: Types.product_categorys[0].type,
+      item_product_category_type_show: Types.product_categorys[0].text,
+      item_product_category_type_list: _item_product_category_type_list,
+
       order_limit_count: 0,
       ori_order_limit_count: 0,
 
@@ -106,8 +126,10 @@ class StoreAddItemPage extends Component{
       file: '',
       show_image: '',
 
-      img_compress_progress: 0
+      img_compress_progress: 0,
+      item_notice: '',
 
+      youtube_url: ''
     }
 
     this.onDrop = this.onDrop.bind(this);
@@ -342,6 +364,16 @@ class StoreAddItemPage extends Component{
     }
   }
 
+  getProductCategoryTypeShow = (type) => {
+    
+    const categoryData = Types.product_categorys.find((_value) => {return _value.type === type});
+    if(categoryData === undefined){
+      return '';
+    }
+
+    return categoryData.text;
+  }
+
   requestItemInfo(){
     if(this.state.pageState === Types.add_page_state.ADD){
       return;
@@ -367,6 +399,26 @@ class StoreAddItemPage extends Component{
       if(_ask_play_time === null){
         _ask_play_time = '';
       }
+
+      let _item_notice = result.data.item_notice;
+      if(_item_notice === null){
+        _item_notice = '';
+      }
+
+      let _item_youtube_url = result.data.youtube_url;
+      if(_item_youtube_url === null){
+        _item_youtube_url = '';
+      }
+
+
+      let _product_category_type = result.data.product_category_type;
+      let _product_category_type_show = this.getProductCategoryTypeShow(_product_category_type);
+      if(_product_category_type === null){
+        const categoryData = Types.product_categorys.find((value) => {return value.product_state === result.data.product_state});
+
+        _product_category_type = categoryData.type;
+        _product_category_type_show = categoryData.text;
+      }
       
       this.setState({
         item_ask_play_time: _ask_play_time,
@@ -389,7 +441,14 @@ class StoreAddItemPage extends Component{
         item_product_state: result.data.product_state,
         item_product_state_show: this.getProductStateShow(result.data.product_state),
 
-        show_image: result.data.img_url
+        item_product_category_type: _product_category_type,
+        item_product_category_type_show: _product_category_type_show,
+
+        show_image: result.data.img_url,
+
+        item_notice: _item_notice,
+
+        youtube_url: _item_youtube_url
       })
     }, (error) => {
 
@@ -429,6 +488,14 @@ class StoreAddItemPage extends Component{
     }else if(type === INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME){
       this.setState({
         item_ask_play_time: e.target.value
+      })
+    }else if(type === INPUT_STORE_MANAGER_ADD_ITEM_NOTICE){
+      this.setState({
+        item_notice: e.target.value
+      })
+    }else if(type === INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL){
+      this.setState({
+        youtube_url: e.target.value
       })
     }
   }
@@ -500,6 +567,18 @@ class StoreAddItemPage extends Component{
     })
   }
 
+  onChangeProductCategoryType = (event) => {
+    const value = event.target.value;
+    
+    const categoryData = Types.product_categorys.find((_value) => {return _value.type === value});
+    this.setState({
+      item_product_category_type: value,
+      item_product_category_type_show: categoryData.text,
+
+      item_product_state: categoryData.product_state
+    })
+  }
+
   clickPhotoAdd(e){
     e.preventDefault();
 
@@ -525,6 +604,9 @@ class StoreAddItemPage extends Component{
     }else if(this.state.item_price < 0){
       alert("0원 이상의 가격으로 입력해주세요.");
       return;
+    }else if(this.state.item_notice === ''){
+      alert("상품의 유의사항을 입력해주세요.");
+      return;
     }
 
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
@@ -534,6 +616,40 @@ class StoreAddItemPage extends Component{
       }
     }
 
+    if(this.state.youtube_url !== ''){
+      if(!Util.matchYoutubeUrl(this.state.youtube_url)){
+        alert("올바른 유투브 url 을 입력해주세요");
+        return;
+      }
+    }
+
+    // let order_limit_count = this.state.order_limit_count;
+    if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
+      if(!this.state.order_limit_count || this.state.order_limit_count <= 0){
+        alert("판매 수량을 1개 이상 입력해주세요. 판매를 중단 하고 싶으시면 하단의 판매상태 옵션을 이용해주세요.");
+        return;
+      }
+    }
+
+    // if(this.imageFileUploaderRef.getData().length === 0){
+    //   this.requestSetItemInfo();
+    // }else{
+    //   this.imageFileUploaderRef.uploadFiles(null, Types.file_upload_target_type.orders_items, 
+    //   (result_upload_files) => {
+
+    //     this.requestSetItemInfo();
+  
+    //   }, (error_upload_files) => {
+    //     alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+    //     return;
+    //   });
+    // }
+
+    this.requestSetItemInfo();
+
+    // this.requestSetItemInfo();
+
+    /*
     let order_limit_count = this.state.order_limit_count;
     if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
       if(!this.state.order_limit_count || this.state.order_limit_count <= 0){
@@ -544,7 +660,6 @@ class StoreAddItemPage extends Component{
     else{
       order_limit_count = 0;
     }
-
     
     if(this.state.pageState === Types.add_page_state.ADD){
       showLoadingPopup('등록중입니다..');
@@ -563,8 +678,13 @@ class StoreAddItemPage extends Component{
         file_upload_state: this.state.item_file_upload_state,
 
         product_state: this.state.item_product_state,
+        product_category_type: this.state.item_product_category_type,
 
-        ask_play_time: this.state.item_ask_play_time
+        ask_play_time: this.state.item_ask_play_time,
+
+        item_notice: this.state.item_notice,
+
+        youtube_url: this.state.youtube_url
       }, (result) => {
         if(this.state.imageBinary === ''){
           stopLoadingPopup();
@@ -602,7 +722,12 @@ class StoreAddItemPage extends Component{
         file_upload_state: this.state.item_file_upload_state,
         product_state: this.state.item_product_state,
 
-        ask_play_time: this.state.item_ask_play_time
+        product_category_type: this.state.item_product_category_type,
+
+        ask_play_time: this.state.item_ask_play_time,
+        item_notice: this.state.item_notice,
+
+        youtube_url: this.state.youtube_url
       }, (result_update) => {
         if(!this.state.isChangeImg){
           stopLoadingPopup();
@@ -622,6 +747,188 @@ class StoreAddItemPage extends Component{
         // alert("에러");
       })
     }
+    */
+  }
+
+  requestSetItemInfo = () => {
+    let order_limit_count = this.state.order_limit_count;
+    if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
+      if(!this.state.order_limit_count || this.state.order_limit_count <= 0){
+        alert("판매 수량을 1개 이상 입력해주세요. 판매를 중단 하고 싶으시면 하단의 판매상태 옵션을 이용해주세요.");
+        return;
+      }
+    }
+    else{
+      order_limit_count = 0;
+    }
+
+    if(this.state.pageState === Types.add_page_state.ADD){
+      showLoadingPopup('등록중입니다..');
+
+      axios.post("/store/item/add", {
+        store_id: this.state.store_id,
+        price: this.state.item_price,
+        state: this.state.item_state,
+        title: this.state.item_title,
+        img_url: this.state.item_img_url,
+        content: this.state.item_content,
+        ask: this.state.item_ask,
+
+        order_limit_count: order_limit_count,
+
+        file_upload_state: this.state.item_file_upload_state,
+
+        product_state: this.state.item_product_state,
+        product_category_type: this.state.item_product_category_type,
+
+        ask_play_time: this.state.item_ask_play_time,
+
+        item_notice: this.state.item_notice,
+
+        youtube_url: this.state.youtube_url
+      }, (result) => {
+        this.nextFileCheck(result.item_id);
+        /*
+        if(this.state.imageBinary === ''){
+          stopLoadingPopup();
+          swal("등록완료!", '', 'success');
+          return;
+        }
+
+        this.uploadFiles(result.item_id, Types.file_upload_target_type.items);
+        */
+
+      }, (error) => {
+        stopLoadingPopup();
+        // alert("에러");
+      })
+    }else if(this.state.pageState === Types.add_page_state.EDIT){
+
+      let isChangeLimitCount = false;
+      if(this.state.order_limit_count !== this.state.ori_order_limit_count){
+        isChangeLimitCount = true;
+      }
+
+      showLoadingPopup('수정중입니다..');
+      axios.post('/store/item/update', {
+        store_id: this.state.store_id,
+        price: this.state.item_price,
+        state: this.state.item_state,
+        title: this.state.item_title,
+        // img_url: this.state.item_img_url,
+        content: this.state.item_content,
+        ask: this.state.item_ask,
+        item_id: this.state.item_id,
+
+        order_limit_count: order_limit_count,
+        isChangeLimitCount: isChangeLimitCount,
+
+        file_upload_state: this.state.item_file_upload_state,
+        product_state: this.state.item_product_state,
+
+        product_category_type: this.state.item_product_category_type,
+
+        ask_play_time: this.state.item_ask_play_time,
+        item_notice: this.state.item_notice,
+
+        youtube_url: this.state.youtube_url
+      }, (result_update) => {
+
+        this.nextFileCheck(this.state.item_id);
+        /*
+        if(!this.state.isChangeImg){
+          stopLoadingPopup();
+          this.showEditPopup();
+          return;
+        }
+
+        if(this.state.imageBinary === ''){
+          stopLoadingPopup();
+          this.showEditPopup();
+          return;
+        }
+
+        this.uploadFiles(this.state.item_id, Types.file_upload_target_type.items);
+        */
+      }, (error_update) => {
+        stopLoadingPopup();
+        // alert("에러");
+      })
+    }
+  }
+
+  nextFileCheck = (item_id) => {
+    this.imageFileUploaderRef.setItems_imgsData(() => {
+      if(!this.state.isChangeImg){
+        this.complitePopup();
+        return;
+      }
+  
+      if(this.state.imageBinary === ''){
+        // stopLoadingPopup();
+        // this.showEditPopup();
+        this.complitePopup();
+        return;
+      }
+
+      this.uploadFiles(item_id, Types.file_upload_target_type.items);
+    }, () => {
+      stopLoadingPopup();
+    })
+    /*
+    // console.log("sadfdsfdsf");
+    if(!this.state.isChangeImg){
+      this.complitePopup();
+      return;
+    }
+
+    if(this.state.imageBinary === ''){
+      // stopLoadingPopup();
+      // this.showEditPopup();
+      this.complitePopup();
+      return;
+    }
+
+    showLoadingPopup('프로필 이미지 업로드중...');
+
+    this.uploadFiles(item_id, Types.file_upload_target_type.items);
+    */
+    
+    /*
+    this.imageFileUploaderRef.uploadFiles(item_id, Types.file_upload_target_type.items_images, 
+    (result_upload_files) => {
+
+      if(!this.state.isChangeImg){
+        this.complitePopup();
+        return;
+      }
+  
+      if(this.state.imageBinary === ''){
+        // stopLoadingPopup();
+        // this.showEditPopup();
+        this.complitePopup();
+        return;
+      }
+
+      showLoadingPopup('프로필 이미지 업로드중...');
+  
+      this.uploadFiles(item_id, Types.file_upload_target_type.items);
+
+    }, (error_upload_files) => {
+      alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
+      return;
+    });
+    */
+    
+  }
+
+  complitePopup = () => {
+    stopLoadingPopup();
+    if(this.state.pageState === Types.add_page_state.ADD){
+      swal("등록완료!", '', 'success');
+    }else{
+      swal("수정완료!", '', 'success');
+    }
   }
 
   uploadFiles = (item_id, target_type) => {
@@ -636,7 +943,6 @@ class StoreAddItemPage extends Component{
 
     data.append("blob", file, file.name);
     
-    console.log(file);
     // return;
     
     const options = {
@@ -663,48 +969,19 @@ class StoreAddItemPage extends Component{
 
     _axios.post(`${apiURL}/uploader/files/item/img`, data, options).then((res) => {
       // console.log(res);
-      stopLoadingPopup();
-      if(this.state.pageState === Types.add_page_state.ADD){
-        swal("등록완료!", '', 'success');
-      }else{
-        this.showEditPopup();
-      }
+
+      this.complitePopup();
+      // stopLoadingPopup();
+      // if(this.state.pageState === Types.add_page_state.ADD){
+      //   swal("등록완료!", '', 'success');
+      // }else{
+      //   this.showEditPopup();
+      // }
       
     }).catch((error) => {
       stopLoadingPopup();
       alert('이미지 저장 에러');
     })
-  }
-
-  showEditPopup(){
-    swal("수정완료!", '', 'success');
-    /*
-    swal("수정완료!", {
-      buttons: {
-        nosave: {
-          text: "더 수정하기",
-          value: "close",
-        },
-        save: {
-          text: "돌아가기",
-          value: "back",
-        },
-      },
-    })
-    .then((value) => {
-      switch (value) {
-        case "back":
-          {
-            // this.goBack();
-          }
-          break;
-        case "close":
-          {
-
-          }break;
-      }
-    });
-    */
   }
 
   clickBackButton(e){
@@ -730,6 +1007,11 @@ class StoreAddItemPage extends Component{
     const isAdmin = document.querySelector('#isAdmin').value;
     if(isAdmin){
       hrefURL = baseURL+'/admin/manager/store/'+this.state.store_id+'/?menu=TAB_ITEM_MANAGER';
+    }
+
+    const go_back_edit_page = document.querySelector('#go_back_edit_page').value;
+    if(go_back_edit_page){
+      hrefURL = baseURL+'/item/store/'+this.state.item_id;
     }
     
     window.location.href = hrefURL;
@@ -871,6 +1153,16 @@ class StoreAddItemPage extends Component{
           {pageTitle}
         </div>
 
+        <div className={'necessary_box'}>
+          
+          <div className={'necessary_dot'}>
+          </div>
+          
+          <div className={'necessary_text'}>
+            필수 항목입니다.
+          </div>
+        </div>
+
         <div className={'box_container'} style={{marginTop: 0}}>
           <div className={'box_label'}>
             사진 업로드
@@ -896,32 +1188,76 @@ class StoreAddItemPage extends Component{
 
         <div className={'box_container'}>
           <div className={'box_label'}>상품 정보</div>
-          <div className={'input_label'} style={{marginTop: 10}}>
+
+          {/* <div className={'input_label'}>
             콘텐츠명
+          </div> */}
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              콘텐츠명
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
           </div>
           <input className={'input_box'} type="text" name={'title'} placeholder={'콘텐츠명을 입력해주세요.'} value={this.state.item_title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_TITLE)}}/>
 
-          <div className={'input_label'} style={{marginTop: 20}}>
-            콘텐츠 가격
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              콘텐츠 가격
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
           </div>
           <input className={'input_box'} type="number" name={'price'} placeholder={'콘텐츠 가격을 입력해주세요.'} value={this.state.item_price} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_PRICE)}}/>
           
-          <div className={'input_label'}>
-            콘텐츠 설명
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              콘텐츠 설명
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
           </div>
           <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={"콘텐츠의 설명을 입력해주세요."}></textarea>
+
+          <div className={'input_label'} style={{marginTop: 10}}>
+            콘텐츠 설명(Youtube 영상URL)
+          </div>
+          <input className={'input_box'} type="text" name={'youtube_url'} placeholder={'콘텐츠 설명에 보여질 영상 url을 넣어주세요.'} value={this.state.youtube_url} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL)}}/>
+
+          <div className={'input_label'} style={{marginTop: 10}}>
+            추가 이미지
+          </div>
+
+          <ImageFileUploader store_user_id={this.state.store_user_id} ref={(ref) => {this.imageFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true}></ImageFileUploader>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              유의사항
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
+          </div>
+          <textarea className={'input_content_textarea'} style={{height: 250}} value={this.state.item_notice} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_NOTICE)}} placeholder={"구매자가 유의해야 하는 사항을 적어주세요.\n예: 어쩌고저쩌고"}></textarea>
 
           <div className={'input_label'}>
             상품 타입 (고객에게 전달해줄 상품 타입입니다.)
           </div>
           <div className={'select_box'}>
+            {this.state.item_product_category_type_show}
+            <img src={icon_box} />
+
+            <select className={'select_tag'} value={this.state.item_product_category_type} onChange={this.onChangeProductCategoryType}>
+              {this.state.item_product_category_type_list}
+            </select>
+          </div>
+          {/* <div className={'select_box'}>
             {this.state.item_product_state_show}
             <img src={icon_box} />
 
             <select className={'select_tag'} value={this.state.item_product_state} onChange={this.onChangeProductState}>
               {this.state.item_product_state_list}
             </select>
-          </div>
+          </div> */}
 
           {playNoticeTextarea}
 
@@ -930,8 +1266,12 @@ class StoreAddItemPage extends Component{
         <div className={'box_container'}>
           <div className={'box_label'}>구매자 요청 폼</div>
 
-          <div className={'input_label'}>
-            구매자 요청사항
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              구매자 요청사항
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
           </div>
           <textarea className={'input_content_ask_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={"예시: \n 1. 이름을 써주세요"}></textarea>
           <div className={'input_ask_explain'}>

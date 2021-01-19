@@ -1,8 +1,10 @@
 $img_width: 520px;
 .StoreItemDetailPage {
   // display: flex;
+  width: 100%;
   padding-top: 64px;
   padding-bottom: 64px;
+  overflow: hidden;
 
   .item_img_container {
     position: relative;
@@ -58,10 +60,40 @@ $img_width: 520px;
     background-color: #ffffff;
     padding-bottom: 32px;
     padding-top: 32px;
-    padding-left: 27px;
-    padding-right: 27px;
+    padding-left: 32px;
+    padding-right: 32px;
+    // padding-left: 27px;
+    // padding-right: 27px;
     margin-top: 20px;
+    overflow: hidden;
     // margin-bottom: 64px;
+  }
+
+  .point_tag_container {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex-wrap: wrap;
+  }
+
+  .point_tag_box {
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 12px;
+    background-color: white;
+    font-size: 14px;
+    color: #b3b3b3;
+    font-weight: 500;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .point_tag_point_color {
+    color: #00bfff;
   }
 
   .content_title {
@@ -75,13 +107,13 @@ $img_width: 520px;
     font-size: 22px;
     font-weight: bold;
     color: #00bfff;
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
   }
 
   .content_text {
     font-size: 14px;
     color: #333333;
-    margin-bottom: 32px;
+    // margin-bottom: 32px;
   }
 
   .button_pay {
@@ -119,7 +151,7 @@ $img_width: 520px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 40%;
     height: 56px;
     border-radius: 12px;
     border: solid 1px #cccccc;
@@ -144,40 +176,167 @@ $img_width: 520px;
     padding-bottom: 20px;
 
     border-radius: 20px;
-    background-color: #ffffff;
+    background-color: #feeff2;
     margin-top: 20px;
     font-size: 14px;
-    color: #333333;
+    color: #fc5e7c;
   }
 
-  .reset_container {
-    width: 100%;
-    height: 56px;
-    background-color: rgba(191, 238, 255, 0.4);
-    border-radius: 20px;
-    font-size: 14px;
+  .reset_date_text {
+    // margin-left: 5px;
     font-weight: bold;
+    color: #fc5e7c;
+  }
 
-    margin-top: 15px;
+  .price_text_container {
+    display: flex;
+    align-items: center;
 
+    // margin-bottom: 24px;
+  }
+
+  .edit_button {
+    font-size: 12px;
+    color: #ffffff;
+    font-weight: 500;
+    background-color: rgb(243, 162, 58);
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 25px;
+    margin-left: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+  }
+
+  .container_label_text {
+    margin-top: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #191919;
+  }
+  
+  .icon_order_img {
+    width: 28px;
+    height: 45px;
+  }
+
+  .icon_check_img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .icon_gift_img {
+    width: 40px;
+    height: 41px;
+  }
+
+  .icon_good_img {
+    width: 40px;
+    height: 38px;
+  }
+
+  .use_img_circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .reset_date_text {
-    margin-left: 5px;
-    color: #00bfff;
+  .use_img_box {
+    text-align: center;
   }
-  
+
+  .use_box_text {
+    margin-top: 9px;
+    color: #b3b3b3;
+  }
+
+  .use_img_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+
+  .buttons_container {
+    display: flex;
+    margin-top: 43px;
+  }
+
+  .under_line {
+    width: 100%;
+    height: 1px;
+    opacity: 0.5;
+    background-color: #cccccc;
+    margin-bottom: 32px;
+    margin-top: 32px;
+  }
+
+  .youtube_container {
+    // margin-top: 12px;
+  }
+
+  .cancel_popup_text {
+    
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #b3b3b3;
+  }
+
+  .refund_container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .button_fix_pay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 520px;
+    height: 56px;
+    // border-radius: 12px;
+    background-color: #00bfff;
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+    position: fixed;
+    bottom: 0;
+  }
 
   @media (max-width: 520px){
     /*모바일일때*/
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-bottom: 24px;
+
+    .button_fix_pay {
+      width: 100%;
+      border-radius: 0px;
+    }
     
+    .container_label_text {
+      font-size: 16px;
+    }
+
+    .item_detail_page_container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
     .user_info_container {
       padding: 18px;
+    }
+    
+    .item_img_cover {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
     }
 
     .content_title{
@@ -187,11 +346,15 @@ $img_width: 520px;
 
     .content_price{
       font-size: 16px;
+      // margin-bottom: 16px;
+    }
+
+    .price_text_container {
       margin-bottom: 16px;
     }
 
     .content_text{
-      margin-bottom: 24px;
+      // margin-bottom: 24px;
     }
 
     .item_img {
@@ -203,8 +366,8 @@ $img_width: 520px;
     }
 
     .content_container{
-      border-radius: 0px;
-      margin-top: 0px;
+      border-radius: 20px;
+      margin-top: 10px;
       // margin-bottom: 0px;
       padding-left: 10px;
       padding-right: 10px;
@@ -246,6 +409,46 @@ $img_width: 520px;
       height: 40px;
       font-size: 11px;
       border-radius: 12px;
+    }
+
+    .icon_order_img {
+      width: 16px;
+      height: 28px;
+    }
+  
+    .icon_check_img {
+      width: 21px;
+      height: 22px;
+    }
+  
+    .icon_gift_img {
+      width: 24px;
+      height: 25px;
+    }
+  
+    .icon_good_img {
+      width: 25px;
+      height: 24px;
+    }
+  
+    .use_img_circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .use_img_box {
+      text-align: center;
+    }
+  
+    .use_box_text {
+      margin-top: 9px;
+      color: #b3b3b3;
+      font-size: 12px;
     }
   }
 }

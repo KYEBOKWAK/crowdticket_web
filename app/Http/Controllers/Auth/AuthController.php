@@ -52,8 +52,8 @@ class AuthController extends Controller
       }
       $this->auth->login($this->registrar->create($request->all()));
 
-      //\Redirect::action('MailSendController@sendEmailRegister', ['email' => $email, 'redirectPath'=>$this->redirectPath()]);
-      //email send
+      
+      // //email send
       $from = 'contact@crowdticket.kr';
       $fromName = '크라우드티켓';
       $to = $email;

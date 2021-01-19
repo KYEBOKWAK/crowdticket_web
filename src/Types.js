@@ -49,6 +49,44 @@ const Types = {
     default: 1,
     product_upload: 2
   },
+  product_categorys: [
+    {
+      type: 'video',
+      text: '영상',
+      subText: '제공 콘텐츠',
+      product_state: 1
+    },
+    {
+      type: 'image',
+      text: '이미지',
+      subText: '제공 콘텐츠',
+      product_state: 1
+    },
+    {
+      type: 'text',
+      text: '텍스트',
+      subText: '위주 콘텐츠',
+      product_state: 0
+    },
+    {
+      type: 'live',
+      text: '실시간',
+      subText: '진행 콘텐츠',
+      product_state: 2
+    },
+    {
+      type: 'sound',
+      text: '음성',
+      subText: '제공 콘텐츠',
+      product_state: 1
+    },
+    {
+      type: 'etc',
+      text: '기타',
+      subText: '형식 콘텐츠',
+      product_state: 1
+    },
+  ],
   product_state: {
     TEXT: 0,
     FILE: 1,
@@ -57,7 +95,8 @@ const Types = {
   file_upload_target_type: {
     orders_items: 'orders_items',
     items: 'items',
-    product_file: 'product_file'
+    product_file: 'product_file',
+    items_images: 'items_images'
   },
   file_upload_state: {
     NONE: 0,
