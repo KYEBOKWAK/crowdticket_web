@@ -324,19 +324,19 @@ class StoreAddItemPage extends Component{
 
   getLimitStateShow(item_state_limit){
     if(item_state_limit === Types.item_limit_state.UNLIMIT){
-      return '무제한';
+      return '제한없음';
     }
     else if(item_state_limit === Types.item_limit_state.LIMIT){
-      return '한주간 한정 수량 판매';
+      return '일주일에 판매 가능한 수량 설정';
     }
     else{
-      return '무제한';
+      return '제한없음';
     }
   }
 
   getFileUploadStateShow(state){
     if(state === Types.file_upload_state.NONE){
-      return '없음';
+      return '받지 않음';
     }
     else if(state === Types.file_upload_state.IMAGE){
       return '이미지';
@@ -345,7 +345,7 @@ class StoreAddItemPage extends Component{
       return '영상, 사운드, 기타 파일';
     }
     else{
-      return '없음';
+      return '받지 않음';
     }
   }
 
@@ -1132,11 +1132,11 @@ class StoreAddItemPage extends Component{
     if(this.state.item_state_limit === Types.item_limit_state.LIMIT){
       limitCountDom = <div>
                         <div className={'input_label'} style={{marginTop: 20}}>
-                          주간 판매 제한 수
+                          판매 가능 수량
                         </div>
                         <input className={'input_box'} type="number" name={'limit_count'} placeholder={'일주일에 판매 가능한 수량을 입력해주세요.'} value={this.state.order_limit_count} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_LIMIT_COUNT)}}/>
                         <div className={'limit_explain_text'}>
-                          일주일에 판매 가능한 수 입니다. 최대 수량에 도달하면 자동으로 판매가 일시중지되며, 판매 수량은 매주 월요일 0시에 초기화되어 다시 주문이 가능해집니다.
+                          최대 판매 가능 수량까지 도달하면 판매 상태가 '품절'로 바뀝니다. 판매 수량은 매주 월요일 0시에 초기화되며, 자동으로 판매 상태가 '판매 중'으로 다시 바뀝니다.
                         </div>
                       </div>
     }
@@ -1175,7 +1175,7 @@ class StoreAddItemPage extends Component{
         <div className={'box_container'} style={{marginTop: 0}}>
           <div className={'photo_upload_container'}>
             <div className={'box_label'}>
-              사진 업로드
+              대표 이미지
             </div>
             <div className={'necessary_dot'}>
             </div>
@@ -1200,23 +1200,20 @@ class StoreAddItemPage extends Component{
         </div>
 
         <div className={'box_container'}>
-          <div className={'box_label'}>상품 정보</div>
+          <div className={'box_label'}>기본 정보</div>
 
-          {/* <div className={'input_label'}>
-            콘텐츠명
-          </div> */}
           <div className={'input_container'}>
             <div className={'input_label'}>
-              콘텐츠명
+              콘텐츠 상품명
             </div>
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <input className={'input_box'} type="text" name={'title'} placeholder={'콘텐츠명을 입력해주세요.'} value={this.state.item_title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_TITLE)}}/>
+          <input className={'input_box'} type="text" name={'title'} placeholder={'콘텐츠를 짧은 한 문장으로 표현해주세요!'} value={this.state.item_title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_TITLE)}}/>
 
           <div className={'input_container'}>
             <div className={'input_label'}>
-              콘텐츠 가격
+              상품 가격
             </div>
             <div className={'necessary_dot'}>
             </div>
@@ -1225,20 +1222,20 @@ class StoreAddItemPage extends Component{
           
           <div className={'input_container'}>
             <div className={'input_label'}>
-              콘텐츠 설명
+              콘텐츠 소개
             </div>
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={"콘텐츠의 설명을 입력해주세요."}></textarea>
+          <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={`판매 할 콘텐츠 상품에 대한 소개를 작성해주세요!\n\n당장 소개가 떠오르지 않는다면 아래 예시와 같은 내용을 적어보는 건 어떨까요?\n\n- 콘텐츠 제공 형태 (파일 유형, 영상 길이, 이미지 사이즈, 진행 방식, 내용물, 특징 등)\n- 상품 기획 의도 및 준비 과정 소개\n- 작업 가능 범위\n- 상품 관련 팬들에게 전하고 싶은 말`}></textarea>
 
           <div className={'input_label'} style={{marginTop: 10}}>
-            콘텐츠 설명(Youtube 영상URL)
+            소개용 영상 추가하기
           </div>
-          <input className={'input_box'} type="text" name={'youtube_url'} placeholder={'콘텐츠 설명에 보여질 영상 url을 넣어주세요.'} value={this.state.youtube_url} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL)}}/>
+          <input className={'input_box'} type="text" name={'youtube_url'} placeholder={'유튜브 영상 url을 넣어주세요'} value={this.state.youtube_url} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_YOUTUBE_URL)}}/>
 
           <div className={'input_label'} style={{marginTop: 10}}>
-            추가 이미지
+            소개용 이미지 추가하기
           </div>
 
           <ImageFileUploader store_user_id={this.state.store_user_id} ref={(ref) => {this.imageFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true}></ImageFileUploader>
@@ -1250,10 +1247,10 @@ class StoreAddItemPage extends Component{
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <textarea className={'input_content_textarea'} style={{height: 250}} value={this.state.item_notice} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_NOTICE)}} placeholder={"구매자가 유의해야 하는 사항을 적어주세요.\n예: 어쩌고저쩌고"}></textarea>
+          <textarea className={'input_content_textarea'} style={{height: 250}} value={this.state.item_notice} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_NOTICE)}} placeholder={`상품 관련하여 구매자에게 반드시 전해야 하는 유의사항이 있다면 작성해주세요.\n\n예) '콘텐츠의 제작과정이 유튜브에 업로드 될 수 있습니다', '저작권 위반 소지가 있는 작업은 어렵습니다' 등`}></textarea>
 
-          <div className={'input_label'}>
-            상품 타입 (고객에게 전달해줄 상품 타입입니다.)
+          <div className={'input_label'} style={{marginTop: 10}}>
+            콘텐츠 제공 형태
           </div>
           <div className={'select_box'}>
             {this.state.item_product_category_type_show}
@@ -1286,14 +1283,14 @@ class StoreAddItemPage extends Component{
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <textarea className={'input_content_ask_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={"예시: \n 1. 이름을 써주세요"}></textarea>
+          <textarea className={'input_content_ask_textarea'} value={this.state.item_ask} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK)}} placeholder={`콘텐츠 제공을 위해 구매자에게 받아야하는 정보나 주문관련 전하고 싶은 내용이 있다면 작성해주세요.\n\n예) '사진을 올려주세요', '주문은 ~~~ 이렇게 해주세요', '고민이나 사연을 알려주세요' 등`}></textarea>
           <div className={'input_ask_explain'}>
             구매자가 콘텐츠 주문시 보게 될 콘텐츠 신청 양식 텍스트입니다
           </div>
         </div>
 
         <div className={'box_container'}>
-          <div className={'box_label'}>파일 업로드 옵션</div>
+          <div className={'input_label'}>구매자에게 사진 또는 파일 받기</div>
 
           <div className={'select_box'}>
             {this.state.item_file_upload_state_show}
@@ -1310,7 +1307,7 @@ class StoreAddItemPage extends Component{
         </div>
 
         <div className={'box_container'}>
-          <div className={'box_label'}>판매 수량 제한 옵션</div>
+          <div className={'box_label'}>판매 수량 제한하기</div>
 
           <div className={'select_box'}>
             {this.state.item_state_limit_show}
