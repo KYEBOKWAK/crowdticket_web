@@ -487,12 +487,12 @@ class StoreItemDetailPage extends Component{
 
     let youtube_dom = <></>;
     if(Util.matchYoutubeUrl(this.state.youtube_url)){
-      const baseURLDom = document.querySelector('#base_url');
-      let baseURL = 'https://crowdticket.kr';
-      if(baseURLDom){
-        // console.log(baseURLDom.value);
-        baseURL = baseURLDom.value;
-      }
+      // const baseURLDom = document.querySelector('#base_url');
+      // let baseURL = 'https://crowdticket.kr';
+      // if(baseURLDom){
+      //   // console.log(baseURLDom.value);
+      //   baseURL = baseURLDom.value;
+      // }
 
       youtube_dom = <div className={'youtube_container'}>
                       <ReactPlayer controls={true} width={'100%'} height={'260px'} url={this.state.youtube_url} 
@@ -500,7 +500,7 @@ class StoreItemDetailPage extends Component{
                         youtube: {
                           playerVars: 
                           { 
-                            'origin': baseURL
+                            'origin': 'https://crowdticket.kr'
                           }
                         }
                       }}
