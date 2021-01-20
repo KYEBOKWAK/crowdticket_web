@@ -72,6 +72,15 @@ class ImageFileUploader extends Component{
   };
 
   componentDidUpdate(){
+
+    if(!this.state.isInitScrollAction){
+      this.setState({
+        isInitScrollAction: true
+      }, () => {
+        this.setScrollAction();
+      })
+    }
+
     if(this.props.store_item_id === null || this.props.store_item_id === undefined){
       return;
     }
@@ -86,13 +95,13 @@ class ImageFileUploader extends Component{
     }
 
     
-    if(!this.state.isInitScrollAction){
-      this.setState({
-        isInitScrollAction: true
-      }, () => {
-        this.setScrollAction();
-      })
-    }
+    // if(!this.state.isInitScrollAction){
+    //   this.setState({
+    //     isInitScrollAction: true
+    //   }, () => {
+    //     this.setScrollAction();
+    //   })
+    // }
   }
 
   requestFilesData = () => {
@@ -145,8 +154,9 @@ class ImageFileUploader extends Component{
       this.setState({
         files: _files.concat(),
         show_images: _show_images.concat(),
+        isInitScrollAction: true
       }, () => {
-        // this.setScrollAction();
+        this.setScrollAction();
       })
     }, (error) => {
 
@@ -260,7 +270,7 @@ class ImageFileUploader extends Component{
     let viewport = document.querySelector('.ImageFileUploader .viewport');
     let content = document.querySelector('.ImageFileUploader .scrollable-content');
 
-    /*
+    
     if(this.props.store_item_id === null || this.props.store_item_id === undefined){
       viewport = document.querySelector('.ImageFileUploader .viewport');
       content = document.querySelector('.ImageFileUploader .scrollable-content');
@@ -273,7 +283,7 @@ class ImageFileUploader extends Component{
         content = document.querySelector(`.ImageFileUploader .scrollable-content-${this.props.file_upload_target_type}-${this.props.store_item_id}`);
       }
     }
-    */
+    
 
     if(viewport === null){
       return;
