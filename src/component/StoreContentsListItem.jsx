@@ -52,11 +52,13 @@ class StoreContentsListItem extends Component{
 
     let goURL = '';
     if(this.props.isHomeList){
-      if(!this.props.store_alias || this.props.store_alias === ''){
-        goURL = baseURL + '/store/' + this.props.store_id;
-      }else{
-        goURL = baseURL + '/store/' + this.props.store_alias;
-      }
+      // if(!this.props.store_alias || this.props.store_alias === ''){
+      //   goURL = baseURL + '/store/' + this.props.store_id;
+      // }else{
+      //   goURL = baseURL + '/store/' + this.props.store_alias;
+      // }
+
+      goURL = baseURL + '/item/store/' + this.props.store_item_id;
       
     }else {
       goURL = baseURL + '/item/store/' + this.props.store_item_id;
