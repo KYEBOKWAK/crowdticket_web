@@ -234,6 +234,14 @@ $img_width: 100px;
     font-size: 14px;
   }
 
+  .input_box::placeholder {
+    color: #acacac;
+  }
+
+  .input_content_textarea::placeholder {
+    color: #acacac;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/
     padding-top: 32px;

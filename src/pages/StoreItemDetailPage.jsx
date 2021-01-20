@@ -420,7 +420,7 @@ class StoreItemDetailPage extends Component{
                                   if(this.state.is_show_other_items){
                                     if(isHide){
                                       this.setState({
-                                        is_hide_other_items: false
+                                        is_show_other_items: false
                                       })
                                     }
                                   }
