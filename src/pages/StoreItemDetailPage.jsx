@@ -221,7 +221,6 @@ class StoreItemDetailPage extends Component{
     axios.post("/store/any/averageday", {
       item_id: this.state.store_item_id
     }, (result) => {
-
       //주문수가 5개 이상부터 평균 계산된다.
       if(result.list.length < 5){
         return;
@@ -232,7 +231,11 @@ class StoreItemDetailPage extends Component{
         const data = result.list[i];
         const timeDiff = moment_timezone(data.relay_at).diff(data.apporve_at);
         
-        const day = moment_timezone.duration(timeDiff).days();
+        let day = moment_timezone.duration(timeDiff).days();
+        if(day === 0){
+          day = 1;
+        }
+
         daysSum+=day;
       }
 
