@@ -544,6 +544,19 @@ class StoreItemDetailPage extends Component{
                       </button>;
     }
 
+    let itemNoticeDom = <></>;
+    if(this.state.item_notice && this.state.item_notice !== ''){
+      itemNoticeDom = <div>
+                        <div className={'container_label_text'}>
+                          유의사항
+                        </div>
+
+                        <div className={'content_container'}>
+                          {this.state.item_notice}
+                        </div>
+                      </div>
+    }
+
     return(
       <div className={'StoreItemDetailPage'}>
         <div className={'item_img_container'}>
@@ -588,13 +601,14 @@ class StoreItemDetailPage extends Component{
             {this.state.item_ask}
           </div>
 
-          <div className={'container_label_text'}>
+          {itemNoticeDom}
+          {/* <div className={'container_label_text'}>
             유의사항
           </div>
 
           <div className={'content_container'}>
             {this.state.item_notice}
-          </div>
+          </div> */}
 
           <div className={'refund_container'}>
             <button onClick={(e) => {this.onClickRefundButton(e)}} className={'cancel_popup_text'}>

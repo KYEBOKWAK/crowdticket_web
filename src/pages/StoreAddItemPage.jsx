@@ -610,8 +610,8 @@ class StoreAddItemPage extends Component{
       alert("0원 이상의 가격으로 입력해주세요.");
       return;
     }else if(this.state.item_notice === ''){
-      alert("상품의 유의사항을 입력해주세요.");
-      return;
+      // alert("상품의 유의사항을 입력해주세요.");
+      // return;
     }
 
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
@@ -1244,8 +1244,8 @@ class StoreAddItemPage extends Component{
             <div className={'input_label'}>
               유의사항
             </div>
-            <div className={'necessary_dot'}>
-            </div>
+            {/* <div className={'necessary_dot'}>
+            </div> */}
           </div>
           <textarea className={'input_content_textarea'} style={{height: 250}} value={this.state.item_notice} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_NOTICE)}} placeholder={`상품 관련하여 구매자에게 반드시 전해야 하는 유의사항이 있다면 작성해주세요.\n\n예) '콘텐츠의 제작과정이 유튜브에 업로드 될 수 있습니다', '저작권 위반 소지가 있는 작업은 어렵습니다' 등`}></textarea>
 
