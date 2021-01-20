@@ -25,6 +25,8 @@ import Popup_image_preview from '../component/Popup_image_preview';
 
 import moment from 'moment';
 
+const FILE_UPLOADER_BOX_WIDTH = 80;
+
 class FileUploader extends Component{
   fileInputRef = React.createRef();
 
@@ -121,7 +123,11 @@ class FileUploader extends Component{
         if(isImage >= 0){
           const imageData = {
             key: i,
-            image: data.url
+            image: data.url,
+            size: {
+              width: 0,
+              height: 0
+            }
           }
 
           _show_images.push(imageData);
@@ -387,7 +393,11 @@ class FileUploader extends Component{
 
         const imgData = {
           key: index,
-          image: e.target.result
+          image: e.target.result,
+          size: {
+            width: 0,
+            height: 0
+          }
         }
         
         _show_images.push(imgData);
@@ -451,6 +461,40 @@ class FileUploader extends Component{
     event.target.value = ''
   }
 
+  onImgLoad = (img, key) => {
+
+    let _show_images = this.state.show_images.concat();
+    const showImageIndex = _show_images.findIndex((value) => {return key === value.key});
+    if(showImageIndex < 0 || showImageIndex >= _show_images.length){
+      alert("image load 범위 오류");
+      return;
+    }
+
+    _show_images[showImageIndex].size = {
+      width: img.target.offsetWidth,
+      height: img.target.offsetHeight
+    }
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+    if(img.target.offsetWidth > img.target.offsetHeight){
+      //가로가 긴 이미지
+      //세로 비율을 찾는다
+      const ratio = FILE_UPLOADER_BOX_WIDTH / img.target.offsetHeight;
+
+      const imgReSizeWidth = img.target.offsetWidth * ratio;
+      const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+      _show_images[showImageIndex].size = {
+        width: imgReSizeWidth,
+        height: imgReSizeHeight
+      }
+    }
+
+    this.setState({
+      show_images: _show_images.concat()
+    })
+  }
+
   render(){
     if(this.props.state === Types.file_upload_state.NONE){
       return (
@@ -489,8 +533,18 @@ class FileUploader extends Component{
         })
 
         if(imageData){
-          centerImageDom = <button onClick={(e) => {this.onPressImagePreview(e, imageData.image)}}>
-                            <img className={'preview_img'} src={imageData.image} />
+          const imageSize = {...imageData.size};
+
+          let imageStyle = {}
+          if(imageSize.width > 0){
+            imageStyle = {
+              width: imageSize.width,
+              height: imageSize.height,
+            }
+          }
+
+          centerImageDom = <button className={'preview_button'} onClick={(e) => {this.onPressImagePreview(e, imageData.image)}}>
+                            <img style={imageStyle} className={'preview_img'} onLoad={(img) => {this.onImgLoad(img, data.key)}} src={imageData.image} />
                           </button>
         }
       }else{

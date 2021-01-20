@@ -12,7 +12,8 @@ class Popup_image_preview extends Component{
     super(props);
 
     this.state = {
-      
+      container_width: '80%',
+      isChangeWidth: false
     }
 
     // this.requestMoreData = this.requestMoreData.bind(this);
@@ -35,11 +36,25 @@ class Popup_image_preview extends Component{
     this.props.closeCallback();
   }
 
+  onImgLoad = (img) => {
+
+    if(window.innerHeight <= img.target.offsetHeight){
+      if(!this.state.isChangeWidth){
+        this.setState({
+          container_width: '50%',
+          isChangeWidth: true
+        })
+      }
+    }
+    // width: img.target.offsetWidth,
+    //   height: img.target.offsetHeight
+  }
+
   render(){    
     return(
       <div className={'Popup_image_preview'}>
-        <div className={'popup_container'}>
-          <img className={'img'} src={this.props.previewURL} />
+        <div style={{width: this.state.container_width}} className={'popup_container'}>
+          <img onLoad={(img) => {this.onImgLoad(img)}} className={'img'} src={this.props.previewURL} />
           <button className={'exitButton'} onClick={(e) => {this.onClickExit(e)}}>
             <img className={'exitImage'} src={ic_exit_circle} />
           </button>

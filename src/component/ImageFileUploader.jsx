@@ -23,6 +23,10 @@ import ScrollBooster from 'scrollbooster';
 import Popup_progress from '../component/Popup_progress';
 import Popup_image_preview from '../component/Popup_image_preview';
 
+import imageCompression from 'browser-image-compression';
+
+const IMAGE_FILE_UPLOADER_BOX_WIDTH = 105;
+
 class ImageFileUploader extends Component{
   fileInputRef = React.createRef();
 
@@ -43,6 +47,8 @@ class ImageFileUploader extends Component{
       MAX_FILES_COUNT: 5,
 
       isRequestFile: false,
+
+      img_compress_progress: 0,
 
       // isInitScrollAction: false,
 
@@ -87,9 +93,6 @@ class ImageFileUploader extends Component{
         this.setScrollAction();
       })
     }
-    
-    
-    
   }
 
   requestFilesData = () => {
@@ -128,7 +131,11 @@ class ImageFileUploader extends Component{
         if(isImage >= 0){
           const imageData = {
             key: i,
-            image: data.url
+            image: data.url,
+            size: {
+              width: 0,
+              height: 0
+            }
           }
 
           _show_images.push(imageData);
@@ -324,6 +331,120 @@ class ImageFileUploader extends Component{
 
   uploadFile = ({target: {files}}) => {
     // console.log(files)
+    //////
+    const fileOri = files[0];
+
+    const _files = this.state.files.concat();
+    const _show_images = this.state.show_images.concat();
+
+    let index = _files.length+1;//0개면 기본 1셋팅
+    if(_files.length > 0){
+      index = _files[_files.length - 1].key + 1;
+    }
+
+    var options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+
+      onProgress: (value) => {
+        let _value = value;
+        if(value === 100){
+          _value = 0
+        }
+
+        // console.log(_value);
+        this.setState({
+          img_compress_progress: _value
+        })
+      } 
+    }
+
+    imageCompression(fileOri, options)
+    .then( (compressedFile) => {
+
+      const file = compressedFile;
+      // console.log("compresssss");
+      // console.log(compressedFile);
+      // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+      // console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+
+      const data = {
+        key: index,
+        id: null,
+        file: file,
+        downloadURL: ''
+      }
+  
+      _files.push(data);
+  
+      const isImage = file.type.indexOf('image');
+      if(isImage >= 0){
+        // centerImage
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          const imagePreview = e.target.result;
+  
+          const imgData = {
+            key: index,
+            image: e.target.result,
+            size: {
+              width: 0,
+              height: 0
+            }
+          }
+          
+          _show_images.push(imgData);
+  
+          this.setState({
+            files: _files.concat(),
+            show_images: _show_images.concat()
+          }, () => {
+            this.uploadFiles(this.props.store_user_id, Types.file_upload_target_type.items_images, (res) => {
+              let _addFileIDs = this.state.addFileIDs.concat();
+  
+              let __files = this.state.files.concat();
+  
+              const fileIndex = __files.findIndex((value) => { return value.key === index });
+              if(fileIndex < 0 || fileIndex >= __files.length){
+                alert("파일 index 범위 오류");
+                return;
+              }
+  
+              const data = res.list[0];
+  
+              const dataIds = {
+                key: index,
+                id: data.insertId
+              }
+              
+              __files[fileIndex].id = data.insertId;
+              _addFileIDs.push(dataIds);
+  
+              this.setState({
+                addFileIDs: _addFileIDs.concat(),
+                files: __files.concat()
+              }, () => {
+                
+              })            
+            }, () => {
+  
+            })
+          })
+        };
+        reader.readAsDataURL(file);
+      }
+    })
+    .catch( (error) => {
+      alert(error.message);
+      return;
+      // console.log(error.message);
+    });
+  }
+
+  /*
+  uploadFile = ({target: {files}}) => {
+    // console.log(files)
 
     const file = files[0];
 
@@ -343,7 +464,6 @@ class ImageFileUploader extends Component{
     }
 
     _files.push(data);
-
 
     const isImage = file.type.indexOf('image');
     if(isImage >= 0){
@@ -388,12 +508,8 @@ class ImageFileUploader extends Component{
               addFileIDs: _addFileIDs.concat(),
               files: __files.concat()
             }, () => {
-              // console.log(this.state.files);
-              // console.log(this.state.addFileIDs);
-            })
-            
-            // console.log(data.list);
-            
+              
+            })            
           }, () => {
 
           })
@@ -401,62 +517,11 @@ class ImageFileUploader extends Component{
       };
       reader.readAsDataURL(file);
     }
-
-    /*
-    const file = files[0];
-
-    const _files = this.state.files.concat();
-    const _show_images = this.state.show_images.concat();
-
-    let index = _files.length+1;//0개면 기본 1셋팅
-    if(_files.length > 0){
-      index = _files[_files.length - 1].key + 1;
-    }
-
-    const data = {
-      key: index,
-      id: null,
-      file: file,
-      downloadURL: ''
-    }
-
-    _files.push(data);
-
-
-    const isImage = file.type.indexOf('image');
-    if(isImage >= 0){
-      // centerImage
-      var reader = new FileReader();
-      reader.onload = (e) => {
-        const imagePreview = e.target.result;
-
-        const imgData = {
-          key: index,
-          image: e.target.result
-        }
-        
-        _show_images.push(imgData);
-
-        this.setState({
-          files: _files.concat(),
-          show_images: _show_images.concat()
-        })
-      };
-      reader.readAsDataURL(file);
-    }
-    // else{
-    //   this.setState({
-    //     files: _files.concat()
-    //   })
-    // }
-
-    */
   }
+  */
 
   removeItem = (e, key, id) => {
     e.preventDefault();
-
-    console.log(id);
 
     if(id === null){
       this.deleteImage(key);
@@ -572,6 +637,45 @@ class ImageFileUploader extends Component{
     event.target.value = ''
   }
 
+  onImgLoad = (img, key) => {
+    // this.updateDimensions();
+    // console.log(img.target);
+
+
+    // console.log(key);
+
+    let _show_images = this.state.show_images.concat();
+    const showImageIndex = _show_images.findIndex((value) => {return key === value.key});
+    if(showImageIndex < 0 || showImageIndex >= _show_images.length){
+      alert("image load 범위 오류");
+      return;
+    }
+
+    _show_images[showImageIndex].size = {
+      width: img.target.offsetWidth,
+      height: img.target.offsetHeight
+    }
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+    if(img.target.offsetWidth > img.target.offsetHeight){
+      //가로가 긴 이미지
+      //세로 비율을 찾는다
+      const ratio = IMAGE_FILE_UPLOADER_BOX_WIDTH / img.target.offsetHeight;
+
+      const imgReSizeWidth = img.target.offsetWidth * ratio;
+      const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+      _show_images[showImageIndex].size = {
+        width: imgReSizeWidth,
+        height: imgReSizeHeight
+      }
+    }
+
+    this.setState({
+      show_images: _show_images.concat()
+    })
+  }
+
   render(){
     // if(this.props.state === Types.file_upload_state.NONE){
     //   return (
@@ -604,8 +708,19 @@ class ImageFileUploader extends Component{
         })
 
         if(imageData){
-          centerImageDom = <button onClick={(e) => {this.onPressImagePreview(e, imageData.image)}}>
-                            <img className={'preview_img'} src={imageData.image} />
+          const imageSize = {...imageData.size};
+
+          let imageStyle = {}
+          if(imageSize.width > 0){
+            imageStyle = {
+              width: imageSize.width,
+              height: imageSize.height,
+            }
+          }
+          
+          // console.log(imageSize);
+          centerImageDom = <button className={'preview_button'} onClick={(e) => {this.onPressImagePreview(e, imageData.image)}}>
+                            <img style={imageStyle} onLoad={(img) => {this.onImgLoad(img, data.key)}} className={'preview_img'} src={imageData.image} />
                           </button>
         }
       }else{
@@ -664,12 +779,20 @@ class ImageFileUploader extends Component{
     };
     
     if(this.props.isUploader){
+
+      let compressInfoDom = <></>;
+      if(this.state.img_compress_progress > 0){
+        compressInfoDom = <div>
+                            {this.state.img_compress_progress}%
+                          </div>
+      }
       uploadButtonDom = <div className={'button_wrapper'}>
                           <button className={'button_container'} onClick={(e) => {this.importClick(e)}}>
                             <img src={buttonImgSrc} />
                           </button>
                           <div className={'file_count_text'}>
                             {this.state.files.length}/{this.state.MAX_FILES_COUNT}
+                            {compressInfoDom}
                           </div>
                         </div>;
 

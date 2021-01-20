@@ -250,6 +250,9 @@ $img_width: 520px;
 
   .use_img_box {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .use_box_text {

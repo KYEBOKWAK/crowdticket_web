@@ -1,5 +1,5 @@
 
-$box_width: 105px;
+$box_width: 105px; //IMAGE_FILE_UPLOADER_BOX_WIDTH 사이즈와 동일 해야 합니다.
 .ImageFileUploader {
   
   .file_uploader_container_wrapper {
@@ -39,6 +39,12 @@ $box_width: 105px;
     margin-right: 8px;
   }
 
+  .preview_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .preview_box {
     width: $box_width;
     height: $box_width;
@@ -48,11 +54,13 @@ $box_width: 105px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    overflow: hidden;
   }
 
   .preview_img { 
     width: $box_width;
-    height: $box_width;
+    // height: $box_width;
     border-radius: 12px;
   }
 

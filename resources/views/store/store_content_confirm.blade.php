@@ -14,11 +14,11 @@
   <link href="{{ asset('/dist/css/StoreContentConfirm.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/FileUploader.css?version=3') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/FileUploader.css?version=4') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Popup_text_viewer.css?version=3') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Popup_image_preview.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Popup_image_preview.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 
