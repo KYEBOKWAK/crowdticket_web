@@ -432,15 +432,15 @@ class StoreItemDetailPage extends Component{
       }
 
       
-      store_order_reviews = <div>
-                              <div className={'container_label_text'}>
-                                최근 진행된 주문
-                              </div>
+      // store_order_reviews = <div>
+      //                         <div className={'container_label_text'}>
+      //                           최근 진행된 주문
+      //                         </div>
 
-                              <div className={'content_container'}>
-                                <StoreReviewTalk store_id={this.state.store_id}></StoreReviewTalk>
-                              </div>
-                            </div>
+      //                         <div className={'content_container'}>
+      //                           <StoreReviewTalk store_id={this.state.store_id}></StoreReviewTalk>
+      //                         </div>
+      //                       </div>
       
 
     }
