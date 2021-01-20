@@ -589,6 +589,11 @@ class StoreAddItemPage extends Component{
   clickContentsOk(e){
     e.preventDefault();
 
+    if(this.state.show_image === null || this.state.show_image === undefined || this.state.show_image === ''){
+      alert("상품의 이미지를 등록해주세요");
+      return;
+    }
+
     if(this.state.item_title === ''){
       alert("콘텐츠명을 입력해주세요");
       return;
@@ -1168,8 +1173,12 @@ class StoreAddItemPage extends Component{
         </div>
 
         <div className={'box_container'} style={{marginTop: 0}}>
-          <div className={'box_label'}>
-            사진 업로드
+          <div className={'photo_upload_container'}>
+            <div className={'box_label'}>
+              사진 업로드
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
           </div>
 
           <div className={'flex_layer'} style={{marginTop: 15}}>

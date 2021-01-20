@@ -12,7 +12,8 @@ class Popup_image_preview extends Component{
     super(props);
 
     this.state = {
-      container_width: '80%',
+      container_width: 0,
+      container_height: 0,
       isChangeWidth: false
     }
 
@@ -38,6 +39,24 @@ class Popup_image_preview extends Component{
 
   onImgLoad = (img) => {
 
+    if(window.innerHeight <= img.target.offsetHeight && !this.state.isChangeWidth){
+      if(img.target.offsetWidth < img.target.offsetHeight){
+        const maxHeight = window.innerHeight * 0.8;
+  
+        const ratio = maxHeight / img.target.offsetHeight;
+  
+        const imgReSizeWidth = img.target.offsetWidth * ratio;
+        const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+        this.setState({
+          container_width: imgReSizeWidth,
+          container_height: imgReSizeHeight
+        })
+      }
+    }
+    
+
+    /*
     if(window.innerHeight <= img.target.offsetHeight){
       if(!this.state.isChangeWidth){
         this.setState({
@@ -46,14 +65,23 @@ class Popup_image_preview extends Component{
         })
       }
     }
+    */
     // width: img.target.offsetWidth,
     //   height: img.target.offsetHeight
   }
 
-  render(){    
+  render(){
+    let imageStyle = {}
+    if(this.state.container_width > 0){
+      imageStyle = {
+        width: this.state.container_width,
+        height: this.state.container_height,
+      }
+    }
+
     return(
       <div className={'Popup_image_preview'}>
-        <div style={{width: this.state.container_width}} className={'popup_container'}>
+        <div style={imageStyle} className={'popup_container'}>
           <img onLoad={(img) => {this.onImgLoad(img)}} className={'img'} src={this.props.previewURL} />
           <button className={'exitButton'} onClick={(e) => {this.onClickExit(e)}}>
             <img className={'exitImage'} src={ic_exit_circle} />
