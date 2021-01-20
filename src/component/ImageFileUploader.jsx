@@ -109,7 +109,7 @@ class ImageFileUploader extends Component{
       return;
     }
 
-    axios.post('/store/file/item/list', {
+    axios.post('/store/any/file/item/list', {
       store_item_id: this.props.store_item_id,
       file_upload_target_type: this.props.file_upload_target_type
     }, (result) => {
