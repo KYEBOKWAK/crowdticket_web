@@ -82,7 +82,9 @@ class StoreItemDetailPage extends Component{
       isContentMoreExplain: true,
       show_refund_popup: false,
 
-      is_show_bottom_button: true
+      is_show_bottom_button: true,
+
+      isAdmin: false
     }
 
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -118,18 +120,21 @@ class StoreItemDetailPage extends Component{
 
     window.addEventListener('resize', this.updateDimensions);
 
-    // history.pushState(null, null, location.href);
-    // window.onpageshow = function(event){
-    //   if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
-    //     console.log("adsfsdf");
-    //   }
-    // }
-    // window.onpopstate = function(event) {
-    //   console.log("asdfasdf");
-    //     // history.go(1);
-    // };
-    // console.log("########");
+    if(isLogin()){
+      this.requestIsAdmin();
+    }
   };
+
+  requestIsAdmin(){
+    axios.post("/user/isadmin", {},
+    (result) => {
+      this.setState({
+        isAdmin: result.isAdmin
+      })
+    }, (error) => {
+
+    })
+  }
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
@@ -365,6 +370,10 @@ class StoreItemDetailPage extends Component{
     }
     
     let goURL = baseURL + '/store/item/'+this.state.store_item_id+'/editpage?back=DETAIL_PAGE';
+
+    if(this.state.isAdmin){
+      goURL = baseURL + '/admin/manager/store/'+this.state.store_id+'/item/'+this.state.store_item_id+'/editpage?back=DETAIL_PAGE';
+    }
     
     window.location.href = goURL;
   }
@@ -477,7 +486,7 @@ class StoreItemDetailPage extends Component{
     }
 
     let goItemEditPageDom = <></>;
-    if(this.state.isManager){
+    if(this.state.isManager || this.state.isAdmin){
       goItemEditPageDom = <button onClick={(e) => this.clickEdit(e)} className={'edit_button'}>
                             상품 수정하기
                           </button>

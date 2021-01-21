@@ -2087,14 +2087,19 @@ class ProjectController extends Controller
       ]);
     }
 
-    public function getStoreAdminEditItemPage($store_id, $id)
+    public function getStoreAdminEditItemPage(Request $request, $store_id, $id)
     {
+      $goBack = null;
+      if($request->has('back')){
+        $goBack = $request->back;
+      }
+
       return view('store.store_add_item', [
         'item_id' => $id,
         'add_item_page_state' => 'ADD_PAGE_STATE_EDIT',
         'store_id' => $store_id,
         'isAdmin' => true,
-        'goBack' => null
+        'goBack' => $goBack
       ]);
     }
 
