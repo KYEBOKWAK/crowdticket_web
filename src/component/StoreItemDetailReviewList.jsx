@@ -106,7 +106,7 @@ class StoreItemDetailReviewList extends Component{
       let _items = this.state.items.concat();
       
       // let hasMore = this.state.hasMore;
-      let hasMore = false;
+      let hasMore = false;  //작동 안함
       let isHideMoreButton = this.state.isHideMoreButton;
       if(REQUEST_ONCE_ITME > itemsData.length ){
         hasMore = false;
@@ -200,15 +200,12 @@ class StoreItemDetailReviewList extends Component{
     return(
       <div className={'StoreItemDetailReviewList'}>
         <div style={{paddingLeft: 10, paddingRight: 10, width: '100%'}}>
-          {/* <button onClick={(e) => {this.clickWriteReview(e)}} className={'reviewButton'}>
-            작성하기
-          </button> */}
         </div>
         <InfiniteScroll
           // style={{width: '100%'}}
           dataLength={this.state.items.length} //This is important field to render the next data
           next={this.requestMoreData}
-          hasMore={this.state.hasMore}
+          hasMore={false}
           loader=
           {
             <div style={{display: 'flex', justifyContent: 'center'}}>
