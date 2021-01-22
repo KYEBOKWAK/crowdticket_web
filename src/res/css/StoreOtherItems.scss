@@ -40,6 +40,14 @@ $thumb_item_width: 130px;
     margin-top: 15px;
   }
 
+  .price_text {
+    text-align: left;
+    margin-top: 2px;
+    font-size: 12px;
+    color: #28BFFF;
+    font-weight: bold;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
   }

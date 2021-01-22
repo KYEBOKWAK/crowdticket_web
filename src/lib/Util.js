@@ -1,3 +1,5 @@
+// import moment_timezone from 'moment-timezone';
+
 const Util = {
   getPayStoreNewMerchant_uid: function(store_id, user_id){
     //이 함수를 수정하려면 서버쪽 코드와 동일 해아함.
@@ -70,7 +72,58 @@ const Util = {
     }
 
     return false;
-}
+  },
+
+  timeBefore(targetDate){
+    //현재시간
+    let now = new Date(); 
+    // console.log(now);
+    //글쓴 시간 
+    let writeDay = new Date(targetDate);
+    let minus;
+    if(now.getFullYear() > writeDay.getFullYear()){
+        minus= now.getFullYear()-writeDay.getFullYear();
+        // document.getElementsByClassName("sub")[0].innerHTML = minus+"년 전";
+        return minus+"년전";
+        // console.log(minus+"년전");
+    }else if(now.getMonth() > writeDay.getMonth()){
+        minus= now.getMonth()-writeDay.getMonth();
+        // document.getElementsByClassName("sub")[0].innerHTML = minus+"달 전";
+        return minus+"달전";
+        // console.log(minus+"달전");
+    }else if(now.getDate() > writeDay.getDate()){
+        minus= now.getDate()-writeDay.getDate();
+        // document.getElementsByClassName("sub")[0].innerHTML = minus+"일 전";
+        return minus+"일전";
+        // console.log(minus+"일전");
+    }else if(now.getDate() == writeDay.getDate()){
+      let nowTime = Number(now.getTime());
+      let writeTime = Number(writeDay.getTime());
+      if(nowTime>writeTime){
+        let sec = Math.floor((nowTime - writeTime) / 1000);
+        let day  = Math.floor((sec/60/60/24));
+        
+        sec = Math.floor((sec - (day * 60 * 60 * 24)));
+        let hour = Math.floor((sec/60/60));
+        sec = Math.floor((sec - (hour*60*60)));
+        let min = Math.floor((sec/60));
+        sec = Math.floor((sec-(min*60)));
+        if(hour>0){
+          return hour+"시간전";
+            // document.getElementsByClassName("sub")[0].innerHTML = hour+"시간 전";
+            // console.log(hour+"시간 전");
+        }else if(min>0){
+          return min+"분전";
+            // document.getElementsByClassName("sub")[0].innerHTML = min+"분 전";
+            // console.log(min+"분 전");
+        }else if(sec>0){
+          return sec+"초전";
+            // document.getElementsByClassName("sub")[0].innerHTML = sec+"초 전";
+            // console.log(sec+"초 전");
+        }
+      }
+    }
+  },
 }
 
 export default Util;

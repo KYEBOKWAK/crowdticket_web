@@ -5,6 +5,8 @@ import axios from '../lib/Axios';
 
 import ScrollBooster from 'scrollbooster';
 
+import Util from '../lib/Util';
+
 //store_id, item_id
 
 class StoreOtherItems extends Component{
@@ -118,6 +120,10 @@ class StoreOtherItems extends Component{
                     <img className={'thumb_item_img'} draggable='false' src={data.img_url}/>
                     <div className={'thumb_item_title text-ellipsize-2'}>
                       {data.title}
+                    </div>
+
+                    <div className={'price_text'}>
+                      {Util.getNumberWithCommas(data.price)}원
                     </div>
                   </div>
                 </button>

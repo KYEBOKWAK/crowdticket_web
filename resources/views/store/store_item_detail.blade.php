@@ -13,11 +13,11 @@
 
 <link href="{{ asset('/dist/css/alice-carousel.css?version=0') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=13') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailPage.css?version=14') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreUserSNSList.css?version=2') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreOtherItems.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOtherItems.css?version=1') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreReviewTalk.css?version=0') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReviewTalkItem.css?version=0') }}" rel="stylesheet"/>
@@ -27,6 +27,9 @@
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=1') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_refund.css?version=0') }}" rel="stylesheet"/>
+
+<link href="{{ asset('/dist/css/StoreItemDetailReviewList.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailReviewItem.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 

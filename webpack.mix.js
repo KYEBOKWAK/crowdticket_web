@@ -65,6 +65,8 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreReviewTalkItem.scss', 'dist/css/')
 .sass('src/res/css/ImageFileUploader.scss', 'dist/css/')
 .sass('src/res/css/Popup_refund.scss', 'dist/css/')
+.sass('src/res/css/StoreItemDetailReviewList.scss', 'dist/css/')
+.sass('src/res/css/StoreItemDetailReviewItem.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

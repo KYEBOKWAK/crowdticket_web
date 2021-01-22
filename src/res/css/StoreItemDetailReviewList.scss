@@ -1,0 +1,41 @@
+.StoreItemDetailReviewList {
+
+  .item_container {
+    margin-top: 24px;
+  }
+
+  .more_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid #E6E6E6;
+    margin-top: 14px;
+  }
+
+  .no_data_text {
+    font-size: 18px;
+    font-weight: 500;
+    color: #b3b3b3;
+    text-align: center;
+  }
+
+  .no_data_text_point_color {
+    color: #00bfff;
+  }
+  // .reviewButton {
+  //   display: flex; 
+  //   align-items: center; 
+  //   justify-content: center;
+  //   width: 100%;
+  //   height: 56px;
+  //   background-color: #00bfff;
+
+  //   font-size: 18px;
+  //   font-weight: 500;
+  //   color: #ffffff;
+  //   border-radius: 12px;
+  // }
+  @media (max-width: 520px){
+    /*모바일일때*/  
+  }
+}

@@ -23,7 +23,7 @@ import moment_timezone from 'moment-timezone';
 // import Types from '~/Types';
 
 import StoreOtherItems from '../component/StoreOtherItems';
-import StoreReviewTalk from '../component/StoreReviewTalk';
+// import StoreReviewTalk from '../component/StoreReviewTalk';
 
 import icon_order from '../res/img/icon-order.jpg';
 import icon_check from '../res/img/icon-check.jpg';
@@ -35,6 +35,8 @@ import ReactPlayer from 'react-player';
 import ImageFileUploader from '../component/ImageFileUploader';
 
 import Popup_refund from '../component/Popup_refund';
+
+import StoreItemDetailReviewList from '../component/StoreItemDetailReviewList';
 
 
 class StoreItemDetailPage extends Component{
@@ -441,15 +443,16 @@ class StoreItemDetailPage extends Component{
       }
 
       
-      // store_order_reviews = <div>
-      //                         <div className={'container_label_text'}>
-      //                           최근 진행된 주문
-      //                         </div>
+      store_order_reviews = <div>
+                              <div className={'container_label_text'}>
+                                최근 진행된 주문 후기
+                              </div>
 
-      //                         <div className={'content_container'}>
-      //                           <StoreReviewTalk store_id={this.state.store_id}></StoreReviewTalk>
-      //                         </div>
-      //                       </div>
+                              <div className={'content_container'}>
+                                <StoreItemDetailReviewList store_id={this.state.store_id}></StoreItemDetailReviewList>
+                                {/* <StoreReviewTalk store_id={this.state.store_id}></StoreReviewTalk> */}
+                              </div>
+                            </div>
       
 
     }
