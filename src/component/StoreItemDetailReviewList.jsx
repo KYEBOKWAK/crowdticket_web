@@ -35,7 +35,7 @@ class StoreItemDetailReviewList extends Component{
     this.state = {
       items: [],
       hasMore: false,
-      isMore: false
+      isHideMoreButton: false
     }
 
     this.requestMoreData = this.requestMoreData.bind(this);
@@ -94,7 +94,7 @@ class StoreItemDetailReviewList extends Component{
       this.isRequestInitData = true;
     }
 
-    axios.post('/comments/any/list', {
+    axios.post('/comments/any/list/buyer', {
       limit: REQUEST_ONCE_ITME,
       skip: this.state.items.length,
       target_id: this.props.store_id,
@@ -105,9 +105,12 @@ class StoreItemDetailReviewList extends Component{
       let itemsData = result.list.concat();
       let _items = this.state.items.concat();
       
-      let hasMore = this.state.hasMore;
+      // let hasMore = this.state.hasMore;
+      let hasMore = false;
+      let isHideMoreButton = this.state.isHideMoreButton;
       if(REQUEST_ONCE_ITME > itemsData.length ){
         hasMore = false;
+        isHideMoreButton = true;
       }
 
       for(let i = 0 ; i < itemsData.length ; i++){
@@ -123,7 +126,8 @@ class StoreItemDetailReviewList extends Component{
       
       this.setState({
         items: _items.concat(),
-        hasMore: hasMore
+        hasMore: hasMore,
+        isHideMoreButton: isHideMoreButton
       });
     }, (error) => {
 
@@ -148,7 +152,7 @@ class StoreItemDetailReviewList extends Component{
 
     this.setState({
       hasMore: true,
-      isMore: true
+      // isHideMoreButton: true
     }, () => {
       this.requestMoreData();
     })
@@ -188,7 +192,7 @@ class StoreItemDetailReviewList extends Component{
     }
 
     let moreButtonDom = <></>;
-    if(!this.state.isMore){
+    if(!this.state.isHideMoreButton){
       moreButtonDom = <button onClick={(e) => {this.onClickMoreButton(e)}} className={'more_button'}>
                         더보기 +
                       </button> 

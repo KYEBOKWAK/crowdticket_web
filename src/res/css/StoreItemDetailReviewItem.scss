@@ -65,7 +65,8 @@ $thumb_image_m_width: 36px;
   }
 
   .item_title_box {
-    width: 100%;
+    // width: 100%;
+    max-width: 100%;
     padding-top: 4px;
     padding-bottom: 4px;
     padding-left: 16px;

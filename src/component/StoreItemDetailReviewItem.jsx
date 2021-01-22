@@ -127,6 +127,7 @@ class StoreItemDetailReviewItem extends Component{
                           </div>
                           <span className={'item_title_tail_point'}>구매</span>
                         </button>
+                      
     }
 
     return(

@@ -29,7 +29,7 @@
 <link href="{{ asset('/dist/css/Popup_refund.css?version=0') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreItemDetailReviewList.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreItemDetailReviewItem.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreItemDetailReviewItem.css?version=1') }}" rel="stylesheet"/>
 
 @endsection
 
