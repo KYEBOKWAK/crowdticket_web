@@ -1144,7 +1144,9 @@ class StoreReceiptItem extends Component{
                                         {this.state.order_user_email}
                                       </div>
                                     </div>;
+        }
 
+        if(this.state.state === Types.order.ORDER_STATE_APP_STORE_READY){
           oneTooneUseInfoDom = <div className={'one_to_one_use_info_box'}>
                                   고객에게 직접 연락해서 실시간 콘텐츠를 진행해주세요!
                                 </div>
@@ -1210,15 +1212,15 @@ class StoreReceiptItem extends Component{
                         </div>
                       </div>
         }
-      }
 
-      review_container = <div className={'product_review_container'}>
-                          <div className={'under_line'}></div>
-                          <div className={'product_review_box'}>
-                            {product_answer_dom}
-                            {review_dom}
+        review_container = <div className={'product_review_container'}>
+                            <div className={'under_line'}></div>
+                            <div className={'product_review_box'}>
+                              {product_answer_dom}
+                              {review_dom}
+                            </div>
                           </div>
-                        </div>
+      }
     }
 
     if(this.state.isOpenProductText){
@@ -1250,7 +1252,7 @@ class StoreReceiptItem extends Component{
 
     let questionDom = <></>;
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE && !this.props.isManager){
-      if(this.state.state === Types.order.ORDER_STATE_APP_STORE_PAYMENT ||
+      if(this.state.state === Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS ||
         this.state.state === Types.order.ORDER_STATE_APP_STORE_READY){
           questionDom = <div className={'question_container'}>
                           <button className={'question_button'} onClick={(e) => {this.onClickContact(e)}}>
@@ -1302,7 +1304,7 @@ class StoreReceiptItem extends Component{
 
         {refund_reason_dom}
 
-        {store_ready_state_dom}
+        {/* {store_ready_state_dom} */}
         
         <div className={'under_line'}>
         </div>
@@ -1311,6 +1313,7 @@ class StoreReceiptItem extends Component{
 
         {stateButtonDom}
 
+        {store_ready_state_dom}
         {review_container}
 
         {bottomLongButtonDom}

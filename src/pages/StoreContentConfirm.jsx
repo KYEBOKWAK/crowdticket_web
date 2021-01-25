@@ -382,8 +382,10 @@ class StoreContentConfirm extends Component{
 
     let product_answer_dom = <></>;
     let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';
+    let buttonText = '구매 완료 하기';
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
       review_placehold_text = '콘텐츠 후기를 남겨주세요!';
+      buttonText = '콘텐츠 확인 완료';
     }
 
     if(this.state.product_answer !== null && this.state.product_answer !== ''){
@@ -403,7 +405,7 @@ class StoreContentConfirm extends Component{
                             </div>
     }
 
-    let buttonText = '구매 완료 하기';
+    
     let textAreaDom = <></>;
     let contact_explain_dom = <></>;
     let review_dom = <></>;

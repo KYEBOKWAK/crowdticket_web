@@ -20,7 +20,7 @@
 <link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=1') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=11') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreReceiptItem.css?version=12') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=2') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/FileUploader.css?version=4') }}" rel="stylesheet"/>
