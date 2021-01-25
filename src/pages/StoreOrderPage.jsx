@@ -56,7 +56,7 @@ class StoreOrderPage extends Component{
   // fileInput = React.createRef();
   fileUploaderRef = React.createRef();
 
-  storePlayTimePlanRef = React.createRef();
+  // storePlayTimePlanRef = React.createRef();
 
   IMP = null;
 
@@ -298,12 +298,12 @@ class StoreOrderPage extends Component{
       return false
     }
 
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      if(!this.storePlayTimePlanRef.isPassSelectTime()){
-        alert("콘텐츠 진행 가능한 시간 최소 3개 이상을 선택해주세요");
-        return false;
-      }
-    }
+    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+    //   if(!this.storePlayTimePlanRef.isPassSelectTime()){
+    //     alert("콘텐츠 진행 가능한 시간 최소 3개 이상을 선택해주세요");
+    //     return false;
+    //   }
+    // }
 
     if(this.state.requestContent === ''){
       alert('요청사항을 필수로 적어주세요');
@@ -353,7 +353,7 @@ class StoreOrderPage extends Component{
           return false;
         }else if(this.state.card_birth === ''){
           // isOrder = false;
-          alert("생년월일 및 법인등록번호를 입력해주세요");
+          alert("생년월일 및 사업자등록번호를 입력해주세요");
           return false;
         }else if(this.state.card_pw_2digit === ''){
           // isOrder = false;
@@ -648,19 +648,21 @@ class StoreOrderPage extends Component{
   }
 
   nextOrderComplite = (store_order_id) => {
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      const event_play_times = this.storePlayTimePlanRef.getSelectTimes();
-      axios.post("/store/eventplaytime/set", {
-        store_order_id: store_order_id,
-        event_play_times: event_play_times.concat()
-      }, (result) => {
-        this.goOrderComplite(store_order_id);
-      }, (error) => {
-        alert("시간 DB 셋팅 오류");
-      })
-    }else{
-      this.goOrderComplite(store_order_id);
-    }
+    this.goOrderComplite(store_order_id);
+    
+    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+    //   const event_play_times = this.storePlayTimePlanRef.getSelectTimes();
+    //   axios.post("/store/eventplaytime/set", {
+    //     store_order_id: store_order_id,
+    //     event_play_times: event_play_times.concat()
+    //   }, (result) => {
+    //     this.goOrderComplite(store_order_id);
+    //   }, (error) => {
+    //     alert("시간 DB 셋팅 오류");
+    //   })
+    // }else{
+    //   this.goOrderComplite(store_order_id);
+    // }
   }
 
   goOrderComplite(order_id){
@@ -966,8 +968,8 @@ class StoreOrderPage extends Component{
                         </div>
                       </div>
                     
-                      <p className={'input_label'}>카드 소유자 생년월일 (법인등록번호)</p>
-                      <input className={'input_box'} type="text" name="bday" autoComplete="off" placeholder='주민번호 앞 6자리(법인등록번호 7자리)'value={this.state.card_birth} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_BIRTH)}}/>
+                      <p className={'input_label'}>카드 소유자 생년월일 (사업자등록 번호)</p>
+                      <input className={'input_box'} type="text" name="bday" autoComplete="off" placeholder='주민번호 앞 6자리(사업자등록번호 10자리)'value={this.state.card_birth} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_BIRTH)}}/>
 
                       <p className={'input_label'}>카드 비밀번호 앞2자리</p>
                       <div className={'flex_layer'}>
@@ -1011,22 +1013,22 @@ class StoreOrderPage extends Component{
                 </div>
     }
 
-    let oneTooneNoticeDom = <></>;
-    let oneTooneSelectDom = <></>;
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      oneTooneNoticeDom = <div className={'container_box'} style={{display:'flex', backgroundColor: '#feeff2'}}>
-                            <div className={'oneToone_notice_warning'}>
-                              !
-                            </div>
-                            <div className={'oneToone_notice_content'}>
-                              {'다음 1~2주 사이에 크리에이터와 실시간 콘텐츠 진행이 가능한 시간대를 \n아래에서 3개 이상 선택해주세요.\n\n크리에이터가 확인 후 선택한 시간대 안에서 최종 진행 시간을 결정하여 알려드립니다!'}
-                            </div>
-                          </div>
+    // let oneTooneNoticeDom = <></>;
+    // let oneTooneSelectDom = <></>;
+    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+    //   oneTooneNoticeDom = <div className={'container_box'} style={{display:'flex', backgroundColor: '#feeff2'}}>
+    //                         <div className={'oneToone_notice_warning'}>
+    //                           !
+    //                         </div>
+    //                         <div className={'oneToone_notice_content'}>
+    //                           {'다음 1~2주 사이에 크리에이터와 실시간 콘텐츠 진행이 가능한 시간대를 \n아래에서 3개 이상 선택해주세요.\n\n크리에이터가 확인 후 선택한 시간대 안에서 최종 진행 시간을 결정하여 알려드립니다!'}
+    //                         </div>
+    //                       </div>
 
-      oneTooneSelectDom = <div className={'container_box'}>
-                            <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
-                          </div>
-    }
+    //   oneTooneSelectDom = <div className={'container_box'}>
+    //                         <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
+    //                       </div>
+    // }
 
     return(
       <div className={'StoreOrderPage'}>
@@ -1065,8 +1067,8 @@ class StoreOrderPage extends Component{
           {/* 파일 input END */}
         </div>
 
-        {oneTooneNoticeDom}
-        {oneTooneSelectDom}
+        {/* {oneTooneNoticeDom}
+        {oneTooneSelectDom} */}
 
         <div className={'container_box'}>
           <div className={'container_label'}>

@@ -809,7 +809,7 @@ class StorePlayTimePlan extends Component{
 
     // if(this.props.isManager && this.props.store_order_state === Types.order.ORDER_STATE_APP_STORE_READY){
     if(this.props.store_order_state === Types.order.ORDER_STATE_APP_STORE_READY ||
-      this.props.store_order_state === Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS ||
+      this.props.store_order_state === Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS ||
       this.props.store_order_state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
 
       let product_detail_ask_dom = <></>;

@@ -714,7 +714,9 @@ FileUploader.defaultProps = {
 
   isListEndBlurCover: true,
 
-  isOptionTitleText: false
+  isOptionTitleText: false,
+
+  product_state: Types.product_state.FILE
   // id: -1,
   // store_item_id: -1,
   // thumbUrl: '',

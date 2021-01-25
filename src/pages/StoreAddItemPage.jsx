@@ -614,12 +614,12 @@ class StoreAddItemPage extends Component{
       // return;
     }
 
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      if(this.state.item_ask_play_time === null || this.state.item_ask_play_time === ''){
-        alert("1:1 상품은 반드시 진행 가능 시간을 작성해야 합니다.");
-        return;
-      }
-    }
+    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+    //   if(this.state.item_ask_play_time === null || this.state.item_ask_play_time === ''){
+    //     alert("1:1 상품은 반드시 진행 가능 시간을 작성해야 합니다.");
+    //     return;
+    //   }
+    // }
 
     if(this.state.youtube_url !== ''){
       if(!Util.matchYoutubeUrl(this.state.youtube_url)){
@@ -1146,15 +1146,15 @@ class StoreAddItemPage extends Component{
       imgCompressValueText = this.state.img_compress_progress + '%';
     }
 
-    let playNoticeTextarea = <></>;
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      playNoticeTextarea = <div>
-                            <div className={'input_label'}>
-                              진행 가능 시간
-                            </div>
-                            <textarea className={'ask_play_time_textarea'} value={this.state.item_ask_play_time} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME)}} placeholder={"1:1 콘텐츠 진행 예상 가능 시간을 적어주세요 \nex) 안녕하세요 구매자님! 저는 다음주 수요일 오후 7시부터 괜찮아요!"}></textarea>
-                          </div>
-    }
+    // let playNoticeTextarea = <></>;
+    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+    //   playNoticeTextarea = <div>
+    //                         <div className={'input_label'}>
+    //                           진행 가능 시간
+    //                         </div>
+    //                         <textarea className={'ask_play_time_textarea'} value={this.state.item_ask_play_time} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME)}} placeholder={"1:1 콘텐츠 진행 예상 가능 시간을 적어주세요 \nex) 안녕하세요 구매자님! 저는 다음주 수요일 오후 7시부터 괜찮아요!"}></textarea>
+    //                       </div>
+    // }
 
     return (
       <div className={'StoreAddItemPage'}>
@@ -1269,7 +1269,7 @@ class StoreAddItemPage extends Component{
             </select>
           </div> */}
 
-          {playNoticeTextarea}
+          {/* {playNoticeTextarea} */}
 
         </div>
 

@@ -49,6 +49,7 @@ class StoreContentConfirm extends Component{
       item_title: '',
       item_price: 0,
       item_product_state: Types.product_state.TEXT,
+      item_file_upload_state: Types.file_upload_state.NONE,
 
       store_user_profile_photo_url: '',
 
@@ -184,7 +185,9 @@ class StoreContentConfirm extends Component{
 
         state: data.state,
 
-        store_alias: data.alias
+        store_alias: data.alias,
+
+        item_file_upload_state: data.file_upload_state
       }, () => {
         this.requestItemInfo();
       })
@@ -369,7 +372,7 @@ class StoreContentConfirm extends Component{
       return <>취소 | 결제된 주문입니다.</>;
     }
 
-    if(this.state.state !== Types.order.ORDER_STATE_APP_STORE_PLAYING_CONTENTS){
+    if(this.state.state !== Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS){
       if(this.state.state < Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER ||
         this.state.state > Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
           return <>아직 완성이 안된 콘텐츠 입니다.</>
@@ -379,6 +382,10 @@ class StoreContentConfirm extends Component{
 
     let product_answer_dom = <></>;
     let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';
+    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
+      review_placehold_text = '콘텐츠 후기를 남겨주세요!';
+    }
+
     if(this.state.product_answer !== null && this.state.product_answer !== ''){
       review_placehold_text = '크리에이터에게 답장을 해보세요!';
       product_answer_dom = <div className={'product_answer_wrapper'}>
@@ -484,7 +491,7 @@ class StoreContentConfirm extends Component{
         </div>
 
         <div className={'file_upload_container'}>
-          <FileUploader file_upload_target_type={Types.file_upload_target_type.product_file} state={Types.file_upload_state.FILES} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>
+          <FileUploader product_state={this.state.item_product_state} file_upload_target_type={Types.file_upload_target_type.product_file} state={this.state.item_file_upload_state} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>
         </div>
 
         <div className={'community_container'}>
