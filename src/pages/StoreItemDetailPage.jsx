@@ -450,7 +450,6 @@ class StoreItemDetailPage extends Component{
 
                               <div className={'content_container'}>
                                 <StoreItemDetailReviewList store_id={this.state.store_id}></StoreItemDetailReviewList>
-                                {/* <StoreReviewTalk store_id={this.state.store_id}></StoreReviewTalk> */}
                               </div>
                             </div>
       

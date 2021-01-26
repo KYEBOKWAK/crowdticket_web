@@ -1,4 +1,4 @@
-// import moment_timezone from 'moment-timezone';
+import moment_timezone from 'moment-timezone';
 
 const Util = {
   getPayStoreNewMerchant_uid: function(store_id, user_id){
@@ -75,54 +75,44 @@ const Util = {
   },
 
   timeBefore(targetDate){
-    //현재시간
-    let now = new Date(); 
-    // console.log(now);
-    //글쓴 시간 
-    let writeDay = new Date(targetDate);
-    let minus;
-    if(now.getFullYear() > writeDay.getFullYear()){
-        minus= now.getFullYear()-writeDay.getFullYear();
-        // document.getElementsByClassName("sub")[0].innerHTML = minus+"년 전";
-        return minus+"년전";
-        // console.log(minus+"년전");
-    }else if(now.getMonth() > writeDay.getMonth()){
-        minus= now.getMonth()-writeDay.getMonth();
-        // document.getElementsByClassName("sub")[0].innerHTML = minus+"달 전";
-        return minus+"달전";
-        // console.log(minus+"달전");
-    }else if(now.getDate() > writeDay.getDate()){
-        minus= now.getDate()-writeDay.getDate();
-        // document.getElementsByClassName("sub")[0].innerHTML = minus+"일 전";
-        return minus+"일전";
-        // console.log(minus+"일전");
-    }else if(now.getDate() == writeDay.getDate()){
-      let nowTime = Number(now.getTime());
-      let writeTime = Number(writeDay.getTime());
-      if(nowTime>writeTime){
-        let sec = Math.floor((nowTime - writeTime) / 1000);
-        let day  = Math.floor((sec/60/60/24));
-        
-        sec = Math.floor((sec - (day * 60 * 60 * 24)));
-        let hour = Math.floor((sec/60/60));
-        sec = Math.floor((sec - (hour*60*60)));
-        let min = Math.floor((sec/60));
-        sec = Math.floor((sec-(min*60)));
-        if(hour>0){
-          return hour+"시간전";
-            // document.getElementsByClassName("sub")[0].innerHTML = hour+"시간 전";
-            // console.log(hour+"시간 전");
-        }else if(min>0){
-          return min+"분전";
-            // document.getElementsByClassName("sub")[0].innerHTML = min+"분 전";
-            // console.log(min+"분 전");
-        }else if(sec>0){
-          return sec+"초전";
-            // document.getElementsByClassName("sub")[0].innerHTML = sec+"초 전";
-            // console.log(sec+"초 전");
-        }
+
+    let nowMoment = moment_timezone();
+
+    let writeMoment = moment_timezone(targetDate);
+
+    let timeDiff = nowMoment.diff(writeMoment);
+    let durationMomentTime = moment_timezone.duration(timeDiff);
+
+    const diffDays = durationMomentTime.days();
+    const diffMonths = durationMomentTime.months();
+    const diffYears = durationMomentTime.years();
+
+    const diffHours = durationMomentTime.hours();
+    const diffMin = durationMomentTime.minutes();
+    const diffSec = durationMomentTime.seconds();
+
+    if(diffYears > 0){
+      return diffYears+'년전';
+    }
+    else if(diffMonths > 0){
+      return diffMonths+'달전';
+    }
+    else if(diffDays > 0){
+      return diffDays+'일전';
+    }
+    else {
+      if(diffHours > 0){
+        return diffHours + '시간전';
+      }
+      else if(diffMin > 0){
+        return diffMin + '분전';
+      }
+      else if(diffSec > 0){
+        return diffSec + '초전';
       }
     }
+
+    return '';
   },
 }
 

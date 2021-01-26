@@ -197,7 +197,6 @@ class StoreContentsListItem extends Component{
                   <img className={'item_img'} src={this.props.thumbUrl} style={inItemImgStyle}/>
                 </div>
                 <div className={'item_content_container'} style={inItemContentContainerStyle}>
-                  {/* <div className={'item_name'}>{this.props.name}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div> */}
                   {nick_name_dom}
                   <div className={'item_title'}>{this.props.title}</div>
                   <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원

@@ -1113,11 +1113,12 @@ class StoreReceiptItem extends Component{
         }
   
         product_files_dom = <div className={'files_container_wrapper'}>
+                              
                               <button onClick={(e) => {this.onClickProductArrow(e)}} className={'file_label_button'}>
                                 완성된 콘텐츠 상품
                                 <img className={'file_label_arrow_img'} src={arrowImg} />
                               </button>
-  
+                              
                               {filesListDom}
                             </div>
   
