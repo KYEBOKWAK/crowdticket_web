@@ -2,28 +2,16 @@
 
 import React, { Component } from 'react';
 
-
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
-// import Util from '@lib/Util';
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
-
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import moment from 'moment';
+
+import moment_timezone from 'moment-timezone';
 import Types from '../Types';
 
 import imgIconBox from '../res/img/icon-box.svg';
+
+import TableComponent from '../component/TableComponent';
 
 const REQUEST_ONCE_ITME = 5;
 let isRequestInitData = false;
@@ -49,14 +37,9 @@ class StoreManagerTabOrderListPage extends Component{
       sort_title_option: []
     }
 
-    this.requestMoreData = this.requestMoreData.bind(this);
     this.onChangeSelect = this.onChangeSelect.bind(this);
     this.onChangeContent = this.onChangeContent.bind(this);
   };
-
-  // shouldComponentUpdate(nextProps: any, nextState: any) {
-  //   return true;
-  // }
 
   componentDidMount(){
     this.requestMoreData();
@@ -121,6 +104,16 @@ class StoreManagerTabOrderListPage extends Component{
     }, (error) => {
 
     })
+
+    // axios.post("/store/order/comfirm/count", {
+    //   store_id: this.props.store_id
+    // }, (result) => {
+    //   this.setState({
+    //     ready_success_total_count: result.ready_success_total_count
+    //   })
+    // }, (error) => {
+
+    // })
   }
 
   requestOrderTotalPrice(){
@@ -157,7 +150,7 @@ class StoreManagerTabOrderListPage extends Component{
 
   
 
-  requestMoreData(){
+  requestMoreData = () => {
     if(this.state.items.length === 0 && this.isRequestInitData){
       return;
     }
@@ -187,9 +180,22 @@ class StoreManagerTabOrderListPage extends Component{
 
       for(let i = 0 ; i < itemsData.length ; i++){
         const data = itemsData[i];
+
+        let confirm_at = "진행 중";
+        if(data.confirm_at === undefined || data.confirm_at === null){
+          confirm_at = "진행 중";
+        }else{
+          confirm_at = moment_timezone(data.confirm_at).format("YYYY-MM-DD");
+        }
         
-        _items.push(data);
-        // itemIndex++;
+        const newData = {
+          ...data,
+          state_text: this.getStateText(data.state),
+          created_at: moment_timezone(data.created_at).format("YYYY-MM-DD"),
+          confirm_at: confirm_at
+        }
+        
+        _items.push(newData);
       }
       
       this.setState({
@@ -219,7 +225,7 @@ class StoreManagerTabOrderListPage extends Component{
       items: []
     }, () => {
       this.isRequestInitData = false;
-      this.requestMoreData();
+      // this.requestMoreData();
     })
   }
 
@@ -231,7 +237,7 @@ class StoreManagerTabOrderListPage extends Component{
       items: []
     }, () => {
       this.isRequestInitData = false;
-      this.requestMoreData();
+      // this.requestMoreData();
     })
   }
 
@@ -272,6 +278,10 @@ class StoreManagerTabOrderListPage extends Component{
     {
       return '취소됨';
     }
+    else if(state === Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS)
+    {
+      return '진행 완료';
+    }
 
     return '';
   }
@@ -279,6 +289,7 @@ class StoreManagerTabOrderListPage extends Component{
   render(){
     return(
       <div className={'StoreManagerTabOrderListPage'}>
+        
         <div className={'summary_container'}>
           <div className={'summary_content_container'}>
             <div className={'summary_content_label_text'}>
@@ -328,7 +339,76 @@ class StoreManagerTabOrderListPage extends Component{
             </div>
           </div>
         </div>
+       
 
+        {/* <div className={'summary_container'}>
+          <div className={'summary_content_container'}>
+            <div className={'summary_content_label_text'}>
+              전체 주문 수
+            </div>
+            <div className={'summary_content_value_text'}>
+              {this.state.total_buy_count}건
+            </div>
+          </div>
+
+          <div className={'summary_content_container'}>
+            <div className={'summary_content_label_text'}>
+              취소 및 반려
+            </div>
+            <div className={'summary_content_value_text'}>
+              {this.state.cancel_refund_total_count}건
+            </div>
+          </div>
+
+          <div className={'summary_content_container'}>
+            <div className={'summary_content_label_text'}>
+              판매 진행 중
+            </div>
+            <div className={'summary_content_value_text'}>
+              {this.state.ready_total_count}건
+            </div>
+          </div>
+
+          <div className={'summary_content_container'}>
+            <div className={'summary_content_label_text'}>
+              확인 완료된 주문
+            </div>
+            <div className={'summary_content_value_text'}>
+              {this.state.ready_success_total_count}건
+            </div>
+          </div>
+          
+          <div className={'summary_under_line'}>
+          </div>
+
+          <div className={'summary_content_container'} style={{marginBottom: 0}}>
+            <div className={'summary_total_label_text'}>
+              최종 판매 금액
+            </div>
+            <div className={'summary_total_value_text'}>
+              {Util.getNumberWithCommas(this.state.total_price)}원
+            </div>
+          </div>
+        </div> */}
+
+        {/* <div className={'order_list_container'}>
+          <TableComponent
+            isInfinite={true}
+            hasMore={this.state.hasMore}
+            requestMoreDataCallback={() => {this.requestMoreData()}}
+            columns={
+              [
+                {title:"주문ID", field:"id"},
+                {title:"콘텐츠명", field:"title", isSort: true, ellipsize: true},
+                {title:"구매자", field:"name"},
+                {title:"결제금액", field:"total_price", type:Types.table_columns_type.price},
+                {title:"판매완료일", field:"confirm_at"},
+                {title:"주문상태", field:"state_text", isSort: true},
+              ]
+            }
+            datas={this.state.items}
+          ></TableComponent>
+        </div> */}
         <div className={'order_list_container'}>
           <div className={'order_list_title_container'}>
             <div className={'order_title_date order_title_font'}>
@@ -388,17 +468,15 @@ class StoreManagerTabOrderListPage extends Component{
             pullDownToRefreshThreshold={50}
             pullDownToRefreshContent={
               <></>
-              // <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
             }
             releaseToRefreshContent={
               <></>
-              // <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
             }
           >
             {this.state.items.map((data) => {
               return <div key={data.id} className={'order_list_title_container order_list_item_container'}>
                       <div className={'order_title_date order_list_item_text'}>
-                        {moment(data.created_at).format('YYYY-MM-DD')}
+                        {moment_timezone(data.created_at).format('YYYY-MM-DD')}
                       </div>
                       <div className={'order_title_contents order_list_item_text'}>
                         {data.title}

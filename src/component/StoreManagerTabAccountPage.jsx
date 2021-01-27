@@ -75,7 +75,6 @@ class StoreManagerTabAccountPage extends Component{
 
   componentDidMount(){
     this.requestMoreData();
-    // this.requestAccountInfo();
     this.requestStoreInfo();
 
     // this.requestPaidList();
@@ -102,28 +101,11 @@ class StoreManagerTabAccountPage extends Component{
     })
   }
 
-  // requestAccountInfo(){
-  //   //manager/account/info
-  //   axios.post("/store/manager/account/info", {
-  //     store_id: this.props.store_id
-  //   }, (result) => {
-  //     this.setState({
-  //       account_name: result.data.account_name,
-  //       account_number: result.data.account_number,
-  //       account_bank: result.data.account_bank,
-  //     })
-  //   }, (error) => {
-
-  //   })
-  // }
-
   requestPaymentInfo = () => {
     axios.post('/store/manager/payment/info', {
       store_id: this.props.store_id
     },
     (result) => {
-      console.log(result);
-
       let total_payment_price = 0;
       let payment_detail_datas = [];
       for(let i = 0 ; i < result.list.length ; i++){
@@ -237,8 +219,8 @@ class StoreManagerTabAccountPage extends Component{
     return(
       <div className={'StoreManagerTabAccountPage'}>
 
-        {/* //여기 주석처리 되어 있는건 2/2일에 업데이트 되어야 한다.
-        <div className={'total_payment_box'}>
+        
+        {/* <div className={'total_payment_box'}>
           <div className={'total_payment_container'}>
             <div className={'total_payment_title'}>
               정산 예정 금액
@@ -273,11 +255,11 @@ class StoreManagerTabAccountPage extends Component{
 
         <div className={'second_box_explain'}>
           수수료 프로모션이나 주문 상태 업데이트에 따라 실제 입금 금액은 바뀔 수 있습니다
-        </div>
-        *}
+        </div> */}
+        
 
-        {/*
-        <div className={'box_container'}>
+        
+        {/* <div className={'box_container'}>
           <div className={'label_title'}>
             세부내역
           </div>
@@ -295,8 +277,8 @@ class StoreManagerTabAccountPage extends Component{
             }
             datas={this.state.payment_detail_datas}
           ></TableComponent>
-        </div>
-        */}
+        </div> */}
+         
 
         <div className={'box_container'}>
           <div className={'label_title'}>
@@ -317,13 +299,14 @@ class StoreManagerTabAccountPage extends Component{
         
 
         <div className={'box_container'}>
+
           <div className={'label_title'}>
             정산내역
           </div>
 
           <div className={'paid_list_container'}>
-            {/*
-            <TableComponent
+            
+            {/* <TableComponent
               columns={
                 [
                   {title:"정산일", field:"created_at"},
@@ -332,8 +315,8 @@ class StoreManagerTabAccountPage extends Component{
                 ]
               }
               datas={this.state.items}
-            ></TableComponent>
-            */}
+            ></TableComponent> */}
+           
             
             <InfiniteScroll
               // style={{backgroundColor: 'red'}}
@@ -374,6 +357,7 @@ class StoreManagerTabAccountPage extends Component{
                       </div>
               })}
             </InfiniteScroll>
+            
             
           </div>
         </div>

@@ -332,7 +332,6 @@ class StoreManager extends Component {
   clickMenu(e, key){
     e.preventDefault();
 
-    console.log(key);
     this.setState({
       selectTabKey: key
     })
