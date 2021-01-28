@@ -648,12 +648,6 @@ class ImageFileUploader extends Component{
   }
 
   onImgLoad = (img, key) => {
-    // this.updateDimensions();
-    // console.log(img.target);
-
-
-    // console.log(key);
-
     let _show_images = this.state.show_images.concat();
     const showImageIndex = _show_images.findIndex((value) => {return key === value.key});
     if(showImageIndex < 0 || showImageIndex >= _show_images.length){

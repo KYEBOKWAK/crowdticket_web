@@ -38,7 +38,7 @@ import Popup_refund from '../component/Popup_refund';
 
 import StoreItemDetailReviewList from '../component/StoreItemDetailReviewList';
 
-
+const IMAGE_THUMB_FILE_WIDTH = 520;
 class StoreItemDetailPage extends Component{
 
   orderButtonRef = React.createRef();
@@ -86,7 +86,10 @@ class StoreItemDetailPage extends Component{
 
       is_show_bottom_button: true,
 
-      isAdmin: false
+      isAdmin: false,
+
+      show_image_width: 0,
+      show_image_height: 0,
     }
 
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -388,6 +391,32 @@ class StoreItemDetailPage extends Component{
     })
   }
 
+  onImgLoad = (img) => {
+    let show_image_width = img.target.offsetWidth;
+    let show_image_height = img.target.offsetHeight;
+    
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+    if(img.target.offsetWidth > img.target.offsetHeight){
+      //가로가 긴 이미지
+      //세로 비율을 찾는다
+      const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.offsetHeight;
+
+      const imgReSizeWidth = img.target.offsetWidth * ratio;
+      const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+      
+      show_image_width = imgReSizeWidth,
+      show_image_height = imgReSizeHeight
+      
+    }
+
+    this.setState({
+      show_image_width: show_image_width,
+      show_image_height: show_image_height
+    })
+  }
+
   render(){
     if(this.state.store_item_id === null){
       return(
@@ -568,10 +597,20 @@ class StoreItemDetailPage extends Component{
                       </div>
     }
 
+    let imageStyle = {}
+    if(this.state.show_image_width > 0){
+      imageStyle = {
+        width:this.state.show_image_width,
+        height: this.state.show_image_height,
+      }
+    }
+
     return(
       <div className={'StoreItemDetailPage'}>
         <div className={'item_img_container'}>
-          <img className={'item_img'} src={this.state.thumb_img_url} />
+          <div className={'item_img_container'}>
+            <img className={'item_img'} style={imageStyle} onLoad={(img) => {this.onImgLoad(img)}} src={this.state.thumb_img_url} />
+          </div>
           <div className={'item_img_cover'}>
           </div>
           {store_user_dom}

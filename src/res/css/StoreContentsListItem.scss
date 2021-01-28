@@ -5,18 +5,28 @@ $item_width: 80px;
 
   .item_img_wrapper {
     width: $item_width;
-    height: $item_width; 
+    height: $item_width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 
   .item_img {
     width: $item_width;
-    height: $item_width;
-    border-radius: 12px;
+    // height: $item_width;
+    // border-radius: 12px;
   }
 
   .item_content_container {
     padding-left: 20px;
     word-break: break-word;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    flex-shrink: 1;
   }
 
   .item_name {

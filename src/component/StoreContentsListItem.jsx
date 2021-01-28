@@ -9,13 +9,16 @@ import Types from '../Types';
 import imgDropDownUp from '../res/img/ic-dropdown-line-up.svg';
 import imgDropDownDown from '../res/img/ic-dropdown-line-down.svg';
 
+const IMAGE_FILE_WIDTH = 80;
+const IMAGE_FILE_WIDTH_IN_ITEM = 63;
 class StoreContentsListItem extends Component{
 
   constructor(props){
     super(props);
 
     this.state = {
-
+      show_image_width: 0,
+      show_image_height: 0,
     }
 
     // this.requestMoreData = this.requestMoreData.bind(this);
@@ -120,6 +123,37 @@ class StoreContentsListItem extends Component{
     }
   }
 
+  onImgLoad = (img) => {
+    let show_image_width = img.target.offsetWidth;
+    let show_image_height = img.target.offsetHeight;
+    
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+    if(img.target.offsetWidth > img.target.offsetHeight){
+      //가로가 긴 이미지
+      //세로 비율을 찾는다
+      let ratio = IMAGE_FILE_WIDTH / img.target.offsetHeight;
+
+      if(this.props.type === Types.store_home_item_list.IN_ITEM){
+        ratio = IMAGE_FILE_WIDTH_IN_ITEM / img.target.offsetHeight;
+      }
+      
+
+      const imgReSizeWidth = img.target.offsetWidth * ratio;
+      const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+      
+      show_image_width = imgReSizeWidth,
+      show_image_height = imgReSizeHeight
+      
+    }
+
+    this.setState({
+      show_image_width: show_image_width,
+      show_image_height: show_image_height
+    })
+  }
+
   render(){
     let itemUnderLine = <></>;
     if(this.props.isHomeList){
@@ -163,7 +197,11 @@ class StoreContentsListItem extends Component{
     let inItemContentContainerStyle = {};
     let inItemContainerStyle = {};
     let inItemImgStyle = {};
-    let imgWarpperClassName = 'item_img_wrapper';
+    let imgWarpperStyle = {
+      width: IMAGE_FILE_WIDTH,
+      height: IMAGE_FILE_WIDTH
+    }
+    // let imgWarpperClassName = 'item_img_wrapper';
     if(this.props.type === Types.store_home_item_list.IN_ITEM){
       inItemContentContainerStyle = {
         display: 'flex',
@@ -178,23 +216,36 @@ class StoreContentsListItem extends Component{
         marginTop: 10
       }
 
-      inItemImgStyle = {
-        width: 63,
-        height: 63
+      imgWarpperStyle = {
+        width: IMAGE_FILE_WIDTH_IN_ITEM,
+        height: IMAGE_FILE_WIDTH_IN_ITEM
       }
 
-      imgWarpperClassName = '';
+      // inItemImgStyle = {
+      //   width: 63,
+      //   height: 63
+      // }
+
+      // imgWarpperClassName = '';
     }else{
       nick_name_dom = <div className={'item_name'}>{this.props.store_title}<span style={{marginLeft: 8}}>{this.getStateShow(this.props.state)}</span></div>;
     }
+
+    if(this.state.show_image_width > 0){
+      inItemImgStyle = {
+        width: this.state.show_image_width,
+        height: this.state.show_image_height
+      }
+    }
+    
 
     return(
       <>
         <div className={'StoreContentsListItem'} style={inItemContainerStyle}>
           <a onClick={(e) => {this.itemClick(e)}}>
             <div className={'flex_layer flex_direction_row'}>
-                <div className={imgWarpperClassName}>
-                  <img className={'item_img'} src={this.props.thumbUrl} style={inItemImgStyle}/>
+                <div style={imgWarpperStyle} className={'item_img_wrapper'}>
+                  <img className={'item_img'} src={this.props.thumbUrl} onLoad={(img) => {this.onImgLoad(img)}} style={inItemImgStyle}/>
                 </div>
                 <div className={'item_content_container'} style={inItemContentContainerStyle}>
                   {nick_name_dom}

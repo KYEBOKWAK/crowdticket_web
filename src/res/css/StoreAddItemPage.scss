@@ -167,12 +167,18 @@ $img_width: 100px;
     width: $img_width;
     height: $img_width;
     margin-left: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
   }
 
   .camera_img {
     width: $img_width;
-    height: $img_width;
-    border-radius: 20px;
+    // height: $img_width;
+    // border-radius: 20px;
   }
 
   .fileUploader{

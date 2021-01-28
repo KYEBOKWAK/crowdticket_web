@@ -182,7 +182,7 @@ class StoreHome extends Component {
   clickCreateStore(e){
     e.preventDefault();
     
-    window.open('https://forms.gle/xoEg8z6pa1Hm2UGW9');    
+    window.open('https://forms.gle/uAgxKCVZY523JKjZA');    
   }
   
   //
