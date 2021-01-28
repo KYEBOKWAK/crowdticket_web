@@ -162,7 +162,7 @@ class StoreAddItemPage extends Component{
   */
 
   componentDidMount(){
-    
+
     const myID = Number(document.querySelector('#myId').value);
     if(myID === 0){
       //ID값이 0이면 로그인 안함.
@@ -821,79 +821,6 @@ class StoreAddItemPage extends Component{
  
     var imageFile = event.target.files[0];
 
-    // let contentType = imageFile.type;
-    // console.log('--------');
-   
-    var reader = new FileReader();
-    reader.onload = (e) => {
-      const imagePreview = e.target.result;
-
-      this.setState({
-        temp_image: imagePreview,
-        // show_image: imagePreview,
-        // imageBinary: compressedFile,
-        // contentType: contentType,
-        // isChangeImg: true,
-
-        // show_image_width: 0,
-        // show_image_height: 0,
-
-        isShowImageCroper: true
-      })
-    };
-
-    reader.readAsDataURL(imageFile);
-
-    /*
-    var options = {
-      maxSizeMB: 2,
-      maxWidthOrHeight: 1920,
-      useWebWorker: true,
-
-      onProgress: (value) => {
-        let _value = value;
-        if(value === 100){
-          _value = 0
-        }
-
-        this.setState({
-          img_compress_progress: _value
-        })
-      } 
-    }
-    imageCompression(imageFile, options)
-      .then( (compressedFile) => {
-
-        var reader = new FileReader();
-        reader.onload = (e) => {
-          const imagePreview = e.target.result;
-
-          this.setState({
-            show_image: imagePreview,
-            imageBinary: compressedFile,
-            contentType: contentType,
-            isChangeImg: true,
-
-            show_image_width: 0,
-            show_image_height: 0,
-
-            isShowImageCroper: true
-          })
-        };
-
-        reader.readAsDataURL(compressedFile);
-        // return uploadToServer(compressedFile); // write your own logic
-      })
-      .catch( (error) => {
-        alert(error.message);
-        return;
-        // console.log(error.message);
-      });
-      */
-
-    /*
-    var imageFile = event.target.files[0];
-
     let contentType = imageFile.type;
    
     var options = {
@@ -912,6 +839,7 @@ class StoreAddItemPage extends Component{
         })
       } 
     }
+
     imageCompression(imageFile, options)
       .then( (compressedFile) => {
 
@@ -920,27 +848,19 @@ class StoreAddItemPage extends Component{
           const imagePreview = e.target.result;
 
           this.setState({
-            show_image: imagePreview,
-            imageBinary: compressedFile,
-            contentType: contentType,
-            isChangeImg: true,
-
-            show_image_width: 0,
-            show_image_height: 0,
-
+            // file: compressedFile,
+            temp_image: imagePreview,
             isShowImageCroper: true
           })
         };
 
         reader.readAsDataURL(compressedFile);
-        // return uploadToServer(compressedFile); // write your own logic
       })
       .catch( (error) => {
         alert(error.message);
         return;
         // console.log(error.message);
       });
-      */
   }
 
   onImgLoad = (img) => {
@@ -969,6 +889,28 @@ class StoreAddItemPage extends Component{
     })
   }
 
+  setThumbImage = (imageData) => {
+    var reader = new FileReader();
+      reader.onload = (e) => {
+        const imagePreview = e.target.result;
+
+        this.setState({
+          show_image: imagePreview,
+          temp_image: '',
+          imageBinary: imageData,
+          // contentType: contentType,
+          isChangeImg: true,
+
+          show_image_width: 0,
+          show_image_height: 0,
+
+          isShowImageCroper: false
+        })
+      };
+
+    reader.readAsDataURL(imageData);
+  }
+  /*
   setImageCompress = (imageData) => {
     var options = {
       maxSizeMB: 2,
@@ -1016,6 +958,7 @@ class StoreAddItemPage extends Component{
       // console.log(error.message);
     });
   }
+  */
 
   render(){
     if(!this.state.isLogin){
@@ -1068,16 +1011,6 @@ class StoreAddItemPage extends Component{
       imgCompressValueText = this.state.img_compress_progress + '%';
     }
 
-    // let playNoticeTextarea = <></>;
-    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-    //   playNoticeTextarea = <div>
-    //                         <div className={'input_label'}>
-    //                           진행 가능 시간
-    //                         </div>
-    //                         <textarea className={'ask_play_time_textarea'} value={this.state.item_ask_play_time} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_ASK_PLAY_TIME)}} placeholder={"1:1 콘텐츠 진행 예상 가능 시간을 적어주세요 \nex) 안녕하세요 구매자님! 저는 다음주 수요일 오후 7시부터 괜찮아요!"}></textarea>
-    //                       </div>
-    // }
-
     let imageCroperDom = <></>;
     if(this.state.isShowImageCroper){
       imageCroperDom = <ImageCroper 
@@ -1089,7 +1022,8 @@ class StoreAddItemPage extends Component{
                           })
                         }}
                         callbackConfirm={(imageData) => {
-                          this.setImageCompress(imageData);
+                          // this.setImageCompress(imageData);
+                          this.setThumbImage(imageData);
                         }}>
                         </ImageCroper>
     }

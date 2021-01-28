@@ -37,7 +37,8 @@ class ImageCroper extends Component{
       zoom: 1,
       aspect: 1 / 1,
 
-      imageData: ''
+      imageData: '',
+      croppedAreaPixels: {}
     }
   };
 
@@ -57,6 +58,10 @@ class ImageCroper extends Component{
   }
  
   onCropComplete = (croppedArea, croppedAreaPixels) => {
+    this.setState({
+      croppedAreaPixels: croppedAreaPixels
+    })
+    /*
     const storagePromise = new Promise((resolve, reject) => {
 
       const croppedImage = getCroppedImg(
@@ -75,7 +80,8 @@ class ImageCroper extends Component{
     }).catch((error) => {
       // console.log(error);
       alert(error);
-    });  
+    });
+    */
   }
  
   onZoomChange = (zoom) => {
@@ -85,9 +91,25 @@ class ImageCroper extends Component{
   onClickConfirm = (e) => {
     e.preventDefault();
 
-    const fileData = Util.dataURLtoFile(this.state.imageData, 'thumb_img.jpg');
+    const storagePromise = new Promise((resolve, reject) => {
 
-    this.props.callbackConfirm(fileData);
+      const croppedImage = getCroppedImg(
+        this.props.image,
+        this.state.croppedAreaPixels,
+        0
+      )
+
+      resolve(croppedImage);
+    });
+
+    storagePromise.then((value) => {
+      const fileData = Util.dataURLtoFile(value, 'thumb_img.jpg');
+
+      this.props.callbackConfirm(fileData);
+    }).catch((error) => {
+      // console.log(error);
+      alert(error);
+    });
   }
 
   onClickExit = (e) => {
@@ -112,8 +134,6 @@ class ImageCroper extends Component{
           onZoomChange={this.onZoomChange}
           disableAutomaticStylesInjection={false}
         />
-
-        {/* <img src={this.state.test}/> */}
 
         <div className={'button_container'}>
           <button className={'button_close'} onClick={(e) => {this.onClickExit(e)}}>닫기</button>
