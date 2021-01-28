@@ -162,7 +162,7 @@ class StoreAddItemPage extends Component{
   */
 
   componentDidMount(){
-
+    
     const myID = Number(document.querySelector('#myId').value);
     if(myID === 0){
       //ID값이 0이면 로그인 안함.
@@ -187,7 +187,7 @@ class StoreAddItemPage extends Component{
       // this.requestLoginToken(myID);
       // store.dispatch(actions.setUserID(myID));
       
-    }    
+    }
   };
 
   componentWillUnmount(){
@@ -1037,6 +1037,7 @@ class StoreAddItemPage extends Component{
     }
 
     let photoThumbImg = <></>;
+
     if(this.state.show_image){
       let imageStyle = {}
       if(this.state.show_image_width > 0){

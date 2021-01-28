@@ -90,15 +90,40 @@ class StoreItemDetailPage extends Component{
 
       show_image_width: 0,
       show_image_height: 0,
-    }
 
-    this.updateDimensions = this.updateDimensions.bind(this);
+      ori_show_image_width: 0,
+      ori_show_image_height: 0,
+
+      isThumbResize: false
+    }
   };
 
-  updateDimensions(){
-    this.setState({
-      innerWidth: window.innerWidth
-    })
+  updateDimensions = () => {
+
+    if(window.innerWidth >= 520){
+      if(!this.state.isThumbResize){
+        this.setState({
+          isThumbResize: true
+        }, () => {
+          this.onImgLoad({
+            target: {
+              naturalWidth: this.state.ori_show_image_width,
+              naturalHeight: this.state.ori_show_image_height
+            }
+          })
+        })
+      }
+    }else{
+      if(this.state.isThumbResize){
+        this.setState({
+          isThumbResize: false
+        })
+      }
+    }
+
+    // this.setState({
+    //   innerWidth: window.innerWidth
+    // })
   }
 
   // shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -108,6 +133,7 @@ class StoreItemDetailPage extends Component{
   componentDidMount(){
 
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.updateDimensions);
 
     const storeItemIDDom = document.querySelector('#store_item_id');
     if(storeItemIDDom){
@@ -122,8 +148,6 @@ class StoreItemDetailPage extends Component{
         this.requestAverageDay();
       })
     }
-
-    window.addEventListener('resize', this.updateDimensions);
 
     if(isLogin()){
       this.requestIsAdmin();
@@ -143,6 +167,8 @@ class StoreItemDetailPage extends Component{
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
+
+    window.removeEventListener('resize', this.updateDimensions);
   };
 
   componentDidUpdate(){
@@ -390,20 +416,27 @@ class StoreItemDetailPage extends Component{
       show_refund_popup: true
     })
   }
+  
 
   onImgLoad = (img) => {
-    let show_image_width = img.target.offsetWidth;
-    let show_image_height = img.target.offsetHeight;
+    let show_image_width = img.target.naturalWidth;
+    let show_image_height = img.target.naturalHeight;
     
+
     //가로로 긴 이미지인가?
     //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
-    if(img.target.offsetWidth > img.target.offsetHeight){
+    if(show_image_width < IMAGE_THUMB_FILE_WIDTH){
+      //520사이즈보다 작으면 확대 해야 한다
+      show_image_width = '100%';
+    }
+    else if(img.target.naturalWidth > img.target.naturalHeight){
       //가로가 긴 이미지
       //세로 비율을 찾는다
-      const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.offsetHeight;
 
-      const imgReSizeWidth = img.target.offsetWidth * ratio;
-      const imgReSizeHeight = img.target.offsetHeight * ratio;
+      const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.naturalHeight;
+
+      const imgReSizeWidth = img.target.naturalWidth * ratio;
+      const imgReSizeHeight = img.target.naturalHeight * ratio;
 
       
       show_image_width = imgReSizeWidth,
@@ -413,8 +446,53 @@ class StoreItemDetailPage extends Component{
 
     this.setState({
       show_image_width: show_image_width,
-      show_image_height: show_image_height
+      show_image_height: show_image_height,
+
+      ori_show_image_width: img.target.naturalWidth,
+      ori_show_image_height: img.target.naturalHeight
     })
+
+    /*
+    // let show_image_width = img.target.offsetWidth;
+    // let show_image_height = img.target.offsetHeight;
+
+    let show_image_width = img.target.naturalWidth;
+    let show_image_height = img.target.naturalHeight;
+    
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+    // if(img.target.offsetWidth > img.target.offsetHeight){
+    if(img.target.naturalWidth > img.target.naturalHeight){
+      //가로가 긴 이미지
+      //세로 비율을 찾는다
+      // const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.offsetHeight;
+
+      // const imgReSizeWidth = img.target.offsetWidth * ratio;
+      // const imgReSizeHeight = img.target.offsetHeight * ratio;
+
+      
+      // show_image_width = imgReSizeWidth,
+      // show_image_height = imgReSizeHeight
+
+      const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.naturalHeight;
+
+      const imgReSizeWidth = img.target.naturalWidth * ratio;
+      const imgReSizeHeight = img.target.naturalHeight * ratio;
+
+      
+      show_image_width = imgReSizeWidth,
+      show_image_height = imgReSizeHeight
+      
+    }
+
+    this.setState({
+      show_image_width: show_image_width,
+      show_image_height: show_image_height,
+
+      ori_show_image_width: img.target.naturalWidth,
+      ori_show_image_height: img.target.naturalHeight
+    })
+    */
   }
 
   render(){
@@ -608,7 +686,7 @@ class StoreItemDetailPage extends Component{
     return(
       <div className={'StoreItemDetailPage'}>
         <div className={'item_img_container'}>
-          <div className={'item_img_container'}>
+          <div className={'item_img_box'}>
             <img className={'item_img'} style={imageStyle} onLoad={(img) => {this.onImgLoad(img)}} src={this.state.thumb_img_url} />
           </div>
           <div className={'item_img_cover'}>
