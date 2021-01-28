@@ -423,13 +423,15 @@ class StoreItemDetailPage extends Component{
     let show_image_height = img.target.naturalHeight;
     
 
+    // console.log("sdddd");
     //가로로 긴 이미지인가?
     //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
     if(show_image_width < IMAGE_THUMB_FILE_WIDTH){
       //520사이즈보다 작으면 확대 해야 한다
       show_image_width = '100%';
+      show_image_height = 'auto';
     }
-    else if(img.target.naturalWidth > img.target.naturalHeight){
+    else if(img.target.naturalWidth >= img.target.naturalHeight){
       //가로가 긴 이미지
       //세로 비율을 찾는다
 
@@ -441,7 +443,10 @@ class StoreItemDetailPage extends Component{
       
       show_image_width = imgReSizeWidth,
       show_image_height = imgReSizeHeight
-      
+    }else if(img.target.naturalWidth < img.target.naturalHeight){
+      //세로로 긴거
+      show_image_width = '100%';
+      show_image_height = 'auto';
     }
 
     this.setState({
