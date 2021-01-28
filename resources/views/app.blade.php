@@ -617,7 +617,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=111') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=112') }}"></script>
 
 </body>
 </html>
