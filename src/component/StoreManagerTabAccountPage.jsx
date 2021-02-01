@@ -70,11 +70,11 @@ class StoreManagerTabAccountPage extends Component{
       payment_detail_datas: []
     }
 
-    this.requestMoreData = this.requestMoreData.bind(this);
+    // this.requestMoreData = this.requestMoreData.bind(this);
   };
 
   componentDidMount(){
-    this.requestMoreData();
+    // this.requestMoreData();
     this.requestStoreInfo();
 
     this.requestPaidList();
@@ -147,6 +147,7 @@ class StoreManagerTabAccountPage extends Component{
 
         data.created_at = moment_timezone(data.created_at).format("YYYY-MM-DD");
 
+        // console.log(data.created_at);
         _items.push(data);
       }
       
@@ -158,6 +159,7 @@ class StoreManagerTabAccountPage extends Component{
     })
   }
 
+  /*
   requestMoreData(){
     if(this.state.items.length === 0 && this.isRequestInitData){
       return;
@@ -197,6 +199,7 @@ class StoreManagerTabAccountPage extends Component{
 
     })
   }
+  */
 
   render(){
     let next_deposit_date = moment_timezone(this.state.next_deposit_date).format('YYYY. MM. DD');
@@ -234,7 +237,7 @@ class StoreManagerTabAccountPage extends Component{
         <div className={'second_container'}>
           <div className={'second_box'}>
             <div className={'second_box_title'}>
-              다음 입금 예정일
+              입금 예정일
             </div>
             <div className={'second_box_date'}>
               {next_deposit_date}

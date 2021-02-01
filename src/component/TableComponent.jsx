@@ -6,6 +6,8 @@ import Util from '../lib/Util';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+import ic_chart_filter from '../res/img/ic-chart-filter.svg'
+
 class TableComponent extends Component{
   columnRefs = [];
 
@@ -261,8 +263,7 @@ class TableComponent extends Component{
                       {options}
                     </select>;
 
-        sortMarkDom = <div className={'sort_mark'}>
-                      </div>
+        sortMarkDom = <img src={ic_chart_filter} />
       }
 
       const objectDom = <div key={i} ref={(ref) => {this.columnRefs[columnRefIndex].ref = ref;}} className={'column_title_box'}>
@@ -498,7 +499,7 @@ TableComponent.defaultProps = {
   ///////////무한에 필요한 데이터 end
 
   columns: [],
-  datas: []
+  datas: [],
 }
 
 // export default connect(mapStateToProps, mapDispatchToProps)(StoreItemDetailPage);

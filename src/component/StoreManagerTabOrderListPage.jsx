@@ -82,6 +82,17 @@ class StoreManagerTabOrderListPage extends Component{
   }
 
   requestReadyTotalCount(){
+    axios.post("/store/order/saling/count", {
+      store_id: this.props.store_id
+    }, (result) => {
+      this.setState({
+        ready_total_count: result.ready_total_count
+      })
+    }, (error) => {
+
+    })
+
+    /*
     axios.post("/store/order/ready/count", {
       store_id: this.props.store_id
     }, (result) => {
@@ -91,6 +102,7 @@ class StoreManagerTabOrderListPage extends Component{
     }, (error) => {
 
     })
+    */
   }
 
   requestReadySuccessTotalCount(){
@@ -184,9 +196,17 @@ class StoreManagerTabOrderListPage extends Component{
         let confirm_at = "진행 중";
         if(data.confirm_at === undefined || data.confirm_at === null){
           confirm_at = "진행 중";
+          if(data.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+            confirm_at = moment_timezone(data.updated_at).format("YYYY-MM-DD");
+          }
         }else{
           confirm_at = moment_timezone(data.confirm_at).format("YYYY-MM-DD");
         }
+
+        if(data.state > Types.order.ORDER_STATE_PAY_END){
+          confirm_at = '-'
+        }
+        
         
         const newData = {
           ...data,
@@ -409,7 +429,7 @@ class StoreManagerTabOrderListPage extends Component{
             datas={this.state.items}
           ></TableComponent>
         </div>
-        <div className={'order_list_container'}>
+        {/* <div className={'order_list_container'}>
           <div className={'order_list_title_container'}>
             <div className={'order_title_date order_title_font'}>
               일시
@@ -445,7 +465,7 @@ class StoreManagerTabOrderListPage extends Component{
             </div>
           </div>
 
-          {/* <InfiniteScroll
+          <InfiniteScroll
             // style={{backgroundColor: 'red'}}
             dataLength={this.state.items.length} //This is important field to render the next data
             next={this.requestMoreData}
@@ -492,9 +512,9 @@ class StoreManagerTabOrderListPage extends Component{
                       </div>
                     </div>
             })}
-          </InfiniteScroll> */}
+          </InfiniteScroll>
           
-        </div>
+        </div> */}
       </div>
     )
   }
