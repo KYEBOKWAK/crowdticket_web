@@ -9,6 +9,9 @@ import StoreManagerTabAccountPage from '../component/StoreManagerTabAccountPage'
 
 import StoreManagerTabTestPage from '../component/StoreManagerTabTestPage';
 import StoreManagerTabAskOrderListPage from '../component/StoreManagerTabAskOrderListPage';
+
+// import StoreManagerTabHomePage from '../component/StoreManagerTabHomePage';
+
 import axios from '../lib/Axios';
 
 import ScrollBooster from 'scrollbooster';
@@ -19,58 +22,35 @@ const TAB_ORDER_LIST = 'TAB_ORDER_LIST';
 const TAB_ASK_LIST = 'TAB_ASK_LIST';
 const TAB_REVIEW_LIST = 'TAB_REVIEW_LIST';
 const TAB_STORE_ACCOUNT = 'TAB_STORE_ACCOUNT';
+// const TAB_MANAGER_HOME = 'TAB_MANAGER_HOME';
 
 const tabInfo = [
-  {
-    key: TAB_ASK_LIST,
-    name: '요청된 콘텐츠',
-  },
-  {
-    key: TAB_STORE_INFO,
-    name: '상점정보',
-  },
-  {
-    key: TAB_ITEM_MANAGER,
-    name: '상품관리',
-  },
-  {
-    key: TAB_ORDER_LIST,
-    name: '판매내역',
-  },
-  {
-    key: TAB_STORE_ACCOUNT,
-    name: '정산'
-  }
-]
-
-/*
-const tabInfo = [
-  {
-    key: TAB_STORE_INFO,
-    name: '상점정보',
-  },
-  {
-    key: TAB_ITEM_MANAGER,
-    name: '상품관리',
-  },
-  {
-    key: TAB_ORDER_LIST,
-    name: '판매내역',
-  },
-  {
-    key: TAB_ASK_LIST,
-    name: '요청된 콘텐츠',
-  },
   // {
-  //   key: TAB_REVIEW_LIST,
-  //   name: '리뷰',
+  //   key: TAB_MANAGER_HOME,
+  //   name: '홈'
   // },
   {
+    key: TAB_ASK_LIST,
+    name: '요청된 콘텐츠',
+  },
+  {
+    key: TAB_STORE_INFO,
+    name: '상점정보',
+  },
+  {
+    key: TAB_ITEM_MANAGER,
+    name: '상품관리',
+  },
+  {
+    key: TAB_ORDER_LIST,
+    name: '판매내역',
+  },
+  {
     key: TAB_STORE_ACCOUNT,
     name: '정산'
   }
 ]
-*/
+
 class StoreManager extends Component {
   sb = null;
   constructor(props) {
@@ -192,7 +172,6 @@ class StoreManager extends Component {
     if(window.innerWidth > 520){
       //pc
       if(this.state.isMenuScroll){
-        console.log("ischenge false");
         this.setState({
           isMenuScroll: false
         }, () => {
@@ -203,7 +182,6 @@ class StoreManager extends Component {
       //mobile
       
       if(!this.state.isMenuScroll){
-        console.log("ischenge true");
         this.setState({
           isMenuScroll: true
         }, () => {
@@ -378,7 +356,7 @@ class StoreManager extends Component {
   getContentPage(){
     let contentPage = <></>;
     if(this.state.selectTabKey === TAB_STORE_INFO){
-      contentPage = <StoreManagerTabStoreInfoPage store_user_id={this.state.store_user_id}></StoreManagerTabStoreInfoPage>;
+      contentPage = <StoreManagerTabStoreInfoPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabStoreInfoPage>;
     }
     else if(this.state.selectTabKey === TAB_ITEM_MANAGER){
       contentPage = <StoreManagerTabItemPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabItemPage>;
@@ -392,6 +370,9 @@ class StoreManager extends Component {
     else if(this.state.selectTabKey === TAB_STORE_ACCOUNT){
       contentPage = <StoreManagerTabAccountPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabAccountPage>;
     }
+    // else if(this.state.selectTabKey === TAB_MANAGER_HOME){
+    //   contentPage = <StoreManagerTabHomePage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabHomePage>;
+    // }
     else{
       contentPage = <StoreManagerTabTestPage></StoreManagerTabTestPage>;
     }

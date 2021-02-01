@@ -34,6 +34,11 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  do_it: {
+    //여기서 더 디테일한 옵션을 넣으려면 json 생성
+    store_info: 'store_info',
+    store_contact_info: 'store_contact_info'
+  },
   table_type: {
     none: 'none',
     total_payment: 'total_payment'  //하단에 총합계가 나오는 ui 구성

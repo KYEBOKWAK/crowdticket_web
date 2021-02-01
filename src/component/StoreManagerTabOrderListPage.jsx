@@ -290,7 +290,7 @@ class StoreManagerTabOrderListPage extends Component{
     return(
       <div className={'StoreManagerTabOrderListPage'}>
         
-        <div className={'summary_container'}>
+        {/* <div className={'summary_container'}>
           <div className={'summary_content_container'}>
             <div className={'summary_content_label_text'}>
               총 콘텐츠 구매
@@ -338,10 +338,10 @@ class StoreManagerTabOrderListPage extends Component{
               {Util.getNumberWithCommas(this.state.total_price)}원
             </div>
           </div>
-        </div>
+        </div> */}
        
 
-        {/* <div className={'summary_container'}>
+        <div className={'summary_container'}>
           <div className={'summary_content_container'}>
             <div className={'summary_content_label_text'}>
               전체 주문 수
@@ -389,9 +389,9 @@ class StoreManagerTabOrderListPage extends Component{
               {Util.getNumberWithCommas(this.state.total_price)}원
             </div>
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className={'order_list_container'}>
+        <div className={'order_list_container'}>
           <TableComponent
             isInfinite={true}
             hasMore={this.state.hasMore}
@@ -408,7 +408,7 @@ class StoreManagerTabOrderListPage extends Component{
             }
             datas={this.state.items}
           ></TableComponent>
-        </div> */}
+        </div>
         <div className={'order_list_container'}>
           <div className={'order_list_title_container'}>
             <div className={'order_title_date order_title_font'}>
@@ -445,7 +445,7 @@ class StoreManagerTabOrderListPage extends Component{
             </div>
           </div>
 
-          <InfiniteScroll
+          {/* <InfiniteScroll
             // style={{backgroundColor: 'red'}}
             dataLength={this.state.items.length} //This is important field to render the next data
             next={this.requestMoreData}
@@ -492,7 +492,7 @@ class StoreManagerTabOrderListPage extends Component{
                       </div>
                     </div>
             })}
-          </InfiniteScroll>
+          </InfiniteScroll> */}
           
         </div>
       </div>

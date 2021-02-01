@@ -97,10 +97,15 @@ class StoreManagerTabStoreInfoPage extends Component{
     axios.post("/store/info/userid", {
       store_user_id: this.props.store_user_id
     }, (result) => {
+
+      let _title = result.data.title;
+      if(_title === null){
+        _title = '';
+      }
       
       this.setState({
         store_id: result.data.store_id,
-        title: result.data.title,
+        title: _title,
         contact: result.data.contact,
         email: result.data.email,
         content: result.data.content

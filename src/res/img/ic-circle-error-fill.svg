@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="_03_ic_00_system_ic_circle_error_fill_24" width="20" height="20" viewBox="0 0 20 20">
+    <defs>
+        <clipPath id="clip-path">
+            <path id="Mask" d="M10 20a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10zm0-6a1 1 0 1 0 1 1 1 1 0 0 0-1-1zm0-9a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0V6a1 1 0 0 0-1-1z" class="cls-1"/>
+        </clipPath>
+        <style>
+            .cls-1{fill:#fff}
+        </style>
+    </defs>
+    <g id="fill">
+        <path id="Mask-2" d="M10 20a10 10 0 1 1 10-10 10.011 10.011 0 0 1-10 10zm0-6a1 1 0 1 0 1 1 1 1 0 0 0-1-1zm0-9a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0V6a1 1 0 0 0-1-1z" class="cls-1"/>
+        <g id="fill-2" clip-path="url(#clip-path)">
+            <g id="_01_color_02_bk" transform="translate(-2 -2)">
+                <path id="Rectangle" fill="#fc5e7c" d="M0 0H24V24H0z"/>
+            </g>
+        </g>
+    </g>
+</svg>

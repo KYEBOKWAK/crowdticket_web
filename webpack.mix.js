@@ -68,6 +68,8 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/StoreItemDetailReviewList.scss', 'dist/css/')
 .sass('src/res/css/StoreItemDetailReviewItem.scss', 'dist/css/')
 .sass('src/res/css/ImageCroper.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerTabHomePage.scss', 'dist/css/')
+.sass('src/res/css/StoreDoIt.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()
