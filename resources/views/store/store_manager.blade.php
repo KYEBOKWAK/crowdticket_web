@@ -17,7 +17,7 @@
 <link href="{{ asset('/dist/css/StoreManagerTabStoreInfoPage.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreManagerTabItemPage.css?version=0') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreManagerTabOrderListPage.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=4') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=5') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/StoreOrderItem.css?version=2') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=13') }}" rel="stylesheet"/>
@@ -39,7 +39,7 @@
 
 <link href="{{ asset('/dist/css/TableComponent.css?version=1') }}" rel="stylesheet"/>
 
-<link href="{{ asset('/dist/css/StoreManagerTabHomePage.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreManagerTabHomePage.css?version=1') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreDoIt.css?version=0') }}" rel="stylesheet"/>
 
 @endsection

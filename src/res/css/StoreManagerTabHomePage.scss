@@ -18,6 +18,8 @@
     border-radius: 20px;
     box-shadow: 6px 4px 30px 0 rgba(25, 25, 25, 0.1);
     background-color: #ffffff;
+
+    position: relative;
   }
 
   .new_order_top_container {
@@ -65,6 +67,25 @@
 
   .point_color {
     color: #00bfff;
+  }
+
+  .new_order_no_content_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .new_order_no_content_text {
+    text-align: center;
+    font-size: 14px;
+    color: #7f7f7f;
   }
   //첫번째 단 end
   @media (max-width: 520px){

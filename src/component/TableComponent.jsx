@@ -191,7 +191,6 @@ class TableComponent extends Component{
         }
         
       }
-      
     }
 
     this.setState({
@@ -242,7 +241,8 @@ class TableComponent extends Component{
       }
 
       let isSortType = false;
-      const sortData = _sortDatas.find((value) => {return value.field === data.field});
+      // const sortData = _sortDatas.find((value) => {return value.field === data.field});
+      let sortData = _sortDatas.find((value) => {return value.field === data.field});
       if(sortData !== undefined){
         isSortType = true;
       }
@@ -254,6 +254,7 @@ class TableComponent extends Component{
         let options = [];
         options.push(<option key={0} value={0}>{'모두보기'}</option>);
 
+        sortData.types.sort();
         for(let j = 0 ; j < sortData.types.length ; j++){
           const sortValue = sortData.types[j];
           const optionDom = <option key={j+1} value={sortValue}>{sortValue}</option>;

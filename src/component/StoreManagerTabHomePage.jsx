@@ -6,7 +6,7 @@ import axios from '../lib/Axios';
 import StoreDoIt from '../component/StoreDoIt';
 
 import ic_more from '../res/img/ic-more.svg';
-
+import ic_btn_add from '../res/img/btn-add.svg';
 
 class StoreManagerTabHomePage extends Component{
 
@@ -17,8 +17,16 @@ class StoreManagerTabHomePage extends Component{
 
       //첫번째 단 start
       order_count: 0,
-      item_count: 0
+      item_count: 0,
       //첫번째 단 end
+
+      //첫번째 옆 정산단 start
+      total_payment_price: 0,
+
+      next_deposit_date: '',
+      standard_payment_date_start: '',
+      standard_payment_date_end: ''
+      //첫번째 옆 정산단 end
     }
   };
 
@@ -39,12 +47,15 @@ class StoreManagerTabHomePage extends Component{
     let new_order_center_container_dom = <></>;
     let new_order_center_content_dom = <></>;
     if(this.state.order_count === 0 && this.state.item_count === 0){
-      new_order_center_content_dom = <div>
-                                      {`주문을 받기 전,\n 먼저 상품을 등록해볼까요?`}
+      new_order_center_content_dom = <div className={'new_order_no_content_text'}>
+                                      <div>
+                                        {`주문을 받기 전,\n 먼저 상품을 등록해볼까요?`}
+                                      </div>
+                                      <img style={{marginTop: 16}} src={ic_btn_add} />
                                     </div>;
 
     }else if(this.state.order_count === 0 && this.state.item_count > 0){
-      new_order_center_content_dom = <div>
+      new_order_center_content_dom = <div className={'new_order_no_content_text'}>
                                       {`신규 주문이 없어요.\n상점 링크 공유 배너를 클릭해\n상점을 홍보해보세요!`}
                                     </div>;
     }
@@ -52,7 +63,7 @@ class StoreManagerTabHomePage extends Component{
 
     }
 
-    new_order_center_container_dom = <div>
+    new_order_center_container_dom = <div className={'new_order_no_content_container'}>
                                       {new_order_center_content_dom}
                                     </div>;
 
@@ -76,6 +87,8 @@ class StoreManagerTabHomePage extends Component{
                   <img src={ic_more} />
                 </div>
               </div>
+
+              {new_order_center_container_dom}
             </div>
 
             <div className={'first_second_box'}>
@@ -88,6 +101,10 @@ class StoreManagerTabHomePage extends Component{
                     더보기
                     <img src={ic_more} />
                   </div>
+                </div>
+
+                <div>
+                  정산 예정 금액
                 </div>
               </div>
               <div className={'link_copy_button'}>
