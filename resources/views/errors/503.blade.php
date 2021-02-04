@@ -34,7 +34,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title" style="font-size: 50px;">크티 서버 개선중..<br> 새벽12시에 정상화 됩니다. <br> 더 좋은 모습으로 찾아뵙겠습니다. :)</div>
+        <div class="title" style="font-size: 50px;">크티 서버 개선중..<br> 새벽2시에 정상화 됩니다. <br> 더 좋은 모습으로 찾아뵙겠습니다. :)</div>
 
     </div>
 </div>
