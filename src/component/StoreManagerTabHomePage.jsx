@@ -272,7 +272,7 @@ class StoreManagerTabHomePage extends Component{
   onClickContactUsHelpCenter = (e) => {
     e.preventDefault();
 
-    plusFriendChat();
+    plusFriendHelpCenterChat();
   }
 
   goMoreButton = (e, tabKey) => {

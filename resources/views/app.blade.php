@@ -617,9 +617,15 @@ function logout(){
         plusFriendId: '_JUxkxjM' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
       });
     }
+
+    function plusFriendHelpCenterChat() {
+      Kakao.PlusFriend.chat({
+        plusFriendId: '_gJyNK' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=117') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=118') }}"></script>
 
 </body>
 </html>
