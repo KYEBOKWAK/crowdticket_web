@@ -12,7 +12,7 @@
   </style>
 
 <link href="{{ asset('/dist/css/StoreDetailReceipt.css?version=1') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreOrderItem.css?version=2') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=3') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=13') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/FileUploader.css?version=4') }}" rel="stylesheet"/>

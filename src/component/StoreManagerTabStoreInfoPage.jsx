@@ -2,24 +2,16 @@
 
 import React, { Component } from 'react';
 
-
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
-// import Util from '@lib/Util';
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
-
 import axios from '../lib/Axios';
 import icon_box from '../res/img/icon-box.svg';
 
+import Profile from '../component/Profile';
+import Types from '../Types';
+
+import ic_success from '../res/img/ic-success.svg';
+import ic_error from '../res/img/ic-error.svg';
+
+import Util from '../lib/Util';
 
 const INPUT_STORE_MANAGER_TITLE = 'INPUT_STORE_MANAGER_TITLE';
 const INPUT_STORE_MANAGER_CONTENT = 'INPUT_STORE_MANAGER_CONTENT';
@@ -31,13 +23,29 @@ const INPUT_STORE_MANAGER_ACCOUNT_NUMBER = "INPUT_STORE_MANAGER_ACCOUNT_NUMBER";
 const INPUT_STORE_MANAGER_CONTACT = 'INPUT_STORE_MANAGER_CONTACT';
 const INPUT_STORE_MANAGER_EMAIL = 'INPUT_STORE_MANAGER_EMAIL';
 
+const INPUT_STORE_MANAGER_ALIAS = 'INPUT_STORE_MANAGER_ALIAS';
+
 const MAX_CATEGORY_LENGTH = 6;
 const MAX_CONTENT_LENGTH = 45;
+const MAX_ALIAS_LENGTH = 32;
+
+const STORE_INFO_PROFILE_IMG_SIZE = 80;
 
 class StoreManagerTabStoreInfoPage extends Component{
 
+  profileRef = React.createRef();
+
   constructor(props){
     super(props);
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    baseURL = baseURL + '/store/';
 
     this.state = {
       myID: null,
@@ -47,6 +55,10 @@ class StoreManagerTabStoreInfoPage extends Component{
       contact: '',
       email: '',
       content: '',
+
+      store_alias: '',
+      alias_warning: '',
+      is_alias_check_success: false,
 
 
       channels: [],
@@ -58,6 +70,9 @@ class StoreManagerTabStoreInfoPage extends Component{
       account_name: '',
       account_number: '',
       account_bank: '',
+
+      store_base_url: baseURL
+
     }
 
     this.onChangeSelect = this.onChangeSelect.bind(this);
@@ -73,6 +88,7 @@ class StoreManagerTabStoreInfoPage extends Component{
   };
 
   componentWillUnmount(){
+    this.profileRef = null;
   };
 
   componentDidUpdate(){
@@ -108,9 +124,12 @@ class StoreManagerTabStoreInfoPage extends Component{
         title: _title,
         contact: result.data.contact,
         email: result.data.email,
-        content: result.data.content
+        content: result.data.content,
+
+        store_alias: result.data.alias
       }, () => {
         this.requestAccountInfo();
+        this.checkAlias();
       })
     }, (error) => {
 
@@ -230,10 +249,82 @@ class StoreManagerTabStoreInfoPage extends Component{
         content: e.target.value
       })
     }
+    else if(type === INPUT_STORE_MANAGER_ALIAS){
+      this.setState({
+        store_alias: e.target.value,
+        is_alias_check_success: false
+      }, () => {
+        this.checkAlias();
+      })
+    }
+  }
+
+  checkAlias = () => {
+
+    if(this.state.store_alias.length <= 0){
+      this.setState({
+        alias_warning: ''
+      })
+      return;
+    }
+
+    //프론트글자 체크
+    let warning_text = '';
+    let isWarning = false;
+    if(Util.checkPatternSpecial(this.state.store_alias.charAt(0))){
+      // console.log("특수문자가 있음");
+      isWarning = true;
+      warning_text = '첫글자는 특수문자가 올 수 없습니다.';
+    }else if(Util.checkPatternSpecialInAlias(this.state.store_alias)){
+      isWarning = true;
+      warning_text = '특수문자는 _ 만 입력이 가능합니다.';
+    }else if(Util.checkPatternKor(this.state.store_alias)){
+      isWarning = true;
+      warning_text = '한글은 입력 불가능합니다.';
+    }else if(this.state.store_alias.length === MAX_ALIAS_LENGTH){
+      isWarning = true;
+      warning_text = '32자 이내만 가능합니다';
+    }
+
+    if(isWarning){
+      this.setState({
+        alias_warning: warning_text
+      })
+
+      return;
+    }
+
+    axios.post("/store/alias/check", {
+      store_alias: this.state.store_alias,
+      store_id: this.state.store_id
+    }, (result) => {
+
+      let is_alias_check_success = false;
+      if(result.warning_text === ''){
+        is_alias_check_success = true;
+      }
+
+      this.setState({
+        alias_warning: result.warning_text,
+        is_alias_check_success: is_alias_check_success
+      })
+    }, (error) => {
+
+    })
   }
 
   onClickSave(e){
     e.preventDefault();
+
+    if(this.state.store_alias === ''){
+      alert("상점 링크 주소를 입력해주세요");
+      return;
+    }
+    
+    if(!this.state.is_alias_check_success){
+      alert("우효한 상점 링크 주소를 입력해주세요");
+      return;
+    }
 
     if(this.state.account_name === ''){
       alert("예금주명을 입력해주세요");
@@ -259,28 +350,37 @@ class StoreManagerTabStoreInfoPage extends Component{
 
     showLoadingPopup('저장중입니다..');
 
-    axios.post("/store/manager/account/info/set", {
-      store_id: this.state.store_id,
-      account_name: this.state.account_name,
-      account_number: this.state.account_number,
-      account_bank: this.state.account_bank,
-
-      email: this.state.email,
-      contact: this.state.contact
-    }, (result) => {
-      axios.post('/store/save/info', {
+    this.profileRef.uploadProfileImage(this.props.store_user_id, Types.file_upload_target_type.user, 
+    () => {
+      axios.post("/store/manager/account/info/set", {
         store_id: this.state.store_id,
-        title: this.state.title,
-        // contact: this.state.contact,
-        // email: this.state.email,
-        content: this.state.content
+        account_name: this.state.account_name,
+        account_number: this.state.account_number,
+        account_bank: this.state.account_bank,
+  
+        email: this.state.email,
+        contact: this.state.contact
       }, (result) => {
-        this.queryChannelsRemove();
+        axios.post('/store/save/info/v1', {
+          store_id: this.state.store_id,
+          title: this.state.title,
+          // contact: this.state.contact,
+          // email: this.state.email,
+          content: this.state.content,
+
+          alias: this.state.store_alias
+        }, (result) => {
+          this.queryChannelsRemove();
+        }, (error) => {
+          stopLoadingPopup();
+        })
       }, (error) => {
         stopLoadingPopup();
       })
-    }, (error) => {
+    }, 
+    () => {
       stopLoadingPopup();
+      alert('프로필 이미지 저장 오류');
     })
   }
 
@@ -587,14 +687,39 @@ class StoreManagerTabStoreInfoPage extends Component{
                         </div>
 
       category_list.push(categoryList);
-      // categories_channel_id
-      // channel_link_url
+    }
+
+    let alias_warning_dom = <></>;
+    if(this.state.alias_warning !== ''){
+      alias_warning_dom = <div className={'alias_warning_container'}>
+                            {this.state.alias_warning}
+                          </div>
+    }
+
+    let alias_warning_icon_img = <></>;
+    if(this.state.store_alias === ''){
+      alias_warning_icon_img = <></>;
+    }else{
+      if(this.state.alias_warning === ''){
+        alias_warning_icon_img = <img src={ic_success} />
+      }else{
+        alias_warning_icon_img = <img src={ic_error} />
+      }
+      
     }
 
     return(
       <div className={'StoreManagerTabStoreInfoPage'}>
 
-        <div className={'input_container'}>
+        <div className={'label_title'}>
+          상점 정보
+        </div>
+
+        <div style={{width: STORE_INFO_PROFILE_IMG_SIZE, height: STORE_INFO_PROFILE_IMG_SIZE}} className={'profile_container'}>
+          <Profile ref={(ref) => {this.profileRef = ref;}} user_id={this.props.store_user_id} circleSize={STORE_INFO_PROFILE_IMG_SIZE} isEdit={true}></Profile>
+        </div>
+
+        <div className={'input_container'} style={{marginTop: 0}}>
           <div className={'input_label'}>상점명</div>
           <input className={'input_box'} type="text" name={'title'} placeholder={'상점명을 입력해주세요.'} value={this.state.title} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_TITLE)}}/>
         </div>
@@ -615,6 +740,40 @@ class StoreManagerTabStoreInfoPage extends Component{
           <div className={'category_max_text'}>
             최대 6개까지 등록 가능합니다.
           </div>
+        </div>
+
+        <div className={'input_container'}>
+          <div className={'input_label'}>상점 링크</div>
+          <div className={'alias_container'}>
+            <div className={'alias_front_box'}>
+              {this.state.store_base_url}
+            </div>
+            <div className={'alias_input_box_container'}>
+             <input 
+              // style = 
+              // {
+              //   {
+              //     borderTopLeftRadius: 0, 
+              //     borderTopRightRadius: 0,
+              //     borderBottomLeftRadius: 0,
+              //     borderBottomRightRadius: 0,
+              //     borderRight: 0,
+              //     paddingRight: 0
+              //   }
+              // } 
+              className={'input_box alias_input_box'} 
+              value={this.state.store_alias} 
+              onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ALIAS)}} 
+              maxLength={MAX_ALIAS_LENGTH} 
+              placeholder={"링크에 사용될 상점명을 입력해주세요."}/>
+
+              <div className={'alias_check_box'}>
+                {alias_warning_icon_img}
+              </div>
+            </div>
+          </div>
+
+          {alias_warning_dom}
         </div>
 
         <div className={'account_info_container'}>

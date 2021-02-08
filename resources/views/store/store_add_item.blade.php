@@ -18,7 +18,7 @@
   <link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/Popup_image_preview.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/ImageCroper.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/ImageCroper.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/react-easy-crop.css?version=0') }}" rel="stylesheet"/>
   
 @endsection

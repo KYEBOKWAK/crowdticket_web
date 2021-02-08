@@ -9,13 +9,24 @@
   }
   .doit_item {
     display: flex;
-    font-size: 16px;
-    font-weight: bold;
-    color: #191919;
     justify-content: space-between;
     align-items: center;
   }
+
+  .doit_item_text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #191919;
+  }
   @media (max-width: 520px){
-    /*모바일일때*/  
+    /*모바일일때*/
+
+    .doit_item_box {
+      padding: 16px;
+      margin-bottom: 0px;
+    }
+    .doit_item_text {
+      font-size: 12px;
+    }
   }
 }

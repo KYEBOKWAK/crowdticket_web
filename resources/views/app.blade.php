@@ -33,6 +33,8 @@
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Global.css?version=3') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('/dist/css/Profile.css?version=0') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -617,7 +619,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=116') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=117') }}"></script>
 
 </body>
 </html>

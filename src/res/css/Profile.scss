@@ -1,0 +1,49 @@
+.Profile {
+  
+  // position: relative;
+
+  .profile_img_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .profile_img {
+
+  }
+
+  .profile_button {
+    position: relative;
+  }
+
+  .profile_button:disabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+
+  .ic_camera_box {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 4px 4px 14px 0 rgba(217, 217, 217, 0.4);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ic_camera_img {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (max-width: 520px){
+    /*모바일일때*/  
+  }
+}

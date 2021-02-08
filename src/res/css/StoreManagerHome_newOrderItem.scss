@@ -1,0 +1,145 @@
+$item_width: 40px;
+$item_m_width: 20px;
+.StoreManagerHome_newOrderItem {
+  
+
+  .new_order_item_button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .item_container {
+    display: flex;
+  }
+  .item_img_wrapper {
+    width: $item_width;
+    height: $item_width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .item_img {
+    width: $item_width;
+  }
+
+  .new_order_item_content_container {
+    margin-left: 8px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
+    overflow: hidden;
+  }
+
+  .new_order_item_name {
+    font-size: 12px;
+    color: #808080;
+  }
+
+  .new_order_item_title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-top: 2px;
+  }
+
+  .new_order_item_price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00bfff;
+  }
+
+  .item_content_box {
+    // padding-right: 24px;
+    overflow: hidden;
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
+  }
+
+  .item_buttons_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .item_buttons_box_m {
+    margin-top: 16px;
+  }
+
+  .item_button {
+    width: 96px;
+    height: 34px;
+    display: flex;
+    border-radius: 12px;
+    border: solid 1px #cccccc;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 12px;
+    font-weight: 500;
+    color: #191919;
+  }
+  
+  .date_text {
+    line-height: 1.5;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #b3b3b3;
+    display: flex;
+    align-items: center;
+  }
+
+  .ic_more_img {
+
+  }
+
+  @media (max-width: 520px){
+    /*모바일일때*/  
+
+    .ic_more_img {
+      width: 14px;
+    }
+    .date_text {
+      font-size: 10px;
+    }
+
+    .item_img_wrapper {
+      width: $item_m_width;
+      height: $item_m_width;
+
+      border-radius: 4px;
+    }
+    .item_img {
+      width: $item_m_width;
+    }
+
+    .item_title {
+      font-size: 12px;
+    }
+
+    .item_price {
+      font-size: 12px;
+    }
+
+    // .item_content_container {
+    //   display: block;
+    // }
+
+    .item_buttons_box {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+
+    .item_button {
+      width: 100%;
+    }
+
+    .item_content_box {
+      padding-right: 0px;
+    }
+  }
+}

@@ -10,7 +10,7 @@ import StoreManagerTabAccountPage from '../component/StoreManagerTabAccountPage'
 import StoreManagerTabTestPage from '../component/StoreManagerTabTestPage';
 import StoreManagerTabAskOrderListPage from '../component/StoreManagerTabAskOrderListPage';
 
-// import StoreManagerTabHomePage from '../component/StoreManagerTabHomePage';
+import StoreManagerTabHomePage from '../component/StoreManagerTabHomePage';
 
 import axios from '../lib/Axios';
 
@@ -23,13 +23,13 @@ const TAB_ASK_LIST = 'TAB_ASK_LIST';
 const TAB_REVIEW_LIST = 'TAB_REVIEW_LIST';
 const TAB_STORE_ACCOUNT = 'TAB_STORE_ACCOUNT';
 
-// const TAB_MANAGER_HOME = 'TAB_MANAGER_HOME';
+const TAB_MANAGER_HOME = 'TAB_MANAGER_HOME';
 
 const tabInfo = [
-  // {
-  //   key: TAB_MANAGER_HOME,
-  //   name: '홈'
-  // },
+  {
+    key: TAB_MANAGER_HOME,
+    name: '홈'
+  },
   {
     key: TAB_ASK_LIST,
     name: '요청된 콘텐츠',
@@ -59,7 +59,7 @@ class StoreManager extends Component {
     this.state = { 
       isLogin: false,
       title: '상점관리',
-      selectTabKey: TAB_ASK_LIST,
+      selectTabKey: TAB_MANAGER_HOME,
 
       store_id: null,
       store_user_id: null,
@@ -371,9 +371,9 @@ class StoreManager extends Component {
     else if(this.state.selectTabKey === TAB_STORE_ACCOUNT){
       contentPage = <StoreManagerTabAccountPage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabAccountPage>;
     }
-    // else if(this.state.selectTabKey === TAB_MANAGER_HOME){
-    //   contentPage = <StoreManagerTabHomePage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabHomePage>;
-    // }
+    else if(this.state.selectTabKey === TAB_MANAGER_HOME){
+      contentPage = <StoreManagerTabHomePage store_user_id={this.state.store_user_id} store_id={this.state.store_id}></StoreManagerTabHomePage>;
+    }
     else{
       contentPage = <StoreManagerTabTestPage></StoreManagerTabTestPage>;
     }
@@ -384,23 +384,32 @@ class StoreManager extends Component {
   goStorePage(e){
     e.preventDefault();
 
-    let baseURL = 'https://crowdticket.kr'
-    const baseURLDom = document.querySelector('#base_url');
-    if(baseURLDom){
-      baseURL = baseURLDom.value;
-    }
+    axios.post('/store/any/info/alias', {
+      store_id: this.state.store_id
+    }, (result) => {
 
-    let goTail = this.state.alias;
+      let baseURL = 'https://crowdticket.kr'
+      const baseURLDom = document.querySelector('#base_url');
+      if(baseURLDom){
+        baseURL = baseURLDom.value;
+      }
 
-    if(!this.state.alias){
-      goTail = this.state.store_id;
-    }
+      const alias = result.alias;
 
-    let goURL = baseURL + '/store/'+goTail;
+      let goTail = alias;
 
-    // window.location.href = goURL;
-    window.open(goURL);
+      if(!alias){
+        goTail = this.state.store_id;
+      }
 
+      let goURL = baseURL + '/store/'+goTail;
+
+      // window.location.href = goURL;
+      window.open(goURL);
+
+    }, (error) => {
+
+    })
   }
 
   render() {

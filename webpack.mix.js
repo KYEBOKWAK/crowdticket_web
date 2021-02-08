@@ -70,6 +70,10 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/ImageCroper.scss', 'dist/css/')
 .sass('src/res/css/StoreManagerTabHomePage.scss', 'dist/css/')
 .sass('src/res/css/StoreDoIt.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerHome_Item.scss', 'dist/css/')
+.sass('src/res/css/StoreManagerHome_newOrderItem.scss', 'dist/css/')
+.sass('src/res/css/Popup_StoreReceiptItem.scss', 'dist/css/')
+.sass('src/res/css/Profile.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

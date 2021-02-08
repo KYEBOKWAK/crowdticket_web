@@ -238,7 +238,11 @@ class UserController extends Controller
 
     private function uploadPosterImage($request, $user)
     {
-        $photoUrlPartial = Model::getS3Directory(Model::S3_USER_DIRECTORY) . $user->id . '.jpg';
+        // $photoUrlPartial = Model::getS3Directory(Model::S3_USER_DIRECTORY) . $user->id . '.jpg';
+
+        $nowTime = date(time());
+
+        $photoUrlPartial = Model::getS3Directory(Model::S3_USER_DIRECTORY).$user->id.'/'.$nowTime.'-'.$user->id.'.jpg';
 
         Storage::put(
             $photoUrlPartial,

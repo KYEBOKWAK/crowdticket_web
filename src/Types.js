@@ -101,7 +101,8 @@ const Types = {
     orders_items: 'orders_items',
     items: 'items',
     product_file: 'product_file',
-    items_images: 'items_images'
+    items_images: 'items_images',
+    user: 'user',
   },
   file_upload_state: {
     NONE: 0,

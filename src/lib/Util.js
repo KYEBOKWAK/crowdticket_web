@@ -127,6 +127,35 @@ const Util = {
     }
     
     return new File([u8arr], filename, {type:mime});
+  },
+
+  checkPatternSpecial(str){
+    var pattern = /[~!@#$%^&*()_+|<>?:{}-]/;
+    if((pattern.test(str))){
+      return true
+    }else{
+      return false
+    }
+  },
+
+  checkPatternSpecialInAlias(str){
+    var pattern = /[~!@#$%^&*()+|<>?:{}-]/;
+    if((pattern.test(str))){
+      return true
+    }else{
+      
+      return false
+    }
+  },
+
+  checkPatternKor(str){
+    var pattern = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글체크
+    if((pattern.test(str))){
+      return true
+    }else{
+      
+      return false
+    }
   }
 }
 

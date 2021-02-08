@@ -4,6 +4,7 @@
   padding-bottom: 64px;
 
   .container_box {
+    width: 100%;
     margin-top: 24px;
   }
 
@@ -20,12 +21,16 @@
     background-color: #ffffff;
 
     position: relative;
+    overflow: hidden;
   }
 
   .new_order_top_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    position: relative;
+    z-index: 2;
   }
 
   .new_order_top_title_text {
@@ -41,6 +46,7 @@
   }
 
   .first_second_box {
+    width: 185px;
     margin-left: 16px;
     display: flex;
     flex-direction: column;
@@ -48,7 +54,7 @@
   }
 
   .calculate_box {
-    width: 185px;
+    width: 100%;
     height: 313px;
     padding: 32px 24px;
     border-radius: 20px;
@@ -57,12 +63,19 @@
   }
 
   .link_copy_button {
-    padding: 16px;
+    width: 100%;
+    height: 49px;
+    padding: 10px;
     border-radius: 20px;
     box-shadow: 6px 4px 18px 0 rgba(25, 25, 25, 0.1);
     background-color: #ffffff;
     font-size: 12px;
     font-weight: bold;
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .point_color {
@@ -80,6 +93,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   }
 
   .new_order_no_content_text {
@@ -87,8 +101,307 @@
     font-size: 14px;
     color: #7f7f7f;
   }
+
+  .calculate_box_content_container {
+    margin-top: 24px;
+  }
+
+  .calculate_box_content_label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4c4c4c;
+    margin-bottom: 4px;
+  }
+
+  .calculate_box_price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00bfff;
+  }
+
+  .calculate_box_date_text{
+    font-size: 12px;
+    color: #7f7f7f;
+  }
   //첫번째 단 end
+
+  .notice_box_button {
+    display: flex;
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #e5f8ff;
+  }
+
+  .notice_box_button:disabled {
+    background-color: #e5f8ff !important;
+  }
+
+  .notice_box_text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #03c5fe;
+    margin-left: 8px;
+    text-align: left;
+  }
+
+  .notice_image_button:disabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+
+  .contents_box {
+    width: 100%;
+    padding: 32px 24px;
+    border-radius: 20px;
+    box-shadow: 6px 4px 30px 0 rgba(25, 25, 25, 0.1);
+    background-color: #ffffff;
+  }
+
+  .notice_image {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .contents_label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .help_contact_us_container {
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
+  .help_contact_us_box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .help_contact_us_text {
+    font-size: 14px;
+    color: #191919;
+    margin-left: 8px;
+  }
+
+  .help_contact_service_center_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #43c7ee;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .help_contact_service_center_text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .help_contact_help_center_button {
+    width: 100%;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #fee500;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .help_contact_help_center_text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .help_contact_us_info {
+    font-size: 12px;
+    color: #7f7f7f;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .no_one_container {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  .no_one_text {
+    font-size: 14px;
+    color: #7f7f7f;
+    margin-left: 8px;
+  }
+
+  .sale_item_label_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .new_order_no_content_plus_img {
+    margin-top: 16px;
+  }
+
+  .items_container {
+    margin-top: 32px;
+  }
+
+  .order_items_container {
+    margin-top: 24px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .item_under_line {
+    width: 100%;
+    height: 1px;
+    background-color: #f4f4f4;
+    margin-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .order_item_under_line {
+    width: 100%;
+    height: 1px;
+    background-color: #f4f4f4;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .Toastify__toast-container {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .Toastify__toast {
+    height: 56px;
+    border-radius: 10px;
+    box-shadow: 10px 10px 24px 0 rgba(0, 0, 0, 0.3);
+
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+  }
+
+  .Toastify__toast-body {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/  
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    .new_order_no_content_plus_img {
+      margin-top: 8px;
+    }
+    .new_order_top_title_text {
+      font-size: 16px;
+    }
+    .contents_label {
+      font-size: 16px;
+    }
+
+    .new_order_top_container {
+      display: block;
+    }
+
+    .sale_item_label_container {
+      display: block;
+    }
+    
+    .new_order_top_more_button {
+      margin-top: 8px;
+    }
+
+    .new_order_no_content_text {
+      font-size: 12px;
+    }
+
+    .notice_box_text {
+      font-size: 12px;
+    }
+
+    .container_box {
+      margin-top: 20px;
+    }
+
+    .no_one_text {
+      font-size: 12px;
+    }
+
+    .no_one_container {
+      margin-top: 24px;
+    }
+
+    .help_contact_service_center_button {
+      height: 40px;
+    }
+
+    .help_contact_help_center_button {
+      height: 40px;
+    }
+
+    .help_contact_service_center_text {
+      font-size: 12px;
+    }
+
+    .help_contact_help_center_text {
+      font-size: 12px;
+    }
+
+    .help_contact_us_text {
+      font-size: 12px;
+    }
+
+    .help_contact_us_info{
+      font-size: 10px;
+    }
+
+    .contents_box {
+      padding: 20px 16px 24px;
+    }
+
+    .new_order_box {
+      width: 100%;
+      height: 350px;
+      padding: 20px 16px; 
+    }
+
+    .calculate_box {
+      height: 290px;
+      padding: 20px 16px; 
+    }
+
+    .first_second_box {
+      width: 100%;
+      margin-left: 10px;
+    }
+
+    .help_contact_us_container {
+      margin-top: 16px;
+    }
+
+    .item_under_line {
+      margin-top: 16px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .order_items_container {
+      margin-top: 16px;
+    }
   }
 }

@@ -23,6 +23,8 @@ class StoreDoIt extends Component{
       store_email: '',
       store_channel_count: 0,
 
+      store_user_profile_photo_url: '',
+
       account_name: '',
       account_number: '',
       account_bank: '',
@@ -74,6 +76,9 @@ class StoreDoIt extends Component{
     else if(this.state.store_channel_count === 0){
       isEmptyStoreInfo = true;
     }
+    else if(this.state.store_user_profile_photo_url === null || this.state.store_user_profile_photo_url === ''){
+      isEmptyStoreInfo = true;
+    }
     
     //연락/정산 정보
     if(this.state.store_contact === null || this.state.store_contact === ''){
@@ -115,7 +120,9 @@ class StoreDoIt extends Component{
         store_title: result.data.title,
         store_content: result.data.content,
         store_email: result.data.email,
-        store_contact: result.data.contact
+        store_contact: result.data.contact,
+
+        store_user_profile_photo_url: result.data.profile_photo_url
       }, () => {
         this.requestStoreChannels();
       })
@@ -188,7 +195,7 @@ class StoreDoIt extends Component{
       let doitItemDom = <></>;
       if(data === Types.do_it.store_info){
         doitItemDom = <div className={'doit_item'}>
-                        <div>
+                        <div className={'doit_item_text'}>
                           🏠 안녕하세요! 상점 정보를 등록해볼까요?
                         </div>
                         <img src={ic_btn_add} />
@@ -196,7 +203,7 @@ class StoreDoIt extends Component{
       }
       else if(data === Types.do_it.store_contact_info){
         doitItemDom = <div className={'doit_item'}>
-                        <div>
+                        <div className={'doit_item_text'}>
                           💳 잊지마세요! 연락처 및 정산 정보를 등록해볼까요?
                         </div>
                         <img src={ic_btn_add} />

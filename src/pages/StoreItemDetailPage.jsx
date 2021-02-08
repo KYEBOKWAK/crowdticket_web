@@ -456,48 +456,6 @@ class StoreItemDetailPage extends Component{
       ori_show_image_width: img.target.naturalWidth,
       ori_show_image_height: img.target.naturalHeight
     })
-
-    /*
-    // let show_image_width = img.target.offsetWidth;
-    // let show_image_height = img.target.offsetHeight;
-
-    let show_image_width = img.target.naturalWidth;
-    let show_image_height = img.target.naturalHeight;
-    
-    //가로로 긴 이미지인가?
-    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
-    // if(img.target.offsetWidth > img.target.offsetHeight){
-    if(img.target.naturalWidth > img.target.naturalHeight){
-      //가로가 긴 이미지
-      //세로 비율을 찾는다
-      // const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.offsetHeight;
-
-      // const imgReSizeWidth = img.target.offsetWidth * ratio;
-      // const imgReSizeHeight = img.target.offsetHeight * ratio;
-
-      
-      // show_image_width = imgReSizeWidth,
-      // show_image_height = imgReSizeHeight
-
-      const ratio = IMAGE_THUMB_FILE_WIDTH / img.target.naturalHeight;
-
-      const imgReSizeWidth = img.target.naturalWidth * ratio;
-      const imgReSizeHeight = img.target.naturalHeight * ratio;
-
-      
-      show_image_width = imgReSizeWidth,
-      show_image_height = imgReSizeHeight
-      
-    }
-
-    this.setState({
-      show_image_width: show_image_width,
-      show_image_height: show_image_height,
-
-      ori_show_image_width: img.target.naturalWidth,
-      ori_show_image_height: img.target.naturalHeight
-    })
-    */
   }
 
   render(){
