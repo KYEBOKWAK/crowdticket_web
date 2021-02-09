@@ -38,6 +38,9 @@ import Popup_refund from '../component/Popup_refund';
 
 import StoreItemDetailReviewList from '../component/StoreItemDetailReviewList';
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 const IMAGE_THUMB_FILE_WIDTH = 520;
 class StoreItemDetailPage extends Component{
 
@@ -146,6 +149,8 @@ class StoreItemDetailPage extends Component{
         this.requestItemTags();
         this.requestOrdersCount();
         this.requestAverageDay();
+
+        this.addViewCount();
       })
     }
 
@@ -172,6 +177,32 @@ class StoreItemDetailPage extends Component{
   };
 
   componentDidUpdate(){
+  }
+
+  addViewCount = () => {
+    let cookiesName = 'cr_view_item_'+this.state.store_item_id;
+
+    let view_store = cookies.get(cookiesName);
+    if(view_store === undefined){
+      var today = new Date();
+
+      var nextDay = new Date(today);
+      nextDay.setMinutes(today.getMinutes() + 10);
+
+      cookies.set(cookiesName, '0', 
+      { 
+        path: '/',
+        expires: nextDay
+      });
+
+      axios.post('/store/any/viewcount/item/add', {
+        item_id: this.state.store_item_id
+      }, (result) => {
+
+      }, (error) => {
+
+      })
+    }
   }
 
   handleScroll = (e) => {

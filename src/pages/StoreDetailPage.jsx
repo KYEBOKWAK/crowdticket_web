@@ -14,13 +14,11 @@ import axios from '../lib/Axios';
 import Util from '../lib/Util';
 
 import Types from '../Types';
-// import Resize from 'react-resize-to-aspect-ratio';
-
-// import Carousel from 'react-elastic-carousel';
-
-// import FlatList from 'flatlist-react';
 
 import StoreUserSNSList from '../component/StoreUserSNSList';
+
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const MENU_STATE_CONTENTS = 'MENU_STATE_CONTENTS';
 const MENU_STATE_REVIEW = 'MENU_STATE_REVIEW';
@@ -112,7 +110,7 @@ class StoreDetailPage extends Component {
       store_id: _store_id,
       store_alias: _store_alias,
       menuState: _menuState
-    }, function(){
+    }, () => {
       this.requestStoreInfo();
 
       if(isLogin()){
@@ -121,37 +119,36 @@ class StoreDetailPage extends Component {
     });
 
     window.addEventListener('resize', this.updateDimensions);
-    
-    /*
-
-    let _items = [];
-
-    let itemIndex = _items.length;
-    if(itemIndex < 0){
-      itemIndex = 0;
-    }
-
-    // let hasMore = true;
-    for(let i = 0 ; i < REQUEST_ONCE_ITME ; i++){
-      if(itemIndex >= itemsData.length ){
-        // hasMore = false;
-        break;
-      }
-
-      _items.push(itemsData[itemIndex]);
-      itemIndex++;
-    }
-    
-    this.setState({
-      items: _items.concat(),
-      store_id: _store_id,
-      store_alias: _store_alias
-    });
-    */
   }
 
   componentWillUnmount(){
     window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  addViewCount = () => {
+    let cookiesName = 'cr_view_'+this.state.store_id;
+
+    let view_store = cookies.get(cookiesName);
+    if(view_store === undefined){
+      var today = new Date();
+
+      var nextDay = new Date(today);
+      nextDay.setMinutes(today.getMinutes() + 10);
+
+      cookies.set(cookiesName, '0', 
+      { 
+        path: '/',
+        expires: nextDay
+      });
+
+      axios.post('/store/any/viewcount/store/add', {
+        store_id: this.state.store_id
+      }, (result) => {
+
+      }, (error) => {
+
+      })
+    }
   }
 
   storeItem(data){
@@ -188,7 +185,8 @@ class StoreDetailPage extends Component {
         store_user_id: result.data.user_id,
         name: result.data.nick_name,
         store_content: result.data.store_content
-      }, function(){
+      }, () => {
+        this.addViewCount();
         this.initData();
       })
     }, (error) => {

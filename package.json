@@ -59,6 +59,7 @@
     "react-redux": "^7.2.1",
     "react-toastify": "^7.0.3",
     "redux": "^4.0.5",
-    "scrollbooster": "^3.0.2"
+    "scrollbooster": "^3.0.2",
+    "universal-cookie": "^4.0.4"
   }
 }
