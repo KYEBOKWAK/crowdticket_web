@@ -215,12 +215,12 @@
    {!! html_entity_decode($magazine->story) !!}
   </div>
 
-  <div class='mannayo_banner_container'>
+  <!-- <div class='mannayo_banner_container'>
     <a href="{{url('/mannayo')}}" target='_blank'>
       <img class='mannayo_banner_img mannayo_banner_img_pc' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190806_meet_banner_wide.png'>
       <img class='mannayo_banner_img mannayo_banner_img_mobile' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/190806_meet_banner.png'>
     </a>
-  </div>
+  </div> -->
 </div>
 
 @if (\Auth::check() && \Auth::user()->isAdmin())
