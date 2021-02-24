@@ -90,11 +90,11 @@ class StoreHome extends Component {
           </div>
         </div>
 
-        <div className={'store_home_container'}>
+        {/* <div className={'store_home_container'}>
           <div className={'thumb_container'}>
             <Home_Thumb_list thumb_list_type={Types.thumb_list_type.stores} pc_show_item_count={12}></Home_Thumb_list>
           </div>
-        </div>
+        </div> */}
 
       </div>
     );

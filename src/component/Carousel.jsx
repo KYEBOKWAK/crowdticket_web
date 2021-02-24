@@ -94,7 +94,7 @@ class Carousel extends Component{
           items={this.props.items}
           disableButtonsControls={true}
           disableDotsControls={true}
-          touchMoveDefaultEvents={false}
+          touchMoveDefaultEvents={true}
           responsive={responsive}
           onSlideChange={(e) => {
           }}
