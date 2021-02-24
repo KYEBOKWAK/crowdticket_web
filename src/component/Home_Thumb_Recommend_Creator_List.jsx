@@ -167,7 +167,7 @@ class Home_Thumb_Recommend_Creator_List extends Component{
         const recommandDom = <div key={i} className={'item_box'}>
                               <Profile user_id={data.store_user_id} circleSize={this.state.user_profile_size} isEdit={false}></Profile>
                               <div className={'item_best_label_box'}>
-                                Best
+                                BEST
                               </div>
 
                               <div className={'item_title_text'}>
@@ -223,8 +223,6 @@ class Home_Thumb_Recommend_Creator_List extends Component{
           <div className={'viewport'}>
             <div className={'scrollable-content'} style={{display: 'flex', flexDirection: 'row',}}>
               {this.state.items}
-            </div>
-            <div className={'blur_thumb_cover'}>
             </div>
           </div>
         </div>
