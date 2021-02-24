@@ -113,7 +113,7 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreHome.css?version=6') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreHome.css?version=7') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=4') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=1') }}" rel="stylesheet"/>
@@ -128,7 +128,7 @@
   <link href="{{ asset('/dist/css/Home_Thumb_Recommend_Creator_List.css?version=0') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=0') }}" rel="stylesheet"/>
