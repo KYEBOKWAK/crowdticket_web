@@ -17,6 +17,8 @@ import ic_dis_right from '../res/img/ic-dis-right.svg';
 
 import Carousel from './Carousel';
 
+import Util from '../lib/Util';
+
 const SLIDE_BUTTON_SHOW_SIZE = 1270;  //css 의 사이즈와 동일해야함.
 class Home_Thumb_list extends Component{
 
@@ -72,12 +74,19 @@ class Home_Thumb_list extends Component{
     axios.post("/main/any/thumbnails/popular/list", {
       thumbnails_type: Types.thumbnails.store_item_popular
     }, (result) => {
-      // console.log(result);
-
       let _title_text = result.list[0].first_text;
-      let _items = [];
+
+      let _temp_list = [];
       for(let i = 1 ; i < result.list.length ; i++){
         const data = result.list[i];
+        _temp_list.push(data);
+      }
+
+      let _rand_list = Util.getArrayRand(_temp_list);
+
+      let _items = [];
+      for(let i = 0 ; i < _rand_list.length ; i++){
+        const data = _rand_list[i];
         const itemDom = <Home_Thumb_Popular_item store_item_id={data.target_id} thumb_img_url={data.thumb_img_url}></Home_Thumb_Popular_item>;
         _items.push(itemDom);
       }
