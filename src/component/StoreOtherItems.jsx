@@ -10,6 +10,7 @@ import Util from '../lib/Util';
 //store_id, item_id
 
 class StoreOtherItems extends Component{
+  
   constructor(props){
     super(props);
 
@@ -84,33 +85,6 @@ class StoreOtherItems extends Component{
     let hrefURL = baseURL+'/item/store/'+item_id;
     
     window.location.href = hrefURL;
-
-    /*
-    if(isStoreHomeSliding){
-      return;
-    }
-
-    // console.log('click!!!');
-    // console.log(store_id);
-
-    let url_tail = '';
-    if(store_alias){
-      url_tail = store_alias;
-    }else{
-      url_tail = store_id;
-    }
-
-    let baseURL = 'https://crowdticket.kr'
-    const baseURLDom = document.querySelector('#base_url');
-    if(baseURLDom){
-      // console.log(baseURLDom.value);
-      baseURL = baseURLDom.value;
-    }
-    
-    let hrefURL = baseURL+'/store/'+url_tail;
-    
-    window.location.href = hrefURL;
-    */
   }
 
   storeItem = (data) => {

@@ -1,0 +1,134 @@
+$item_width: 176px;
+$item_tablet_width: 144px;
+$item_mobile_width: 132px;
+
+.Home_Thumb_Recommend_Creator_List {
+  width: 100%;
+  // width: 1176px;
+  max-width: 1176px;
+
+  .list_container {
+    margin-top: 32px;
+  }
+
+  .label_text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+  }
+  //item START
+  .item_box {
+    width: $item_width;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    margin-right: 24px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    // background-color: blue;
+  }
+
+  .item_best_label_box {
+    width: 34px;
+    height: 16px;
+    
+    border-radius: 2px;
+    margin-top: 16px;
+    background-color: #e5f8ff;
+
+    font-size: 10px;
+    font-weight: bold;
+    color: #00bfff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item_title_text {
+    font-size: 16px;
+    font-weight: bold;
+    color: #191919;
+    margin-top: 8px;
+  }
+
+  .item_info_container {
+    display: flex;
+    margin-top: 4px;
+  }
+
+  .item_review_count_container {
+    display: flex;
+    align-items: center;
+  }
+
+  .item_review_count {
+    font-size: 12px;
+    font-weight: bold;
+    color: #00bfff;
+    margin-left: 2px;
+  }
+
+  .item_view_count_container {
+    display: flex;
+    align-items: center;
+
+    margin-left: 8px;
+  }
+
+  .item_view_count {
+    font-size: 10px;
+    color: #999999;
+  }
+
+  .item_button_box {
+    width: 96px;
+    height: 34px;
+    border-radius: 4px;
+    border: solid 1px #f4f4f4;
+    background-color: #ffffff;
+    margin-top: 25px;
+
+    font-size: 12px;
+    font-weight: bold;
+    color: #191919;
+  }
+  //item END
+
+  .Home_Thumb_Tag_container {
+    margin-bottom: 8px;
+  }
+  @media (max-width: 1176px){
+    padding-left: 40px;
+    // padding-right: 40px;
+
+    .item_box {
+      width: $item_tablet_width;
+      margin-right: 16px;
+
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+  @media (max-width: 786px){
+    padding-left: 24px;
+
+    .list_container {
+      margin-top: 24px;
+    }
+    .label_text {
+      font-size: 20px;
+    }
+
+    .item_box {
+      width: $item_mobile_width;
+      margin-right: 16px;
+
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+  }
+}

@@ -18,23 +18,42 @@
     })(window,document,'script','dataLayer','GTM-T94QPRD');</script>
     <!-- End Google Tag Manager -->
 
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1148233795612592');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1148233795612592&ev=PageView&noscript=1"
+    /></noscript>
+<!-- End Facebook Pixel Code -->
+
     @section('title')
         <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=10') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/app.css?version=9') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=11') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/app.css?version=10') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=7') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/global.css?version=20') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/global.css?version=21') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery-ui.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/jquery.toast.min.css') }}" rel="stylesheet"/>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=3') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=4') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Profile.css?version=0') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Footer_React.css?version=0') }}" rel="stylesheet"/>
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -127,6 +146,10 @@
       opacity: 0;
     }
 
+    footer {
+      padding-top: 0px !important;
+    }
+
     @media (max-width:1030px){
       #isMobile{
         display: block;
@@ -136,7 +159,10 @@
     /*3.5 START*/
     .navbar{
       min-width: 0;
-      width: 1060px;
+      /* width: 1060px; */
+      /* width: 100%; */
+      /* max-width: 1176px; */
+      min-height: 60px;
 
       margin-left: auto;
       margin-right: auto;
@@ -149,8 +175,8 @@
     .navbar-brand{
       padding: 0px;
       height: auto;
-      margin-top: 26px;
-      margin-bottom: 26px;
+      margin-top: 18px;
+      margin-bottom: 18px;
     }
 
     .navbar-brand img{
@@ -158,7 +184,7 @@
       height: 16px;
       padding: 0px;*/
       width: 100%;
-      height: 28px;
+      /* height: 28px; */
       padding: 0px;
     }
 
@@ -168,9 +194,10 @@
 
     .navbar-nav>li>a{
       padding: 0px;
-      margin-left: 30px;
-      margin-top: 30px;
-      margin-bottom: 30px;
+      margin-left: 40px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 13px;
 
       font-weight: normal !important;
       font-style: normal !important;
@@ -219,13 +246,13 @@
     }
 
     @media (max-width:1060px){
-      .navbar{
+      /* .navbar{
         min-width: 0;
         width: 93%;
 
         margin-left: auto;
         margin-right: auto;
-      }
+      } */
     }
 
     @media (max-width:1030px){
@@ -246,9 +273,14 @@
     }
 
     @media (max-width:767px){
-      .navbar-toggle{
+      /* .navbar-toggle{
         margin-top: 27px;
         margin-right: 0px;
+      } */
+
+      .navbar-brand{
+        margin-top: 23px;
+        margin-bottom: 23px;
       }
 
       .navbar-nav>li>a{
@@ -340,18 +372,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 @yield('event_banner')
 
 @section('navbar')
-<nav class="navbar navbar-default">
+<div id="navbar_fake_dom"></div>
+<nav id="navbar_container" class="navbar navbar-default">
+  <div id="navbar_box">
     <div class="navbar-header">
+        
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                 data-target="#ctNavBar">
-            <span class="sr-only">Toggle Navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <img src="{{ asset('/img/icons/svg/ic-menu.svg') }}"/>
         </button>
+
+        <!-- <a href="javascript:;" id='button_search_mobile'>
+          <img style='width: 32px; height: 32px;' src="{{ asset('/img/icons/svg/ic-search.svg') }}">
+        </a> -->
         @if(!env('REVIEW_ON'))
           <a class="navbar-brand" href="{{ url('/') }}">
-              <img src="{{ asset('/img/icons/svg/header-logo-color-v-2.svg') }}"/>
+              <img src="{{ asset('/img/icons/svg/logo-ct.svg') }}"/>
           </a>
         @endif
     </div>
@@ -364,15 +400,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li>
             <a href="{{ url('/store') }}" style="display: inline-block;">콘텐츠 상점</a>
               <!-- <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a> -->
-              <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span>
+              <!-- <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span> -->
           </li>
-          <li><a href="{{ url('/projects') }}">이벤트</a></li>
+          <li><a href="{{ url('/projects') }}">팬 이벤트</a></li>
           <!-- <li><a href="{{ url('/blueprints/welcome') }}">이벤트 만들기</a></li> -->
           <li><a href="{{ url('/magazine') }}">매거진</a></li>
         @endif
         </ul>
 
+        
+
         <ul class="nav navbar-nav navbar-right">
+          <!-- <li>
+            <a href="javascript:;" id='button_search'>
+              <img style='width: 24px; height: 24px;' src="{{ asset('/img/icons/svg/ic-search.svg') }}">
+            </a>
+          </li> -->
             @if (Auth::guest())
                 <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
                 <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
@@ -395,7 +438,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             @endif
         </ul>
     </div>
-    
+  </div>
 </nav>
 @show
 
@@ -444,7 +487,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="react_root"></div>
 
 <footer>
-    <div class="container ct-res-text footer-top">
+  <div id="react_footer">
+
+  </div>
+
+    <!-- <div class="container ct-res-text footer-top">
 	    <div class="col-md-3 footer_padding_left_remover">
             <img src="{{ asset('/img/icons/svg/footer-logo-color-v-2.svg') }}" class="footer-logo">
         </div>
@@ -489,7 +536,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </p>
           @endif
         </div>
-    </div>
+    </div> -->
 </footer>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -625,7 +672,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=119') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=120') }}"></script>
 
 </body>
 </html>

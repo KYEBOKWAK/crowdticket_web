@@ -1,0 +1,22 @@
+.Home_Thumb_Tag {
+  
+  // width: 82px;
+  // height: 26px;
+  display: flex;
+
+  .Home_Thumb_Tag_box {
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 4px;
+    background-color: #191919;
+    padding: 4px 8px;
+  }
+  @media (max-width: 1176px){
+    /*모바일일때*/  
+  }
+
+  @media (max-width: 786px){
+    /*모바일일때*/  
+  }
+}

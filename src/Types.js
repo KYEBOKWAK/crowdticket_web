@@ -34,6 +34,31 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  width: {
+    pc: 1176,
+    tablet: 768,
+    mobile: 360
+  },
+  thumb_list_type: {
+    popular: 'popular',
+    attention: 'attention',
+    stores: 'stores',
+    event: 'event',
+    live_update: 'live_update'
+  },
+  thumb_tags: {
+    trend: 'trend',
+    attention: 'attention',
+    live_update: 'live_update'
+  },
+  thumbnails: {
+    recomment: 1,
+    crolling: 2,
+    magazine: 3,
+    sandbox_event: 4,
+    store_item: 5,
+    store_item_popular: 6 //오늘의 인기 콘텐츠
+  },
   do_it: {
     //여기서 더 디테일한 옵션을 넣으려면 json 생성
     store_info: 'store_info',

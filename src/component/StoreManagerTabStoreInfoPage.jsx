@@ -95,7 +95,6 @@ class StoreManagerTabStoreInfoPage extends Component{
   }
 
   requestAccountInfo = () => {
-    //manager/account/info
     axios.post("/store/manager/account/info", {
       store_id: this.state.store_id
     }, (result) => {
@@ -118,6 +117,11 @@ class StoreManagerTabStoreInfoPage extends Component{
       if(_title === null){
         _title = '';
       }
+
+      let _alias = result.data.alias;
+      if(_alias === null){
+        _alias = '';
+      }
       
       this.setState({
         store_id: result.data.store_id,
@@ -126,7 +130,7 @@ class StoreManagerTabStoreInfoPage extends Component{
         email: result.data.email,
         content: result.data.content,
 
-        store_alias: result.data.alias
+        store_alias: _alias
       }, () => {
         this.requestAccountInfo();
         this.checkAlias();

@@ -20,6 +20,9 @@ import * as storageType from  './StorageKeys';
 
 import * as actions from './actions/index';
 
+// import Templite from './pages/Templite';
+import Footer_React from './component/Footer_React';
+
 // import dotEnv from 'dotenv';
 
 // require('dotenv').config()
@@ -189,3 +192,6 @@ class App extends Component {
 
 let domContainer = document.querySelector('#react_root');
 ReactDOM.render(<App />, domContainer);
+
+let footerContainer = document.querySelector('#react_footer');
+ReactDOM.render(<Footer_React />, footerContainer);

@@ -273,14 +273,53 @@ class Profile extends Component{
                         }}>
                         </ImageCroper>
     }
+
+    let buttonDom = <></>;
+    if(isButtonDisable){
+      buttonDom = <div className={'profile_button'}>
+                    <div style={profile_wrapper_style} className={'profile_img_wrapper'}>
+                      <img 
+                      onDragStart={(e) => {e.preventDefault()}}
+                      style={profile_img_style} 
+                      onLoad={(img) => {this.onImgLoad(img)}} 
+                      src={photoImg} 
+                      className={'profile_img'} 
+                      onError={(e) => 
+                        {
+                          this.setState({profile_photo_url: ''})
+                        }} />
+                    </div>
+
+                    {camera_icon}
+                  </div>
+    }else{
+      buttonDom = <button className={'profile_button'} onClick={(e) => {this.clickPhotoAdd(e)}} disabled={isButtonDisable}>
+                    <div style={profile_wrapper_style} className={'profile_img_wrapper'}>
+                      <img 
+                      onDragStart={(e) => {e.preventDefault()}}
+                      style={profile_img_style} 
+                      onLoad={(img) => {this.onImgLoad(img)}} 
+                      src={photoImg} 
+                      className={'profile_img'} 
+                      onError={(e) => 
+                        {
+                          this.setState({profile_photo_url: ''})
+                        }} />
+                    </div>
+
+                    {camera_icon}
+                  </button>
+    }
     
 
     return(
       <div className={'Profile'}>
         <input onClick={this.onInputClick} accept={'image/*'} ref={(ref) => {this.fileInputRef = ref}} type="file" onChange={this.handleImageUpload} style={{display: 'none'}}/>
-        <button className={'profile_button'} onClick={(e) => {this.clickPhotoAdd(e)}} disabled={isButtonDisable}>
+        {buttonDom}
+        {/* <button className={'profile_button'} onClick={(e) => {this.clickPhotoAdd(e)}} disabled={isButtonDisable}>
           <div style={profile_wrapper_style} className={'profile_img_wrapper'}>
             <img 
+            onDragStart={(e) => {e.preventDefault()}}
             style={profile_img_style} 
             onLoad={(img) => {this.onImgLoad(img)}} 
             src={photoImg} 
@@ -292,7 +331,7 @@ class Profile extends Component{
           </div>
 
           {camera_icon}
-        </button>
+        </button> */}
 
         {imageCroperDom}
       </div>
