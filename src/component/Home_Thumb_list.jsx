@@ -32,6 +32,8 @@ class Home_Thumb_list extends Component{
 
       isNextSlideDisabled: false,
       isPrevSlideDisabled: true,
+
+      title_text: ''
     }
   };
 
@@ -72,15 +74,17 @@ class Home_Thumb_list extends Component{
     }, (result) => {
       // console.log(result);
 
+      let _title_text = result.list[0].first_text;
       let _items = [];
-      for(let i = 0 ; i < result.list.length ; i++){
+      for(let i = 1 ; i < result.list.length ; i++){
         const data = result.list[i];
         const itemDom = <Home_Thumb_Popular_item store_item_id={data.target_id} thumb_img_url={data.thumb_img_url}></Home_Thumb_Popular_item>;
         _items.push(itemDom);
       }
 
       this.setState({
-        items: _items.concat()
+        items: _items.concat(),
+        title_text: _title_text
       })
     }, (error) => {
 
@@ -143,7 +147,7 @@ class Home_Thumb_list extends Component{
     let labelText = '';
     let arrowButtonTop = 0;
     if(this.props.thumb_list_type === Types.thumb_list_type.popular){
-      labelText = '오늘의 인기 콘텐츠';
+      labelText = this.state.title_text;
       arrowButtonTop = 180;
     }
     else if(this.props.thumb_list_type === Types.thumb_list_type.attention){
