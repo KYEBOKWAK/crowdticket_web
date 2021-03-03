@@ -8,3 +8,5 @@ export const FIND_ALL = "FIND_ALL";
 export const CHATTING = "CHATTING";
 
 export const SNS_TYPE = "SNS_TYPE";
+
+export const SEARCH_TEXTS = "SEARCH_TEXTS";

@@ -24,6 +24,9 @@ import EventPage from '../pages/EventPage';
 
 import StoreHomeOld from '../pages/StoreHome_2021_02_17';
 
+import SearchPage from '../pages/SearchPage';
+import SearchResultPage from '../pages/SearchResultPage';
+
 'use strict';
 
 class PageController extends Component {
@@ -31,7 +34,10 @@ class PageController extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      pageKey: AppKeys.WEB_PAGE_KEY_HOME
+      pageKey: AppKeys.WEB_PAGE_KEY_HOME,
+
+      isSearchPage: false,
+      isSearchResultPage: false
     };
   }
 
@@ -45,12 +51,16 @@ class PageController extends Component {
 
     window.addEventListener('scroll', this.handleScroll);
 
-    // document.querySelector("#button_search").addEventListener("click", this.test);
+    document.querySelector("#button_search").addEventListener("click", this.onClickSearch);
+    document.querySelector("#button_search_mobile").addEventListener("click", this.onClickSearch);
+    
   }
 
   componentWillUnmount(){
     window.removeEventListener('scroll', this.handleScroll);
-    // document.querySelector("#button_search").removeEventListener("click", this.test);
+    document.querySelector("#button_search").removeEventListener("click", this.onClickSearch);
+    document.querySelector("#button_search_mobile").removeEventListener("click", this.onClickSearch);
+    
   };
 
   handleScroll = () => {
@@ -80,8 +90,11 @@ class PageController extends Component {
   }
   
 
-  test = () => {
-    console.log('adfdsf');
+  onClickSearch = () => {
+    // console.log('adfdsf');
+    this.setState({
+      isSearchPage: true
+    })
   }
 
   render() {
@@ -124,6 +137,10 @@ class PageController extends Component {
     }else if(_pageKey === AppKeys.WEB_EVENT_PAGE){
       pageView = <EventPage></EventPage>;
     }
+    else if(_pageKey === AppKeys.WEB_PAGE_KEY_STORE_SEARCH_RESULT){
+      pageView = <SearchResultPage></SearchResultPage>;
+      isNewPage = true;
+    }
 
     let pageController = <></>;
     if(isNewPage){
@@ -136,9 +153,19 @@ class PageController extends Component {
                       </div>
     }
 
+    let searchPage = <></>;
+    if(this.state.isSearchPage){
+      searchPage = <SearchPage closeCallback={() => {
+        this.setState({
+          isSearchPage: false
+        })
+      }}></SearchPage>;
+    }
+
     return (
       <>
         {pageController}
+        {searchPage}
       </>
 
       // <div className={'pageController'}>

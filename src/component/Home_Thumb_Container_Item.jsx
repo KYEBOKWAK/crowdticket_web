@@ -48,9 +48,8 @@ class Home_Thumb_Container_Item extends Component{
   //   return true;
   // }
 
-  componentDidMount(){
+  componentDidMount(){    
     window.addEventListener('resize', this.updateDimensions);
-
     this.requestItemInfo();
   };
 
@@ -75,16 +74,16 @@ class Home_Thumb_Container_Item extends Component{
 
         user_name: data.user_name,
         nick_name: data.nick_name
-      }, () => {
-        this.updateDimensions()
+      }, () => {  
+        this.updateDimensions();
       })
     }, (error) => {
 
     })
   }
 
-  componentWillUnmount(){
-    window.removeEventListener('resize', this.updateDimensions);
+  componentWillUnmount(){  
+    window.removeEventListener('resize', this.updateDimensions);    
   };
 
   setItemWidth = () => {

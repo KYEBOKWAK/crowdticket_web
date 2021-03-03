@@ -258,4 +258,16 @@ class WelcomeController extends Controller
     return $tempProjectArray;
   }
 
+  public function getSearchResult(Request $request)
+  {
+    $search = null;
+    if($request->has('search')){
+      $search = $request->search;
+    }
+
+    return view('store.store_search_result', [
+      'search' => $search
+    ]);
+  }
+
 }

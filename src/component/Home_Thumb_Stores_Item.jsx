@@ -3,10 +3,10 @@
 import React, { Component } from 'react';
 import axios from '../lib/Axios';
 
-import Name from '../component/Name';
+// import Name from '../component/Name';
 import Profile from '../component/Profile';
 
-import Util from '../lib/Util';
+// import Util from '../lib/Util';
 import Types from '../Types';
 
 const HOME_THUMB_STORE_USER_PROFILE_SIZE = 60;

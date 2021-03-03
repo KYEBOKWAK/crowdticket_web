@@ -55,6 +55,8 @@ class Popup_text_editor extends Component{
     });
 
     window.addEventListener('resize', this.updateSize);
+
+    ScrollLock();
   };
 
   updateSize = () => {
@@ -68,6 +70,7 @@ class Popup_text_editor extends Component{
 
   componentWillUnmount(){
     this._quill = null;
+    ScrollUnLock();
   };
 
   componentDidUpdate(){

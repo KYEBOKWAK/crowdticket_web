@@ -27,10 +27,29 @@
 
   .list_container {
     margin-top: 32px;
+    // height: 637px;
+    // overflow: auto;
   }
 
   .label_box {
     margin-bottom: 8px;
+  }
+
+  .more_button {
+    margin-left: auto;
+    display: flex;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+
+    width: 120px;
+    height: 44px;
+    border: solid 1px #f4f4f4;
+    border-radius: 4px;
+
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 60px;
   }
 
   @media (max-width: 1176px){
@@ -46,11 +65,19 @@
     .row_items_container {
       margin-top: 40px;
     }
+    
+    .more_button {
+      margin-top: 48px;
+    }
   }
 
   @media (max-width: 768px) {
     .row_items_gap {
       width: 17px;
+    }
+
+    .more_button {
+      margin-top: 40px;
     }
   }
 }

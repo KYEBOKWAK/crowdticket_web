@@ -156,6 +156,158 @@ const Util = {
       
       return false
     }
+  },
+
+  getTicketShowDate(start_date, end_date){
+    let now_moment = moment_timezone();
+    let start_date_moment = moment_timezone(start_date);
+
+    let now_date_year = now_moment.year();
+
+    let start_date_year = start_date_moment.year();
+    let start_date_month = start_date_moment.month() + 1;
+    let start_date_days = start_date_moment.date();
+
+    if(end_date === null || start_date === end_date){
+      let show_date_year = start_date_year + '/';
+      if(now_date_year === start_date_year){
+        show_date_year = '';
+      }
+
+      if(start_date_month < 10){
+        start_date_month = '0'+start_date_month;
+      }
+
+      if(start_date_days < 10){
+        start_date_days = '0'+start_date_days;
+      }
+
+      return show_date_year + start_date_month + '/' + start_date_days;
+    }
+
+
+    let end_date_moment = moment_timezone(end_date);
+
+    let end_date_year = end_date_moment.year();
+    let end_date_month = end_date_moment.month() + 1;
+    let end_date_days = end_date_moment.date();
+
+    let show_start_date_year = '';
+    let show_start_date_month = '';
+    let show_start_date_days = '';
+
+    let show_end_date_year = '';
+    let show_end_date_month = '';
+    let show_end_date_days = '';
+
+    if(start_date_year !== end_date_year){
+      show_start_date_year = start_date_year;
+      show_end_date_year = end_date_year;
+
+      show_start_date_month = start_date_month;
+      show_end_date_month = end_date_month;
+
+      show_start_date_days = start_date_days;
+      show_end_date_days = end_date_days;
+
+      if(show_start_date_month < 10){
+        show_start_date_month = '0' + show_start_date_month;
+      }
+
+      if(show_end_date_month < 10){
+        show_end_date_month = '0' + show_end_date_month;
+      }
+
+      if(show_start_date_days < 10){
+        show_start_date_days = '0' + show_start_date_days;
+      }
+
+      if(show_end_date_days < 10){
+        show_end_date_days = '0' + show_end_date_days;
+      }
+
+      return show_start_date_year + '/' + show_start_date_month + '/' + show_start_date_days + '~' + show_end_date_year + '/' + show_end_date_month + '/' + show_end_date_days;
+    }
+    else if(start_date_month !== end_date_month){
+      show_start_date_month = start_date_month;
+      show_end_date_month = end_date_month;
+
+      show_start_date_days = start_date_days;
+      show_end_date_days = end_date_days;
+
+      let show_date_year = start_date_year + '/';
+      if(now_date_year === start_date_year){
+        show_date_year = '';
+      }
+
+      if(show_start_date_month < 10){
+        show_start_date_month = '0' + show_start_date_month;
+      }
+
+      if(show_end_date_month < 10){
+        show_end_date_month = '0' + show_end_date_month;
+      }
+
+      if(show_start_date_days < 10){
+        show_start_date_days = '0' + show_start_date_days;
+      }
+
+      if(show_end_date_days < 10){
+        show_end_date_days = '0' + show_end_date_days;
+      }
+
+      return show_date_year + show_start_date_month + '/' + show_start_date_days + '~' + show_end_date_month + '/' + show_end_date_days;
+    }
+    else if(start_date_days !== end_date_days){
+      show_start_date_month = start_date_month;
+
+      show_start_date_days = start_date_days;
+      show_end_date_days = end_date_days;
+
+      let show_date_year = start_date_year + '/';
+      if(now_date_year === start_date_year){
+        show_date_year = '';
+      }
+
+      if(show_start_date_month < 10){
+        show_start_date_month = '0' + show_start_date_month;
+      }
+
+      if(show_start_date_days < 10){
+        show_start_date_days = '0' + show_start_date_days;
+      }
+
+      if(show_end_date_days < 10){
+        show_end_date_days = '0' + show_end_date_days;
+      }
+
+      return show_date_year + show_start_date_month + '/' + show_start_date_days + '~' + show_end_date_days;
+    }
+    else {
+      show_start_date_month = start_date_month;
+
+      show_start_date_days = start_date_days;
+      show_end_date_days = end_date_days;
+
+      let show_date_year = start_date_year + '/';
+      if(now_date_year === start_date_year){
+        show_date_year = '';
+      }
+
+      if(show_start_date_month < 10){
+        show_start_date_month = '0' + show_start_date_month;
+      }
+
+      if(show_start_date_days < 10){
+        show_start_date_days = '0' + show_start_date_days;
+      }
+
+      if(show_end_date_days < 10){
+        show_end_date_days = '0' + show_end_date_days;
+      }
+
+      return show_date_year + show_start_date_month + '/' + show_start_date_days;
+    }
   }
 }
 

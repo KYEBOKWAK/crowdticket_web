@@ -21,10 +21,11 @@ class Popup_image_preview extends Component{
   };
 
   componentDidMount(){
-    
+    ScrollLock();
   };
 
   componentWillUnmount(){
+    ScrollUnLock();
   };
 
   componentDidUpdate(){

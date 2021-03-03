@@ -84,6 +84,11 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/Home_Thumb_Container_List.scss', 'dist/css/')
 .sass('src/res/css/Home_Thumb_Container_Item.scss', 'dist/css/')
 .sass('src/res/css/Home_Thumb_Stores_Item.scss', 'dist/css/')
+.sass('src/res/css/SearchPage.scss', 'dist/css/')
+.sass('src/res/css/SearchResultPage.scss', 'dist/css/')
+.sass('src/res/css/Find_Result_Stores_item.scss', 'dist/css/')
+.sass('src/res/css/Home_Thumb_Container_Project_Item.scss', 'dist/css/')
+.sass('src/res/css/Thumb_Recommend_item.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

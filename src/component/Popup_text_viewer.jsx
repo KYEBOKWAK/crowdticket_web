@@ -36,9 +36,12 @@ class Popup_text_viewer extends Component{
 
   componentDidMount(){
     this.requestProductText();
+    
+    ScrollLock();
   };
 
   componentWillUnmount(){
+    ScrollUnLock();
   };
 
   componentDidUpdate(){

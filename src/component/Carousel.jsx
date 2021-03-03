@@ -74,15 +74,21 @@ class Carousel extends Component{
   render(){
     let isAutoWidth = false;
     let responsive = undefined;
-    if(this.state.innerWidth < 1176){
+
+    if(this.props.pc_show_item_count >= this.props.items.length){
       isAutoWidth = true;
     }else{
-      responsive = {
-        1176: {
-          items: this.props.pc_show_item_count,
-        },
+      if(this.state.innerWidth < 1176){
+        isAutoWidth = true;
+      }else{
+        responsive = {
+          1176: {
+            items: this.props.pc_show_item_count,
+          },
+        }
       }
     }
+    
     return(
       <div style={{width: '100%'}}>
         <AliceCarousel 

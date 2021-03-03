@@ -1,0 +1,137 @@
+#react_root {
+  background-color: white;
+}
+
+.SearchResultPage {
+  
+  background-color: white;
+
+  padding-top: 60px;
+
+  width: 100%;
+  max-width: 1176px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  .search_result_page_container {
+    width: 100%;
+    // max-width: 1176px;
+
+    // margin-left: auto;
+    // margin-right: auto;
+  }
+
+  .search_result_title { 
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+    margin-bottom: 60px;
+  }
+
+  .search_result_container {
+    margin-bottom: 80px;
+  }
+
+  .search_result_recommend_container {
+    margin-bottom: 80px;
+  }
+
+  .search_result_label_text_container {
+    display: flex;
+    margin-bottom: 33px;
+  }
+
+  .search_result_label_text {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .search_result_label_count {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00bfff;
+    margin-left: 6px;
+  }
+
+  .search_no_result {
+    margin-top: 100px;
+    margin-bottom: 150px;
+    font-size: 14px;
+    color: #999999;
+    text-align: center;
+  }
+
+  .list_container {
+    margin-top: 0px !important;
+  }
+
+  .row_items_container {
+    margin-top: 0px !important;
+  }
+
+  .column_items_container {
+    margin-top: 0px !important;
+    margin-bottom: 40px !important;
+  }
+
+  @media (max-width: 1176px){
+    
+
+    .search_result_page_container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .Home_Thumb_list {
+      padding-left: 0px !important;
+    }
+
+    .search_result_recommend_container {
+      padding-left: 40px;
+      margin-bottom: 64px;
+    }
+
+    .search_result_container {
+      margin-bottom: 64px;
+    }
+
+    .search_result_title {
+      margin-bottom: 40px;
+    }
+
+    .row_items_container {
+      margin-bottom: 40px !important;
+    }
+  }
+
+  @media (max-width: 768px){
+    
+
+    .search_result_page_container {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .search_result_recommend_container {
+      padding-left: 24px;
+      margin-bottom: 40px;
+    }
+
+    .search_result_container {
+      margin-bottom: 40px;
+    }
+
+    .search_result_title {
+      margin-bottom: 32px;
+    }
+
+    .search_result_label_text_container {
+      margin-bottom: 25px;
+    }
+
+    .row_items_container {
+      margin-bottom: 32px !important;
+    }
+  }
+}

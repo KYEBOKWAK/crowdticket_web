@@ -130,8 +130,8 @@
   <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Stores_Item.css?version=1') }}" rel="stylesheet"/>
   

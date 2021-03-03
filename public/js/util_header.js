@@ -208,3 +208,36 @@ function FindIE() {
 }
 
 FindIE();
+
+let g_lock_scrollPosition = 0;
+
+function ScrollLock() {
+  const body = document.querySelector('body');
+  g_lock_scrollPosition = window.pageYOffset;
+
+  // console.log(scrollPosition);
+
+  body.style.overflow = 'hidden';
+  // body.style.pointerEvents = 'none';
+  body.style.position = 'fixed';
+  body.style.top = `-${g_lock_scrollPosition}px`;
+  body.style.left = '0';
+  body.style.right= '0';
+  body.style.height= 'auto';
+
+}
+
+function ScrollUnLock(){
+  const body = document.querySelector('body');
+
+  body.style.removeProperty('overflow');
+  // body.style.removeProperty('pointer-events');
+  body.style.removeProperty('position');
+  body.style.removeProperty('top');
+  body.style.removeProperty('left');
+  body.style.removeProperty('right');
+  body.style.removeProperty('height');
+  window.scrollTo(0, g_lock_scrollPosition);
+
+  g_lock_scrollPosition = 0;
+}

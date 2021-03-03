@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1"/>
     @section('meta')
       <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     @show
@@ -54,6 +54,8 @@
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/Footer_React.css?version=0') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SearchPage.css?version=0') }}" rel="stylesheet"/>
+    
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
 
@@ -382,9 +384,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <img src="{{ asset('/img/icons/svg/ic-menu.svg') }}"/>
         </button>
 
-        <!-- <a href="javascript:;" id='button_search_mobile'>
+        <a href="javascript:;" id='button_search_mobile'>
           <img style='width: 32px; height: 32px;' src="{{ asset('/img/icons/svg/ic-search.svg') }}">
-        </a> -->
+        </a>
         @if(!env('REVIEW_ON'))
           <a class="navbar-brand" href="{{ url('/') }}">
               <img src="{{ asset('/img/icons/svg/logo-ct.svg') }}"/>
@@ -411,11 +413,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         
 
         <ul class="nav navbar-nav navbar-right">
-          <!-- <li>
+          <li>
             <a href="javascript:;" id='button_search'>
               <img style='width: 24px; height: 24px;' src="{{ asset('/img/icons/svg/ic-search.svg') }}">
             </a>
-          </li> -->
+          </li>
             @if (Auth::guest())
                 <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
                 <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
@@ -672,7 +674,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=125') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=126') }}"></script>
 
 </body>
 </html>

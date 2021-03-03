@@ -1,0 +1,119 @@
+$item_width: 276px; //pc
+$item_height: 276px;
+$blur_value: 20px;
+
+.Home_Thumb_Container_Project_Item {
+  
+  width: $item_width;
+  position: relative;
+
+  // background-color: blue;
+  .item_container {
+    width: $item_width;
+    text-align: left;
+    position: relative;
+  }
+
+  .item_img_wrapper {
+    width: $item_width;
+    // max-width: 276px;
+    // height: $item_height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+
+    // background-color: blue;
+  }
+
+  .item_img {
+    width: $item_width;
+  }
+
+  .item_bottom_container {
+    // display: flex;
+    margin-top: 12px;
+  }
+
+  .item_img_wrapper_blur {
+    width: $item_width;
+    // max-width: 276px;
+    // height: $item_height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    position: absolute;
+
+    // background-color: blue;
+  }
+
+  .item_img_blur {
+    width: $item_width;
+    filter: blur($blur_value); 
+    -webkit-filter: blur($blur_value); 
+    -moz-filter: blur($blur_value);
+    -o-filter: blur($blur_value);
+  }
+
+  .project_description_text {
+    font-size: 12px;
+    color: #4c4c4c;
+  }
+
+  .project_title_text {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .project_contents_bottom_container {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+  }
+  
+  .project_contents_city_name {
+    font-size: 12px;
+    color: #999999;
+    margin-left: 8px;
+  }
+
+  .project_contents_type_box {
+    padding: 1px 4px;
+    border-radius: 2px;
+    background-color: #f4f4f4;
+    font-size: 10px;
+    font-weight: bold;
+    color: #7f7f7f;
+    margin-left: 8px;
+  }
+
+  .project_show_date {
+    font-size: 12px;
+    color: #999999;
+  }
+
+  @media (max-width: 1176px){
+
+    width: 100%;
+
+    .item_container {
+      width: 100%;
+    }
+
+    .item_img_wrapper {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px){
+  }
+}

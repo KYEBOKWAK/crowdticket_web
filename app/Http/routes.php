@@ -180,6 +180,8 @@ Route::get('item/store/{id}', 'ProjectController@getStoreItemDetail');
 
 /////
 
+Route::get('search', 'WelcomeController@getSearchResult');
+
 //event start
 //기획전으로 우선 개발
 Route::get('event/{alias}', 'ProjectController@getEventPage');

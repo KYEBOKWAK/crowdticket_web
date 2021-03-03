@@ -71,40 +71,6 @@ class Home_Thumb_Attention_Item extends Component{
     })
   }
 
-  // requestItemInfo = () => {
-  //   axios.post('/store/any/item/info', {
-  //     store_item_id: this.props.store_item_id
-  //   }, (result) => {
-  //     const data = result.data;
-
-  //     let ask_play_time = data.ask_play_time;
-  //     if(ask_play_time === null){
-  //       ask_play_time = '';
-  //     }
-
-  //     console.log(data);
-
-  //     let _thumb_img_url = this.props.thumb_img_url;
-  //     if(_thumb_img_url === null || _thumb_img_url === ''){
-  //       _thumb_img_url = data.img_url;
-  //     }
-
-  //     this.setState({
-  //       store_user_id: data.store_user_id,
-        
-  //       thumb_img_url: _thumb_img_url,
-  //       item_title: data.title,
-
-  //       user_name: data.user_name,
-  //       nick_name: data.nick_name,
-
-  //       item_price: data.price,
-  //     })
-  //   }, (error) => {
-
-  //   })
-  // }
-
   componentWillUnmount(){
     
   };

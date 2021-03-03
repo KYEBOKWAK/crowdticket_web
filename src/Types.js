@@ -44,7 +44,11 @@ const Types = {
     attention: 'attention',
     stores: 'stores',
     event: 'event',
-    live_update: 'live_update'
+    live_update: 'live_update',
+    find_result_stores: 'find_result_stores',
+    find_result_items: 'find_result_items',
+    find_result_projects: 'find_result_projects',
+    find_no_result_recommend: 'find_no_result_recommend'
   },
   thumb_tags: {
     trend: 'trend',
