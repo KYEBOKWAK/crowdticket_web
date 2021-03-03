@@ -14,6 +14,10 @@
     margin-right: auto;
   }
 
+  .search_bar_padding {
+
+  }
+
   .padding_container {
 
   }
@@ -93,6 +97,10 @@
     .save_search_label_container {
       margin-top: 35px;
     }
+
+    .search_input_box {
+      height: 72px;
+    }
   }
 
   @media (max-width: 786px){
@@ -106,6 +114,7 @@
     }
 
     .input_box {
+      width: 100%;
       margin-left: 0px;
     }
 
@@ -115,6 +124,10 @@
 
     .save_search_label_container {
       margin-top: 27px;
+    }
+
+    .search_bar_padding {
+      padding-right: 16px;    
     }
   }
 }

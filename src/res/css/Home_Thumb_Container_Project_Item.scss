@@ -101,6 +101,11 @@ $blur_value: 20px;
     color: #999999;
   }
 
+  .project_show_date_container {
+    display: flex;
+    align-items: center;
+  }
+
   @media (max-width: 1176px){
 
     width: 100%;
@@ -115,5 +120,18 @@ $blur_value: 20px;
   }
 
   @media (max-width: 768px){
+    .project_title_text {
+      height: 40px;
+    }
+
+    .project_contents_bottom_container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .project_contents_type_box {
+      margin-left: 0px;
+      margin-top: 6px;
+    }
   }
 }

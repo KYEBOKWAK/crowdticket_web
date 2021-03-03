@@ -31,6 +31,7 @@ class SearchPage extends Component{
   componentDidMount(){
     ScrollLock();
 
+    // window.scrollTo(0, 0);
     this.loadSearchText();
   };
 
@@ -196,7 +197,7 @@ class SearchPage extends Component{
     }
     return(
       <div className={'SearchPage'}>
-        <div className={'SearchPage_container'}>
+        <div className={'SearchPage_container search_bar_padding'}>
           <div className={'search_input_box'}>
             <div className={'search_input_box_first'}>
               <img className={'ic_search_img'} src={ic_search} />
@@ -215,7 +216,9 @@ class SearchPage extends Component{
               </div>
             </div>
             <button onClick={(e) => {this.onClickExit(e)}}>
-              <img src={ic_exit} />
+              <div>
+                <img src={ic_exit} />
+              </div>
             </button>
           </div>
         </div>

@@ -385,6 +385,11 @@ class Home_Thumb_Container_Project_Item extends Component{
       show_date = this.state.ticket_date;
     }
 
+    let textClassName = 'project_title_text text-ellipsize';
+    if(window.innerWidth <= 768){
+      textClassName = 'project_title_text text-ellipsize-2';
+    }
+
     return(
       <div className={'Home_Thumb_Container_Project_Item'} style={{width: this.state.item_width}}>
         <button onClick={(e) => {this.onClickGoItem(e)}} className={'item_container'}>
@@ -395,18 +400,19 @@ class Home_Thumb_Container_Project_Item extends Component{
           
           <div className={'item_bottom_container'}>
             <div className={'project_description_text text-ellipsize'}>
-              {this.props.project_id} / 
               {this.state.description}
             </div>
-            <div className={'project_title_text text-ellipsize'}>
+            <div className={textClassName}>
               {this.state.title}
             </div>
             <div className={'project_contents_bottom_container'}>
-              <div className={'project_show_date'}>
-                {show_date}
-              </div>
-              <div className={'project_contents_city_name'}>
-                {this.state.city_name}
+              <div className={'project_show_date_container'}>
+                <div className={'project_show_date'}>
+                  {show_date}
+                </div>
+                <div className={'project_contents_city_name'}>
+                  {this.state.city_name}
+                </div>
               </div>
               <div className={'project_contents_type_box'}>
                 {this.state.project_type}

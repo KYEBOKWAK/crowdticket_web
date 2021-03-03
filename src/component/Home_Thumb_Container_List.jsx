@@ -28,16 +28,10 @@ class Home_Thumb_Container_List extends Component{
       items_total_count: 0,
       hasMore: true,
 
-      isRefreshing: true,
-
-      // isMoreMode: false
+      // isRefreshing: true,
       isShowMoreButton: true
     }
   };
-
-  // shouldComponentUpdate(nextProps: any, nextState: any) {
-  //   return true;
-  // }
 
   componentDidMount(){
     if(this.props.type === Types.thumb_list_type.event){
@@ -52,18 +46,8 @@ class Home_Thumb_Container_List extends Component{
       this.requestItemTotalCount();
     }
 
-    if(this.props.isMore){
-      window.addEventListener('scroll', this.handleScroll);
-    }
-    
-
-    // else if(this.props.type === Types.thumb_list_type.find_result_items){
-    //   // this.requestSearchResult();
-    //   this.requestMoreData();
-    // }
-    // else if(this.props.type === Types.thumb_list_type.find_result_projects){
-    //   // this.requestSearchProject();
-    //   this.requestMoreData();
+    // if(this.props.isMore){
+    //   // window.addEventListener('scroll', this.handleScroll);
     // }
   };
 
@@ -174,7 +158,7 @@ class Home_Thumb_Container_List extends Component{
       _items.push(itemColumnsDom);
     }
 
-    // console.log(this.state.items_count);
+    // console.log(this.state.items_count + index);
     if(this.props.type === Types.thumb_list_type.find_result_items ||
       this.props.type === Types.thumb_list_type.find_result_projects){
       this.setState({
@@ -182,9 +166,6 @@ class Home_Thumb_Container_List extends Component{
         items_count: this.state.items_count + index,
         hasMore: hasMore
       }, () => {
-        this.setState({
-          isRefreshing: false
-        })
       })
     }
     else{
@@ -258,13 +239,8 @@ class Home_Thumb_Container_List extends Component{
     }, (result) => {
       const data = result.data;
 
-      let isShowMoreButton = false;
-      if(data.count > REQUEST_ONCE_ITME) {
-        isShowMoreButton = true;
-      }
       this.setState({
         items_total_count: data.count,
-        isShowMoreButton: isShowMoreButton
       }, () => {
         this.props.search_result_count_callback(this.state.items_total_count);
       })
@@ -283,34 +259,49 @@ class Home_Thumb_Container_List extends Component{
   }
 
   componentWillUnmount(){
-    if(this.props.isMore){
-      window.removeEventListener('scroll', this.handleScroll);
-    }
+    // if(this.props.isMore){
+    //   // window.removeEventListener('scroll', this.handleScroll);
+    // }
   };
 
   componentDidUpdate(){
-  }
+    // console.log(this.state.items_count);
 
-  handleScroll = () => {
-    let refresh_target_dom = document.querySelector('#refresh_target_'+this.props.type);
-    // const navFakeBar = document.querySelector("#navbar_fake_dom");
-
-    const { top, height } = refresh_target_dom.getBoundingClientRect();
-
-    const windowHeight = window.innerHeight;
-
-    if(top <= windowHeight){
-      if(!this.state.isRefreshing && this.state.hasMore && !this.state.isShowMoreButton){
-        // console.log(windowHeight);
-        // console.log(top);
+    if(this.state.items_count < this.state.items_total_count) {
+      if(!this.state.isShowMoreButton){
         this.setState({
-          isRefreshing: true
-        }, () => {
-          this.requestMoreData();
+          isShowMoreButton: true
+        })
+      }
+    }else{
+      if(this.state.isShowMoreButton){
+        this.setState({
+          isShowMoreButton: false
         })
       }
     }
   }
+
+  // handleScroll = () => {
+  //   let refresh_target_dom = document.querySelector('#refresh_target_'+this.props.type);
+  //   // const navFakeBar = document.querySelector("#navbar_fake_dom");
+
+  //   const { top, height } = refresh_target_dom.getBoundingClientRect();
+
+  //   const windowHeight = window.innerHeight;
+
+  //   if(top <= windowHeight){
+  //     // if(!this.state.isRefreshing && this.state.hasMore && !this.state.isShowMoreButton){
+  //     //   // console.log(windowHeight);
+  //     //   // console.log(top);
+  //     //   this.setState({
+  //     //     isRefreshing: true
+  //     //   }, () => {
+  //     //     this.requestMoreData();
+  //     //   })
+  //     // }
+  //   }
+  // }
 
   render(){
 
@@ -325,11 +316,13 @@ class Home_Thumb_Container_List extends Component{
     if(this.props.isMore){
 
       let moreButtonDom = <></>;
-      if(this.state.isShowMoreButton){
+     if(this.state.isShowMoreButton) {
         moreButtonDom = <button 
                           onClick={() => {
                             this.setState({
                               isShowMoreButton: false
+                            }, () => {
+                              this.requestMoreData();
                             })
                           }} 
                           className={'more_button'}
@@ -337,6 +330,7 @@ class Home_Thumb_Container_List extends Component{
                           더보기
                         </button>
       }
+
       return(
         <div className={'Home_Thumb_Container_List'}>
           {labelDom}

@@ -54,7 +54,7 @@
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/Footer_React.css?version=0') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/SearchPage.css?version=0') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SearchPage.css?version=1') }}" rel="stylesheet"/>
     
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
@@ -353,7 +353,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=13') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=14') }}"></script>
 
     <!-- 카카오톡 sdk -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -674,7 +674,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=126') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=127') }}"></script>
 
 </body>
 </html>

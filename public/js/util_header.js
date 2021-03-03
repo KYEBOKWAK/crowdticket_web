@@ -220,7 +220,8 @@ function ScrollLock() {
   body.style.overflow = 'hidden';
   // body.style.pointerEvents = 'none';
   body.style.position = 'fixed';
-  body.style.top = `-${g_lock_scrollPosition}px`;
+  // body.style.top = `-${g_lock_scrollPosition}px`;
+  body.style.top = 0;
   body.style.left = '0';
   body.style.right= '0';
   body.style.height= 'auto';

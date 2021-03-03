@@ -38,7 +38,7 @@
 
   <link href="{{ asset('/dist/css/Find_Result_Stores_item.css?version=0') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Thumb_Recommend_item.css?version=0') }}" rel="stylesheet"/>
   
