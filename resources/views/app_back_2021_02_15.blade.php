@@ -320,7 +320,7 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- crowdticket util before body -->
-    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=12') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/util_header.js?version=13') }}"></script>
 
     <!-- 카카오톡 sdk -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
