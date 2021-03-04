@@ -163,7 +163,7 @@ Route::get('app/story/{target}/{id}', 'ProjectController@getAppStory');
 
 //상점
 Route::get('store/', function () {
-    return view('store.store_old_home');
+    return view('store.store_home');
 });
 
 Route::get('store/{id}', 'ProjectController@getStoreDetailByID');
