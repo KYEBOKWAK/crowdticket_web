@@ -75,7 +75,7 @@ class Footer_React extends Component{
       baseURL = baseURL + '/magazine';
     }
     else if(type === FOOTER_LINK_TYPE_CREATE_STORE){
-      baseURL = 'https://forms.gle/uAgxKCVZY523JKjZA';
+      baseURL = 'https://forms.gle/vRiirC1mdfgUbZLt5';
     }
     else if(type === FOOTER_LINK_TYPE_HELP_CENTER){
       baseURL = 'https://www.notion.so/crowdticket/bd04ecd76ae840a0b32feed12fd10d57';

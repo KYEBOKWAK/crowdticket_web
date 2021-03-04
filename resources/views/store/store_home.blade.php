@@ -83,7 +83,7 @@
     }
 
     .welcome_start_content_container{
-      margin-left: 13%;
+      margin-left: 8%;
       width: 70%;
     }
 
@@ -147,12 +147,12 @@
 
       <div class="welcome_start_content_container">
         <div class="welcome_start_banner_content_container">
-          <b>세상에 없던<br>맞춤형 콘텐츠 커머스, 콘텐츠상점 오픈!</b>
+          <b>크리에이터라면,<br>지금바로 콘텐츠상점에 입점해보세요!</b>
         </div>
 
         <div class="welcome_start_button_container">
-          <a href="{{url('/store')}}">
-            <button type="button" class="welcome_start_button">바로가기</button>
+          <a href="https://forms.gle/vRiirC1mdfgUbZLt5" target="_blank">
+            <button type="button" class="welcome_start_button">입점신청</button>
           </a>
         </div>
       </div>
