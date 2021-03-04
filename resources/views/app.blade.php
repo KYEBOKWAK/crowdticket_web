@@ -54,7 +54,7 @@
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/Footer_React.css?version=0') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/SearchPage.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SearchPage.css?version=2') }}" rel="stylesheet"/>
     
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
