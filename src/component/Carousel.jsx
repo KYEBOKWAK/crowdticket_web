@@ -75,7 +75,7 @@ class Carousel extends Component{
     let isAutoWidth = false;
     let responsive = undefined;
 
-    if(this.props.pc_show_item_count >= this.props.items.length){
+    if(this.props.pc_show_item_count > this.props.items.length){
       isAutoWidth = true;
     }else{
       if(this.state.innerWidth < 1176){

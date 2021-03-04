@@ -53,7 +53,7 @@
     <link href="{{ asset('/dist/css/Global.css?version=4') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/Footer_React.css?version=0') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Footer_React.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/SearchPage.css?version=2') }}" rel="stylesheet"/>
     
 @yield('css')
@@ -674,7 +674,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=129') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=130') }}"></script>
 
 </body>
 </html>

@@ -132,7 +132,7 @@
     padding-right: 40px;
 
     .logo_container {
-      width: 100%;
+      // width: 100%;
     }
 
     .container_wrapper {
@@ -192,6 +192,10 @@
 
     .term_privacy_container {
       margin-top: 24px;
+    }
+
+    .logo_container {
+      width: 100%;
     }
   }
 }
