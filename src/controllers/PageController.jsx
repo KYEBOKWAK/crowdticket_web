@@ -81,11 +81,13 @@ class PageController extends Component {
       navBar.style.top = 0;
       navBar.style.left = 0;
       navBar.style.boxShadow = 0;
+      navBar.style.zIndex = 1;
     }else{
       navBar.style.position = 'relative';
       navBar.style.top = 0;
       navBar.style.left = 0;
       navBar.style.boxShadow = '6px 4px 15px 0 rgba(25, 25, 25, 0.05)';
+      navBar.style.zIndex = 1;
     }
   }
   

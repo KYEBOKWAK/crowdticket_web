@@ -23,7 +23,7 @@
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/css/base.css?version=11') }}" rel="stylesheet"/>
+    <link href="{{ asset('/css/base.css?version=12') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css?version=10') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/main.css?version=7') }}" rel="stylesheet"/>
     <link href="{{ asset('/css/global.css?version=21') }}" rel="stylesheet"/>
@@ -626,7 +626,7 @@ function logout(){
     }
 </script>
 
-<!-- <script type="text/javascript" src="{{ asset('/dist/App.js?version=119') }}"></script> -->
+<!-- <script type="text/javascript" src="{{ asset('/dist/App.js?version=129') }}"></script> -->
 
 </body>
 </html>

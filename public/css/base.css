@@ -3804,7 +3804,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 	min-width: 1030px;
 	position: absolute;
 	min-height: 50px;
-	z-index: 9999 !important;
+	/* z-index: 9999 !important; */
 }
 @media (min-width: 768px) {
   .navbar-header {
