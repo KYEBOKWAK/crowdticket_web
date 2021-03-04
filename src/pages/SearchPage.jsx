@@ -196,7 +196,7 @@ class SearchPage extends Component{
                       </div>
     }
     return(
-      <div className={'SearchPage'}>
+      <div className={'SearchPage'} style={{zIndex: 9999}}>
         <div className={'SearchPage_container search_bar_padding'}>
           <div className={'search_input_box'}>
             <div className={'search_input_box_first'}>
