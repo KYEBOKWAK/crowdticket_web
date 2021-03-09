@@ -34,6 +34,15 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  carousel_bg_img_type: {
+    lottie: 'lottie',
+    image: 'image'
+  },
+  carousel_target_type: {
+    store_info_count: 'store_info_count',
+    store_event_info: 'store_event_info',
+    link_store: 'link_store'
+  },
   width: {
     pc: 1176,
     tablet: 768,

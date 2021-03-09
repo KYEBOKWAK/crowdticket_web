@@ -14,6 +14,8 @@ import Home_Thumb_Container_List from '../component/Home_Thumb_Container_List';
 
 import Home_Thumb_Tag from '../component/Home_Thumb_Tag';
 
+import Home_Top_Banner from '../component/Home_Top_Banner';
+
 
 class StoreHome extends Component {
 
@@ -60,6 +62,7 @@ class StoreHome extends Component {
   
     return (
       <div className={'StoreHome'}>
+        <Home_Top_Banner></Home_Top_Banner>
         <div className={'store_home_container'}>
           <div className={'thumb_container'}>
             <Home_Thumb_list thumb_list_type={Types.thumb_list_type.popular}></Home_Thumb_list>
