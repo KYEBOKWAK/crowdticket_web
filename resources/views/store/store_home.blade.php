@@ -43,7 +43,7 @@
 
   <link href="{{ asset('/dist/css/Home_Thumb_Stores_Item.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Top_Banner.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Top_Banner.css?version=2') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Carousel_Item_Counting.css?version=0') }}" rel="stylesheet"/>
   

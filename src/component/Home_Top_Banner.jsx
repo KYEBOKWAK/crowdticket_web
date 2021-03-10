@@ -78,8 +78,12 @@ class Home_Top_Banner extends Component{
       if(target_type === Types.carousel_target_type.store_event_info){
         goURL = 'https://forms.gle/vRiirC1mdfgUbZLt5';
         isPopup = true;
-      }else if(target_type === Types.carousel_target_type.link_store){
+      }
+      else if(target_type === Types.carousel_target_type.link_store){
         goURL = baseURL + '/store/'+target_id;
+      }
+      else if(target_type === Types.carousel_target_type.link_magazine){
+        goURL = baseURL + '/magazine/'+target_id;
       }
 
       if(isPopup){
@@ -170,9 +174,7 @@ class Home_Top_Banner extends Component{
                           style={bgStyle} 
                           disabled={isButtonDisabled}
                         >
-                          <div 
-                            className={'right_contents'}
-                          >
+                          <div className={'right_contents'}>
                             {imageDom}
                           </div>
 
