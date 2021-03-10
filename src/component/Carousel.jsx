@@ -21,7 +21,6 @@ class Carousel extends Component{
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-
     if(this.state.isResizing !== nextState.isResizing){
       return true;
     }
@@ -95,13 +94,17 @@ class Carousel extends Component{
     let isAutoWidth = false;
     let responsive = undefined;
 
-    if(this.props.pc_show_item_count === 1){
-      isAutoWidth = true;
-      responsive = {
-        1176: {
-          items: 1,
-        },
+    if(this.props.pc_show_item_count === 1){      
+      if(this.state.innerWidth < 1176){
+        isAutoWidth = true;
+      }else{
+        responsive = {
+          1176: {
+            items: this.props.pc_show_item_count,
+          },
+        }
       }
+      
     }else{
       if(this.props.pc_show_item_count > this.props.items.length){
         isAutoWidth = true;
@@ -131,7 +134,6 @@ class Carousel extends Component{
           ref={(el) => (this.Carousel = el)}
           // slideToIndex={this.state.slideToIndex}
           autoWidth={isAutoWidth}
-          infinite={false}
           mouseTracking
           items={this.props.items}
           disableButtonsControls={true}

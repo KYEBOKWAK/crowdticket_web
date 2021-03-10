@@ -22,6 +22,8 @@ class Lottie extends Component{
       return;
     }
 
+    window.addEventListener('resize', this.updateDimensions);
+
     lottie_web.loadAnimation({
       container: this.ref,
       renderer: "svg",
@@ -34,6 +36,8 @@ class Lottie extends Component{
   };
 
   componentWillUnmount(){
+    window.removeEventListener('resize', this.updateDimensions);
+    this.ref = null;
   };
 
   updateDimensions = () => {

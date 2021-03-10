@@ -144,7 +144,7 @@ class Home_Top_Banner extends Component{
 
           contentsBottomDom = <div className={'carousel_counting_contents_container'}>
                                 <Carousel_Item_Counting
-                                  ref={(ref) => {                                    
+                                  ref={(ref) => {
                                     this.CountUpStoresRefs.push(ref);
                                   }}
 

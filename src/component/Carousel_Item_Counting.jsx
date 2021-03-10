@@ -73,7 +73,7 @@ class Carousel_Item_Counting extends Component{
       if(this.isUnmount){
         return
       }
-      
+
       this.setState({
         isSetItemCount: true,
         itemsCount: result.data.item_count
