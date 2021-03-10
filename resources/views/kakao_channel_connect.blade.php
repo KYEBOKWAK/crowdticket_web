@@ -7,7 +7,7 @@
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 
-    <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
+    <title>크티 : 크라우드티켓 - 크리에이터 비즈니스 플랫폼</title>
     <!-- 카카오톡 sdk -->
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>

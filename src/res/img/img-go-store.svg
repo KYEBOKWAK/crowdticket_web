@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="44" viewBox="0 0 150 44">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-372 -1026) translate(0 850) translate(372 176)">
+                    <rect width="150" height="44" fill="#FAFAFA" rx="4"/>
+                    <text fill="#191919" font-family="AppleColorEmoji, Apple Color Emoji" font-size="14">
+                        <tspan x="23.682" y="30">🏠</tspan> <tspan x="42.682" y="30" font-family="NotoSansCJKkr-Bold, Noto Sans CJK KR" font-weight="bold"> 상점 구경하기</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

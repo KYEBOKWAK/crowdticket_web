@@ -53,7 +53,7 @@ class App extends Component {
           this.requestLogout(result.value);
         }else{
           //값이 없음
-          console.log("이미 로그아웃됨");
+          // console.log("이미 로그아웃됨");
         }        
       })      
     }else{

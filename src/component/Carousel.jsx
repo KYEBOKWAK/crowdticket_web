@@ -151,7 +151,6 @@ class Carousel extends Component{
           onSlideChanged={(e) => {
             this.isNextSlideDisabled = e.isNextSlideDisabled;
             this.isPrevSlideDisabled = e.isPrevSlideDisabled;
-
             this.onSlideChanged(e);
           }}
           onResized={(e) => {
@@ -159,7 +158,7 @@ class Carousel extends Component{
               isResizing: false
             })
           }}
-          />
+        />
       </div>
     )
   }

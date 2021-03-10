@@ -26,6 +26,7 @@
   .carousel_item_title_box {
     width: 1176px;
     padding-left: 15px;
+    text-align: left;
   }
 
   .right_contents {
@@ -61,6 +62,7 @@
     
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .carousel_buttons_box {
@@ -95,16 +97,37 @@
   .carousel_total_text {
     opacity: 0.5;
   }
+
+  .carousel_go_store_img_container {
+    margin-top: 24px;
+  }
+
+  .carousel_go_store_img {
+    
+  }
+
+  .carousel_counting_contents_container {
+    margin-top: 24px;
+  }
+
   @media (max-width: 1176px){
     /*모바일일때*/
 
+    .carousel_buttons_box {
+      width: 100%;
+      padding-left: 28px;
+    }
     .carousel_item_container {
       // height: 560px;
       height: auto;
     }
+
     .carousel_item_title_container {
       position: unset;
       height: 296px;
+
+      align-items: flex-start;
+      padding-top: 40px;
     }
 
     .carousel_item_title_box {
@@ -121,6 +144,60 @@
 
     .alice-carousel__stage-item{
       width: 100% !important;
+    }
+
+    .carousel_item_title {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 768px){
+    .carousel_item_title_container {
+      position: unset;
+      height: 218px;
+
+      align-items: flex-start;
+      padding-top: 24px;
+    }
+
+    .carousel_buttons_box {
+      padding-left: 24px;
+    }
+
+    .carousel_item_title {
+      font-size: 20px;
+    }
+  
+    .carousel_item_sub_title {
+      font-size: 14px;
+    }
+
+    .carousel_button_left {
+      display: none;
+    }
+
+    .carousel_button_right {
+      display: none;
+    }
+
+    .carousel_index_container {
+      margin-left: 0px;
+    }
+
+    .carousel_item_title_box {
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 26px;
+    }
+
+    .carousel_go_store_img_container {
+      margin-top: 16px;
+    }
+  
+    .carousel_go_store_img {
+      width: 116px;
+      height: 34px;
     }
   }
 }

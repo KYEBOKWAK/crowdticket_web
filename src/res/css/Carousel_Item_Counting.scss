@@ -1,0 +1,41 @@
+.Carousel_Item_Counting {
+  
+  .counting_box {
+    display: flex;
+  }
+
+  .counting_count_text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .counting_label_text {
+    font-size: 32px;
+    font-weight: 300;
+    color: #ffffff;
+    margin-left: 4px;
+  }
+
+  @media (max-width: 1176px){
+    /*모바일일때*/
+    .counting_count_text {
+      font-size: 28px;
+    }
+
+    .counting_label_text {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 768px){
+    /*모바일일때*/
+    .counting_count_text {
+      font-size: 20px;
+    }
+
+    .counting_label_text {
+      font-size: 20px;
+    }
+  }
+}

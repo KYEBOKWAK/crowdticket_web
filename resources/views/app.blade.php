@@ -37,7 +37,7 @@
 <!-- End Facebook Pixel Code -->
 
     @section('title')
-        <title>크티 : 크라우드티켓 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼</title>
+        <title>크티 : 크라우드티켓 - 크리에이터 비즈니스 플랫폼</title>
     @show
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"/>
     <link href="{{ asset('/css/lib/toast.min.css') }}" rel="stylesheet"/>
@@ -674,7 +674,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=136') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=137') }}"></script>
 
 </body>
 </html>

@@ -2,7 +2,7 @@
 @section('meta')
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content="크티 - 팬과 크리에이터가 함께 즐기는 이벤트 플랫폼"/>
+    <meta property="og:title" content="크티 - 크리에이터 비즈니스 플랫폼"/>
     <meta property="og:description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     <meta property="og:image" content="{{ asset('/img/app/og_image_3.png') }}"/>
     <meta property="og:url" content="https://crowdticket.kr/"/>
