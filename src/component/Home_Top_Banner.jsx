@@ -215,7 +215,7 @@ class Home_Top_Banner extends Component{
       if(this.CountUpStoresRefs[i] === null){
         continue;
       }
-      
+
       this.CountUpStoresRefs[i].reStartCountUp();
     }
   }
@@ -237,7 +237,7 @@ class Home_Top_Banner extends Component{
           ref={(el) => (this.Carousel = el)} 
           items={this.state.items} 
           pc_show_item_count={1}
-          autoPlay={false}
+          autoPlay={true}
           autoPlayInterval={5000}
           animationDuration={600}
           infinite={true}
