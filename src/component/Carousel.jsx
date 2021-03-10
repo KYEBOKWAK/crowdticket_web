@@ -39,6 +39,10 @@ class Carousel extends Component{
 
   updateDimensions = (isInit) => {
 
+    if(this.state.innerWidth === window.innerWidth){
+      return;
+    }
+    
     let isResizing = true;
     if(isInit){
       isResizing = false;
