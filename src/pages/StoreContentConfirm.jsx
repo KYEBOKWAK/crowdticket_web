@@ -473,6 +473,25 @@ class StoreContentConfirm extends Component{
       }}></Popup_text_viewer>
     }
 
+    let review_talk_container_dom = <></>;
+    if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+    }else{
+      review_talk_container_dom = <div>
+                                    <div className={'community_container'}>
+                                      {product_answer_dom}
+                                      {contact_explain_dom}
+                                      {review_dom}
+                                    </div>
+
+                                    <div className={'review_textarea_container'}>
+                                      {textAreaDom}
+                                      <div className={'explain_text'}>
+                                        {'[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.'}
+                                      </div>
+                                    </div>
+                                  </div>
+    }
+
     return(
       <div className={'StoreContentConfirm'}>
         <div className={'title_container'}>
@@ -496,18 +515,7 @@ class StoreContentConfirm extends Component{
           <FileUploader product_state={this.state.item_product_state} file_upload_target_type={Types.file_upload_target_type.product_file} state={this.state.item_file_upload_state} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>
         </div>
 
-        <div className={'community_container'}>
-          {product_answer_dom}
-          {contact_explain_dom}
-          {review_dom}
-        </div>
-
-        <div className={'review_textarea_container'}>
-          {textAreaDom}
-          <div className={'explain_text'}>
-            {'[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.'}
-          </div>
-        </div>
+        {review_talk_container_dom}
 
         <div className={'problem_button_container'}>
           <button className={'problem_button'} onClick={(e) => {this.onClickContact(e)}}>

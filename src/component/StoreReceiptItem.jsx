@@ -1016,25 +1016,8 @@ class StoreReceiptItem extends Component{
           }
         }
       }
-
-      // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      //   oneTooneSelectDom = <div className={'play_time_container_box'}>
-      //                         <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} isManager={this.props.isManager} store_order_id={this.props.store_order_id} store_order_state={this.state.state} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
-      //                       </div>
-      // }
     }else{
-      //구매자 화면
-      // if(this.state.state === Types.order.ORDER_STATE_APP_STORE_PAYMENT ||
-      //   this.state.state === Types.order.ORDER_STATE_APP_STORE_READY ||
-      //   this.state.state === Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS){
-      //   //승인 대기
-      //   if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      //     oneTooneSelectDom = <div className={'play_time_container_box'}>
-      //                           <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} isManager={this.props.isManager} store_order_id={this.props.store_order_id} store_order_state={this.state.state} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
-      //                         </div>
-      //   }
-      // }
-      
+      //구매자 화면      
     }
     
 
@@ -1173,56 +1156,57 @@ class StoreReceiptItem extends Component{
     let review_container = <></>;
 
     let openProductTextView = <></>;
-    if(this.props.isManager){
-      let product_answer_dom = <></>;
-      let review_dom = <></>;
+    // if(this.props.isManager){
+    //초반엔 여기에 매니저만 나왓다
+    let product_answer_dom = <></>;
+    let review_dom = <></>;
 
-      if(this.state.state >= Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER){
-        // store_manager_answer
-        if(this.state.product_answer !== null && this.state.product_answer !== ''){
-          //크리에이터 구매 답변
-          product_answer_dom =  <div className={'product_answer_wrapper'}>
-                                  {/* <div className={'under_line'}>
-                                  </div> */}
-                                  <div className={'product_answer_container'}>
-                                    <img className={'product_answer_img'} src={this.state.store_user_profile_photo_url} />
-                                    <div className={'product_answer_content_container'}>
-                                      <div className={'product_answer_name'}>
-                                        {this.state.store_title}
-                                      </div>
-                                      <div className={'product_answer_content'}>
-                                        {this.state.product_answer}
-                                      </div>
+    if(this.state.state >= Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER){
+      // store_manager_answer
+      if(this.state.product_answer !== null && this.state.product_answer !== ''){
+        //크리에이터 구매 답변
+        product_answer_dom =  <div className={'product_answer_wrapper'}>
+                                {/* <div className={'under_line'}>
+                                </div> */}
+                                <div className={'product_answer_container'}>
+                                  <img className={'product_answer_img'} src={this.state.store_user_profile_photo_url} />
+                                  <div className={'product_answer_content_container'}>
+                                    <div className={'product_answer_name'}>
+                                      {this.state.store_title}
+                                    </div>
+                                    <div className={'product_answer_content'}>
+                                      {this.state.product_answer}
                                     </div>
                                   </div>
                                 </div>
-        }
-
-        if(this.state.comment_contents !== ''){
-          review_dom = <div className={'product_answer_wrapper'}>
-                        <div className={'product_answer_container review_container'}>
-                          <div className={'product_answer_content_container review_answer_content_container'}>
-                            <div className={'product_answer_name review_answer_name'}>
-                              {this.state.order_user_real_name}
-                            </div>
-                            <div className={'product_answer_content'}>
-                            {this.state.comment_contents}
-                            </div>
-                          </div>
-                          <img className={'product_answer_img'} src={this.state.order_user_profile_photo_url} />
-                        </div>
-                      </div>
-        }
-
-        review_container = <div className={'product_review_container'}>
-                            <div className={'under_line'}></div>
-                            <div className={'product_review_box'}>
-                              {product_answer_dom}
-                              {review_dom}
-                            </div>
-                          </div>
+                              </div>
       }
+
+      if(this.state.comment_contents !== ''){
+        review_dom = <div className={'product_answer_wrapper'}>
+                      <div className={'product_answer_container review_container'}>
+                        <div className={'product_answer_content_container review_answer_content_container'}>
+                          <div className={'product_answer_name review_answer_name'}>
+                            {this.state.order_user_real_name}
+                          </div>
+                          <div className={'product_answer_content'}>
+                          {this.state.comment_contents}
+                          </div>
+                        </div>
+                        <img className={'product_answer_img'} src={this.state.order_user_profile_photo_url} />
+                      </div>
+                    </div>
+      }
+
+      review_container = <div className={'product_review_container'}>
+                          <div className={'under_line'}></div>
+                          <div className={'product_review_box'}>
+                            {product_answer_dom}
+                            {review_dom}
+                          </div>
+                        </div>
     }
+    // }
 
     if(this.state.isOpenProductText){
       openProductTextView = <Popup_text_viewer store_order_id={this.props.store_order_id} closeCallback={() => {
