@@ -20,7 +20,7 @@
 <link href="{{ asset('/dist/css/StoreManagerTabAccountPage.css?version=5') }}" rel="stylesheet"/>
 
 
-<link href="{{ asset('/dist/css/StoreContentsListItem.css?version=4') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreContentsListItem.css?version=5') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/FileUploader.css?version=4') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/Popup_image_preview.css?version=1') }}" rel="stylesheet"/>
@@ -46,7 +46,7 @@
 <link href="{{ asset('/dist/css/StoreManagerHome_newOrderItem.css?version=0') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/Popup_StoreReceiptItem.css?version=0') }}" rel="stylesheet"/>
-<link href="{{ asset('/dist/css/StoreOrderItem.css?version=3') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/StoreOrderItem.css?version=4') }}" rel="stylesheet"/>
 <link href="{{ asset('/dist/css/StoreReceiptItem.css?version=14') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/ReactToastify.css?version=0') }}" rel="stylesheet"/>

@@ -11,6 +11,7 @@ import ic_label_image from '../res/img/ic-label-image.svg';
 import ic_label_text from '../res/img/ic-label-text.svg';
 import ic_label_live from '../res/img/ic-label-live.svg';
 import ic_label_music from '../res/img/ic-label-music.svg';
+import ic_label_download from '../res/img/ic-label-download.svg';
 
 class Home_Thumb_Product_Label extends Component{
 
@@ -46,6 +47,11 @@ class Home_Thumb_Product_Label extends Component{
           type: 'sound',
           text: '음성',
           thum_icon_img: ic_label_music
+        },
+        {
+          type: 'download',
+          text: '다운로드',
+          thum_icon_img: ic_label_download
         },
         {
           type: 'etc',

@@ -3,6 +3,9 @@
 import React, { Component } from 'react';
 
 import Util from '../lib/Util';
+import Types from '../Types';
+
+import ic_badge_download from '../res/img/badge-download.svg';
 
 const IMAGE_FILE_WIDTH = 80;
 
@@ -90,6 +93,19 @@ class StoreOrderItem extends Component{
       }
     }
 
+    let badge_dom = <></>;
+    if(this.props.type_contents === Types.contents.completed){
+      badge_dom = <span className={'item_badge_box'}>
+                    <img src={ic_badge_download} />
+                  </span>
+    }
+
+    let underLine = <></>;
+    if(this.props.isShowUnderLine){
+      underLine = <div className={'item_under_line'}>
+                  </div>
+    }
+
     return(
       <div className={'StoreOrderItem'}>
         
@@ -99,13 +115,16 @@ class StoreOrderItem extends Component{
             </div>
             <div className={'item_content_container'}>
               <div className={'item_name'}>{this.props.store_title}</div>
-              <div className={'item_title'}>{this.props.title}</div>
+                
+              <div className={'item_title_container'}>
+                <div className={'item_title'}>{this.props.title}{badge_dom}</div>
+                {/* {badge_dom} */}
+              </div>
               <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
             </div>
         </div>
         
-        <div className={'item_under_line'}>
-        </div>
+        {underLine}
       </div>
     )
   }
@@ -118,7 +137,9 @@ StoreOrderItem.defaultProps = {
   thumbUrl: '',
   name: '',
   title: '',
-  price: 0
+  price: 0,
+  type_contents: Types.contents.customized,
+  isShowUnderLine: true
 }
 
 export default StoreOrderItem;

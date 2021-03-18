@@ -9,6 +9,8 @@ import Types from '../Types';
 import imgDropDownUp from '../res/img/ic-dropdown-line-up.svg';
 import imgDropDownDown from '../res/img/ic-dropdown-line-down.svg';
 
+import ic_badge_download from '../res/img/badge-download.svg';
+
 const IMAGE_FILE_WIDTH = 80;
 const IMAGE_FILE_WIDTH_IN_ITEM = 63;
 class StoreContentsListItem extends Component{
@@ -237,6 +239,13 @@ class StoreContentsListItem extends Component{
         height: this.state.show_image_height
       }
     }
+
+    let badge_dom = <></>;
+    if(this.props.type_contents === Types.contents.completed){
+      badge_dom = <span className={'badge_img'}>
+                    <img src={ic_badge_download} />
+                  </span>
+    }
     
 
     return(
@@ -249,7 +258,9 @@ class StoreContentsListItem extends Component{
                 </div>
                 <div className={'item_content_container'} style={inItemContentContainerStyle}>
                   {nick_name_dom}
-                  <div className={'item_title'}>{this.props.title}</div>
+                  <div className={'item_title'}>
+                    {this.props.title}{badge_dom}
+                  </div>
                   <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원
                   </div>
                 </div>
@@ -282,6 +293,7 @@ StoreContentsListItem.defaultProps = {
   state: 0,
   type: Types.store_home_item_list.POPUALER,
   isLink: true,
+  type_contents: Types.contents.customized,//여기 아이템에 뱃지 넣어야함..
   reOrderCallback: (index, item_id, reorder_type) => {},
   deleteItemCallback: (item_id, item_title) => {}
 }

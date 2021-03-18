@@ -176,7 +176,7 @@ class StoreHomeStoreListItem extends Component{
     let _contentList = [];
     for(let i = 0 ; i < this.state.items.length ; i++){
       const data = this.state.items[i];
-      const domObject = <StoreContentsListItem key={i} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isHomeList={true} store_alias={data.alias} type={Types.store_home_item_list.IN_ITEM}></StoreContentsListItem>;
+      const domObject = <StoreContentsListItem key={i} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isHomeList={true} store_alias={data.alias} type={Types.store_home_item_list.IN_ITEM} type_contents={data.type_contents}></StoreContentsListItem>;
 
       _contentList.push(domObject);
     }

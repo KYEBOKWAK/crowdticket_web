@@ -39,6 +39,12 @@ import Popup_refund from '../component/Popup_refund';
 import StoreItemDetailReviewList from '../component/StoreItemDetailReviewList';
 
 import Cookies from 'universal-cookie';
+
+import ic_icon_download from '../res/img/icon-download.svg';
+import icon_clip_tag from '../res/img/icon-clip-tag.svg';
+
+import icon_download_big from '../res/img/icon-download-big.svg';
+
 const cookies = new Cookies();
 
 const IMAGE_THUMB_FILE_WIDTH = 520;
@@ -79,6 +85,8 @@ class StoreItemDetailPage extends Component{
       item_ask: '',
       item_notice: '',
 
+      item_type_contents: Types.contents.customized,
+
       is_show_other_items: true,
       is_show_order_reviews: true,
 
@@ -97,7 +105,9 @@ class StoreItemDetailPage extends Component{
       ori_show_image_width: 0,
       ori_show_image_height: 0,
 
-      isThumbResize: false
+      isThumbResize: false,
+
+      download_type_file_count: 0
     }
   };
 
@@ -223,7 +233,7 @@ class StoreItemDetailPage extends Component{
     }
   }
 
-  requestItemInfo(){
+  requestItemInfo = () => {
     // console.log(this.state.store_item_id);
     axios.post('/store/any/item/info', {
       store_item_id: this.state.store_item_id
@@ -244,7 +254,26 @@ class StoreItemDetailPage extends Component{
         item_product_category_type: data.product_category_type,
         item_notice: data.item_notice,
 
-        youtube_url: data.youtube_url
+        youtube_url: data.youtube_url,
+        item_type_contents: data.type_contents
+      }, () => {
+        this.requestDownloadFileCount();
+      })
+    }, (error) => {
+
+    })
+  }
+
+  requestDownloadFileCount = () => {
+    if(this.state.item_type_contents === Types.contents.customized){
+      return;
+    }
+
+    axios.post('/store/any/download/file/count', {
+      store_item_id: this.state.store_item_id
+    }, (result) => {
+      this.setState({
+        download_type_file_count: result.file_count
       })
     }, (error) => {
 
@@ -330,6 +359,18 @@ class StoreItemDetailPage extends Component{
 
         _pointTags.push(pointTagDom);
       }
+    }
+
+    if(this.state.item_type_contents === Types.contents.completed){
+      // download_type_file_count
+      const pointTagDom = <div key={_pointTags.length} className={'point_tag_box point_tag_box_file_type'}>
+                            <img src={icon_clip_tag} />
+                            <div style={{marginLeft: 4}}>
+                              첨부파일 {this.state.download_type_file_count}개
+                            </div>
+                          </div>;
+
+      _pointTags.push(pointTagDom);
     }
     
     if(this.state.item_average_make_day){
@@ -642,7 +683,7 @@ class StoreItemDetailPage extends Component{
 
     let refundPopupDom = <></>;
     if(this.state.show_refund_popup){
-      refundPopupDom = <Popup_refund closeCallback={() => {
+      refundPopupDom = <Popup_refund item_type_contents={this.state.item_type_contents} closeCallback={() => {
         this.setState({
           show_refund_popup: false
         })
@@ -677,6 +718,43 @@ class StoreItemDetailPage extends Component{
       }
     }
 
+    let download_type_notice_dom = <></>;
+    let need_item_notice_dom = <></>;
+
+    let how_to_text_1 = `콘텐츠\n주문하고`;
+    let how_to_text_2 = `크리에이터가\n승인하고`;
+    let how_to_text_3 = `콘텐츠가\n준비되면`;
+    let how_to_text_4 = `소통하고\n즐기면 끝!`;
+
+    let how_to_icon_3 = icon_gift;
+    if(this.state.item_type_contents === Types.contents.completed){
+      how_to_text_2 = `‘나의 콘텐츠 주문’\n확인하고`;
+      how_to_text_3 = `바로 다운로드\n받아서`;
+      how_to_text_4 = `편하게\n즐기면 끝!`;
+      how_to_icon_3 = icon_download_big;
+
+      download_type_notice_dom = <div className={'download_type_notice_box'}>
+                                  <img src={ic_icon_download} />
+                                  <div className={'download_type_notice_text'}>
+                                    해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다.
+                                  </div>
+                                </div>
+    }else{
+      need_item_notice_dom = <div>
+                              <div className={'container_label_text'}>
+                                구매시 필요사항
+                              </div>
+
+                              <div className={'content_container'}>
+                                {this.state.item_ask}
+                              </div>
+                            </div>;
+
+
+
+
+    }
+
     return(
       <div className={'StoreItemDetailPage'}>
         <div className={'item_img_container'}>
@@ -687,6 +765,8 @@ class StoreItemDetailPage extends Component{
           </div>
           {store_user_dom}
         </div>
+
+        {download_type_notice_dom}
 
         <div className={'item_detail_page_container'}>
           <div className={'content_container'}>
@@ -715,22 +795,16 @@ class StoreItemDetailPage extends Component{
             {contentMoreExplainDom}
           </div>
 
-          <div className={'container_label_text'}>
+          {/* <div className={'container_label_text'}>
             구매시 필요사항
           </div>
 
           <div className={'content_container'}>
             {this.state.item_ask}
-          </div>
+          </div> */}
+          {need_item_notice_dom}
 
           {itemNoticeDom}
-          {/* <div className={'container_label_text'}>
-            유의사항
-          </div>
-
-          <div className={'content_container'}>
-            {this.state.item_notice}
-          </div> */}
 
           <div className={'refund_container'}>
             <button onClick={(e) => {this.onClickRefundButton(e)}} className={'cancel_popup_text'}>
@@ -753,8 +827,7 @@ class StoreItemDetailPage extends Component{
                 <img className={'icon_order_img'} src={icon_order} />
               </div>
               <div className={'use_box_text'}>
-                {`콘텐츠 
-                주문하고`}
+                {how_to_text_1}
               </div>
             </div>
 
@@ -763,18 +836,16 @@ class StoreItemDetailPage extends Component{
                 <img className={'icon_check_img'} src={icon_check} />
               </div>
               <div className={'use_box_text'}>
-                {`크리에이터가 
-                승인하고`}
+                {how_to_text_2}
               </div>
             </div>
 
             <div className={'use_img_box'}>
               <div className={'use_img_circle'}>
-                <img className={'icon_gift_img'} src={icon_gift} />
+                <img className={'icon_gift_img'} src={how_to_icon_3} />
               </div>
               <div className={'use_box_text'}>
-                {`콘텐츠가 
-                준비되면`}
+                {how_to_text_3}
               </div>
             </div>
 
@@ -783,8 +854,7 @@ class StoreItemDetailPage extends Component{
                 <img className={'icon_good_img'} src={icon_good} />
               </div>
               <div className={'use_box_text'}>
-                {`소통하고 
-                즐기면 끝!`}
+                {how_to_text_4}
               </div>
             </div>
           </div>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#28bfff;stroke-linecap:round;stroke-linejoin:round;stroke-width:3px}
+        </style>
+    </defs>
+    <g id="icon_download_big" transform="translate(-1011 -3595)">
+        <path id="사각형_21" fill="none" d="M0 0H38V38H0z" transform="translate(1011 3595)"/>
+        <g id="icon_download" transform="translate(1014 3598)">
+            <path id="패스_37" d="M35 15v7.111a3.556 3.556 0 0 1-3.556 3.556H6.556A3.556 3.556 0 0 1 3 22.111V15" class="cls-2" transform="translate(-3 6.333)"/>
+            <path id="패스_38" d="M7 10l8.889 8.889L24.778 10" class="cls-2" transform="translate(.111 2.444)"/>
+            <path id="선_3" d="M0 21.333L0 0" class="cls-2" transform="translate(16)"/>
+        </g>
+    </g>
+</svg>

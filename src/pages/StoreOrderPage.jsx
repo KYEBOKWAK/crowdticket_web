@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
 
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 import Types from '../Types';
 
@@ -26,7 +26,9 @@ import FileUploader from '../component/FileUploader';
 import ic_radio_btn_n from '../res/img/radio-btn-n.svg'
 import ic_radio_btn_s from '../res/img/radio-btn-s.svg'
 
-import StorePlayTimePlan from '../component/StorePlayTimePlan';
+// import StorePlayTimePlan from '../component/StorePlayTimePlan';
+
+import ic_icon_download from '../res/img/icon-download.svg';
 
 
 // import * as GlobalKeys from '~/GlobalKeys';
@@ -80,6 +82,7 @@ class StoreOrderPage extends Component{
       item_file_upload_state: Types.file_upload_state.NONE,
       item_product_state: Types.product_state.TEXT,
       item_ask_play_time: '',
+      item_type_contents: Types.contents.customized,
 
       isInitDeriveStateFromProps: false,
       user_id: null,
@@ -150,7 +153,16 @@ class StoreOrderPage extends Component{
 
   componentDidMount(){
     this.IMP = window.IMP; // 생략가능
-    this.IMP.init(process.env.REACT_APP_IAMPORT_CODE); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
+    const app_type_key = document.querySelector('#g_app_type');
+    let iamportCode = process.env.REACT_APP_IAMPORT_CODE;
+    if(app_type_key){
+      if(app_type_key.value === 'local'){
+        iamportCode = process.env.REACT_APP_IAMPORT_CODE_LOCAL;
+      }
+    }
+
+    this.IMP.init(iamportCode); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
     const storeItemIDDom = document.querySelector('#store_item_id');
     if(storeItemIDDom){
@@ -278,7 +290,9 @@ class StoreOrderPage extends Component{
         item_file_upload_state: data.file_upload_state,
 
         item_ask_play_time: ask_play_time,
-        item_product_state: data.product_state
+        item_product_state: data.product_state,
+
+        item_type_contents: data.type_contents
       })
     }, (error) => {
 
@@ -305,10 +319,14 @@ class StoreOrderPage extends Component{
     //   }
     // }
 
-    if(this.state.requestContent === ''){
-      alert('요청사항을 필수로 적어주세요');
-      return false;
+    if(this.state.item_type_contents === Types.contents.customized){
+      if(this.state.requestContent === ''){
+        alert('요청사항을 필수로 적어주세요');
+        return false;
+      }
     }
+    
+
 
     if(this.fileUploaderRef.getData().length === 0){
       if(this.state.item_file_upload_state === Types.file_upload_state.IMAGE){
@@ -1013,22 +1031,42 @@ class StoreOrderPage extends Component{
                 </div>
     }
 
-    // let oneTooneNoticeDom = <></>;
-    // let oneTooneSelectDom = <></>;
-    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-    //   oneTooneNoticeDom = <div className={'container_box'} style={{display:'flex', backgroundColor: '#feeff2'}}>
-    //                         <div className={'oneToone_notice_warning'}>
-    //                           !
-    //                         </div>
-    //                         <div className={'oneToone_notice_content'}>
-    //                           {'다음 1~2주 사이에 크리에이터와 실시간 콘텐츠 진행이 가능한 시간대를 \n아래에서 3개 이상 선택해주세요.\n\n크리에이터가 확인 후 선택한 시간대 안에서 최종 진행 시간을 결정하여 알려드립니다!'}
-    //                         </div>
-    //                       </div>
 
-    //   oneTooneSelectDom = <div className={'container_box'}>
-    //                         <StorePlayTimePlan ref={(ref) => {this.storePlayTimePlanRef = ref;}} store_item_id={this.state.store_item_id}></StorePlayTimePlan>
-    //                       </div>
-    // }
+    let download_type_notice_dom = <></>;
+    let refundText = ``;
+    let request_content_dom = <></>;
+    if(this.state.item_type_contents === Types.contents.completed){
+      download_type_notice_dom = <div className={'download_type_notice_box'}>
+                                  <img src={ic_icon_download} />
+                                  <div className={'download_type_notice_text'}>
+                                    해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다.
+                                  </div>
+                                </div>
+
+      refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 콘텐츠 제작 전 크리에이터의 주문 승인이 필요하며 크리에이터의 정책 또는 의사에 따라 주문이 반려될 수 있습니다.\n• 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.\n• 주문이 승인되기 전에는 구매자에 의한 주문 취소 및 환불이 가능합니다.\n• 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단, 주문 날짜로부터 14일 경과 후에도 콘텐츠를 제공받지 못한 경우에는 요청 시 주문 취소 후 결제 금액을 전액 환불해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`;
+
+      request_content_dom = <div style={{display: 'none'}}>
+                              <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}>
+                              </FileUploader>
+                            </div>
+    }else{
+      request_content_dom = <div>
+                              <div className={'request_label'}>
+                                콘텐츠 요청
+                              </div>
+
+                              <div className={'ask_container'}>
+                                {this.state.item_ask}
+                              </div>
+
+                              <div className={'request_content_box'}>
+                                <textarea className={'textArea'} value={this.state.requestContent} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_REQUEST_CONTENTS)}} placeholder={"요청사항을 작성해주세요!"}></textarea>
+                              </div>
+                              <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}></FileUploader>
+                            </div>;
+
+      refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 구매 완료 시점으로부터 60일 동안 횟수 제한없이 콘텐츠를 다운로드 받아 사용할 수 있습니다.\n• 즉시 다운로드 콘텐츠는 결제 이후 취소 및 환불이 불가능합니다. 단, 다운로드 받은 파일에 문제가 있는 경우 7일 이내에 고객센터 문의를 해주시면 처리해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`
+    }
 
     return(
       <div className={'StoreOrderPage'}>
@@ -1039,6 +1077,8 @@ class StoreOrderPage extends Component{
           주문내역
         </div>
 
+        {download_type_notice_dom}
+
         <div className={'container_box'}>
           <StoreOrderItem 
             id={this.state.store_item_id} 
@@ -1048,23 +1088,11 @@ class StoreOrderPage extends Component{
             title={this.state.item_title}
             price={this.state.item_price}
             store_title={this.state.store_title}
+            type_contents={this.state.item_type_contents}
+            isShowUnderLine={false}
           ></StoreOrderItem>
           
-          <div className={'request_label'}>
-            콘텐츠 요청
-          </div>
-
-          <div className={'ask_container'}>
-            {this.state.item_ask}
-          </div>
-
-          <div className={'request_content_box'}>
-            <textarea className={'textArea'} value={this.state.requestContent} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_REQUEST_CONTENTS)}} placeholder={"요청사항을 작성해주세요!"}></textarea>
-          </div>
-
-          {/* 파일 input START */}
-          <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}></FileUploader>
-          {/* 파일 input END */}
+          {request_content_dom}
         </div>
 
         {/* {oneTooneNoticeDom}
@@ -1119,12 +1147,7 @@ class StoreOrderPage extends Component{
             크티 취소/환불 규정
           </div>
           <div className={'policy_content'}>
-            1. 모든 콘텐츠 주문은 크리에이터의 승인이 필요합니다.<br/>
-            2. 크리에이터의 의사에 따라 콘텐츠 주문이 반려될 수 있습니다.<br/>
-            3. 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.<br/>
-            4. 주문이 승인되기 전 구매자에 의한 주문 취소 및 환불이 가능합니다.<br/>
-            5. 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단, 주문 날짜로부터 최대 14일 이내에 콘텐츠를 제공받지 못한 경우에는 결제 금액을 전액 환불해드립니다.<br/>
-            6. 콘텐츠를 제공 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.
+            {refundText}
           </div>
         </div>
 

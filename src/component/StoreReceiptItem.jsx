@@ -59,6 +59,7 @@ class StoreReceiptItem extends Component{
       item_nick_name: '',
       item_product_state: Types.product_state.TEXT,
       item_file_upload_state: Types.file_upload_state.NONE,
+      item_type_contents: Types.contents.customized,
 
       store_item_id: null,
       store_title: '',
@@ -124,7 +125,9 @@ class StoreReceiptItem extends Component{
       comment_id: null,
       comment_contents: '',
 
-      isOpenProductText: false
+      isOpenProductText: false,
+
+      download_isExpired: false
     }
 
     // this.requestMoreData = this.requestMoreData.bind(this);
@@ -199,8 +202,13 @@ class StoreReceiptItem extends Component{
         item_product_state: data.product_state,
         item_file_upload_state: data.file_upload_state,
 
-        store_user_profile_photo_url: data.profile_photo_url
+        store_user_profile_photo_url: data.profile_photo_url,
+        item_type_contents: data.type_contents
       }, () => {
+        if(this.state.item_type_contents === Types.contents.completed){
+          this.requestDownloadIsExpired();
+        }
+
         if(this.state.item_product_state === Types.product_state.ONE_TO_ONE &&
           this.state.state === Types.order.ORDER_STATE_APP_STORE_READY){
             this.setState({
@@ -211,6 +219,24 @@ class StoreReceiptItem extends Component{
     }, (error) => {
 
     })
+  }
+
+  requestDownloadIsExpired = () => {
+    if(this.props.store_order_id === null){
+      return;
+    }
+
+    axios.post('/store/expired/download/valid', {
+      store_order_id: this.props.store_order_id
+    }, (result) => {
+      this.setState({
+        download_isExpired: result.data.isExpired
+      })
+      
+    }, (error) => {
+
+    })
+    
   }
 
   requestOrderInfo(){
@@ -828,6 +854,7 @@ class StoreReceiptItem extends Component{
                               title={this.state.item_title}
                               price={this.state.item_price}
                               store_title={this.state.store_title}
+                              type_contents={this.state.item_type_contents}
                             ></StoreOrderItem>
     }
 
@@ -837,9 +864,19 @@ class StoreReceiptItem extends Component{
       if(this.state.state === Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER ||
         this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE ||
         this.state.state === Types.order.ORDER_STATE_APP_STORE_PLAYING_DONE_CONTENTS){
+
+        let buttonText = '콘텐츠 확인하기';
+        if(this.state.item_type_contents === Types.contents.completed){
+          buttonText = '콘텐츠 다운로드';
+
+          if(this.state.download_isExpired){
+            buttonText += '(이용기간 만료)'
+          }
+        }
+
         _goDetailButtonDom = <div className={'receipt_button_container'}>
                                 <button onClick={(e) => {this.clickContentsOk(e)}} className={'receipt_contents_ok_button'}>
-                                  콘텐츠 확인하기
+                                  {buttonText}
                                 </button>
                                 <button 
                                   className={'detail_receipt_button'} 
@@ -1198,13 +1235,15 @@ class StoreReceiptItem extends Component{
                     </div>
       }
 
-      review_container = <div className={'product_review_container'}>
-                          <div className={'under_line'}></div>
-                          <div className={'product_review_box'}>
-                            {product_answer_dom}
-                            {review_dom}
+      if(this.state.product_answer !== null && this.state.product_answer !== '' || this.state.comment_contents !== ''){
+        review_container = <div className={'product_review_container'}>
+                            <div className={'under_line'}></div>
+                            <div className={'product_review_box'}>
+                              {product_answer_dom}
+                              {review_dom}
+                            </div>
                           </div>
-                        </div>
+      }
     }
     // }
 
@@ -1266,33 +1305,52 @@ class StoreReceiptItem extends Component{
                           {questionDom}
                         </div>
 
+    let state_process_dom = <></>;
+    let request_content_dom = <></>;
+    let under_line = <></>;
+    if(this.state.item_type_contents === Types.contents.customized){
+      state_process_dom = <div className={'StoreStateProcess_container'}>
+                            <StoreStateProcess product_state={this.state.item_product_state} order_state={this.state.state}></StoreStateProcess>
+                          </div>
+
+      request_content_dom = <div className={'request_content'}>
+                              <div className={'order_user_info_title'}>
+                                요청사항
+                              </div>
+                              {this.state.requestContent}
+                            </div>
+
+      under_line = <div className={'under_line'}></div>
+    }
     return(
       <div className={'StoreReceiptItem'}>
         {order_id_dom}
         {_storeOrderItemDom}
 
-        <div className={'StoreStateProcess_container'}>
+        {state_process_dom}
+        {/* <div className={'StoreStateProcess_container'}>
           <StoreStateProcess product_state={this.state.item_product_state} order_state={this.state.state}></StoreStateProcess>
-        </div>
+        </div> */}
 
         {orderUserDom}
         {oneTooneUseInfoDom}
-        <div className={'request_content'}>
+
+        {request_content_dom}
+        {/* <div className={'request_content'}>
           <div className={'order_user_info_title'}>
             요청사항
           </div>
           {this.state.requestContent}
-        </div>
+        </div> */}
         
         {customer_files_dom}
         {product_files_dom}
 
         {refund_reason_dom}
-
-        {/* {store_ready_state_dom} */}
         
-        <div className={'under_line'}>
-        </div>
+        {under_line}
+        {/* <div className={'under_line'}>
+        </div> */}
 
         {priceInfoDom}
 

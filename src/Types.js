@@ -34,6 +34,14 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  progress: {
+    uploader: 'uploader',
+    downloader: 'downloader'
+  },
+  contents: {
+    customized: 'customized', //맞춤형
+    completed: 'completed'  //완성형
+  },
   carousel_bg_img_type: {
     lottie: 'lottie',
     image: 'image'
@@ -130,6 +138,12 @@ const Types = {
       subText: '형식 콘텐츠',
       product_state: 1
     },
+    {
+      type: 'download',
+      text: '즉시 다운로드',
+      subText: '콘텐츠',
+      product_state: 1
+    },
   ],
   product_state: {
     TEXT: 0,
@@ -142,6 +156,7 @@ const Types = {
     product_file: 'product_file',
     items_images: 'items_images',
     user: 'user',
+    download_file: 'download_file'
   },
   file_upload_state: {
     NONE: 0,

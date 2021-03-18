@@ -16,7 +16,6 @@ import Home_Thumb_Tag from '../component/Home_Thumb_Tag';
 
 import Home_Top_Banner from '../component/Home_Top_Banner';
 
-
 class StoreHome extends Component {
 
   constructor(props) {
@@ -56,10 +55,11 @@ class StoreHome extends Component {
     
     window.open('https://forms.gle/vRiirC1mdfgUbZLt5');
   }
-  
+    
   //
   render() {
-  
+
+    
     return (
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>

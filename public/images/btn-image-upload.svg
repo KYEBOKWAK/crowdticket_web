@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g transform="translate(-700 -1430) translate(700 644) translate(0 760) translate(0 26)">
+                        <rect width="100" height="100" fill="#F7F7F7" rx="20"/>
+                        <g>
+                            <g stroke="#4C4C4C" transform="translate(21 29) translate(19)">
+                                <rect width="19" height="19" x=".5" y=".5" rx="5.5"/>
+                                <path fill="#4C4C4C" fill-rule="nonzero" stroke-width=".5" d="M13.92 9.365c-.09.096-.234.11-.34.033l-.037-.033-3.278-3.417v8.775c0 .099-.05.19-.133.24-.082.05-.184.05-.266 0-.082-.05-.133-.141-.133-.24V5.948L6.454 9.365c-.09.096-.234.11-.34.033l-.036-.033c-.092-.094-.105-.244-.031-.354l.03-.04 3.733-3.89.023-.02.033-.024.033-.016.032-.012L9.96 5h.079-.04.03l.039.01.034.011.05.029.03.026 3.739 3.896c.05.052.078.123.078.197 0 .074-.028.144-.078.196z"/>
+                            </g>
+                            <text fill="#4C4C4C" font-family="NotoSansCJKkr-Regular, Noto Sans CJK KR" font-size="12" transform="translate(21 29)">
+                                <tspan x="0" y="38">이미지 등록</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

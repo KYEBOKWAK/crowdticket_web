@@ -495,7 +495,7 @@ class StoreDetailPage extends Component {
                       }
                     >
                       {this.state.items.map((data) => {
-                        return <StoreContentsListItem key={data.id} store_title={data.store_title} store_id={this.state.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price}></StoreContentsListItem>
+                        return <StoreContentsListItem key={data.id} store_title={data.store_title} store_id={this.state.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} type_contents={data.type_contents}></StoreContentsListItem>
                       })}
                     </InfiniteScroll>
     }else if(this.state.menuState === MENU_STATE_REVIEW){

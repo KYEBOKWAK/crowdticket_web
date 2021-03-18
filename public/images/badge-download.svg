@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>
+            .cls-2{fill:none;stroke:#00bfff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px}
+        </style>
+    </defs>
+    <g id="badge_download" transform="translate(-972 -285)">
+        <circle id="타원_5" cx="12" cy="12" r="12" fill="#f7f7f7" transform="translate(972 285)"/>
+        <g id="icon_download" transform="translate(-678 -819)">
+            <g id="download" transform="translate(1657 1111)">
+                <path id="패스_37" d="M13 15v2.222a1.111 1.111 0 0 1-1.111 1.111H4.111A1.111 1.111 0 0 1 3 17.222V15" class="cls-2" transform="translate(-3 -8.333)"/>
+                <path id="패스_38" d="M7 10l2.778 2.778L12.556 10" class="cls-2" transform="translate(-4.778 -6.111)"/>
+                <path id="선_3" d="M0 6.667L0 0" class="cls-2" transform="translate(5)"/>
+            </g>
+            <path id="사각형_12" fill="none" d="M0 0H16V16H0z" transform="translate(1654 1108)"/>
+        </g>
+    </g>
+</svg>

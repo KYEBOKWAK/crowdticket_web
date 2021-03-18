@@ -16,6 +16,8 @@ import ic_ct_thumb_img from '../res/img/ic-ct-thumb.svg';
 import Util from '../lib/Util';
 
 import Popup_text_viewer from '../component/Popup_text_viewer';
+
+import CompletedFileUpLoader from '../component/CompletedFileUpLoader';
 // import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 // import FontWeights from '@lib/fontWeights';
 
@@ -50,6 +52,7 @@ class StoreContentConfirm extends Component{
       item_price: 0,
       item_product_state: Types.product_state.TEXT,
       item_file_upload_state: Types.file_upload_state.NONE,
+      item_type_contents: Types.contents.customized,
 
       store_user_profile_photo_url: '',
 
@@ -70,7 +73,9 @@ class StoreContentConfirm extends Component{
 
       product_title: null,
       product_text: null,
-      isOpenProductText: false
+      isOpenProductText: false,
+
+      review_button_disabled: false
     }
   };
 
@@ -187,7 +192,9 @@ class StoreContentConfirm extends Component{
 
         store_alias: data.alias,
 
-        item_file_upload_state: data.file_upload_state
+        item_file_upload_state: data.file_upload_state,
+
+        item_type_contents: data.type_contents
       }, () => {
         this.requestItemInfo();
       })
@@ -202,19 +209,7 @@ class StoreContentConfirm extends Component{
     }, (result) => {
       const data = result.data;
       this.setState({
-        // item_title: data.title,
-        // item_price: data.price,
-        // item_content: data.content,
-        // item_thumb_img_url: data.img_url,
-        // // total_price: data.price,
-        // store_id: data.store_id,
-        // item_nick_name: data.nick_name,
-
-        // store_title: data.store_title,
-
         item_product_state: data.product_state,
-        // item_file_upload_state: data.file_upload_state,
-
         store_user_profile_photo_url: data.profile_photo_url
       })
     }, (error) => {
@@ -285,70 +280,79 @@ class StoreContentConfirm extends Component{
   }
 
   onClickContact = (e) => {
+    e.preventDefault();
+
     plusFriendChat();
+  }
+
+  onClickReview = (e) => {
+    e.preventDefault();
+
+    if(this.state.input_comment_value === ''){
+      alert('리뷰를 작성해주세요~!');
+      return;
+    }
+
+    this.setState({
+      review_button_disabled: true
+    }, () => {
+      axios.post('/comments/second/add', {
+        commentType: Types.comment.commentType.store,
+        target_id: this.state.store_id,
+        comment_value: this.state.input_comment_value,
+        second_target_id: this.state.store_order_id,
+        second_target_type: Types.comment.secondTargetType.store_order
+      }, (result_comment) => {
+        this.requestAnswerComment();
+        this.successReviewAlert();
+      }, (error_comment) => {
+        
+      })
+    })
+  }
+
+  onClickGoStore = (e) => {
+    e.preventDefault();
+
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    let goURL = '';
+    if(!this.state.store_alias || this.state.store_alias === ''){
+      goURL = baseURL + '/store/' + this.state.store_id;
+    }else{
+      goURL = baseURL + '/store/' + this.state.store_alias;
+    }
+      
+    window.location.href = goURL;
   }
 
   onClickOK = (e) => {
     e.preventDefault();
 
-    if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
-      let baseURL = 'https://crowdticket.kr'
-      const baseURLDom = document.querySelector('#base_url');
-      if(baseURLDom){
-        // console.log(baseURLDom.value);
-        baseURL = baseURLDom.value;
-      }
-
-      let goURL = '';
-      if(!this.state.store_alias || this.state.store_alias === ''){
-        goURL = baseURL + '/store/' + this.state.store_id;
-      }else{
-        goURL = baseURL + '/store/' + this.state.store_alias;
-      }
-        
-      window.location.href = goURL;
-    }else{
-      axios.post('/orders/store/state/confirm/ok', {
-        store_order_id: this.state.store_order_id
-      }, (result) => {
-
-        if(this.state.input_comment_value === ''){
-          this.setState({
-            state: result.data.state
-          }, () => {
-            this.successAlert();
-          })
-
-          return;
-        }
-
-        axios.post('/comments/second/add', {
-          commentType: Types.comment.commentType.store,
-          target_id: this.state.store_id,
-          comment_value: this.state.input_comment_value,
-          second_target_id: this.state.store_order_id,
-          second_target_type: Types.comment.secondTargetType.store_order
-        }, (result_comment) => {
-          this.setState({
-            state: result.data.state
-          }, () => {
-            this.requestAnswerComment();
-            this.successAlert();
-          })
-        }, (error_comment) => {
-          
-        })
-        
-
-        
-      }, (error) => {
-
+    axios.post('/orders/store/state/confirm/ok', {
+      store_order_id: this.state.store_order_id
+    }, (result) => {
+      this.setState({
+        state: result.data.state
+      }, () => {
+        this.successAlert();
       })
-    }
+    }, (error) => {
+
+    })
   }
 
   successAlert = () => {
     swal('구매 완료!', '구매해주셔서 감사합니다. :)', 'success');
+  }
+
+  successReviewAlert = () => {
+    swal('리뷰 작성 완료!', '감사합니다. :)', 'success');
   }
 
   clickProductText = (e) => {
@@ -380,69 +384,29 @@ class StoreContentConfirm extends Component{
     }
     
 
-    let product_answer_dom = <></>;
+    
     let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';
     let buttonText = '구매 완료 하기';
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
       review_placehold_text = '콘텐츠 후기를 남겨주세요!';
       buttonText = '콘텐츠 확인 완료';
     }
-
-    if(this.state.product_answer !== null && this.state.product_answer !== ''){
-      review_placehold_text = '크리에이터에게 답장을 해보세요!';
-      product_answer_dom = <div className={'product_answer_wrapper'}>
-                              <div className={'product_answer_container'}>
-                                <img className={'product_answer_img'} src={this.state.store_user_profile_photo_url} />
-                                <div className={'product_answer_content_container'}>
-                                  <div className={'product_answer_name'}>
-                                    {this.state.store_title}
-                                  </div>
-                                  <div className={'product_answer_content'}>
-                                    {this.state.product_answer}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-    }
-
     
-    let textAreaDom = <></>;
-    let contact_explain_dom = <></>;
-    let review_dom = <></>;
+    let ok_button_dom = <></>;
+    let go_store_button_dom = <></>;
     if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
-      buttonText = '상점으로 가기';
 
-      if(this.state.comment_contents !== ''){
-        review_dom = <div className={'product_answer_wrapper'}>
-                      <div className={'product_answer_container review_container'}>
-                        <div className={'product_answer_content_container review_answer_content_container'}>
-                          <div className={'product_answer_name review_answer_name'}>
-                            {this.state.order_user_name}
-                          </div>
-                          <div className={'product_answer_content'}>
-                          {this.state.comment_contents}
-                          </div>
-                        </div>
-                        <img className={'product_answer_img'} src={this.state.order_user_profile_photo_url} />
-                      </div>
-                    </div>
+      let goStoreButtonTopSize = 20;
+      if(this.state.comment_id === null){
+        goStoreButtonTopSize = 8;
       }
+      go_store_button_dom = <button style={{marginTop: goStoreButtonTopSize}} onClick={(e) => {this.onClickGoStore(e)}} className={'white_button'}>
+                              상점 가기
+                            </button>
     }else{
-      textAreaDom = <textarea className={'review_textarea'} type="text" name={'review'} placeholder={review_placehold_text} value={this.state.input_comment_value} onChange={(e) => {this.onChangeInput(e)}}/>
-
-      contact_explain_dom = <div className={'product_answer_wrapper'}>
-                              <div className={'product_answer_container'}>
-                                <img className={'product_answer_img'} src={ic_ct_thumb_img} />
-                                <div className={'product_answer_content_container'}>
-                                  <div className={'product_answer_name'}>
-                                    크티 고객팀
-                                  </div>
-                                  <div className={'product_answer_content'}>
-                                  {'받아보신 콘텐츠는 어떠셨나요? \n\n크리에이터에게 감사 인사 및 콘텐츠 이용 후기를 아래에 남겨주세요! 여러분이 작성하신 리뷰와 응원이 크리에이터에게 힘이 됩니다!'}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+      ok_button_dom = <button className={'ok_button'} onClick={(e) => {this.onClickOK(e)}}>
+                        {buttonText}
+                      </button>
     }
 
     let product_after_confirm_content_dom = <></>;
@@ -474,9 +438,69 @@ class StoreContentConfirm extends Component{
     }
 
     let review_talk_container_dom = <></>;
-    if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
-    }else{
-      review_talk_container_dom = <div>
+    if(this.state.comment_id === null){
+      let product_answer_dom = <></>;
+      let review_dom = <></>;
+
+      if(this.state.product_answer !== null && this.state.product_answer !== ''){
+        review_placehold_text = '크리에이터에게 답장을 해보세요!';
+        product_answer_dom = <div className={'product_answer_wrapper'}>
+                                <div className={'product_answer_container'}>
+                                  <img className={'product_answer_img'} src={this.state.store_user_profile_photo_url} />
+                                  <div className={'product_answer_content_container'}>
+                                    <div className={'product_answer_name'}>
+                                      {this.state.store_title}
+                                    </div>
+                                    <div className={'product_answer_content'}>
+                                      {this.state.product_answer}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+      }
+
+      const textAreaDom = <textarea className={'review_textarea'} type="text" name={'review'} placeholder={review_placehold_text} value={this.state.input_comment_value} onChange={(e) => {this.onChangeInput(e)}}/>
+      
+      if(this.state.comment_contents !== ''){
+        review_dom = <div className={'product_answer_wrapper'}>
+                      <div className={'product_answer_container review_container'}>
+                        <div className={'product_answer_content_container review_answer_content_container'}>
+                          <div className={'product_answer_name review_answer_name'}>
+                            {this.state.order_user_name}
+                          </div>
+                          <div className={'product_answer_content'}>
+                          {this.state.comment_contents}
+                          </div>
+                        </div>
+                        <img className={'product_answer_img'} src={this.state.order_user_profile_photo_url} />
+                      </div>
+                    </div>
+      }
+
+      const contact_explain_dom = <div className={'product_answer_wrapper'}>
+                                    <div className={'product_answer_container'}>
+                                      <img className={'product_answer_img'} src={ic_ct_thumb_img} />
+                                      <div className={'product_answer_content_container'}>
+                                        <div className={'product_answer_name'}>
+                                          크티 고객팀
+                                        </div>
+                                        <div className={'product_answer_content'}>
+                                        {'받아보신 콘텐츠는 어떠셨나요? \n\n크리에이터에게 감사 인사 및 콘텐츠 이용 후기를 아래에 남겨주세요! 여러분이 작성하신 리뷰와 응원이 크리에이터에게 힘이 됩니다!'}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+      let reviewButtonStyle = {}
+      if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+        reviewButtonStyle = {
+          backgroundColor: '#00bfff',
+          color: '#ffffff'
+        }
+      }
+      review_talk_container_dom = <div className={'community_container_box'}>
+                                    <div className={'community_top_line'}>
+                                    </div>
                                     <div className={'community_container'}>
                                       {product_answer_dom}
                                       {contact_explain_dom}
@@ -489,7 +513,27 @@ class StoreContentConfirm extends Component{
                                         {'[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.'}
                                       </div>
                                     </div>
+
+                                    <button disabled={this.state.review_button_disabled} style={reviewButtonStyle} onClick={(e) => {this.onClickReview(e)}} className={'white_button'}>
+                                      리뷰 작성 완료
+                                    </button>
                                   </div>
+    }
+
+    let file_list_dom = <></>;
+    let under_line_dom = <></>;
+    if(this.state.item_type_contents === Types.contents.completed) {
+      file_list_dom = <div>
+                        <CompletedFileUpLoader store_order_id={this.state.store_order_id} store_item_id={this.state.item_id} isUploader={false}></CompletedFileUpLoader>
+                      </div>
+
+      under_line_dom = <div style={{marginBottom: 0}} className={'under_line'}></div>
+    }else{
+      file_list_dom = <div className={'file_upload_container'}>
+                        <FileUploader product_state={this.state.item_product_state} file_upload_target_type={Types.file_upload_target_type.product_file} state={this.state.item_file_upload_state} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>
+                      </div>
+
+      under_line_dom = <div className={'under_line'}></div>
     }
 
     return(
@@ -502,30 +546,32 @@ class StoreContentConfirm extends Component{
         </div>
 
         <div className={'store_contents_item_container'}>
-          <StoreContentsListItem store_id={this.state.store_id} id={this.state.item_id} store_item_id={this.state.item_id} thumbUrl={this.state.item_img_url} store_title={this.state.store_title} title={this.state.item_title} price={this.state.item_price} isHomeList={true} store_alias={''} isLink={false}></StoreContentsListItem>
+          <StoreContentsListItem store_id={this.state.store_id} id={this.state.item_id} store_item_id={this.state.item_id} thumbUrl={this.state.item_img_url} store_title={this.state.store_title} title={this.state.item_title} price={this.state.item_price} isHomeList={true} store_alias={''} isLink={false} type_contents={this.state.item_type_contents}></StoreContentsListItem>
         </div>
 
         {product_after_confirm_content_dom}
 
-        <div className={'under_line'}>
+        {under_line_dom}
 
-        </div>
-
-        <div className={'file_upload_container'}>
+        {file_list_dom}
+        {/* <div className={'file_upload_container'}>
           <FileUploader product_state={this.state.item_product_state} file_upload_target_type={Types.file_upload_target_type.product_file} state={this.state.item_file_upload_state} isUploader={false} store_order_id={this.state.store_order_id} isListEndBlurCover={false}></FileUploader>
-        </div>
-
-        {review_talk_container_dom}
+        </div> */}
 
         <div className={'problem_button_container'}>
           <button className={'problem_button'} onClick={(e) => {this.onClickContact(e)}}>
             <u>콘텐츠에 문제가 있나요?</u>
           </button>
         </div>
-
-        <button className={'ok_button'} onClick={(e) => {this.onClickOK(e)}}>
+  
+        {ok_button_dom}
+        {/* <button className={'ok_button'} onClick={(e) => {this.onClickOK(e)}}>
           {buttonText}
-        </button>
+        </button> */}
+
+        {review_talk_container_dom}
+
+        {go_store_button_dom}
 
         {openProductTextView}
       </div>

@@ -91,6 +91,7 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/Thumb_Recommend_item.scss', 'dist/css/')
 .sass('src/res/css/Home_Top_Banner.scss', 'dist/css/')
 .sass('src/res/css/Carousel_Item_Counting.scss', 'dist/css/')
+.sass('src/res/css/CompletedFileUpLoader.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

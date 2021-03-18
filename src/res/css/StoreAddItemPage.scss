@@ -6,6 +6,10 @@ $img_width: 100px;
 
   width: 100%;
 
+  button:disabled {
+    background-color: rgba(0,0,0,0) !important;
+  }
+
   .page_title_text {
     font-size: 32px;
     font-weight: bold;
@@ -26,8 +30,7 @@ $img_width: 100px;
   }
 
   .box_container {
-    margin-top: 24px;
-
+    margin-top: 40px;
   }
 
   .input_label {
@@ -125,7 +128,7 @@ $img_width: 100px;
   .button_back {
     width: 100%;
     height: 56px;
-    border-radius: 12px;
+    border-radius: 4px;
     border: solid 1px rgba(0, 0, 0, 0.1);
     font-size: 18px;
     color: #191919;
@@ -135,7 +138,7 @@ $img_width: 100px;
   .button_ok {
     width: 100%;
     height: 56px;
-    border-radius: 12px;
+    border-radius: 4px;
     background-color: #00bfff;
     font-size: 18px;
     font-weight: 500;
@@ -210,7 +213,7 @@ $img_width: 100px;
   .input_container {
     display: flex;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   .necessary_dot_box {
@@ -232,7 +235,7 @@ $img_width: 100px;
     display: flex;
     align-items: center;
     padding-left: 16px;
-    margin-bottom: 24px;
+    // margin-bottom: 24px;
   }
 
   .necessary_text {
@@ -248,6 +251,72 @@ $img_width: 100px;
     color: #acacac;
   }
 
+  .type_contents_container {
+    margin-top: 16px;
+  }
+
+  .type_contents_box {
+    display: flex;
+    align-items: center;
+  }
+
+  .type_contents_box_gap {
+    margin-top: 16px;
+  }
+
+  .type_contents_label {
+    font-size: 14px;
+    margin-left: 4px;
+    color: #191919;
+  }
+
+  .type_contents_explain_container {
+    display: flex;
+    margin-left: 8px;
+    border-radius: 2px;
+    background-color: #f4f4f4;
+    padding: 1px 4px;
+  }
+
+  .type_contents_explain {
+    font-size: 10px;
+    font-weight: bold;
+    color: #7f7f7f;
+  }
+
+  .type_contents_content_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .seller_answer_dom_textarea {
+    width: 100%;
+    height: 100px;
+
+    padding: 16px;
+    border-radius: 5px;
+    border: solid 1px #e6e6e6;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .seller_answer_dom_textarea::placeholder {
+    color: #acacac;
+  }
+
+  .complited_type_agree_container {
+    display: flex;
+    text-align: left;
+    margin-top: 40px;
+  }
+  
+  .complited_type_agree_text {
+    font-size: 14px;
+    color: #191919;
+    margin-left: 8px;
+  }
+
   @media (max-width: 520px){
     /*모바일일때*/
     padding-top: 32px;
@@ -258,6 +327,21 @@ $img_width: 100px;
     .page_title_text {
       font-size: 22px;
       margin-bottom: 32px;
+    }
+
+    .type_contents_content_container {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 4px;
+    }
+
+    .type_contents_label {
+      margin-left: 0px;
+    }
+
+    .type_contents_explain_container {
+      margin-left: 0px;
+      margin-top: 5px;
     }
   }
 }

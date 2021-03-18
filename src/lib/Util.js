@@ -308,6 +308,21 @@ const Util = {
 
       return show_date_year + show_start_date_month + '/' + show_start_date_days;
     }
+  },
+  convertBytes(bytes) {
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+  
+    if (bytes == 0) {
+      return "n/a"
+    }
+  
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1000)))
+  
+    if (i == 0) {
+      return bytes + " " + sizes[i]
+    }
+  
+    return (bytes / Math.pow(1000, i)).toFixed(1) + " " + sizes[i]
   }
 }
 

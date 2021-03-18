@@ -29,7 +29,8 @@ class StoreOrderComplitePage extends Component{
 
     this.state = {
       store_order_id: null,
-      product_state: Types.product_state.FILE
+      product_state: Types.product_state.FILE,
+      item_type_contents: Types.contents.customized
     }
   };
 
@@ -60,7 +61,8 @@ class StoreOrderComplitePage extends Component{
       }
 
       this.setState({
-        product_state: data.product_state
+        product_state: data.product_state,
+        item_type_contents: data.type_contents
       })
     }, (error) => {
 
@@ -86,6 +88,11 @@ class StoreOrderComplitePage extends Component{
     if(this.state.product_state === Types.product_state.ONE_TO_ONE){
       askTitle = '🤔 1:1 실시간 콘텐츠는 언제 시작하나요?';
       askContent = '크리에이터가 요청을 승인한 후 주문 시 입력한 이메일 또는 전화번호로 연락을 드립니다. 연락처는 요청 승인 이후에만 전달되었다가 콘텐츠 진행 이후에는 삭제됩니다.';
+    }
+
+    if(this.state.item_type_contents === Types.contents.completed){
+      askTitle = `🤔 콘텐츠는 어떻게 받나요?`;
+      askContent = `아래 주문내역의 ‘콘텐츠 다운로드’ 버튼을 눌러주세요!\n지금 바로 구매하신 콘텐츠를 다운로드 받고 확인할 수 있습니다.\n※ 구매한 콘텐츠들은 ‘나의 콘텐츠 주문’에서도 모두 보실 수 있습니다.`
     }
 
     return(

@@ -532,7 +532,7 @@ class ImageFileUploader extends Component{
 
   removeItem = (e, key, id) => {
     e.preventDefault();
-
+    
     if(id === null){
       this.deleteImage(key);
     }else{
@@ -742,24 +742,12 @@ class ImageFileUploader extends Component{
                       <img src={ic_exit_circle} />
                     </button>
       }
-      // else{
-      //   bottomDom = <div className={'download_text'}>
-      //                 <a href={data.downloadURL} download={data.file.name}>
-      //                   <img src={ic_file_download_img} />
-      //                 </a>
-      //               </div>
-      // }
 
       let file_show_item = <div key={i} className={'preview_box_container'}>
                             <div className={'preview_box'}>
                               {centerImageDom}
                             </div>
                             {bottomDom}
-                            {/* <button className={'circle_button'} onClick={(e) => {
-                              this.removeItem(e, data.key)
-                            }}>
-                              <img src={ic_exit_circle} />
-                            </button> */}
                           </div>
       
 

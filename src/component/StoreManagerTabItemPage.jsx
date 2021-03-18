@@ -200,7 +200,7 @@ class StoreManagerTabItemPage extends Component{
     })
   }
 
-  deleteItem(item_id, title){
+  onClickDeleteItem = (item_id, title) => {
     // console.log(item_id + title);
     swal(title + " 상품을 삭제 하시겠습니까? (판매가 된 경우는 삭제가 불가능합니다. 수정에서 판매중지 기능을 이용해주세요.)", {
       buttons: {
@@ -225,9 +225,8 @@ class StoreManagerTabItemPage extends Component{
     });
   }
 
-  requsetDeleteItem(item_id){
-
-    showLoadingPopup('삭제중입니다..');
+  deleteItem = (item_id) => {
+    
 
     axios.post("/uploader/delete/img", {
       type: Types.save_img.item,
@@ -247,8 +246,49 @@ class StoreManagerTabItemPage extends Component{
     }, (error) => {
       stopLoadingPopup();
     })
+  }
+  requsetDeleteItem(item_id){
+    axios.post("/store/delete/item/valid", {
+      item_id: item_id
+    }, (result_valid) => {
+      if(!result_valid.data.isValid){
+        alert("이미 주문이 있는 상품입니다. 수정에서 판매중지 기능을 이용해주세요.");
+        return;
+      }
 
-    
+      axios.post("/store/item/get/typecontents", {
+        item_id: item_id
+      }, (result_typecontents) => {
+        showLoadingPopup('삭제중입니다..');
+
+        if(result_typecontents.data.type_contents === Types.contents.customized){
+          this.deleteItem(item_id);
+        }else{
+          axios.post("/uploader/delete/files/s3", {
+            target_id: item_id,
+            target_type: Types.file_upload_target_type.download_file
+          }, (result_delete_file) => {
+
+            axios.post("/store/delete/filesdownload", {
+              target_id: item_id,
+              target_type: Types.file_upload_target_type.download_file
+            }, (result_filesdownload) => {
+              this.deleteItem(item_id);
+            }, (error_filesdownloads) => {
+              stopLoadingPopup();
+            })
+          }, (error_delete_file) => {
+            stopLoadingPopup();
+          })
+        }
+      }, (error_typecontents) => {
+        // stopLoadingPopup();
+      })
+
+      
+    }, (error_valid) => {
+
+    })    
   }
 
   render(){
@@ -266,7 +306,7 @@ class StoreManagerTabItemPage extends Component{
       }
 
       const itemDom = <div key={data.id} className={'item_box'}>
-                        <StoreContentsListItem state={data.state} store_title={data.store_title} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.deleteItem(item_id, title)}}></StoreContentsListItem>
+                        <StoreContentsListItem state={data.state} store_title={data.store_title} store_id={data.store_id} id={data.id} store_item_id={data.id} thumbUrl={data.img_url} name={data.nick_name} title={data.title} price={data.price} isManager={true} state_re_order={this.state.state_re_order} reOrderCallback={(index, item_id, reorder_type) => {this.reOrderCallback(index, item_id, reorder_type)}} index={i} deleteItemCallback={(item_id, title) => {this.onClickDeleteItem(item_id, title)}} type_contents={data.type_contents}></StoreContentsListItem>
                       </div>
 
       itemListDom.push(itemDom);
