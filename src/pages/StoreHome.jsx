@@ -55,8 +55,7 @@ class StoreHome extends Component {
     
     window.open('https://forms.gle/vRiirC1mdfgUbZLt5');
   }
-    
-  //
+
   render() {
 
     

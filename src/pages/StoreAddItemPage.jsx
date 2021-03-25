@@ -553,9 +553,6 @@ class StoreAddItemPage extends Component{
     }else if(this.state.item_notice === ''){
       // alert("상품의 유의사항을 입력해주세요.");
       // return;
-    }else if(this.state.item_product_answer === ''){
-      alert('판매자에게 구매 감사 인사를 입력해주세요.');
-      return;
     }
 
     // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
@@ -1247,12 +1244,17 @@ class StoreAddItemPage extends Component{
                               <div className={'box_label'}>
                                 판매자 인사 등록
                               </div>
-                              <div className={'necessary_dot'}>
-                              </div>
+                              {/* <div className={'necessary_dot'}>
+                              </div> */}
                             </div>
 
                             <textarea className={'seller_answer_dom_textarea'} value={this.state.item_product_answer} onChange={(e) => {this.onChangeInput(e, TEXTAREA_STORE_MANAGER_ADD_ITEM_SELLER_ANSWER)}} placeholder={`구매자를 위한 감사 인사를 남겨주세요. 입력한 내용은 구매자의 주문결과창에 표시됩니다.`}></textarea>
                           </div>
+
+      let isShowUploaderButton = false;
+      if(this.state.pageState === Types.add_page_state.ADD){
+        isShowUploaderButton = true;
+      }
 
       completed_type_file_upload_dom = <div className={'box_container'}>
                                         <div className={'input_container'}>
@@ -1263,7 +1265,7 @@ class StoreAddItemPage extends Component{
                                           </div>
                                         </div>
 
-                                        <CompletedFileUpLoader store_user_id={this.state.store_user_id} ref={(ref) => {this.completedFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true}></CompletedFileUpLoader>
+                                        <CompletedFileUpLoader store_user_id={this.state.store_user_id} ref={(ref) => {this.completedFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true} isShowUploaderButton={isShowUploaderButton}></CompletedFileUpLoader>
                                       </div>
 
       //동의 체크

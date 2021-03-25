@@ -274,6 +274,13 @@ class CompletedFileUpLoader extends Component{
     // console.log(file);
 
     const _files = this.state.files.concat();
+
+    const sameNameFileIndex = _files.findIndex((value) => {return value.file.name === file.name});
+    // console.log(sameNameFileIndex);
+    if(sameNameFileIndex >= 0){
+      alert('같은 이름의 파일이 있습니다. 다른 파일을 업로드 해주세요');
+      return;
+    }
     // const _show_images = this.state.show_images.concat();
 
     let index = _files.length+1;//0개면 기본 1셋팅
@@ -336,67 +343,10 @@ class CompletedFileUpLoader extends Component{
     reader.readAsDataURL(file);
   }
 
-  downloadFile = (file_s3_key, file_name, total) => {
-    if(file_s3_key === undefined || file_s3_key === null || file_s3_key === ''){
-      alert('다운로드 file key error');
-      return;
-    }
-
-    let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
-    const app_type_key = document.querySelector('#g_app_type');
-    if(app_type_key){
-      if(app_type_key.value === 'local'){
-        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
-      }else if(app_type_key.value === 'qa'){
-        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
-      }
-    }
-
-    this.setState({
-      isFileUploading: true,
-      progressType: Types.progress.downloader,
-      uploading_progress: 0
-    }, () => {
-      _axios({
-        url: `${apiURL}/downloader/file`,
-        method: 'GET',
-        responseType: 'blob', // important
-        // responseType: 'json', // important
-        headers: {
-          'Cache-Control': 'no-store, no-cache',
-          'file_s3_key': encodeURI(file_s3_key)
-        },
-        onDownloadProgress: (progressEvent) => {
-          const {loaded} = progressEvent;
-          let percent = Math.floor( (loaded * 100) / total);
-          // console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-          this.setState({
-            uploading_progress: percent
-          })
-        }
-      }).then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', file_name); //or any other extension
-        document.body.appendChild(link);
-        link.click();
-
-        this.setState({
-          isFileUploading: false,
-          progressType: Types.progress.uploader,
-          uploading_progress: 0
-        })
-        
-      }).catch((error) => {
-        console.log(error);
-        this.setState({
-          isFileUploading: false,
-          progressType: Types.progress.uploader,
-          uploading_progress: 0
-        })
-      });
-    })
+  downloadFile = (downloadURL, file_name, id) => {
+    const download_a_tag_dom = document.querySelector('.'+this.getDownloadATagClassName(id));
+    download_a_tag_dom.click();
+    
   }
 
   onClickDownloadFileButton = (e, key, id, downloadURL, file_s3_key, file_name, total) => {
@@ -404,20 +354,25 @@ class CompletedFileUpLoader extends Component{
       this.removeItem(e, key, id);
     }else{
       
-      axios.post('/store/expired/download/valid', {
-        store_order_id: this.props.store_order_id
-      }, (result) => {
-        const isExpired = result.data.isExpired;
-        if(isExpired){
-          alert('다운로드 기간이 만료 되었습니다.');
-          return;
-        }else{
-          this.downloadFile(file_s3_key, file_name, total);
-        }
-        
-      }, (error) => {
-  
-      })
+      if(this.props.isUploader){
+        this.downloadFile(downloadURL, file_name, id);
+      }
+      else{
+        axios.post('/store/expired/download/valid', {
+          store_order_id: this.props.store_order_id
+        }, (result) => {
+          const isExpired = result.data.isExpired;
+          if(isExpired){
+            alert('다운로드 기간이 만료 되었습니다.');
+            return;
+          }else{
+            this.downloadFile(downloadURL, file_name, id);
+          }
+          
+        }, (error) => {
+    
+        })
+      }
     }
   }
 
@@ -499,6 +454,10 @@ class CompletedFileUpLoader extends Component{
     event.target.value = ''
   }
 
+  getDownloadATagClassName = (id) => {
+    return 'Complieted_File_Download_A_'+id;
+  }
+
   render(){
     // if(this.props.state === Types.file_upload_state.NONE){
     //   return (
@@ -514,16 +473,21 @@ class CompletedFileUpLoader extends Component{
 
     let file_show_list = [];
     let file_show_list_dom = <></>;
+    let file_download_a_tags = [];
     for(let i = 0 ; i < this.state.files.length ; i++){
       const data = this.state.files[i];
       let bottomDom = <></>;
       
-      let buttonIconImg = ic_circle_download;
-      if(data.downloadURL === null || data.downloadURL === ''){
-        buttonIconImg = ic_exit_circle;
-      }
-
       if(!this.state.is_down_expired){
+
+        let buttonIconImg = ic_circle_download;
+        if(data.downloadURL === null || data.downloadURL === ''){
+          buttonIconImg = ic_exit_circle;
+        }else{
+          const download_a_tag_name = this.getDownloadATagClassName(data.id);
+          file_download_a_tags.push(<a key={data.id} className={download_a_tag_name} style={{display: 'none'}} download={data.file.name} href={data.downloadURL}></a>)
+        }
+
         bottomDom = <button className={'circle_button'} onClick={(e) => {this.onClickDownloadFileButton(e, data.key, data.id, data.downloadURL, data.file_s3_key, data.file.name, Number(data.size))}}>
                     <img src={buttonIconImg} />
                   </button>
@@ -534,7 +498,9 @@ class CompletedFileUpLoader extends Component{
       if(this.props.isUploader){
         file_show_item = <div key={i} className={'item_container'}>
                           <div className={'item_contents_container'}>
-                            <img src={ic_clip} />
+                            <div className={'item_file_image'}>
+                              <img src={ic_clip} />
+                            </div>
                             <div className={'item_file_name'}>
                               {data.file.name}
                             </div>
@@ -548,7 +514,9 @@ class CompletedFileUpLoader extends Component{
       }else{
         file_show_item = <div key={i} className={'item_container item_container_downloader'}>
                           <div className={'item_contents_container'}>
-                            <img src={ic_clip} />
+                            <div className={'item_file_image'}>
+                              <img src={ic_clip} />
+                            </div>
                             <div className={'item_file_name'}>
                               {data.file.name}
                             </div>
@@ -586,23 +554,43 @@ class CompletedFileUpLoader extends Component{
 
     let uploadButtonDom = <></>;
     let downloadExpireExplainDom = <></>;
-    if(this.props.isUploader){      
+    if(this.props.isUploader){
+      let noticeContainerStyle = {
+        marginTop: 0
+      };
+
+      let buttonDom = <></>
+      if(this.props.isShowUploaderButton){
+        buttonDom = <div className={'add_button_container'}>
+                      <button onClick={(e) => {this.importClick(e)}}>
+                        <img src={ic_btn_file_upload} />
+                      </button>
+                      <div className={'file_count_text'}>
+                        {this.state.files.length}/{this.state.MAX_FILES_COUNT}
+                      </div>
+                    </div>
+        noticeContainerStyle = {}
+      }
       uploadButtonDom = <div className={'uploader_button_container'}>
-                          <div className={'add_button_container'}>
+                          {buttonDom}
+                          {/* <div className={'add_button_container'}>
                             <button onClick={(e) => {this.importClick(e)}}>
                               <img src={ic_btn_file_upload} />
                             </button>
                             <div className={'file_count_text'}>
                               {this.state.files.length}/{this.state.MAX_FILES_COUNT}
                             </div>
-                          </div>
+                          </div> */}
 
-                          <div className={'uploader_notice_container'}>
+                          <div className={'uploader_notice_container'} style={noticeContainerStyle}>
                             <div>
                               ∙파일 용량이 너무 크면 구매자가 다운로드를 하기 어려울 수 있으니 유의해주세요.
                             </div>
                             <div>
                               ∙등록하는 콘텐츠가 타인의 저작권 또는 초상권을 침해하지 않도록 유의해주세요.
+                            </div>
+                            <div>
+                              ∙등록된 콘텐츠 파일은 수정 및 삭제가 불가하니 유의해주세요.
                             </div>
                           </div>
                         </div>
@@ -619,6 +607,7 @@ class CompletedFileUpLoader extends Component{
         <input onClick={this.onInputClick} ref={(ref) => {this.fileInputRef = ref}} type="file" className={'input_order_file_upload'} onChange={this.uploadFile} style={{display: 'none'}}/>
         
         {file_show_list_dom}
+        {file_download_a_tags}
         {downloadExpireExplainDom}
         {uploadButtonDom}
           
@@ -635,6 +624,7 @@ CompletedFileUpLoader.defaultProps = {
   store_order_id: null,
   file_upload_target_type: Types.file_upload_target_type.download_file,
   isUploader: true,
+  isShowUploaderButton: true,
   store_item_id: null,
 
   noDataCallback: (isNoData) => {}
