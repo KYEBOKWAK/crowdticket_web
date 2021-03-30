@@ -142,7 +142,7 @@ class CompletedFileDownloadButton extends Component{
 
   requsetSetFileInServer = () => {
     _axios.post(this.state.apiURL+'/downloader/set/file/info', {
-      Headers: {
+      headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
