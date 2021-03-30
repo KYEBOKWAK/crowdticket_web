@@ -88,6 +88,11 @@ class CompletedFileDownloadButton extends Component{
     // }
 
     _axios.post(this.state.apiURL+'/downloader/file/info', {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+      },
       data: {
         files_downloads_id: this.props.files_downloads_id,
       }
