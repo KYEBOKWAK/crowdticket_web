@@ -34,6 +34,11 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  files_servers_state: {
+    INIT: 0,
+    DONE: 1,
+    ERROR: 2
+  },
   progress: {
     uploader: 'uploader',
     downloader: 'downloader'

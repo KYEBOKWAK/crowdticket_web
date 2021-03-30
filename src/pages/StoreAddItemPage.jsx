@@ -1396,10 +1396,10 @@ class StoreAddItemPage extends Component{
         {receive_files_from_buyer}
 
         {sell_count_limite_dom}
-        
-        {seller_answer_dom}
 
         {completed_type_file_upload_dom}
+
+        {seller_answer_dom}
 
         <div className={'box_container'}>
           <div className={'input_container'}>
