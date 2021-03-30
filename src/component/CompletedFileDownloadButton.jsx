@@ -130,7 +130,13 @@ class CompletedFileDownloadButton extends Component{
       
     }).catch((error) => {
       this.stopCheckFileTimer();
-      alert('파일 정보 조회 에러');
+
+      this.setState({
+        state: Types.files_servers_state.ERROR,
+        files_servers_id: null,
+        originalname: ''
+      })
+      // alert('파일 정보 조회 에러');
     })
   }
 
@@ -160,7 +166,12 @@ class CompletedFileDownloadButton extends Component{
       }
       
     }).catch((error) => {
-      alert('파일 서버 셋팅 에러');
+      // alert('파일 서버 셋팅 에러');
+      this.setState({
+        state: Types.files_servers_state.ERROR,
+        files_servers_id: null,
+        originalname: ''
+      })
     })
   }
 
