@@ -77,27 +77,10 @@ class CompletedFileDownloadButton extends Component{
       return;
     }
 
-    // let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
-    // const app_type_key = document.querySelector('#g_app_type');
-    // if(app_type_key){
-    //   if(app_type_key.value === 'local'){
-    //     apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
-    //   }else if(app_type_key.value === 'qa'){
-    //     apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
-    //   }
-    // }
-
     _axios.post(this.state.apiURL+'/downloader/file/info', {
-      // headers: {
-      //   "Access-Control-Allow-Origin": "*",
-      //   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      //   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-      // },
       data: {
         files_downloads_id: this.props.files_downloads_id,
       }
-      // file_s3_key: this.props.file_s3_key,
-      // originalname: this.props.originalname
     }).then((result) => {
       
 
@@ -147,11 +130,6 @@ class CompletedFileDownloadButton extends Component{
 
   requsetSetFileInServer = () => {
     _axios.post(this.state.apiURL+'/downloader/set/file/info', {
-      // headers: {
-      //   "Access-Control-Allow-Origin": "*",
-      //   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      //   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-      // },
       data: {
         files_downloads_id: this.props.files_downloads_id,
         file_s3_key: this.props.file_s3_key,
@@ -199,16 +177,12 @@ class CompletedFileDownloadButton extends Component{
       )
     } 
 
-    // console.log(this.state.state);
-
     const encodeName = this.state.originalname;
-
-    // const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+this.state.originalname;
 
     const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
 
     return(
-      <a download={this.props.originalname} target={'_blank'} href={href} className={'CompletedFileDownloadButton'}>
+      <a download={this.props.originalname} href={href} className={'CompletedFileDownloadButton'}>
         <img src={ic_circle_download} />
       </a>
     )
