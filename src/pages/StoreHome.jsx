@@ -86,13 +86,37 @@ class StoreHome extends Component {
     })
   }
 
+  // coreTest = (e) => {
+  //   e.preventDefault();
+
+  //   let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
+  //   const app_type_key = document.querySelector('#g_app_type');
+  //   if(app_type_key){
+  //     if(app_type_key.value === 'local'){
+  //       apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
+  //     }else if(app_type_key.value === 'qa'){
+  //       apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
+  //     }
+  //   }
+  //   _axios.post(apiURL+'/downloader/file/info', {
+  //     data: {
+  //       files_downloads_id: 77
+  //     }
+  //   }).then((result) => {
+  //     console.log(result);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //     alert('정상적인 접근이 아닙니다');
+  //   })
+  // }
+
   render() {
 
     
     return (
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>
-        {/* <button onClick={(e) => {this.testdownload(e)}}>다운로드</button> */}
+        {/* <button onClick={(e) => {this.coreTest(e)}}>core 테스트</button> */}
         {/* <a download href={'http://192.168.200.152:3100/downloader/test'}>다운로드</a> */}
         {/* <a download={'안녕.mp4'} href={'http://192.168.200.152:3100/static/%EC%95%88%EB%85%95.mp4'}>다다다운</a> */}
         {/* <a download={'안녕.mp4'} href={'http://192.168.200.152:3100/static/zip파일.zip'}>다다다운</a> */}

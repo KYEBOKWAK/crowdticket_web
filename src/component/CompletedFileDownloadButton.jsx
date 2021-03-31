@@ -208,7 +208,7 @@ class CompletedFileDownloadButton extends Component{
     const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
 
     return(
-      <a download={this.props.originalname} href={href} className={'CompletedFileDownloadButton'}>
+      <a download={this.props.originalname} target={'_blank'} href={href} className={'CompletedFileDownloadButton'}>
         <img src={ic_circle_download} />
       </a>
     )
