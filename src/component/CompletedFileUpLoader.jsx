@@ -278,9 +278,7 @@ class CompletedFileUpLoader extends Component{
     const _files = this.state.files.concat();
 
     let _originalName = Util.regExp(file.name);
-    console.log(_originalName);
-    _originalName = _originalName.normalize('NFC');
-    console.log(_originalName);
+    // _originalName = _originalName.normalize('NFC');
 
     const sameNameFileIndex = _files.findIndex((value) => {return value.originalname === _originalName});
     // console.log(sameNameFileIndex);
