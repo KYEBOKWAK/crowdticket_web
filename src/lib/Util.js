@@ -323,6 +323,19 @@ const Util = {
     }
   
     return (bytes / Math.pow(1000, i)).toFixed(1) + " " + sizes[i]
+  },
+  regExp(_str){
+    //####이부분은 프론트 엔드/백엔드 코드가 동일해야함!!! 수정할때 주의!!!!!####
+    //특수문자 검증 start
+    let str = _str.replace(/ /g,"_");
+    let replaceStr = str;
+    var regExp = /[\{\}\[\]\/?,;:|\)*~`!^\-+<>@\#$%&\\\=\(\'\"]/gi
+    if(regExp.test(str)){
+      //특수문자 제거
+      replaceStr = str.replace(regExp, "")
+    }
+    
+    return replaceStr;
   }
 }
 

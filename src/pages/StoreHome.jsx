@@ -18,8 +18,6 @@ import Home_Top_Banner from '../component/Home_Top_Banner';
 
 import _axios from 'axios';
 
-import { browserName, browserVersion, engineName, engineVersion, getUA } from 'react-device-detect';
-
 class StoreHome extends Component {
 
   constructor(props) {
@@ -35,10 +33,6 @@ class StoreHome extends Component {
     // if(pageKeyDom){
     //   console.log(pageKeyDom.value);
     // }
-
-    //test//
-    
-    ////////
   }
 
   requestCreatorStore = () => {

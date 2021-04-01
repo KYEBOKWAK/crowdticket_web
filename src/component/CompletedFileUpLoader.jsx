@@ -134,6 +134,7 @@ class CompletedFileUpLoader extends Component{
             // type: data.mimetype,
             name: data.originalname
           },
+          originalname: data.originalname,
           size: data.size,
           size_convert: size_convert,
           downloadURL: data.url,
@@ -273,11 +274,12 @@ class CompletedFileUpLoader extends Component{
     }
 
     const file = files[0];
-    // console.log(file);
 
     const _files = this.state.files.concat();
 
-    const sameNameFileIndex = _files.findIndex((value) => {return value.file.name === file.name});
+    let _originalName = Util.regExp(file.name);
+
+    const sameNameFileIndex = _files.findIndex((value) => {return value.originalname === _originalName});
     // console.log(sameNameFileIndex);
     if(sameNameFileIndex >= 0){
       alert('같은 이름의 파일이 있습니다. 다른 파일을 업로드 해주세요');
@@ -301,6 +303,7 @@ class CompletedFileUpLoader extends Component{
       size_convert: Util.convertBytes(file.size),
       downloadURL: '',
       file_s3_key: '',
+      originalname: _originalName
     }
 
     _files.push(data);
@@ -351,7 +354,7 @@ class CompletedFileUpLoader extends Component{
     
   }
 
-  onClickDownloadFileButton = (e, key, id, downloadURL, file_s3_key, file_name, total) => {
+  onClickDownloadFileButton = (e, key, id, downloadURL) => {
     if(downloadURL === null || downloadURL === ''){
       this.removeItem(e, key, id);
     }
@@ -488,11 +491,11 @@ class CompletedFileUpLoader extends Component{
 
         // let buttonIconImg = ic_circle_download;
         if(data.downloadURL === null || data.downloadURL === ''){
-          bottomDom = <button className={'circle_button'} onClick={(e) => {this.onClickDownloadFileButton(e, data.key, data.id, data.downloadURL, data.file_s3_key, data.file.name, Number(data.size))}}>
+          bottomDom = <button className={'circle_button'} onClick={(e) => {this.onClickDownloadFileButton(e, data.key, data.id, data.downloadURL)}}>
                     <img src={ic_exit_circle} />
                   </button>
         }else{
-          bottomDom = <CompletedFileDownloadButton files_downloads_id={data.id} file_s3_key={data.file_s3_key} originalname={data.file.name}></CompletedFileDownloadButton>
+          bottomDom = <CompletedFileDownloadButton files_downloads_id={data.id} file_s3_key={data.file_s3_key} originalname={data.originalname}></CompletedFileDownloadButton>
         }
 
         // bottomDom = <button className={'circle_button'} onClick={(e) => {this.onClickDownloadFileButton(e, data.key, data.id, data.downloadURL, data.file_s3_key, data.file.name, Number(data.size))}}>
@@ -509,7 +512,7 @@ class CompletedFileUpLoader extends Component{
                               <img src={ic_clip} />
                             </div>
                             <div className={'item_file_name text-ellipsize'}>
-                              {data.file.name}
+                              {data.originalname}
                             </div>
                             <div className={'item_file_size'}>
                               {data.size_convert}
@@ -525,7 +528,7 @@ class CompletedFileUpLoader extends Component{
                               <img src={ic_clip} />
                             </div>
                             <div className={'item_file_name text-ellipsize'}>
-                              {data.file.name}
+                              {data.originalname}
                             </div>
                             <div className={'item_file_size'}>
                               {data.size_convert}
