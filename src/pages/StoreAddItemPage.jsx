@@ -682,23 +682,29 @@ class StoreAddItemPage extends Component{
 
   nextFileCheck = (item_id) => {
     this.imageFileUploaderRef.setItems_imgsData(item_id, () => {
-      this.completedFileUploaderRef.setFiles_DownloadIDData(item_id, () => {
-        if(!this.state.isChangeImg){
-          this.complitePopup();
-          return;
-        }
+
+      if(this.completedFileUploaderRef.current === null){
+        this.complitePopup();
+      }else{
+        this.completedFileUploaderRef.setFiles_DownloadIDData(item_id, () => {
+          if(!this.state.isChangeImg){
+            this.complitePopup();
+            return;
+          }
+      
+          if(this.state.imageBinary === ''){
+            // stopLoadingPopup();
+            // this.showEditPopup();
+            this.complitePopup();
+            return;
+          }
     
-        if(this.state.imageBinary === ''){
-          // stopLoadingPopup();
-          // this.showEditPopup();
-          this.complitePopup();
-          return;
-        }
-  
-        this.uploadFiles(item_id, Types.file_upload_target_type.items);
-      }, () => {
-        stopLoadingPopup();
-      })
+          this.uploadFiles(item_id, Types.file_upload_target_type.items);
+        }, () => {
+          stopLoadingPopup();
+        })
+      }
+      
     }, () => {
       stopLoadingPopup();
     })
@@ -735,7 +741,9 @@ class StoreAddItemPage extends Component{
 
     }else{
       swal("수정완료!", "", "success").then(() => {
-        this.completedFileUploaderRef.isRefresh();
+        if(this.completedFileUploaderRef.current !== null){
+          this.completedFileUploaderRef.isRefresh();
+        }
       });
     }
   }

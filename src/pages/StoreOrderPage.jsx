@@ -742,7 +742,6 @@ class StoreOrderPage extends Component{
           item_id: this.state.store_item_id,
           store_item_order_id: result.order_id
         }, (result_last_order) => {
-
           if(filesInsertID.length === 0){
             stopLoadingPopup();
             this.nextOrderComplite(result.order_id);  
