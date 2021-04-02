@@ -492,53 +492,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div id="react_footer">
 
   </div>
-
-    <!-- <div class="container ct-res-text footer-top">
-	    <div class="col-md-3 footer_padding_left_remover">
-            <img src="{{ asset('/img/icons/svg/footer-logo-color-v-2.svg') }}" class="footer-logo">
-        </div>
-        <div class="col-md-3">
-            <h2>social media</h2>
-            <h2 class="footer-social">
-            <li>
-            <a href="https://www.facebook.com/crowdticket/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-01-facebook.svg') }}"></a></li>
-            <li><a href="https://www.instagram.com/k.haem/" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-02-instagram.svg') }}"></a></li>
-            <li><a href="http://blog.naver.com/crowdticket" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-03-naver.svg') }}"></a></li>
-            <li><a href="https://www.youtube.com/channel/UCrZuTkc1H8w7d2nLoRE-e5g" target="_blank"><img src="{{ asset('/img/icons/svg/ic-footer-social-04-youtube.svg') }}"></a></li>
-            </h2>
-        </div>
-        <div class="col-md-3">
-            <h2>contact</h2>
-            <h4>KAKAO : @크라우드티켓<br>
-              T : 070-8819-4308<br>
-              E : contact@crowdticket.kr</h4>
-        </div>
-        <div class="col-md-3">
-            <h2>address</h2>
-            <h4>서울시 마포구 독막로 331 마스터즈타워 2501호<br>
-             (주)나인에이엠</h4>
-        </div>
-        <div class="col-md-12 ct-info">
-            <p style="margin-bottom: 8px;">
-                 (주)나인에이엠 대표: 신효준&nbsp;|&nbsp;사업자 등록번호: 407 81 31606&nbsp;|&nbsp;통신판매업신고: 2017-서울동대문-1218&nbsp;|&nbsp;<a href="{{ url('/terms') }}" style="font-weight:bold; color:#888888">이용약관</a> / <a href="{{ url('/privacy') }}" style="font-weight:bold; color:#888888">개인정보취급방침</a>
-            </p>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container" style="margin-bottom: 20px;">
-          @if(env('REVIEW_ON'))
-          <h4>COPYRIGHT © 2016 NINEAM</h4>
-          @else
-          <p>
-            크라우드티켓은 이벤트의 당사자가 아닙니다. 따라서 이벤트 진행 전반에 대한 책임은 해당 이벤트를 진행하는 기획자에게 있습니다.<br>
-            크라우드티켓팀은 이벤트 티켓팅과 관련된 편리하고 공정한 온라인 솔루션을 제공할 수 있도록 항상 최선을 다하겠습니다.
-          </p>
-          <p>
-            COPYRIGHT © 2016 CROWDTICKET
-          </p>
-          @endif
-        </div>
-    </div> -->
 </footer>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -674,7 +627,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=159') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=160') }}"></script>
 
 </body>
 </html>

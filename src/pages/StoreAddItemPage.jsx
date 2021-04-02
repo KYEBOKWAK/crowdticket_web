@@ -684,7 +684,19 @@ class StoreAddItemPage extends Component{
     this.imageFileUploaderRef.setItems_imgsData(item_id, () => {
 
       if(this.completedFileUploaderRef.current === null){
-        this.complitePopup();
+        // this.complitePopup();
+        if(!this.state.isChangeImg){
+          this.complitePopup();
+          return;
+        }
+    
+        if(this.state.imageBinary === ''){
+          this.complitePopup();
+          return;
+        }
+  
+        this.uploadFiles(item_id, Types.file_upload_target_type.items);
+        
       }else{
         this.completedFileUploaderRef.setFiles_DownloadIDData(item_id, () => {
           if(!this.state.isChangeImg){
@@ -693,8 +705,6 @@ class StoreAddItemPage extends Component{
           }
       
           if(this.state.imageBinary === ''){
-            // stopLoadingPopup();
-            // this.showEditPopup();
             this.complitePopup();
             return;
           }
