@@ -15,9 +15,9 @@
             {{$magazine->subtitle}}
         </h5>
 
-        <h4 class="text-ellipsize-2 welcome_thumb_content_title">
+        <div class="text-ellipsize-2 welcome_thumb_content_title" style="font-size: 17px;">
             {{$magazine->title}}
-        </h4>
+        </div>
     </div>
 </a>
 </div>
