@@ -63,12 +63,11 @@ $font_size: 14px;
     padding-top: 32px;
     padding-left: 32px;
     padding-right: 32px;
-    // padding-left: 27px;
-    // padding-right: 27px;
+    
     margin-top: 20px;
     overflow: hidden;
     font-size: $font_size;
-    // margin-bottom: 64px;
+    word-break: break-all;
   }
 
   .point_tag_container {
