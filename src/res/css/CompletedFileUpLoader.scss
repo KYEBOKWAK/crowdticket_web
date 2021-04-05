@@ -32,6 +32,7 @@
     border: solid 1px #e6e6e6;
     align-items: center;
     margin-top: 4px;
+    position: relative;
   }
   
   .item_container_downloader {
@@ -91,6 +92,22 @@
     margin-top: 10px;
     font-size: 10px;
     color: #808080;
+  }
+
+  .CompletedFileDownloadButton_button {
+    background-color: rgba(0,0,0,0);
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: right;
+    padding-right: 16px;
+  }
+  
+  .CompletedFileDownloadButton_button_spinner {
+    margin-left: auto;
   }
   @media (max-width: 520px){
     /*모바일일때*/  

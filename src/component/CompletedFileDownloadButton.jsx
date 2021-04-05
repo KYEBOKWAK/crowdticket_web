@@ -136,25 +136,30 @@ class CompletedFileDownloadButton extends Component{
         originalname: this.props.originalname
       }
     }).then((result) => {
-      if(result.data.state === 'success'){
-        const data = result.data.data;
-        this.setState({
-          state: data.state,
-          files_servers_id: data.files_servers_id,
-          originalname: data.originalname
-        })
-      }else{
-        alert(result.data.message);
+      this.stopCheckFileTimer();
+      this.startCheckFileTimer();
 
-        this.setState({
-          state: Types.files_servers_state.ERROR,
-          files_servers_id: null,
-          originalname: ''
-        })
-      }
+      // if(result.data.state === 'success'){
+      //   const data = result.data.data;
+      //   this.setState({
+      //     state: data.state,
+      //     files_servers_id: data.files_servers_id,
+      //     originalname: data.originalname
+      //   })
+      // }else{
+      //   alert(result.data.message);
+
+      //   this.setState({
+      //     state: Types.files_servers_state.ERROR,
+      //     files_servers_id: null,
+      //     originalname: ''
+      //   })
+      // }
       
     }).catch((error) => {
       // alert('파일 서버 셋팅 에러');
+      this.stopCheckFileTimer();
+      
       this.setState({
         state: Types.files_servers_state.ERROR,
         files_servers_id: null,
@@ -164,26 +169,45 @@ class CompletedFileDownloadButton extends Component{
   }
 
   onClickFileDownload = (e) => {
-    e.preventDefault();
+    
+    if(this.state.state === Types.files_servers_state.DONE){
+
+    }else{
+      e.preventDefault();
+
+      if(this.state.state === Types.files_servers_state.INIT){
+        alert('파일을 준비중입니다. 파일 용량이 클수록 시간이 더 소요됩니다. 잠시만 기다려주세요.');
+        return;
+      }else if(this.state.state === Types.files_servers_state.ERROR){
+        alert("서버 파일 에러. 증상이 반복되면 크티에 연락주세요!");
+        return;
+      }
+    }
   }
 
   render(){
+    let itemDom = <></>;
+    let isButtonDisabled = false;
     if(this.state.state === Types.files_servers_state.ERROR){
-      return (<></>)
+      // return (<></>)
+      itemDom = <></>;
     }
     else if(this.state.state !== Types.files_servers_state.DONE){
-      return (
-        <ReactLoading type={'spin'} color={'#00bfff'} height={20} width={20} />
-      )
-    } 
+      itemDom = <ReactLoading className={'CompletedFileDownloadButton_button_spinner'} type={'spin'} color={'#00bfff'} height={20} width={20} />;
+    }else{
+      isButtonDisabled = true;
 
-    const encodeName = this.state.originalname;
+      const encodeName = this.state.originalname;
+      const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
+      itemDom = <a download={this.props.originalname} href={href} className={'CompletedFileDownloadButton'}>
+                  <img src={ic_circle_download} />
+                </a>
+    }
 
-    const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
-    return(
-      <a download={this.props.originalname} href={href} className={'CompletedFileDownloadButton'}>
-        <img src={ic_circle_download} />
-      </a>
+    return (
+      <button className={'CompletedFileDownloadButton_button'} onClick={(e) => {this.onClickFileDownload(e)}} disabled={isButtonDisabled}>
+        {itemDom}
+      </button>
     )
   }
 };

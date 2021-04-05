@@ -582,8 +582,8 @@ class CompletedFileUpLoader extends Component{
         // let buttonIconImg = ic_circle_download;
         if(data.downloadURL === null || data.downloadURL === ''){
           bottomDom = <button className={'circle_button'} onClick={(e) => {this.onClickDownloadFileButton(e, data.key, data.id, data.downloadURL)}}>
-                    <img src={ic_exit_circle} />
-                  </button>
+                        <img src={ic_exit_circle} />
+                      </button>
         }else{
           bottomDom = <CompletedFileDownloadButton files_downloads_id={data.id} file_s3_key={data.file_s3_key} originalname={data.originalname}></CompletedFileDownloadButton>
         }
