@@ -187,6 +187,10 @@ Route::get('search', 'WelcomeController@getSearchResult');
 Route::get('event/{alias}', 'ProjectController@getEventPage');
 //event end
 
+// Route::get('login/', function(){
+//     return view('login.login');
+// });
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');

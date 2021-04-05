@@ -15,11 +15,13 @@ import ic_btn_file_upload from '../res/img/btn-file-upload.svg';
 import ic_clip from '../res/img/ic-clip.svg';
 
 import ic_exit_circle from '../res/img/ic-exit-circle.svg';
-import ic_circle_download from '../res/img/ic-circle-download.svg';
+// import ic_circle_download from '../res/img/ic-circle-download.svg';
 
 import CompletedFileDownloadButton from '../component/CompletedFileDownloadButton';
 
 import Util from '../lib/Util';
+
+import {isMobile} from 'react-device-detect';
 
 class CompletedFileUpLoader extends Component{
   fileInputRef = React.createRef();
@@ -266,8 +268,94 @@ class CompletedFileUpLoader extends Component{
   }
 
   uploadFile = ({target: {files}}) => {
-    //////
-    // const fileOri = files[0];
+    ///////
+    if(this.props.store_user_id === null){
+      alert('유저 정보가 없습니다. 새로고침 후 다시 이용해주세요');
+      return;
+    }
+
+    const file = files[0];
+
+    if(file.size === 0){
+      alert("에러: 파일 사이즈가 0 입니다.");
+      return;
+    }
+
+    if(isMobile && Util.isLargeFile(file.size)){
+      alert("2기가 이상 파일은 pc에서 업로드해주세요");
+      return;
+    }
+
+    const _files = this.state.files.concat();
+
+    let _originalName = Util.regExp(file.name);
+    // _originalName = _originalName.normalize('NFC');
+
+    const sameNameFileIndex = _files.findIndex((value) => {return value.originalname === _originalName});
+    // console.log(sameNameFileIndex);
+    if(sameNameFileIndex >= 0){
+      alert('같은 이름의 파일이 있습니다. 다른 파일을 업로드 해주세요');
+      return;
+    }
+    // const _show_images = this.state.show_images.concat();
+
+    let index = _files.length+1;//0개면 기본 1셋팅
+    if(_files.length > 0){
+      index = _files[_files.length - 1].key + 1;
+    }
+
+    // const size_mb = (String)(file.size / CONVERT_MB);
+    const size = (String)(file.size);
+
+    const data = {
+      key: index,
+      id: null,
+      file: file,
+      size: size,
+      size_convert: Util.convertBytes(file.size),
+      downloadURL: '',
+      file_s3_key: '',
+      originalname: _originalName
+    }
+
+    _files.push(data);
+    
+    this.setState({
+      files: _files.concat(),
+    }, () => {
+      this.uploadFiles(this.props.store_user_id, this.props.file_upload_target_type, (res) => {
+        let _addFileIDs = this.state.addFileIDs.concat();
+
+        let __files = this.state.files.concat();
+
+        const fileIndex = __files.findIndex((value) => { return value.key === index });
+        if(fileIndex < 0 || fileIndex >= __files.length){
+          alert("파일 index 범위 오류");
+          return;
+        }
+
+        const data = res.list[0];
+
+        const dataIds = {
+          key: index,
+          id: data.insertId
+        }
+        
+        __files[fileIndex].id = data.insertId;
+        _addFileIDs.push(dataIds);
+
+        this.setState({
+          addFileIDs: _addFileIDs.concat(),
+          files: __files.concat()
+        }, () => {
+          
+        })            
+      }, () => {
+
+      })
+    })
+
+    /*
     if(this.props.store_user_id === null){
       alert('유저 정보가 없습니다. 새로고침 후 다시 이용해주세요');
       return;
@@ -347,6 +435,7 @@ class CompletedFileUpLoader extends Component{
       })
     };
     reader.readAsDataURL(file);
+    */
   }
 
   downloadFile = (downloadURL, file_name, id) => {

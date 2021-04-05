@@ -328,6 +328,27 @@ const Util = {
   
     return (bytes / Math.pow(1000, i)).toFixed(1) + " " + sizes[i]
   },
+  isLargeFile(bytes) {
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
+  
+    if (bytes == 0) {
+      return false
+    }
+  
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1000)))
+  
+    const value = Number((bytes / Math.pow(1000, i)).toFixed(1));
+
+    if(i >= 3){
+      if(value >= 2.0){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  },
   regExp(_str){
     //####이부분은 프론트 엔드/백엔드 코드가 동일해야함!!! 수정할때 주의!!!!!####
     //특수문자 검증 start

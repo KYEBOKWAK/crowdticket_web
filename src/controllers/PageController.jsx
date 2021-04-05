@@ -37,7 +37,7 @@ class PageController extends Component {
       pageKey: AppKeys.WEB_PAGE_KEY_HOME,
 
       isSearchPage: false,
-      isSearchResultPage: false
+      // isSearchResultPage: false
     };
   }
 
@@ -102,6 +102,7 @@ class PageController extends Component {
   render() {
     
     let isNewPage = false;
+    let isNoPage = false;
 
     let pageView = <></>;
     const _pageKey = this.state.pageKey
@@ -142,6 +143,8 @@ class PageController extends Component {
     else if(_pageKey === AppKeys.WEB_PAGE_KEY_STORE_SEARCH_RESULT){
       pageView = <SearchResultPage></SearchResultPage>;
       isNewPage = true;
+    }else{
+      isNoPage = true;
     }
 
     let pageController = <></>;
@@ -162,6 +165,11 @@ class PageController extends Component {
           isSearchPage: false
         })
       }}></SearchPage>;
+    }
+
+    if(isNoPage){
+      pageController = <></>;
+      searchPage = <></>;
     }
 
     return (

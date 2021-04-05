@@ -25,6 +25,7 @@ const Dotenv = require('dotenv-webpack');
 // mix.sass('src/res/css/Test.scss', 'dist/css/')
 
 mix.react('src/App.jsx', 'dist/')
+.react('src/App_Login.jsx', 'dist/')
 .sass('src/res/css/Global.scss', 'dist/css/')
 .sass('src/res/css/StoreHome.scss', 'dist/css/')
 .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
