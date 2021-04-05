@@ -105,6 +105,10 @@
     text-align: right;
     padding-right: 16px;
   }
+
+  .CompletedFileDownloadButton_button:disabled {
+    background-color: rgba(0,0,0,0) !important;
+  }
   
   .CompletedFileDownloadButton_button_spinner {
     margin-left: auto;
