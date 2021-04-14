@@ -221,8 +221,7 @@ class LoginStartPage extends Component{
         Kakao.API.request({
           url: '/v2/user/me',
           success: (res) => {
-            // alert(JSON.stringify(res))
-            res.kakao_account.has_email = false;
+            
             if(!res.kakao_account.has_email || res.kakao_account.email === undefined || res.kakao_account.email === null || res.kakao_account.email === ''){
               //email이 없을때
               axios.post('/user/any/check/snsid', {
