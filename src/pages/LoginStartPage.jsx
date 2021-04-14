@@ -158,6 +158,7 @@ class LoginStartPage extends Component{
   
       const url = '/me?fields=id,name,email';
       FB.api(url, (responseMe) => {
+        console.log(responseMe);
         const socialId = responseMe.id;
         const socialName = responseMe.name;
         const socialEmail = responseMe.email;
@@ -205,6 +206,8 @@ class LoginStartPage extends Component{
     } else {
       // The person is not logged into your app or we are unable to tell.
       FB.login((response) => {
+        console.log('bbbbbb');
+        console.log(response);
         if (response.status === 'connected') {
           this.fbStatusChangeCallback(response);
         }
@@ -319,6 +322,8 @@ class LoginStartPage extends Component{
     e.preventDefault();
 
     FB.login((response) => {
+      console.log('aaaaa');
+      console.log(response);
       if (response.status === 'connected') {
         this.fbStatusChangeCallback(response);
       }
