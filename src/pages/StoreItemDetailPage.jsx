@@ -45,6 +45,8 @@ import icon_clip_tag from '../res/img/icon-clip-tag.svg';
 
 import icon_download_big from '../res/img/icon-download-big.svg';
 
+import Login from '../lib/Login';
+
 const cookies = new Cookies();
 
 const IMAGE_THUMB_FILE_WIDTH = 520;
@@ -439,7 +441,13 @@ class StoreItemDetailPage extends Component{
    
    let hrefURL = baseURL+'/order/store/'+this.state.store_item_id;
    
-   window.location.href = hrefURL;
+  //  window.location.href = hrefURL;
+
+   if(isLogin()){
+    window.location.href = hrefURL;
+   }else{
+    Login.start();
+   }
 
   }
 
@@ -454,7 +462,7 @@ class StoreItemDetailPage extends Component{
     }
     
     let tailUrl = this.state.store_alias;
-    if(tailUrl === ''){
+    if(tailUrl === null || tailUrl === ''){
       tailUrl = this.state.store_id;
     }
     let hrefURL = baseURL+'/store/'+tailUrl;
@@ -877,156 +885,6 @@ class StoreItemDetailPage extends Component{
         {bottomButton}
       </div>
     )
-
-    /*
-    return(
-      <div className={'StoreItemDetailPage'}>
-        <div className={'item_img_container'}>
-          <img className={'item_img'} src={this.state.thumb_img_url} />
-          <div className={'item_img_cover'}>
-          </div>
-          {store_user_dom}
-        </div>
-
-        <div className={'item_detail_page_container'}>
-        </div>
-        <div className={'content_container'}>
-          <div className={'content_title'}>
-            {this.state.title}
-          </div>
-          <div className={'price_text_container'}>
-            <div className={'content_price'}>
-              {Util.getNumberWithCommas(this.state.price)}원
-            </div>
-            {goItemEditPageDom}
-          </div>
-        </div>
-
-        <div className={'point_tag_container'}>
-          {_pointTags}
-        </div>
-
-        {warningNoticeDom}
-
-        <div className={'content_container'}>
-          <div className={'content_text'}>
-            {this.state.content}
-            
-          </div>
-          {contentMoreExplainDom}
-        </div>
-
-        <div className={'container_label_text'}>
-          구매시 필요사항
-        </div>
-
-        <div className={'content_container'}>
-          {this.state.item_ask}
-        </div>
-
-        <div className={'container_label_text'}>
-          유의사항
-        </div>
-
-        <div className={'content_container'}>
-          {this.state.item_notice}
-        </div>
-
-        <div className={'refund_container'}>
-          <button onClick={(e) => {this.onClickRefundButton(e)}} className={'cancel_popup_text'}>
-            <u>크티 콘텐츠 취소/환불 규정</u>
-          </button>
-        </div>
-
-        {store_other_items}
-
-        {store_order_reviews}
-
-        
-        <div className={'container_label_text'}>
-          콘텐츠 상점 이용 방법
-        </div>
-
-        <div className={'use_img_container'}>
-          <div className={'use_img_box'}>
-            <div className={'use_img_circle'}>
-              <img className={'icon_order_img'} src={icon_order} />
-            </div>
-            <div className={'use_box_text'}>
-              {`콘텐츠 
-              주문하고`}
-            </div>
-          </div>
-
-          <div className={'use_img_box'}>
-            <div className={'use_img_circle'}>
-              <img className={'icon_check_img'} src={icon_check} />
-            </div>
-            <div className={'use_box_text'}>
-              {`크리에이터가 
-              승인하고`}
-            </div>
-          </div>
-
-          <div className={'use_img_box'}>
-            <div className={'use_img_circle'}>
-              <img className={'icon_gift_img'} src={icon_gift} />
-            </div>
-            <div className={'use_box_text'}>
-              {`콘텐츠가 
-              준비되면`}
-            </div>
-          </div>
-
-          <div className={'use_img_box'}>
-            <div className={'use_img_circle'}>
-              <img className={'icon_good_img'} src={icon_good} />
-            </div>
-            <div className={'use_box_text'}>
-              {`소통하고 
-              즐기면 끝!`}
-            </div>
-          </div>
-        </div>
-
-        <div className={'buttons_container'}>
-          <button onClick={(e) => {this.clickGoStore(e)}} className={'button_go_store'}>
-            상점가기
-          </button>
-          <div className={'button_gap'}>
-          </div>
-          <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'} disabled={isButtonDisabel}>
-            {buttonText}
-          </button>
-        </div>
-
-        {refundPopupDom}
-      </div>
-    )
-    */
-
-    /*
-    return(
-      <div className={'StoreItemDetailPage'}>
-        <img className={'item_img'} src={this.state.thumb_img_url} />
-        <div className={'content_container'}>
-          <div className={'content_title'}>
-            {this.state.title}
-          </div>
-          <div className={'content_price'}>
-            {Util.getNumberWithCommas(this.state.price)}원
-          </div>
-          <div className={'content_text'}>
-            {this.state.content}
-          </div>
-
-          <button onClick={(e) => {this.clickOrder(e)}} className={'button_pay'}>
-            주문하기
-          </button>
-        </div>
-      </div>
-    )
-    */
   }
 };
 

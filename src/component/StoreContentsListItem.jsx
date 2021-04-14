@@ -13,6 +13,7 @@ import ic_badge_download from '../res/img/badge-download.svg';
 
 const IMAGE_FILE_WIDTH = 80;
 const IMAGE_FILE_WIDTH_IN_ITEM = 63;
+
 class StoreContentsListItem extends Component{
 
   constructor(props){
@@ -57,19 +58,11 @@ class StoreContentsListItem extends Component{
 
     let goURL = '';
     if(this.props.isHomeList){
-      // if(!this.props.store_alias || this.props.store_alias === ''){
-      //   goURL = baseURL + '/store/' + this.props.store_id;
-      // }else{
-      //   goURL = baseURL + '/store/' + this.props.store_alias;
-      // }
-
       goURL = baseURL + '/item/store/' + this.props.store_item_id;
       
     }else {
       goURL = baseURL + '/item/store/' + this.props.store_item_id;
     }
-
-    
 
     window.location.href = goURL;
   }

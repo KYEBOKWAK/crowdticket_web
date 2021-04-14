@@ -126,8 +126,8 @@ $(document).ready(function() {
 	var addComment = function(){
 		if(isLogin() == false)
 		{
-			//alert("로그인을 해야 댓글을 달 수 있습니다.");
-			loginPopup(addComment, null);
+			alert("로그인을 해야 댓글을 달 수 있습니다. 로그인 후에 작성한 댓글이 지워질 수 있습니다.");
+			// loginPopup(addComment, null);
 			return;
 		}
 

@@ -1,0 +1,35 @@
+.LoginForgetEmailPage {
+  
+  .title_text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+  }
+  
+  .content_text {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  .input_box_container {
+    margin-top: 32px;
+  }
+
+  .reset_button {
+    width: 100%;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #00bfff;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+  @media (max-width: 768px){
+    /*테블릿*/  
+  }
+
+  @media (max-width: 453px){
+    /*모바일일때*/  
+  }
+}

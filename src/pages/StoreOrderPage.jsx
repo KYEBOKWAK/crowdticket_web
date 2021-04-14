@@ -9,6 +9,7 @@ import React, { Component } from 'react';
 // import * as appKeys from '~/AppKeys';
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
+import Login from '../lib/Login';
 
 // import { connect } from 'react-redux';
 
@@ -172,20 +173,8 @@ class StoreOrderPage extends Component{
       }, function(){
         //아이템 정보 가져오기
         if(!isLogin())
-        {
-          // loginPopup(null, null);
-          loginPopup(() => {
-            if(isLogin()){
-              swal.close();
-              window.location.reload();
-              // this.setState({
-              //   isLogin: true
-              // }, function(){
-              //   swal.close();
-              //   window.location.reload();
-              // })
-            }
-          }, null);
+        {          
+          Login.start();
           return;
         }else{
           axios.post("/user/info", {}, 

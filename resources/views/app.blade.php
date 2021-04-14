@@ -356,7 +356,7 @@
     <script type="text/javascript" src="{{ asset('/js/util_header.js?version=14') }}"></script>
 
     <!-- 카카오톡 sdk -->
-    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="{{ asset('/js/lib/kakao.min.js?version=0') }}"></script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -419,8 +419,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </a>
           </li>
             @if (Auth::guest())
-                <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
-                <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li>
+              <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
+              <!-- <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li> -->
             @else
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -486,7 +486,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="isMobile"></div>
 
+<div id="g_go_login_react" style="display:none;"></div>
 <div id="react_root"></div>
+<div id="react_app_login"></div>
 
 <footer>
   <div id="react_footer">
@@ -496,7 +498,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=30') }}"></script>
+<script src="{{ asset('/js/util.js?version=31') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -508,7 +510,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=17');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=18');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
@@ -613,7 +615,7 @@ function logout(){
 </script>
 
 <script type='text/javascript'>
-    Kakao.init('0e5457b479dfe84c5e52e6de84d6d684');
+    Kakao.init('f48f12644c731f65b78a3b0c6788f42e');
     function plusFriendChat() {
       Kakao.PlusFriend.chat({
         plusFriendId: '_JUxkxjM' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
@@ -627,7 +629,8 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=163') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=164') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=1') }}"></script>
 
 </body>
 </html>

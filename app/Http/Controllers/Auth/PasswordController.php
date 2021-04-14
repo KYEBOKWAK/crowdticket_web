@@ -46,9 +46,11 @@ class PasswordController extends Controller
         });
         switch ($response) {
             case PasswordBroker::RESET_LINK_SENT:
-                return redirect()->back()->with('status', trans($response));
+                // return redirect()->back()->with('status', trans($response));
+                return ['state' => 'success'];
             case PasswordBroker::INVALID_USER:
-                return redirect()->back()->withErrors(array('email' => trans($response)));
+                return ['state' => 'error', 'message' => '미가입된 이메일 입니다'];
+                // return redirect()->back()->withErrors(array('email' => trans($response)));
         }
     }
 
@@ -84,7 +86,12 @@ class PasswordController extends Controller
             case PasswordBroker::PASSWORD_RESET:
                 return ['state' => 'success', 'user_id' => \Auth::user()->id ,'goDirect' => ''];
 				// return redirect($this->redirectPath());
-
+            case PasswordBroker::INVALID_USER:
+                return ['state' => 'error', 'message' => '가입되어 있지 않는 이메일 입니다.'];
+            case PasswordBroker::INVALID_PASSWORD:
+                return ['state' => 'error', 'message' => '패스워드가 다릅니다.'];
+            case PasswordBroker::INVALID_TOKEN:
+                return ['state' => 'error', 'message' => '유효하지 않는 토큰입니다.'];
 			default:
 				return redirect()->back()
 							->withInput($request->only('email'))

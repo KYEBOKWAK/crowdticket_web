@@ -495,7 +495,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-<script src="{{ asset('/js/util.js?version=30') }}"></script>
+<script src="{{ asset('/js/util.js?version=31') }}"></script>
 <script src="{{ asset('/js/underscore-min.js') }}"></script>
 <script src="{{ asset('/js/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/js/jquery.form.min.js') }}"></script>
@@ -507,7 +507,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="{{ asset('/js/loader.js?version=1') }}"></script>
 
 <?php
-  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=17');
+  $loginFilePath = asset('/js/fblogin.js?fbid='.env('FACEBOOK_ID').'&fbver='.env('FACEBOOK_VER').'&ggid='.env('GOOGLE_ID').'&version=18');
 ?>
 <script src="{{ $loginFilePath }}"></script>
 
@@ -626,7 +626,7 @@ function logout(){
     }
 </script>
 
-<!-- <script type="text/javascript" src="{{ asset('/dist/App.js?version=163') }}"></script> -->
+<!-- <script type="text/javascript" src="{{ asset('/dist/App.js?version=164') }}"></script> -->
 
 </body>
 </html>

@@ -3,11 +3,15 @@
 import React, { Component } from 'react';
 
 import * as AppKeys from '../AppKeys';
-// import { connect } from 'react-redux';
-// import actions from '../actions/index.js';
-// import * as actions from '../actions/index';
 
 import LoginPage from '../pages/LoginPage';
+import LoginResetPasswordPage from '../pages/LoginResetPasswordPage';
+
+import Login from '../lib/Login';
+
+
+// import Storage from './lib/Storage';
+// import * as storageType from  './StorageKeys';
 
 class PageLoginController extends Component {
   
@@ -31,58 +35,39 @@ class PageLoginController extends Component {
 
     // window.addEventListener('scroll', this.handleScroll);
 
-    // document.querySelector("#g_login_react").addEventListener("click", this.onClickLogin);
-    
+    document.querySelector("#g_go_login_react").addEventListener("click", this.onGoLogin);
+
+    const login_button_dom = document.querySelector('#g_login');
+    if(login_button_dom){
+      login_button_dom.addEventListener("click", this.onClickLogin);
+    }
   }
 
   componentWillUnmount(){
     // window.removeEventListener('scroll', this.handleScroll);
-    // document.querySelector("#g_login_react").removeEventListener("click", this.onClickLogin);
+    document.querySelector("#g_go_login_react").removeEventListener("click", this.onGoLogin);
+
+    const login_button_dom = document.querySelector('#g_login');
+    if(login_button_dom){
+      login_button_dom.removeEventListener("click", this.onClickLogin);
+    }
   };
 
-  onClickLogin = () => {
+  onGoLogin = () => {
     let baseURL = 'https://crowdticket.kr'
     const baseURLDom = document.querySelector('#base_url');
     if(baseURLDom){
       baseURL = baseURLDom.value;
     }
 
-    let goURL = baseURL + '/login';
+    //기존 auth/login과 겹치는데 해결방법을 찾아야함.
+    let goURL = baseURL + '/auth/login';
     window.location.href = goURL;
   }
 
-  // handleScroll = () => {
-  //   let navBar = document.querySelector("#navbar_container");
-  //   const navFakeBar = document.querySelector("#navbar_fake_dom");
-
-  //   const { top, height } = navBar.getBoundingClientRect();
-
-  //   const fakeTop = navFakeBar.getBoundingClientRect().top;
-
-  //   let _top = (fakeTop) * -1;
-
-  //   if(_top > height){
-  //     navBar.style.position = 'fixed';
-  //     navBar.style.top = 0;
-  //     navBar.style.left = 0;
-  //     navBar.style.boxShadow = 0;
-  //     navBar.style.zIndex = 1;
-  //   }else{
-  //     navBar.style.position = 'relative';
-  //     navBar.style.top = 0;
-  //     navBar.style.left = 0;
-  //     navBar.style.boxShadow = '6px 4px 15px 0 rgba(25, 25, 25, 0.05)';
-  //     navBar.style.zIndex = 1;
-  //   }
-  // }
-  
-
-  // onClickSearch = () => {
-  //   // console.log('adfdsf');
-  //   this.setState({
-  //     isSearchPage: true
-  //   })
-  // }
+  onClickLogin = () => {
+    Login.start();
+  }
 
   render() {
     
@@ -98,19 +83,11 @@ class PageLoginController extends Component {
     if(_pageKey === AppKeys.WEB_PAGE_LOGIN){
       pageView = <LoginPage></LoginPage>;
     }
+    else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET){
+      pageView = <LoginResetPasswordPage email_reset={true}></LoginResetPasswordPage>
+    }
     else{
       isNoPage = true;
-    }
-
-    let pageController = <></>;
-    if(isNewPage){
-      pageController = <div className={'pageController_home'}>
-                        {pageView}
-                      </div>
-    }else{
-      pageController = <div className={'pageController'}>
-                        {pageView}
-                      </div>
     }
 
     // let searchPage = <></>;
@@ -123,13 +100,13 @@ class PageLoginController extends Component {
     // }
 
     if(isNoPage){
-      pageController = <></>;
+      return (<></>)
     }
 
     return (
-      <>
-        {pageController}
-      </>
+      <div className={'PageLoginController'}>
+        {pageView}
+      </div>
     );
   }
 }

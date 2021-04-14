@@ -111,6 +111,7 @@ class Home_Thumb_Attention_Item extends Component{
 
   onClickGoStore = (e) => {
     // e.preventDefault();
+    console.log('dsfasdf');
 
     if (this.COORDS.xDown !== this.COORDS.xUp) {
       e.preventDefault()
@@ -121,14 +122,9 @@ class Home_Thumb_Attention_Item extends Component{
         baseURL = baseURLDom.value;
       }
 
-      if(this.state.alias === null || this.state.alias === ''){
-        return;
-      }
-      const alias = this.state.alias;
+      let goTail = this.state.alias;
 
-      let goTail = alias;
-
-      if(!alias){
+      if(goTail === null || goTail === ''){
         goTail = this.props.store_id;
       }
 

@@ -83,11 +83,11 @@ class SocialAuthController extends Controller
             $user->save();
             return $user;
           }
+        }else{
+          //둘다 없으면 email 을 가져온다.
+          // $email = $this->getFacebookEmail($socialUser);
+          return ['state' => 'error', 'message' => '이메일 정보가 없습니다.'];
         }
-        
-
-        //둘다 없으면 email 을 가져온다.
-        $email = $this->getFacebookEmail($socialUser);
       }
       else if($socialType === 'GOOGLE')
       {
@@ -122,15 +122,61 @@ class SocialAuthController extends Controller
 
             return $user;
         }
+      }
+      else if($socialType === 'KAKAO')
+      {
+        if ($user = User::where('kakao_id', $socialUser['id'])->first()) {
+          $photoURL = $this->updateSocialPhotoURL($user->profile_photo_url, $socialUser['profile_photo_url']);
+          if($photoURL)
+          {
+            $user->profile_photo_url = $photoURL;
+            $user->save();
+          }
+          return $user;
+        }
 
+        //이메일을 찾았는데, 이메일이 있으면 카카오 id를 등록해준다.
+        if($email)
+        {
+          if ($user = User::where('email', $email)->first()) {
+            $user->kakao_id = $socialUser['id'];
+
+            if(!$user->profile_photo_url)
+            {
+              $user->profile_photo_url = $socialUser['profile_photo_url'];
+            }
+            else
+            {
+              if($this->isSocialPhotoURL($user->profile_photo_url))
+              {
+                //자체 이미지인 경우에는 저장하지 않는다.
+                $user->profile_photo_url = $socialUser['profile_photo_url'];
+              }
+            }
+
+            $user->save();
+
+            return $user;
+          }
+        }
+        else{
+          // $email = $this->getKakaoMakeId($socialUser);
+          return ['state' => 'error', 'message' => '이메일 정보가 없습니다.'];
+        }
+        
       }
 
       //위의 둘다 없으면 아이디를 새로 가입해준다.
+      $nowTime = time();
+      $newPassword = bcrypt($nowTime.$socialUser['id']);
+
       $user = User::create([
           'email' => $email,
           'name' => $socialUser['name'],
+          'nick_name' => $socialUser['name'],
           'profile_photo_url' => $socialUser['profile_photo_url'],
-          'password' => $socialUser['id']
+          // 'password' => $socialUser['id']
+          'password' => $newPassword
       ]);
 
       if($socialType === 'FACEBOOK')
@@ -141,6 +187,10 @@ class SocialAuthController extends Controller
       else if($socialType === 'GOOGLE')
       {
         $user->google_id = $socialUser['id'];
+      }
+      else if($socialType === 'KAKAO')
+      {
+        $user->kakao_id = $socialUser['id'];
       }
 
       return $user;
@@ -200,6 +250,10 @@ class SocialAuthController extends Controller
             return $facebookUser['email'];
         }
         return $facebookUser['id'] . '@facebook.com';
+    }
+
+    private function getKakaoMakeId($user){
+      return '';
     }
 
     private function isSocialPhotoURL($profile_photo_url){

@@ -1,0 +1,88 @@
+.LoginKnowSNSPage {
+
+  .logo_img_container {
+    display: flex;
+  }
+
+  .logo_img_box {
+    margin-right: 16px;
+  }
+
+  .logo_img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .logo_title_box {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+    margin-top: 24px;
+  }
+
+  .logo_explain_text_box {
+    font-size: 14px;
+    color: #191919;
+    margin-top: 8px;
+  }
+
+  .again_login_button {
+    width: 184px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #fafafa;
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .password_set_button {
+    width: 184px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #00bfff;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .buttons_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+  }
+  @media (max-width: 768px){
+    /*테블릿*/
+    .again_login_button {
+      width: 222px;
+    }
+
+    .password_set_button {
+      width: 222px;
+    }
+  }
+
+  @media (max-width: 453px){
+    /*모바일일때*/
+    .logo_img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .logo_title_box {
+      font-size: 20px;
+    }
+
+    .again_login_button {
+      width: 100%;
+    }
+
+    .password_set_button {
+      width: 100%;
+      margin-left: 8px;
+    }
+  }
+}

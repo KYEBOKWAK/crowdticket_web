@@ -157,25 +157,6 @@ class StoreItemDetailReviewList extends Component{
       this.requestMoreData();
     })
   }
-  /*
-  clickWriteReview(e){
-    e.preventDefault();
-
-    if(!isLogin())
-    {
-      // loginPopup(null, null);
-      loginPopup(() => {
-        if(isLogin()){
-          swal.close();
-          this.goWriteReviewPage()
-        }
-      }, null);
-      return;
-    }else{
-      this.goWriteReviewPage()
-    }
-  }
-  */
 
   render(){
 

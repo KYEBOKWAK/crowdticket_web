@@ -1,3 +1,4 @@
+/*
 var scripts = document.getElementsByTagName('script');
 
 var myScript = scripts[ scripts.length - 1 ];
@@ -23,29 +24,22 @@ var iconboxImg = $("#asset_url").val() + 'img/icons/svg/icon-box.svg';
 
 const REGISTER_AGE_NONE_TYPE_OPTION = 9999;//선택되지 않은 년생 option 값
 
-//asset('/img/icons/svg/radio-btn-s.svg')
-//asset('/img/icons/svg/radio-btn-n.svg')
 var jQuery_loginPopup = null;
 var loginCallback = null;
 
-// 'id' : socialId,
-//         'name' : socialName,
-//         'email' : socialEmail,
-//         'profile_photo_url' : socialPhotoUrl,
-//         'type' : 'FACEBOOK'
 //Login Javascript
 jQuery_loginPopup = $;
 
 $(document).ready(function() {  
   // jQuery_loginPopup = $;
 
-  $('#g_login').click(function(){
-    loginPopup(null, null);
-  });
+  // $('#g_login').click(function(){
+  //   loginPopup(null, null);
+  // });
 
-  $('#g_register').click(function(){
-    registerPopup(null, null);
-  });
+  // $('#g_register').click(function(){
+  //   registerPopup(null, null);
+  // });
 });
 
 //social login start
@@ -166,7 +160,6 @@ function startFacebookLogin(){
 }
 
 function facebookLibInit(){
-
   window.fbAsyncInit = function() {
     FB.init({
       appId      : g_facebookAccessId,
@@ -175,8 +168,6 @@ function facebookLibInit(){
       xfbml      : true,  // parse social plugins on this page
       version    : g_facebookAccessVer // use graph api version 2.8
     });
-
-    console.error("FB Init Success!!!!!");
 
     FB.getLoginStatus(function(response) {
         //console.error(response);
@@ -200,6 +191,7 @@ function facebookLibInit(){
 //google login started
 
 function attachSignin(element) {
+  console.log(element);
   auth2.attachClickHandler(element, {},
       function(googleUser) {
         //console.error("google!! : " + googleUser.getBasicProfile().getName());
@@ -225,6 +217,7 @@ function attachSignin(element) {
 }
 
 function googleLibInit(){
+  console.log("sdfasdfsadf");
   setTimeout(function(){
     gapi.load('auth2', function(){
       // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -240,43 +233,17 @@ function googleLibInit(){
       //alert(isKakao);
       if(isKakao > 0)
       {
-        $('#login_social_google_button_wrapper').click(function(){
+        $('#login_social_google_react_button').click(function(){
           alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
         });
       }
       else
       {
-        attachSignin(document.getElementById('login_social_google_button_wrapper'));
+        attachSignin(document.getElementById('login_social_google_react_button'));
+        // attachSignin(document.getElementsByClassName('login_social_google_react_button'));
       }
     });
   }, 100);
-    
-  
-  /*
-  gapi.load('auth2', function(){
-    // Retrieve the singleton for the GoogleAuth library and set up the client.
-    auth2 = gapi.auth2.init({
-      client_id: g_googleAccessId,
-      cookiepolicy: 'single_host_origin',
-      // Request scopes in addition to 'profile' and 'email'
-      //scope: 'additional_scope'
-    });
-
-    var userAgent = window.navigator.userAgent;
-    var isKakao = userAgent.indexOf('KAKAOTALK');
-    //alert(isKakao);
-    if(isKakao > 0)
-    {
-      $('#login_social_google_button_wrapper').click(function(){
-        alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
-      });
-    }
-    else
-    {
-      attachSignin(document.getElementById('login_social_google_button_wrapper'));
-    }
-  });
-  */
 };
 
 //google login end
@@ -567,17 +534,6 @@ function registerPopup(successFunc, closeFunc){
               "<a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a> 동의 (필수)" +
             "</div>" +
           "</div>" +
-
-          /* 추후 적용예정
-          "<div class='login-form-checklist flex_layer'>" +
-            "<div class='meetup_checkbox_wrapper'>" +
-              "<input id='marketing_agreement' style='zoom: 1' type='checkbox' class='agreement_inputbox' value=''/>" +
-              "<img class='marketing_checkbox_img marketing_checkbox_img_select' src="+checkboxSelectImg+">" +
-              "<img class='marketing_checkbox_img marketing_checkbox_img_unselect' src="+checkboxUnSelectImg+">" +
-              "<a href='/marketing_agree' target='_blank'><u>광고성 정보 수신</u></a> 동의 (선택)" +
-            "</div>" +
-          "</div>" +
-          */
         "</div>" +
 
         "<div style='width: 100%; text-align: center;'>" +
@@ -975,3 +931,4 @@ function registerPopup(successFunc, closeFunc){
     startFacebookLogin();
   });
 }
+*/

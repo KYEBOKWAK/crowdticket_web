@@ -10,3 +10,5 @@ export const CHATTING = "CHATTING";
 export const SNS_TYPE = "SNS_TYPE";
 
 export const SEARCH_TEXTS = "SEARCH_TEXTS";
+
+// export const LOGIN_NEXT_URL = "LOGIN_NEXT_URL";

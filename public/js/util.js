@@ -43,15 +43,33 @@ function showLoadingPopup(message){
     //timer: 10000,
     //timer: 2000,
   }).then(function(value){
-    /*
-    if(!value)
-    {
-      swal({
-        title: "처리 시간 초과",
-        text:"인터넷 오류로 인해 처리되지 않았습니다. 다시 한번 시도해주세요",
-      })
-    }
-    */
+  });
+}
+
+function showLoadingNoContentPopup(message){
+  var title = "처리중입니다.";
+
+  if(message)
+  {
+    title = message;
+  }
+
+  var elementPopup = document.createElement("div");
+  elementPopup.innerHTML =
+  "<div><b>" + title + "</b></div>" +
+  "<div id='loading_options'></div>" +
+  "<div class='loading loading_util'>" +
+  "</div>";
+
+  swal({
+    //title: title,
+    content: elementPopup,
+    closeOnClickOutside: false,
+    closeOnEsc: false,
+    button: false,
+    //timer: 10000,
+    //timer: 2000,
+  }).then(function(value){
   });
 }
 

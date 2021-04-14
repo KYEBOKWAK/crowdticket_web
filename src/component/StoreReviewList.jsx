@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Util from '../lib/Util';
+import Login from '../lib/Login';
 
 import StoreReviewItem from './StoreReviewItem';
 import axios from '../lib/Axios';
@@ -158,7 +159,11 @@ class StoreReviewList extends Component{
     */
   };
 
-  goWriteReviewPage(){
+  goWriteReviewPage = () => {
+    window.location.href = this.getWriteReviewPage();
+  }
+
+  getWriteReviewPage = () => {
     let baseURL = 'https://crowdticket.kr'
     const baseURLDom = document.querySelector('#base_url');
     if(baseURLDom){
@@ -166,9 +171,7 @@ class StoreReviewList extends Component{
       baseURL = baseURLDom.value;
     }
 
-    let reviewWriteURL = baseURL + '/review/store/write/' + this.props.store_id;
-
-    window.location.href = reviewWriteURL;
+    return baseURL + '/review/store/write/' + this.props.store_id;
   }
 
   clickWriteReview(e){
@@ -176,13 +179,7 @@ class StoreReviewList extends Component{
 
     if(!isLogin())
     {
-      // loginPopup(null, null);
-      loginPopup(() => {
-        if(isLogin()){
-          swal.close();
-          this.goWriteReviewPage()
-        }
-      }, null);
+      Login.start();      
       return;
     }else{
       this.goWriteReviewPage()

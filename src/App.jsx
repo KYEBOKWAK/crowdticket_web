@@ -126,7 +126,6 @@ class App extends Component {
   }
 
   loginReact(){
-    // loginAjaxSuccess({state: 'success'});
     const myID = Number(document.querySelector('#myId').value);
     if(myID === 0){
       //ID값이 0이면 로그인 안함.
@@ -178,12 +177,12 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className={'login_react'} onClick={() => {this.loginReact()}}>
+        {/* <div className={'login_react'} onClick={() => {this.loginReact()}}>
         </div>
         <div className={'login_react_callback'} onClick={() => { this.loginReactCallback() }}>
         </div>
         <div className={'logout_react'} onClick={() => { this.logoutReact() }}>
-        </div>
+        </div> */}
         <PageController></PageController>
       </Provider>
     );

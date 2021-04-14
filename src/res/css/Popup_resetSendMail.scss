@@ -1,0 +1,67 @@
+.Popup_resetSendMail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+
+  // padding-top: 40px;
+  // padding-bottom: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .bg_container {
+    position: relative;
+    background-color: white;
+    border-radius: 4px;
+
+    padding: 40px;
+
+  }
+
+  .title_text {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .content_text {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #191919;
+  }
+
+  .email_box {
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 16px;
+    font-weight: 500;
+    color: #7f7f7f;
+    margin-top: 32px;
+    padding: 24px;
+    background-color: #fafafa;
+  }
+
+  .button_close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: rgba(0,0,0,0);
+  }
+
+  
+  @media (max-width: 520px){
+    /*모바일일때*/  
+    // padding-top: 40px;
+    // padding-bottom: 40px;
+    // padding-left: 10px;
+    // padding-right: 10px;
+  }
+}

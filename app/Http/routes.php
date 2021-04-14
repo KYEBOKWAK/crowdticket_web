@@ -187,9 +187,13 @@ Route::get('search', 'WelcomeController@getSearchResult');
 Route::get('event/{alias}', 'ProjectController@getEventPage');
 //event end
 
-// Route::get('login/', function(){
-//     return view('login.login');
-// });
+Route::get('auth/login/', function(){
+    return view('auth.login');
+});
+
+Route::get('auth/login/{any}', function($any){
+    return view('auth.login');
+});
 
 Route::group(['middleware' => 'auth'], function () {
 

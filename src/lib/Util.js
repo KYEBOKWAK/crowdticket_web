@@ -361,6 +361,41 @@ const Util = {
     }
     
     return replaceStr;
+  },
+  getBaseURL(path = ''){
+    let baseURL = 'https://crowdticket.kr'
+    const baseURLDom = document.querySelector('#base_url');
+    if(baseURLDom){
+      // console.log(baseURLDom.value);
+      baseURL = baseURLDom.value;
+    }
+
+    if(path === ''){
+      return baseURL;
+    }
+
+    return baseURL+path;
+  },
+  isCheckEmailValid(email){
+
+    var regExpEmail = /^[0-9a-zA-Z_]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    if(!regExpEmail.test(email))
+    {
+      return false;
+    }
+  
+    return true;
+  },
+  getMeta(metaName) {
+    const metas = document.getElementsByTagName('meta');
+  
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+  
+    return '';
   }
 }
 

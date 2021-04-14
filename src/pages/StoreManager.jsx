@@ -15,6 +15,7 @@ import StoreManagerTabHomePage from '../component/StoreManagerTabHomePage';
 import axios from '../lib/Axios';
 
 import ScrollBooster from 'scrollbooster';
+import Login from '../lib/Login';
 
 const TAB_STORE_INFO = 'TAB_STORE_INFO';
 const TAB_ITEM_MANAGER = 'TAB_ITEM_MANAGER';
@@ -76,17 +77,7 @@ class StoreManager extends Component {
   componentDidMount(){    
     if(!isLogin())
     {
-      // loginPopup(null, null);
-      loginPopup(() => {
-        if(isLogin()){
-          this.setState({
-            isLogin: true
-          }, function(){
-            swal.close();
-            window.location.reload();
-          })
-        }
-      }, null);
+      Login.start();
       return;
     }else{
     }

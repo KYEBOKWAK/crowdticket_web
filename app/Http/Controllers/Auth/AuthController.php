@@ -119,7 +119,11 @@ class AuthController extends Controller
         else if($hasSocialType == 'isFacebook')
         {
           $message = '이미 페이스북으로 가입되어 있습니다. 페이스북 계정으로 계속 하시거나, 비밀번호 찾기로 비밀번호를 등록 후 사용해주세요.';
-        }
+        }else{
+          if($request->has('version')){
+            $message = '비밀번호가 일치하지 않습니다';
+          }
+        }        
 
         return ['state' => 'fail', 'message' => $message];
       }
