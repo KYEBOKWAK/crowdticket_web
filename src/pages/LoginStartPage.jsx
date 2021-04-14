@@ -24,7 +24,6 @@ import axios from '../lib/Axios';
 class LoginStartPage extends Component{
 
   auth2 = null;
-
   constructor(props){
     super(props);
 
@@ -51,7 +50,7 @@ class LoginStartPage extends Component{
       }
     }
 
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = () => {
       FB.init({
         appId      : facebook_app_id,
         // cookie     : true,  // enable cookies to allow the server to access
@@ -60,8 +59,7 @@ class LoginStartPage extends Component{
         version    : facebook_app_ver // use graph api version 2.8
       });
   
-      FB.getLoginStatus(function(response) {
-          console.log(response);
+      FB.getLoginStatus((response) => {
       });
   
     };
@@ -158,7 +156,6 @@ class LoginStartPage extends Component{
   
       const url = '/me?fields=id,name,email';
       FB.api(url, (responseMe) => {
-        console.log(responseMe);
         const socialId = responseMe.id;
         const socialName = responseMe.name;
         const socialEmail = responseMe.email;
@@ -206,8 +203,6 @@ class LoginStartPage extends Component{
     } else {
       // The person is not logged into your app or we are unable to tell.
       FB.login((response) => {
-        console.log('bbbbbb');
-        console.log(response);
         if (response.status === 'connected') {
           this.fbStatusChangeCallback(response);
         }
@@ -321,9 +316,10 @@ class LoginStartPage extends Component{
   onClickFacebookLogin = (e) => {
     e.preventDefault();
 
+    // FB.getLoginStatus((response) => {
+    //   this.fbStatusChangeCallback(response);
+    // }, true);
     FB.login((response) => {
-      console.log('aaaaa');
-      console.log(response);
       if (response.status === 'connected') {
         this.fbStatusChangeCallback(response);
       }
