@@ -205,11 +205,12 @@ class LoginStartPage extends Component{
   
     } else {
       // The person is not logged into your app or we are unable to tell.
+      console.log('facebook login!!');
       FB.login((response) => {
         if (response.status === 'connected') {
           this.fbStatusChangeCallback(response);
         }
-      }, {scope: 'id,name,email'});
+      }, {scope: 'email'});
     }
   }
 
