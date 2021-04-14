@@ -221,7 +221,16 @@ class LoginStartPage extends Component{
         Kakao.API.request({
           url: '/v2/user/me',
           success: (res) => {
-            
+            let profile_photo_url = res.kakao_account.profile.thumbnail_image_url;
+            if(profile_photo_url === undefined){
+              profile_photo_url = null;
+            }
+
+            let name = res.kakao_account.profile.nickname;
+            if(name === undefined){
+              name = '';
+            }
+
             if(!res.kakao_account.has_email || res.kakao_account.email === undefined || res.kakao_account.email === null || res.kakao_account.email === ''){
               //email이 없을때
               axios.post('/user/any/check/snsid', {
@@ -231,19 +240,17 @@ class LoginStartPage extends Component{
                 if(result_user.id === null){
                   this.props.callbackNoEmail({
                     'id' : res.id,
-                    'name' : res.kakao_account.profile.nickname,
+                    'name' : name,
                     'email' : null,
-                    'profile_photo_url' : res.kakao_account.profile.thumbnail_image_url,
+                    'profile_photo_url' : profile_photo_url,
                     'type' : 'KAKAO'
                   })
                 }else{
-                  console.log(res.kakao_account);
-                  return;
                   this.requestSNSLogin({
                     'id' : res.id,
-                    'name' : res.kakao_account.profile.nickname,
+                    'name' : name,
                     'email' : res.kakao_account.email,
-                    'profile_photo_url' : res.kakao_account.profile.thumbnail_image_url,
+                    'profile_photo_url' : profile_photo_url,
                     'type' : 'KAKAO'
                   });
                 }
@@ -252,13 +259,11 @@ class LoginStartPage extends Component{
               })
 
             }else{
-              console.log(res.kakao_account);
-              return;
               this.requestSNSLogin({
                 'id' : res.id,
-                'name' : res.kakao_account.profile.nickname,
+                'name' : name,
                 'email' : res.kakao_account.email,
-                'profile_photo_url' : res.kakao_account.profile.thumbnail_image_url,
+                'profile_photo_url' : profile_photo_url,
                 'type' : 'KAKAO'
               });
             }
