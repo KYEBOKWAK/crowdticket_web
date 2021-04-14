@@ -54,14 +54,14 @@ class LoginStartPage extends Component{
     window.fbAsyncInit = function() {
       FB.init({
         appId      : facebook_app_id,
-        cookie     : true,  // enable cookies to allow the server to access
+        // cookie     : true,  // enable cookies to allow the server to access
                             // the session
         xfbml      : true,  // parse social plugins on this page
         version    : facebook_app_ver // use graph api version 2.8
       });
   
       FB.getLoginStatus(function(response) {
-          //console.error(response);
+          console.log(response);
       });
   
     };
