@@ -158,7 +158,6 @@ class LoginStartPage extends Component{
   
       const url = '/me?fields=id,name,email';
       FB.api(url, (responseMe) => {
-        console.log(responseMe);
         const socialId = responseMe.id;
         const socialName = responseMe.name;
         const socialEmail = responseMe.email;
