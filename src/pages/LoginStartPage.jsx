@@ -153,13 +153,12 @@ class LoginStartPage extends Component{
   }
 
   fbStatusChangeCallback = (response) => {
-    console.log(response);
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
   
       const url = '/me?fields=id,name,email';
       FB.api(url, (responseMe) => {
-
+        console.log(responseMe);
         const socialId = responseMe.id;
         const socialName = responseMe.name;
         const socialEmail = responseMe.email;
