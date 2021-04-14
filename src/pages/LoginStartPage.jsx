@@ -153,6 +153,7 @@ class LoginStartPage extends Component{
   }
 
   fbStatusChangeCallback = (response) => {
+    console.log(response);
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
   
@@ -209,7 +210,7 @@ class LoginStartPage extends Component{
         if (response.status === 'connected') {
           this.fbStatusChangeCallback(response);
         }
-      });
+      }, {scope: 'id,name,email'});
     }
   }
 
