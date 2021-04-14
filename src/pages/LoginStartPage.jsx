@@ -237,6 +237,8 @@ class LoginStartPage extends Component{
                     'type' : 'KAKAO'
                   })
                 }else{
+                  console.log(res.kakao_account);
+                  return;
                   this.requestSNSLogin({
                     'id' : res.id,
                     'name' : res.kakao_account.profile.nickname,
@@ -250,6 +252,8 @@ class LoginStartPage extends Component{
               })
 
             }else{
+              console.log(res.kakao_account);
+              return;
               this.requestSNSLogin({
                 'id' : res.id,
                 'name' : res.kakao_account.profile.nickname,
