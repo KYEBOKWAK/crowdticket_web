@@ -320,10 +320,16 @@ class LoginStartPage extends Component{
   onClickFacebookLogin = (e) => {
     e.preventDefault();
 
+    console.log('facebook login!!');
+    FB.login((response) => {
+      if (response.status === 'connected') {
+        this.fbStatusChangeCallback(response);
+      }
+    }, {scope: 'email'});
     // startFacebookLogin();
-    FB.getLoginStatus( (response) => {
-      this.fbStatusChangeCallback(response);
-    });
+    // FB.getLoginStatus( (response) => {
+    //   this.fbStatusChangeCallback(response);
+    // });
   }
 
   render(){
