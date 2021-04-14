@@ -205,7 +205,6 @@ class LoginStartPage extends Component{
   
     } else {
       // The person is not logged into your app or we are unable to tell.
-      console.log('facebook login!!');
       FB.login((response) => {
         if (response.status === 'connected') {
           this.fbStatusChangeCallback(response);
@@ -320,16 +319,11 @@ class LoginStartPage extends Component{
   onClickFacebookLogin = (e) => {
     e.preventDefault();
 
-    console.log('facebook login!!');
     FB.login((response) => {
       if (response.status === 'connected') {
         this.fbStatusChangeCallback(response);
       }
     }, {scope: 'email'});
-    // startFacebookLogin();
-    // FB.getLoginStatus( (response) => {
-    //   this.fbStatusChangeCallback(response);
-    // });
   }
 
   render(){
