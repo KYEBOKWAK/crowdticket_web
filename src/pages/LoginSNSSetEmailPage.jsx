@@ -114,7 +114,7 @@ class LoginSNSSetEmailPage extends Component{
         // result_email.sns_array
         stopLoadingPopup();
         if(result_email.sns_array.length === 0){
-          alert('이미 가입되어 있는 이메일 입니다. 이메일로 로그인 해주세요.');
+          alert('이미 가입되어 있는 이메일 입니다. 이메일로 로그인 후 SNS를 연동 해주세요.');
           return;
         }
 
@@ -137,7 +137,7 @@ class LoginSNSSetEmailPage extends Component{
           }
         }
 
-        alert(sns_titles+'로 가입 되어 있는 이메일 입니다. 해당 sns로 로그인 해주세요');
+        alert(sns_titles+'로 가입 되어 있는 이메일 입니다. 해당 sns로 로그인 후 설정에서 연동 해주세요');
         return;
       }
     }, (error_email) => {
