@@ -428,7 +428,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <ul class="dropdown-menu" role="menu">
                         <!-- <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li> -->
                         <!-- <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/mannayo">내 만나요</a></li> -->
-                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">내 정보 수정</a></li>
+                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">프로필 수정</a></li>
                         @if(\Auth::user()->stores()->first())
                         <li><a href="{{ url('/manager/store') }}">내 상점 관리</a></li>
                         @endif
