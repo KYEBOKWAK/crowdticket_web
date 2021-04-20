@@ -2,9 +2,6 @@
 import React, { Component } from 'react';
 
 import * as AppKeys from '../AppKeys';
-import { connect } from 'react-redux';
-// import actions from '../actions/index.js';
-import * as actions from '../actions/index';
 
 import StoreHome from '../pages/StoreHome';
 import StoreManager from '../pages/StoreManager';
@@ -169,7 +166,7 @@ class PageController extends Component {
 
     if(isNoPage){
       pageController = <></>;
-      searchPage = <></>;
+      // searchPage = <></>;
     }
 
     return (

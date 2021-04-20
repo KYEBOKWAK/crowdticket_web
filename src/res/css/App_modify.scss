@@ -1,0 +1,159 @@
+.App_modify {
+  
+  .all_container {
+    display: flex;
+  }
+
+  .container_title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .left_container {
+    width: 100%;
+    padding-right: 124px;
+  }
+
+  .right_container {
+    width: 276px;
+    flex-shrink: 0;
+    // background-color: red;
+  }
+
+  .right_top_box {
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 0 4px 0 rgba(25, 25, 25, 0.06);
+  }
+
+  .right_top_box_line {
+    width: 100%;
+    height: 1px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: #f4f4f4;
+  }
+
+  .right_top_title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .right_top_content {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #999999;
+  }
+
+  .profile_container {
+    margin-top: 40px;
+  }
+
+  .contents_wrapper {
+    display: flex;
+    height: 44px;
+    margin-top: 32px;
+    align-items: center;
+  }
+
+  .contents_label {
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  .input_box {
+    width: 100%;
+  }
+
+  .input_error_box {
+    display: flex;
+  }
+
+  .buttons_container {
+    margin-top: 40px;
+  }
+
+  .change_password_button {
+    width: 176px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #fafafa;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .update_button {
+    width: 176px;
+    height: 44px;
+    border-radius: 4px;
+    background-color: #00bfff;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .email_text_container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo_container {
+    width: 100%;
+    margin-left: 16px;
+    display: flex;
+  }
+
+  .logo_button {
+    margin-right: 12px;
+  }
+
+  .logo_img {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 1176px){
+    .all_container {
+      display: block;
+    }
+
+    .left_container {
+      padding-right: 0px;
+    }
+
+    .right_container {
+      width: 100%;
+      margin-top: 40px;
+    }
+  }
+
+  @media (max-width: 768px){
+    /*테블릿*/  
+  }
+
+  @media (max-width: 453px){
+    /*모바일일때*/  
+    .contents_label {
+      width: 66px;
+    }
+
+    .right_container {
+      margin-top: 32px;
+    }
+
+    .contents_wrapper {
+      margin-top: 24px;
+    }
+
+    .email_text_container {
+      display: block;
+    }
+
+    .logo_container {
+      margin-top: 12px;
+      margin-left: 0px;
+    }
+  }
+}

@@ -21,14 +21,14 @@
                 <table class="email-title" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
                     <td style="font-family:'Noto Sans KR',sans-serif;font-size:24px;font-weight:bold;font-stretch:normal;font-style:normal;line-height:normal;letter-spacing:normal;color:#212121">
-                      <div style="text-align:left">크티 회원이 되신 것을<br/>환영합니다</div>
+                      <div style="text-align:left">크티 가입을<br/>환영합니다!</div>
                     </td>
                   </tr></tbody>
                 </table>
                 <table class="email-paragraph" border="0" cellpadding="0" cellspacing="0" style="overflow:hidden;margin:0px auto;padding:32px 0px;width:100%;max-width:630px;clear:both;background:none">
                   <tbody><tr>
                     <td style="padding:0px 0px;font-family:'Noto Sans KR',sans-serif;font-size:14px;font-weight:normal;font-stretch:normal;font-style:normal;line-height:1.71;letter-spacing:normal;color:#575757;word-break:keep-all">
-                      <div style="text-align:left">크티에서는 여러분이 가장 좋아하는 크리에이터의 이벤트를 만나볼 수 있습니다. 온라인 선물나눔부터 팬미팅까지! 어떤 이벤트가 여러분의 참여를 기다리고 있는지 지금 바로 확인해보세요!</div>
+                      <div style="text-align:left">크리에이터와 팬이 함께하는 크티의 회원이 되어주셔서 감사합니다. 지금부터 크티 콘텐츠상점 및 팬이벤트 서비스를 이용하실 수 있습니다. 다양한 크리에이터들이 크티에서 어떤 방법으로 자신만의 콘텐츠를 상품으로 만들고 판매하고 있는지 바로 확인해보세요!</div>
                     </td>
                   </tr></tbody>
                 </table>

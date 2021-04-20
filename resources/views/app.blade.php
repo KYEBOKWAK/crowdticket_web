@@ -50,7 +50,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=4') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=5') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/Footer_React.css?version=1') }}" rel="stylesheet"/>
@@ -629,8 +629,8 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=164') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=13') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=165') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=14') }}"></script>
 
 </body>
 </html>

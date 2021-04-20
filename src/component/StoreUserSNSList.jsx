@@ -4,29 +4,6 @@ import React, { Component } from 'react';
 import axios from '../lib/Axios';
 import Util from '../lib/Util';
 
-
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
-// import Util from '@lib/Util';
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
-
-// const list = [
-//   {
-//     img_store_url: 'https://s3-ap-northeast-1.amazonaws.com/crowdticket0/channels/twitter_logo.png'
-//   }
-// ]
-
-
-
 class StoreUserSNSList extends Component{
 
   constructor(props){

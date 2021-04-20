@@ -21,7 +21,7 @@
 <input type="hidden" id='password_reset_token' name="token" value="@if(isset($token)){{$token}}@endif">
 
 
-<input id='app_page_key' type='hidden' value='WEB_PAGE_PASSWORD_RESET'/>
+<input id='app_page_key' type='hidden' value='WEB_PAGE_PASSWORD_RESET_EMAIL'/>
 
 @endsection
 

@@ -3,26 +3,11 @@
 import React, { Component } from 'react';
 
 
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
-// import Util from '@lib/Util';
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
-
 import axios from '../lib/Axios';
 
 import Util from '../lib/Util';
 import Types from '../Types';
-// import InfiniteScroll from 'react-infinite-scroll-component';
-// import moment from 'moment';
+
 import moment_timezone from 'moment-timezone';
 
 import TableComponent from '../component/TableComponent';
@@ -318,49 +303,7 @@ class StoreManagerTabAccountPage extends Component{
                 ]
               }
               datas={this.state.items}
-            ></TableComponent>
-           
-            
-            {/* <InfiniteScroll
-              // style={{backgroundColor: 'red'}}
-              dataLength={this.state.items.length} //This is important field to render the next data
-              next={this.requestMoreData}
-              hasMore={this.state.hasMore}
-              loader=
-              {
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                  <h4>Loading...</h4>
-                </div>
-              }
-              endMessage={
-                <></>
-                // <p style={{ textAlign: 'center' }}>
-                //   <b>Yay! You have seen it all</b>
-                // </p>
-              }
-              // below props only if you need pull down functionality
-              // refreshFunction={this.refresh}
-              // pullDownToRefresh
-              pullDownToRefreshThreshold={50}
-              pullDownToRefreshContent={
-                <></>
-              }
-              releaseToRefreshContent={
-                <></>
-              }
-            >
-              {this.state.items.map((data) => {
-                return <div key={data.id} className={'paid_list_title_container paid_list_item_container'}>
-                        <div className={'paid_title_date paid_list_item_text'}>
-                          {moment_timezone(data.created_at).format('YYYY-MM-DD')}
-                        </div>
-                        <div className={'paid_title_price paid_list_item_text'}>
-                          {Util.getNumberWithCommas(data.pay_price)}원
-                        </div>
-                      </div>
-              })}
-            </InfiniteScroll> */}
-            
+            ></TableComponent>           
             
           </div>
         </div>

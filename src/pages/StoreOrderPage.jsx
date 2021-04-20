@@ -3,15 +3,9 @@
 import React, { Component } from 'react';
 
 
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
 import Login from '../lib/Login';
-
-// import { connect } from 'react-redux';
 
 import Types from '../Types';
 
@@ -31,15 +25,6 @@ import ic_radio_btn_s from '../res/img/radio-btn-s.svg'
 
 import ic_icon_download from '../res/img/icon-download.svg';
 
-
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
 
 const INPUT_STORE_ORDER_NAME = "INPUT_STORE_ORDER_NAME";
 const INPUT_STORE_ORDER_CONTACT = "INPUT_STORE_ORDER_CONTACT";
@@ -1168,32 +1153,10 @@ class StoreOrderPage extends Component{
   
 };
 
-// props 로 넣어줄 스토어 상태값
-// const mapStateToProps = (state) => {
-//   return {
-//     name: state.user.name,
-//     email: state.user.email,
-//     contact: state.user.contact
-//   }
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     // handleAddPageViewKey: (pageKey: string, data: any) => {
-//     //   dispatch(actions.addPageViewKey(pageKey, data));
-//     // },
-//     // handleAddToastMessage: (toastType:number, message: string, data: any) => {
-//     //   dispatch(actions.addToastMessage(toastType, message, data));
-//     // }
-//   }
-// };
-
 StoreOrderPage.defaultProps = {
   // name: ''
   // people: [
   // ]
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(StoreItemDetailPage);
-// export default connect(mapStateToProps, null)(StoreOrderPage);
 export default StoreOrderPage;

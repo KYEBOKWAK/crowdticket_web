@@ -163,6 +163,3 @@ class App_Login extends Component {
 
 let domContainer = document.querySelector('#react_app_login');
 ReactDOM.render(<App_Login />, domContainer);
-
-// let footerContainer = document.querySelector('#react_footer');
-// ReactDOM.render(<Footer_React />, footerContainer);

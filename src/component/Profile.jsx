@@ -6,6 +6,8 @@ import axios from '../lib/Axios';
 import default_user_img from '../res/img/default-user-image.png';
 import ic_camera_fill from '../res/img/ic-camera-fill.svg';
 
+import ic_btn_profile_edit from '../res/img/btn-profile-edit.svg';
+
 import imageCompression from 'browser-image-compression';
 import ImageCroper from '../component/ImageCroper';
 
@@ -252,9 +254,16 @@ class Profile extends Component{
     if(this.props.isEdit){
       isButtonDisable = false;
 
-      camera_icon = <div className={'ic_camera_box'}>
-                      <img className={'ic_camera_img'} src={ic_camera_fill} />
-                    </div>
+      if(this.props.isBlackCameraIcon){
+        camera_icon = <div className={'ic_camera_box'} style={{width: 32, height: 32}}>
+                        <img src={ic_btn_profile_edit} />
+                      </div>
+      }else{
+        camera_icon = <div className={'ic_camera_box'}>
+                        <img className={'ic_camera_img'} src={ic_camera_fill} />
+                      </div>
+      }
+      
     }
 
     let imageCroperDom = <></>;
@@ -316,23 +325,6 @@ class Profile extends Component{
       <div className={'Profile'}>
         <input onClick={this.onInputClick} accept={'image/*'} ref={(ref) => {this.fileInputRef = ref}} type="file" onChange={this.handleImageUpload} style={{display: 'none'}}/>
         {buttonDom}
-        {/* <button className={'profile_button'} onClick={(e) => {this.clickPhotoAdd(e)}} disabled={isButtonDisable}>
-          <div style={profile_wrapper_style} className={'profile_img_wrapper'}>
-            <img 
-            onDragStart={(e) => {e.preventDefault()}}
-            style={profile_img_style} 
-            onLoad={(img) => {this.onImgLoad(img)}} 
-            src={photoImg} 
-            className={'profile_img'} 
-            onError={(e) => 
-              {
-                this.setState({profile_photo_url: ''})
-              }} />
-          </div>
-
-          {camera_icon}
-        </button> */}
-
         {imageCroperDom}
       </div>
     )
@@ -343,6 +335,7 @@ Profile.defaultProps = {
   user_id: null,
   circleSize: 80,
   isEdit: false,
+  isBlackCameraIcon: false
 
   // successUploadCallback: () => {},
   // errorUploadCallback: () => {},

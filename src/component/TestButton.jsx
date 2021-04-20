@@ -1,12 +1,6 @@
 
 import React, { Component } from 'react';
 
-// import '../css/TestButton.css';
-
-import { connect } from 'react-redux';
-// import actions from '../actions/index.js';
-import * as actions from '../actions/index';
-
 'use strict';
 
 class TestButton extends Component {

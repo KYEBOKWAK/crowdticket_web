@@ -171,9 +171,7 @@ class Footer_React extends Component{
               <button onClick={(e) => {this.onClickLink(e, FOOTER_LINK_TYPE_STORE)}} className={'title_text'}>
                 콘텐츠상점
               </button>
-              {/* <div className={'title_text'}>
-                크리에이터
-              </div> */}
+              
               <button onClick={(e) => {this.onClickLink(e, FOOTER_LINK_TYPE_EVENT)}} className={'title_text'}>
                 팬 이벤트
               </button>

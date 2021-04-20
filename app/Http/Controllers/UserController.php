@@ -138,10 +138,11 @@ class UserController extends Controller
 
     private function getUpdateView($user, $toast = null)
     {
-        return view('user.modify', [
-            'user' => $user,
-            'toast' => $toast
-        ]);
+      return view('user.modify_react', []);
+        // return view('user.modify', [
+        //     'user' => $user,
+        //     'toast' => $toast
+        // ]);
     }
 
     public function updateUser(Request $request, $id)
@@ -292,5 +293,10 @@ class UserController extends Controller
         return view('store.my_contents', [
             'user' => $user
         ]);
+    }
+
+    public function getPasswordReset()
+    {
+      return view('user.password_reset');
     }
 }

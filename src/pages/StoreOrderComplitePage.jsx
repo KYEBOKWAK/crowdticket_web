@@ -6,21 +6,6 @@ import StoreReceiptItem from '../component/StoreReceiptItem';
 import axios from '../lib/Axios';
 
 import Types from '../Types';
-// import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
-// import FontWeights from '@lib/fontWeights';
-
-// import * as appKeys from '~/AppKeys';
-// import Util from '@lib/Util';
-// import * as GlobalKeys from '~/GlobalKeys';
-
-//redux START
-// import * as actions from '@actions/index';
-// import { connect } from 'react-redux';
-//redux END
-// import Colors from '@lib/colors';
-// import Types from '~/Types';
-
-
 
 class StoreOrderComplitePage extends Component{
 

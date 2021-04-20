@@ -100,7 +100,6 @@ class LoginStartPage extends Component{
         var isKakao = userAgent.indexOf('KAKAOTALK');
         if(isKakao > 0)
         {
-          // alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
           return;
         }else{
           this.attachSignin(document.getElementById('login_social_google_react_button'));
@@ -112,14 +111,6 @@ class LoginStartPage extends Component{
   }
 
   attachSignin = (element) => {
-    // var userAgent = window.navigator.userAgent;
-    // var isKakao = userAgent.indexOf('KAKAOTALK');
-    // //alert(isKakao);
-    // if(isKakao > 0)
-    // {
-    //   alert('카카오톡 브라우저에선 구글 로그인이 불가능합니다.');
-    //   return;
-    // }
 
     this.auth2.attachClickHandler(element, {},
     (googleUser) => {

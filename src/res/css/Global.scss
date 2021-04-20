@@ -33,32 +33,6 @@
   }
 }
 
-/*
-.pageController_home {
-  width: 100%;
-
-  @media (min-width: 1176px){
-    display: flex;
-    width: 1176px;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @media (max-width: 1176px){
-    width: 100%;
-    // padding-left: 40px;
-    // padding-right: 40px;
-  }
-
-  @media (max-width: 768px){
-    width: 100%;
-    // padding-left: 24px;
-    // padding-right: 24px;
-  }
-}
-*/
-
 .pageController {
   width: 100%;
   
@@ -80,26 +54,6 @@
   }
 }
 
-// @media (min-width: 520px){
-//   .pageController{
-//     display: flex;
-//     width: 520px;
-//     justify-content: center;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-// }
-
-// @media (min-width: 1176px){
-//   .pageController{
-//     display: flex;
-//     width: 1176px;
-//     justify-content: center;
-//     margin-left: auto;
-//     margin-right: auto;
-//   }
-// }
-
 @media (min-width: 520px){
   .pageController{
     display: flex;
@@ -118,3 +72,58 @@ input::placeholder {
   background-color: rgb(204, 204, 204);
   color: rgb(255, 255, 255);
 }
+
+/*개편된 전체 페이지 감싸는 컨트롤러 START*/
+.allPageController {
+  max-width: 1176px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 60px;
+
+  // background-color: blue;
+}
+
+.SelectBox {
+  width: 100%;
+  height: 44px;
+  position: relative;
+  border-radius: 4px;
+  border: solid 1px #f4f4f4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-right: 12px;
+  font-size: 14px;
+  color: #191919;
+}
+
+.selectBox_select {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  -webkit-appearance: menulist-button;
+}
+
+@media (max-width: 1176px){
+  .allPageController{
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 767px){
+  .allPageController{
+    width: 100%;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/*개편된 전체 페이지 감싸는 컨트롤러 END*/

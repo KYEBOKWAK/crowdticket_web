@@ -6,8 +6,10 @@ import * as AppKeys from '../AppKeys';
 
 import LoginPage from '../pages/LoginPage';
 import LoginResetPasswordPage from '../pages/LoginResetPasswordPage';
+import PasswordResetPage from '../pages/PasswordResetPage';
 
 import Login from '../lib/Login';
+
 
 
 // import Storage from './lib/Storage';
@@ -83,8 +85,11 @@ class PageLoginController extends Component {
     if(_pageKey === AppKeys.WEB_PAGE_LOGIN){
       pageView = <LoginPage></LoginPage>;
     }
-    else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET){
+    else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET_EMAIL){
       pageView = <LoginResetPasswordPage email_reset={true}></LoginResetPasswordPage>
+    }
+    else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET) {
+      pageView = <PasswordResetPage></PasswordResetPage>
     }
     else{
       isNoPage = true;

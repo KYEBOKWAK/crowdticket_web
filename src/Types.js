@@ -34,6 +34,11 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  input_error_messages: {
+    empty: 'empty',
+    password_max_length: 'password_max_length',
+    password_same_check: 'password_same_check'
+  },
   files_servers_state: {
     INIT: 0,
     DONE: 1,

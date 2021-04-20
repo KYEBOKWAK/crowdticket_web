@@ -13,7 +13,7 @@ class LoginForgetEmailPage extends Component{
     super(props);
 
     this.state = {
-      email: '',
+      email: this.props.email,
       successPopup: false,
 
       inputWarningClassName: 'input_warning',
@@ -146,5 +146,9 @@ class LoginForgetEmailPage extends Component{
     )
   }
 };
+
+LoginForgetEmailPage.defaultProps = {
+  email: ''
+}
 
 export default LoginForgetEmailPage;

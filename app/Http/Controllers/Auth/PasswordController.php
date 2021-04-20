@@ -35,7 +35,7 @@ class PasswordController extends Controller
         $this->auth = $auth;
         $this->passwords = $passwords;
 
-        $this->middleware('guest');
+        // $this->middleware('guest');
     }
 
     public function postEmail(Request $request)
