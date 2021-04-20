@@ -612,12 +612,12 @@ class App_modify extends Component {
 
               <div className={'contents_wrapper'}>
                 <div className={'contents_label'}>
-                  년생
+                  출생 연도
                 </div>
                 <div className={'input_box'}>
                   <SelectBox 
                     default_value={this.state.age}
-                    null_show_value={'년도 선택'}
+                    null_show_value={'연도 선택'}
                     list={this.state.select_age_list_data}
                     null_show_value_set_last={true}
                     callbackChangeSelect={(value) => {

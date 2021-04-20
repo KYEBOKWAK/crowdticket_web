@@ -68,7 +68,11 @@ class PasswordResetPage extends Component{
       password_new: this.state.new_password,
       password_new_check: this.state.new_password_confirmation
     }, (result) => {
-      swal("변경 완료", "", "success");
+      swal("변경 완료", "", "success").then(
+        () => {
+          window.history.back();
+        }
+      );
     }, (error) => {
 
     })
