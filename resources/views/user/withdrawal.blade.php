@@ -14,7 +14,7 @@
   </style>
 
   <link href="{{ asset('/dist/css/Page_pc_776_Controller.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/WithdrawalPage.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/WithdrawalPage.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 

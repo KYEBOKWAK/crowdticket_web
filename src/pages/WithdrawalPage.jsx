@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 import ic_check_checked from '../res/img/check-checked.svg';
 import ic_check_unchecked from '../res/img/check-unchecked.svg';
+import ic_grey_close from '../res/img/ic-grey-close.svg';
 
 import SelectBox from '../component/SelectBox';
 
@@ -12,7 +13,7 @@ import Types from '../Types';
 import axios from '../lib/Axios';
 
 //Types에 10번이 자유 입력
-const WITHDRAWAL_TYPE_FREE_TYPE = 10;
+const WITHDRAWAL_TYPE_FREE_TYPE = '10';
 
 class WithdrawalPage extends Component{
 
@@ -22,8 +23,10 @@ class WithdrawalPage extends Component{
     this.state = {
       isAgree: false,
 
-      withdrawal_select_value: null,
-      withdrawal_reason: ''
+      withdrawal_select_value: WITHDRAWAL_TYPE_FREE_TYPE,
+      withdrawal_reason: '',
+
+      isHelpBarShow: true
     }
   };
 
@@ -96,8 +99,6 @@ class WithdrawalPage extends Component{
         break;
       }
     });
-
-    
   }
 
   requestLeave = () => {
@@ -122,6 +123,20 @@ class WithdrawalPage extends Component{
     });
   }
 
+  onClickHelpBarClose = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      isHelpBarShow: false
+    })
+  }
+
+  onClickHelpButton = (e) => {
+    e.preventDefault();
+
+    plusFriendChat();
+  }
+
   render(){    
     let checkImg = ic_check_unchecked;
     if(this.state.isAgree){
@@ -138,6 +153,24 @@ class WithdrawalPage extends Component{
     let reason_text_area = <></>;
     if(this.state.withdrawal_select_value === WITHDRAWAL_TYPE_FREE_TYPE){
       reason_text_area = <textarea maxLength={255} className={'reason_textarea'} type="text" name={'drawal_reason'} placeholder={'회원님의 탈퇴 사유는 무엇인가요? 편하고 솔직하게 말씀해주세요.'} value={this.state.withdrawal_reason} onChange={(e) => {this.onChangeTextArea(e)}}/>
+    }
+
+    let helpBarDom = <></>;
+    if(this.state.isHelpBarShow){
+      helpBarDom = <div className={'help_bar_box'}>
+                    <div className={'help_bar_container'}>
+                      <div className={'help_bar_explain_text'}>
+                        상담을 통해 해결해드릴 수 있는 문제라면, <br />
+                        탈퇴 대신 크티 고객센터에 먼저 문의해주세요!
+                      </div>
+                      <button onClick={(e) => {this.onClickHelpButton(e)}} className={'help_bar_button'}>
+                        고객센터 문의하기
+                      </button>
+                    </div>
+                    <button onClick={(e) => {this.onClickHelpBarClose(e)}} className={'help_bar_close_button'}>
+                      <img src={ic_grey_close} />
+                    </button>
+                  </div>
     }
 
     return(
@@ -184,7 +217,7 @@ class WithdrawalPage extends Component{
             null_show_value={'탈퇴 사유'}
             list={Types.withdrawal}
             callbackChangeSelect={(value) => {
-              const selectValue = Number(value);
+              const selectValue = value;
               
               let withdrawal_reason = '';
               const withdrawalData = Types.withdrawal.find((value) => {
@@ -201,7 +234,7 @@ class WithdrawalPage extends Component{
                 withdrawal_reason = '';
               }
               this.setState({
-                withdrawal_select_value: Number(value),
+                withdrawal_select_value: selectValue,
                 withdrawal_reason: withdrawal_reason
               })
             }}
@@ -220,6 +253,8 @@ class WithdrawalPage extends Component{
             크티 계속하기
           </button>
         </div>
+
+        {helpBarDom}
       </div>
     )
   }
