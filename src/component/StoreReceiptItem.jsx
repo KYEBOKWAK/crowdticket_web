@@ -24,11 +24,7 @@ import Popup_text_viewer from '../component/Popup_text_viewer';
 
 import StoreStateProcess from '../component/StoreStateProcess';
 
-import StorePlayTimePlan from '../component/StorePlayTimePlan';
-// import moment_timezone from 'moment-timezone';
-// moment_timezone.tz.setDefault("Asia/Seoul");
-// const moment_timezone = require('moment-timezone');
-// moment_timezone.tz.setDefault("Asia/Seoul");
+import Profile from '../component/Profile';
 
 const REFUND_STATE_NONE = "REFUND_STATE_NONE";
 const REFUND_STATE_SELECT = "REFUND_STATE_SELECT";
@@ -274,20 +270,7 @@ class StoreReceiptItem extends Component{
   }
 
   itemClick(e){
-    /*
-    e.preventDefault();
     
-    let baseURL = 'https://crowdticket.kr'
-    const baseURLDom = document.querySelector('#base_url');
-    if(baseURLDom){
-      // console.log(baseURLDom.value);
-      baseURL = baseURLDom.value;
-    }
-
-    let goURL = baseURL + '/item/store/' + this.props.store_item_id;
-
-    window.location.href = goURL;
-    */
   }
 
   clikcDetailReceipt(e){
@@ -312,45 +295,10 @@ class StoreReceiptItem extends Component{
     this.setState({
       refund_state: REFUND_STATE_SELECT
     })
-    /*
-    swal("주문을 취소하시겠습니까?", {
-      buttons: {
-        nosave: {
-          text: "아니오",
-          value: "notsave",
-        },
-        save: {
-          text: "예",
-          value: "cancel",
-        },
-      },
-    })
-    .then((value) => {
-      switch (value) {
-        case "cancel":
-        {
-          this.requestOrderCancel();
-        }
-        break;
-      }
-    });
-    */
   }
 
   clickOk(e){
     e.preventDefault();
-    // this.storePlayTimePlanRef.isPassSelectTime()
-    // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-    //   if(this.storePlayTimePlanRef.getSelectKey() === null){
-    //     alert("진행 가능 시간을 선택하셔야 합니다.");
-    //     return;
-    //   }
-
-    //   if(this.storePlayTimePlanRef.getProductDetailAsk() === ''){
-    //     alert("고객에게 디테일한 요청을 적어주세요.");
-    //     return;
-    //   }
-    // }
     
     swal("해당 주문을 승인하시겠습니까? (주문번호: "+this.props.store_order_id+" )", {
       buttons: {
@@ -507,75 +455,11 @@ class StoreReceiptItem extends Component{
         return;
       });
     }
-
-    /*
-    if(this.state.item_product_state !== Types.product_state.ONE_TO_ONE){
-      this.fileUploaderRef.uploadFiles(this.state.order_user_id, Types.file_upload_target_type.product_file, 
-        (result_upload_files) => {
-          let filesInsertID = [];
-          for(let i = 0 ; i < result_upload_files.list.length ; i++){
-            const data = result_upload_files.list[i];
-            let _data = {
-              file_id: data.insertId
-            }
-            
-            filesInsertID.push(_data);
-          }
-    
-          if(filesInsertID.length === 0){
-            this.requestStoreRelayCustomer();
-          }else{
-            axios.post("/store/file/set/orderid", {
-              store_order_id: this.props.store_order_id,
-              filesInsertID: filesInsertID.concat()
-            }, (result_files) => {
-              this.requestStoreRelayCustomer();
-            }, (error_files) => {
-              alert("파일 ORDER ID 셋팅 에러");
-              return;
-            })
-          }
-    
-        }, (error_upload_files) => {
-          alert('파일 업로드 실패. 새로고침 후 다시 시도해주세요.');
-          return;
-        });
-    }else{
-      this.requestStoreRelayCustomer();
-    }
-    */
   }
 
   requestStoreOrderNext = () => {
     showLoadingPopup('변경중입니다..');
     this.requsetStoreOrderOk();
-
-    /*
-    if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
-      axios.post("/store/order/detailask/set", {
-        store_order_id: this.props.store_order_id,
-        product_detail_ask: this.storePlayTimePlanRef.getProductDetailAsk(),
-      }, (result_detail_ask) => {
-
-        axios.post("/store/eventplaytime/select", {
-          store_order_id: this.props.store_order_id,
-          event_play_time_id: this.storePlayTimePlanRef.getSelectTimeId(),
-          select_time: this.storePlayTimePlanRef.getSelectTime()
-        }, (result) => {
-          this.requsetStoreOrderOk();
-        }, (error) => {
-          stopLoadingPopup();
-        })
-
-      }, (error_detail_ask) => {
-        stopLoadingPopup();
-      })
-
-      
-    }else{
-      this.requsetStoreOrderOk();
-    }
-    */
   }
 
   requsetStoreOrderOk(){
@@ -631,22 +515,6 @@ class StoreReceiptItem extends Component{
     }, (error) => {
       stopLoadingPopup();
     })
-
-    /*
-    axios.post("/orders/store/state/relay/customer", {
-      store_order_id: this.props.store_order_id,
-      product_answer: this.state.thanks_text
-    }, (result) => {
-      stopLoadingPopup();
-      this.setState({
-        state: result.data.state
-      }, () => {
-        this.requestOrderInfo();
-      })
-    }, (error) => {
-      stopLoadingPopup();
-    })
-    */
   }
 
   clickReason(e, key){
@@ -1230,7 +1098,7 @@ class StoreReceiptItem extends Component{
                           {this.state.comment_contents}
                           </div>
                         </div>
-                        <img className={'product_answer_img'} src={this.state.order_user_profile_photo_url} />
+                        <Profile user_id={this.state.order_user_id} circleSize={40}></Profile>
                       </div>
                     </div>
       }
@@ -1328,20 +1196,11 @@ class StoreReceiptItem extends Component{
         {_storeOrderItemDom}
 
         {state_process_dom}
-        {/* <div className={'StoreStateProcess_container'}>
-          <StoreStateProcess product_state={this.state.item_product_state} order_state={this.state.state}></StoreStateProcess>
-        </div> */}
 
         {orderUserDom}
         {oneTooneUseInfoDom}
 
         {request_content_dom}
-        {/* <div className={'request_content'}>
-          <div className={'order_user_info_title'}>
-            요청사항
-          </div>
-          {this.state.requestContent}
-        </div> */}
         
         {customer_files_dom}
         {product_files_dom}
@@ -1349,8 +1208,6 @@ class StoreReceiptItem extends Component{
         {refund_reason_dom}
         
         {under_line}
-        {/* <div className={'under_line'}>
-        </div> */}
 
         {priceInfoDom}
 
@@ -1371,50 +1228,6 @@ class StoreReceiptItem extends Component{
         {openProductTextView}
       </div>
     )
-
-    /*
-    return(
-      <div className={'StoreReceiptItem'}>
-        {order_id_dom}
-        {_storeOrderItemDom}
-
-        {orderNameDom}
-        <div className={'request_content'}>
-          {this.state.requestContent}
-        </div>
-
-        <div className={'under_line'}>
-        </div>
-
-        <FileUploader state={Types.file_upload_state.FILES} isUploader={false} store_order_id={this.props.store_order_id}></FileUploader>
-
-        <div className={'pay_state_text_container'}>
-          <div>
-            {Util.getNumberWithCommas(this.state.total_price)}원 {this.state.card_state_text}
-          </div>
-          <div>
-            {moment(this.state.created_at).format('YYYY-MM-DD HH:mm') }
-          </div>
-        </div>
-
-        <div className={'state_container'} style={{marginTop: state_container_marginTop}}>
-          <div className={'state_text'}>
-            {this.state.state_string}
-          </div>
-          {stateButtonDom}
-        </div>
-
-        {refund_reason_dom}
-
-        {bottomLongButtonDom}
-        {stateRefundButtonLabel}
-        {stateRefundButtonSubLabel}
-        {refundStateContainer}
-
-        {_goDetailButtonDom}        
-      </div>
-    )
-    */
   }
 };
 
