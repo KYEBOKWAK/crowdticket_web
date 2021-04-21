@@ -90,7 +90,8 @@ const Types = {
     store_info_count: 'store_info_count',
     store_event_info: 'store_event_info',
     link_store: 'link_store',
-    link_magazine: 'link_magazine'
+    link_magazine: 'link_magazine',
+    link_url: 'link_url'
   },
   width: {
     pc: 1176,

@@ -61,7 +61,7 @@ class Home_Top_Banner extends Component{
     this.Carousel.onClickNext(e);
   }
 
-  onClickItem = (e, target_id, target_type) => {
+  onClickItem = (e, target_id, target_type, link_url, is_open_new_window) => {
     if (this.COORDS.xDown !== this.COORDS.xUp) {
       e.preventDefault();
     } else {
@@ -84,6 +84,14 @@ class Home_Top_Banner extends Component{
       }
       else if(target_type === Types.carousel_target_type.link_magazine){
         goURL = baseURL + '/magazine/'+target_id;
+      }
+      else if(target_type === Types.carousel_target_type.link_url) {
+        goURL = link_url;
+        if(is_open_new_window){
+          isPopup = true;
+        }else{
+          isPopup = false;
+        }
       }
 
       if(isPopup){
@@ -169,7 +177,7 @@ class Home_Top_Banner extends Component{
         const itemDom = <button onDragStart={(e) => {e.preventDefault();}} 
                           onMouseDown={(e) => {this.handleOnMouseDown(e)}}
                           onMouseUp={(e) => {this.handleMouseUp(e)}} 
-                          onClick={(e) => {this.onClickItem(e, data.target_id, data.target_type)}} 
+                          onClick={(e) => {this.onClickItem(e, data.target_id, data.target_type, data.link_url, data.is_open_new_window)}} 
                           className={'carousel_item_container'} 
                           style={bgStyle} 
                           disabled={isButtonDisabled}

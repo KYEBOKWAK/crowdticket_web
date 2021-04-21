@@ -27,5 +27,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=3') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=4') }}"></script>
 @endsection
