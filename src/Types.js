@@ -34,6 +34,36 @@ import * as GlobalTypes from "./GlobalKeys";
 // }
 
 const Types = {
+  withdrawal: [
+    {
+      value: 0,
+      show_value: '서비스를 자주 이용하지 않아요.'
+    },
+    {
+      value: 1,
+      show_value: '서비스 내에 콘텐츠 또는 크리에이터가 부족해요.'
+    },
+    {
+      value: 2,
+      show_value: '서비스 기능이나 디자인이 이용하기 불편해요.'
+    },
+    {
+      value: 3,
+      show_value: '구매자를 위한 혜택이 부족해요.'
+    },
+    {
+      value: 4,
+      show_value: '중복가입 및 실수로 회원가입을 했어요.'
+    },
+    {
+      value: 5,
+      show_value: '개인정보를 남기고 싶지 않아요.'
+    },
+    {
+      value: 10,
+      show_value: '자유 입력'
+    }
+  ],
   input_error_messages: {
     empty: 'empty',
     password_max_length: 'password_max_length',

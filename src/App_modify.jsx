@@ -17,6 +17,8 @@ import img_logo_kakao from './res/img/img-logo-kakao.svg';
 import img_logo_google from './res/img/img-logo-google.svg';
 import img_logo_facebook from './res/img/img-logo-facebook.png';
 
+import ic_text_btn_more from './res/img/ic-text-btn-more.svg';
+
 class App_modify extends Component {
   
   profileRef = null;
@@ -333,7 +335,6 @@ class App_modify extends Component {
   onClickGoogleUnLogin = (e) => {
     e.preventDefault();
 
-    console.log('dfdf');
     axios.post("/user/update/sns/id/delete", {
       sns_type : 'GOOGLE'
     }, (result) => {
@@ -404,6 +405,12 @@ class App_modify extends Component {
         }
       }, {scope: 'email'});
     }
+  }
+
+  onClickWithDrawal = (e) => {
+    e.preventDefault();
+
+    window.location.href = '/users/withdrawal';
   }
 
   render() {
@@ -629,6 +636,11 @@ class App_modify extends Component {
                 </div>
               </div>
 
+              <div className={'buttons_container'}>
+                <button className={'update_button'} onClick={(e) => {this.onClickUpdate(e)}}>
+                    수정하기
+                </button>
+              </div>
 
             </div>
             <div className={'right_container'}>
@@ -649,13 +661,12 @@ class App_modify extends Component {
                 </div>
 
               </div>
+
+              <button onClick={(e) => {this.onClickWithDrawal(e)}} className={'drawal_button'}>
+                크티 탈퇴하기
+                <img src={ic_text_btn_more} />
+              </button>
             </div>
-          </div>
-          
-          <div className={'buttons_container'}>
-            <button className={'update_button'} onClick={(e) => {this.onClickUpdate(e)}}>
-                수정하기
-            </button>
           </div>
         </div>
         <ReactTooltip />

@@ -299,4 +299,9 @@ class UserController extends Controller
     {
       return view('user.password_reset');
     }
+
+    public function getWithDrawalPage()
+    {
+      return view('user.withdrawal');
+    }
 }

@@ -24,6 +24,8 @@ import StoreHomeOld from '../pages/StoreHome_2021_02_17';
 import SearchPage from '../pages/SearchPage';
 import SearchResultPage from '../pages/SearchResultPage';
 
+
+
 'use strict';
 
 class PageController extends Component {
@@ -140,7 +142,8 @@ class PageController extends Component {
     else if(_pageKey === AppKeys.WEB_PAGE_KEY_STORE_SEARCH_RESULT){
       pageView = <SearchResultPage></SearchResultPage>;
       isNewPage = true;
-    }else{
+    }
+    else{
       isNoPage = true;
     }
 

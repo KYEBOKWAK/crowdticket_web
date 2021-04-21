@@ -1294,7 +1294,7 @@ class StoreAddItemPage extends Component{
       }
 
       completed_agree_check_dom = <button onClick={(e) => {this.onClickAgree(e)}} className={'complited_type_agree_container'}>
-                                    <img src={checkImg} />
+                                    <img style={{width: 20, height: 20}} src={checkImg} />
                                     <div className={'complited_type_agree_text'}>
                                       등록한 콘텐츠로 인해 저작권 및 법적 요구사항을 위반하는 문제 발생 시 정산이 보류될 수 있음에 동의합니다.
                                     </div>

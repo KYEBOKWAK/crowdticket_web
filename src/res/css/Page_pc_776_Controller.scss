@@ -1,0 +1,23 @@
+.Page_pc_776_Controller {
+  
+  width: 100%;
+  max-width: 776px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-top: 64px;
+  @media (max-width: 776px){
+    /*테블릿*/  
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 56px;
+  }
+
+  @media (max-width: 688px){
+    /*모바일일때*/  
+
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 40px;
+  }
+}

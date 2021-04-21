@@ -11,7 +11,7 @@
   } */
   </style>
 
-  <link href="{{ asset('/dist/css/App_modify.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/App_modify.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/InputBox.css?version=0') }}" rel="stylesheet"/>
 
@@ -27,5 +27,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=1') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=2') }}"></script>
 @endsection

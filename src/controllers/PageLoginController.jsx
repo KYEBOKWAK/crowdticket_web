@@ -86,10 +86,10 @@ class PageLoginController extends Component {
       pageView = <LoginPage></LoginPage>;
     }
     else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET_EMAIL){
-      pageView = <LoginResetPasswordPage email_reset={true}></LoginResetPasswordPage>
+      pageView = <LoginResetPasswordPage email_reset={true}></LoginResetPasswordPage>;
     }
     else if(_pageKey === AppKeys.WEB_PAGE_PASSWORD_RESET) {
-      pageView = <PasswordResetPage></PasswordResetPage>
+      pageView = <PasswordResetPage></PasswordResetPage>;
     }
     else{
       isNoPage = true;

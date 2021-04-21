@@ -27,6 +27,7 @@ const Dotenv = require('dotenv-webpack');
 mix.react('src/App.jsx', 'dist/')
 .react('src/App_Login.jsx', 'dist/')
 .react('src/App_modify.jsx', 'dist/')
+.react('src/App_PC_776.jsx', 'dist/')
 .sass('src/res/css/Global.scss', 'dist/css/')
 .sass('src/res/css/StoreHome.scss', 'dist/css/')
 .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -106,6 +107,8 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/App_modify.scss', 'dist/css/')
 .sass('src/res/css/InputBox.scss', 'dist/css/')
 .sass('src/res/css/PasswordResetPage.scss', 'dist/css/')
+.sass('src/res/css/WithdrawalPage.scss', 'dist/css/')
+.sass('src/res/css/Page_pc_776_Controller.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

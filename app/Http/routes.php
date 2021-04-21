@@ -203,6 +203,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('users/{id}/mannayo', 'UserController@getUserMannayo');
     Route::get('users/store/{id}/orders', 'UserController@getMyContents');
 
+    Route::get('users/withdrawal', 'UserController@getWithDrawalPage');
+
     Route::get('user/password/reset', 'UserController@getPasswordReset');
 
     Route::post('blueprints', 'BlueprintController@createBlueprint');

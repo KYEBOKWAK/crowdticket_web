@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
     <g fill="none" fill-rule="evenodd">
-        <g>
+        <g stroke="#00BFFF">
             <g>
-                <g transform="translate(-1300 -2250) translate(1300 2210) translate(0 40)">
-                    <rect width="20" height="20" fill="#00BFFF" rx="4"/>
-                    <path stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9.814L8.894 13 14 7"/>
+                <g transform="translate(-113 -477) translate(113 433) translate(0 44)">
+                    <rect width="19" height="19" x="2.5" y="2.5" fill="#FFF" rx="2"/>
+                    <g stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M10 0.938L3.125 7.938 0 4.756" transform="translate(7 8.063)"/>
+                    </g>
                 </g>
             </g>
         </g>

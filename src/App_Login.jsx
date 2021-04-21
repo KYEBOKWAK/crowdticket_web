@@ -40,9 +40,19 @@ class App_Login extends Component {
         }else{
           //값이 없음
           // console.log("이미 로그아웃됨");
-        }        
-      })      
+        }
+      })
     }else{
+      //새로고침 됐는데, 탈퇴 유저면 로그아웃 해준다
+      axios.post("/user/info", {}, 
+      (result) => {
+        const data = result.userInfo;
+        if(data.is_withdrawal){
+          logout();
+        }
+      }, (error) => {
+
+      })
     }
   }
   

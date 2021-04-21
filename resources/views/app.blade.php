@@ -489,6 +489,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="g_go_login_react" style="display:none;"></div>
 <div id="react_root"></div>
 <div id="react_app_login"></div>
+<div id="react_App_PC_776"></div>
 
 <footer>
   <div id="react_footer">
@@ -629,8 +630,9 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=165') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=16') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=166') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=17') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=0') }}"></script>
 
 </body>
 </html>
