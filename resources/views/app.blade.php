@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="naver-site-verification" content="8bce253ce1271e2eaa22bd34b508b72cc60044a5"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1"/>
+    <meta name="facebook-domain-verification" content="761h35o1rdduhr3bz5xlvb05760144" />
     @section('meta')
       <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     @show
