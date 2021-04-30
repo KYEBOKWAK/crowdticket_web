@@ -1,6 +1,7 @@
 import * as GlobalTypes from "./GlobalKeys";
 
 const Types = {
+  category_total_etc_id: 9999,
   sort_category: {
     SORT_POPULAR: 'SORT_POPULAR',
     SORT_NEW: 'SORT_NEW',

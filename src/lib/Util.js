@@ -1,6 +1,13 @@
 import moment_timezone from 'moment-timezone';
 
 const Util = {
+  arrayEquals: function(array1, array2){
+    if(JSON.stringify(array1) === JSON.stringify(array2)){
+      return true;
+    }else{
+      return false;
+    }
+  },
   getPayStoreNewMerchant_uid: function(store_id, user_id){
     //이 함수를 수정하려면 서버쪽 코드와 동일 해아함.
     const timestamp = Math.floor(new Date().getTime() / 1000)

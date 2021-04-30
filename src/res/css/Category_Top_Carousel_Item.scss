@@ -25,6 +25,7 @@ $item_mobile_text_box_width: 108px;
 
   .item_box {
     width: $item_box_width;
+    height: 72px;
     // text-align: left;
     display: flex;
     flex-direction: column;
@@ -35,8 +36,8 @@ $item_mobile_text_box_width: 108px;
     font-size: 16px;
     font-weight: bold;
 
-    padding-top: 24px;
-    padding-bottom: 24px;
+    // padding-top: 24px;
+    // padding-bottom: 24px;
   }
 
   .item_select {
@@ -59,6 +60,7 @@ $item_mobile_text_box_width: 108px;
 
     .item_box {
       width: $item_tablet_item_width;
+      height: 68px;
     }
   }
 
@@ -69,8 +71,8 @@ $item_mobile_text_box_width: 108px;
     .item_box {
       width: $item_mobile_item_width;
 
-      padding-top: 16px;
-      padding-bottom: 16px;
+      // padding-top: 16px;
+      // padding-bottom: 16px;
     }    
   }
 }

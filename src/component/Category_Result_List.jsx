@@ -14,6 +14,7 @@ import Types from '../Types';
 
 const HOME_THUMB_CONTAINER_SHOW_LINE_COUNT = 4;
 const REQUEST_ONCE_ITME = 16;
+
 class Category_Result_List extends Component{
 
   isUnmount = false;
@@ -38,8 +39,9 @@ class Category_Result_List extends Component{
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    
     if(prevState.category_sub_ids.length !== nextProps.category_sub_ids.length || 
-      prevState.contents_filter_selects.length !== nextProps.contents_filter_selects.length || 
+      !Util.arrayEquals(prevState.contents_filter_selects, nextProps.contents_filter_selects) || 
       prevState.contents_sort_select_type !== nextProps.contents_sort_select_type){
       return {
         items: [],
@@ -51,18 +53,6 @@ class Category_Result_List extends Component{
     }
 
     return null;
-
-    /*
-    if(prevState.category_sub_ids.length !== nextProps.category_sub_ids.length){
-      return {
-        items: [],
-        items_count: 0,
-        category_sub_ids: nextProps.category_sub_ids.concat()
-      }
-    }
-
-    return null;
-    */
   }
 
   componentDidMount(){
@@ -73,16 +63,17 @@ class Category_Result_List extends Component{
   };
 
   componentDidUpdate(prevProps, prevState){
-
-    // if(this.state.category_sub_ids.length !== prevState.category_sub_ids.length){
-    //   this.requestMoreData();
-    // }
-
     if(this.state.category_sub_ids.length !== prevState.category_sub_ids.length || 
-      this.state.contents_filter_selects.length !== prevState.contents_filter_selects.length || 
+      !Util.arrayEquals(this.state.contents_filter_selects, prevState.contents_filter_selects) || 
       this.state.contents_sort_select_type !== prevState.contents_sort_select_type){
         this.requestMoreData();
     }
+
+    // if(this.state.category_sub_ids.length !== prevState.category_sub_ids.length || 
+    //   this.state.contents_filter_selects.length !== prevState.contents_filter_selects.length || 
+    //   this.state.contents_sort_select_type !== prevState.contents_sort_select_type){
+    //     this.requestMoreData();
+    // }
   }
 
   handleScroll = () => {
@@ -224,14 +215,36 @@ class Category_Result_List extends Component{
     
   }
 
+  isTotalEtcSub = () => {
+    const category_sub_ids_data = this.state.category_sub_ids.find((value) => {
+      if(value === Types.category_total_etc_id){
+        return value;
+      }
+    })
+
+    if(category_sub_ids_data === undefined){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   requestCategoryList = () => {
+    let category_sub_ids = this.state.category_sub_ids.concat();
+    if(this.isTotalEtcSub()){
+      for(let i = 0 ; i < this.props.ETC_LISTS.length ; i++){
+        const data = this.props.ETC_LISTS[i];
+        category_sub_ids.push(data);
+      }
+    }
+
     axios.post("/category/any/items/list", 
     {
       limit: REQUEST_ONCE_ITME,
       skip: this.state.items_count,
 
       category_top_item_id: this.props.category_top_id,
-      category_sub_item_ids: this.state.category_sub_ids.concat(),
+      category_sub_item_ids: category_sub_ids.concat(),
 
       contents_filter_selects: this.state.contents_filter_selects.concat(),
       contents_sort_select_type: this.state.contents_sort_select_type

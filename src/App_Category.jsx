@@ -28,6 +28,9 @@ import Popup_category_info from './component/Popup_category_info';
 const MENU_CONTENTS = 'MENU_CONTENTS';
 const MENU_CREATOR = 'MENU_CREATOR';
 
+//9999로 넘어오는 전체 카테고리의 기타에 id값 모음
+const ETC_LISTS = [9, 15, 20, 23, 26, 29, 32];
+
 class App_Category extends Component {
   scrollBooster = null;
 
@@ -335,6 +338,7 @@ class App_Category extends Component {
                             category_sub_ids={this.state.category_sub_select_list.concat()}
                             contents_filter_selects={this.state.contents_filter_selects}
                             contents_sort_select_type={this.state.contents_sort_select_type}
+                            ETC_LISTS={ETC_LISTS}
                           >
                           </Category_Result_List>
                         </div>
@@ -370,6 +374,7 @@ class App_Category extends Component {
                             category_top_id={this.state.category_top_item_id}
                             category_sub_ids={this.state.category_sub_select_list.concat()}
                             creator_sort_select_type={this.state.creator_sort_select_type}
+                            ETC_LISTS={ETC_LISTS}
                           >
                           </Category_Creator_List>
                         </div>

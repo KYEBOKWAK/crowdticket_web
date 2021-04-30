@@ -220,14 +220,36 @@ class Category_Creator_List extends Component{
     
   }
 
+  isTotalEtcSub = () => {
+    const category_sub_ids_data = this.state.category_sub_ids.find((value) => {
+      if(value === Types.category_total_etc_id){
+        return value;
+      }
+    })
+
+    if(category_sub_ids_data === undefined){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   requestCategoryList = () => {
+    let category_sub_ids = this.state.category_sub_ids.concat();
+    if(this.isTotalEtcSub()){
+      for(let i = 0 ; i < this.props.ETC_LISTS.length ; i++){
+        const data = this.props.ETC_LISTS[i];
+        category_sub_ids.push(data);
+      }
+    }
+
     axios.post("/category/any/store/list", 
     {
       limit: REQUEST_ONCE_ITME,
       skip: this.state.items_count,
 
       category_top_item_id: this.props.category_top_id,
-      category_sub_item_ids: this.state.category_sub_ids.concat(),
+      category_sub_item_ids: category_sub_ids.concat(),
 
       creator_sort_select_type: this.state.creator_sort_select_type
       // search_text: this.props.search_text
