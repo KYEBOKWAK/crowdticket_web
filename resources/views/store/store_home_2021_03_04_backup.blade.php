@@ -113,7 +113,7 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreHome.css?version=7') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreHome.css?version=8') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=5') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=1') }}" rel="stylesheet"/>

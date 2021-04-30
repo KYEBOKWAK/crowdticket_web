@@ -249,7 +249,6 @@ class Home_Thumb_Container_Item extends Component{
             </div>
           </div>
         </button>
-        
       </div>
     )
   }

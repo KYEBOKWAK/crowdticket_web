@@ -51,7 +51,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=5') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=6') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/Footer_React.css?version=1') }}" rel="stylesheet"/>
@@ -475,15 +475,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
           </a>
       </div>
-    
-    <!--
-    <div id="animate" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
-      <a href="javascript:void plusFriendChat()">
-        <img src="https://developers.kakao.com/assets/img/about/logos/plusfriend/consult_small_yellow_pc.png"/>
-      </a>
-    </div>
-  -->
 </div>
+
+@yield('react_main')
 
 <div id="isMobile"></div>
 
@@ -631,9 +625,9 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=169') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=19') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=2') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=170') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=20') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=3') }}"></script>
 
 </body>
 </html>

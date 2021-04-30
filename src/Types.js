@@ -1,39 +1,48 @@
 import * as GlobalTypes from "./GlobalKeys";
 
-// interface ITypes {
-//   login: any,
-//   loading: any,
-//   ticketingSlide: any,
-//   toastMessage: any,
-//   mannayo_sort: any,
-//   project_sort: any,
-//   project_list_type: any,
-//   refresh: any,
-//   comment: any,
-//   mannayo_type_view: any,
-//   mannayo_list: any,
-//   mannayo_collect: any,
-//   main_view_type: any,
-//   myPage_MenuBarTypes: any,
-//   order: any,
-//   pay_method: any,
-//   order_commision: any,
-//   like: any,
-//   fine: any,
-//   gender: any,
-//   res: any,
-//   find_email: any,
-//   directOpen: any,
-//   socket: any,
-//   chatMessage: any,
-//   chatSynchronize: any,
-//   chatMessageState: any,
-//   alertButtons: any,
-//   rooms: any,
-//   project: any
-// }
-
 const Types = {
+  sort_category: {
+    SORT_POPULAR: 'SORT_POPULAR',
+    SORT_NEW: 'SORT_NEW',
+    SORT_PRICE_HIGH: 'SORT_PRICE_HIGH',
+    SORT_PRICE_LOW: 'SORT_PRICE_LOW',
+    SORT_NAME_HIGH: 'SORT_NAME_HIGH',
+    SORT_NAME_LOW: 'SORT_NAME_LOW'
+  },
+  category_top: [
+    {
+      id: 0,  //DB의 category_top에 id와 일치하게 한다.
+      show_value: '전체'
+    },
+    {
+      id: 1, 
+      show_value: '🎨  만들어드려요'
+    },
+    {
+      id: 2,
+      show_value: '🔈  소통해요'
+    },
+    {
+      id: 3,
+      show_value: '✏️  알려드려요'
+    },
+    {
+      id: 4,
+      show_value: '✌️  같이 해요'
+    },
+    {
+      id: 5,
+      show_value: '🥳  만나요'
+    },
+    {
+      id: 6,
+      show_value: '📢  홍보해드려요'
+    },
+    {
+      id: 7,
+      show_value: '💾  바로 즐겨요'
+    }
+  ],
   withdrawal: [
     {
       value: '0',
@@ -107,7 +116,9 @@ const Types = {
     find_result_stores: 'find_result_stores',
     find_result_items: 'find_result_items',
     find_result_projects: 'find_result_projects',
-    find_no_result_recommend: 'find_no_result_recommend'
+    find_no_result_recommend: 'find_no_result_recommend',
+
+    category_result: 'category_result'
   },
   thumb_tags: {
     trend: 'trend',

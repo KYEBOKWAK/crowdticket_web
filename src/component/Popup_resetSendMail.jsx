@@ -13,12 +13,7 @@ class Popup_resetSendMail extends Component{
     super(props);
 
     this.state = {
-      // quill_height: this.getQuillHeight()
     }
-
-    // this.handleChange = this.handleChange.bind(this)
-    //3.0.0
-    // this.requestMoreData = this.requestMoreData.bind(this);
   };
 
   componentDidMount(){

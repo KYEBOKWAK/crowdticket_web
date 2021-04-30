@@ -270,4 +270,11 @@ class WelcomeController extends Controller
     ]);
   }
 
+  public function getCategoryPage($category_top_item_id)
+  {
+    return view('category.category', [
+      'category_top_item_id' => $category_top_item_id
+    ]);
+  }
+
 }

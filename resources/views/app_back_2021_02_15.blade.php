@@ -32,7 +32,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=5') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=6') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
 @yield('css')

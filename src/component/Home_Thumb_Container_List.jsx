@@ -29,7 +29,7 @@ class Home_Thumb_Container_List extends Component{
       hasMore: true,
 
       // isRefreshing: true,
-      isShowMoreButton: true
+      isShowMoreButton: true,
     }
   };
 
@@ -46,8 +46,8 @@ class Home_Thumb_Container_List extends Component{
       this.requestItemTotalCount();
     }
 
-    // if(this.props.isMore){
-    //   // window.addEventListener('scroll', this.handleScroll);
+    // if(this.props.isMoreAuto){
+    //   window.addEventListener('scroll', this.handleScroll);
     // }
   };
 
@@ -232,6 +232,8 @@ class Home_Thumb_Container_List extends Component{
     }
     else if(this.props.type === Types.thumb_list_type.find_result_projects){
       requestURL = '/main/any/search/projects/count';
+    }else{
+      return;
     }
 
     axios.post(requestURL, {
@@ -259,8 +261,8 @@ class Home_Thumb_Container_List extends Component{
   }
 
   componentWillUnmount(){
-    // if(this.props.isMore){
-    //   // window.removeEventListener('scroll', this.handleScroll);
+    // if(this.props.isMoreAuto){
+    //   window.removeEventListener('scroll', this.handleScroll);
     // }
   };
 
@@ -283,6 +285,7 @@ class Home_Thumb_Container_List extends Component{
   }
 
   // handleScroll = () => {
+
   //   let refresh_target_dom = document.querySelector('#refresh_target_'+this.props.type);
   //   // const navFakeBar = document.querySelector("#navbar_fake_dom");
 
@@ -304,7 +307,6 @@ class Home_Thumb_Container_List extends Component{
   // }
 
   render(){
-
     // let titleText = '';
     let labelDom = <></>;
     if(this.props.type === Types.thumb_list_type.live_update){

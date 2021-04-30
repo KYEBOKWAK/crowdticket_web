@@ -1,0 +1,120 @@
+.Popup_category_filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 10000;
+
+  // padding-top: 40px;
+  // padding-bottom: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .bg_container {
+    position: relative;
+    background-color: white;
+    border-radius: 4px;
+
+    padding: 40px;
+    width: 408px;
+    // height: 400px;
+  }
+
+  .title_text {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .check_button_container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+  }
+
+  .check_button {
+    display: flex;
+    align-items: center;
+    width: 140px;
+  }
+
+  .check_button_text {
+    font-size: 16px;
+    margin-left: 8px;
+    color: #191919;
+  }
+
+  .check_container {
+    margin-top: 32px;
+  }
+
+  .button_container {
+    display: flex;
+    // justify-content: space-between;
+    margin-top: 40px;
+  }
+
+  .clear_button {
+    width: 160px;
+    height: 44px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    border: solid 1px #f4f4f4;
+  }
+
+  .save_button {
+    width: 160px;
+    height: 44px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #00bfff;
+    color: #ffffff;
+  }
+
+  .button_gap {
+    width: 8px;
+  }
+
+  .button_close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: rgba(0,0,0,0);
+  }
+
+  
+  @media (max-width: 1176px){
+    
+    justify-content: flex-end;
+
+    .bg_container {
+      width: 100%;
+    }
+
+    .check_button {
+      width: 100%;
+    }
+
+    .clear_button {
+      width: 100%;
+    }
+  
+    .save_button {
+      width: 100%;
+    }
+  
+    .button_gap {
+      width: 17px;
+    }
+  }
+
+  @media (max-width: 768px){    
+  }
+}

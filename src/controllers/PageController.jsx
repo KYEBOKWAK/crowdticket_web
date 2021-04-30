@@ -19,8 +19,6 @@ import StoreISPOrderComplitePage from '../pages/StoreISPOrderComplitePage';
 
 import EventPage from '../pages/EventPage';
 
-import StoreHomeOld from '../pages/StoreHome_2021_02_17';
-
 import SearchPage from '../pages/SearchPage';
 import SearchResultPage from '../pages/SearchResultPage';
 
@@ -110,9 +108,6 @@ class PageController extends Component {
     }else if(_pageKey === AppKeys.WEB_PAGE_KEY_STORE_HOME){
       pageView = <StoreHome></StoreHome>;
       isNewPage = true;
-    }
-    else if(_pageKey === AppKeys.WEB_PAGE_KEY_STORE_HOME_OLD){
-      pageView = <StoreHomeOld></StoreHomeOld>;
     }
     else if(_pageKey === AppKeys.WEB_STORE_PAGE_DETAIL){
       pageView = <StoreDetailPage></StoreDetailPage>;

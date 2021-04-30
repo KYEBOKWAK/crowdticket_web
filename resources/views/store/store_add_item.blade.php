@@ -22,6 +22,8 @@
   <link href="{{ asset('/dist/css/react-easy-crop.css?version=0') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/CompletedFileUpLoader.css?version=4') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('/dist/css/Category_Selecter.css?version=0') }}" rel="stylesheet"/>
   
 @endsection
 

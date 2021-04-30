@@ -111,7 +111,6 @@ class Home_Thumb_Attention_Item extends Component{
 
   onClickGoStore = (e) => {
     // e.preventDefault();
-    console.log('dsfasdf');
 
     if (this.COORDS.xDown !== this.COORDS.xUp) {
       e.preventDefault()

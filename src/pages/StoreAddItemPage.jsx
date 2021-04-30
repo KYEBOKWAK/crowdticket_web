@@ -28,6 +28,8 @@ import CompletedFileUpLoader from '../component/CompletedFileUpLoader';
 import ic_check_checked from '../res/img/check-checked.svg';
 import ic_check_unchecked from '../res/img/check-unchecked.svg';
 
+import Category_Selecter from '../component/Category_Selecter';
+
 const INPUT_STORE_MANAGER_ADD_ITEM_TITLE = "INPUT_STORE_MANAGER_ADD_ITEM_TITLE";
 const INPUT_STORE_MANAGER_ADD_ITEM_CONTENT = "INPUT_STORE_MANAGER_ADD_ITEM_CONTENT";
 const INPUT_STORE_MANAGER_ADD_ITEM_PRICE = "INPUT_STORE_MANAGER_ADD_ITEM_PRICE";
@@ -143,7 +145,10 @@ class StoreAddItemPage extends Component{
 
       isShowImageCroper: false,
 
-      is_check_agree_download_type: false
+      is_check_agree_download_type: false,
+
+      select_top_id: null,
+      select_sub_id: null
     }
 
     // this.onDrop = this.onDrop.bind(this);
@@ -383,7 +388,10 @@ class StoreAddItemPage extends Component{
 
         youtube_url: _item_youtube_url,
         item_type_contents: result.data.type_contents,
-        item_product_answer: result.data.completed_type_product_answer
+        item_product_answer: result.data.completed_type_product_answer,
+
+        select_top_id: result.data.category_top_item_id,
+        select_sub_id: result.data.category_sub_item_id
       })
     }, (error) => {
 
@@ -536,23 +544,33 @@ class StoreAddItemPage extends Component{
     if(this.state.item_title === ''){
       alert("콘텐츠명을 입력해주세요");
       return;
-    }else if(this.state.item_price === ''){
+    }
+    
+    if(this.state.item_price === ''){
       alert("콘텐츠 가격을 입력해주세요");
       return;
-    }else if(this.state.item_content === ''){
+    }
+    
+    if(this.state.item_content === ''){
       alert("콘텐츠 설명을 입력해주세요");
       return;
-    }else if(this.state.item_ask === ''){
+    }
+    
+    if(this.state.item_ask === ''){
       if(this.state.item_type_contents === Types.contents.customized){
         alert("구매 요청사항을 적어주세요");
         return;
       }
-    }else if(this.state.item_price < 0){
+    }
+    
+    if(this.state.item_price < 0){
       alert("0원 이상의 가격으로 입력해주세요.");
       return;
-    }else if(this.state.item_notice === ''){
-      // alert("상품의 유의사항을 입력해주세요.");
-      // return;
+    }
+    
+    if(this.state.select_sub_id === null){
+      alert('콘텐츠의 카테고리를 선택해주세요!');
+      return;
     }
 
     // if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
@@ -630,7 +648,10 @@ class StoreAddItemPage extends Component{
         youtube_url: this.state.youtube_url,
 
         completed_type_product_answer: this.state.item_product_answer,
-        type_contents: this.state.item_type_contents
+        type_contents: this.state.item_type_contents,
+
+        category_top_item_id: this.state.select_top_id,
+        category_sub_item_id: this.state.select_sub_id
       }, (result) => {
         this.nextFileCheck(result.item_id);
       }, (error) => {
@@ -669,7 +690,10 @@ class StoreAddItemPage extends Component{
         youtube_url: this.state.youtube_url,
 
         completed_type_product_answer: this.state.item_product_answer,
-        type_contents: this.state.item_type_contents
+        type_contents: this.state.item_type_contents,
+
+        category_top_item_id: this.state.select_top_id,
+        category_sub_item_id: this.state.select_sub_id
       }, (result_update) => {
 
         this.nextFileCheck(this.state.item_id);
@@ -1385,6 +1409,25 @@ class StoreAddItemPage extends Component{
             </div>
           </div>
           <textarea className={'input_content_textarea'} value={this.state.item_content} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_CONTENT)}} placeholder={`판매 할 콘텐츠에 대한 소개를 작성해주세요!\n\n당장 소개가 떠오르지 않는다면 아래 예시와 같은 내용을 적어보는 건 어떨까요?\n\n- 콘텐츠 제공 형태 (파일 유형, 영상 길이, 이미지 사이즈, 진행 방식, 내용물, 특징 등)\n- 콘텐츠 기획 의도 및 준비 과정 소개\n- 작업 가능 범위\n- 콘텐츠 관련 팬들에게 전하고 싶은 말`}></textarea>
+
+          <div className={'input_container'}>
+            <div className={'input_label'}>
+              콘텐츠 카테고리
+            </div>
+            <div className={'necessary_dot'}>
+            </div>
+          </div>
+          <div style={{marginTop: 8}}>
+            <Category_Selecter 
+            item_type_contents={this.state.item_type_contents}
+            default_category_sub_id={this.state.select_sub_id} 
+            callback_select={(select_top_id, select_sub_id) => {
+              this.setState({
+                select_sub_id: select_sub_id,
+                select_top_id: select_top_id
+              })
+            }}></Category_Selecter>
+          </div>
 
           {content_provision_form_dom}
 

@@ -193,6 +193,41 @@ $thumb_item_height: 95px;
 
   }
 
+  //카테고리 start
+  .category_top_label {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .category_top_container {
+    margin-top: 24px;
+  }
+
+  .category_top_button {
+    width: 276px;
+    height: 72px;
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    font-size: 16px;
+    font-weight: 500;
+    color: #191919;
+  }
+
+  .category_top_item_box {
+    display: flex;
+  }
+
+  .category_top_item_line_box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .category_item_gap {
+    width: 24px;
+  }
+  //카테고리 end
+
   @media (max-width: 1176px){
     overflow: hidden;
 
@@ -234,6 +269,29 @@ $thumb_item_height: 95px;
     .thumb_tag_attention_container {
       padding-left: 40px;
     }
+
+    //카테고리 start
+
+    .category_top_button {
+      width: 100%;
+      height: 68px;
+      font-size: 14px;
+    }
+
+    .category_top_item_box {
+      margin-bottom: 16px;
+    }
+
+    .category_top_item_line_box {
+      display: block;
+      margin-bottom: 0px;
+    }
+
+    .category_item_gap {
+      width: 16px;
+      flex-shrink: 0;
+    }
+    //카테고리 end
   }
   
   @media (max-width: 768px){

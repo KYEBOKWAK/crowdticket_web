@@ -1,0 +1,38 @@
+.Category_Top_Carousel {
+  
+  width: 100%;
+  position: relative;
+
+  .prev_button_container {
+    position: absolute;
+    top: 180px;
+    left: -39px;
+  }
+
+  .next_button_container {
+    position: absolute;
+    top: 180px;
+    right: -39px;
+  }
+
+  @media (max-width: 1270px){
+    // width: 100%;
+    .prev_button_container {
+      display: none;
+    }
+  
+    .next_button_container {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1176px){
+    // width: 100%;
+    padding-left: 40px;
+  }
+
+  @media (max-width: 768px){
+    // width: 100%;
+    padding-left: 24px;
+  }
+}

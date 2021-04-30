@@ -195,6 +195,8 @@ Route::get('auth/login/{any}', function($any){
     return view('auth.login');
 });
 
+Route::get('category/{top_id}', 'WelcomeController@getCategoryPage');
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('users/{id}/form', 'UserController@getUpdateForm');

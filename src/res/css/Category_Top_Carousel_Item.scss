@@ -1,0 +1,76 @@
+$item_box_width: 176px; //pc
+
+$item_tablet_box_width: 234px;  //218 + 16
+$item_tablet_padding: 16px;
+$item_tablet_item_width: 218px;
+
+$item_mobile_box_width: 164px;  //148 + 16
+$item_mobile_padding: 16px;
+$item_mobile_item_width: 148px;
+
+$item_text_box_width: 228px;
+$item_tablet_text_box_width: 170px;
+$item_mobile_text_box_width: 108px;
+
+.Category_Top_Carousel_Item {
+  width: $item_box_width;
+  height: 72px;
+  // margin-left: auto;
+  // margin-right: auto;
+  
+
+  // margin-right: 24px;
+  // padding: 2px;
+  // box-sizing: border-box;
+
+  .item_box {
+    width: $item_box_width;
+    // text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-radius: 4px;
+    background-color: #f4f4f4;
+    font-size: 16px;
+    font-weight: bold;
+
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .item_select {
+    color: #ffffff;
+    background-color: #191919;
+  }
+
+  .item_button_box {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
+  }
+
+  
+
+  @media (max-width: 1176px){
+    /*모바일일때*/
+    width: $item_tablet_box_width;
+    padding-right: $item_tablet_padding;
+
+    .item_box {
+      width: $item_tablet_item_width;
+    }
+  }
+
+  @media (max-width: 768px){
+    width: $item_mobile_box_width;
+    padding-right: $item_mobile_padding;
+
+    .item_box {
+      width: $item_mobile_item_width;
+
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }    
+  }
+}

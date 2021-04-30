@@ -82,7 +82,7 @@
 
     .mannayo_meetup_list_container{
       padding: 0px 0px;
-      margin-top: 64px;
+      padding-top: 64px;
     }
 
     .mannayo_creator_pop_list_title{
