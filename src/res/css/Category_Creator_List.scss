@@ -38,6 +38,15 @@
     margin-top: 16px;
   }
 
+  .no_list_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #999999;
+    margin-top: 100px;
+  }
+
   @media (max-width: 1176px){
 
     .list_container {
@@ -54,6 +63,10 @@
     .item_box {
       width: 148px;
       margin-bottom: 50px;
+    }
+
+    .no_list_container {
+      margin-top: 80px;
     }
   }
 

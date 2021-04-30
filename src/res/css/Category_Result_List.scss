@@ -54,6 +54,15 @@
     margin-top: 60px;
   }
 
+  .no_list_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #999999;
+    margin-top: 100px;
+  }
+
   @media (max-width: 1176px){
 
     .column_items_gap {
@@ -80,6 +89,10 @@
 
     .more_button {
       margin-top: 40px;
+    }
+
+    .no_list_container {
+      margin-top: 80px;
     }
   }
 }

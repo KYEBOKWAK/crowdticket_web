@@ -77,40 +77,23 @@ class Category_Creator_List extends Component{
       this.state.creator_sort_select_type !== prevState.creator_sort_select_type){
       this.requestMoreData();
     }
-    // console.log(this.state.items_count);
-
-    // if(this.state.items_count < this.state.items_total_count) {
-    //   if(!this.state.isShowMoreButton){
-    //     this.setState({
-    //       isShowMoreButton: true
-    //     })
-    //   }
-    // }else{
-    //   if(this.state.isShowMoreButton){
-    //     this.setState({
-    //       isShowMoreButton: false
-    //     })
-    //   }
-    // }
   }
 
   handleScroll = () => {
     let refresh_target_dom = document.querySelector('#refresh_target_creator_list');
+    if(refresh_target_dom){
+      const { top, height } = refresh_target_dom.getBoundingClientRect();
 
-    const { top, height } = refresh_target_dom.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-    const windowHeight = window.innerHeight;
-
-    if(top <= windowHeight){
-      if(!this.state.isRefreshing && this.state.hasMore){
-        // console.log(windowHeight);
-        // console.log(top);
-        this.setState({
-          isRefreshing: true
-        }, () => {
-          console.log('리프레시!!!')
-          this.requestMoreData();
-        })
+      if(top <= windowHeight){
+        if(!this.state.isRefreshing && this.state.hasMore){
+          this.setState({
+            isRefreshing: true
+          }, () => {
+            this.requestMoreData();
+          })
+        }
       }
     }
   }
@@ -168,44 +151,6 @@ class Category_Creator_List extends Component{
 
       _items.push(itemDom);
     }
-    /*
-    for(let i = 0 ; i < lineCount ; i++){
-      
-      let rowItems = [];
-      for(let j = 0 ; j < 2 ; j++){
-        let user_id = null;
-
-        if(index >= _rand_list.length){
-          break;
-          // if(j === 0){
-          //   //두개중 한개만 비어있는 경우가 있음
-          //   isOverCount = true;
-          // }
-        }else{
-          const data = _rand_list[index];
-          user_id = data.user_id;
-        }
-
-        let itemDom = <></>;
-        if(user_id !== null){
-          itemDom = <div key={j}>
-                      <Profile user_id={user_id} circleSize={this.state.user_profile_size} isEdit={false}></Profile>
-                    </div>
-        }
-
-        rowItems.push(itemDom);
-
-        index++;
-      }
-
-      let columnItems = <div key={index} className={'row_items_container'}>
-                          {rowItems}
-                        </div>
-
-      _items.push(columnItems);
-    }
-    */
-
     
     this.setState({
       items: _items.concat(),
@@ -339,17 +284,28 @@ class Category_Creator_List extends Component{
       }
     }
 
+    if(_items.length === 0){
+      return(
+        <div className={'Category_Creator_List'}>
+          <div className={'no_list_container'}>
+            <div>
+              필터 검색 결과가 없습니다.
+            </div>
+          </div>
+        </div>
+      )    
+    }else{
+      return(
+        <div className={'Category_Creator_List'}>
+          <div className={'list_container'}>
+            {_items}
+          </div>
+          <div id={'refresh_target_creator_list'}>
+          </div>
+        </div>
+      )    
+    }
     
-    return(
-      <div className={'Category_Creator_List'}>
-        <div className={'list_container'}>
-          {/* {this.state.items} */}
-          {_items}
-        </div>
-        <div id={'refresh_target_creator_list'}>
-        </div>
-      </div>
-    )    
   }
 };
 

@@ -46,6 +46,7 @@ class Category_Result_List extends Component{
       return {
         items: [],
         items_count: 0,
+        isRefreshing: true,
         category_sub_ids: nextProps.category_sub_ids.concat(),
         contents_filter_selects: nextProps.contents_filter_selects.concat(),
         contents_sort_select_type: nextProps.contents_sort_select_type
@@ -78,23 +79,23 @@ class Category_Result_List extends Component{
 
   handleScroll = () => {
     let refresh_target_dom = document.querySelector('#refresh_target_'+this.props.type);
+    if(refresh_target_dom){
+      const { top, height } = refresh_target_dom.getBoundingClientRect();
 
-    const { top, height } = refresh_target_dom.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-    const windowHeight = window.innerHeight;
-
-    if(top <= windowHeight){
-      if(!this.state.isRefreshing && this.state.hasMore){
-        // console.log(windowHeight);
-        // console.log(top);
-        this.setState({
-          isRefreshing: true
-        }, () => {
-          console.log('리프레시!!!')
-          this.requestMoreData();
-        })
+      if(top <= windowHeight){
+        if(!this.state.isRefreshing && this.state.hasMore){
+          // console.log(windowHeight);
+          // console.log(top);
+          this.setState({
+            isRefreshing: true
+          }, () => {
+            this.requestMoreData();
+          })
+        }
       }
-    }
+    } 
   }
 
   makeItemList = (_list) => {
@@ -269,16 +270,30 @@ class Category_Result_List extends Component{
     window.removeEventListener('scroll', this.handleScroll);
   };
 
-  render(){    
-    return(
-      <div className={'Category_Result_List'}>
-        <div className={'list_container'}>
-          {this.state.items}
-          <div id={'refresh_target_'+this.props.type}>
+  render(){
+    if(this.state.items.length === 0){
+      return(
+        <div className={'Category_Result_List'}>
+          <div className={'no_list_container'}>
+            <div>
+              필터 검색 결과가 없습니다.
+            </div>
           </div>
         </div>
-      </div>
-    )    
+      )
+
+    }else{
+      return(
+        <div className={'Category_Result_List'}>
+          <div className={'list_container'}>
+            {this.state.items}
+            <div id={'refresh_target_'+this.props.type}>
+            </div>
+          </div>
+        </div>
+      )    
+    }
+    
   }
 };
 
