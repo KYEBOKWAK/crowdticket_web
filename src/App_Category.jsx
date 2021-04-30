@@ -23,6 +23,8 @@ import ic_dropdown from './res/img/ic-dropdown.svg';
 import Popup_category_filter from './component/Popup_category_filter';
 import Popup_category_sort from './component/Popup_category_sort';
 
+import Popup_category_info from './component/Popup_category_info';
+
 const MENU_CONTENTS = 'MENU_CONTENTS';
 const MENU_CREATOR = 'MENU_CREATOR';
 
@@ -52,7 +54,9 @@ class App_Category extends Component {
       creator_sort_select_type: Types.sort_category.SORT_POPULAR,
       select_contents_sort_text: '인기순',
       select_creator_sort_text: '인기순',
-      is_sort_popup: false
+      is_sort_popup: false,
+
+      is_info_popup: false
     }
     
   }
@@ -266,6 +270,14 @@ class App_Category extends Component {
     })
   }
 
+  onClickInfoPopup = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      is_info_popup: true
+    })
+  }
+
   render() {
 
     let sub_category_list_dom = [];
@@ -425,6 +437,16 @@ class App_Category extends Component {
                       ></Popup_category_sort>
     }
 
+    let infoPopupDom = <></>;
+    if(this.state.is_info_popup){
+      infoPopupDom = <Popup_category_info 
+                      closeCallback={() => {
+                        this.setState({
+                          is_info_popup: false
+                        })
+                      }}></Popup_category_info>
+    }
+
     return (
       <div className={'App_Category'}>
         <div className={'allPageController'}>
@@ -432,7 +454,9 @@ class App_Category extends Component {
             <div className={'category_page_label_text'}>
               카테고리
             </div>
-            <img className={'category_page_info_img'} src={ic_category_info} />
+            <button onClick={(e) => {this.onClickInfoPopup(e)}}>
+              <img className={'category_page_info_img'} src={ic_category_info} />
+            </button>
           </div>
         </div>
         <div className={'category_top_carousel_box'}>
@@ -488,6 +512,7 @@ class App_Category extends Component {
 
         {filterPopupDom}
         {sortPopupDom}
+        {infoPopupDom}
       </div>
     );
   }

@@ -25,6 +25,8 @@
   
   <link href="{{ asset('/dist/css/Popup_category_filter.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/Popup_category_sort.css?version=0') }}" rel="stylesheet"/>
+
+  <link href="{{ asset('/dist/css/Popup_category_info.css?version=0') }}" rel="stylesheet"/>
   
 @endsection
 
@@ -38,5 +40,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=0') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=1') }}"></script>
 @endsection
