@@ -436,6 +436,10 @@ class FileUploader extends Component{
       )
     }
 
+    if(this.props.state === Types.file_upload_state.NONE){
+      return (<></>)
+    }
+
     if(!this.props.isUploader && this.state.files.length === 0){
       return (
         // <></>
