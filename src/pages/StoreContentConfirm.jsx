@@ -35,6 +35,8 @@ class StoreContentConfirm extends Component{
       item_img_url: '',
       item_title: '',
       item_price: 0,
+      item_price_usd: 0,
+      currency_code: Types.currency_code.Won,
       item_product_state: Types.product_state.TEXT,
       item_file_upload_state: Types.file_upload_state.NONE,
       item_type_contents: Types.contents.customized,
@@ -179,7 +181,10 @@ class StoreContentConfirm extends Component{
 
         item_file_upload_state: data.file_upload_state,
 
-        item_type_contents: data.type_contents
+        item_type_contents: data.type_contents,
+
+        item_price_usd: data.price_USD,
+        currency_code: data.currency_code
       }, () => {
         this.requestItemInfo();
       })
@@ -531,7 +536,7 @@ class StoreContentConfirm extends Component{
         </div>
 
         <div className={'store_contents_item_container'}>
-          <StoreContentsListItem store_id={this.state.store_id} id={this.state.item_id} store_item_id={this.state.item_id} thumbUrl={this.state.item_img_url} store_title={this.state.store_title} title={this.state.item_title} price={this.state.item_price} isHomeList={true} store_alias={''} isLink={false} type_contents={this.state.item_type_contents}></StoreContentsListItem>
+          <StoreContentsListItem store_id={this.state.store_id} id={this.state.item_id} store_item_id={this.state.item_id} thumbUrl={this.state.item_img_url} store_title={this.state.store_title} title={this.state.item_title} price={this.state.item_price} isHomeList={true} store_alias={''} isLink={false} type_contents={this.state.item_type_contents} price_USD={this.state.item_price_usd} currency_code={this.state.currency_code}></StoreContentsListItem>
         </div>
 
         {product_after_confirm_content_dom}

@@ -228,7 +228,7 @@ class StoreManagerHome_newOrderItem extends Component{
             <div className={'new_order_item_content_container'}>
               <div className={'item_content_box'}>
                 <div className={'new_order_item_title text-ellipsize'}>{this.props.item_title}</div>
-                <div className={'new_order_item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
+                <div className={'new_order_item_price'}>{Util.getPriceCurrency(this.props.price, this.props.price_USD, this.props.currency_code)}</div>
               </div>
             </div>
           </div>
@@ -249,7 +249,10 @@ StoreManagerHome_newOrderItem.defaultProps = {
   img_url: '',
   item_title: '',
   price: 0,
-  created_at: ''
+  created_at: '',
+
+  price_USD: 0,
+  currency_code: Types.currency_code.Won
   // state: 0,
   // isLink: false,
 }

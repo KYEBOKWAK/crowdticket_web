@@ -39,6 +39,10 @@ const INPUT_STORE_ORDER_CARD_PW_TWODIGIT = "INPUT_STORE_ORDER_CARD_PW_TWODIGIT";
 const INPUT_STORE_ORDER_REQUEST_CONTENTS = "INPUT_STORE_ORDER_REQUEST_CONTENTS";
 // const INPUT_STORE_ORDER_CARD_PW_TWODIGIT = "";
 
+const PAY_TYPE_ISP = "PAY_TYPE_ISP";
+const PAY_TYPE_INPUT = "PAY_TYPE_INPUT";
+const PAY_TYPE_PAYPAL = "PAY_TYPE_PAYPAL";
+
 class StoreOrderPage extends Component{
 
   // fileInput = React.createRef();
@@ -52,7 +56,9 @@ class StoreOrderPage extends Component{
     super(props);
 
     this.state = {
+      pay_type: PAY_TYPE_ISP,
       pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
+      pg: 'nice',
 
       store_id: null,
       store_item_id: null,
@@ -69,6 +75,8 @@ class StoreOrderPage extends Component{
       item_product_state: Types.product_state.TEXT,
       item_ask_play_time: '',
       item_type_contents: Types.contents.customized,
+      item_price_usd: 0,
+      currency_code: Types.currency_code.Won,
 
       isInitDeriveStateFromProps: false,
       user_id: null,
@@ -83,6 +91,7 @@ class StoreOrderPage extends Component{
       card_birth: '',
       card_pw_2digit: '',
       total_price: 0, //로컬에서 보내는 토탈 가격 정보와 서버 db 조회후 결제될 가격 정보가 일치하는지 체크한다
+      total_price_usd: 0,
 
       requestContent: '',
 
@@ -123,12 +132,25 @@ class StoreOrderPage extends Component{
 
       payMethodArray: [
         {
+          pg: 'nice',
           pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
-          text: '신용카드 (ISP)'
+          text: '신용카드 (ISP)',
+          pay_type: PAY_TYPE_ISP,
+          currency_code: Types.currency_code.Won
         },
         {
+          pg: 'nice',
           pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT,
-          text: '신용카드 (직접입력)'
+          text: '신용카드 (직접입력)',
+          pay_type: PAY_TYPE_INPUT,
+          currency_code: Types.currency_code.Won
+        },
+        {
+          pg: 'paypal',
+          pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
+          text: 'paypal(페이팔)',
+          pay_type: PAY_TYPE_PAYPAL,
+          currency_code: Types.currency_code.US_Dollar
         }
       ]
     }
@@ -140,6 +162,7 @@ class StoreOrderPage extends Component{
   componentDidMount(){
     this.IMP = window.IMP; // 생략가능
 
+    console.log('dfsdf');
     const app_type_key = document.querySelector('#g_app_type');
     let iamportCode = process.env.REACT_APP_IAMPORT_CODE;
     if(app_type_key){
@@ -249,6 +272,16 @@ class StoreOrderPage extends Component{
       if(ask_play_time === null){
         ask_play_time = '';
       }
+      
+      let pay_type = PAY_TYPE_ISP;
+      let pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD;
+      let pg = 'nice';
+      if(data.currency_code === Types.currency_code.US_Dollar){
+        pay_type = PAY_TYPE_PAYPAL;
+        pay_method = Types.pay_method.PAY_METHOD_TYPE_CARD;
+        pg = 'paypal';
+      }
+      
 
       this.setState({
         item_title: data.title,
@@ -266,7 +299,16 @@ class StoreOrderPage extends Component{
         item_ask_play_time: ask_play_time,
         item_product_state: data.product_state,
 
-        item_type_contents: data.type_contents
+        item_type_contents: data.type_contents,
+
+        currency_code: data.currency_code,
+        item_price_usd: data.price_USD,
+        total_price_usd: data.price_USD,
+        //여기는 나중에 pg를 자유롭게 설정하게 되면 그때 수정한다 start
+        pay_type: pay_type,
+        pay_method: pay_method,
+        pg: pg
+        //여기는 나중에 pg를 자유롭게 설정하게 되면 그때 수정한다 end
       })
     }, (error) => {
 
@@ -397,17 +439,43 @@ class StoreOrderPage extends Component{
         return;
       }
 
-      if(this.state.total_price === 0){
-        this.requsetOrder();
-      }else{
-        if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+
+      if(this.state.pay_type === PAY_TYPE_PAYPAL){
+        if(this.state.total_price_usd === 0){
           this.requsetOrder();
         }else{
-          // this.showIamportPayView();
-          //isp는 모바일때문에 우선 order를 다셋팅 한 후 결제 시스템으로 들어간다.
           this.requestISPInsertStoreOrder();
         }
+      }else{
+        if(this.state.total_price === 0){
+          this.requsetOrder();
+        }
+        else{
+          if(this.state.pay_type === PAY_TYPE_INPUT){
+            this.requsetOrder();
+          }else if(this.state.pay_type === PAY_TYPE_ISP){
+            // this.showIamportPayView();
+            //isp는 모바일때문에 우선 order를 다셋팅 한 후 결제 시스템으로 들어간다.
+            this.requestISPInsertStoreOrder();
+          }
+        }
       }
+      
+
+      // if(this.state.total_price === 0){
+      //   this.requsetOrder();
+      // }
+      // else{
+      //   if(this.state.pay_type === PAY_TYPE_INPUT){
+      //     this.requsetOrder();
+      //   }else if(this.state.pay_type === PAY_TYPE_ISP){
+      //     // this.showIamportPayView();
+      //     //isp는 모바일때문에 우선 order를 다셋팅 한 후 결제 시스템으로 들어간다.
+      //     this.requestISPInsertStoreOrder();
+      //   }else if(this.state.pay_type === PAY_TYPE_PAYPAL){
+      //     this.requestISPInsertStoreOrder();
+      //   }
+      // }
       
       
     }, (error) => {
@@ -429,14 +497,22 @@ class StoreOrderPage extends Component{
     }
 
     const m_redirect_url = baseURL+'/store/isp/'+store_order_id+'/complite';
-    console.log(m_redirect_url);
+    // console.log(m_redirect_url);
+
+    let itemPrice = this.state.item_price;
+    let isPopup = false;
+    if(this.state.currency_code === Types.currency_code.US_Dollar){
+      itemPrice = this.state.item_price_usd;
+      isPopup = true;
+    }
 
     this.IMP.request_pay({
-      pg : 'nice', // version 1.1.0부터 지원.
+      pg : this.state.pg, // version 1.1.0부터 지원.
+      popup: isPopup,
       pay_method : Types.pay_method.PAY_METHOD_TYPE_CARD,
       merchant_uid : merchant_uid,
       name : this.state.item_title,
-      amount : this.state.item_price,
+      amount : itemPrice,
       buyer_email : this.state.email,
       buyer_name : this.state.name,
       buyer_tel : this.state.contact,
@@ -445,10 +521,18 @@ class StoreOrderPage extends Component{
     }, (rsp) => {
         if ( rsp.success ) {
 
-          if(rsp.paid_amount !== this.state.total_price){
-            alert("(에러)결제 가격과 구매 가격이 다릅니다.");
-            return;
+          if(this.state.currency_code === Types.currency_code.US_Dollar){
+            if(rsp.paid_amount !== this.state.total_price_usd){
+              alert("(에러)결제 가격과 구매 가격이 다릅니다. (USD)");
+              return;
+            }
+          }else{
+            if(rsp.paid_amount !== this.state.total_price){
+              alert("(에러)결제 가격과 구매 가격이 다릅니다.");
+              return;
+            }
           }
+          
 
           this.requestISPSuccess(rsp.imp_uid, rsp.merchant_uid, store_order_id);
         } else {
@@ -515,7 +599,11 @@ class StoreOrderPage extends Component{
       email: this.state.email,
       name: this.state.name,
       requestContent: this.state.requestContent,
-      pay_method: this.state.pay_method
+      pay_method: this.state.pay_method,
+      currency_code: this.state.currency_code,
+
+      total_price_usd: this.state.total_price_usd,
+      price_usd: this.state.item_price_usd
     }, (result) => {
       // console.log(result);
 
@@ -569,6 +657,7 @@ class StoreOrderPage extends Component{
     })
   }
 
+  /*
   requestAfterISPPay = (imp_uid, merchant_uid) => {
     showLoadingPopup('완료중입니다..');  
 
@@ -638,6 +727,7 @@ class StoreOrderPage extends Component{
       stopLoadingPopup();
     })
   }
+  */
 
   nextOrderComplite = (store_order_id) => {
     this.goOrderComplite(store_order_id);
@@ -706,7 +796,11 @@ class StoreOrderPage extends Component{
         email: this.state.email,
         name: this.state.name,
         requestContent: this.state.requestContent,
-        pay_method: this.state.pay_method
+        pay_method: this.state.pay_method,
+        currency_code: this.state.currency_code,
+
+        price_usd: this.state.item_price_usd,
+        total_price_usd: this.state.total_price_usd
         // merchant_uid: merchant_uid
       }
 
@@ -882,11 +976,13 @@ class StoreOrderPage extends Component{
     })
   }
 
-  onClickMethod = (e, method_type) => {
+  onClickMethod = (e, method_type, pg, pay_type) => {
     e.preventDefault();
 
     this.setState({
-      pay_method: method_type
+      pay_method: method_type,
+      pg: pg,
+      pay_type: pay_type
     })
   }
 
@@ -927,10 +1023,12 @@ class StoreOrderPage extends Component{
     }
 
     let payDom = <></>;
-    if(this.state.total_price > 0){
+    if(this.state.total_price > 0 ||
+      this.state.total_price_usd > 0){
 
       let payFormDom = <></>;
-      if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+      // if(this.state.pay_method === Types.pay_method.PAY_METHOD_TYPE_CARD_INPUT){
+      if(this.state.pay_type === PAY_TYPE_INPUT){
         payFormDom = <div className={'card_info_container'}>
                       <p className={'input_label'}>카드번호</p>
                       <input className={'input_box'} placeholder={'- 없이 숫자만 입력'} type="text" name="cc-number" autoComplete="off" value={this.state.card_number} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CARD_NUMBER)}}/>
@@ -976,14 +1074,24 @@ class StoreOrderPage extends Component{
       for(let i=0 ; i < this.state.payMethodArray.length ; i++){
         const data = this.state.payMethodArray[i];
 
+        if(this.state.currency_code !== data.currency_code){
+          continue;
+        }
+
         let imgRadioImg = <></>;
-        if(this.state.pay_method === data.pay_method){
+        if(this.state.pay_type === data.pay_type){
           imgRadioImg = <img src={ic_radio_btn_s} />
         }else{
           imgRadioImg = <img src={ic_radio_btn_n} />
         }
 
-        let payMethodDom = <button key={i} className={'pay_method_button'} onClick={(e) => {this.onClickMethod(e, data.pay_method)}}>
+        // if(this.state.pay_method === data.pay_method){
+        //   imgRadioImg = <img src={ic_radio_btn_s} />
+        // }else{
+        //   imgRadioImg = <img src={ic_radio_btn_n} />
+        // }
+
+        let payMethodDom = <button key={i} className={'pay_method_button'} onClick={(e) => {this.onClickMethod(e, data.pay_method, data.pg, data.pay_type)}}>
                             {imgRadioImg}
                             <div className={'pay_method_text'}>
                               {data.text}
@@ -1063,6 +1171,8 @@ class StoreOrderPage extends Component{
             store_title={this.state.store_title}
             type_contents={this.state.item_type_contents}
             isShowUnderLine={false}
+            price_USD={this.state.item_price_usd}
+            currency_code={this.state.currency_code}
           ></StoreOrderItem>
           
           {request_content_dom}
@@ -1097,7 +1207,7 @@ class StoreOrderPage extends Component{
               {this.state.item_title}
             </div>
             <div className={'pay_info_value'}>
-              {Util.getNumberWithCommas(this.state.item_price)}원
+              {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)}
             </div>
 
             
@@ -1107,7 +1217,7 @@ class StoreOrderPage extends Component{
           </div>
 
           <div className={'pay_info_total_price'}>
-              {Util.getNumberWithCommas(this.state.total_price)}원
+              {Util.getPriceCurrency(this.state.total_price, this.state.total_price_usd, this.state.currency_code)}
           </div>
         </div>
 
@@ -1145,7 +1255,7 @@ class StoreOrderPage extends Component{
         </div>
 
         <button className={'order_button'} onClick={(e) => {this.clickOrder(e)}}>
-          {Util.getNumberWithCommas(this.state.item_price)}원 주문하기
+          {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)} 주문하기
         </button>
       </div>
     )

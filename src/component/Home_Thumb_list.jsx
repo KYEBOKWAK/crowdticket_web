@@ -73,7 +73,8 @@ class Home_Thumb_list extends Component{
       let _items = [];
       for(let i = 0 ; i < result.list.length ; i++){
         const data = result.list[i];
-        const itemDom = <Thumb_Recommend_item store_item_id={data.item_id}></Thumb_Recommend_item>
+        const itemDom = <Thumb_Recommend_item store_item_id={item_id}></Thumb_Recommend_item>
+        // const itemDom = <Thumb_Recommend_item store_item_id={data.item_id}></Thumb_Recommend_item>
         _items.push(itemDom);
       }
 

@@ -254,7 +254,7 @@ class StoreContentsListItem extends Component{
                   <div className={'item_title'}>
                     {this.props.title}{badge_dom}
                   </div>
-                  <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원
+                  <div className={'item_price'}>{Util.getPriceCurrency(this.props.price, this.props.price_USD, this.props.currency_code)}
                   </div>
                 </div>
             </div>
@@ -279,6 +279,8 @@ StoreContentsListItem.defaultProps = {
   name: '',
   title: '',
   price: 0,
+  price_USD: 0,
+  currency_code: Types.currency_code.Won,
   isHomeList: false,
   store_alias: '',
   isManager: false,

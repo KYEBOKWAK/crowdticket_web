@@ -24,6 +24,7 @@ class StoreISPOrderComplitePage extends Component{
   };
 
   componentDidMount(){
+    console.log("storeISP ORDER complite Page");
     const imp_uid_dom = document.querySelector('#imp_uid');
     if(!imp_uid_dom){
       alert("잘못된 접근입니다");

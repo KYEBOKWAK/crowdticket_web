@@ -82,6 +82,7 @@ class StoreAddItemPage extends Component{
       item_content: '',
       item_img_url: '',
       item_price: 0,
+      item_price_usd: 0,
       item_ask: '',
       item_state: Types.item_state.SALE,
       item_ask_play_time: '',
@@ -148,7 +149,9 @@ class StoreAddItemPage extends Component{
       is_check_agree_download_type: false,
 
       select_top_id: null,
-      select_sub_id: null
+      select_sub_id: null,
+
+      currency_code: Types.currency_code.Won
     }
 
     // this.onDrop = this.onDrop.bind(this);
@@ -391,7 +394,11 @@ class StoreAddItemPage extends Component{
         item_product_answer: result.data.completed_type_product_answer,
 
         select_top_id: result.data.category_top_item_id,
-        select_sub_id: result.data.category_sub_item_id
+        select_sub_id: result.data.category_sub_item_id,
+
+        currency_code: result.data.currency_code,
+
+        item_price_usd: result.data.price_USD
       })
     }, (error) => {
 
@@ -1060,10 +1067,6 @@ class StoreAddItemPage extends Component{
     })
   }
 
-  test = () => {
-    console.log('aaaa');
-  }
-
   render(){
     if(!this.state.isLogin){
       return(
@@ -1324,6 +1327,16 @@ class StoreAddItemPage extends Component{
                                     </div>
                                   </button>
     }
+
+    let priceTitleText = '콘텐츠 가격';
+    let priceText = this.state.item_price;
+    let priceInputDisabled = false;
+    if(this.state.currency_code === Types.currency_code.US_Dollar){
+      priceTitleText = '콘텐츠 가격(달러 - 해외 결제 베타 서비스 / 수정이 필요하면 크티로 연락주세요)';
+      priceText = this.state.item_price_usd;
+      priceInputDisabled = true;
+    }
+
     return (
       <div className={'StoreAddItemPage'}>
 
@@ -1394,12 +1407,13 @@ class StoreAddItemPage extends Component{
 
           <div className={'input_container'}>
             <div className={'input_label'}>
-              콘텐츠 가격
+              {/* 콘텐츠 가격 */}
+              {priceTitleText}
             </div>
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <input className={'input_box'} type="number" name={'price'} placeholder={'콘텐츠 가격을 입력해주세요.'} value={this.state.item_price} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_PRICE)}}/>
+          <input className={'input_box'} type="number" name={'price'} placeholder={'콘텐츠 가격을 입력해주세요.'} value={priceText} disabled={priceInputDisabled} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_PRICE)}}/>
           
           <div className={'input_container'}>
             <div className={'input_label'}>

@@ -120,7 +120,7 @@ class StoreOrderItem extends Component{
                 <div className={'item_title'}>{this.props.title}{badge_dom}</div>
                 {/* {badge_dom} */}
               </div>
-              <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
+              <div className={'item_price'}>{Util.getPriceCurrency(this.props.price, this.props.price_USD, this.props.currency_code)}</div>
             </div>
         </div>
         
@@ -139,7 +139,10 @@ StoreOrderItem.defaultProps = {
   title: '',
   price: 0,
   type_contents: Types.contents.customized,
-  isShowUnderLine: true
+  isShowUnderLine: true,
+
+  price_USD: 0,
+  currency_code: Types.currency_code.Won
 }
 
 export default StoreOrderItem;

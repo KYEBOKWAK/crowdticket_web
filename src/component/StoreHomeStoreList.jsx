@@ -1,3 +1,4 @@
+/*
 'use strict';
 
 import React, { Component } from 'react';
@@ -135,3 +136,4 @@ class StoreHomeStoreList extends Component{
 };
 
 export default StoreHomeStoreList;
+*/

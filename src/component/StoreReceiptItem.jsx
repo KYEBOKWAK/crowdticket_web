@@ -56,6 +56,10 @@ class StoreReceiptItem extends Component{
       item_product_state: Types.product_state.TEXT,
       item_file_upload_state: Types.file_upload_state.NONE,
       item_type_contents: Types.contents.customized,
+      item_price_usd: 0,
+      currency_code: Types.currency_code.Won,
+
+      total_price_usd: 0,
 
       store_item_id: null,
       store_title: '',
@@ -199,7 +203,10 @@ class StoreReceiptItem extends Component{
         item_file_upload_state: data.file_upload_state,
 
         store_user_profile_photo_url: data.profile_photo_url,
-        item_type_contents: data.type_contents
+        item_type_contents: data.type_contents,
+
+        item_price_usd: data.price_USD,
+        currency_code: data.currency_code
       }, () => {
         if(this.state.item_type_contents === Types.contents.completed){
           this.requestDownloadIsExpired();
@@ -258,7 +265,9 @@ class StoreReceiptItem extends Component{
         product_answer: data.product_answer,
 
         order_user_email: data.email,
-        order_user_contact: data.contact
+        order_user_contact: data.contact,
+
+        total_price_usd: data.total_price_USD
       }, () => {
         this.requestItemInfo();
         this.requestProductText();
@@ -723,6 +732,8 @@ class StoreReceiptItem extends Component{
                               price={this.state.item_price}
                               store_title={this.state.store_title}
                               type_contents={this.state.item_type_contents}
+                              price_USD={this.state.item_price_usd}
+                              currency_code={this.state.currency_code}
                             ></StoreOrderItem>
     }
 
@@ -1163,7 +1174,7 @@ class StoreReceiptItem extends Component{
 
                           <div className={'pay_state_text_container'}>
                             <div>
-                              {Util.getNumberWithCommas(this.state.total_price)}원 {this.state.card_state_text}
+                              {Util.getPriceCurrency(this.state.total_price, this.state.total_price_usd, this.state.currency_code)} {this.state.card_state_text}
                             </div>
                             <div>
                               {moment(this.state.created_at).format('YYYY-MM-DD HH:mm') }

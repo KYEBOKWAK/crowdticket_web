@@ -97,7 +97,7 @@ class StoreOtherItems extends Component{
                     </div>
 
                     <div className={'price_text'}>
-                      {Util.getNumberWithCommas(data.price)}원
+                      {Util.getPriceCurrency(data.price, data.price_USD, data.currency_code)}
                     </div>
                   </div>
                 </button>

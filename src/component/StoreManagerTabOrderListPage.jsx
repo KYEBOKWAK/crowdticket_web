@@ -34,7 +34,8 @@ class StoreManagerTabOrderListPage extends Component{
       sort_state: 0,
       sort_item_id: -1,
 
-      sort_title_option: []
+      sort_title_option: [],
+      doller_count: 0
     }
 
     this.onChangeSelect = this.onChangeSelect.bind(this);
@@ -52,7 +53,22 @@ class StoreManagerTabOrderListPage extends Component{
     this.requestOrderTotalPrice();
 
     this.requestItemListTitle();
+
+    //임시로 달러 구매가 있는지만 확인한다.
+    this.requestDollerOrderCount();
   };
+
+  requestDollerOrderCount = () => {
+    axios.post("/store/order/doller/count", {
+      store_id: this.props.store_id
+    }, (result) => {
+      this.setState({
+        doller_count: result.doller_count
+      })
+    }, (error) => {
+
+    })
+  }
 
   requestTotalBuyCount(){
     axios.post("/store/order/all/count", {
@@ -307,60 +323,26 @@ class StoreManagerTabOrderListPage extends Component{
   }
 
   render(){
+
+    let total_price_dom = <></>;
+    if(this.state.doller_count > 0){
+      //달러가 있다면,
+      //
+      total_price_dom = <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                          <div className={'summary_total_value_text'}>
+                            {Util.getNumberWithCommas(this.state.total_price)}원
+                          </div>
+                          <div style={{fontSize: 12, fontWeight: 500, color: '#acacac'}}>
+                            외화 결제 금액 미포함
+                          </div>
+                        </div>
+    }else{
+      total_price_dom = <div className={'summary_total_value_text'}>
+                          {Util.getNumberWithCommas(this.state.total_price)}원
+                        </div>
+    }
     return(
       <div className={'StoreManagerTabOrderListPage'}>
-        
-        {/* <div className={'summary_container'}>
-          <div className={'summary_content_container'}>
-            <div className={'summary_content_label_text'}>
-              총 콘텐츠 구매
-            </div>
-            <div className={'summary_content_value_text'}>
-              {this.state.total_buy_count}건
-            </div>
-          </div>
-
-          <div className={'summary_content_container'}>
-            <div className={'summary_content_label_text'}>
-              취소 및 반려
-            </div>
-            <div className={'summary_content_value_text'}>
-              {this.state.cancel_refund_total_count}건
-            </div>
-          </div>
-
-          <div className={'summary_content_container'}>
-            <div className={'summary_content_label_text'}>
-              승인 대기
-            </div>
-            <div className={'summary_content_value_text'}>
-              {this.state.ready_total_count}건
-            </div>
-          </div>
-
-          <div className={'summary_content_container'}>
-            <div className={'summary_content_label_text'}>
-              전달 완료
-            </div>
-            <div className={'summary_content_value_text'}>
-              {this.state.ready_success_total_count}건
-            </div>
-          </div>
-          
-          <div className={'summary_under_line'}>
-          </div>
-
-          <div className={'summary_content_container'} style={{marginBottom: 0}}>
-            <div className={'summary_total_label_text'}>
-              총 판매 금액
-            </div>
-            <div className={'summary_total_value_text'}>
-              {Util.getNumberWithCommas(this.state.total_price)}원
-            </div>
-          </div>
-        </div> */}
-       
-
         <div className={'summary_container'}>
           <div className={'summary_content_container'}>
             <div className={'summary_content_label_text'}>
@@ -405,9 +387,10 @@ class StoreManagerTabOrderListPage extends Component{
             <div className={'summary_total_label_text'}>
               최종 판매 금액
             </div>
-            <div className={'summary_total_value_text'}>
+            {total_price_dom}
+            {/* <div className={'summary_total_value_text'}>
               {Util.getNumberWithCommas(this.state.total_price)}원
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -429,92 +412,6 @@ class StoreManagerTabOrderListPage extends Component{
             datas={this.state.items}
           ></TableComponent>
         </div>
-        {/* <div className={'order_list_container'}>
-          <div className={'order_list_title_container'}>
-            <div className={'order_title_date order_title_font'}>
-              일시
-            </div>
-            <div className={'order_title_contents order_title_font select_box'}>
-              콘텐츠 종류
-              <img style={{width: 12, height: 8, marginLeft:2}} src={imgIconBox} />
-
-              <select className={'select_tag'} value={this.state.sort_item_id} onChange={this.onChangeContent}>
-                {this.state.sort_title_option}
-              </select>
-
-            </div>
-            <div className={'order_title_count order_title_font'}>
-              개수
-            </div>
-            <div className={'order_title_price order_title_font'}>
-              결제금액
-            </div>
-            <div className={'order_title_state order_title_font select_box'}>
-              상태
-              <img style={{width: 12, height: 8, marginLeft:2}} src={imgIconBox} />
-              
-              <select className={'select_tag'} value={this.state.sort_state} onChange={this.onChangeSelect}>
-                <option key={0} value={0}>{'모두보기'}</option>;
-                <option key={1} value={Types.order.ORDER_STATE_APP_STORE_PAYMENT}>{'승인대기'}</option>;
-                <option key={2} value={Types.order.ORDER_STATE_APP_STORE_READY}>{'승인완료(콘텐츠 제작중)'}</option>;
-                <option key={3} value={Types.order.ORDER_STATE_APP_STORE_SUCCESS}>{'크티 전달완료'}</option>;
-                <option key={4} value={Types.order.ORDER_STATE_APP_STORE_RELAY_CUSTOMER}>{'고객 전달완료'}</option>;
-                <option key={5} value={Types.order.ORDER_STATE_CANCEL_STORE_RETURN}>{'반려'}</option>;
-                <option key={6} value={Types.order.ORDER_STATE_CANCEL}>{'취소됨'}</option>;
-              </select>
-            </div>
-          </div>
-
-          <InfiniteScroll
-            // style={{backgroundColor: 'red'}}
-            dataLength={this.state.items.length} //This is important field to render the next data
-            next={this.requestMoreData}
-            hasMore={this.state.hasMore}
-            loader=
-            {
-              <div style={{display: 'flex', justifyContent: 'center'}}>
-                <h4>Loading...</h4>
-              </div>
-            }
-            endMessage={
-              <></>
-              // <p style={{ textAlign: 'center' }}>
-              //   <b>Yay! You have seen it all</b>
-              // </p>
-            }
-            // below props only if you need pull down functionality
-            // refreshFunction={this.refresh}
-            // pullDownToRefresh
-            pullDownToRefreshThreshold={50}
-            pullDownToRefreshContent={
-              <></>
-            }
-            releaseToRefreshContent={
-              <></>
-            }
-          >
-            {this.state.items.map((data) => {
-              return <div key={data.id} className={'order_list_title_container order_list_item_container'}>
-                      <div className={'order_title_date order_list_item_text'}>
-                        {moment_timezone(data.created_at).format('YYYY-MM-DD')}
-                      </div>
-                      <div className={'order_title_contents order_list_item_text'}>
-                        {data.title}
-                      </div>
-                      <div className={'order_title_count order_list_item_text'}>
-                        {data.count}
-                      </div>
-                      <div className={'order_title_price order_list_item_text'}>
-                        {Util.getNumberWithCommas(data.total_price)}원
-                      </div>
-                      <div className={'order_title_state order_list_item_text'}>
-                        {this.getStateText(data.state)}
-                      </div>
-                    </div>
-            })}
-          </InfiniteScroll>
-          
-        </div> */}
       </div>
     )
   }

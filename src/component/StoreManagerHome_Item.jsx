@@ -252,7 +252,7 @@ class StoreManagerHome_Item extends Component{
             <div className={'item_content_box'}>
               {nick_name_dom}
               <div className={'item_title text-ellipsize'}>{this.props.item_title}</div>
-              <div className={'item_price'}>{Util.getNumberWithCommas(this.props.price)}원</div>
+              <div className={'item_price'}>{Util.getPriceCurrency(this.props.price, this.props.price_USD, this.props.currency_code)}</div>
             </div>
             {buttons_dom}
           </div>
@@ -272,6 +272,8 @@ StoreManagerHome_Item.defaultProps = {
   img_url: '',
   item_title: '',
   price: 0,
+  price_USD: 0,
+  currency_code: Types.currency_code.Won,
   state: 0,
   isLink: false,
 }

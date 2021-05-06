@@ -77,7 +77,6 @@ class TableComponent extends Component{
   };
 
   componentDidUpdate(prevProps, prevState){
-
     if(prevProps.datas.length !== this.props.datas.length){
       //sort 데이터 셋팅
       let _sortDatas = this.state.sortDatas.concat();
@@ -221,7 +220,6 @@ class TableComponent extends Component{
   }
   
   render(){
-
     //상단 셋팅 start
     let _sortDatas = this.state.sortDatas.concat();
     let columnsDoms = [];
@@ -338,7 +336,8 @@ class TableComponent extends Component{
                             value = '';
                           }else{
                             if(columnData.type === Types.table_columns_type.price){
-                              value = Util.getNumberWithCommas(valueData) + '원';
+                              // value = Util.getNumberWithCommas(valueData) + '원';
+                              value = Util.getPriceCurrency(data.total_price, data.total_price_USD, data.currency_code);
                             }
                           }
                           

@@ -52,6 +52,8 @@ class StoreItemDetailPage extends Component{
       typeContent: '',
       title: '',
       price: 0,
+      price_usd: 0,
+      currency_code: Types.currency_code.Won,
       content: '',
       thumb_img_url: '',
 
@@ -244,7 +246,10 @@ class StoreItemDetailPage extends Component{
         item_notice: data.item_notice,
 
         youtube_url: data.youtube_url,
-        item_type_contents: data.type_contents
+        item_type_contents: data.type_contents,
+
+        price_usd: data.price_USD,
+        currency_code: data.currency_code
       }, () => {
         this.requestDownloadFileCount();
       })
@@ -770,7 +775,7 @@ class StoreItemDetailPage extends Component{
             </div>
             <div className={'price_text_container'}>
               <div className={'content_price'}>
-                {Util.getNumberWithCommas(this.state.price)}원
+                {Util.getPriceCurrency(this.state.price, this.state.price_usd, this.state.currency_code)}
               </div>
               {goItemEditPageDom}
             </div>

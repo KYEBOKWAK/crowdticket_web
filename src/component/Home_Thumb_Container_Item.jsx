@@ -27,6 +27,8 @@ class Home_Thumb_Container_Item extends Component{
       item_img_url: '',
       item_title: '',
       item_price: 0,
+      item_price_usd: 0,
+      currency_code: Types.currency_code.Won,
 
       show_image_width: 0,
       show_image_height: 0,
@@ -73,7 +75,10 @@ class Home_Thumb_Container_Item extends Component{
         item_img_url: data.img_url,
 
         user_name: data.user_name,
-        nick_name: data.nick_name
+        nick_name: data.nick_name,
+
+        item_price_usd: data.price_USD,
+        currency_code: data.currency_code
       }, () => {  
         this.updateDimensions();
       })
@@ -239,7 +244,7 @@ class Home_Thumb_Container_Item extends Component{
 
               <div className={'item_contents_price_container'}>
                 <div className={'item_contents_price'}>
-                  {Util.getNumberWithCommas(this.state.item_price)}원
+                  {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)}
                 </div>
                 <div className={'thumb_item_label'}>
                   <Home_Thumb_Product_Label product_category_type={this.state.product_category_type}></Home_Thumb_Product_Label>

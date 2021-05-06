@@ -7,6 +7,7 @@ import Name from '../component/Name';
 import Profile from '../component/Profile';
 
 import Util from '../lib/Util';
+import Types from '../Types';
 
 const HOME_THUMB_ATTENTION_USER_PROFILE_SIZE = 60;
 
@@ -29,8 +30,10 @@ class Home_Thumb_Attention_Item extends Component{
 
       item_title: '',
       item_price: 0,
+      item_price_usd: 0,
       item_img_url: '',
       item_id: null,
+      item_currency_code: Types.currency_code.Won,
 
       user_profile_size: HOME_THUMB_ATTENTION_USER_PROFILE_SIZE
     }
@@ -66,7 +69,9 @@ class Home_Thumb_Attention_Item extends Component{
         item_title: data.title,
         item_price: data.price,
         item_img_url: data.img_url,
-        item_id: data.id
+        item_id: data.id,
+        item_currency_code: data.currency_code,
+        item_price_usd: data.price_USD
       })
     })
   }
@@ -188,7 +193,7 @@ class Home_Thumb_Attention_Item extends Component{
                 {this.state.item_title}
               </div>
               <div className={'item_store_item_price'}>
-                {Util.getNumberWithCommas(this.state.item_price)}원
+                {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.item_currency_code)}
               </div>
             </div>
           </button>

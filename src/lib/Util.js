@@ -1,4 +1,5 @@
 import moment_timezone from 'moment-timezone';
+import Types from '../Types';
 
 const Util = {
   arrayEquals: function(array1, array2){
@@ -41,6 +42,27 @@ const Util = {
     }
 
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  },
+
+  getPriceCurrency: (price, price_usd, currency_code) => {
+    let _price = price;
+    if(currency_code === Types.currency_code.US_Dollar){
+      _price = price_usd;
+    }
+
+    if(_price === undefined || _price === null){
+      _price = 0;
+    }
+
+    let _priceText = _price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    if(currency_code === Types.currency_code.US_Dollar){
+      _priceText = '$'+_priceText;
+    }else{
+      _priceText = _priceText+'원';
+    }
+
+    return _priceText;
   },
 
   getArrayRand: (array) => {

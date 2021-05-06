@@ -96,6 +96,10 @@ class StoreStateProcess extends Component{
       )
     }
 
+    if(this.props.order_state === Types.order.ORDER_STATE_APP_STORE_STANBY){
+      return (<></>)
+    }
+
     if(this.props.order_state > Types.order.ORDER_STATE_PAY_END){
       return (
         <></>

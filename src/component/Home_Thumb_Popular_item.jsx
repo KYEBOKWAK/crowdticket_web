@@ -9,6 +9,7 @@ import Profile from '../component/Profile';
 import Home_Thumb_Product_Label from '../component/Home_Thumb_Product_Label';
 
 import Util from '../lib/Util';
+import Types from '../Types';
 
 class Home_Thumb_Popular_item extends Component{
 
@@ -27,6 +28,8 @@ class Home_Thumb_Popular_item extends Component{
 
       item_title: '',
       item_price: 0,
+      item_price_usd: 0,
+      currency_code: Types.currency_code.Won,
       product_category_type: null,
 
       user_name: '',
@@ -67,14 +70,10 @@ class Home_Thumb_Popular_item extends Component{
 
         item_price: data.price,
 
-        product_category_type: data.product_category_type
-        // store_id: data.store_id,
-        
-        // store_title: data.store_title,
+        product_category_type: data.product_category_type,
 
-        // item_ask_play_time: ask_play_time,
-        // item_product_state: data.product_state,
-        // profile_photo_url: data.profile_photo_url
+        item_price_usd: data.price_USD,
+        currency_code: data.currency_code
       })
     }, (error) => {
 
@@ -145,7 +144,7 @@ class Home_Thumb_Popular_item extends Component{
               </div>
               <div className={'price_container'}>
                 <div className={'thumb_item_price'}>
-                  {Util.getNumberWithCommas(this.state.item_price)}원
+                  {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)}
                 </div>
                 <div className={'thumb_item_label'}>
                   <Home_Thumb_Product_Label product_category_type={this.state.product_category_type}></Home_Thumb_Product_Label>

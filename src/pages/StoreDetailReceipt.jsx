@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import StoreReceiptItem from '../component/StoreReceiptItem';
 import Util from '../lib/Util';
 import axios from '../lib/Axios';
+import Types from '../Types';
 
 class StoreDetailReceipt extends Component{
 
@@ -22,7 +23,10 @@ class StoreDetailReceipt extends Component{
       item_title: '',
 
       item_price: 0,
+      item_price_usd: 0,
       total_price: 0,
+      total_price_usd: 0,
+      currency_code: Types.currency_code.Won,
 
       refundButtonText: '',
 
@@ -88,7 +92,11 @@ class StoreDetailReceipt extends Component{
         isRefund: data.isRefund,
         refundPolicyText: data.refundPolicyText,
 
-        store_item_id: data.item_id
+        store_item_id: data.item_id,
+
+        item_price_usd: data.price_USD,
+        total_price_usd: data.total_price_USD,
+        currency_code: data.currency_code
       }, () => {
       })
     }, (error) => {
@@ -189,7 +197,7 @@ class StoreDetailReceipt extends Component{
               {this.state.item_title}
             </div>
             <div className={'pay_info_value'}>
-              {Util.getNumberWithCommas(this.state.item_price)}원
+              {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)}
             </div>
 
             
@@ -204,7 +212,7 @@ class StoreDetailReceipt extends Component{
                 총 결제 금액
               </div>
               <div>
-                {Util.getNumberWithCommas(this.state.total_price)}원
+                {Util.getPriceCurrency(this.state.total_price, this.state.total_price_usd, this.state.currency_code)}
               </div>
             </div>
           </div>

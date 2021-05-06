@@ -1,6 +1,10 @@
 import * as GlobalTypes from "./GlobalKeys";
 
 const Types = {
+  currency_code: {
+    US_Dollar: 'USD', //달러
+    Won: 'KRW'  //원
+  },
   category_total_etc_id: 9999,
   sort_category: {
     SORT_POPULAR: 'SORT_POPULAR',

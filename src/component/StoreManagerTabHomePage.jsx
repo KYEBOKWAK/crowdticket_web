@@ -410,7 +410,7 @@ class StoreManagerTabHomePage extends Component{
       const itemDom = <StoreManagerHome_newOrderItem 
       callbackRefreshItems={() => {
         this.requestStoreNewOrderList();
-      }} store_order_id={data.store_order_id} img_url={data.img_url} item_title={data.title} price={data.price} created_at={data.created_at}></StoreManagerHome_newOrderItem>
+      }} store_order_id={data.store_order_id} img_url={data.img_url} item_title={data.title} price={data.price} created_at={data.created_at} price_USD={data.price_USD} currency_code={data.currency_code}></StoreManagerHome_newOrderItem>
 
       let lineDom = <div className={'order_item_under_line'}></div>;
       if(i === 0){
@@ -457,7 +457,7 @@ class StoreManagerTabHomePage extends Component{
 
       const data = this.state.itemDatas[i];
 
-      const itemDom = <StoreManagerHome_Item store_id={this.props.store_id} id={data.id} store_item_id={data.id} store_title={data.store_title} img_url={data.img_url} item_title={data.title} price={data.price} state={data.state}></StoreManagerHome_Item>
+      const itemDom = <StoreManagerHome_Item store_id={this.props.store_id} id={data.id} store_item_id={data.id} store_title={data.store_title} img_url={data.img_url} item_title={data.title} price={data.price} state={data.state} price_USD={data.price_USD} currency_code={data.currency_code}></StoreManagerHome_Item>
 
       let lineDom = <div className={'item_under_line'}></div>;
       if(i === 0){
