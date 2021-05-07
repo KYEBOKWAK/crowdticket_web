@@ -35,8 +35,6 @@ class CompletedFileUpLoader extends Component{
       progressType: Types.progress.uploader,
       uploading_progress: 0,
 
-      MAX_FILES_COUNT: 5,
-
       down_expired_at: '',
       is_down_expired: false,
 
@@ -260,8 +258,8 @@ class CompletedFileUpLoader extends Component{
   importClick(e){
     e.preventDefault();
 
-    if(this.state.files.length >= this.state.MAX_FILES_COUNT){
-      alert(`파일은 최대 ${this.state.MAX_FILES_COUNT}개만 가능합니다`);
+    if(this.state.files.length >= this.props.MAX_FILES_COUNT){
+      alert(`파일은 최대 ${this.props.MAX_FILES_COUNT}개만 가능합니다`);
       return;
     }
     this.fileInputRef.click();
@@ -558,7 +556,7 @@ class CompletedFileUpLoader extends Component{
                         <img src={ic_btn_file_upload} />
                       </button>
                       <div className={'file_count_text'}>
-                        {this.state.files.length}/{this.state.MAX_FILES_COUNT}
+                        {this.state.files.length}/{this.props.MAX_FILES_COUNT}
                       </div>
                     </div>
         noticeContainerStyle = {}
@@ -608,6 +606,7 @@ CompletedFileUpLoader.defaultProps = {
   isUploader: true,
   isShowUploaderButton: true,
   store_item_id: null,
+  MAX_FILES_COUNT: 5,
 
   noDataCallback: (isNoData) => {}
 }

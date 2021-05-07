@@ -73,6 +73,8 @@ class StoreAddItemPage extends Component{
       item_id: null,
       isLogin: false,
       pageState: Types.add_page_state.ADD,
+
+      download_file_max: 5,
       // pictures: [],
       // testImg: '',
 
@@ -223,7 +225,8 @@ class StoreAddItemPage extends Component{
             store_id: result.data.store_id,
             item_id: item_id,
             pageState: pageState,
-            isLogin: true
+            isLogin: true,
+            download_file_max: result.data.download_file_max
           }, () => {
             this.requestItemInfo();
           })
@@ -238,7 +241,8 @@ class StoreAddItemPage extends Component{
           store_id: result.data.store_id,
           item_id: null,
           pageState: pageState,
-          isLogin: true
+          isLogin: true,
+          download_file_max: result.data.download_file_max
         }, () => {
           this.requestItemInfo();
         })
@@ -1310,7 +1314,7 @@ class StoreAddItemPage extends Component{
                                           </div>
                                         </div>
 
-                                        <CompletedFileUpLoader store_user_id={this.state.store_user_id} ref={(ref) => {this.completedFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true} isShowUploaderButton={isShowUploaderButton}></CompletedFileUpLoader>
+                                        <CompletedFileUpLoader MAX_FILES_COUNT={this.state.download_file_max} store_user_id={this.state.store_user_id} ref={(ref) => {this.completedFileUploaderRef = ref;}} store_item_id={this.state.item_id} isUploader={true} isShowUploaderButton={isShowUploaderButton}></CompletedFileUpLoader>
                                       </div>
 
       //동의 체크
