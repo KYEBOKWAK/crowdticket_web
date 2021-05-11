@@ -82,7 +82,6 @@ class CompletedFileDownloadButton extends Component{
         files_downloads_id: this.props.files_downloads_id,
       }
     }).then((result) => {
-      
 
       if(result.data.state === 'success'){
         const data = result.data.data;

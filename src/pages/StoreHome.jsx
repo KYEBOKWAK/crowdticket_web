@@ -141,9 +141,27 @@ class StoreHome extends Component {
                               {category_line_box}
                             </div>
 
+    // const filename = 'image.jpg';
+    // const filenamebig = '500mb.mp4';
+    // const href = 'http://localhost:8080/downloader/get/file/2/'+filename;
+    // const hrefbig = 'http://localhost:8080/downloader/get/file/1/'+filenamebig;
+    
+    
     return (
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>
+
+        {/* <div>
+          <a download={filename} href={href} className={'CompletedFileDownloadButton'}>
+            파일 다운로드 테스트
+          </a>
+        </div>
+
+        <div>
+          <a download={filename} href={hrefbig} className={'CompletedFileDownloadButton'}>
+            대용량 파일 다운로드 테스트
+          </a>
+        </div> */}
 
         <div className={'store_home_container'}>
           <div className={'thumb_container'}>

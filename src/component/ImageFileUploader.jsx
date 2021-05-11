@@ -44,7 +44,7 @@ class ImageFileUploader extends Component{
       previewURL: '',
       isPreview: false,
 
-      MAX_FILES_COUNT: 5,
+      MAX_FILES_COUNT: 10,
 
       isRequestFile: false,
 
