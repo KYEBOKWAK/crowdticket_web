@@ -17,18 +17,32 @@ class CompletedFileDownloadButton extends Component{
   constructor(props){
     super(props);
 
-    let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
+    // let apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_REAL;
+    // const app_type_key = document.querySelector('#g_app_type');
+    // if(app_type_key){
+    //   if(app_type_key.value === 'local'){
+    //     apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
+    //   }else if(app_type_key.value === 'qa'){
+    //     apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
+    //   }
+    // }
+
+    let apiURL = process.env.CROWDTICKET_DOWNLOAD_CONTROLLER_REAL;
+    let apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_REAL;
     const app_type_key = document.querySelector('#g_app_type');
     if(app_type_key){
       if(app_type_key.value === 'local'){
-        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_local;
+        apiURL = process.env.CROWDTICKET_DOWNLOAD_CONTROLLER_LOCAL;
+        apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_local;
       }else if(app_type_key.value === 'qa'){
-        apiURL = process.env.REACT_APP_UPLOAD_API_SERVER_QA;
+        apiURL = process.env.CROWDTICKET_DOWNLOAD_CONTROLLER_QA;
+        apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_QA;
       }
     }
 
     this.state = {
       apiURL: apiURL,
+      apiDownloadURL: apiDownloadURL,
       is_completed: false,
       state: Types.files_servers_state.INIT,
       files_servers_id: null,
@@ -72,6 +86,69 @@ class CompletedFileDownloadButton extends Component{
     this.timerInterval = null;
   };
 
+
+  requestFileCheckInServer = () => {
+    if(this.props.files_download_id === null){
+      return;
+    }
+
+    _axios.post(this.state.apiURL+'/file/info', {
+      data: {
+        files_downloads_id: this.props.files_downloads_id,
+        file_s3_key: this.props.file_s3_key,
+        originalname: this.props.originalname
+      }
+    }).then((result) => {
+      if(result.data.state === 'success'){
+        const data = result.data.data;
+        if(data.files_servers_id === null){
+          this.stopCheckFileTimer();
+          this.startCheckFileTimer();
+          // this.requsetSetFileInServer();
+        }else{
+
+          if(data.state === Types.files_servers_state.DONE){
+            this.stopCheckFileTimer();
+          }else if(data.state === Types.files_servers_state.INIT){
+            this.startCheckFileTimer();
+          }else if(data.state === Types.files_servers_state.ERROR){
+            this.stopCheckFileTimer();
+            alert(data.message);
+          }
+          else{
+            this.stopCheckFileTimer();
+          }
+
+          this.setState({
+            state: data.state,
+            files_servers_id: data.files_servers_id,
+            originalname: data.originalname
+          })
+        }
+      }else{
+        
+
+        // this.setState({
+        //   state: Types.files_servers_state.ERROR,
+        //   files_servers_id: null,
+        //   originalname: ''
+        // })
+        return;
+      }
+      
+    }).catch((error) => {
+      this.stopCheckFileTimer();
+
+      this.setState({
+        state: Types.files_servers_state.ERROR,
+        files_servers_id: null,
+        originalname: ''
+      })
+      // alert('파일 정보 조회 에러');
+    })
+  }
+
+  /*
   requestFileCheckInServer = () => {
     if(this.props.files_download_id === null){
       return;
@@ -82,7 +159,6 @@ class CompletedFileDownloadButton extends Component{
         files_downloads_id: this.props.files_downloads_id,
       }
     }).then((result) => {
-
       if(result.data.state === 'success'){
         const data = result.data.data;
         if(data.files_servers_id === null){
@@ -126,7 +202,9 @@ class CompletedFileDownloadButton extends Component{
       // alert('파일 정보 조회 에러');
     })
   }
+  */
 
+  /*
   requsetSetFileInServer = () => {
     _axios.post(this.state.apiURL+'/downloader/set/file/info', {
       data: {
@@ -166,6 +244,7 @@ class CompletedFileDownloadButton extends Component{
       })
     })
   }
+  */
 
   onClickFileDownload = (e) => {
     
@@ -197,7 +276,8 @@ class CompletedFileDownloadButton extends Component{
       isButtonDisabled = true;
 
       const encodeName = this.state.originalname;
-      const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
+      // const href = this.state.apiURL+'/downloader/get/file/'+this.state.files_servers_id+'/'+encodeName;
+      const href = this.state.apiDownloadURL+'/downloader/get/file/'+this.props.files_downloads_id+'/'+encodeName;
       itemDom = <a download={this.props.originalname} href={href} className={'CompletedFileDownloadButton'}>
                   <img src={ic_circle_download} />
                 </a>
