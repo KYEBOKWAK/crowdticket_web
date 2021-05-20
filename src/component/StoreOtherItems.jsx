@@ -9,13 +9,17 @@ import Util from '../lib/Util';
 
 //store_id, item_id
 
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class StoreOtherItems extends Component{
   
   constructor(props){
     super(props);
 
     this.state = {
-      otherItemDoms: []
+      otherItemDoms: [],
+      language_code: 'kr'
     }
   };
 
@@ -24,7 +28,20 @@ class StoreOtherItems extends Component{
   // }
 
   componentDidMount(){
-    this.requestOtherItems();
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      }, () => {
+        this.requestOtherItems();
+      })
+    })
   };
 
   setScrollAction = () => {
@@ -107,7 +124,8 @@ class StoreOtherItems extends Component{
   requestOtherItems = () => {
     axios.post("/store/any/item/other/get", {
       store_id: this.props.store_id,
-      item_id: this.props.item_id
+      item_id: this.props.item_id,
+      language_code: this.state.language_code
     }, (result) => {
 
       // result.list = [];

@@ -1220,7 +1220,7 @@ class StoreOrderPage extends Component{
             <Str strKey={'s55'} />
           </div>
 
-          <div className={'input_label'}><Str strKey={'s56'} /></div>
+          <div className={'input_label'}><Str strKey={'s146'} /></div>
           <input className={'input_box'} type="name" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
 
           <div className={'input_label'}><Str strKey={'s57'} /></div>

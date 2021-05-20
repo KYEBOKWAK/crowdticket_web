@@ -16,8 +16,7 @@ const StrLib = {
       text = language[stringKey][language_code];
      }
 
-    //  return text;
-     return text+'('+strKey+')';
+     return text;
   }
 }
 

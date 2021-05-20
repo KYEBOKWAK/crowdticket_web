@@ -11,6 +11,8 @@ import StoreReviewItem from './StoreReviewItem';
 import axios from '../lib/Axios';
 import Types from '../Types';
 
+import Str from '../component/Str';
+
 const REQUEST_ONCE_ITME = 5;
 let isRequestInitData = false;
 
@@ -185,7 +187,8 @@ class StoreReviewList extends Component{
       <div className={'StoreReviewList'}>
         <div style={{paddingLeft: 10, paddingRight: 10, width: '100%'}}>
           <button onClick={(e) => {this.clickWriteReview(e)}} className={'reviewButton'}>
-            작성하기
+            {/* 작성하기 */}
+            <Str strKey={'s145'} />
           </button>
         </div>
         <InfiniteScroll

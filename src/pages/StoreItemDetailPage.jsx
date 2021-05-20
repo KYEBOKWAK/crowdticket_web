@@ -364,7 +364,7 @@ class StoreItemDetailPage extends Component{
       const pointTagDom = <div key={_pointTags.length} className={'point_tag_box point_tag_box_file_type'}>
                             <img src={icon_clip_tag} />
                             <div style={{marginLeft: 4}}>
-                              <Str strKey={'s25'} /> {this.state.download_type_file_count}<Str strKey={'s26'} />
+                              <Str strKey={'s25'} /> {this.state.download_type_file_count} <Str strKey={'s26'} />
                             </div>
                           </div>;
 

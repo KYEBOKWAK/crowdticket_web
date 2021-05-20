@@ -12,9 +12,9 @@ import './res/css/App.css';
 // import Templite from './pages/Templite';
 import Footer_React from './component/Footer_React';
 
+import StrLib from './lib/StrLib';
 import Storage from './lib/Storage';
 import * as storageType from './StorageKeys';
-import language from './res/json/language/language.json';
 
 class App extends Component {
   
@@ -22,7 +22,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      isLoad: false
+      isLoad: false,
+      language_code: 'kr'
     }
     
   }
@@ -33,46 +34,12 @@ class App extends Component {
       return;
     }
 
-    Storage.load(storageType.LANGUAGE_CODE, (result) => {
-      let language_code = 'kr';
-      if(result.value){
-        language_code = result.value;      
-      }else{
-        //값이 없음 
-      }
- 
-      const stringKey = strKey;
-      let text = stringKey;
- 
-      if(stringKey === ''){
-       text = '##EMPTY##';
-      }
-      else if(language[stringKey] === undefined){
-       text = stringKey;
-      }else if(language[stringKey][language_code] === undefined || language[stringKey][language_code] === null){
-       text = stringKey;
-      }else{
-       text = language[stringKey][language_code];
-      }
-      
-      document.innerText = text+'('+strKey+')';
-    })
+    let text = StrLib.getStr(strKey, this.state.language_code);
+
+    document.innerText = text;
   }
 
   componentDidMount(){
-    // let language_code = 'kr'
-
-    this.setTopMenuStr('s1', document.getElementById('top_menu_store'));
-    this.setTopMenuStr('s2', document.getElementById('top_menu_fanevent'));
-    this.setTopMenuStr('s3', document.getElementById('top_menu_magazine'));
-
-    this.setTopMenuStr('s4', document.getElementById('top_side_menu_login'));
-    this.setTopMenuStr('s5', document.getElementById('top_side_menu_profile_edit'));
-    this.setTopMenuStr('s6', document.getElementById('top_side_menu_my_store'));
-    this.setTopMenuStr('s7', document.getElementById('top_side_menu_my_orders'));
-    this.setTopMenuStr('s8', document.getElementById('top_side_menu_my_events'));
-    this.setTopMenuStr('s9', document.getElementById('top_side_menu_logout'));
-
 
     const languageDom = document.querySelector('#g_language');
     if(languageDom){
@@ -103,6 +70,127 @@ class App extends Component {
         })
       }
     }
+
+    this.setLanguageCode();
+  }
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      }, () => {
+        this.setTopMenuStr('s1', document.getElementById('top_menu_store'));
+        this.setTopMenuStr('s2', document.getElementById('top_menu_fanevent'));
+        this.setTopMenuStr('s3', document.getElementById('top_menu_magazine'));
+
+        this.setTopMenuStr('s4', document.getElementById('top_side_menu_login'));
+        this.setTopMenuStr('s5', document.getElementById('top_side_menu_profile_edit'));
+        this.setTopMenuStr('s6', document.getElementById('top_side_menu_my_store'));
+        this.setTopMenuStr('s7', document.getElementById('top_side_menu_my_orders'));
+        this.setTopMenuStr('s8', document.getElementById('top_side_menu_my_events'));
+        this.setTopMenuStr('s9', document.getElementById('top_side_menu_logout'));
+
+        document.getElementById('logo_home_link').addEventListener('click', this.onClickLogoHome);
+        document.getElementById('top_menu_store').addEventListener('click', this.onClickStoreMenu);
+        document.getElementById('top_menu_fanevent').addEventListener('click', this.onClickProjectMenu);
+        document.getElementById('top_menu_magazine').addEventListener('click', this.onClickMagazineMenu);
+      })
+    })
+  }
+
+  onClickLogoHome = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      if(language_code === 'en'){
+        if(confirm(StrLib.getStr('s144', language_code))){
+          window.location.href = '/';
+        }else {
+          
+        }
+      }else{
+        window.location.href = '/';
+      }
+    })
+  }
+
+  onClickStoreMenu = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      if(language_code === 'en'){
+        if(confirm(StrLib.getStr('s144', language_code))){
+          window.location.href = '/store';
+        }else {
+        }
+      }else{
+        window.location.href = '/store';
+      }
+    })
+  }
+
+  onClickMagazineMenu = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      if(language_code === 'en'){
+        if(confirm(StrLib.getStr('s144', language_code))){
+          window.location.href = '/magazine';
+        }else {
+        }
+      }else{
+        window.location.href = '/magazine';
+      }
+    })
+  }
+
+  onClickProjectMenu = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      if(language_code === 'en'){
+        if(confirm(StrLib.getStr('s144', language_code))){
+          window.location.href = '/projects';
+        }else {
+        }
+      }else{
+        window.location.href = '/projects';
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    document.getElementById('logo_home_link').removeEventListener('click', this.onClickLogoHome);
+    document.getElementById('top_menu_store').removeEventListener('click', this.onClickStoreMenu);
+    document.getElementById('top_menu_fanevent').removeEventListener('click', this.onClickProjectMenu);
+    document.getElementById('top_menu_magazine').removeEventListener('click', this.onClickMagazineMenu);
   }
 
   render() {

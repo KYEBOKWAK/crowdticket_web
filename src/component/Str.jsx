@@ -52,7 +52,11 @@ class Str extends Component{
       }else if(language[stringKey][language_code] === undefined || language[stringKey][language_code] === null){
        text = stringKey;
       }else{
-       text = language[stringKey][language_code];
+        if(language[stringKey][language_code] === '##EMPTY##'){
+          text = '';  
+        }else{
+          text = language[stringKey][language_code];
+        }
       }
  
      //  console.log(text);
@@ -74,7 +78,7 @@ class Str extends Component{
     return(
       <span>
        {/* {this.state.text} */}
-       {this.state.text}({this.props.strKey})
+       {this.state.text}
       </span>
     )
   }

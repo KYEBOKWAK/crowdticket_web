@@ -97,11 +97,11 @@
   },
   "s25": {
     "kr": "첨부파일",
-    "en": "files"
+    "en": "##EMPTY##"
   },
   "s26": {
     "kr": "개",
-    "en": "files"
+    "en": "file(s)"
   },
   "s27": {
     "kr": "평균 제작 기간",
@@ -348,7 +348,7 @@
   },
   "s82": {
     "kr": "모바일의 경우 다운로드 중 데이터 추가 요금이 부과될 수 있으니 Wi-Fi 연결을 권장합니다.\n파일 다운로드는 PC 사용을 권장합니다.",
-    "en": "- We recomment using Wi-Fi connection while downloading large files."
+    "en": "- We recommend using Wi-Fi connection while downloading large files."
   },
   "s83": {
     "kr": "크티 고객팀",
@@ -412,7 +412,7 @@
   },
   "s97": {
     "kr": "반갑습니다!\n지금 크티를 시작해볼까요?",
-    "en": "Welcome!\nIt's easy to join us"
+    "en": "Welcome!"
   },
   "s98": {
     "kr": "카카오로 빠르게 시작하기",
@@ -611,6 +611,21 @@
   },
   "s143": {
     "kr": "이미 sns에 가입되어 있다. (안씀)",
-    "en": "You are already joined to social media."
+    "en": "You are already signed in with social media account."
+  },
+  "s144": {
+    "kr": "(한글에서 안씀) - 아직 영어 서비스가 준비중이다",
+    "en": [
+      "Sorry! From here",
+      "things are not ready for non-Korean-speakers yet."
+    ]
+  },
+  "s145": {
+    "kr": "작성하기",
+    "en": "write a review"
+  },
+  "s146": {
+    "kr": "이름",
+    "en": "Full name"
   }
 }

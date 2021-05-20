@@ -393,7 +393,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <img style='width: 32px; height: 32px;' src="{{ asset('/img/icons/svg/ic-search.svg') }}">
         </a>
         @if(!env('REVIEW_ON'))
-          <a class="navbar-brand" href="{{ url('/') }}">
+          <a id='logo_home_link' class="navbar-brand" href="javascript:;">
               <img src="{{ asset('/img/icons/svg/logo-ct.svg') }}"/>
           </a>
         @endif
@@ -402,16 +402,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="ctNavBar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
         @if(env('REVIEW_ON'))
-          <li><a id='top_menu_magazine' href="{{ url('/magazine') }}">매거진</a></li>
+          <li><a id='top_menu_magazine' href="javascript:;">매거진</a></li>
         @else
           <li>
-            <a id='top_menu_store' href="{{ url('/store') }}" style="display: inline-block;">콘텐츠 상점</a>
+            <a id='top_menu_store' href="javascript:;" style="display: inline-block;">콘텐츠 상점</a>
               <!-- <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a> -->
               <!-- <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span> -->
           </li>
-          <li><a id='top_menu_fanevent' href="{{ url('/projects') }}">팬 이벤트</a></li>
+          <li><a id='top_menu_fanevent' href="javascript:;">팬 이벤트</a></li>
           <!-- <li><a href="{{ url('/blueprints/welcome') }}">이벤트 만들기</a></li> -->
-          <li><a id='top_menu_magazine' href="{{ url('/magazine') }}">매거진</a></li>
+          <li><a id='top_menu_magazine' href="javascript:;">매거진</a></li>
         @endif
         </ul>
 
@@ -629,8 +629,8 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=179') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=23') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=180') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=24') }}"></script>
 <script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=6') }}"></script>
 
 </body>
