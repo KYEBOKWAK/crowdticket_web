@@ -14,7 +14,14 @@ import Types from '../Types';
 
 import StoreUserSNSList from '../component/StoreUserSNSList';
 
+// import StrLib from '../lib/StrLib';
+import Str from '../component/Str';
+
 import Cookies from 'universal-cookie';
+
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 const cookies = new Cookies();
 
 const MENU_STATE_CONTENTS = 'MENU_STATE_CONTENTS';
@@ -49,7 +56,9 @@ class StoreDetailPage extends Component {
 
       commentCount: 0,
 
-      isAdmin: false
+      isAdmin: false,
+
+      language_code: 'kr'
 
       // window_width: window.innerWidth,
       // window_height: window.innerHeight,
@@ -108,11 +117,31 @@ class StoreDetailPage extends Component {
       store_alias: _store_alias,
       menuState: _menuState
     }, () => {
-      this.requestStoreInfo();
 
-      if(isLogin()){
-        this.requestIsAdmin();
-      }
+      Storage.load(storageType.LANGUAGE_CODE, (result) => {
+        let language_code = 'kr';
+        if(result.value){
+          language_code = result.value;      
+        }else{
+          //값이 없음 
+        }
+  
+        this.setState({
+          language_code: language_code
+        }, () => {
+          this.requestStoreInfo();
+
+          if(isLogin()){
+            this.requestIsAdmin();
+          }
+        })
+      })
+
+      // this.requestStoreInfo();
+
+      // if(isLogin()){
+      //   this.requestIsAdmin();
+      // }
     });
 
     window.addEventListener('resize', this.updateDimensions);
@@ -233,7 +262,9 @@ class StoreDetailPage extends Component {
     axios.post('/store/any/detail/item/list', {
       limit: REQUEST_ONCE_ITME,
       skip: this.state.items.length,
-      store_id: this.state.store_id
+      store_id: this.state.store_id,
+
+      language_code: this.state.language_code
       // lastID: 
     }, 
     (result) => {
@@ -520,11 +551,11 @@ class StoreDetailPage extends Component {
         <div className={'contentsContainer flex_layer flex_direction_column'}>
           <div className={'contentsMenuContainer flex_layer flex_direction_row'}>
             <button onClick={(e) => {this.clickMenu(e, MENU_STATE_CONTENTS)}} style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-              <div style={menuContentsTextStyle}>콘텐츠</div>
+              <div style={menuContentsTextStyle}><Str strKey={'s10'}/></div>
               {contentsUnderLine}
             </button>
             <button onClick={(e) => {this.clickMenu(e, MENU_STATE_REVIEW)}} style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-              <div style={menuReviewTextStyle}>리뷰 & 기대평 {this.state.commentCount}</div>
+              <div style={menuReviewTextStyle}><Str strKey={'s11'}/> {this.state.commentCount}</div>
               {reviewUnderLine}
             </button>
           </div>

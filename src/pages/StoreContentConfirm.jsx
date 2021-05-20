@@ -18,6 +18,11 @@ import Util from '../lib/Util';
 import Popup_text_viewer from '../component/Popup_text_viewer';
 
 import CompletedFileUpLoader from '../component/CompletedFileUpLoader';
+import Str from '../component/Str';
+
+import StrLib from '../lib/StrLib';
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
 
 class StoreContentConfirm extends Component{
 
@@ -62,7 +67,8 @@ class StoreContentConfirm extends Component{
       product_text: null,
       isOpenProductText: false,
 
-      review_button_disabled: false
+      review_button_disabled: false,
+      language_code: 'kr'
     }
   };
 
@@ -96,7 +102,24 @@ class StoreContentConfirm extends Component{
         
       })
     }
+
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     
@@ -342,7 +365,8 @@ class StoreContentConfirm extends Component{
   }
 
   successReviewAlert = () => {
-    swal('리뷰 작성 완료!', '감사합니다. :)', 'success');
+    // swal('리뷰 작성 완료!', '감사합니다. :)', 'success');
+    swal(StrLib.getStr('s90', this.state.language_code), StrLib.getStr('s91', this.state.language_code), 'success');
   }
 
   clickProductText = (e) => {
@@ -375,7 +399,8 @@ class StoreContentConfirm extends Component{
     
 
     
-    let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';
+    // let review_placehold_text = '기대평 & 리뷰를 남겨보세요!';
+    let review_placehold_text = StrLib.getStr('s85', this.state.language_code);
     let buttonText = '구매 완료 하기';
     if(this.state.item_product_state === Types.product_state.ONE_TO_ONE){
       review_placehold_text = '콘텐츠 후기를 남겨주세요!';
@@ -391,7 +416,8 @@ class StoreContentConfirm extends Component{
         goStoreButtonTopSize = 8;
       }
       go_store_button_dom = <button style={{marginTop: goStoreButtonTopSize}} onClick={(e) => {this.onClickGoStore(e)}} className={'white_button'}>
-                              상점 가기
+                              {/* 상점 가기 */}
+                              <Str strKey={'s89'} />
                             </button>
     }else{
       ok_button_dom = <button className={'ok_button'} onClick={(e) => {this.onClickOK(e)}}>
@@ -475,7 +501,8 @@ class StoreContentConfirm extends Component{
                                           크티 고객팀
                                         </div>
                                         <div className={'product_answer_content'}>
-                                        {'받아보신 콘텐츠는 어떠셨나요? \n\n크리에이터에게 감사 인사 및 콘텐츠 이용 후기를 아래에 남겨주세요! 여러분이 작성하신 리뷰와 응원이 크리에이터에게 힘이 됩니다!'}
+                                          <Str strKey={'s84'} />
+                                        {/* {'받아보신 콘텐츠는 어떠셨나요? \n\n크리에이터에게 감사 인사 및 콘텐츠 이용 후기를 아래에 남겨주세요! 여러분이 작성하신 리뷰와 응원이 크리에이터에게 힘이 됩니다!'} */}
                                         </div>
                                       </div>
                                     </div>
@@ -500,12 +527,14 @@ class StoreContentConfirm extends Component{
                                     <div className={'review_textarea_container'}>
                                       {textAreaDom}
                                       <div className={'explain_text'}>
-                                        {'[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.'}
+                                        {/* {'[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.'} */}
+                                        <Str strKey={'s86'} />
                                       </div>
                                     </div>
 
                                     <button disabled={this.state.review_button_disabled} style={reviewButtonStyle} onClick={(e) => {this.onClickReview(e)}} className={'white_button'}>
-                                      리뷰 작성 완료
+                                      {/* 리뷰 작성 완료 */}
+                                      <Str strKey={'s88'} />
                                     </button>
                                   </div>
     }
@@ -531,7 +560,8 @@ class StoreContentConfirm extends Component{
         <div className={'title_container'}>
           <img style={{}} src={ic_arrive_icon_img} />
           <div className={'title_text'}>
-            {'주문하신 콘텐츠 상품이\n도착했습니다!'}
+            {/* {'주문하신 콘텐츠 상품이\n도착했습니다!'} */}
+            <Str strKey={'s80'} />
           </div>
         </div>
 
@@ -550,7 +580,8 @@ class StoreContentConfirm extends Component{
 
         <div className={'problem_button_container'}>
           <button className={'problem_button'} onClick={(e) => {this.onClickContact(e)}}>
-            <u>콘텐츠에 문제가 있나요?</u>
+            {/* <u>콘텐츠에 문제가 있나요?</u> */}
+            <u><Str strKey={'s87'} /></u>
           </button>
         </div>
   

@@ -119,6 +119,7 @@ mix.react('src/App.jsx', 'dist/')
 .sass('src/res/css/Popup_category_filter.scss', 'dist/css/')
 .sass('src/res/css/Popup_category_sort.scss', 'dist/css/')
 .sass('src/res/css/Popup_category_info.scss', 'dist/css/')
+.sass('src/res/css/SelectBoxLanguage.scss', 'dist/css/')
 .webpackConfig({
   plugins: [
     new Dotenv()

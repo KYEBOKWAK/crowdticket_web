@@ -26,6 +26,8 @@ import StoreStateProcess from '../component/StoreStateProcess';
 
 import Profile from '../component/Profile';
 
+import Str from '../component/Str';
+
 const REFUND_STATE_NONE = "REFUND_STATE_NONE";
 const REFUND_STATE_SELECT = "REFUND_STATE_SELECT";
 
@@ -746,7 +748,8 @@ class StoreReceiptItem extends Component{
 
         let buttonText = '콘텐츠 확인하기';
         if(this.state.item_type_contents === Types.contents.completed){
-          buttonText = '콘텐츠 다운로드';
+          // buttonText = '콘텐츠 다운로드';
+          buttonText = <Str strKey={'s77'} />
 
           if(this.state.download_isExpired){
             buttonText += '(이용기간 만료)'
@@ -761,17 +764,18 @@ class StoreReceiptItem extends Component{
                                   className={'detail_receipt_button'} 
                                   onClick={(e) => {this.clikcDetailReceipt(e)}}
                                   >
-                                  주문상세
+                                  {/* 주문상세 */}
+                                  <Str strKey={'s78'} />
                                 </button>
                               </div>
       }else{
         _goDetailButtonDom = <div className={'receipt_button_container'}>
                                 <button 
-                                  // style={{marginTop: 12}}
                                   className={'detail_receipt_button'} 
                                   onClick={(e) => {this.clikcDetailReceipt(e)}}
                                   >
-                                  주문상세
+                                  {/* 주문상세 */}
+                                  <Str strKey={'s78'} />
                                 </button>
                               </div>
       }
@@ -1165,10 +1169,20 @@ class StoreReceiptItem extends Component{
         }
     }
 
+
+    let state_string_dom = null;
+    if(this.state.state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+      //영문 번역에선 우선 다운로드만 진행 하므로 고객 확인 완료만 번역한다.
+      state_string_dom = <Str strKey={'s79'} />;
+    }else{
+      state_string_dom = this.state.state_string;
+    }
+
     let priceInfoDom = <div className={'price_info_container'}>
                           <div className={'state_container'} style={{marginTop: state_container_marginTop}}>
                             <div className={'state_text'}>
-                              {this.state.state_string}
+                              {/* {this.state.state_string} */}
+                              {state_string_dom}
                             </div>
                           </div>
 

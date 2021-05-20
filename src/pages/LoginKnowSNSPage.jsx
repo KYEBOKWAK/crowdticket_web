@@ -22,13 +22,19 @@ import Popup_resetSendMail from '../component/Popup_resetSendMail';
 import _axios from 'axios';
 import Util from '../lib/Util';
 
+import Str from '../component/Str';
+
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class LoginKnowSNSPage extends Component{
 
   constructor(props){
     super(props);
 
     this.state = {
-      successPopup: false
+      successPopup: false,
+      language_code: 'kr'
     }
   };
 
@@ -57,7 +63,24 @@ class LoginKnowSNSPage extends Component{
         progress: undefined,
         });
     }
+
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
   };
@@ -100,11 +123,12 @@ class LoginKnowSNSPage extends Component{
   render(){
 
     let img_array = [];
-    let content_title = '';
+    let content_title = null;
     let content_sub = '';
 
     if(this.props.sns_array.length === 0){
-      content_title = '이미 가입된 계정입니다.';
+      // content_title = '이미 가입된 계정입니다.';
+      content_title = <Str strKey={'s127'} />;
       content_sub = <div className={'logo_explain_text_box'}>
                       이메일로 다시 로그인하시거나,<br/>
                       계정 정보를 잊으셨다면 비밀번호를 재설정 후 사용해주세요.
@@ -147,12 +171,26 @@ class LoginKnowSNSPage extends Component{
         img_array.push(img_dom);
       }
 
-      content_title = sns_titles+'으로 가입된 계정입니다.';
+      if(this.state.language_code === 'kr'){
+        content_title = sns_titles+'으로 가입된 계정입니다.';
 
-      content_sub = <div className={'logo_explain_text_box'}>
-                      {sns_titles}으로 다시 로그인하시거나,<br/>
-                      이메일로 로그인하기 위해서는 비밀번호를 설정 후 사용해주세요.
-                    </div>
+        content_sub = <div className={'logo_explain_text_box'}>
+                        {sns_titles}으로 다시 로그인하시거나,<br/>
+                        이메일로 로그인하기 위해서는 비밀번호를 설정 후 사용해주세요.
+                      </div>
+      }else{
+        content_title = <Str strKey={'s132'} />
+
+        content_sub = <div className={'logo_explain_text_box'}>
+                        <Str strKey={'s133'} />
+                      </div>
+      }
+      // content_title = sns_titles+'으로 가입된 계정입니다.';
+
+      // content_sub = <div className={'logo_explain_text_box'}>
+      //                 {sns_titles}으로 다시 로그인하시거나,<br/>
+      //                 이메일로 로그인하기 위해서는 비밀번호를 설정 후 사용해주세요.
+      //               </div>
     }
     
 
@@ -176,19 +214,16 @@ class LoginKnowSNSPage extends Component{
         </div>
 
         {content_sub}
-        {/* <div className={'logo_explain_text_box'}> */}
-          
-          {/* {sns_titles}으로 다시 로그인하시거나,<br/> */}
-          {/* 이메일로 로그인하기 위해서는 비밀번호를 설정 후 사용해주세요. */}
-        {/* </div> */}
         
         <div className={'buttons_container'}>
           <Link className={'again_login_button'} to={RoutesTypes.login.home}>
-            다시 로그인하기
+            {/* 다시 로그인하기 */}
+            <Str strKey={'s134'} />
           </Link>
 
           <button onClick={(e) => {this.onClickSendPassword(e)}} className={'password_set_button'}>
-            비밀번호 설정하기
+            {/* 비밀번호 설정하기 */}
+            <Str strKey={'s135'} />
           </button>
         </div>
 

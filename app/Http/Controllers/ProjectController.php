@@ -1913,12 +1913,20 @@ class ProjectController extends Controller
       return [];
     }
 
-    public function getStoreDetailByID(Request $request, $id)
+    public function getStoreDetailByID(Request $request, $id, $language_code='')
     {
       //id로 alias를 찾아서 보내줌
       $tabMenu = null;
       if($request->has('menu')){
         $tabMenu = $request->menu;
+      }
+
+      $language = '';
+      if($language_code !== ''){
+        $language = $language_code;
+      }
+      else if($request->has('language')){
+        $language = $request->language;
       }
 
       $nick_name = '';
@@ -1938,17 +1946,24 @@ class ProjectController extends Controller
         'store_alias' => null,
         'tabmenu' => $tabMenu,
         'store_user_nick_name' => $nick_name,
-        'store_content' => $store_content
+        'store_content' => $store_content,
+        'language' => $language
       ]);
     }
 
-    public function getStoreDetailByAlias(Request $request, $alias)
+    public function getStoreDetailByAlias(Request $request, $alias, $language_code='')
     {
-      // const MENU_STATE_CONTENTS = 'MENU_STATE_CONTENTS';
-      // const MENU_STATE_REVIEW = 'MENU_STATE_REVIEW';
       $tabMenu = null;
       if($request->has('menu')){
         $tabMenu = $request->menu;
+      }
+
+      $language = '';
+      if($language_code !== ''){
+        $language = $language_code;
+      }
+      else if($request->has('language')){
+        $language = $request->language;
       }
 
       $nick_name = '';
@@ -1968,7 +1983,8 @@ class ProjectController extends Controller
         'store_alias' => $alias,
         'tabmenu' => $tabMenu,
         'store_user_nick_name' => $nick_name,
-        'store_content' => $store_content
+        'store_content' => $store_content,
+        'language' => $language
       ]);
     }
 

@@ -11,6 +11,13 @@ import ic_footer_instagram from '../res/img/ic-footer-instagram.svg';
 import ic_footer_naver from '../res/img/ic-footer-naver.svg';
 import ic_footer_youtube from '../res/img/ic-footer-youtube.svg';
 
+import Str from '../component/Str';
+
+import SelectBoxLanguage from '../component/SelectBoxLanguage';
+
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 const FOOTER_LINK_TYPE_STORE = 'FOOTER_LINK_TYPE_STORE';
 const FOOTER_LINK_TYPE_EVENT = 'FOOTER_LINK_TYPE_EVENT';
 const FOOTER_LINK_TYPE_MAGAZINE = 'FOOTER_LINK_TYPE_MAGAZINE';
@@ -32,14 +39,32 @@ class Footer_React extends Component{
     super(props);
 
     this.state = {
-      innerWidth: 0
+      innerWidth: 0,
+      language_code: 'kr'
     }
   };
 
   componentDidMount(){
     window.addEventListener('resize', this.updateDimensions);
     this.updateDimensions();
+
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     window.removeEventListener('resize', this.updateDimensions);
@@ -117,6 +142,36 @@ class Footer_React extends Component{
 
     let logo_dom = <div className={'logo_container'}>
                     <img src={ic_logo} />
+                    <div className={'select_box_lang'}>
+                      <SelectBoxLanguage 
+                        default_value={this.state.language_code}
+                        null_show_value={'언어를 선택해주세요.'}
+                        list={[
+                          {
+                            value: 'kr',
+                            show_value: '한국어'
+                          },
+                          {
+                            value: 'en',
+                            show_value: 'English'
+                          }
+                        ]}
+                        callbackChangeSelect={(value) => {
+                          let language_code = value;
+                          if(value === null){
+                            language_code = 'kr'
+                          }
+
+                          this.setState({
+                            language_code: language_code
+                          }, () => {
+                            Storage.save(storageType.LANGUAGE_CODE, this.state.language_code, (result) => {
+                              window.location.reload();
+                            });
+                          })
+                        }}
+                      ></SelectBoxLanguage>
+                    </div>
                   </div>;
 
     let service_center_dom = <div className={'service_container'}>
@@ -169,14 +224,17 @@ class Footer_React extends Component{
                 크티
               </div>
               <button onClick={(e) => {this.onClickLink(e, FOOTER_LINK_TYPE_STORE)}} className={'title_text'}>
-                콘텐츠상점
+                {/* 콘텐츠상점 */}
+                <Str strKey={'s12'}/>
               </button>
               
               <button onClick={(e) => {this.onClickLink(e, FOOTER_LINK_TYPE_EVENT)}} className={'title_text'}>
-                팬 이벤트
+                {/* 팬 이벤트 */}
+                <Str strKey={'s2'}/>
               </button>
               <button style={{marginBottom: 0}} onClick={(e) => {this.onClickLink(e, FOOTER_LINK_TYPE_MAGAZINE)}} className={'title_text'}>
-                매거진
+                {/* 매거진 */}
+                <Str strKey={'s3'}/>
               </button>
             </div>
 

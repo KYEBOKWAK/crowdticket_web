@@ -21,6 +21,11 @@ import Util from '../lib/Util';
 import _axios from 'axios';
 import axios from '../lib/Axios';
 
+import Str from '../component/Str';
+
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class LoginStartPage extends Component{
 
   auth2 = null;
@@ -28,13 +33,31 @@ class LoginStartPage extends Component{
     super(props);
 
     this.state = {
+      language_code: 'kr'
     }
   };
 
   componentDidMount(){
     this.facebookLibInit();
     this.googleLibInit();
+
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   facebookLibInit = () => {
     let facebook_app_id = process.env.REACT_APP_FACEBOOK_ID_REAL;
@@ -218,7 +241,7 @@ class LoginStartPage extends Component{
             if(name === undefined){
               name = '';
             }
-
+            
             if(!res.kakao_account.has_email || res.kakao_account.email === undefined || res.kakao_account.email === null || res.kakao_account.email === ''){
               //email이 없을때
               axios.post('/user/any/check/snsid', {
@@ -318,19 +341,29 @@ class LoginStartPage extends Component{
   }
 
   render(){
-
+    let terms_dom = <></>;
+    if(this.state.language_code === 'kr'){
+      terms_dom = <div className={'term_container'}>
+                    <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span> 내용을 확인하였으며, 이에 동의합니다.
+                  </div>
+    }else{
+      terms_dom = <div className={'term_container'}>
+                    By clicking Sign in with Kakao, Google, or Facebook,  you agree to Crowdticket's <span className={'term_text'}><a href='/terms' target='_blank'><u>Terms and Conditions</u></a></span>, and <span className={'term_text'}><a href='/join_agree' target='_blank'><u>Privacy Policy</u></a></span>
+                  </div>
+    }
     return(
       <div className={'LoginStartPage'}>
         <div className={'title_text'}>
-          반갑습니다!<br/>
-          지금 크티를 시작해볼까요?
+          {/* 반갑습니다!<br/>
+          지금 크티를 시작해볼까요? */}
+          <Str strKey={'s97'} />
         </div>
         <div className={'sns_buttons_container'}>
           <div>
             <button className={'sns_buttons sns_kakao_button'} onClick={(e) => {this.onClickKakaoLogin(e)}}>
               <img className={'sns_kakao_img'} src={ic_img_sign_kakao} />
               <div className={'sns_text'}>
-                카카오로 빠르게 시작하기
+                <Str strKey={'s98'} />
               </div>
             </button>
           </div>
@@ -338,7 +371,7 @@ class LoginStartPage extends Component{
             <button className={'sns_buttons sns_google_button'} id={'login_social_google_react_button'} onClick={(e) => {this.onClickGoogleLogin(e)}}>
               <img className={'sns_google_img'} src={ic_img_sign_google} />
               <div className={'sns_text'}>
-                구글로 빠르게 시작하기
+                <Str strKey={'s99'} />
               </div>
             </button>
           </div>
@@ -346,21 +379,19 @@ class LoginStartPage extends Component{
             <button className={'sns_buttons sns_facebook_button'} onClick={(e) => {this.onClickFacebookLogin(e)}}>
               <img className={'sns_facebook_img'} src={ic_img_sign_facebook} />
               <div className={'sns_text'}>
-                페이스북으로 빠르게 시작하기
+                <Str strKey={'s100'} />
               </div>
             </button>
           </div>
           <Link className={'sns_buttons sns_email_button'} to={RoutesTypes.login.email}>
             <img className={'sns_email_img'} src={ic_img_sign_mail} />
             <div className={'sns_text'}>
-              이메일로 시작하기
+              <Str strKey={'s101'} />
             </div>
           </Link>
         </div>
         
-        <div className={'term_container'}>
-          <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span> 내용을 확인하였으며, 이에 동의합니다.
-        </div>
+        {terms_dom}
       </div>
     )
   }

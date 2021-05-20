@@ -425,7 +425,7 @@ const Util = {
     }
   
     return '';
-  }
+  }  
 }
 
 export default Util;

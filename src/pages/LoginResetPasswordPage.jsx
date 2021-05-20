@@ -8,6 +8,12 @@ import axios from '../lib/Axios';
 import ic_eye_on from '../res/img/ic-eye-on.svg';
 import ic_eye_off from '../res/img/ic-eye-off.svg';
 
+import Str from '../component/Str';
+
+import StrLib from '../lib/StrLib';
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class LoginResetPasswordPage extends Component{
 
   constructor(props){
@@ -25,7 +31,9 @@ class LoginResetPasswordPage extends Component{
 
       email_explain_text: '',
       password_explain_text: '',
-      password_confirm_explain_text: ''
+      password_confirm_explain_text: '',
+
+      language_code: 'kr'
     }
   };
 
@@ -33,8 +41,24 @@ class LoginResetPasswordPage extends Component{
   //   return true;
   // }
 
-  componentDidMount(){    
+  componentDidMount(){
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     
@@ -47,10 +71,10 @@ class LoginResetPasswordPage extends Component{
 
     let email_explain_text = '';
     if(e.target.value === ''){
-      email_explain_text = '이메일을 입력해주세요';
+      email_explain_text = StrLib.getStr('s61', this.state.language_code); //
     }else{
       if(!Util.isCheckEmailValid(e.target.value)){
-        email_explain_text = '올바른 이메일 양식이 아닙니다.';
+        email_explain_text = StrLib.getStr('s108', this.state.language_code);  //
       }
     }
 
@@ -63,9 +87,9 @@ class LoginResetPasswordPage extends Component{
   onChangePassword = (e) => {
     let password_explain_text = '';
     if(e.target.value === ''){
-      password_explain_text = '비밀번호를 입력해주세요';
+      password_explain_text = StrLib.getStr('s107', this.state.language_code);  //
     }else if(e.target.value.length < 6){
-      password_explain_text = '비밀번호는 6글자 이상 입력해주세요';
+      password_explain_text = StrLib.getStr('s109', this.state.language_code); //
     }
 
     this.setState({
@@ -82,7 +106,7 @@ class LoginResetPasswordPage extends Component{
 
     }
     else if(e.target.value !== this.state.password){
-      password_confirm_explain_text = '비밀번호가 다릅니다.';
+      password_confirm_explain_text = StrLib.getStr('s119', this.state.language_code); //
     }
 
     this.setState({
@@ -96,34 +120,34 @@ class LoginResetPasswordPage extends Component{
 
     if(this.state.email === ''){
       this.setState({
-        email_explain_text: '이메일을 입력해주세요.'
+        email_explain_text: StrLib.getStr('s61', this.state.language_code) //
       })
       return;
     }
 
     if(!Util.isCheckEmailValid(this.state.email)){
       this.setState({
-        email_explain_text: '올바른 이메일 양식이 아닙니다.'
+        email_explain_text: StrLib.getStr('s108', this.state.language_code) //
       })
       return;
     }
 
     if(this.state.password === ''){
       this.setState({
-        password_explain_text: '비밀번호를 입력해주세요.'
+        password_explain_text: StrLib.getStr('s107', this.state.language_code) //
       })
       return;
     }
     else if(this.state.password.length < 6){
       this.setState({
-        password_explain_text: '비밀번호는 6글자 이상 입력해주세요'
+        password_explain_text: StrLib.getStr('s109', this.state.language_code) //
       })
       return;
     }
 
     if(this.state.password !== this.state.password_confirmation){
       this.setState({
-        password_confirm_explain_text: '비밀번호가 다릅니다. 다시 입력해주세요.'
+        password_confirm_explain_text: StrLib.getStr('s118', this.state.language_code)  //
       })
       return;
     }
@@ -148,7 +172,7 @@ class LoginResetPasswordPage extends Component{
         stopLoadingPopup();
         const data = result.data;
         if(data.state === 'success'){
-          swal('변경완료!', '', 'success').then(() => {
+          swal(StrLib.getStr('s125', this.state.language_code), '', 'success').then(() => {
             if(this.props.email_reset){
               window.location.href = Util.getBaseURL();
             }
@@ -254,21 +278,24 @@ class LoginResetPasswordPage extends Component{
       <div className={'LoginResetPasswordPage'}>
 
         <div className={'page_label_text'}>
-          비밀번호 변경
+          {/* 비밀번호 변경 */}
+          <Str strKey={'s123'} />
         </div>
         <div className={'content_container'}>
           <div className={'input_label'}>
-            이메일
+            {/* 이메일 */}
+            <Str strKey={'s58'} />
           </div>
-          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={'이메일을 입력해주세요.'} value={this.state.email} onBlur={(e) => {this.onChangeEmail(e)}} onChange={(e) => {this.onChangeEmail(e)}} />
+          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={StrLib.getStr('s61', this.state.language_code)} value={this.state.email} onBlur={(e) => {this.onChangeEmail(e)}} onChange={(e) => {this.onChangeEmail(e)}} />
           {email_explain_dom}
           
           <div className={'input_label'} style={{marginTop: 16}}>
-            비밀번호
+            {/* 비밀번호 */}
+            <Str strKey={'s103'} />
           </div>
 
           <div className={'password_container'}>
-            <input className={password_input_warning_classname+' input_password'} type={password_type} name={'password'} placeholder={'비밀번호를 입력해주세요.'} value={this.state.password} onBlur={(e) => {this.onChangePassword(e)}} onChange={(e) => {this.onChangePassword(e)}} />
+            <input className={password_input_warning_classname+' input_password'} type={password_type} name={'password'} placeholder={StrLib.getStr('s107', this.state.language_code)} value={this.state.password} onBlur={(e) => {this.onChangePassword(e)}} onChange={(e) => {this.onChangePassword(e)}} />
 
             <button onClick={(e) => {this.onClickShowPassword(e)}} className={'password_show_button'}>
               <img src={show_password_img} />
@@ -278,11 +305,12 @@ class LoginResetPasswordPage extends Component{
           {password_explain_dom}
 
           <div className={'input_label'} style={{marginTop: 16}}>
-            비밀번호 확인
+            {/* 비밀번호 확인 */}
+            <Str strKey={'s115'} />
           </div>
 
           <div className={'password_container'}>
-            <input className={password_confirm_input_warning_classname+' input_password'} type={password_confirm_type} name={'password'} placeholder={'비밀번호를 한 번 더 입력해주세요.'} value={this.state.password_confirmation} onChange={(e) => {this.onChangePasswordConfirm(e)}} onBlur={(e) => {this.onChangePasswordConfirm(e)}} />
+            <input className={password_confirm_input_warning_classname+' input_password'} type={password_confirm_type} name={'password'} placeholder={StrLib.getStr('s116', this.state.language_code)} value={this.state.password_confirmation} onChange={(e) => {this.onChangePasswordConfirm(e)}} onBlur={(e) => {this.onChangePasswordConfirm(e)}} />
 
             <button onClick={(e) => {this.onClickShowPasswordConfirm(e)}} className={'password_show_button'}>
               <img src={show_password_confirm_img} />
@@ -294,7 +322,8 @@ class LoginResetPasswordPage extends Component{
         
         <div className={'buttons_container'}>
           <button className={'set_password_button'} onClick={(e) => {this.onClickSetPassword(e)}}>
-            비밀번호 변경하기
+            {/* 비밀번호 변경하기 */}
+            <Str strKey={'s124'} />
           </button>
         </div>
       </div>

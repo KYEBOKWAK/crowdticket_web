@@ -25,6 +25,12 @@ import ic_radio_btn_s from '../res/img/radio-btn-s.svg'
 
 import ic_icon_download from '../res/img/icon-download.svg';
 
+import Str from '../component/Str';
+
+import StrLib from '../lib/StrLib';
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 
 const INPUT_STORE_ORDER_NAME = "INPUT_STORE_ORDER_NAME";
 const INPUT_STORE_ORDER_CONTACT = "INPUT_STORE_ORDER_CONTACT";
@@ -104,27 +110,24 @@ class StoreOrderPage extends Component{
       selectShowMonthValue: 'mm',
 
       agreeArray: [
-        // {
-        //   type: Types.agree.all,
-        //   name: '모두 동의',
-        //   isCheck: false,
-        //   link: ''
-        // }, 
         {
           type: Types.agree.refund,
           name: '환불 정책',
+          name_key: 's66',
           isCheck: false,
           link: ''
         }, 
         {
           type: Types.agree.terms_useInfo,
           name: '크티 이용약관',
+          name_key: 's67',
           isCheck: false,
           link: 'https://crowdticket.kr/terms/app'
         }, 
         {
           type: Types.agree.third,
           name: '제3자 정보제공정책',
+          name_key: 's68',
           isCheck: false,
           link: 'https://crowdticket.kr/thirdterms/app'
         }
@@ -148,11 +151,13 @@ class StoreOrderPage extends Component{
         {
           pg: 'paypal',
           pay_method: Types.pay_method.PAY_METHOD_TYPE_CARD,
-          text: 'paypal(페이팔)',
+          text: 'Paypal',
           pay_type: PAY_TYPE_PAYPAL,
           currency_code: Types.currency_code.US_Dollar
         }
-      ]
+      ],
+
+      language_code: 'kr'
     }
 
     this.handleSelectChangeYear = this.handleSelectChangeYear.bind(this);
@@ -162,7 +167,6 @@ class StoreOrderPage extends Component{
   componentDidMount(){
     this.IMP = window.IMP; // 생략가능
 
-    console.log('dfsdf');
     const app_type_key = document.querySelector('#g_app_type');
     let iamportCode = process.env.REACT_APP_IAMPORT_CODE;
     if(app_type_key){
@@ -253,7 +257,24 @@ class StoreOrderPage extends Component{
      optionYears: _optionYears.concat(),
      optionMonth: _optionMonth.concat()
    })
+
+   this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     this.IMP = null;
@@ -356,15 +377,12 @@ class StoreOrderPage extends Component{
     
 
     if(this.state.name === ''){
-      // isOrder = false;
       alert('이름을 적어주세요');
       return false;
     }else if(this.state.contact === ''){
-      // isOrder = false;
       alert('전화번호를 적어주세요');
       return false;
     }else if(this.state.email === ''){
-      // isOrder = false;
       alert("이메일을 적어주세요");
       return false;
     }
@@ -399,8 +417,8 @@ class StoreOrderPage extends Component{
 
     let isAllAgree = this.isAllAgree();
     if(!isAllAgree){
-      // isOrder = false;
-      alert("이용 정책에 동의 해주세요");
+      // alert("이용 정책에 동의 해주세요");
+      alert(StrLib.getStr('s72'));
       return false;
     }
     
@@ -1005,9 +1023,16 @@ class StoreOrderPage extends Component{
         agreeSelectImg = <img className={'agreeImg'} src={ic_checkbox_btn_s} />
       }
 
-      let linkTextDom = <a href={agreeData.link} target={'_blank'}><u>{agreeData.name}</u></a>;
+      let linkTextDom = <></>;
       if(agreeData.type === Types.agree.refund){
-        linkTextDom = agreeData.name;
+        linkTextDom = <Str strKey={agreeData.name_key} />;
+      }else{
+        linkTextDom = <a href={agreeData.link} target={'_blank'}><u><Str strKey={agreeData.name_key} /></u></a>;
+      }
+
+      let agreeTailText = '';
+      if(this.state.language_code === 'kr'){
+        agreeTailText = '동의'
       }
 
       let agreeButtonDom = <div className={'agree_button'} key={i}>
@@ -1015,7 +1040,7 @@ class StoreOrderPage extends Component{
                                 {agreeSelectImg}
                               </button>
                               <div className={'agree_text'}>
-                                {linkTextDom} 동의
+                                {linkTextDom} {agreeTailText}
                               </div>
                             </div>
 
@@ -1103,7 +1128,8 @@ class StoreOrderPage extends Component{
 
       payDom = <div className={'container_box'}>
                   <div className={'container_label'}>
-                    결제방법
+                    {/* 결제방법 */}
+                    <Str strKey={'s63'} />
                   </div>
                   <div className={'pay_method_container'}>
                     {payMethodDoms}
@@ -1120,11 +1146,14 @@ class StoreOrderPage extends Component{
       download_type_notice_dom = <div className={'download_type_notice_box'}>
                                   <img src={ic_icon_download} />
                                   <div className={'download_type_notice_text'}>
-                                    해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다.
+                                    {/* 해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다. */}
+                                    <Str strKey={'s32'} />
                                   </div>
                                 </div>
 
-      refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 구매 완료 시점으로부터 60일 동안 횟수 제한없이 콘텐츠를 다운로드 받아 사용할 수 있습니다.\n• 즉시 다운로드 콘텐츠는 결제 이후 취소 및 환불이 불가능합니다. 단, 다운로드 받은 파일에 문제가 있는 경우 7일 이내에 고객센터 문의를 해주시면 처리해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`;
+      // refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 구매 완료 시점으로부터 60일 동안 횟수 제한없이 콘텐츠를 다운로드 받아 사용할 수 있습니다.\n• 즉시 다운로드 콘텐츠는 결제 이후 취소 및 환불이 불가능합니다. 단, 다운로드 받은 파일에 문제가 있는 경우 7일 이내에 고객센터 문의를 해주시면 처리해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`;
+
+      refundText = <Str strKey={'s70'} />;
 
       request_content_dom = <div style={{display: 'none'}}>
                               <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}>
@@ -1146,16 +1175,20 @@ class StoreOrderPage extends Component{
                               <FileUploader ref={(ref) => {this.fileUploaderRef = ref;}} state={this.state.item_file_upload_state} isUploader={true}></FileUploader>
                             </div>;
 
-      refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 콘텐츠 제작 전 크리에이터의 주문 승인이 필요하며 크리에이터의 정책 또는 의사에 따라 주문이 반려될 수 있습니다.\n• 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.\n• 주문이 승인되기 전에는 구매자에 의한 주문 취소 및 환불이 가능합니다.\n• 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단, 주문 날짜로부터 14일 경과 후에도 콘텐츠를 제공받지 못한 경우에는 요청 시 주문 취소 후 결제 금액을 전액 환불해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`
+      // refundText = `• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 콘텐츠 제작 전 크리에이터의 주문 승인이 필요하며 크리에이터의 정책 또는 의사에 따라 주문이 반려될 수 있습니다.\n• 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.\n• 주문이 승인되기 전에는 구매자에 의한 주문 취소 및 환불이 가능합니다.\n• 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단, 주문 날짜로부터 14일 경과 후에도 콘텐츠를 제공받지 못한 경우에는 요청 시 주문 취소 후 결제 금액을 전액 환불해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다.`
+
+      refundText = <Str strKey={'s71'} />
     }
 
     return(
       <div className={'StoreOrderPage'}>
         <div className={'title_label'}>
-          주문
+          {/* 주문 */}
+          <Str strKey={'s53'} />
         </div>
         <div className={'sub_title_label'}>
-          주문내역
+          {/* 주문내역 */}
+          <Str strKey={'s54'} />
         </div>
 
         {download_type_notice_dom}
@@ -1183,23 +1216,25 @@ class StoreOrderPage extends Component{
 
         <div className={'container_box'}>
           <div className={'container_label'}>
-            신청자 정보
+            {/* 신청자 정보 */}
+            <Str strKey={'s55'} />
           </div>
 
-          <div className={'input_label'}>이름</div>
-          <input className={'input_box'} type="name" name={'name'} placeholder={'이름을 입력해주세요'} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
+          <div className={'input_label'}><Str strKey={'s56'} /></div>
+          <input className={'input_box'} type="name" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
 
-          <div className={'input_label'}>전화번호</div>
-          <input className={'input_box'} type="tel" name={'tel'} placeholder={'전화번호를 입력해주세요'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/>
+          <div className={'input_label'}><Str strKey={'s57'} /></div>
+          <input className={'input_box'} type="tel" name={'tel'} placeholder={StrLib.getStr('s60', this.state.language_code)} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/>
 
-          <div className={'input_label'}>이메일</div>
-          <input className={'input_box'} type="email" name={'email'} placeholder={'이메일을 입력해주세요'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/>
+          <div className={'input_label'}><Str strKey={'s58'} /></div>
+          <input className={'input_box'} type="email" name={'email'} placeholder={StrLib.getStr('s61', this.state.language_code)} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/>
           
         </div>
 
         <div className={'container_box'}>
           <div className={'container_label'}>
-            결제
+            {/* 결제 */}
+            <Str strKey={'s62'} />
           </div>
 
           <div className={'pay_info_container'}>
@@ -1227,7 +1262,8 @@ class StoreOrderPage extends Component{
 
         <div className={'policy_container'}>
           <div className={'policy_title'}>
-            크티 취소/환불 규정
+            {/* 크티 취소/환불 규정 */}
+            <Str strKey={'s33'} />
           </div>
           <div className={'policy_content'}>
             {refundText}
@@ -1236,14 +1272,16 @@ class StoreOrderPage extends Component{
 
         <div className={'container_box'}>
           <div className={'container_label'}>
-            크티 이용 정책 동의
+            {/* 크티 이용 정책 동의 */}
+            <Str strKey={'s64'} />
           </div>
 
           <button onClick={(e) => {this.clickAllAgree(e)}} style={{marginTop: 22}}>
             <div style={{display: 'flex', alignItems: 'center'}}>
               {allAgreeImage}
               <div style={{fontSize: 14, color: '#4d4d4d', marginLeft: 8}}>
-                모두 동의
+                {/* 모두 동의 */}
+                <Str strKey={'s65'} />
               </div>
             </div>
           </button>
@@ -1255,7 +1293,7 @@ class StoreOrderPage extends Component{
         </div>
 
         <button className={'order_button'} onClick={(e) => {this.clickOrder(e)}}>
-          {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)} 주문하기
+          {Util.getPriceCurrency(this.state.item_price, this.state.item_price_usd, this.state.currency_code)}<span>&nbsp;</span><Str strKey={'s69'} />
         </button>
       </div>
     )

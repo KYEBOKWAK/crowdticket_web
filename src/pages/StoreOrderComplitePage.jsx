@@ -6,6 +6,7 @@ import StoreReceiptItem from '../component/StoreReceiptItem';
 import axios from '../lib/Axios';
 
 import Types from '../Types';
+import Str from '../component/Str';
 
 class StoreOrderComplitePage extends Component{
 
@@ -76,14 +77,15 @@ class StoreOrderComplitePage extends Component{
     }
 
     if(this.state.item_type_contents === Types.contents.completed){
-      askTitle = `🤔 콘텐츠는 어떻게 받나요?`;
-      askContent = `아래 주문내역의 ‘콘텐츠 다운로드’ 버튼을 눌러주세요!\n지금 바로 구매하신 콘텐츠를 다운로드 받고 확인할 수 있습니다.\n※ 구매한 콘텐츠들은 ‘나의 콘텐츠 주문’에서도 모두 보실 수 있습니다.`
+      askTitle = <Str strKey={'s74'} />
+      askContent = <Str strKey={'s75'} />
     }
 
     return(
       <div className={"StoreOrderComplitePage"}>
         <div className={'label_title_text'}>
-          주문 완료
+          {/* 주문 완료 */}
+          <Str strKey={'s73'} />
         </div>
         <div className={"container_box"}>
           <div className={"how_ask_text"}>
@@ -97,7 +99,8 @@ class StoreOrderComplitePage extends Component{
         </div>
 
         <div className={'receipt_label_text'}>
-          주문내역
+          {/* 주문내역 */}
+          <Str strKey={'s76'} />
         </div>
 
         <div className={'container_box'}>

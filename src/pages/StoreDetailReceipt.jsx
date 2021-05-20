@@ -7,6 +7,8 @@ import Util from '../lib/Util';
 import axios from '../lib/Axios';
 import Types from '../Types';
 
+import Str from '../component/Str';
+
 class StoreDetailReceipt extends Component{
 
   constructor(props){
@@ -28,12 +30,16 @@ class StoreDetailReceipt extends Component{
       total_price_usd: 0,
       currency_code: Types.currency_code.Won,
 
+      ordet_state: Types.order.ORDER_STATE_STAY,
+
       refundButtonText: '',
 
       isRefund: false,
       refundPolicyText: '',
 
-      is_owner: false
+      is_owner: false,
+
+      type_contents: Types.contents.customized
     }
   };
 
@@ -96,7 +102,10 @@ class StoreDetailReceipt extends Component{
 
         item_price_usd: data.price_USD,
         total_price_usd: data.total_price_USD,
-        currency_code: data.currency_code
+        currency_code: data.currency_code,
+
+        ordet_state: data.state,
+        type_contents: data.type_contents
       }, () => {
       })
     }, (error) => {
@@ -175,20 +184,38 @@ class StoreDetailReceipt extends Component{
       refundBackgroundColor = '#ffffff';
     }
 
+    let refundButtonText = null;
+    if(this.state.ordet_state === Types.order.ORDER_STATE_APP_STORE_CUSTOMER_COMPLITE){
+      // console.log(this.state.ordet_state);
+      refundButtonText = <Str strKey={'s79'} />
+    }else{
+      refundButtonText = this.state.refundButtonText
+    }
+
+    let refundPolicyText = null;
+    if(this.state.type_contents === Types.contents.completed){
+      refundPolicyText = <Str strKey={'s70'} />
+    }else{
+      refundPolicyText = this.state.refundPolicyText;
+    }
+
     return(
       <div className={'StoreDetailReceipt'}>
         <div className={'page_title'}>
-          주문 상세
+          {/* 주문 상세 */}
+          <Str strKey={'s92'} />
         </div>
         <div className={'page_sub_title'}>
-          주문내역
+          {/* 주문내역 */}
+          <Str strKey={'s93'} />
         </div>
         <div className={'container_box'}>
           {storeReceiptItemDom}
         </div>
 
         <div className={'container_box_label'}>
-          결제정보
+          {/* 결제정보 */}
+          <Str strKey={'s94'} />
         </div>
 
         <div className={'container_box'}>
@@ -209,7 +236,8 @@ class StoreDetailReceipt extends Component{
           <div className={'pay_info_total_price'}>
             <div style={{display: "flex", justifyContent: 'space-between'}}>
               <div>
-                총 결제 금액
+                {/* 총 결제 금액 */}
+                <Str strKey={'s95'} />
               </div>
               <div>
                 {Util.getPriceCurrency(this.state.total_price, this.state.total_price_usd, this.state.currency_code)}
@@ -219,29 +247,31 @@ class StoreDetailReceipt extends Component{
         </div>
 
         <button className={'refund_button'} onClick={(e) => {this.clickCancelOrder(e)}} disabled={isRefundDisable} style={{backgroundColor: refundBackgroundColor}}>
-          {this.state.refundButtonText}
+          {/* {this.state.refundButtonText} */}
+          {refundButtonText}
         </button>
 
         <div className={'policy_container'}>
           <div className={'policy_title'}>
-            크티 취소/환불 규정
+            <Str strKey={'s96'} />
           </div>
           <div className={'policy_content'}>
-            {this.state.refundPolicyText}
+            {/* {this.state.refundPolicyText} */}
+            {refundPolicyText}
           </div>
         </div>
 
         <div className={'container_box_label'}>
-          신청자 정보
+          <Str strKey={'s55'} />
         </div>
         <div className={'container_box'}>
-          <div className={'input_label'} style={{marginTop: 0}}>이름</div>
+          <div className={'input_label'} style={{marginTop: 0}}><Str strKey={'s56'} /></div>
           <input className={'input_box'} disabled={true} type="name" name={'name'} placeholder={'이름을 입력해주세요'} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
 
-          <div className={'input_label'}>전화번호</div>
+          <div className={'input_label'}><Str strKey={'s57'} /></div>
           <input className={'input_box'} disabled={true} type="tel" name={'tel'} placeholder={'전화번호를 입력해주세요'} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/>
 
-          <div className={'input_label'}>이메일</div>
+          <div className={'input_label'}><Str strKey={'s58'} /></div>
           <input className={'input_box'} disabled={true} type="email" name={'email'} placeholder={'이메일을 입력해주세요'} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/>
           
         </div>

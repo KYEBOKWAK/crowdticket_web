@@ -8,6 +8,12 @@ import Types from '../Types';
 
 import Login from '../lib/Login';
 
+import Str from '../component/Str';
+
+import StrLib from '../lib/StrLib';
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class LoginSNSSetEmailPage extends Component{
 
   constructor(props){
@@ -18,6 +24,7 @@ class LoginSNSSetEmailPage extends Component{
 
       inputWarningClassName: 'input_warning',
       email_explain_text: '',
+      language_code: 'kr'
     }
   };
 
@@ -30,9 +37,24 @@ class LoginSNSSetEmailPage extends Component{
       window.location.href='/auth/login';
       return;
     }
-
     
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     
@@ -45,10 +67,10 @@ class LoginSNSSetEmailPage extends Component{
 
     let email_explain_text = '';
     if(e.target.value === ''){
-      email_explain_text = '이메일을 입력해주세요';
+      email_explain_text = StrLib.getStr('s61', this.state.language_code); //
     }else{
       if(!Util.isCheckEmailValid(e.target.value)){
-        email_explain_text = '올바른 이메일 양식이 아닙니다.';
+        email_explain_text = StrLib.getStr('s108', this.state.language_code);  //
       }
     }
 
@@ -84,14 +106,14 @@ class LoginSNSSetEmailPage extends Component{
 
     if(this.state.email === ''){
       this.setState({
-        email_explain_text: '이메일을 입력해주세요.'
+        email_explain_text: StrLib.getStr('s61', this.state.language_code) //
       })
       return;
     }
 
     if(!Util.isCheckEmailValid(this.state.email)){
       this.setState({
-        email_explain_text: '올바른 이메일 양식이 아닙니다.'
+        email_explain_text: StrLib.getStr('s108', this.state.language_code) //
       })
       return;
     }
@@ -114,7 +136,7 @@ class LoginSNSSetEmailPage extends Component{
         // result_email.sns_array
         stopLoadingPopup();
         if(result_email.sns_array.length === 0){
-          alert('이미 가입되어 있는 이메일 입니다. 이메일로 로그인 후 SNS를 연동 해주세요.');
+          alert(StrLib.getStr('s139', this.state.language_code));
           return;
         }
 
@@ -129,15 +151,21 @@ class LoginSNSSetEmailPage extends Component{
           
           
           if(data === Types.login.facebook){
-            sns_titles = sns_titles + title_slush + '페이스북';
+            // sns_titles = sns_titles + title_slush + '페이스북';
+            sns_titles = sns_titles + title_slush + StrLib.getStr('s140', this.state.language_code);
           }else if(data === Types.login.google){
-            sns_titles = sns_titles + title_slush + '구글';
+            sns_titles = sns_titles + title_slush + StrLib.getStr('s141', this.state.language_code);
           }else if(data === Types.login.kakao){
-            sns_titles = sns_titles + title_slush + '카카오';
+            sns_titles = sns_titles + title_slush + StrLib.getStr('s142', this.state.language_code);
           }
         }
 
-        alert(sns_titles+'로 가입 되어 있는 이메일 입니다. 해당 sns로 로그인 후 설정에서 연동 해주세요');
+        if(this.state.language_code === 'kr'){
+          alert(sns_titles+'로 가입 되어 있는 이메일 입니다. 해당 sns로 로그인 후 설정에서 연동 해주세요');
+        }else{
+          alert(StrLib.getStr('s143', this.state.language_code) + ' / ' + sns_titles);
+        }
+        
         return;
       }
     }, (error_email) => {
@@ -158,22 +186,22 @@ class LoginSNSSetEmailPage extends Component{
     return(
       <div className={'LoginSNSSetEmailPage'}>
         <div className={'title_text'}>
-          이메일만 입력하면 가입 완료!
+          <Str strKey={'s136'} />
         </div>
         <div className={'content_text'}>
-          입력하신 이메일로 필수 콘텐츠 정보 및 주문 내역을 안내드립니다.
+          <Str strKey={'s137'} />
         </div>
 
         <div className={'input_box_container'}>
           <div className={'input_label'}>
-            이메일
+            <Str strKey={'s58'} />
           </div>
-          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={'가입하신 이메일을 입력해주세요.'} value={this.state.email} onBlur={(e) => {this.onChangeEmail(e)}} onChange={(e) => {this.onChangeEmail(e)}} />
+          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={StrLib.getStr('s112', this.state.language_code)} value={this.state.email} onBlur={(e) => {this.onChangeEmail(e)}} onChange={(e) => {this.onChangeEmail(e)}} />
           {email_explain_dom}
         </div>
 
         <button className={'reset_button'} onClick={(e) => {this.onClickJoin(e)}}>
-          회원가입하기
+          <Str strKey={'s138'} />
         </button>
         
       </div>

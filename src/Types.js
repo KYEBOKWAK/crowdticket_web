@@ -162,43 +162,57 @@ const Types = {
     {
       type: 'video',
       text: '영상',
+      text_key: 's13',
       subText: '제공 콘텐츠',
+      subText_key: 's20',
       product_state: 1
     },
     {
       type: 'image',
       text: '이미지',
+      text_key: 's14',
       subText: '제공 콘텐츠',
+      subText_key: 's20',
       product_state: 1
     },
     {
       type: 'text',
       text: '텍스트',
+      text_key: 's15',
       subText: '위주 콘텐츠',
+      subText_key: 's21',
       product_state: 0
     },
     {
       type: 'live',
       text: '실시간',
+      text_key: 's16',
       subText: '진행 콘텐츠',
+      subText_key: 's22',
       product_state: 2
     },
     {
       type: 'sound',
       text: '음성',
+      text_key: 's17',
       subText: '제공 콘텐츠',
+      subText_key: 's20',
       product_state: 1
     },
     {
       type: 'etc',
       text: '기타',
+      text_key: 's19',
       subText: '형식 콘텐츠',
+      subText_key: 's23',
       product_state: 1
     },
     {
       type: 'download',
       text: '즉시 다운로드',
+      text_key: 's18',
       subText: '콘텐츠',
+      subText_key: 's24',
       product_state: 1
     },
   ],

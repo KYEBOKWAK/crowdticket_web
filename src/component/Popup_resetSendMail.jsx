@@ -6,6 +6,8 @@ import React, { Component, createRef } from 'react';
 
 import ic_close from '../res/img/ic-close.svg';
 
+import Str from '../component/Str';
+
 class Popup_resetSendMail extends Component{
   // _quill = null;
 
@@ -43,15 +45,17 @@ class Popup_resetSendMail extends Component{
       <div className={'Popup_resetSendMail'}>
         <div className={'bg_container'}>
           <div className={'title_text'}>
-            비밀번호 설정 링크 전송 완료!
+            {/* 비밀번호 설정 링크 전송 완료! */}
+            <Str strKey={'s120'} />
           </div>
           <div className={'content_text'}>
-            가입하신 이메일로 비밀번호 설정 링크가 전송되었습니다.<br/>
-            해당 이메일을 통해 로그인 해주세요.
+            {/* 가입하신 이메일로 비밀번호 설정 링크가 전송되었습니다.<br/>
+            해당 이메일을 통해 로그인 해주세요. */}
+            <Str strKey={'s121'} />
           </div>
 
           <div className={'email_box'}>
-            전송된 이메일: {this.props.email}
+            <Str strKey={'s122'} />{this.props.email}
           </div>
           <button onClick={(e) => {this.onClickExit(e)}} className={'button_close'}>
             <img src={ic_close} />

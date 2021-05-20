@@ -23,6 +23,8 @@ import Util from '../lib/Util';
 
 import {isMobile} from 'react-device-detect';
 
+import Str from '../component/Str';
+
 class CompletedFileUpLoader extends Component{
   fileInputRef = React.createRef();
 
@@ -578,7 +580,13 @@ class CompletedFileUpLoader extends Component{
 
     }else{
       downloadExpireExplainDom = <div className={'download_expire_explain_container'}>
-                                  {`구매한 콘텐츠는 60일간 다운받을 수 있습니다. [기간 만료: ${this.state.down_expired_at}]\n모바일의 경우 다운로드 중 데이터 추가 요금이 부과될 수 있으니 Wi-Fi 연결을 권장합니다.\n파일 다운로드는 PC 사용을 권장합니다.`}
+                                  {/* {`구매한 콘텐츠는 60일간 다운받을 수 있습니다. [기간 만료: ${this.state.down_expired_at}]\n모바일의 경우 다운로드 중 데이터 추가 요금이 부과될 수 있으니 Wi-Fi 연결을 권장합니다.\n파일 다운로드는 PC 사용을 권장합니다.`} */}
+                                  <div>
+                                    <Str strKey={'s81'} />{this.state.down_expired_at}]
+                                  </div>
+                                  <div>
+                                    <Str strKey={'s82'} />
+                                  </div>
                                 </div>
       
     }

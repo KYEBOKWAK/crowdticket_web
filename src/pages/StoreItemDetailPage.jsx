@@ -34,6 +34,8 @@ import icon_download_big from '../res/img/icon-download-big.svg';
 
 import Login from '../lib/Login';
 
+import Str from '../component/Str';
+
 const cookies = new Cookies();
 
 const IMAGE_THUMB_FILE_WIDTH = 520;
@@ -346,8 +348,10 @@ class StoreItemDetailPage extends Component{
       const categoryData = Types.product_categorys.find((value) => {return value.type === this.state.item_product_category_type});
       if(categoryData){
         const pointTagDom = <div key={_pointTags.length} className={'point_tag_box'}>
-                              <span className={'point_tag_point_color'}>{categoryData.text}</span>
-                              {' ' + categoryData.subText}
+                              {/* <span className={'point_tag_point_color'}>{categoryData.text}</span>
+                              {' ' + categoryData.subText} */}
+                              <span className={'point_tag_point_color'}><Str strKey={categoryData.text_key}/></span>
+                              {' '}<Str strKey={categoryData.subText_key} />
                             </div>
                             
 
@@ -360,7 +364,7 @@ class StoreItemDetailPage extends Component{
       const pointTagDom = <div key={_pointTags.length} className={'point_tag_box point_tag_box_file_type'}>
                             <img src={icon_clip_tag} />
                             <div style={{marginLeft: 4}}>
-                              첨부파일 {this.state.download_type_file_count}개
+                              <Str strKey={'s25'} /> {this.state.download_type_file_count}<Str strKey={'s26'} />
                             </div>
                           </div>;
 
@@ -369,7 +373,7 @@ class StoreItemDetailPage extends Component{
     
     if(this.state.item_average_make_day){
       const pointTagDom = <div key={_pointTags.length} className={'point_tag_box'}>
-                            평균 제작 기간 <span className={'point_tag_point_color'}>{this.state.item_average_make_day}일</span>
+                            <Str strKey={'s27'} /> <span className={'point_tag_point_color'}>{this.state.item_average_make_day}<Str strKey={'s28'} /></span>
                           </div>;
 
       _pointTags.push(pointTagDom);
@@ -377,7 +381,7 @@ class StoreItemDetailPage extends Component{
 
     if(this.state.item_like_count){
       const pointTagDom = <div key={_pointTags.length} className={'point_tag_box'}>
-                            <span className={'point_tag_point_color'}>{this.state.item_like_count}명</span>의 팬이 만족했어요!
+                            <span className={'point_tag_point_color'}>{this.state.item_like_count}<Str strKey={'s29'} /></span><Str strKey={'s30'} />
                           </div>;
 
       _pointTags.push(pointTagDom);
@@ -388,7 +392,8 @@ class StoreItemDetailPage extends Component{
         const data = this.state.item_tag_list[i];
 
         const pointTagDom = <div key={_pointTags.length} className={'point_tag_box'}>
-                              {data}
+                              {/* {data} */}
+                              <Str strKey={data} />
                             </div>;
 
         _pointTags.push(pointTagDom);
@@ -565,7 +570,8 @@ class StoreItemDetailPage extends Component{
       if(this.state.is_show_other_items){
         store_other_items = <div>
                               <div className={'container_label_text'}>
-                                크리에이터의 다른 콘텐츠 상품
+                                {/* 크리에이터의 다른 콘텐츠 상품 */}
+                                <Str strKey={'s34'}/>
                               </div>
 
                               <div className={'content_container'} style={{paddingRight: 0}}>
@@ -587,7 +593,8 @@ class StoreItemDetailPage extends Component{
       
       store_order_reviews = <div>
                               <div className={'container_label_text'}>
-                                최근 진행된 주문 후기
+                                {/* 최근 진행된 주문 후기 */}
+                                <Str strKey={'s35'} />
                               </div>
 
                               <div className={'content_container'}>
@@ -599,7 +606,8 @@ class StoreItemDetailPage extends Component{
     }
 
     let isButtonDisabel = false;
-    let buttonText = '주문하기';
+    // let buttonText = '주문하기';
+    let buttonText = <Str strKey={'s45'} />;
     let warningNoticeDom = <></>;    
 
     if(this.state.item_state === Types.item_state.SALE_STOP ||
@@ -609,12 +617,16 @@ class StoreItemDetailPage extends Component{
 
         let pauseText = "";
         if(this.state.item_state === Types.item_state.SALE_STOP){
-          pauseText = "판매가 중지되었습니다.";
-          buttonText = "판매중지";
+          // pauseText = "판매가 중지되었습니다.";
+          pauseText = <Str strKey={'s46'} />
+          // buttonText = "판매중지";
+          buttonText = <Str strKey={'s47'} />;
         }else if(this.state.item_state === Types.item_state.SALE_PAUSE){
-          pauseText = "콘텐츠 재 입고 준비 중입니다. 다음에 다시 찾아주세요!";
+          // pauseText = "콘텐츠 재 입고 준비 중입니다. 다음에 다시 찾아주세요!";
+          pauseText = <Str strKey={'s48'} />;
 
-          buttonText = "준비 중";
+          // buttonText = "준비 중";
+          buttonText = <Str strKey={'s49'} />;
         }
 
         warningNoticeDom = <div className={'warning_notice_dom_container'}>{pauseText}</div>
@@ -701,7 +713,7 @@ class StoreItemDetailPage extends Component{
     if(this.state.item_notice && this.state.item_notice !== ''){
       itemNoticeDom = <div>
                         <div className={'container_label_text'}>
-                          유의사항
+                          <Str strKey={'s31'} />
                         </div>
 
                         <div className={'content_container'}>
@@ -721,22 +733,23 @@ class StoreItemDetailPage extends Component{
     let download_type_notice_dom = <></>;
     let need_item_notice_dom = <></>;
 
-    let how_to_text_1 = `콘텐츠\n주문하고`;
-    let how_to_text_2 = `크리에이터가\n승인하고`;
-    let how_to_text_3 = `콘텐츠가\n준비되면`;
-    let how_to_text_4 = `소통하고\n즐기면 끝!`;
+    let how_to_text_1 = <Str strKey={'s37'} />;
+    let how_to_text_2 = <Str strKey={'s38'} />;
+    let how_to_text_3 = <Str strKey={'s39'} />;
+    let how_to_text_4 = <Str strKey={'s40'} />;
 
     let how_to_icon_3 = icon_gift;
     if(this.state.item_type_contents === Types.contents.completed){
-      how_to_text_2 = `‘나의 콘텐츠 주문’\n확인하고`;
-      how_to_text_3 = `바로 다운로드\n받아서`;
-      how_to_text_4 = `편하게\n즐기면 끝!`;
+      how_to_text_2 = <Str strKey={'s41'} />;
+      how_to_text_3 = <Str strKey={'s42'} />;
+      how_to_text_4 = <Str strKey={'s43'} />;
       how_to_icon_3 = icon_download_big;
 
       download_type_notice_dom = <div className={'download_type_notice_box'}>
                                   <img src={ic_icon_download} />
                                   <div className={'download_type_notice_text'}>
-                                    해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다.
+                                    {/* 해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다. */}
+                                    <Str strKey={'s32'} />
                                   </div>
                                 </div>
     }else{
@@ -795,20 +808,14 @@ class StoreItemDetailPage extends Component{
             {contentMoreExplainDom}
           </div>
 
-          {/* <div className={'container_label_text'}>
-            구매시 필요사항
-          </div>
-
-          <div className={'content_container'}>
-            {this.state.item_ask}
-          </div> */}
           {need_item_notice_dom}
 
           {itemNoticeDom}
 
           <div className={'refund_container'}>
             <button onClick={(e) => {this.onClickRefundButton(e)}} className={'cancel_popup_text'}>
-              <u>크티 콘텐츠 취소/환불 규정</u>
+              {/* <u>크티 콘텐츠 취소/환불 규정</u> */}
+              <u><Str strKey={'s33'} /></u>
             </button>
           </div>
 
@@ -818,7 +825,8 @@ class StoreItemDetailPage extends Component{
 
           
           <div className={'container_label_text'}>
-            콘텐츠 상점 이용 방법
+            {/* 콘텐츠 상점 이용 방법 */}
+            <Str strKey={'s36'} />
           </div>
 
           <div className={'use_img_container'}>
@@ -861,7 +869,8 @@ class StoreItemDetailPage extends Component{
 
           <div ref={this.orderButtonRef} className={'buttons_container'}>
             <button onClick={(e) => {this.clickGoStore(e)}} className={'button_go_store'}>
-              상점가기
+              {/* 상점가기 */}
+              <Str strKey={'s44'} />
             </button>
             <div className={'button_gap'}>
             </div>

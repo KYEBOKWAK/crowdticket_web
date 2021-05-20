@@ -333,7 +333,7 @@ class StoreManagerTabOrderListPage extends Component{
                             {Util.getNumberWithCommas(this.state.total_price)}원
                           </div>
                           <div style={{fontSize: 12, fontWeight: 500, color: '#acacac'}}>
-                            외화 결제 금액 미포함
+                            외화 결제 금액 미포함페이
                           </div>
                         </div>
     }else{

@@ -1,0 +1,616 @@
+{
+  "s1": {
+    "kr": "콘텐츠 상점",
+    "en": "Content Store"
+  },
+  "s2": {
+    "kr": "팬 이벤트",
+    "en": "Fan Event"
+  },
+  "s3": {
+    "kr": "매거진",
+    "en": "Magazine"
+  },
+  "s4": {
+    "kr": "로그인",
+    "en": "Login"
+  },
+  "s5": {
+    "kr": "프로필 수정",
+    "en": "Profile Edit"
+  },
+  "s6": {
+    "kr": "내 상점 관리",
+    "en": "My Store"
+  },
+  "s7": {
+    "kr": "나의 콘텐츠 주문",
+    "en": "My Order"
+  },
+  "s8": {
+    "kr": "나의 이벤트 참여",
+    "en": "My Event"
+  },
+  "s9": {
+    "kr": "로그아웃",
+    "en": "Logout"
+  },
+  "s10": {
+    "kr": "콘텐츠",
+    "en": "Content"
+  },
+  "s11": {
+    "kr": "리뷰 & 기대평",
+    "en": "Review"
+  },
+  "s12": {
+    "kr": "콘텐츠상점",
+    "en": "Content Store"
+  },
+  "s13": {
+    "kr": "영상",
+    "en": "Video"
+  },
+  "s14": {
+    "kr": "이미지",
+    "en": "Image"
+  },
+  "s15": {
+    "kr": "텍스트",
+    "en": "Text"
+  },
+  "s16": {
+    "kr": "실시간",
+    "en": "Live"
+  },
+  "s17": {
+    "kr": "음성",
+    "en": "Sound"
+  },
+  "s18": {
+    "kr": "즉시 다운로드",
+    "en": "Downloadable"
+  },
+  "s19": {
+    "kr": "기타",
+    "en": "ETC"
+  },
+  "s20": {
+    "kr": "제공 콘텐츠",
+    "en": "content"
+  },
+  "s21": {
+    "kr": "위주 콘텐츠",
+    "en": "content"
+  },
+  "s22": {
+    "kr": "진행 콘텐츠",
+    "en": "content"
+  },
+  "s23": {
+    "kr": "형식 콘텐츠",
+    "en": "content"
+  },
+  "s24": {
+    "kr": "콘텐츠",
+    "en": "content"
+  },
+  "s25": {
+    "kr": "첨부파일",
+    "en": "files"
+  },
+  "s26": {
+    "kr": "개",
+    "en": "files"
+  },
+  "s27": {
+    "kr": "평균 제작 기간",
+    "en": "Average production period"
+  },
+  "s28": {
+    "kr": "일",
+    "en": "days"
+  },
+  "s29": {
+    "kr": "명",
+    "en": "fans"
+  },
+  "s30": {
+    "kr": "의 팬이 만족했어요!",
+    "en": "fans satisfied!"
+  },
+  "s31": {
+    "kr": "유의사항",
+    "en": "Notice"
+  },
+  "s32": {
+    "kr": "해당 콘텐츠는 주문 및 결제 후 즉시 다운로드가 가능한 콘텐츠입니다.",
+    "en": "This item is downloadable immediately after purchase"
+  },
+  "s33": {
+    "kr": "크티 콘텐츠 취소/환불 규정",
+    "en": "Cancellation Policy"
+  },
+  "s34": {
+    "kr": "크리에이터의 다른 콘텐츠 상품",
+    "en": "Other items from this creator"
+  },
+  "s35": {
+    "kr": "최근 진행된 주문 후기",
+    "en": "Recent Orders & Comments"
+  },
+  "s36": {
+    "kr": "콘텐츠 상점 이용 방법",
+    "en": "How does it work?"
+  },
+  "s37": {
+    "kr": "콘텐츠\n주문하고",
+    "en": "Make your\npurchase"
+  },
+  "s38": {
+    "kr": "크리에이터가\n승인하고",
+    "en": "Approved\nby the creator"
+  },
+  "s39": {
+    "kr": "콘텐츠가\n준비되면",
+    "en": "When the content\nis ready"
+  },
+  "s40": {
+    "kr": "소통하고\n즐기면 끝!",
+    "en": "Enjoy!"
+  },
+  "s41": {
+    "kr": "‘나의 콘텐츠 주문’\n확인하고",
+    "en": "Check your\norder list"
+  },
+  "s42": {
+    "kr": "바로 다운로드\n받아서",
+    "en": "Download the\ncontent"
+  },
+  "s43": {
+    "kr": "편하게\n즐기면 끝!",
+    "en": "Enjoy!"
+  },
+  "s44": {
+    "kr": "상점가기",
+    "en": "Back to store"
+  },
+  "s45": {
+    "kr": "주문하기",
+    "en": "Buy it Now"
+  },
+  "s46": {
+    "kr": "판매가 중지되었습니다.",
+    "en": "The sale has been stopped."
+  },
+  "s47": {
+    "kr": "판매중지",
+    "en": "Stop selling"
+  },
+  "s48": {
+    "kr": "콘텐츠 재 입고 준비 중입니다. 다음에 다시 찾아주세요!",
+    "en": "Preparing to restock content. Please come back next time!"
+  },
+  "s49": {
+    "kr": "준비 중",
+    "en": "preparing"
+  },
+  "s50": {
+    "kr": [
+      "• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n\n• 해당 콘텐츠상품은 구매 완료 시점으로부터 60일 동안 횟수 제한없이 콘텐츠를 다운로드 받아 사용할 수 있습니다.\n     \n• 즉시 다운로드 콘텐츠는 결제 이후 취소 및 환불이 불가능합니다. 단",
+      "다운로드 받은 파일에 문제가 있는 경우 7일 이내에 고객센터 문의를 해주시면 처리해드립니다.\n      \n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다."
+    ],
+    "en": [
+      "• Due to the characteristics of digital contents",
+      "all items are non-refundable if the reason is 'dissatisfaction' or 'simple change of mind' once the transaction is finalized.\n\n• This item can be dowloaded for 60 days with an unlimited number of times since the day of purchase.\n\n• For instant download contents",
+      "purchases cannot be canceled after they are finalized unless there is a problem with the original file.\n\n• Any content provided through our service cannot be used for commercial use unless it is specified"
+    ]
+  },
+  "s51": {
+    "kr": [
+      "• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n\n• 해당 콘텐츠상품은 콘텐츠 제작 전 크리에이터의 주문 승인이 필요하며 크리에이터의 정책 또는 의사에 따라 주문이 반려될 수 있습니다.\n      \n• 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.\n      \n• 주문이 승인되기 전에는 구매자에 의한 주문 취소 및 환불이 가능합니다.\n      \n• 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단",
+      "주문 날짜로부터 14일 경과 후에도 콘텐츠를 제공받지 못한 경우에는 요청 시 주문 취소 후 결제 금액을 전액 환불해드립니다.\n      \n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다."
+    ],
+    "en": null
+  },
+  "s52": {
+    "kr": "닫기",
+    "en": "Close"
+  },
+  "s53": {
+    "kr": "주문",
+    "en": "Checkout"
+  },
+  "s54": {
+    "kr": "주문내역",
+    "en": "Please review and submit your order"
+  },
+  "s55": {
+    "kr": "신청자 정보",
+    "en": "Contact Information"
+  },
+  "s56": {
+    "kr": "이름",
+    "en": "Name"
+  },
+  "s57": {
+    "kr": "전화번호",
+    "en": "Phone"
+  },
+  "s58": {
+    "kr": "이메일",
+    "en": "Email"
+  },
+  "s59": {
+    "kr": "이름을 입력해주세요.",
+    "en": "Please enter your name"
+  },
+  "s60": {
+    "kr": "전화번호를 입력해주세요.",
+    "en": "Please enter your phone number"
+  },
+  "s61": {
+    "kr": "이메일을 입력해주세요.",
+    "en": "Please enter your email"
+  },
+  "s62": {
+    "kr": "결제",
+    "en": "Order Summary"
+  },
+  "s63": {
+    "kr": "결제방법",
+    "en": "Payment Options"
+  },
+  "s64": {
+    "kr": "크티 이용 정책 동의",
+    "en": "Terms Agreement"
+  },
+  "s65": {
+    "kr": "모두 동의",
+    "en": "Yes To All"
+  },
+  "s66": {
+    "kr": "환불 정책",
+    "en": "Cancellation Policy"
+  },
+  "s67": {
+    "kr": "크티 이용약관",
+    "en": "Terms and Conditions"
+  },
+  "s68": {
+    "kr": "제3자 정보제공정책",
+    "en": "Privacy Policy"
+  },
+  "s69": {
+    "kr": "주문하기",
+    "en": "Submit Order"
+  },
+  "s70": {
+    "kr": [
+      "• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 구매 완료 시점으로부터 60일 동안 횟수 제한없이 콘텐츠를 다운로드 받아 사용할 수 있습니다.\n• 즉시 다운로드 콘텐츠는 결제 이후 취소 및 환불이 불가능합니다. 단",
+      "다운로드 받은 파일에 문제가 있는 경우 7일 이내에 고객센터 문의를 해주시면 처리해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다."
+    ],
+    "en": [
+      "• Due to the characteristics of digital contents",
+      "all items are non-refundable if the reason is 'dissatisfaction' or 'simple change of mind' once the transaction is finalized.\n• This item can be dowloaded for 60 days with an unlimited number of times since the day of purchase.\n• For instant download contents",
+      "purchases cannot be canceled after they are finalized unless there is a problem with the original file.\n• Any content provided through our service cannot be used for commercial use unless it is specified"
+    ]
+  },
+  "s71": {
+    "kr": [
+      "• 디지털 콘텐츠 특성상 콘텐츠를 받은 이후에는 단순 불만족 또는 변심으로 인한 환불이 불가능하니 유의해주세요.\n• 해당 콘텐츠상품은 콘텐츠 제작 전 크리에이터의 주문 승인이 필요하며 크리에이터의 정책 또는 의사에 따라 주문이 반려될 수 있습니다.\n• 주문 날짜로부터 7일 안에 승인이 안되거나 반려될 경우 결제 금액은 전액 환불됩니다.\n• 주문이 승인되기 전에는 구매자에 의한 주문 취소 및 환불이 가능합니다.\n• 크리에이터가 주문을 승인한 이후에는 취소 및 환불이 불가능합니다. 단",
+      "주문 날짜로부터 14일 경과 후에도 콘텐츠를 제공받지 못한 경우에는 요청 시 주문 취소 후 결제 금액을 전액 환불해드립니다.\n• 콘텐츠상점을 통해 제공받은 모든 콘텐츠는 상품 설명에 별도로 명시되지 않은 이상 구매자가 크티 플랫폼 밖에서 상업적으로 이용할 수 없습니다."
+    ],
+    "en": null
+  },
+  "s72": {
+    "kr": "이용 정책에 동의 해주세요",
+    "en": "Please agree to the use policy"
+  },
+  "s73": {
+    "kr": "주문 완료",
+    "en": "Order Completed!"
+  },
+  "s74": {
+    "kr": "🤔 콘텐츠는 어떻게 받나요?",
+    "en": "🤔 How do i check my content?"
+  },
+  "s75": {
+    "kr": "아래 주문내역의 ‘콘텐츠 다운로드’ 버튼을 눌러주세요!\n지금 바로 구매하신 콘텐츠를 다운로드 받고 확인할 수 있습니다.\n※ 구매한 콘텐츠들은 ‘나의 콘텐츠 주문’에서도 모두 보실 수 있습니다.",
+    "en": [
+      "You can check your content right away by clicking the 'Download My Content' button below! Also",
+      "you can check your contents at anytime by using the 'Purchased Contents' menu."
+    ]
+  },
+  "s76": {
+    "kr": "주문내역",
+    "en": "Item Information"
+  },
+  "s77": {
+    "kr": "콘텐츠 다운로드",
+    "en": "Download My Content"
+  },
+  "s78": {
+    "kr": "주문상세",
+    "en": "Order Details"
+  },
+  "s79": {
+    "kr": "고객 확인 완료",
+    "en": "Order Complete"
+  },
+  "s80": {
+    "kr": "주문하신 콘텐츠 상품이\n도착했습니다!",
+    "en": "Your content has arrived!\nMade by your favorite Creator"
+  },
+  "s81": {
+    "kr": "구매한 콘텐츠는 60일간 다운받을 수 있습니다. [기간 만료:",
+    "en": "- Purchased contents can be downloaded for 60 days with an unlimited number of times since the day of purchase. [Expires on"
+  },
+  "s82": {
+    "kr": "모바일의 경우 다운로드 중 데이터 추가 요금이 부과될 수 있으니 Wi-Fi 연결을 권장합니다.\n파일 다운로드는 PC 사용을 권장합니다.",
+    "en": "- We recomment using Wi-Fi connection while downloading large files."
+  },
+  "s83": {
+    "kr": "크티 고객팀",
+    "en": "Crowdticket"
+  },
+  "s84": {
+    "kr": "받아보신 콘텐츠는 어떠셨나요?\n\n크리에이터에게 감사 인사 및 콘텐츠 이용 후기를 아래에 남겨주세요! 여러분이 작성하신 리뷰와 응원이 크리에이터에게 힘이 됩니다!",
+    "en": [
+      "How was the content made by your favorite creator?\n\nPlease leave a comment",
+      "review",
+      "or message for the creator here. Your comment can be a huge support for their next project!"
+    ]
+  },
+  "s85": {
+    "kr": "기대평 & 리뷰를 남겨보세요!",
+    "en": "Please leave a comment"
+  },
+  "s86": {
+    "kr": "[상점 - 리뷰&기대평]에서 확인 할 수 있습니다.",
+    "en": "You can check your comments at [Comments & Review] of each creator's store."
+  },
+  "s87": {
+    "kr": "콘텐츠에 문제가 있나요?",
+    "en": "Are you having any issues?"
+  },
+  "s88": {
+    "kr": "리뷰 작성 완료",
+    "en": "Post Comment"
+  },
+  "s89": {
+    "kr": "상점 가기",
+    "en": "Back to store"
+  },
+  "s90": {
+    "kr": "리뷰 작성 완료!",
+    "en": "Complete review!"
+  },
+  "s91": {
+    "kr": "감사합니다. :)",
+    "en": "Thank you. :)"
+  },
+  "s92": {
+    "kr": "주문 상세",
+    "en": "Order Details"
+  },
+  "s93": {
+    "kr": "주문내역",
+    "en": "Item Information"
+  },
+  "s94": {
+    "kr": "결제정보",
+    "en": "Purchase Information"
+  },
+  "s95": {
+    "kr": "총 결제 금액",
+    "en": "Total payment amount"
+  },
+  "s96": {
+    "kr": "크티 취소/환불 규정",
+    "en": "Cancellation Policy"
+  },
+  "s97": {
+    "kr": "반갑습니다!\n지금 크티를 시작해볼까요?",
+    "en": "Welcome!\nIt's easy to join us"
+  },
+  "s98": {
+    "kr": "카카오로 빠르게 시작하기",
+    "en": "Sign in with Kakao"
+  },
+  "s99": {
+    "kr": "구글로 빠르게 시작하기",
+    "en": "Sign in with Google"
+  },
+  "s100": {
+    "kr": "페이스북으로 빠르게 시작하기",
+    "en": "Sign in with Facebook"
+  },
+  "s101": {
+    "kr": "이메일로 시작하기",
+    "en": "Sign in by Email"
+  },
+  "s102": {
+    "kr": "로그인",
+    "en": "Sign in"
+  },
+  "s103": {
+    "kr": "비밀번호",
+    "en": "Password"
+  },
+  "s104": {
+    "kr": "비밀번호를 잊으셨나요?",
+    "en": "Did you forget your password?"
+  },
+  "s105": {
+    "kr": "로그인",
+    "en": "Log in"
+  },
+  "s106": {
+    "kr": "회원가입",
+    "en": "Create Account"
+  },
+  "s107": {
+    "kr": "비밀번호를 입력해주세요.",
+    "en": "Please enter your password"
+  },
+  "s108": {
+    "kr": "올바른 이메일 양식이 아닙니다.",
+    "en": "Not a valid email form."
+  },
+  "s109": {
+    "kr": "비밀번호는 6글자 이상 입력해주세요",
+    "en": "Please enter at least 6 characters for your password."
+  },
+  "s110": {
+    "kr": "비밀번호를 잊으셨나요?",
+    "en": "Can't remember your password?"
+  },
+  "s111": {
+    "kr": [
+      "가입하신 이메일 주소를 입력하시면",
+      "비밀번호를 재설정할 수 있는 링크를 이메일로 전송해드립니다."
+    ],
+    "en": [
+      "Tell us the email address you used to sign in",
+      "and we will send you a link to change your password"
+    ]
+  },
+  "s112": {
+    "kr": "가입하신 이메일을 입력해주세요.",
+    "en": "Please enter your email"
+  },
+  "s113": {
+    "kr": "비밀번호 재설정하기",
+    "en": "Send Link"
+  },
+  "s114": {
+    "kr": "회원가입",
+    "en": "Sign Up"
+  },
+  "s115": {
+    "kr": "비밀번호 확인",
+    "en": "Confirm Password"
+  },
+  "s116": {
+    "kr": "비밀번호를 한 번 더 입력해주세요.",
+    "en": "Please re-enter your password"
+  },
+  "s117": {
+    "kr": "동의하고 회원가입하기",
+    "en": "Sign Up"
+  },
+  "s118": {
+    "kr": "비밀번호가 다릅니다. 다시 입력해주세요.",
+    "en": "The password is different. Please re-enter"
+  },
+  "s119": {
+    "kr": "비밀번호가 다릅니다.",
+    "en": "The password is different."
+  },
+  "s120": {
+    "kr": "비밀번호 설정 링크 전송 완료!",
+    "en": "A link is sent to your email"
+  },
+  "s121": {
+    "kr": "가입하신 이메일로 비밀번호 설정 링크가 전송되었습니다.\n해당 이메일을 통해 로그인 해주세요.",
+    "en": "Please check your email to set up a password for your account.\nYou can continue to sign in through the link"
+  },
+  "s122": {
+    "kr": "전송된 이메일:",
+    "en": "Sent Email :"
+  },
+  "s123": {
+    "kr": "비밀번호 변경",
+    "en": "Reset your password"
+  },
+  "s124": {
+    "kr": "비밀번호 변경하기",
+    "en": "Done"
+  },
+  "s125": {
+    "kr": "변경완료!",
+    "en": "Complete"
+  },
+  "s126": {
+    "kr": "이미 가입된 계정입니다.",
+    "en": "You already have an account"
+  },
+  "s127": {
+    "kr": [
+      "이메일로 다시 로그인하시거나",
+      "계정 정보를 잊으셨다면 비밀번호를 재설정 후 사용해주세요."
+    ],
+    "en": [
+      "Go back and try sign in with your email",
+      "or reset the password in case you forgot your account information"
+    ]
+  },
+  "s128": {
+    "kr": "다시 로그인하기",
+    "en": "Back to Sign In"
+  },
+  "s129": {
+    "kr": "비밀번호 설정하기",
+    "en": "Reset Password"
+  },
+  "s130": {
+    "kr": "아이디가 없습니다. 아이디를 확인해주세요.",
+    "en": "I don't have an ID. Please check your ID."
+  },
+  "s131": {
+    "kr": "비밀번호가 틀렸습니다. 비밀번호를 확인해주세요",
+    "en": "The password is incorrect. Please check your password"
+  },
+  "s132": {
+    "kr": "SNS로 가입된 계정입니다.(sns 조합형이라 한글안씀)",
+    "en": "You already have an account"
+  },
+  "s133": {
+    "kr": [
+      "SNS으로 다시 로그인하시거나",
+      "이메일로 로그인하기 위해서는 비밀번호를 설정 후 사용해주세요.(sns 조합형이라 한글안씀)"
+    ],
+    "en": "Try using your social media account to sign in\nor set up a password to continue by using your email"
+  },
+  "s134": {
+    "kr": "다시 로그인하기",
+    "en": "Back to Sign In"
+  },
+  "s135": {
+    "kr": "비밀번호 설정하기",
+    "en": "Set up a Password"
+  },
+  "s136": {
+    "kr": "이메일만 입력하면 가입 완료!",
+    "en": "Just one more step!"
+  },
+  "s137": {
+    "kr": "입력하신 이메일로 필수 콘텐츠 정보 및 주문 내역을 안내드립니다.",
+    "en": "Please enter your email address for us to send necessary information regarding your account or purchase"
+  },
+  "s138": {
+    "kr": "회원가입하기",
+    "en": "Sign Up"
+  },
+  "s139": {
+    "kr": "이미 가입되어 있는 이메일 입니다. 이메일로 로그인 후 SNS를 연동 해주세요.",
+    "en": "This email is already signed up. Please log in by email and link the SNS."
+  },
+  "s140": {
+    "kr": "페이스북",
+    "en": "Facebook"
+  },
+  "s141": {
+    "kr": "구글",
+    "en": "Google"
+  },
+  "s142": {
+    "kr": "카카오",
+    "en": "Kakao"
+  },
+  "s143": {
+    "kr": "이미 sns에 가입되어 있다. (안씀)",
+    "en": "You are already joined to social media."
+  }
+}

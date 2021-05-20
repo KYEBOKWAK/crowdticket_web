@@ -18,6 +18,11 @@ import ic_eye_off from '../res/img/ic-eye-off.svg';
 
 import { ToastContainer, toast } from 'react-toastify';
 
+import Str from '../component/Str';
+import StrLib from '../lib/StrLib';
+import Storage from '../lib/Storage';
+import * as storageType from '../StorageKeys';
+
 class LoginEmailPage extends Component{
 
   constructor(props){
@@ -31,13 +36,30 @@ class LoginEmailPage extends Component{
       inputWarningClassName: 'input_warning',
 
       email_explain_text: '',
-      password_explain_text: ''
+      password_explain_text: '',
 
+      language_code: 'kr'
     }
   };
 
-  componentDidMount(){    
+  componentDidMount(){
+    this.setLanguageCode();
   };
+
+  setLanguageCode = () => {
+    Storage.load(storageType.LANGUAGE_CODE, (result) => {
+      let language_code = 'kr';
+      if(result.value){
+        language_code = result.value;      
+      }else{
+        //값이 없음 
+      }
+
+      this.setState({
+        language_code: language_code
+      })
+    })
+  }
 
   componentWillUnmount(){
     
@@ -86,7 +108,15 @@ class LoginEmailPage extends Component{
         this.requsetLogin();
       }else{
         stopLoadingPopup();
-        toast.dark(result_user.message, {
+
+        let message = result_user.message;
+        if(StrLib.getStr('s130', 'kr') === result_user.message){
+          message = StrLib.getStr('s130', this.state.language_code);
+        }else if(StrLib.getStr('s131', 'kr') === result_user.message){
+          message = StrLib.getStr('s131', this.state.language_code);
+        }
+
+        toast.dark(message, {
           position: "top-center",
           autoClose: 3000,
           hideProgressBar: true,
@@ -104,26 +134,6 @@ class LoginEmailPage extends Component{
     }, (error_user) => {
       stopLoadingPopup();
     })
-
-    /*
-    var csrfToken = Util.getMeta("csrf-token");
-    _axios.post(Util.getBaseURL('/auth/login'), {
-      email: this.state.email,
-      password: this.state.password,
-      _token: csrfToken,
-      ispopup: 'TRUE',
-      version: 'v1'
-    }).then((result) => {
-      const data = result.data;
-      if(data.state === "success"){
-        Login.end(data.user_id);
-      }else{
-
-      }
-    }).catch((error) => {
-      stopLoadingPopup();
-    })
-    */
   }
 
   requsetLogin = () => {
@@ -149,10 +159,11 @@ class LoginEmailPage extends Component{
   onChangeEmail = (e) => {
     let email_explain_text = '';
     if(e.target.value === ''){
-      email_explain_text = '이메일을 입력해주세요';
+      // email_explain_text = '이메일을 입력해주세요';
+      email_explain_text = StrLib.getStr('s61', this.state.language_code);
     }else{
       if(!Util.isCheckEmailValid(e.target.value)){
-        email_explain_text = '올바른 이메일 양식이 아닙니다.';
+        email_explain_text = StrLib.getStr('s108', this.state.language_code);;
       }
     }
 
@@ -165,9 +176,9 @@ class LoginEmailPage extends Component{
   onChangePassword = (e) => {
     let password_explain_text = '';
     if(e.target.value === ''){
-      password_explain_text = '비밀번호를 입력해주세요';
+      password_explain_text = StrLib.getStr('s107', this.state.language_code);;;
     }else if(e.target.value.length < 6){
-      password_explain_text = '비밀번호는 6글자 이상 입력해주세요';
+      password_explain_text = StrLib.getStr('s109', this.state.language_code);;;
     }
 
     this.setState({
@@ -231,21 +242,24 @@ class LoginEmailPage extends Component{
     return(
       <div className={'LoginEmailPage'}>
         <div className={'page_label_text'}>
-          로그인
+          {/* 로그인 */}
+          <Str strKey={'s102'} />
         </div>
         <div className={'content_container'}>
           <div className={'input_label'}>
-            이메일
+            {/* 이메일 */}
+            <Str strKey={'s58'} />
           </div>
-          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={'이메일을 입력해주세요.'} value={this.state.email} onChange={(e) => {this.onChangeEmail(e)}} onBlur={(e) => {this.onChangeEmail(e)}} />
+          <input className={email_input_warning_classname} type="email" name={'email'} placeholder={StrLib.getStr('s61', this.state.language_code)} value={this.state.email} onChange={(e) => {this.onChangeEmail(e)}} onBlur={(e) => {this.onChangeEmail(e)}} />
           {email_explain_dom}
           
           <div className={'input_label'} style={{marginTop: 16}}>
-            비밀번호
+            {/* 비밀번호 */}
+            <Str strKey={'s103'} />
           </div>
 
           <div className={'password_container'}>
-            <input className={password_input_warning_classname+' input_password'} type={password_type} name={'password'} placeholder={'비밀번호를 입력해주세요.'} value={this.state.password} onChange={(e) => {this.onChangePassword(e)}} onBlur={(e) => {this.onChangePassword(e)}} />
+            <input className={password_input_warning_classname+' input_password'} type={password_type} name={'password'} placeholder={StrLib.getStr('s107', this.state.language_code)} value={this.state.password} onChange={(e) => {this.onChangePassword(e)}} onBlur={(e) => {this.onChangePassword(e)}} />
 
             <button onClick={(e) => {this.onClickShowPassword(e)}} className={'password_show_button'}>
               <img src={show_password_img} />
@@ -256,17 +270,17 @@ class LoginEmailPage extends Component{
           
           <div className={'forgot_password_text'}>
             <Link to={RoutesTypes.login.forget_email}>
-              <u>비밀번호를 잊으셨나요?</u>
+              <u><Str strKey={'s104'} /></u>
             </Link>
           </div>
         </div>
         
         <div className={'buttons_container'}>
-          <button className={'login_button'} onClick={(e) => {this.onClickLogin(e)}}>로그인</button>
+          <button className={'login_button'} onClick={(e) => {this.onClickLogin(e)}}><Str strKey={'s105'} /></button>
           
           <Link to={RoutesTypes.login.join}>
             <div className={'join_button'}>
-              회원가입
+              <Str strKey={'s106'} />
             </div>
           </Link>
         </div>

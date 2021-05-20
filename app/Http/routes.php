@@ -169,6 +169,9 @@ Route::get('store/', function () {
 Route::get('store/{id}', 'ProjectController@getStoreDetailByID');
 Route::get('store/{alias}', 'ProjectController@getStoreDetailByAlias');
 
+Route::get('store/{id}/language/{language_code}', 'ProjectController@getStoreDetailByID');
+Route::get('store/{alias}/language/{language_code}', 'ProjectController@getStoreDetailByAlias');
+
 Route::get('review/store/write/{id}', 'ProjectController@getWriteReviewPage');
 Route::get('review/store/{store_id}/edit/{comment_id}', 'ProjectController@getEditReviewPage');
 

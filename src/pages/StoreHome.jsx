@@ -18,6 +18,9 @@ import Home_Top_Banner from '../component/Home_Top_Banner';
 
 import _axios from 'axios';
 
+// import language from '../res/json/language/language.json';
+// import StrLib from '../lib/StrLib';
+
 class StoreHome extends Component {
 
   constructor(props) {
@@ -204,6 +207,7 @@ class StoreHome extends Component {
           <div className={'thumb_container'}>
             <div className={'category_top_label'}>
               카테고리
+              {/* {StrLib.getString('s2')} */}
             </div>
 
             <div className={'category_top_container'}>

@@ -51,11 +51,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=6') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=7') }}" rel="stylesheet"/>
 
     <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/Footer_React.css?version=1') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Footer_React.css?version=2') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/SearchPage.css?version=2') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SelectBoxLanguage.css?version=0') }}" rel="stylesheet"/>
+    
     
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
@@ -372,6 +374,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <input type="hidden" id="notification" value="@if(isset($_COOKIE['cr_config_notification'])){{$_COOKIE['cr_config_notification']}}@endif"/>
 <input id="g_app_type" type="hidden" value="{{env('APP_TYPE')}}"/>
 
+<input type="hidden" id="g_language" value="@if(isset($language)){{$language}}@endif">
+
 @yield('event_banner')
 
 @section('navbar')
@@ -398,16 +402,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div id="ctNavBar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
         @if(env('REVIEW_ON'))
-          <li><a href="{{ url('/magazine') }}">매거진</a></li>
+          <li><a id='top_menu_magazine' href="{{ url('/magazine') }}">매거진</a></li>
         @else
           <li>
-            <a href="{{ url('/store') }}" style="display: inline-block;">콘텐츠 상점</a>
+            <a id='top_menu_store' href="{{ url('/store') }}" style="display: inline-block;">콘텐츠 상점</a>
               <!-- <a href="{{ url('/mannayo') }}" style="display: inline-block;">만나요</a> -->
               <!-- <span style="position:relative; margin-left:2px; top:-4px; color:#43c9f0; font-size:10px">beta</span> -->
           </li>
-          <li><a href="{{ url('/projects') }}">팬 이벤트</a></li>
+          <li><a id='top_menu_fanevent' href="{{ url('/projects') }}">팬 이벤트</a></li>
           <!-- <li><a href="{{ url('/blueprints/welcome') }}">이벤트 만들기</a></li> -->
-          <li><a href="{{ url('/magazine') }}">매거진</a></li>
+          <li><a id='top_menu_magazine' href="{{ url('/magazine') }}">매거진</a></li>
         @endif
         </ul>
 
@@ -420,7 +424,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </a>
           </li>
             @if (Auth::guest())
-              <li id="g_login"><a href="javascript:;" onclick="">로그인</a></li>
+              <li id="g_login"><a id="top_side_menu_login" href="javascript:;" onclick="">로그인</a></li>
               <!-- <li id="g_register"><a href="javascript:;" onclick="">회원가입</a></li> -->
             @else
                 <li class="dropdown">
@@ -429,13 +433,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <ul class="dropdown-menu" role="menu">
                         <!-- <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}">내 페이지</a></li> -->
                         <!-- <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/mannayo">내 만나요</a></li> -->
-                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">프로필 수정</a></li>
+                        <li><a id="top_side_menu_profile_edit" href="{{ url('/users/') }}/{{ Auth::user()->id }}/form">프로필 수정</a></li>
                         @if(\Auth::user()->stores()->first())
-                        <li><a href="{{ url('/manager/store') }}">내 상점 관리</a></li>
+                        <li><a id="top_side_menu_my_store" href="{{ url('/manager/store') }}">내 상점 관리</a></li>
                         @endif
-                        <li><a href="{{ url('/users/store/') }}/{{ Auth::user()->id }}/orders">나의 콘텐츠 주문</a></li>
-                        <li><a href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">나의 이벤트 참여</a></li>
-                        <li><a href="#" onclick="logout(); return false;">로그아웃</a></li>
+                        <li><a id="top_side_menu_my_orders" href="{{ url('/users/store/') }}/{{ Auth::user()->id }}/orders">나의 콘텐츠 주문</a></li>
+                        <li><a id="top_side_menu_my_events" href="{{ url('/users/') }}/{{ Auth::user()->id }}/orders">나의 이벤트 참여</a></li>
+                        <li><a id="top_side_menu_logout" href="#" onclick="logout(); return false;">로그아웃</a></li>
                     </ul>
                 </li>
             @endif
@@ -625,9 +629,9 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=178') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=22') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=5') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=179') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=23') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=6') }}"></script>
 
 </body>
 </html>
