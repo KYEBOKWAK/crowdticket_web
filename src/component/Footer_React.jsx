@@ -165,8 +165,17 @@ class Footer_React extends Component{
                           this.setState({
                             language_code: language_code
                           }, () => {
+                            // console.log(window.location.href);
                             Storage.save(storageType.LANGUAGE_CODE, this.state.language_code, (result) => {
-                              window.location.reload();
+
+                              const url = window.location.href;
+                              const urlIndex = url.indexOf('/language/en');
+                              if(urlIndex > 0){
+                                const reUrl = url.split('/language/en');
+                                window.location.href = reUrl[0];
+                              }else{
+                                window.location.reload();
+                              }
                             });
                           })
                         }}
