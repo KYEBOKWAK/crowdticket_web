@@ -30,9 +30,10 @@ class Category_Top_Carousel extends Component{
       let isSelect = false;
       if(data.id === this.props.category_top_item_id){
         isSelect = true;
+        items.splice(1, 0, <Category_Top_Carousel_Item top_id={data.id} title={data.show_value} isSelect={isSelect}></Category_Top_Carousel_Item>);
+      }else{
+        items.push(<Category_Top_Carousel_Item top_id={data.id} title={data.show_value} isSelect={isSelect}></Category_Top_Carousel_Item>);  
       }
-
-      items.push(<Category_Top_Carousel_Item top_id={data.id} title={data.show_value} isSelect={isSelect}></Category_Top_Carousel_Item>);
     }
 
     this.state = {
