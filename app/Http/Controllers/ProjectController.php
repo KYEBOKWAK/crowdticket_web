@@ -15,6 +15,9 @@ use App\Models\Main_thumbnail as Main_thumbnail;
 use App\Models\Store as Store;
 use App\Models\Test as Test;
 use App\Models\Magazine as Magazine;
+
+use App\Models\Main_thumb_play_creator as Main_thumb_play_creator;
+
 use App\Services\SmsService;
 
 use Illuminate\Http\Request as Request;
@@ -390,56 +393,14 @@ class ProjectController extends Controller
         return ['state' => 'success', 'projects' => $projects, 'keytype' => $request->keytype, 'message' => $mcnMessage];
     }
 
-    /*
-    public function getProjectObjects(Request $request)
-    {
-        $orderBy = 'projects.funding_closing_at';
-        $orderType = 'desc';
-
-        $skip = $request->call_skip_counter;
-        $take = $request->call_once_max_counter;
-
-        $projects = [];
-
-        $user = null;
-        if(\Auth::check() && \Auth::user())
-        {
-            $user = \Auth::user();
-        }
-
-        if($request->company === self::MCN_SANDBOX)
-        {
-          $thumb_projectIds = Main_thumbnail::where('type', Main_thumbnail::THUMBNAIL_TYPE_RECOMMENT_SANDBOX_EVENT)->where('order_number', '>', 0)->select('project_id')->get();
-          $thumb_projectIds = json_decode($thumb_projectIds, true);
-          $projects = Project::whereIn('id', $thumb_projectIds)->where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-        }
-        else
-        {
-          $projects = Project::where('state', Project::STATE_APPROVED)->orderBy($orderBy, $orderType)->skip($skip)->take($take)->get();
-        }
-
-        foreach($projects as $project)
-        {
-          $project->link = $project->getProjectURLWithIdOrAlias();
-          $project->poster_url = $project->getPosterUrl();
-          $project->ticket_data_slash = $project->getTicketDateFormattedSlash();
-
-          $project->city_name = '';
-          if(isset($project->city->name))
-          {
-            $project->city_name = $project->city->name;
-          }
-        }
-
-        return ['state' => 'success', 'projects' => $projects, 'keytype' => $request->keytype];
-    }
-    */
-
-
     public function getProjects()
     {
       $company = '';
-      return view('project.explore_new', ['company' => $company]);
+      $thumbPlayCreators = Main_thumb_play_creator::orderBy('order_number')->get();
+
+      return view('project.fan_event', ['company' => $company, 'playedcreators' => $thumbPlayCreators,]);
+
+      // return view('project.explore_new', ['company' => $company]);
     }
 
     public function getMCNProjects($company)

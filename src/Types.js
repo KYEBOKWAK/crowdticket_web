@@ -123,12 +123,14 @@ const Types = {
     find_result_projects: 'find_result_projects',
     find_no_result_recommend: 'find_no_result_recommend',
 
-    category_result: 'category_result'
+    category_result: 'category_result',
+    fan_event_thumb: 'fan_event_thumb'
   },
   thumb_tags: {
     trend: 'trend',
     attention: 'attention',
-    live_update: 'live_update'
+    live_update: 'live_update',
+    hot: 'hot'
   },
   thumbnails: {
     recomment: 1,
@@ -136,7 +138,9 @@ const Types = {
     magazine: 3,
     sandbox_event: 4,
     store_item: 5,
-    store_item_popular: 6 //오늘의 인기 콘텐츠
+    store_item_popular: 6, //오늘의 인기 콘텐츠
+    store_home_event: 7, //오늘의 인기 콘텐츠  //7타입의 0번째가 의 firstText 가 7번타입의 타이틀임.
+    fan_events: 8 //8타입의 0번째가 의 firstText 가 8번타입의 타이틀임.
   },
   do_it: {
     //여기서 더 디테일한 옵션을 넣으려면 json 생성

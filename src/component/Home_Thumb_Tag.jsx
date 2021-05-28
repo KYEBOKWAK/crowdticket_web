@@ -45,6 +45,8 @@ class Home_Thumb_Tag extends Component{
       box_style = {
         backgroundColor: '#fc5e7c'
       }
+    }else if(this.props.thumb_tags === Types.thumb_tags.hot){
+      text = '🔥 HOT';
     }
     return(
       <div className='Home_Thumb_Tag'>

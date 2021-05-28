@@ -1,0 +1,366 @@
+.App_Fan_Event {
+
+  position: relative;
+  white-space: pre-line;
+
+  .page_container {
+    width: 100%;
+    max-width: 1176px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .thumb_carousel_box {
+    width: 100%;
+    max-width: 1176px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 80px;
+  }
+
+  .top_banner_container_box {
+    background-color: #fafafa;
+  }
+
+  .top_banner_container {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    height: 360px;
+    
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .top_banner_content_box {
+    
+  }
+
+  .top_banner_img_box {
+    position: absolute;
+    width: 948px;
+    height: 360px;
+    right: 0;
+    top: 0;
+    background-color: #fafafa;
+    text-align: center;
+  }
+
+  .top_banner_img {
+    width: 100%;    
+  }
+
+  .top_banner_title_1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #191919;
+    margin-bottom: 16px;
+  }
+
+  .top_banner_title_2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #999999;
+    margin-bottom: 30px;
+  }
+
+  .top_banner_button {
+    width: 150px;
+    height: 44px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    background-color: #e5f8ff;
+    color: #00bfff;
+  }
+
+  .thumb_tag_box {
+    margin-bottom: 8px;
+  }
+
+  .fan_project_list_box {
+    margin-top: 100px;
+  }
+
+  .fan_project_list_label {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+    margin-bottom: 32px;
+  }
+
+  .event_make_banner_container {
+    width: 100%;
+    height: 120px;
+    background-color: #00bfff;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .event_make_banner_box {
+    width: 980px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .event_make_banner_content_emoji {
+    font-size: 50px;
+  }
+
+  .event_make_banner_content_text {
+    margin-left: 50px;
+    font-size: 20px;
+    color: white;
+  }
+
+  .event_make_banner_content_text_1 {
+
+  }
+
+  .event_make_banner_content_text_2 {
+    font-weight: bold;
+  }
+
+  .event_make_banner_content_box {
+    display: flex;
+    align-items: center;
+  }
+
+  .event_make_banner_button {
+    width: 145px;
+    height: 52px;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    font-weight: bold;
+    color: #00bfff
+  }
+
+  .play_creator_img {
+    border-radius: 4px;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.3));
+  }
+
+  .play_creator_info {
+    position: absolute;
+    width: 100%;
+    bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .event_creators_container {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    background-color: #fafafa;
+    position: relative;
+  }
+
+  .event_creators_box {
+    position: relative;
+  }
+
+  .event_creators_effect_img_mobile {
+    display: none;
+
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  .event_creators_effect_img {
+    width: 942px;
+    height: 254px;
+    position: absolute;
+    top: -80px;
+    left: -325px;
+  }
+
+  .event_creators_title_1 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .event_creators_title_2 {
+    font-size: 14px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 1919px){
+    /*테블릿*/  
+    .top_banner_img_box {
+      position: relative;
+      width: 100%;
+      // max-width: 1176px;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .top_banner_img {
+      width: 100%;
+      max-width: 1176px;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .top_banner_container {
+      height: 296px;
+    }
+
+    .top_banner_title_1 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+  
+    .top_banner_title_2 {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+  }
+
+  @media (max-width: 1176px){
+    /*테블릿*/
+    .page_container {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .thumb_tag_box {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .event_make_banner_container {
+      height: 130px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .event_make_banner_box {
+      width: 100%;
+    }
+
+    .event_make_banner_content_emoji {
+      font-size: 40px;
+    }
+
+    .event_make_banner_content_text {
+      font-size: 18px;
+      margin-left: 40px;
+    }
+
+    .event_creators_container {
+      padding-top: 72px;
+      padding-bottom: 58px;
+    }
+
+    .event_creators_effect_img {
+      display: none;
+    }
+
+    .event_creators_effect_img_mobile {
+      display: block;
+      width: 100%;
+      height: auto;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  @media (max-width: 768px){
+    /*테블릿*/
+    .page_container {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .thumb_tag_box {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .top_banner_container {
+      height: auto;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
+    .top_banner_title_1 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+  
+    .top_banner_title_2 {
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .event_make_banner_container {
+      height: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-top: 18px;
+      padding-bottom: 26px;
+      display: block;
+    }
+
+    .event_make_banner_box {
+      display: block;
+    }
+
+    .event_make_banner_content_box {
+      display: block;
+    }
+
+    .event_make_banner_content_emoji {
+      font-size: 32px;
+    }
+
+    .event_make_banner_content_text {
+      font-size: 16px;
+      margin-left: 0px;
+      margin-top: 4px;
+    }
+
+    .event_make_banner_button {
+      width: 117px;
+      height: 38px;
+      font-size: 12px;
+      margin-top: 24px;
+    }
+
+    .event_creators_container {
+      padding-top: 48px;
+      padding-bottom: 40px;
+    }
+
+    .event_creators_title_1 {
+      font-size: 16px;
+    }
+  
+    .event_creators_title_2 {
+      font-size: 12px;
+      margin-top: 16px;
+    }
+  }
+
+  @media (max-width: 453px){
+    /*모바일일때*/  
+  }
+}

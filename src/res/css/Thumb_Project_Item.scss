@@ -1,0 +1,137 @@
+$item_box_width: 276px; //pc
+
+$item_tablet_box_width: 234px;  //218 + 16
+$item_tablet_padding: 16px;
+$item_tablet_item_width: 218px;
+
+$item_mobile_box_width: 246px;  //230 + 16
+$item_mobile_padding: 16px;
+$item_mobile_item_width: 230px;
+
+
+.Thumb_Project_Item {
+  width: $item_box_width;
+  margin-left: auto;
+  margin-right: auto;
+  // margin-right: 24px;
+  // padding: 2px;
+  // box-sizing: border-box;
+
+  .item_box {
+    width: $item_box_width;
+    text-align: left;
+  }
+
+  .item_img {
+    width: $item_box_width;
+    height: $item_box_width;
+    border-radius: 4px;
+  }
+
+  .item_content_container {
+    margin-top: 12px;
+  }
+
+  .item_content {
+    margin-left: 8px;
+  }
+
+  .item_title {
+    height: 40px;
+    font-size: 14px;
+    color: #191919;
+  }
+
+  .price_container {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+  }
+
+  .user_name {
+
+  }
+
+  .thumb_item_price {
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .thumb_item_label {
+    margin-left: 8px;
+  }
+
+  .project_description_text {
+    font-size: 12px;
+    color: #4c4c4c;
+  }
+
+  .project_show_date_container {
+    display: flex;
+    align-items: center;
+  }
+
+  .project_show_date {
+    font-size: 12px;
+    color: #999999;
+  }
+
+  .project_contents_city_name {
+    font-size: 12px;
+    color: #999999;
+    margin-left: 8px;
+  }
+
+  .project_contents_type_box {
+    padding: 1px 4px;
+    border-radius: 2px;
+    background-color: #f4f4f4;
+    font-size: 10px;
+    font-weight: bold;
+    color: #7f7f7f;
+    margin-left: 8px;
+  }
+
+  .project_title_text {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .project_contents_bottom_container {
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+  }
+
+  @media (max-width: 1176px){
+    /*모바일일때*/
+    width: $item_tablet_box_width;
+    padding-right: $item_tablet_padding;
+
+    .item_box {
+      width: $item_tablet_item_width;
+    }
+  
+    .item_img {
+      width: $item_tablet_item_width;
+      height: $item_tablet_item_width;
+    }
+  }
+
+  @media (max-width: 768px){
+    width: $item_mobile_box_width;
+    padding-right: $item_mobile_padding;
+
+    .item_box {
+      width: $item_mobile_item_width;
+    }
+  
+    .item_img {
+      width: $item_mobile_item_width;
+      height: $item_mobile_item_width;
+    }
+  }
+}

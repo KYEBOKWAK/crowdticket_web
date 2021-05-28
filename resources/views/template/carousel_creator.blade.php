@@ -48,7 +48,6 @@
         
       ?>
         <div class="swiper-slide">
-            <!--<div class="creator_slide_container" style="position:absolute; width:190px; height:190px; margin-top:{{$top}}px">-->
             <div class="creator_slide_container" style="margin-top:{{$top}}px">
                 <a href="{{url('/projects/'.$playedcreator->project_alias)}}">
                     <img src="{{$playedcreator->img_url}}" style="width:100%; border-radius: 20px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)); box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.2);"/>

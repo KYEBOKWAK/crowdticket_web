@@ -8,7 +8,6 @@ import Types from '../Types';
 
 // import moment_timezone from 'moment-timezone';
 import Util from '../lib/Util';
-import { instanceOf } from 'prop-types';
 
 // import Util from '../lib/Util';
 
@@ -64,6 +63,12 @@ class Home_Thumb_Container_Project_Item extends Component{
     this.requestProjectInfo();
     this.requestShowDate();
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.ori_show_image_width !== this.state.ori_show_image_width){
+      this.updateDimensions();
+    }
+  }
 
   requestProjectInfo = () => {
     if(this.props.project_id === null){
@@ -220,9 +225,6 @@ class Home_Thumb_Container_Project_Item extends Component{
         })
       })
     }
-  }
-
-  componentDidUpdate(){
   }
 
   //배경

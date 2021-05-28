@@ -14,6 +14,8 @@ import Find_Result_Stores_item from './Find_Result_Stores_item';
 
 import Thumb_Recommend_item from './Thumb_Recommend_item';
 
+import Thumb_Project_Item from './Thumb_Project_Item';
+
 import ic_left from '../res/img/ic-left.svg';
 import ic_dis_left from '../res/img/ic-dis-left.svg';
 import ic_right from '../res/img/ic-right.svg';
@@ -58,6 +60,8 @@ class Home_Thumb_list extends Component{
     }
     else if(this.props.thumb_list_type === Types.thumb_list_type.find_no_result_recommend){
       this.requestNoResultRecommend();
+    }else if(this.props.thumb_list_type === Types.thumb_list_type.fan_event_thumb){
+      this.requsetThumbFanEvent();
     }
   };
 
@@ -179,6 +183,39 @@ class Home_Thumb_list extends Component{
     })
   }
 
+  requsetThumbFanEvent = () => {
+    axios.post("/main/any/thumbnails/fanevent/list", {
+    }, (result) => {
+      if(result.list.length === 0){
+        return;
+      }
+      
+      let _title_text = result.list[0].first_text;
+
+      let _temp_list = [];
+      for(let i = 1 ; i < result.list.length ; i++){
+        const data = result.list[i];
+        _temp_list.push(data);
+      }
+
+      let _rand_list = Util.getArrayRand(_temp_list);
+
+      let _items = [];
+      for(let i = 0 ; i < _rand_list.length ; i++){
+        const data = _rand_list[i];
+        const itemDom = <Thumb_Project_Item project_id={data.target_id}></Thumb_Project_Item>;
+        _items.push(itemDom);
+      }
+
+      this.setState({
+        items: _items.concat(),
+        title_text: _title_text
+      })
+    }, (error) => {
+
+    })
+  }
+
   componentWillUnmount(){
     this.Carousel = null;
   };
@@ -233,6 +270,10 @@ class Home_Thumb_list extends Component{
     else if(this.props.thumb_list_type === Types.thumb_list_type.find_no_result_recommend){
       arrowButtonTop = 100;
       arrowButtonLeftRight = -30;
+    }else if(this.props.thumb_list_type === Types.thumb_list_type.fan_event_thumb){
+      labelText = this.state.title_text;
+      arrowButtonTop = 180;
+      arrowButtonLeftRight = -39;
     }
 
     let leftButtonDom = <></>;
