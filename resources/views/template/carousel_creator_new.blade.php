@@ -50,7 +50,7 @@
         <div class="swiper-slide">
             <div class="creator_slide_container" style="margin-top:{{$top}}px">
                 <a href="{{url('/projects/'.$playedcreator->project_alias)}}">
-                    <img src="{{$playedcreator->img_url}}" style="width:100%; border-radius: 4px; background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.3));"/>
+                    <img src="{{$playedcreator->img_url}}" style="width:100%; border-radius: 4px; background-image: linear-gradient(to bottom, rgba(54, 54, 54, 0), rgba(25, 25, 25, 0.5));"/>
                     <div class="thumb-black-mask">
                     </div>
                     <div class="creator_slide_name">

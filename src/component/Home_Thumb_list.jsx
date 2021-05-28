@@ -187,9 +187,10 @@ class Home_Thumb_list extends Component{
     axios.post("/main/any/thumbnails/fanevent/list", {
     }, (result) => {
       if(result.list.length === 0){
+        this.props.result_count_callback(this.state.items.length);
         return;
       }
-      
+
       let _title_text = result.list[0].first_text;
 
       let _temp_list = [];
@@ -210,6 +211,8 @@ class Home_Thumb_list extends Component{
       this.setState({
         items: _items.concat(),
         title_text: _title_text
+      }, () => {
+        this.props.result_count_callback(this.state.items.length);
       })
     }, (error) => {
 
@@ -324,7 +327,8 @@ Home_Thumb_list.defaultProps = {
   thumb_list_type: Types.thumb_list_type.popular,
   pc_show_item_count: 4,
   search_text: '',
-  search_result_count_callback: (count) => {}
+  search_result_count_callback: (count) => {},
+  result_count_callback: (count) => {}
 }
 
 export default Home_Thumb_list;

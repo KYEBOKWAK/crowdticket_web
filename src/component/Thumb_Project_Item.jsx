@@ -22,6 +22,7 @@ class Thumb_Project_Item extends Component{
     this.state = {
       user_id: null,
 
+      project_id: null,
       poster_url: '',
       poster_renew_url: '',
       title: '',
@@ -85,6 +86,7 @@ class Thumb_Project_Item extends Component{
       }
 
       this.setState({
+        project_id: data.project_id,
         user_id: data.user_id,
         poster_url: data.poster_url,
         poster_renew_url: data.poster_renew_url,
@@ -120,16 +122,18 @@ class Thumb_Project_Item extends Component{
       e.preventDefault()
       // console.log('drag')
     } else {
-      // console.log('click')
-      let baseURL = 'https://crowdticket.kr'
-      const baseURLDom = document.querySelector('#base_url');
-      if(baseURLDom){
-        baseURL = baseURLDom.value;
+      
+      if(this.state.project_id === null){
+        alert('project ID 에러! 새로고침 후 다시 이용 부탁드립니다');
+        return;
       }
 
-      alert('dfdfdf');
-      // let goURL = baseURL + '/item/store/' + this.props.store_item_id;
-      // window.location.href = goURL;
+      let urlTail = this.state.alias;
+      if(urlTail === undefined || urlTail === null || urlTail === ''){
+        urlTail = this.state.project_id
+      }
+
+      window.location.href = '/projects/'+urlTail;
     }   
   }
 

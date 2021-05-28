@@ -31,8 +31,7 @@ class App_Fan_Event extends Component {
       playCreatorList: [],
       innerWidth: window.innerWidth,
 
-      item_width: 176,
-      item_box_width: 176
+      thumb_count: 1, //우선 0 이상으로 셋팅 해서 렌더 시켜야 카운트를 가져올 수 있음.
     }
     
   }
@@ -117,6 +116,20 @@ class App_Fan_Event extends Component {
   }
 
   render() {
+
+    let thumb_list_dom = <></>;
+    if(this.state.thumb_count > 0){
+      thumb_list_dom = <div className={'thumb_carousel_box'}>
+                        <div className={'thumb_tag_box'}>
+                          <Home_Thumb_Tag thumb_tags={Types.thumb_tags.hot}></Home_Thumb_Tag>
+                        </div>
+                        <Home_Thumb_list result_count_callback={(count) => {
+                          this.setState({
+                            thumb_count: count
+                          })
+                        }} thumb_list_type={Types.thumb_list_type.fan_event_thumb}></Home_Thumb_list>
+                      </div>
+    }
     return (
       <div className={'App_Fan_Event'}>
         <div className={'top_banner_img_box'}>
@@ -139,12 +152,7 @@ class App_Fan_Event extends Component {
           </div>
         </div>
 
-        <div className={'thumb_carousel_box'}>
-          <div className={'thumb_tag_box'}>
-            <Home_Thumb_Tag thumb_tags={Types.thumb_tags.hot}></Home_Thumb_Tag>
-          </div>
-          <Home_Thumb_list thumb_list_type={Types.thumb_list_type.fan_event_thumb}></Home_Thumb_list>
-        </div>
+        {thumb_list_dom}
 
         <div className={'page_container fan_project_list_box'}>
           <div className={'fan_project_list_label'}>

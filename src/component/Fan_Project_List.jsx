@@ -27,7 +27,7 @@ class Fan_Project_List extends Component{
 
   componentDidMount(){
     this.requestMoreData();
-    window.addEventListener('scroll', this.handleScroll);
+    // window.addEventListener('scroll', this.handleScroll);
   };
 
   
@@ -110,10 +110,16 @@ class Fan_Project_List extends Component{
       _items.push(itemColumnsDom);
     }
 
+    let isShowMoreButton = false;
+    if(hasMore){
+      isShowMoreButton = true;
+    }
+
     this.setState({
       items: _items.concat(),
       items_count: this.state.items_count + index,
       hasMore: hasMore,
+      isShowMoreButton: isShowMoreButton,
       isRefreshing: false
     })
   }
@@ -135,7 +141,7 @@ class Fan_Project_List extends Component{
   }
 
   componentWillUnmount(){
-    window.removeEventListener('scroll', this.handleScroll);
+    // window.removeEventListener('scroll', this.handleScroll);
   };
 
   componentDidUpdate(){
@@ -156,27 +162,27 @@ class Fan_Project_List extends Component{
     // }
   }
 
-  handleScroll = () => {
+  // handleScroll = () => {
 
-    let refresh_target_dom = document.querySelector('#refresh_target');
-    // const navFakeBar = document.querySelector("#navbar_fake_dom");
+  //   let refresh_target_dom = document.querySelector('#refresh_target');
+  //   // const navFakeBar = document.querySelector("#navbar_fake_dom");
 
-    const { top, height } = refresh_target_dom.getBoundingClientRect();
+  //   const { top, height } = refresh_target_dom.getBoundingClientRect();
 
-    const windowHeight = window.innerHeight;
+  //   const windowHeight = window.innerHeight;
 
-    if(top <= windowHeight){
-      if(!this.state.isRefreshing && this.state.hasMore && !this.state.isShowMoreButton){
-        // console.log(windowHeight);
-        // console.log(top);
-        this.setState({
-          isRefreshing: true
-        }, () => {
-          this.requestMoreData();
-        })
-      }
-    }
-  }
+  //   if(top <= windowHeight){
+  //     if(!this.state.isRefreshing && this.state.hasMore && !this.state.isShowMoreButton){
+  //       // console.log(windowHeight);
+  //       // console.log(top);
+  //       this.setState({
+  //         isRefreshing: true
+  //       }, () => {
+  //         this.requestMoreData();
+  //       })
+  //     }
+  //   }
+  // }
 
   render(){
     // let titleText = '';

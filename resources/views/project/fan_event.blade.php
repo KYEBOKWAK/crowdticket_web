@@ -12,7 +12,10 @@
 
   .carousel_creator_container{
     display: none;
-    height: 235px;
+    /* height: 235px; */
+    /* height: 235px; */
+    height: 390px;
+    /* margin-top: 20px; */
     background-color: #fafafa;
   }
 
@@ -73,14 +76,14 @@
   }
 
   .thumb-black-mask{
-    display: none;
+    /* display: none; */
     width:100%;
-    height:100%;
+    height:50%;
     position:absolute;
-    top:0;
     bottom:0;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
-    border-radius: 20px;
+    /* background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3)); */
+    background-image: linear-gradient(to bottom, rgba(54, 54, 54, 0), rgba(25, 25, 25, 0.5));
+    border-radius: 4px;
   }
 
   .creator_slide_name{
@@ -99,6 +102,18 @@
     color: white;
   }
 
+  @media (max-width: 2793px) {
+    .carousel_creator_container{
+      height: 345px;
+    }
+  }
+
+  @media (max-width: 2125px) {
+    .carousel_creator_container{
+      height: 280px;
+    }
+  }
+
   @media (max-width: 1176px) {
     .carousel_bottom_box {
       height: 72px;
@@ -112,6 +127,7 @@
 
     .carousel_creator_container{
       /* margin-top: -37px; */
+      height: 190px;
     }
 
     .welcome_meetup_banner_title{
@@ -167,6 +183,6 @@
 
 @section('js')
 <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=6') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=7') }}"></script>
 
 @endsection
