@@ -137,7 +137,6 @@ class Thumb_Project_Item extends Component{
 
   handleOnMouseDown = (e) => {
     e.preventDefault();
-    console.log(this.props.project_id);
     this.COORDS.xUp = null
     this.COORDS.xDown = null
     
