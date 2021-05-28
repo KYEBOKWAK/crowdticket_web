@@ -3,9 +3,6 @@
 import React, { Component } from 'react';
 import axios from '../lib/Axios';
 
-// import Name from '../component/Name';
-// import Profile from '../component/Profile';
-
 import Util from '../lib/Util';
 import Types from '../Types';
 
@@ -52,11 +49,13 @@ class Thumb_Project_Item extends Component{
       show_blur_image_height: 0,
       isShowBlurImage: true,
 
-      isHaveTicketShowDate: false
+      isHaveTicketShowDate: false,
     }
   };
 
   componentDidMount(){
+    // window.addEventListener('resize', this.updateDimensions);
+
     this.requestProjectInfo();
   };
 
@@ -110,7 +109,6 @@ class Thumb_Project_Item extends Component{
   }
 
   componentWillUnmount(){
-    
   };
 
   componentDidUpdate(){
@@ -122,7 +120,7 @@ class Thumb_Project_Item extends Component{
       e.preventDefault()
       // console.log('drag')
     } else {
-      
+
       if(this.state.project_id === null){
         alert('project ID 에러! 새로고침 후 다시 이용 부탁드립니다');
         return;
@@ -149,6 +147,26 @@ class Thumb_Project_Item extends Component{
   handleMouseUp = (e) => {
     e.preventDefault()
     this.COORDS.xUp = e.clientX
+  }
+
+  onImgLoad = (img) => {
+    
+    let show_image_width = img.target.naturalWidth;
+    let show_image_height = img.target.naturalHeight;
+
+    
+    //가로로 긴 이미지인가?
+    //세로가 긴 이미지는 width 만 맞추면 height는 자동 맞춰짐
+
+    if(show_image_width <= show_image_height){
+      return this.setState({
+        isShowBlurImage: false
+      })
+    }else{
+      this.setState({
+        isShowBlurImage: true
+      })
+    }    
   }
 
   render(){
@@ -179,11 +197,21 @@ class Thumb_Project_Item extends Component{
       show_date = this.state.ticket_date;
     }
 
+    let blurImageDom = <></>;
+    if(this.state.isShowBlurImage){
+      blurImageDom = <div className={'item_img_wrapper_blur'} >
+                      <img className={'item_img_blur'} src={imgSrc} />
+                    </div>
+    }
+
     return(
       <div className={'Thumb_Project_Item'}>
         <button onDragStart={(e) => {e.preventDefault();}} onMouseDown={(e) => {this.handleOnMouseDown(e)}}
             onMouseUp={(e) => {this.handleMouseUp(e)}} onClick={(e) => {this.onClickItem(e)}} className={'item_box'}>
-          <img onDragStart={(e) => {e.preventDefault()}} className={'item_img'} src={imgSrc} />
+          {blurImageDom}
+          <div className={'img_box'}>
+            <img onDragStart={(e) => {e.preventDefault()}} className={'item_img'} onLoad={(img) => {this.onImgLoad(img)}} src={imgSrc} />
+          </div>
           <div className={'item_content_container'}>
             <div className={'project_description_text text-ellipsize'}>
               {this.state.description}

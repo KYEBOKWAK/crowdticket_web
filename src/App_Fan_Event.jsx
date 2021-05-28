@@ -116,7 +116,6 @@ class App_Fan_Event extends Component {
   }
 
   render() {
-
     let thumb_list_dom = <></>;
     if(this.state.thumb_count > 0){
       thumb_list_dom = <div className={'thumb_carousel_box'}>

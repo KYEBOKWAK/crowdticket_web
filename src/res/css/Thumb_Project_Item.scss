@@ -8,6 +8,8 @@ $item_mobile_box_width: 246px;  //230 + 16
 $item_mobile_padding: 16px;
 $item_mobile_item_width: 230px;
 
+$blur_value: 20px;
+
 
 .Thumb_Project_Item {
   width: $item_box_width;
@@ -20,12 +22,25 @@ $item_mobile_item_width: 230px;
   .item_box {
     width: $item_box_width;
     text-align: left;
+    position: relative;
+  }
+
+  .img_box {
+    width: $item_box_width;
+    height: $item_box_width;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .item_img {
-    width: $item_box_width;
-    height: $item_box_width;
+    width: 100%;
+    // width: $item_box_width;
+    // height: $item_box_width;
     border-radius: 4px;
+    position: relative;
   }
 
   .item_content_container {
@@ -106,6 +121,30 @@ $item_mobile_item_width: 230px;
     align-items: center;
   }
 
+  .item_img_wrapper_blur {
+    width: $item_box_width;
+    height: $item_box_width;
+    // max-width: 276px;
+    // height: $item_height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    position: absolute;
+  }
+
+  .item_img_blur {
+    width: $item_box_width;
+    height: $item_box_width;
+    filter: blur($blur_value); 
+    -webkit-filter: blur($blur_value); 
+    -moz-filter: blur($blur_value);
+    -o-filter: blur($blur_value);
+  }
+
   @media (max-width: 1176px){
     /*모바일일때*/
     width: $item_tablet_box_width;
@@ -116,6 +155,21 @@ $item_mobile_item_width: 230px;
     }
   
     .item_img {
+      // width: $item_tablet_item_width;
+      // height: $item_tablet_item_width;
+    }
+
+    .img_box {
+      width: $item_tablet_item_width;
+      height: $item_tablet_item_width;
+    }
+
+    .item_img_wrapper_blur {
+      width: $item_tablet_item_width;
+      height: $item_tablet_item_width;
+    }
+
+    .item_img_blur {
       width: $item_tablet_item_width;
       height: $item_tablet_item_width;
     }
@@ -130,6 +184,21 @@ $item_mobile_item_width: 230px;
     }
   
     .item_img {
+      // width: $item_mobile_item_width;
+      // height: $item_mobile_item_width;
+    }
+
+    .img_box {
+      width: $item_mobile_item_width;
+      height: $item_mobile_item_width;
+    }
+
+    .item_img_wrapper_blur {
+      width: $item_mobile_item_width;
+      height: $item_mobile_item_width;
+    }
+
+    .item_img_blur {
       width: $item_mobile_item_width;
       height: $item_mobile_item_width;
     }
