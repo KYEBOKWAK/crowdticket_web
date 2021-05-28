@@ -97,6 +97,7 @@ Route::get('landing/form', function () {
 
 Route::post('landing/sendmail', 'MailSendController@sendEmail');
 Route::post('question/sendmail', 'MailSendController@sendQuestionEmail');
+Route::post('makeevent/sendmail', 'MailSendController@sendMakeEventEmail');
 Route::get('register/sendmail', 'MailSendController@sendEmailRegister');
 //
 

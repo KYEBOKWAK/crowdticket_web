@@ -1336,8 +1336,8 @@
 
     <div class="blueprint_welcome_start_container">
         <div class="blueprint_welcome_start_form_container">
-        
-            <form id="blueprint_form_start" action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
+                    <!-- /blueprints -->
+            <form id="blueprint_form_start" action="{{ url('/makeevent/sendmail') }}" method="post" data-toggle="validator" role="form">
                 <div class="form-group">
                     <label class="cr_label">크리에이터 이름</label>
                     <input id="input-user-intro" name="user_introduction" class="form-control cr_input" placeholder="유튜브 채널명, 먹방 BJ ‘000’, 게임 스트리머 ‘000’ 등">
@@ -1405,8 +1405,41 @@
                 $('#blueprint_form_start').submit();
             };
 
+            
+            var blueprint_form_start_option = {
+                'beforeSerialize': function($form, options) {
+                },
+                'success': function(result) {
+                    loadingProcessStop($(".blueprint_start_button_wrapper"));
+
+                    if(result.state === 'error')
+                    {
+                        alert(result.message);
+                        return;
+                    }
+                    
+                    swal("요청 성공!", "곧 크라우드티켓에서 연락 드리겠습니다.", "success");
+                },
+                'error': function(data) {
+                    alert("개설 에러! 입력 확인 후 다시 한번 시도해주세요");
+                }
+                
+            };
+                
+
+            $('#blueprint_form_start').ajaxForm(blueprint_form_start_option);
+
             $("#blueprint_start_button").click(function(){
-                blueprintStart();
+                // blueprintStart();
+                if(!isCheckPhoneNumber($('#input-phone').val()))
+                {
+                    alert('전화번호 입력이 바르지 않습니다.');
+                    return;
+                }
+
+                loadingProcess($(".blueprint_start_button_wrapper"));
+
+                $('#blueprint_form_start').submit();
             });
 
             var swiper = new Swiper('.swiper-event-plan', {

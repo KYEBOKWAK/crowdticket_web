@@ -89,6 +89,41 @@ class MailSendController extends Controller {
 		return ['state' => 'success', 'message' => ''];
 	}
 
+	public function sendMakeEventEmail(){
+		if(empty($_POST['user_introduction'])  		|| // post로 넘어온 name값이 비었는지 확인
+		      empty($_POST['project_introduction']) 		|| // 유투브 채널 값이 비었는지 확인
+		      empty($_POST['contact']) 		|| // email값이 비었는지 확인
+		     empty($_POST['tel']) 		|| // phone값이 비었는지 확인
+		     !filter_var($_POST['contact'],FILTER_VALIDATE_EMAIL)) // 전달된 이메일 값이 유효한 이메일값인지 검증
+		     {
+				 return ['state' => 'error', 'message' => '값이 비어있거나 이메일이 잘못되었습니다.'];
+		     }
+		  // Cross-Site Scripting (XSS)을 방지하는 시큐어코딩
+		  // strip_tags() -> 문자열에서 html과 php태그를 제거한다
+		  // htmlspecialchars() -> 특수 문자를 HTML 엔터티로 변환
+		  // 악의적인 특수문자 삽입에 대비하기 위함
+
+		  $name = strip_tags(htmlspecialchars($_POST['user_introduction']));
+		  $messageExplain = strip_tags(htmlspecialchars($_POST['project_introduction']));
+		  $email_address = strip_tags(htmlspecialchars($_POST['contact']));
+		  $phone = strip_tags(htmlspecialchars($_POST['tel']));
+
+		  // 이메일을 생성하고 메일을 전송하는 부분
+		  $to = 'contact@crowdticket.kr'; // 받는 측의 이메일 주소를 기입하는 부분
+		  $email_subject = "FROM: 팬 이벤트 시작하기 [$name]"; // 메일 제목에 해당하는 부분
+		  $email_body = ['content' => "\n\n프로젝트 개설자:\n\n $name\n\n만들고 싶은 이벤트:\n\n $messageExplain\n\nEmail:\n\n $email_address\n\nPhone:\n\n $phone\n\n"];
+
+
+			Mail::send('landing.landing_email_form', $email_body, function ($m) use ($email_subject, $to) {
+								$m->from('contact@crowdticket.kr', '팬 이벤트 시작하기');
+								$m->to($to)->subject($email_subject);
+						});
+		
+
+		//return view('landing.landing_creator_form_sendmail');
+		return ['state' => 'success', 'message' => ''];
+	}
+
 	public function sendEmailRegister(Request $request)
 	{
 		$from = 'contact@crowdticket.kr';

@@ -102,6 +102,10 @@
     color: white;
   }
 
+  .Footer_React {
+    padding-top: 0px !important;
+  }
+
   @media (max-width: 2793px) {
     .carousel_creator_container{
       height: 345px;
