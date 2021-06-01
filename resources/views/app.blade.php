@@ -460,25 +460,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <input id='user_gender' type='hidden' value='{{\Auth::user()->getUserGender()}}'/>
 @endif
     @yield('content')
-
-      <div id="kakao_chat_ask" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
-          <div class="kakao_chat_round">
-          <p class="kakao_chat_ask">카톡<br>문의</p>
-          </div>
-      </div>
-
-      <div id="kakao_chat_icon" class="kakao_chat_icon_wrapper navbar-fixed-bottom">
-          <div class="kakao_chat_round">
-            <img class="kakao_chat_icon_img" src="{{asset('/img/icons/svg/ic-bottom-btn-kakao-n.svg')}}">
-          </div>
-      </div>
-
-      <div id="kakao_chat_empty_area" class="kakao_chat_icon_wrapper navbar-fixed-bottom" style="box-shadow: unset; opacity:0">
-          <a href="javascript:void plusFriendChat()">
-            <div class="kakao_chat_round">
-            </div>
-          </a>
-      </div>
 </div>
 
 @yield('react_main')
@@ -554,63 +535,7 @@ function logout(){
         'success': success,
         'error': error
       });
-    }
-
-
-    function kakaoIconMove() {
-      var elem = document.getElementById("kakao_chat_icon");   
-      var pos = 0;
-      var id = setInterval(frame, 5);
-      //var initPosY = elem.style.bottom;
-      var moveTarget = 60;
-      function frame() {
-        if (pos === moveTarget) {
-          elem.style.bottom = moveTarget + "px";
-          clearInterval(id);
-        } else {
-          pos++; 
-          elem.style.bottom = pos + "px"; 
-          //elem.style.left = pos + "px"; 
-        }
-      }
-    }
-
-    function kakaoIconInitMove() {
-      var elem = document.getElementById("kakao_chat_icon");   
-      var pos = 0;
-      var id = setInterval(frame, 5);
-      var initPosY = elem.style.bottom;
-      function frame() {
-        if (pos <= 0) {
-          elem.style.bottom = 0;
-          clearInterval(id);
-        } else {
-          pos--; 
-          elem.style.bottom = pos + "px"; 
-          //elem.style.left = pos + "px"; 
-        }
-      }
-    }
-
-    $("#kakao_chat_empty_area").mouseenter(function(){
-      $("#kakao_chat_icon").fadeOut('slow');
-    });
-
-    $("#kakao_chat_empty_area").mouseleave(function(){
-      $("#kakao_chat_icon").fadeIn('slow');
-    });
-
-    $(window).scroll(function() {
-      $("#kakao_chat_icon").hide();
-      $("#kakao_chat_ask").hide();
-      
-      clearTimeout($.data(this, 'scrollTimer'));
-      $.data(this, 'scrollTimer', setTimeout(function() {
-        $("#kakao_chat_icon").fadeIn('slow', function(){
-          $("#kakao_chat_ask").show();
-        });
-      }, 1000));
-    });    
+    }    
   });
 </script>
 
