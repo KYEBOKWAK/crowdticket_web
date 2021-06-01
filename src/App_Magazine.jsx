@@ -30,7 +30,9 @@ class App_Magazine extends Component {
     super(props);
 
     this.state = {
-      items: []
+      items: [],
+      hiddenItems: [],
+      isShowHiddenList: false
     }
     
   }
@@ -44,7 +46,16 @@ class App_Magazine extends Component {
 
    let writeMagazineDom = document.querySelector("#go_write_magazine");
    if(writeMagazineDom){
-    writeMagazineDom.addEventListener("click", this.onClickGoWriteMagazine);
+     writeMagazineDom.addEventListener("click", this.onClickGoWriteMagazine);
+   }
+
+   let adminMagazineDom = document.querySelector("#magazine_page_hidden_list");
+   if(adminMagazineDom){
+     this.setState({
+      isShowHiddenList: true
+     }, () => {
+       this.requestHiddenMagazineList();
+     })
    }
   }
 
@@ -65,6 +76,13 @@ class App_Magazine extends Component {
       this.makeItemList(result.list);
     }, (error) => {
 
+    })
+  }
+
+  requestHiddenMagazineList = () => {
+    axios.post("/magazine/any/list/hidden", {}, 
+    (result) => {
+      this.makeHiddenItemList(result.list);
     })
   }
 
@@ -158,21 +176,117 @@ class App_Magazine extends Component {
       _items.push(itemColumnsDom);
     }
 
-    // let isShowMoreButton = false;
-    // if(hasMore){
-    //   isShowMoreButton = true;
+    this.setState({
+      items: _items.concat()
+    })
+  }
+
+  makeHiddenItemList = (_list) => {
+    // let _event_title = title;
+
+    let _rand_list = _list.concat();
+    
+    let lineCount = _rand_list.length / HOME_THUMB_CONTAINER_SHOW_LINE_COUNT;
+
+    let index = 0;
+
+    let _items = this.state.hiddenItems.concat();
+    let hasMore = false;
+    
+    // if(_list.length < REQUEST_ONCE_ITME) {
+    //   hasMore = false;
     // }
+    
+
+    let marginTopZeroStyle = {
+      marginTop: 0
+    }
+    for(let i = 0 ; i < lineCount ; i++){
+      let columnItems = [];
+      let isOverCount = false;
+      for(let j = 0 ; j < 2 ; j++){
+        //1줄에 4개 모바일일 경우 2개씩 쪼개야 하기 때문에 쪼개서 flex 한다.(모바일일때 2개 flex 유지, pc 일때 4개 flex 유지)
+        let rowItems = [];
+
+        for(let k = 0 ; k < 2 ; k++){
+          let target_id = null;
+          let subtitle = '';
+          let thumb_img_url = '';
+          let title = '';
+
+          if(index >= _rand_list.length){
+            if(k === 0){
+              //두개중 한개만 비어있는 경우가 있음
+              isOverCount = true;
+            }
+          }else{
+            const data = _rand_list[index];
+            target_id = data.id;
+            subtitle = data.subtitle;
+            thumb_img_url = data.thumb_img_url;
+            title = data.title;
+          }
+
+          // const itemDom = <Home_Thumb_Container_Item key={k} store_item_id={target_id}></Home_Thumb_Container_Item>;
+
+          let itemDom = <Magazine_List_Item key={k} magazine_id={target_id} subtitle={subtitle} thumb_img_url={thumb_img_url} title={title}></Magazine_List_Item>;          
+          
+          rowItems.push(itemDom);
+
+          if(k === 0){
+            rowItems.push(<div key={k+'_gap'} className={'row_items_gap'}></div>)
+          }
+
+          index++;
+        }
+
+        let itemContainerStyle = {}
+        if(isOverCount){
+          itemContainerStyle = {
+            ...marginTopZeroStyle
+          }
+        }
+
+        const itemContainerDom = <div style={itemContainerStyle} key={j} className={'row_items_container'}>
+                                  {rowItems}
+                                </div>
+
+        columnItems.push(itemContainerDom);
+
+        if(j === 0){
+          columnItems.push(<div key={j+'_gap'} className={'column_items_gap'}></div>);
+        }
+      }
+
+      let columnStyle = {}
+      if(i === 0){
+        columnStyle = {
+          marginTop: 0
+        }
+      }
+      const itemColumnsDom = <div key={this.state.items.length+'_'+i} className={'column_items_container'} style={columnStyle}>
+                              {columnItems}
+                            </div>
+
+      _items.push(itemColumnsDom);
+    }
 
     this.setState({
-      items: _items.concat(),
-      // items_count: this.state.items_count + index,
-      // hasMore: hasMore,
-      // isShowMoreButton: isShowMoreButton,
-      // isRefreshing: false
+      hiddenItems: _items.concat()
     })
   }
 
   render() {
+
+    let hiddenMagazineList = <></>;
+    if(this.state.isShowHiddenList){
+      hiddenMagazineList = <div className={'list_container'} style={{marginTop: 40}}>
+                            <div style={{fontSize: 20}}>
+                              비공개 매거진(운영진만 보임)
+                            </div>
+                            {this.state.hiddenItems}
+                          </div>
+    }
 
     return (
       <div className={'App_Magazine'}>
@@ -188,6 +302,8 @@ class App_Magazine extends Component {
           <div className={'list_container'}>
             {this.state.items}
           </div>
+
+          {hiddenMagazineList}
         </div>
       </div>
     );

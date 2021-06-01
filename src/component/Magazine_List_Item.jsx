@@ -272,7 +272,6 @@ class Magazine_List_Item extends Component{
     e.preventDefault()
 
     if(this.props.magazine_id === null){
-      alert('매거진 ID 오류! 새로고침 후 이용 바랍니다');
       return;
     }
     

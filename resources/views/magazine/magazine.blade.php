@@ -30,12 +30,16 @@
 
 @if (\Auth::check() && \Auth::user()->isAdmin())
     <button id="go_write_magazine" style="margin-top: 30px;" class="btn btn-success center-block project_form_button">글쓰기</button>
-  @endif
+@endif
 
 <div id="react_app_magazine_page"></div>
+
+@if (\Auth::check() && \Auth::user()->isAdmin())
+  <div id="magazine_page_hidden_list" style="margin-top: 50px;" ></div>
+@endif
 
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Magazine.js?version=0') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Magazine.js?version=1') }}"></script>
 @endsection
