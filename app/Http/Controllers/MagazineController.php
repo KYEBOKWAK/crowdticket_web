@@ -11,9 +11,11 @@ class MagazineController extends Controller
 {
   public function getMagazineAll()
   {
-    return view('magazine.magazine', [
-        'magazines' => Magazine::where('is_open', true)->orderBy('id', 'desc')->get()
-    ]);
+    // return view('magazine.magazine', [
+    //     'magazines' => Magazine::where('is_open', true)->orderBy('id', 'desc')->get()
+    // ]);
+
+    return view('magazine.magazine');
   }
 
   public function getMagazine($magazineId)
@@ -63,7 +65,7 @@ class MagazineController extends Controller
   {
 
     $magazine = Magazine::findOrFail($magazineId);
-
+    
     $magazine->update(\Input::all());
 
     if ($request->file('magazine_title_img_file')) {

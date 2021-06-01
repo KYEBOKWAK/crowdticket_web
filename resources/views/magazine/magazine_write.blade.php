@@ -189,7 +189,8 @@
     .magazine_thumb_img_preview_ratio_wrapper{
       position: relative;
       width: 100%;
-      padding-bottom: 56.25%;
+      /* padding-bottom: 56.25%; */
+      padding-bottom: 100%;
     }
     /*썸네일 이미지 업로드 END*/
 
@@ -199,6 +200,10 @@
 
     #subtitle{
       height: 190px;
+    }
+
+    #select_magazine_is_open {
+      font-size: 20px;
     }
 
     @media(max-width:630px)
@@ -225,6 +230,7 @@
         <input type="hidden" id="magazineId" name="magazineId" value="{{$magazine->id}}"/>
         <input id="magazine_title_img_url" type="hidden" value="{{$magazine->title_img_url}}"/>
         <input id="magazine_thumb_img_url" type="hidden" value="{{$magazine->thumb_img_url}}"/>
+        <input id="magazine_is_open" type="hidden" value="{{$magazine->is_open}}" />
       @else
         <input type="hidden" id="magazineId" name="magazineId" value=""/>
       @endif
@@ -269,7 +275,8 @@
       </div>
 
       <div class="project_form_input_container">
-          <p class="magazine_content_title">썸네일 이미지(16:9)</p>
+          <p class="magazine_content_title">썸네일 이미지(1:1)<span style="font-size:10px; margin-left: 5px;">*자동으로 잘리지 않음. 정방향 이미지를 준비해주세요.</span></p>
+          
           <div class="project-form-content">
               <a href="javascript:void(0);" id="magazine_thumb_file_fake"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/plus-2-math.png"></a>
               <a href="javascript:void(0);" id="magazine_thumb_file_sub" style="display: none;"><img style="margin-left: -5px;" src="https://img.icons8.com/windows/40/EF4D5D/minus-2-math.png"></a>
@@ -284,6 +291,11 @@
                 <input id="magazine_thumb_image_name" type="hidden" name="magazine_thumb_image_name"/>
           </div>
       </div>
+
+      <select id="select_magazine_is_open" name="is_open" class="select_magazine_is_open">
+        <option value="0" selected>비공개</option>
+        <option value="1">공개</option>           
+      </select>
     </form>
   </div>
 
@@ -303,6 +315,7 @@
             </textarea>
             @include('editor_summernote')
         </div>
+
         <div class="project_form_button_wrapper">
           <div class="flex_layer">
             <button id="update_story" type="button" class="btn btn-success center-block project_form_button">
@@ -571,6 +584,14 @@ $(document).ready(function () {
     if($('#magazine_thumb_img_url'))
     {
        setMagazineThumbImgPreview($('#magazine_thumb_img_url').val(), '');
+    }
+
+    if($('#select_magazine_is_open'))
+    {
+      // console.log($("#magazine_is_open").val());
+      if($("#magazine_is_open").val()){
+        $("#select_magazine_is_open").val($("#magazine_is_open").val());
+      }
     }
 
   };

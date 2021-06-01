@@ -2,7 +2,7 @@
 
 class Magazine extends Model
 {
-    protected $fillable = ['title', 'subtitle', 'title_img_url', 'thumb_img_url', 'story', 'updated_at'];
+    protected $fillable = ['title', 'subtitle', 'title_img_url', 'thumb_img_url', 'story', 'updated_at', 'is_open'];
 
     protected static $typeRules = [
         'title_img_url' => 'url',
