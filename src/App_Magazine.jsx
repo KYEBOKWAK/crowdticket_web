@@ -229,7 +229,7 @@ class App_Magazine extends Component {
 
           // const itemDom = <Home_Thumb_Container_Item key={k} store_item_id={target_id}></Home_Thumb_Container_Item>;
 
-          let itemDom = <Magazine_List_Item key={k} magazine_id={target_id} subtitle={subtitle} thumb_img_url={thumb_img_url} title={title}></Magazine_List_Item>;          
+          let itemDom = <Magazine_List_Item key={k} magazine_id={target_id} subtitle={subtitle} thumb_img_url={thumb_img_url} title={title} isHidden={true}></Magazine_List_Item>;          
           
           rowItems.push(itemDom);
 
@@ -280,8 +280,8 @@ class App_Magazine extends Component {
 
     let hiddenMagazineList = <></>;
     if(this.state.isShowHiddenList){
-      hiddenMagazineList = <div className={'list_container'} style={{marginTop: 40}}>
-                            <div style={{fontSize: 20}}>
+      hiddenMagazineList = <div className={'list_container'} style={{marginTop: 40, marginBottom: 40}}>
+                            <div style={{fontSize: 20, fontWeight: 'bold'}}>
                               비공개 매거진(운영진만 보임)
                             </div>
                             {this.state.hiddenItems}

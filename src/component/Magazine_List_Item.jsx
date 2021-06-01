@@ -329,6 +329,11 @@ class Magazine_List_Item extends Component{
       textClassName = 'project_title_text text-ellipsize-2';
     }
 
+    let title = this.props.title;
+    if(this.props.isHidden){
+      title = '(비공개)'+title;
+    }
+
     return(
       <div className={'Magazine_List_Item'} style={{width: this.state.item_width}}>
         <button onClick={(e) => {this.onClickGoItem(e)}} className={'item_container'}>
@@ -342,7 +347,7 @@ class Magazine_List_Item extends Component{
               {this.props.subtitle}
             </div>
             <div className={textClassName}>
-              {this.props.title}
+              {title}
             </div>
           </div>
         </button>
@@ -357,7 +362,8 @@ Magazine_List_Item.defaultProps = {
   magazine_id: null,
   subtitle: '',
   thumb_img_url: '',
-  title: ''
+  title: '',
+  isHidden: false
 }
 
 
