@@ -429,14 +429,14 @@ class FileUploader extends Component{
   }
 
   render(){
-    
     if(this.props.product_state === Types.product_state.ONE_TO_ONE){
       return (
         <></>
       )
     }
 
-    if(this.props.state === Types.file_upload_state.NONE){
+    
+    if(this.props.isUploader && this.props.state === Types.file_upload_state.NONE){
       return (<></>)
     }
 
