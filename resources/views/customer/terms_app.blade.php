@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="agreement_container_app">
-        @include ('helper.terms_content_v2')
+        @include ('helper.terms_content_v3')
     </div>
 </body>
 </html>

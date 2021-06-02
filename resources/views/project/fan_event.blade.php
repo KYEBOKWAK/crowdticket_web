@@ -187,6 +187,6 @@
 
 @section('js')
 <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=9') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=10') }}"></script>
 
 @endsection

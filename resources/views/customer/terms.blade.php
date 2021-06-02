@@ -6,6 +6,6 @@
 
 @section('content')
     <div class='terms_container'>
-        @include ('helper.terms_content_v2')
+        @include ('helper.terms_content_v3')
     </div>
 @endsection
