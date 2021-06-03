@@ -149,6 +149,19 @@ class StoreHome extends Component {
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>
 
+        <button onClick={(e) => {
+          e.preventDefault();
+          axios.post("/any/call/certify/number", {
+            contact: '1234'
+          }, (result) => {
+            console.log(result);
+          }, (error) => {
+
+          })
+        }}>
+          레디스 테슷트
+        </button>
+        
         <div className={'store_home_container'}>
           <div className={'thumb_container'}>
             <Home_Thumb_list thumb_list_type={Types.thumb_list_type.popular}></Home_Thumb_list>
