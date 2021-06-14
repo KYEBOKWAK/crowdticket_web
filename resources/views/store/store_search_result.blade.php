@@ -19,28 +19,28 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_list.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Popular_item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_list.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Popular_item.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/alice-carousel.css?version=0') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Product_Label.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Recommend_Creator_List.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Product_Label.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Recommend_Creator_List.css?version=1') }}" rel="stylesheet"/>
 
-  <!-- <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=0') }}" rel="stylesheet"/> -->
-  <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=1') }}" rel="stylesheet"/>
+  <!-- <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=1') }}" rel="stylesheet"/> -->
+  <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=1') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Stores_Item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Stores_Item.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/SearchResultPage.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/SearchResultPage.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Find_Result_Stores_item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Find_Result_Stores_item.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Thumb_Recommend_item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Thumb_Recommend_item.css?version=1') }}" rel="stylesheet"/>
   
 
 @endsection

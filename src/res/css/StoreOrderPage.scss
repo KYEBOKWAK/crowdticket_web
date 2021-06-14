@@ -61,7 +61,10 @@
 
   .input_box {
     width: 100%;
-    padding: 16px;
+    height: 52px;
+    // padding: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-radius: 5px;
     border: solid 1px #e6e6e6;
     background-color: #ffffff;

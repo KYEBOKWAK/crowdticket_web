@@ -19,10 +19,16 @@ import img_logo_facebook from './res/img/img-logo-facebook.png';
 
 import ic_text_btn_more from './res/img/ic-text-btn-more.svg';
 
+import PhoneConfirm from './component/PhoneConfirm';
+
+import Switch from './component/Switch';
+
 class App_modify extends Component {
   
   profileRef = null;
   input_name_ref = null;
+
+  PhoneConfirm_ref = null;
 
   constructor(props) {
     super(props);
@@ -54,6 +60,11 @@ class App_modify extends Component {
       kakao_id: null,
       google_id: null,
       facebook_id: null,
+      is_certification: false,
+
+      ori_advertising: false,
+
+      advertising: false
     }
     
   }
@@ -81,7 +92,12 @@ class App_modify extends Component {
 
         kakao_id: data.kakao_id,
         google_id: data.google_id,
-        facebook_id: data.facebook_id
+        facebook_id: data.facebook_id,
+
+        is_certification: data.is_certification,
+
+        ori_advertising: data.advertising,
+        advertising: data.advertising
       })
     }, (error) => {
 
@@ -216,6 +232,7 @@ class App_modify extends Component {
   componentWillUnmount(){
     this.profileRef = null;
     this.input_name_ref = null;
+    this.PhoneConfirm_ref = null;
   }
 
   requestSave = () => {
@@ -244,6 +261,12 @@ class App_modify extends Component {
       return;
     }
 
+    if(this.PhoneConfirm_ref !== null && !this.PhoneConfirm_ref.getIsCertification()){
+      this.PhoneConfirm_ref.setErrorMessageType(Types.input_error_messages.is_confirm_phone);
+      alert('휴대폰 인증을 해주세요.');
+      return;
+    }
+
     showLoadingNoContentPopup();
 
     this.profileRef.uploadProfileImage(this.state.user_id, Types.file_upload_target_type.user, 
@@ -251,9 +274,11 @@ class App_modify extends Component {
       axios.post('/user/info/update/web', {
         name: this.state.name,
         nick_name: this.state.nick_name,
-        contact: this.state.contact,
         gender: this.state.gender,
-        age: this.state.age
+        age: this.state.age,
+
+        ori_advertising: this.state.ori_advertising,
+        advertising: this.state.advertising
       }, (result) => {
         swal('수정완료!', '', 'success');
       }, (error) => {
@@ -413,6 +438,15 @@ class App_modify extends Component {
     window.location.href = '/users/withdrawal';
   }
 
+  reConfirmContact = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      contact: '',
+      is_certification: false
+    })
+  }
+
   render() {
     if(this.state.user_id === null){
       return (<></>)
@@ -457,6 +491,52 @@ class App_modify extends Component {
       facebookImgStyle = {
         opacity: 0.3
       }
+    }
+
+    let phoneInputDom = <></>;
+    let phoneContainerStyle = {}
+    let phoneConfirmDom = <></>;
+    if(this.state.is_certification){
+      phoneInputDom = <div className={'input_box contact_box'}>
+                        <InputBox
+                        styleProps={{
+                          width: '100%', 
+                          height: 44,
+                          borderTopRightRadius: 0, 
+                          borderBottomRightRadius: 0
+                        }}
+                        default_text={this.state.contact}
+                        type={'tel'}
+                        name={'contact'}
+                        placeholder={'연락처를 입력해주세요.'}
+                        callback_set_text={(text) => {
+                          this.setState({
+                            contact: text
+                          })
+                        }}
+                        is_disabled={true}
+                        ></InputBox>
+                        <button onClick={(e) => {this.reConfirmContact(e)}} className={'re_certification_button'}>
+                          재인증하기
+                        </button>
+                      </div>
+    }else{
+      phoneContainerStyle = {
+        height: 'auto',
+        alignItems: 'flex-start'
+      }
+      phoneInputDom = <div style={{width: '100%'}}>
+                        <PhoneConfirm
+                          ref={(ref) => {
+                            this.PhoneConfirm_ref = ref;
+                          }}
+                          // language_code={this.state.language_code}
+                          default_contact={this.state.contact}
+                          user_id={this.state.user_id}
+                          is_advertising={false}
+                          is_modify_page={true}
+                        ></PhoneConfirm>
+                      </div>
     }
 
     return (
@@ -571,30 +651,18 @@ class App_modify extends Component {
                 </div>                
               </div>
 
-              <div className={'contents_wrapper'}>
+              <div className={'contents_wrapper'} style={phoneContainerStyle}>
                 <div className={'contents_label'}>
-                  연락처
+                  휴대폰 번호
                 </div>
-                <div className={'input_box'}>
-                  <InputBox
-                  default_text={this.state.contact}
-                  type={'tel'}
-                  name={'contact'}
-                  placeholder={'연락처를 입력해주세요.'}
-                  callback_set_text={(text) => {
-                    this.setState({
-                      contact: text
-                    })
-                  }}
-                  ></InputBox>
-                </div>
+                {phoneInputDom}
               </div>
 
               <div className={'contents_wrapper'}>
                 <div className={'contents_label'}>
                   성별
                 </div>
-                <div className={'input_box'}>
+                <div className={'input_box select_box_container'}>
                   <SelectBox 
                     default_value={this.state.gender}
                     null_show_value={'성별을 선택해주세요'}
@@ -621,7 +689,7 @@ class App_modify extends Component {
                 <div className={'contents_label'}>
                   출생 연도
                 </div>
-                <div className={'input_box'}>
+                <div className={'input_box select_box_container'}>
                   <SelectBox 
                     default_value={this.state.age}
                     null_show_value={'연도 선택'}
@@ -635,6 +703,35 @@ class App_modify extends Component {
                   ></SelectBox>
                 </div>
               </div>
+
+              <div className={'contents_wrapper'}>
+                <div className={'contents_label'}>
+                  수신 동의
+                </div>
+                <div style={{width: '100%'}}>
+                  <div className={'input_box'}>
+                    <Switch 
+                      is_switch={this.state.ori_advertising}
+                      callbackSwitch={(is_switch) => {
+                        this.setState({
+                          advertising: is_switch
+                        })
+                      }}
+                    ></Switch>
+                  </div>
+                </div>
+              </div>
+
+              <div className={'contents_wrapper'} style={{marginTop: 0, height: 'auto'}}>
+                <div className={'contents_label'}>
+                  
+                </div>
+                <div style={{fontSize: 12, color: '#999999'}}>
+                  알림 수신 동의시, 다양한 기획전/이벤트 및 할인 소식을 받아보실 수 있습니다.
+                </div>
+              </div>
+
+              
 
               <div className={'buttons_container'}>
                 <button className={'update_button'} onClick={(e) => {this.onClickUpdate(e)}}>

@@ -19,12 +19,16 @@ import LoginForgetEmailPage from '../pages/LoginForgetEmailPage';
 import LoginKnowSNSPage from '../pages/LoginKnowSNSPage';
 import LoginSNSSetEmailPage from '../pages/LoginSNSSetEmailPage';
 
+import InActivePage from '../pages/InActivePage';
+
 import RoutesTypes from '../Routes_types';
 
 class LoginPage extends Component{
 
   goSNSLinkRef = null;
   goNoEmailSNSRef = null;
+
+  goInActivePageRef = null;
 
   constructor(props){
     super(props);
@@ -39,8 +43,10 @@ class LoginPage extends Component{
       sns_name: '',
       sns_email: null,
       sns_profile_photo_url: '',
-      sns_type: null
+      sns_type: null,
       //sns로그인시 이메일이 없을경우 이메일 입력란 브릿지 end
+      user_id: null,
+      password: null,
     }
   };
 
@@ -65,8 +71,9 @@ class LoginPage extends Component{
       sns_name: '',
       sns_email: null,
       sns_profile_photo_url: '',
-      sns_type: null
+      sns_type: null,
       //sns로그인시 이메일이 없을경우 이메일 입력란 브릿지 end
+      is_email_login: false
     })
   }
 
@@ -74,6 +81,7 @@ class LoginPage extends Component{
     // window.removeEventListener('popstate', this.onBackButtonEvent);
     goSNSLinkRef = null;
     goNoEmailSNSRef = null;
+    goInActivePageRef = null;//이거 추가하고 밥 먹으러 감
   };
 
   componentDidUpdate() {
@@ -91,6 +99,8 @@ class LoginPage extends Component{
             <Link ref={(ref) => {this.goSNSLinkRef = ref;}} style={{display: 'none'}} to={RoutesTypes.login.know_sns}></Link>
 
             <Link ref={(ref) => {this.goNoEmailSNSRef = ref;}} style={{display: 'none'}} to={RoutesTypes.login.no_email_sns}></Link>
+
+            <Link ref={(ref) => {this.goInActivePageRef = ref;}} style={{display: 'none'}} to={RoutesTypes.login.inactive_user}></Link>
             <Switch>
               <Route path={RoutesTypes.login.no_email_sns}>
                 <LoginSNSSetEmailPage 
@@ -100,6 +110,20 @@ class LoginPage extends Component{
                   sns_profile_photo_url={this.state.sns_profile_photo_url}
                   sns_type={this.state.sns_type}
                 ></LoginSNSSetEmailPage>
+              </Route>
+
+              <Route path={RoutesTypes.login.inactive_user}>
+                <InActivePage
+                  sns_id={this.state.sns_id}
+                  user_id={this.state.user_id}
+                  sns_name={this.state.sns_name}
+                  sns_email={this.state.sns_email}
+                  sns_profile_photo_url={this.state.sns_profile_photo_url}
+                  sns_type={this.state.sns_type}
+                  is_email_login={this.state.is_email_login}
+                  password={this.state.password}
+                >
+                </InActivePage>
               </Route>
 
               <Route path={RoutesTypes.login.know_sns}>
@@ -122,7 +146,8 @@ class LoginPage extends Component{
                 ></LoginJoinPage>
               </Route>
               <Route path={RoutesTypes.login.email}>
-                <LoginEmailPage callbackSnsArray={(sns_array, email) => {
+                <LoginEmailPage 
+                callbackSnsArray={(sns_array, email) => {
                   this.setState({
                     sns_array: sns_array.concat(),
                     sns_is_password: true,
@@ -130,10 +155,26 @@ class LoginPage extends Component{
                   }, () => {
                     this.goSNSLinkRef.click();
                   })
-                }}></LoginEmailPage>
+                }}
+                callbackInActiveUser={(data) => {
+                  this.setState({
+                    sns_id: data.sns_id,
+                    user_id: data.user_id,
+                    sns_name: data.name,
+                    sns_email: data.email,
+                    sns_profile_photo_url: data.profile_photo_url,
+                    sns_type: data.sns_type,
+                    password: data.password,
+                    is_email_login: data.is_email_login
+                  }, () => {
+                    this.goInActivePageRef.click();
+                  })
+                }}
+                ></LoginEmailPage>
               </Route>
               <Route path={RoutesTypes.login.home}>
-                <LoginStartPage callbackNoEmail={(data) => {
+                <LoginStartPage 
+                callbackNoEmail={(data) => {
                   this.setState({
                     sns_id: data.id,
                     sns_name: data.name,
@@ -143,7 +184,20 @@ class LoginPage extends Component{
                   }, () => {
                     this.goNoEmailSNSRef.click();
                   })
-                }}></LoginStartPage>
+                }}
+                callbackInActiveUser={(data) => {
+                  this.setState({
+                    sns_id: data.id,
+                    user_id: data.user_id,
+                    sns_name: data.name,
+                    sns_email: data.email,
+                    sns_profile_photo_url: data.profile_photo_url,
+                    sns_type: data.type
+                  }, () => {
+                    this.goInActivePageRef.click();
+                  })
+                }}
+                ></LoginStartPage>
               </Route>
               
             </Switch>

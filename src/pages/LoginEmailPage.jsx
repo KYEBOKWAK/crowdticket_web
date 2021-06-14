@@ -105,7 +105,22 @@ class LoginEmailPage extends Component{
       password: this.state.password
     }, (result_user) => {
       if(result_user.state_login === 'success'){
-        this.requsetLogin();
+        if(result_user.data.inactive){
+          stopLoadingPopup();
+          this.props.callbackInActiveUser({
+            sns_id: 0,
+            user_id: result_user.data.id,
+            name: result_user.data.name,
+            email: result_user.data.email,
+            profile_photo_url: result_user.data.profile_photo_url,
+            sns_type: null,
+            password: this.state.password,
+            is_email_login: true
+          })
+        }else{
+          this.requsetLogin();
+        }
+        // this.requsetLogin();
       }else{
         stopLoadingPopup();
 

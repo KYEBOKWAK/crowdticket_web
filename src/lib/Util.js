@@ -425,7 +425,29 @@ const Util = {
     }
   
     return '';
-  }  
+  },
+  getWaitTimer: (sec) => {
+    let gapMiliSecTime = Number(sec);
+
+    if(gapMiliSecTime <= 0){
+      gapMiliSecTime = 0;
+    }
+
+    let D = Math.floor(gapMiliSecTime / 86400);
+    let H = Math.floor((gapMiliSecTime - D * 86400) / 3600 % 3600);
+    let M = Math.floor((gapMiliSecTime - H * 3600) / 60 % 60);
+    let S = Math.floor((gapMiliSecTime - M * 60) % 60);
+
+    // console.log(M+"분"+S+"초");
+    let sString = '';
+    if(S < 10){
+      // S = '0'+S;
+      sString = '0'+S.toString();
+    }else{
+      sString = S.toString();
+    }
+    return M+":"+sString;
+  },
 }
 
 export default Util;

@@ -31,6 +31,9 @@ import StrLib from '../lib/StrLib';
 import Storage from '../lib/Storage';
 import * as storageType from '../StorageKeys';
 
+import PhoneConfirm from '../component/PhoneConfirm';
+import InputBox from '../component/InputBox';
+
 
 const INPUT_STORE_ORDER_NAME = "INPUT_STORE_ORDER_NAME";
 const INPUT_STORE_ORDER_CONTACT = "INPUT_STORE_ORDER_CONTACT";
@@ -57,6 +60,8 @@ class StoreOrderPage extends Component{
   // storePlayTimePlanRef = React.createRef();
 
   IMP = null;
+
+  PhoneConfirm_ref = null;
 
   constructor(props){
     super(props);
@@ -157,7 +162,9 @@ class StoreOrderPage extends Component{
         }
       ],
 
-      language_code: 'kr'
+      language_code: 'kr',
+
+      is_certification: false
     }
 
     this.handleSelectChangeYear = this.handleSelectChangeYear.bind(this);
@@ -199,7 +206,8 @@ class StoreOrderPage extends Component{
               name: name,
               email: result.userInfo.email,
               contact: result.userInfo.contact,
-              user_id: result.userInfo.user_id
+              user_id: result.userInfo.user_id,
+              is_certification: result.userInfo.is_certification
             }, () => {
               this.requestItemInfo()
             })
@@ -278,6 +286,8 @@ class StoreOrderPage extends Component{
 
   componentWillUnmount(){
     this.IMP = null;
+    this.PhoneConfirm_ref = null;
+    this.fileUploaderRef = null;
   };
 
   componentDidUpdate(){
@@ -356,6 +366,12 @@ class StoreOrderPage extends Component{
     //   }
     // }
 
+    if(this.PhoneConfirm_ref !== null && !this.PhoneConfirm_ref.getIsCertification()){
+      this.PhoneConfirm_ref.setErrorMessageType(Types.input_error_messages.is_confirm_phone);
+      alert('휴대폰 인증을 해주세요');
+      return false;
+    }
+
     if(this.state.item_type_contents === Types.contents.customized){
       if(this.state.requestContent === ''){
         alert('요청사항을 필수로 적어주세요');
@@ -418,7 +434,7 @@ class StoreOrderPage extends Component{
     let isAllAgree = this.isAllAgree();
     if(!isAllAgree){
       // alert("이용 정책에 동의 해주세요");
-      alert(StrLib.getStr('s72'));
+      alert(StrLib.getStr('s72', this.state.language_code));
       return false;
     }
     
@@ -1180,6 +1196,42 @@ class StoreOrderPage extends Component{
       refundText = <Str strKey={'s71'} />
     }
 
+    let phoneInputDom = <></>;
+    if(this.state.is_certification){
+      phoneInputDom = <InputBox
+                        default_text={this.state.contact}
+                        type={'tel'}
+                        name={'tel'}
+                        placeholder={StrLib.getStr('s60', this.state.language_code)} 
+                        callback_set_text={(text) => {
+                          this.setState({
+                            contact: text
+                          })
+                        }}
+                        is_disabled={true}
+                      ></InputBox>
+      // <input className={'input_box'} type="tel" name={'tel'} placeholder={StrLib.getStr('s60', this.state.language_code)} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}} disabled={true}/>
+    }else{
+      phoneInputDom = <div style={{width: '100%'}}>
+                        <PhoneConfirm
+                          ref={(ref) => {
+                            this.PhoneConfirm_ref = ref;
+                          }}
+                          language_code={this.state.language_code}
+                          default_contact={this.state.contact}
+                          user_id={this.state.user_id}
+                          is_advertising={false}
+                          callback_confirm_complete={(contact) => {
+                            this.setState({
+                              contact: contact
+                            })
+                          }}
+                          is_only_pay_explain={true}
+                          // is_modify_page={true}
+                        ></PhoneConfirm>
+                      </div>
+    }
+
     return(
       <div className={'StoreOrderPage'}>
         <div className={'title_label'}>
@@ -1221,13 +1273,40 @@ class StoreOrderPage extends Component{
           </div>
 
           <div className={'input_label'}><Str strKey={'s146'} /></div>
-          <input className={'input_box'} type="name" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/>
 
-          <div className={'input_label'}><Str strKey={'s57'} /></div>
-          <input className={'input_box'} type="tel" name={'tel'} placeholder={StrLib.getStr('s60', this.state.language_code)} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/>
+          <InputBox
+            default_text={this.state.name}
+            type={'text'}
+            name={'nick_name'}
+            placeholder={StrLib.getStr('s59', this.state.language_code)}
+            callback_set_text={(text) => {
+              this.setState({
+                name: text
+              })
+            }}
+          ></InputBox>
+          {/* <input className={'input_box'} type="name" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_NAME)}}/> */}
+
+          <div className={'input_label'}><Str strKey={'s147'} /></div>
+          
+          {phoneInputDom}
+          {/* <input className={'input_box'} type="tel" name={'tel'} placeholder={StrLib.getStr('s60', this.state.language_code)} value={this.state.contact} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_CONTACT)}}/> */}
 
           <div className={'input_label'}><Str strKey={'s58'} /></div>
-          <input className={'input_box'} type="email" name={'email'} placeholder={StrLib.getStr('s61', this.state.language_code)} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/>
+
+          <InputBox
+            default_text={this.state.email}
+            type={'email'}
+            name={'email'}
+            placeholder={StrLib.getStr('s61', this.state.language_code)}
+            callback_set_text={(text) => {
+              this.setState({
+                email: text
+              })
+            }}
+          ></InputBox>
+
+          {/* <input className={'input_box'} type="email" name={'email'} placeholder={StrLib.getStr('s61', this.state.language_code)} value={this.state.email} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_ORDER_EMAIL)}}/> */}
           
         </div>
 

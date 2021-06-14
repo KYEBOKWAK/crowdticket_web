@@ -11,11 +11,11 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/PageLoginController.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/InputBox.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/LoginForgetEmailPage.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Popup_resetSendMail.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/PasswordResetPage.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/PageLoginController.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/InputBox.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/LoginForgetEmailPage.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Popup_resetSendMail.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/PasswordResetPage.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 

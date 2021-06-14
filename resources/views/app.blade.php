@@ -51,13 +51,14 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/login/login.css?version=5') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Global.css?version=7') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Global.css?version=8') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/Profile.css?version=1') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/Footer_React.css?version=2') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/SearchPage.css?version=2') }}" rel="stylesheet"/>
-    <link href="{{ asset('/dist/css/SelectBoxLanguage.css?version=0') }}" rel="stylesheet"/>
-    
+    <link href="{{ asset('/dist/css/Profile.css?version=2') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/Footer_React.css?version=3') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SearchPage.css?version=3') }}" rel="stylesheet"/>
+    <link href="{{ asset('/dist/css/SelectBoxLanguage.css?version=1') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('/dist/css/InActivePage.css?version=0') }}" rel="stylesheet"/>    
     
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
@@ -470,6 +471,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="react_root"></div>
 <div id="react_app_login"></div>
 <div id="react_App_PC_776"></div>
+<div id="react_inactive"></div>
 
 <footer>
   <div id="react_footer">
@@ -554,9 +556,9 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=189') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=26') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=8') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=190') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=27') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=9') }}"></script>
 
 </body>
 </html>

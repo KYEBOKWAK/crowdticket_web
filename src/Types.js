@@ -81,7 +81,9 @@ const Types = {
   input_error_messages: {
     empty: 'empty',
     password_max_length: 'password_max_length',
-    password_same_check: 'password_same_check'
+    password_same_check: 'password_same_check',
+    confirm_expire: 'confirm_expire',
+    is_confirm_phone: 'is_confirm_phone'
   },
   files_servers_state: {
     INIT: 0,

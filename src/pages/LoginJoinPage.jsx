@@ -16,7 +16,13 @@ import StrLib from '../lib/StrLib';
 import Storage from '../lib/Storage';
 import * as storageType from '../StorageKeys';
 
+import PhoneConfirm from '../component/PhoneConfirm';
+
+import Types from '../Types';
+
 class LoginJoinPage extends Component{
+
+  PhoneConfirm_ref = null;
 
   constructor(props){
     super(props);
@@ -61,7 +67,7 @@ class LoginJoinPage extends Component{
   }
 
   componentWillUnmount(){
-    
+    this.PhoneConfirm_ref = null;
   };
 
   componentDidUpdate(){
@@ -130,6 +136,11 @@ class LoginJoinPage extends Component{
   onClickJoinButton = (e) => {
     e.preventDefault();
 
+    if(!this.PhoneConfirm_ref.getIsCertification()){
+      this.PhoneConfirm_ref.setErrorMessageType(Types.input_error_messages.is_confirm_phone);
+      return;
+    }
+
     if(this.state.name === ''){
       this.setState({
         name_explain_text: StrLib.getStr('s59', this.state.language_code)
@@ -171,6 +182,11 @@ class LoginJoinPage extends Component{
       return;
     }
 
+    const contact = this.PhoneConfirm_ref.getPhoneNumber();
+    const country_code = this.PhoneConfirm_ref.getCountryCode();
+    const advertising = this.PhoneConfirm_ref.getAdvertisingAgree();
+    
+
     showLoadingNoContentPopup();
 
     axios.post('/user/any/email/join/check/web', {
@@ -187,6 +203,10 @@ class LoginJoinPage extends Component{
           password_confirmation: this.state.password_confirmation,
           age: null,
           gender: null,
+          contact: contact,
+          country_code: country_code,
+          is_certification: true,
+          advertising: advertising,
           ispopup: 'TRUE',
         }).then((result) => {
           const data = result.data;
@@ -311,7 +331,7 @@ class LoginJoinPage extends Component{
     let terms_dom = <></>;
     if(this.state.language_code === 'kr'){
       terms_dom = <div className={'term_container'}>
-                    <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span> 내용을 확인하였으며, 이에 동의합니다.
+                    <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span>에 동의하며, 만 14세 이상입니다.
                   </div>
     }else{
       terms_dom = <div className={'term_container'}>
@@ -327,12 +347,6 @@ class LoginJoinPage extends Component{
           <Str strKey={'s114'} />
         </div>
         <div className={'content_container'}>
-          <div className={'input_label'}>
-            <Str strKey={'s56'} />
-          </div>
-          <input className={name_input_warning_classname} type="text" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeName(e)}} onBlur={(e) => {this.onChangeName(e)}} />
-          {name_explain_dom}
-
           <div className={'input_label'} style={{marginTop: 16}}>
             <Str strKey={'s58'} />
           </div>
@@ -367,6 +381,26 @@ class LoginJoinPage extends Component{
           </div>
 
           {password_confirm_explain_dom}
+
+          <div className={'input_label'} style={{marginTop: 16}}>
+            <Str strKey={'s56'} />
+          </div>
+          <input className={name_input_warning_classname} type="text" name={'name'} placeholder={StrLib.getStr('s59', this.state.language_code)} value={this.state.name} onChange={(e) => {this.onChangeName(e)}} onBlur={(e) => {this.onChangeName(e)}} />
+          {name_explain_dom}
+
+          <div className={'input_label'} style={{marginTop: 16}}>
+            {/* <Str strKey={'s56'} /> */}
+            <Str strKey={'s147'} />
+          </div>
+          <div className={'PhoneConfirm_container'}>
+            <PhoneConfirm
+              ref={(ref) => {
+                this.PhoneConfirm_ref = ref;
+              }}
+              language_code={this.state.language_code}
+            ></PhoneConfirm>
+          </div>
+
         </div>
         
         <div className={'buttons_container'}>

@@ -11,7 +11,8 @@ const Routes = {
     forget_email: '/auth/login/forget/email',
     reset_password: '/auth/login/password/reset',
     know_sns: '/auth/login/know/sns',
-    no_email_sns: '/auth/login/noemail/sns'
+    no_email_sns: '/auth/login/last/sns',
+    inactive_user: '/auth/login/inactive'
   }
 };
 

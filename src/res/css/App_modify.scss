@@ -129,6 +129,25 @@
     align-items: center;
   }
 
+  .contact_box {
+    display: flex;
+  }
+
+  .re_certification_button {
+    width: 115px;
+    height: 44px;
+    border-radius: 4px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border: solid 1px #f4f4f4;
+    border-left: 0px;
+    flex-shrink: 0;
+  }
+
+  .select_box_container {
+    width: 276px;
+  }
+
 
   @media (max-width: 1176px){
     .all_container {
@@ -152,10 +171,17 @@
       margin-top: 24px;
       margin-bottom: 0px;
     }
+
+    .select_box_container {
+      width: 219px;
+    }
   }
 
   @media (max-width: 768px){
-    /*테블릿*/  
+    /*테블릿*/
+    .select_box_container {
+      width: 100%;
+    }
   }
 
   @media (max-width: 453px){

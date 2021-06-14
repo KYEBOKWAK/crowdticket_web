@@ -155,16 +155,16 @@
   }
   </style>
   
-  <link href="{{ asset('/dist/css/App_Fan_Event.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Thumb_Project_Item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/App_Fan_Event.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Thumb_Project_Item.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_list.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_list.css?version=1') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/alice-carousel.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Fan_Project_List.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Fan_Project_List.css?version=1') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Project_Item.css?version=2') }}" rel="stylesheet"/>
 
   <link rel="stylesheet" href="{{ asset('/css/swiper/swiper.min.css?version=1') }}"/>
   
@@ -187,6 +187,6 @@
 
 @section('js')
 <script src="{{ asset('/js/swiper/swiper.min.js?version=1') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=10') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Fan_Event.js?version=11') }}"></script>
 
 @endsection

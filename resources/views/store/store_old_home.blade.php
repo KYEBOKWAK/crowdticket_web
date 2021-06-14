@@ -18,12 +18,12 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreHome.css?version=8') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=5') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreHome.css?version=9') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreContentsListItem.css?version=6') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreHomeStoreListItem.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>  
+  <link href="{{ asset('/dist/css/Popup_progress.css?version=1') }}" rel="stylesheet"/>  
   
 @endsection
 

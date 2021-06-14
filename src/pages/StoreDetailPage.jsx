@@ -369,8 +369,6 @@ class StoreDetailPage extends Component {
       offsetHeight: this.thumb_img_ref.current.offsetHeight,
     };
 
-    console.log("asdfasdfsdf");
-
     // var targetWidth =  imgData.naturalWidth / (imgData.naturalHeight / parentData.clientHeight);
     var targetWidth =  imgData.offsetWidth / (imgData.offsetHeight / parentData.offsetHeight);
 

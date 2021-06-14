@@ -20,13 +20,37 @@ class InputBox extends Component{
       isBlur: false,
 
       //마우스를 클릭 후 아무것도 입력 안했을때 체크 하기 위함
-      isEmptyCheckErrorMessage: false
+      isEmptyCheckErrorMessage: false,
+
+      is_disabled: false,
+
+      is_default_text: false
       // input_box_error_classname: ''
     }
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    
+    if(nextProps.is_disabled !== prevState.is_disabled){
+      return {
+        is_disabled: nextProps.is_disabled
+      }
+    }
+
+    if(nextProps.default_text !== prevState.text && prevState.is_default_text === false){
+      return {
+        text: nextProps.default_text,
+        is_default_text: true
+      }
+    }
+
+    return null;
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log(nextProps);
+    if(nextProps.placeholder !== this.props.placeholder){
+      return true;
+    }
     if(nextState !== this.state){
       return true;
     }
@@ -44,7 +68,14 @@ class InputBox extends Component{
     
   };
 
-  componentDidUpdate(){
+  componentDidUpdate(prevProps, prevState){
+  }
+
+  clear = () => {
+    this.setState({
+      text: '',
+      isError: false
+    })
   }
 
   getErrorMessage = (type_input_error_message) => {
@@ -64,6 +95,7 @@ class InputBox extends Component{
   onChangeText = (e) => {
     this.setState({
       text: e.target.value,
+      is_default_text: true
     }, () => {
       this.props.callback_set_text(this.state.text);
     });
@@ -97,6 +129,12 @@ class InputBox extends Component{
   setError = (isError) => {
     this.setState({
       isError: isError
+    })
+  }
+
+  setDisabled = (disabled) => {
+    this.setState({
+      is_disabled: disabled
     })
   }
 
@@ -157,7 +195,7 @@ class InputBox extends Component{
 
     return(
       <div className={'InputBox'}>
-        <input style={{width: '100%', height: 44}} className={inputClassName} type={inputType} name={this.props.name} placeholder={this.props.placeholder} value={this.state.text} onFocus={(e) => {this.onFocusInput(e)}} onChange={(e) => {this.onChangeText(e)}} onBlur={(e) => {this.onChangeTextBlur(e)}} />
+        <input disabled={this.state.is_disabled} maxLength={this.props.maxLength} style={this.props.styleProps} className={inputClassName} type={inputType} name={this.props.name} placeholder={this.props.placeholder} value={this.state.text} onFocus={(e) => {this.onFocusInput(e)}} onChange={(e) => {this.onChangeText(e)}} onBlur={(e) => {this.onChangeTextBlur(e)}} />
 
         {password_show_icon_dom}
       </div>
@@ -170,6 +208,12 @@ InputBox.defaultProps = {
   name: '',
   placeholder: '',
   default_text: '',
+  styleProps: {
+    width: '100%', 
+    height: 44
+  },
+  maxLength: null,
+  is_disabled: false,
   callback_set_text: (text) => {}
 }
 

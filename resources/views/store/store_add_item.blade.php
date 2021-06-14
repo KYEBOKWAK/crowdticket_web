@@ -11,19 +11,19 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/StoreAddItemPage.css?version=12') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/StoreAddItemPage.css?version=13') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/ImageFileUploader.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/ImageFileUploader.css?version=3') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Popup_progress.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Popup_image_preview.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Popup_progress.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Popup_image_preview.css?version=2') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/ImageCroper.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/ImageCroper.css?version=2') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/react-easy-crop.css?version=0') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/CompletedFileUpLoader.css?version=4') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/CompletedFileUpLoader.css?version=5') }}" rel="stylesheet"/>
 
-  <link href="{{ asset('/dist/css/Category_Selecter.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Category_Selecter.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 

@@ -45,6 +45,9 @@ class Registrar implements RegistrarContract
       {
         $nickName = $data['name'];
       }
+
+      $advertising_at = date('Y-m-d H:i:s', time());
+
         return User::create([
             'name' => $data['name'],
             'nick_name' => $nickName,
@@ -52,6 +55,11 @@ class Registrar implements RegistrarContract
             'gender' => $data['gender'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'contact' => $data['contact'],
+            'country_code' => $data['country_code'],
+            'is_certification' => $data['is_certification'],
+            'advertising' => $data['advertising'],
+            'advertising_at' => $advertising_at
         ]);
     }
 

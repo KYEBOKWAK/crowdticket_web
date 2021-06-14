@@ -11,8 +11,8 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/PageLoginController.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/LoginResetPasswordPage.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/PageLoginController.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/LoginResetPasswordPage.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 

@@ -10,20 +10,12 @@ import PasswordResetPage from '../pages/PasswordResetPage';
 
 import Login from '../lib/Login';
 
-
-
-// import Storage from './lib/Storage';
-// import * as storageType from  './StorageKeys';
-
 class PageLoginController extends Component {
   
   constructor(props) {
     super(props);
     this.state = { 
-      pageKey: AppKeys.WEB_PAGE_KEY_HOME,
-
-      // isSearchPage: false,
-      // isSearchResultPage: false
+      pageKey: AppKeys.WEB_PAGE_KEY_HOME
     };
   }
 
@@ -32,6 +24,7 @@ class PageLoginController extends Component {
     if(pageKeyDom){
       this.setState({
         pageKey: pageKeyDom.value
+      }, () => {
       })
     }
 
@@ -94,15 +87,6 @@ class PageLoginController extends Component {
     else{
       isNoPage = true;
     }
-
-    // let searchPage = <></>;
-    // if(this.state.isSearchPage){
-    //   searchPage = <SearchPage closeCallback={() => {
-    //     this.setState({
-    //       isSearchPage: false
-    //     })
-    //   }}></SearchPage>;
-    // }
 
     if(isNoPage){
       return (<></>)

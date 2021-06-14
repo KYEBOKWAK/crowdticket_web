@@ -12,7 +12,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     const LIKE_KEY_MAGAGINE = "magazine";
 
-    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder', 'like_meta', 'age', 'gender'];
+    protected $fillable = ['email', 'name', 'nick_name', 'password', 'profile_photo_url', 'contact', 'introduce', 'website', 'bank', 'account', 'account_holder', 'like_meta', 'age', 'gender', 'country_code', 'is_certification', 'advertising', 'advertising_at'];
 
     protected $hidden = ['password', 'remember_token', 'facebook_id', 'google_id'];
 

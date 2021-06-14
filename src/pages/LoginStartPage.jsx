@@ -142,6 +142,59 @@ class LoginStartPage extends Component{
       const socialEmail = googleUser.getBasicProfile().getEmail();
       const socialPhotoUrl = googleUser.getBasicProfile().getImageUrl();;
 
+      
+      axios.post('/user/any/check/snsid', {
+        sns_id: socialId,
+        sns_type : 'GOOGLE'
+      }, (result_user) => {
+        if(result_user.id === null){
+          //미가입자
+          this.props.callbackNoEmail({
+            'id' : socialId,
+            'name' : socialName,
+            'email' : socialEmail,
+            'profile_photo_url' : socialPhotoUrl,
+            'type' : 'GOOGLE'
+          })
+        }else{
+          //가입자
+          if(result_user.inactive){
+            this.props.callbackInActiveUser({
+              'id' : socialId,
+              'user_id': result_user.id,
+              'name' : socialName,
+              'email' : socialEmail,
+              'profile_photo_url' : socialPhotoUrl,
+              'type' : 'GOOGLE'
+            })
+          }else{
+            this.requestSNSLogin({
+              'id' : socialId,
+              'name' : socialName,
+              'email' : socialEmail,
+              'profile_photo_url' : socialPhotoUrl,
+              'type' : 'GOOGLE'
+            });
+          }
+        }
+      }, (error_user) => {
+
+      })
+    }, (error) => {
+      //alert(JSON.stringify(error, undefined, 2));
+    });
+  }
+
+  /*
+  attachSignin = (element) => {
+
+    this.auth2.attachClickHandler(element, {},
+    (googleUser) => {
+      const socialId = googleUser.getBasicProfile().getId();
+      const socialName = googleUser.getBasicProfile().getName();
+      const socialEmail = googleUser.getBasicProfile().getEmail();
+      const socialPhotoUrl = googleUser.getBasicProfile().getImageUrl();;
+
       //console.error(socialId + socialName + socialEmail + " | " + socialPhotoUrl);
 
       this.requestSNSLogin({
@@ -156,6 +209,7 @@ class LoginStartPage extends Component{
       //alert(JSON.stringify(error, undefined, 2));
     });
   }
+  */
 
   componentWillUnmount(){
     
@@ -164,6 +218,77 @@ class LoginStartPage extends Component{
   componentDidUpdate(){
   }
 
+
+  fbStatusChangeCallback = (response) => {
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+  
+      const url = '/me?fields=id,name,email';
+      FB.api(url, (responseMe) => {
+        const socialId = responseMe.id;
+        const socialName = responseMe.name;
+        const socialEmail = responseMe.email;
+        const socialPhotoUrl = "https://graph.facebook.com/"+socialId+"/picture?type=normal";
+  
+
+        axios.post('/user/any/check/snsid', {
+          sns_id: res.id,
+          sns_type : 'FACEBOOK'
+        }, (result_user) => {
+          if(result_user.id === null){
+            //미가입자
+            let _email = null;
+            if(socialEmail === undefined || socialEmail === null || socialEmail === ''){
+              _email = null;
+            }else{
+              _email = socialEmail
+            }
+
+            this.props.callbackNoEmail({
+              'id' : socialId,
+              'name' : socialName,
+              'email' : _email,
+              'profile_photo_url' : socialPhotoUrl,
+              'type' : 'FACEBOOK'
+            })
+          }else{
+            //가입자
+            if(result_user.inactive){
+              this.props.callbackInActiveUser({
+                'id' : socialId,
+                'user_id': result_user.id,
+                'name' : socialName,
+                'email' : _email,
+                'profile_photo_url' : socialPhotoUrl,
+                'type' : 'FACEBOOK'
+              })
+            }else{
+              this.requestSNSLogin({
+                'id' : socialId,
+                'name' : socialName,
+                'email' : socialEmail,
+                'profile_photo_url' : socialPhotoUrl,
+                'type' : 'FACEBOOK'
+              });
+            }
+            
+          }
+        }, (error_user) => {
+
+        })
+      });
+  
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      FB.login((response) => {
+        if (response.status === 'connected') {
+          this.fbStatusChangeCallback(response);
+        }
+      }, {scope: 'email'});
+    }
+  }
+
+  /*
   fbStatusChangeCallback = (response) => {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
@@ -223,7 +348,87 @@ class LoginStartPage extends Component{
       }, {scope: 'email'});
     }
   }
+  */
 
+
+  onClickKakaoLogin = (e) => {
+    e.preventDefault();
+
+    Kakao.Auth.login({
+      success: (authObj) => {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: (res) => {
+            let profile_photo_url = res.kakao_account.profile.thumbnail_image_url;
+            if(profile_photo_url === undefined){
+              profile_photo_url = null;
+            }
+
+            let name = res.kakao_account.profile.nickname;
+            if(name === undefined){
+              name = '';
+            }
+
+            axios.post('/user/any/check/snsid', {
+              sns_id: res.id,
+              sns_type : 'KAKAO'
+            }, (result_user) => {
+              if(result_user.id === null){
+                //미가입자
+                let _email = null;
+                if(!res.kakao_account.has_email || res.kakao_account.email === undefined || res.kakao_account.email === null || res.kakao_account.email === ''){
+                  _email = null;
+                }else{
+                  _email = res.kakao_account.email
+                }
+
+                this.props.callbackNoEmail({
+                  'id' : res.id,
+                  'name' : name,
+                  'email' : _email,
+                  'profile_photo_url' : profile_photo_url,
+                  'type' : 'KAKAO'
+                })
+              }else{
+                //가입자
+                if(result_user.inactive){
+                  this.props.callbackInActiveUser({
+                    'id' : res.id,
+                    'user_id': result_user.id,
+                    'name' : name,
+                    'email' : res.kakao_account.email,
+                    'profile_photo_url' : profile_photo_url,
+                    'type' : 'KAKAO'
+                  })
+                }else{
+                  this.requestSNSLogin({
+                    'id' : res.id,
+                    'name' : name,
+                    'email' : res.kakao_account.email,
+                    'profile_photo_url' : profile_photo_url,
+                    'type' : 'KAKAO'
+                  });
+                }
+              }
+            }, (error_user) => {
+  
+            })
+          },
+          fail: (error) => {
+            alert(
+              'login success, but failed to request user information: ' +
+                JSON.stringify(error)
+            )
+          },
+        })
+      },
+      fail: function(err) {
+        alert(JSON.stringify(err))
+      },
+    })
+  }
+
+  /*
   onClickKakaoLogin = (e) => {
     e.preventDefault();
 
@@ -292,6 +497,7 @@ class LoginStartPage extends Component{
       },
     })
   }
+  */
 
   onClickGoogleLogin = (e) => {
     e.preventDefault();
@@ -344,7 +550,7 @@ class LoginStartPage extends Component{
     let terms_dom = <></>;
     if(this.state.language_code === 'kr'){
       terms_dom = <div className={'term_container'}>
-                    <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span> 내용을 확인하였으며, 이에 동의합니다.
+                    <span className={'term_text'}><a href='/terms' target='_blank'><u>이용약관</u></a></span>과 <span className={'term_text'}><a href='/join_agree' target='_blank'><u>개인정보 수집이용</u></a></span>에 동의하며, 만 14세 이상입니다.
                   </div>
     }else{
       terms_dom = <div className={'term_container'}>

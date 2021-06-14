@@ -20,8 +20,8 @@
   }
   </style>
 
-  <link href="{{ asset('/dist/css/App_Magazine.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Magazine_List_Item.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/App_Magazine.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Magazine_List_Item.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 
@@ -41,5 +41,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Magazine.js?version=3') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Magazine.js?version=4') }}"></script>
 @endsection

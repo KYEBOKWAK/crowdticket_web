@@ -51,15 +51,38 @@ class SocialAuthController extends Controller
     {
       //페이스북 아이디가 있으면 해당 계정을 넘겨준다.
       $email = '';
+      $advertising_at = date('Y-m-d H:i:s', time());
       if(isset($socialUser['email']))
       {
         $email = $socialUser['email'];
       }
+
+
+      $contact = '';
+      if(isset($socialUser['contact']))
+      {
+        $contact = $socialUser['contact'];
+      }
+
+      $country_code = null;
+      if(isset($socialUser['country_code']))
+      {
+        $country_code = $socialUser['country_code'];
+      }
+
       $socialType = $socialUser['type'];
       if($socialType === 'FACEBOOK')
       {
         if ($user = User::where('facebook_id', $socialUser['id'])->first()) {
-            return $user;
+
+          if(isset($socialUser['advertising']))
+          {
+            $user->advertising = $socialUser['advertising'];
+            $user->advertising_at = $advertising_at;
+            $user->save();
+          }
+
+          return $user;
         }
 
         //이메일을 찾았는데, 이메일이 있으면 페이스북 id를 등록해준다.
@@ -80,6 +103,12 @@ class SocialAuthController extends Controller
               }
             }
 
+            if(isset($socialUser['advertising']))
+            {
+              $user->advertising = $socialUser['advertising'];
+              $user->advertising_at = $advertising_at;
+            }
+
             $user->save();
             return $user;
           }
@@ -98,6 +127,14 @@ class SocialAuthController extends Controller
             $user->profile_photo_url = $photoURL;
             $user->save();
           }
+
+          if(isset($socialUser['advertising']))
+          {
+            $user->advertising = $socialUser['advertising'];
+            $user->advertising_at = $advertising_at;
+            $user->save();
+          }
+
           return $user;
         }
 
@@ -118,6 +155,12 @@ class SocialAuthController extends Controller
               }
             }
 
+            if(isset($socialUser['advertising']))
+            {
+              $user->advertising = $socialUser['advertising'];
+              $user->advertising_at = $advertising_at;
+            }
+
             $user->save();
 
             return $user;
@@ -130,6 +173,13 @@ class SocialAuthController extends Controller
           if($photoURL)
           {
             $user->profile_photo_url = $photoURL;
+            $user->save();
+          }
+
+          if(isset($socialUser['advertising']))
+          {
+            $user->advertising = $socialUser['advertising'];
+            $user->advertising_at = $advertising_at;
             $user->save();
           }
           return $user;
@@ -154,6 +204,12 @@ class SocialAuthController extends Controller
               }
             }
 
+            if(isset($socialUser['advertising']))
+            {
+              $user->advertising = $socialUser['advertising'];
+              $user->advertising_at = $advertising_at;
+            }
+
             $user->save();
 
             return $user;
@@ -170,13 +226,19 @@ class SocialAuthController extends Controller
       $nowTime = time();
       $newPassword = bcrypt($nowTime.$socialUser['id']);
 
+      // $advertising_at = date('Y-m-d H:i:s', time());
       $user = User::create([
           'email' => $email,
           'name' => $socialUser['name'],
           'nick_name' => $socialUser['name'],
           'profile_photo_url' => $socialUser['profile_photo_url'],
-          // 'password' => $socialUser['id']
-          'password' => $newPassword
+          'password' => $newPassword,
+          'contact' => $contact,
+          'country_code' => $country_code,
+          // 'is_certification' => $socialUser['is_certification'],
+          'is_certification' => true,
+          'advertising' => $socialUser['advertising'],
+          'advertising_at' => $advertising_at
       ]);
 
       if($socialType === 'FACEBOOK')
