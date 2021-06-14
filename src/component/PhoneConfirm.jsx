@@ -340,9 +340,12 @@ class PhoneConfirm extends Component{
     }
 
     let confirmSendButtonClassName = 'number_send_confirm_button';
+    if(this.state.number !== ''){
+      confirmSendButtonClassName = 'number_send_confirm_button number_send_confirm_button_bg_white';
+    }
+    
     if(this.state.isConfirmBox){
       let counterStyle = {}
-      confirmSendButtonClassName = 'number_send_confirm_button number_send_confirm_button_bg_white';
       if(this.state.waitSec === 0){
         counterStyle = {
           color: '#fc5e7c'
