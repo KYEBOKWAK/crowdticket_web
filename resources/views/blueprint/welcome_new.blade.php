@@ -1337,7 +1337,11 @@
     <div class="blueprint_welcome_start_container">
         <div class="blueprint_welcome_start_form_container">
                     <!-- /blueprints -->
+            @if (\Auth::check() && \Auth::user()->isAdmin())
+            <form id="blueprint_form_start_admin" action="{{ url('/blueprints') }}" method="post" data-toggle="validator" role="form">
+            @else
             <form id="blueprint_form_start" action="{{ url('/makeevent/sendmail') }}" method="post" data-toggle="validator" role="form">
+            @endif
                 <div class="form-group">
                     <label class="cr_label">크리에이터 이름</label>
                     <input id="input-user-intro" name="user_introduction" class="form-control cr_input" placeholder="유튜브 채널명, 먹방 BJ ‘000’, 게임 스트리머 ‘000’ 등">
@@ -1363,7 +1367,11 @@
             </form>
 
             <div class="blueprint_start_button_wrapper">
-                <button id="blueprint_start_button" type="button" class="blue_button">시작하기</button>
+                @if (\Auth::check() && \Auth::user()->isAdmin())
+                    <button id="blueprint_start_button_admin" type="button" class="blue_button">시작하기</button>
+                @else
+                    <button id="blueprint_start_button" type="button" class="blue_button">시작하기</button>
+                @endif
             </div>
         </div>
     </div>
@@ -1440,6 +1448,19 @@
                 loadingProcess($(".blueprint_start_button_wrapper"));
 
                 $('#blueprint_form_start').submit();
+            });
+
+            $("#blueprint_start_button_admin").click(function(){
+                // blueprintStart();
+                if(!isCheckPhoneNumber($('#input-phone').val()))
+                {
+                    alert('전화번호 입력이 바르지 않습니다.');
+                    return;
+                }
+
+                loadingProcess($(".blueprint_start_button_wrapper"));
+
+                $('#blueprint_form_start_admin').submit();
             });
 
             var swiper = new Swiper('.swiper-event-plan', {
@@ -1716,7 +1737,7 @@
                             "프로젝트 개설신청" + 
                     "</div>" +
 
-                    "<form id='blueprint_form_start_mobile' action='{{ url('/blueprints') }}' method='post' data-toggle='validator' role='form'>" +
+                    "<form id='blueprint_form_start_mobile' action='{{ url('/makeevent/sendmail') }}' method='post' data-toggle='validator' role='form'>" +
                         "<div class='form-group'>" +
                             "<label class='cr_label'>크리에이터 이름</label>" +
                             "<input id='input-user-intro-mobile' name='user_introduction' class='form-control cr_input' placeholder='뮤지션 ‘000’, 먹방 BJ ‘000’, 게임 스트리머 ‘000’'>" +
@@ -1766,7 +1787,8 @@
                 $('.popup_close_button').click(function(){
                     swal.close();
                 });
-                /*
+                
+
                 var blueprint_form_start_mobile_option = {
                     'beforeSerialize': function($form, options) {
                     },
@@ -1779,18 +1801,29 @@
                             return;
                         }
                         
-                        //swal("문의 성공!", "곧 크라우드티켓에서 연락 드리겠습니다.", "success");
+                         swal("문의 성공!", "곧 크라우드티켓에서 연락 드리겠습니다.", "success");
                     },
                     'error': function(data) {
                         alert("개설 에러! 입력 확인 후 다시 한번 시도해주세요");
                     }
                     
                 };
-                */
+                
 
-                //$('#blueprint_form_start_mobile').ajaxForm(blueprint_form_start_mobile_option);
+                $('#blueprint_form_start_mobile').ajaxForm(blueprint_form_start_mobile_option);
 
                 var blueprint_start_mobile_button = function(){
+                    if(!isCheckPhoneNumber($('#input-phone-mobile').val()))
+                    {
+                        alert('전화번호 입력이 바르지 않습니다.');
+                        return;
+                    }
+
+                    loadingProcess($(".blueprint_start_button_wrapper"));
+
+                    $('#blueprint_form_start_mobile').submit();
+
+                    /*
                     if(!isLogin())
                     {
                         loginPopup(blueprint_start_mobile_button, null);
@@ -1806,6 +1839,7 @@
                     $('#blueprint_form_start_mobile').submit();
 
                     showLoadingPopup("프로젝트 개설중입니다..");
+                    */
                 };
 
                 $("#blueprint_start_button_mobile").click(function(){
