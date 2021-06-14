@@ -339,8 +339,10 @@ class PhoneConfirm extends Component{
       is_disabled = true;
     }
 
+    let confirmSendButtonClassName = 'number_send_confirm_button';
     if(this.state.isConfirmBox){
       let counterStyle = {}
+      confirmSendButtonClassName = 'number_send_confirm_button number_send_confirm_button_bg_white';
       if(this.state.waitSec === 0){
         counterStyle = {
           color: '#fc5e7c'
@@ -484,8 +486,7 @@ class PhoneConfirm extends Component{
               // })
             }}
           ></InputBox>
-          <button disabled={this.state.sendConfirmButtonDisabled} onClick={(e) => {this.onClickSendConfirmNumber(e)}} className={'number_send_confirm_button'}>
-            {/* 인증번호 전송 */}
+          <button disabled={this.state.sendConfirmButtonDisabled} onClick={(e) => {this.onClickSendConfirmNumber(e)}} className={confirmSendButtonClassName}>
             <Str strKey={'s149'} />
           </button>
         </div>

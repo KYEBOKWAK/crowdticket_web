@@ -20,7 +20,7 @@
   <link href="{{ asset('/dist/css/ImageCroper.css?version=2') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/react-phone-input-2-style.css?version=0') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/PhoneConfirm.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/PhoneConfirm.css?version=1') }}" rel="stylesheet"/>
   
 @endsection
 
@@ -32,5 +32,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=11') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_modify.js?version=12') }}"></script>
 @endsection

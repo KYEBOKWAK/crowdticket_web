@@ -26,7 +26,7 @@
 
 <link href="{{ asset('/dist/css/react-phone-input-2-style.css?version=0') }}" rel="stylesheet"/>
   <!--react-phone-input-2-style 이거 밑에 PhoneConfirm 이게 있어야함-->
-<link href="{{ asset('/dist/css/PhoneConfirm.css?version=0') }}" rel="stylesheet"/>
+<link href="{{ asset('/dist/css/PhoneConfirm.css?version=1') }}" rel="stylesheet"/>
 
 <link href="{{ asset('/dist/css/InputBox.css?version=1') }}" rel="stylesheet"/>
 
