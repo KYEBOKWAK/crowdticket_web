@@ -340,10 +340,15 @@ class PhoneConfirm extends Component{
     }
 
     let confirmSendButtonClassName = 'number_send_confirm_button';
+    let confirmButtonClassName = 'number_send_confirm_button';
     if(this.state.number !== ''){
       confirmSendButtonClassName = 'number_send_confirm_button number_send_confirm_button_bg_white';
     }
-    
+
+    if(this.state.confirm_number.length >= 6){
+      confirmButtonClassName = 'number_send_confirm_button number_send_confirm_button_bg_white';
+    }
+
     if(this.state.isConfirmBox){
       let counterStyle = {}
       if(this.state.waitSec === 0){
@@ -385,7 +390,7 @@ class PhoneConfirm extends Component{
                                 </div>
                               </div>
                               {/* <button disabled={this.state.sendConfirmCheckButtonDisbaled} className={'number_send_confirm_button'}> */}
-                              <button onClick={(e) => {this.onClickConfirmCheck(e)}} disabled={this.state.sendConfirmCheckButtonDisbaled} className={'number_send_confirm_button'}>
+                              <button onClick={(e) => {this.onClickConfirmCheck(e)}} disabled={this.state.sendConfirmCheckButtonDisbaled} className={confirmButtonClassName}>
                                 {confirm_button_text}
                               </button>
                             </div>
