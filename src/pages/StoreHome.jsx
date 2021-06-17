@@ -84,10 +84,40 @@ class StoreHome extends Component {
   testOnclickDownload = (e) => {
     e.preventDefault();
 
+    fetch('https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'image/png',
+      },
+    })
+    .then((response) => response.blob())
+    .then((blob) => {
+      // Create blob link to download
+      const url = window.URL.createObjectURL(
+        new Blob([blob]),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+        'download',
+        `%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png`,
+      );
+
+      // Append to html link element page
+      document.body.appendChild(link);
+
+      // Start download
+      link.click();
+
+      // Clean up and remove the link
+      link.parentNode.removeChild(link);
+    });
+
+    /*
     _axios({
       url: 'https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png', //your url
       method: 'GET',
-      responseType: 'blob', // important
+      // responseType: 'blob', // important
     }).then((response) => {
        const url = window.URL.createObjectURL(new Blob([response.data]));
        const link = document.createElement('a');
@@ -96,6 +126,7 @@ class StoreHome extends Component {
        document.body.appendChild(link);
        link.click();
     });
+    */
   }
 
   render() {
