@@ -107,9 +107,10 @@ class App_Top_Banner extends Component{
         channelPublicId: '_JUxkxjM'
       });
     }else{
-      this.closeBanner(() => {
-        window.location.href = this.state.link_url
-      });
+      window.location.href = this.state.link_url
+      // this.closeBanner(() => {
+      //   window.location.href = this.state.link_url
+      // });
     }
   }
 
