@@ -98,10 +98,12 @@
     "/dist/css/Magazine_List_Item.css": "/dist/css/Magazine_List_Item.css",
     "/dist/css/PhoneConfirm.css": "/dist/css/PhoneConfirm.css",
     "/dist/css/InActivePage.css": "/dist/css/InActivePage.css",
+    "/dist/css/App_Top_Banner.css": "/dist/css/App_Top_Banner.css",
     "/dist/App_Category.js": "/dist/App_Category.js",
     "/dist/App_Fan_Event.js": "/dist/App_Fan_Event.js",
     "/dist/App_Login.js": "/dist/App_Login.js",
     "/dist/App_Magazine.js": "/dist/App_Magazine.js",
     "/dist/App_PC_776.js": "/dist/App_PC_776.js",
+    "/dist/App_Top_Banner.js": "/dist/App_Top_Banner.js",
     "/dist/App_modify.js": "/dist/App_modify.js"
 }

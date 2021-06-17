@@ -2123,11 +2123,11 @@ class ProjectController extends Controller
     public function getEventPage($alias)
     {
       // storeplanning
-      if($alias === 'storeplanning'){
-        return view('events.event_page', [
-          'alias' => $alias
-        ]);
-      }
+      // if($alias === 'storeplanning'){
+      //   return view('events.event_page', [
+      //     'alias' => $alias
+      //   ]);
+      // }
       
       return view('events.event_page', [
         'alias' => $alias

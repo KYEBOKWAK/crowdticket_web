@@ -1,6 +1,10 @@
 import * as GlobalTypes from "./GlobalKeys";
 
 const Types = {
+  top_banner: {
+    none: 0,
+    kakao_channel: 1
+  },
   currency_code: {
     US_Dollar: 'USD', //달러
     Won: 'KRW'  //원

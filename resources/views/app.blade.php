@@ -58,7 +58,9 @@
     <link href="{{ asset('/dist/css/SearchPage.css?version=3') }}" rel="stylesheet"/>
     <link href="{{ asset('/dist/css/SelectBoxLanguage.css?version=1') }}" rel="stylesheet"/>
 
-    <link href="{{ asset('/dist/css/InActivePage.css?version=0') }}" rel="stylesheet"/>    
+    <link href="{{ asset('/dist/css/InActivePage.css?version=0') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('/dist/css/App_Top_Banner.css?version=0') }}" rel="stylesheet"/>
     
 @yield('css')
     <link href="{{ asset('/css/flex.css?version=6') }}" rel="stylesheet"/>
@@ -378,6 +380,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <input type="hidden" id="g_language" value="@if(isset($language)){{$language}}@endif">
 
 @yield('event_banner')
+<div id="react_top_banner"></div>
 
 @section('navbar')
 <div id="navbar_fake_dom"></div>
@@ -556,9 +559,10 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=193') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=30') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=9') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=194') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=31') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=10') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Top_Banner.js?version=0') }}"></script>
 
 </body>
 </html>

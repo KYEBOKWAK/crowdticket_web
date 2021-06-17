@@ -28,6 +28,7 @@ if (mix.inProduction()) {
   .react('src/App_Category.jsx', 'dist/')
   .react('src/App_Fan_Event.jsx', 'dist/')
   .react('src/App_Magazine.jsx', 'dist/')
+  .react('src/App_Top_Banner.jsx', 'dist/')
   .sass('src/res/css/Global.scss', 'dist/css/')
   .sass('src/res/css/StoreHome.scss', 'dist/css/')
   .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -126,11 +127,13 @@ if (mix.inProduction()) {
   .sass('src/res/css/Magazine_List_Item.scss', 'dist/css/')
   .sass('src/res/css/PhoneConfirm.scss', 'dist/css/')
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
+  .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()
     ],
   });
+  /* production UP */
 }else{
   mix.react('src/App.jsx', 'dist/')
   .react('src/App_Login.jsx', 'dist/')
@@ -139,6 +142,7 @@ if (mix.inProduction()) {
   .react('src/App_Category.jsx', 'dist/')
   .react('src/App_Fan_Event.jsx', 'dist/')
   .react('src/App_Magazine.jsx', 'dist/')
+  .react('src/App_Top_Banner.jsx', 'dist/')
   .sass('src/res/css/Global.scss', 'dist/css/')
   .sass('src/res/css/StoreHome.scss', 'dist/css/')
   .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -237,6 +241,7 @@ if (mix.inProduction()) {
   .sass('src/res/css/Magazine_List_Item.scss', 'dist/css/')
   .sass('src/res/css/PhoneConfirm.scss', 'dist/css/')
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
+  .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()
@@ -244,6 +249,7 @@ if (mix.inProduction()) {
     devtool: 'inline-source-map'
   }).sourceMaps().version();
 }
+/*DEV UP */
 
 /*
 mix.react('src/App.jsx', 'dist/')
