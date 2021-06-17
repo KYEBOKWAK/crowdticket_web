@@ -85,14 +85,14 @@ class StoreHome extends Component {
     e.preventDefault();
 
     _axios({
-      url: 'http://172.30.1.1:8080/downloader/get/file/121/2_3_1.jpg', //your url
+      url: 'https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png', //your url
       method: 'GET',
       responseType: 'blob', // important
     }).then((response) => {
        const url = window.URL.createObjectURL(new Blob([response.data]));
        const link = document.createElement('a');
        link.href = url;
-       link.setAttribute('download', '2_3_1.jpg'); //or any other extension
+       link.setAttribute('download', '하카소_스티커.png'); //or any other extension
        document.body.appendChild(link);
        link.click();
     });
@@ -167,8 +167,9 @@ class StoreHome extends Component {
         <Home_Top_Banner></Home_Top_Banner>
 
         {/* <a href="http://172.30.1.1:8080/downloader/get/file/121/2_3_1.jpg">다운로드 테슷트</a> */}
-        <a href={"https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png"}>다운로드 테슷트</a>
-        {/* <button onClick={(e) => {this.testOnclickDownload(e)}}>다운로드 테슷트</button> */}
+        {/* <a href={"https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png"}>다운로드 테슷트</a> */}
+
+        <button onClick={(e) => {this.testOnclickDownload(e)}}>함수형 다운로드 테슷트</button>
 
         <div className={'store_home_container'}>
           <div className={'thumb_container'}>
