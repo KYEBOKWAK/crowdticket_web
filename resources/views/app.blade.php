@@ -10,6 +10,28 @@
     @section('meta')
       <meta name="description" content="영상으로만 닿을 수 있었던 크리에이터와 팬, 이제는 크티에서 팬밋업·강연·온라인 선물나눔·랜선팬미팅 등 다양한 이벤트로 더 깊이 소통하고 공감해보세요!"/>
     @show
+    <script>
+      // 모바일 에이전트 구분
+      var g_isMobile={Android:function(){return null!=navigator.userAgent.match(/Android/i)},BlackBerry:function(){return null!=navigator.userAgent.match(/BlackBerry/i)},IOS:function(){return null!=navigator.userAgent.match(/iPhone|iPad|iPod/i)},Opera:function(){return null!=navigator.userAgent.match(/Opera Mini/i)},Windows:function(){return null!=navigator.userAgent.match(/IEMobile/i)},any:function(){return isMobile.Android()||isMobile.BlackBerry()||isMobile.IOS()||isMobile.Opera()||isMobile.Windows()}};
+    </script>
+    <script>
+      var userAgent = window.navigator.userAgent;
+      var isKakao = userAgent.indexOf('KAKAOTALK');
+      // alert(window.location);
+      console.log(window.location);
+      if(isKakao > 0)
+      {
+        if(g_isMobile.Android()){
+          let protocol = 'http'
+          if(window.location.hostname === 'crowdticket'){
+            protocol = 'https';
+          }
+
+          let intentURL = window.location.host + window.location.pathname;
+          location.href=`intent://${intentURL}#Intent;scheme=${protocol};package=com.android.chrome;end`
+        }        
+      }
+    </script>
 
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -559,7 +581,7 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=197') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=198') }}"></script>
 <script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=31') }}"></script>
 <script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=10') }}"></script>
 <script type="text/javascript" src="{{ asset('/dist/App_Top_Banner.js?version=1') }}"></script>

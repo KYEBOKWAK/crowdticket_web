@@ -16,8 +16,6 @@ import Home_Thumb_Tag from '../component/Home_Thumb_Tag';
 
 import Home_Top_Banner from '../component/Home_Top_Banner';
 
-import _axios from 'axios';
-
 // import language from '../res/json/language/language.json';
 // import StrLib from '../lib/StrLib';
 
@@ -79,54 +77,6 @@ class StoreHome extends Component {
     e.preventDefault();
 
     window.location.href = '/category/'+id;
-  }
-
-  testOnclickDownload = (e) => {
-    e.preventDefault();
-
-    fetch('https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'image/png',
-      },
-    })
-    .then((response) => response.blob())
-    .then((blob) => {
-      // Create blob link to download
-      const url = window.URL.createObjectURL(
-        new Blob([blob]),
-      );
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute(
-        'download',
-        `%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png`,
-      );
-
-      // Append to html link element page
-      document.body.appendChild(link);
-
-      // Start download
-      link.click();
-
-      // Clean up and remove the link
-      link.parentNode.removeChild(link);
-    });
-
-    /*
-    _axios({
-      url: 'https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png', //your url
-      method: 'GET',
-      // responseType: 'blob', // important
-    }).then((response) => {
-       const url = window.URL.createObjectURL(new Blob([response.data]));
-       const link = document.createElement('a');
-       link.href = url;
-       link.setAttribute('download', '하카소_스티커.png'); //or any other extension
-       document.body.appendChild(link);
-       link.click();
-    });
-    */
   }
 
   render() {
@@ -196,12 +146,6 @@ class StoreHome extends Component {
     return (
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>
-
-        {/* <a href="http://172.30.1.1:8080/downloader/get/file/121/2_3_1.jpg">다운로드 테슷트</a> */}
-        {/* <a href={"https://download.crowdticket.kr:3000/downloader/get/file/468/%ED%95%98%EC%B9%B4%EC%86%8C_%EC%8A%A4%ED%8B%B0%EC%BB%A4.png"}>다운로드 테슷트</a> */}
-
-        <button onClick={(e) => {this.testOnclickDownload(e)}}>함수형 다운로드 테슷트</button>
-
         <div className={'store_home_container'}>
           <div className={'thumb_container'}>
             <Home_Thumb_list thumb_list_type={Types.thumb_list_type.popular}></Home_Thumb_list>

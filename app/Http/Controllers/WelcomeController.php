@@ -276,5 +276,4 @@ class WelcomeController extends Controller
       'category_top_item_id' => $category_top_item_id
     ]);
   }
-
 }
