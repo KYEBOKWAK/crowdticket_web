@@ -18,12 +18,11 @@
       var userAgent = window.navigator.userAgent;
       var isKakao = userAgent.indexOf('KAKAOTALK');
       // alert(window.location);
-      console.log(window.location);
       if(isKakao > 0)
       {
         if(g_isMobile.Android()){
           let protocol = 'http'
-          if(window.location.hostname === 'crowdticket'){
+          if(window.location.hostname === 'crowdticket.kr'){
             protocol = 'https';
           }
 
