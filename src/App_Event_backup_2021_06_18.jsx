@@ -1,17 +1,18 @@
 'use strict';
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 
-import event_timer_layer from '../res/img/event_timer_layer_1.png';
+import event_timer_layer from './res/img/event_timer_layer_1.png';
 
 import moment_timezone from 'moment-timezone';
-import axios from '../lib/Axios';
-import Types from '../Types';
+import axios from './lib/Axios';
+import Types from './Types';
 
 const ITEM_LINE_ITEM_COUNT_MAX = 2;
 
-class EventPage extends Component{
+class App_Event extends Component{
 
   timerInterval = null;
 
@@ -45,27 +46,7 @@ class EventPage extends Component{
     // console.log(this.imgRefs[0].ref.current.clientHeight)
 
     window.addEventListener('resize', this.updateDimensions);
-
-
-    // let unitlTime = moment_timezone('2020-12-17 16:00:00');
-
-    // let nowTime_moment = moment_timezone('2020-12-17 15:00:00');
-
-    // let seconds = nowTime_moment.format('X');
-
-    // let test = moment_timezone.unix(seconds).format("YYYY-MM-DD HH:mm:ss");
-    // console.log(test);
-
-
     this.initData();
-
-    
-
-    // console.log(nowTime_moment.format('X'));  //seconds
-
-    // console.log(nowTime_moment.format('x'));  //miliseconds
-
-    // console.log(moment_timezone.duration(this.state.untilTime.diff(nowTime_moment)).hours());
   };
 
   initData = () => {
@@ -75,6 +56,8 @@ class EventPage extends Component{
       alert("잘못된 접근입니다");
       return;
     }
+
+    /*
 
     axios.post("/event/any/pages", {
       alias: event_alias_dom.value
@@ -128,6 +111,7 @@ class EventPage extends Component{
     }, (error) => {
 
     })
+    */
   }
 
   setDurationTimer = () => {
@@ -350,7 +334,7 @@ class EventPage extends Component{
     }
     
     return(
-      <div className={'EventPage'}>
+      <div className={'App_Event'}>
         {contents_array}
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#910000', fontSize: 20, paddingTop: 40, paddingBottom: 40, height: 440, position: 'relative', justifyContent: 'center'}}>
           <img style={{position: 'absolute', top: 0}} src={event_timer_layer} />
@@ -368,4 +352,6 @@ class EventPage extends Component{
   }
 };
 
-export default EventPage;
+// export default App_Event;
+let domContainer = document.querySelector('#react_app_event_page');
+ReactDOM.render(<App_Event />, domContainer);

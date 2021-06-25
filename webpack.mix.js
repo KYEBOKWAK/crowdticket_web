@@ -29,6 +29,7 @@ if (mix.inProduction()) {
   .react('src/App_Fan_Event.jsx', 'dist/')
   .react('src/App_Magazine.jsx', 'dist/')
   .react('src/App_Top_Banner.jsx', 'dist/')
+  .react('src/App_Event.jsx', 'dist/')
   .sass('src/res/css/Global.scss', 'dist/css/')
   .sass('src/res/css/StoreHome.scss', 'dist/css/')
   .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -59,7 +60,6 @@ if (mix.inProduction()) {
   .sass('src/res/css/StoreContentConfirm.scss', 'dist/css/')
   .sass('src/res/css/Popup_text_viewer.scss', 'dist/css/')
   .sass('src/res/css/StoreISPOrderComplitePage.scss', 'dist/css/')
-  .sass('src/res/css/EventPage.scss', 'dist/css/')
   .sass('src/res/css/StoreStateProcess.scss', 'dist/css/')
   .sass('src/res/css/StorePlayTimePlan.scss', 'dist/css/')
   .sass('src/res/css/Popup_SelectTime.scss', 'dist/css/')
@@ -128,6 +128,7 @@ if (mix.inProduction()) {
   .sass('src/res/css/PhoneConfirm.scss', 'dist/css/')
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
   .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
+  .sass('src/res/css/App_Event.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()
@@ -143,6 +144,7 @@ if (mix.inProduction()) {
   .react('src/App_Fan_Event.jsx', 'dist/')
   .react('src/App_Magazine.jsx', 'dist/')
   .react('src/App_Top_Banner.jsx', 'dist/')
+  .react('src/App_Event.jsx', 'dist/')
   .sass('src/res/css/Global.scss', 'dist/css/')
   .sass('src/res/css/StoreHome.scss', 'dist/css/')
   .sass('src/res/css/StoreContentsListItem.scss', 'dist/css/')
@@ -173,7 +175,6 @@ if (mix.inProduction()) {
   .sass('src/res/css/StoreContentConfirm.scss', 'dist/css/')
   .sass('src/res/css/Popup_text_viewer.scss', 'dist/css/')
   .sass('src/res/css/StoreISPOrderComplitePage.scss', 'dist/css/')
-  .sass('src/res/css/EventPage.scss', 'dist/css/')
   .sass('src/res/css/StoreStateProcess.scss', 'dist/css/')
   .sass('src/res/css/StorePlayTimePlan.scss', 'dist/css/')
   .sass('src/res/css/Popup_SelectTime.scss', 'dist/css/')
@@ -242,6 +243,7 @@ if (mix.inProduction()) {
   .sass('src/res/css/PhoneConfirm.scss', 'dist/css/')
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
   .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
+  .sass('src/res/css/App_Event.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()

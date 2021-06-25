@@ -1,0 +1,44 @@
+// @font-face {
+//   font-family: "jua";
+//   src: url("/fonts/BMJUA_ttf.ttf");
+// }
+
+.App_Event {
+  padding-bottom: 64px;
+
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+
+  .images_container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .images_pc {
+
+  }
+
+  .images_mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px){
+    /*모바일일때*/  
+    .images_pc {
+      display: none;
+    }
+    .images_mobile {
+      display: block;
+      width: 1250px;
+    }    
+  }
+
+  @media (max-width: 365px){
+    
+  }
+}
+
+.pageController {
+  width: 100%;
+}

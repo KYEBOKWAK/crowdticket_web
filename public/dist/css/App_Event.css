@@ -1,0 +1,1 @@
+.App_Event{padding-bottom:64px;width:100%;overflow:hidden;background-color:#fff}.App_Event .images_container{display:flex;justify-content:center}.App_Event .images_mobile{display:none}@media (max-width:768px){.App_Event .images_pc{display:none}.App_Event .images_mobile{display:block;width:1250px}}.pageController{width:100%}

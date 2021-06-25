@@ -21,15 +21,23 @@
   </style>
 
 
-  <link href="{{ asset('/dist/css/EventPage.css?version=5') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/App_Event.css?version=0') }}" rel="stylesheet"/>
 
 @endsection
 
 @section('content')
-<input id='app_page_key' type='hidden' value='WEB_EVENT_PAGE'/>
-<input id='event_alias' type='hidden' value='{{$alias}}'/>
+
 
 @endsection
 
+@section('react_main')
+<input id='app_page_key' type='hidden' value='WEB_EVENT_PAGE'/>
+<input id='event_alias' type='hidden' value='{{$alias}}'/>
+
+<div id="react_app_event_page"></div>
+</div>
+@endsection
+
 @section('js')
+<script type="text/javascript" src="{{ asset('/dist/App_Event.js?version=0') }}"></script>
 @endsection
