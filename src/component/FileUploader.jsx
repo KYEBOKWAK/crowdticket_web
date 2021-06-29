@@ -486,7 +486,7 @@ class FileUploader extends Component{
       }else{
         // alert('그낭 다운로드!!');        
         
-        const filename = file_name;
+        const filename = Util.regExp(file_name);
 
         const downloadLink = `${apiDownloadURL}/downloader/get/custom/file/${filename}?token=${result.filedownloadtoken}&user_id=${myID}`;
 
