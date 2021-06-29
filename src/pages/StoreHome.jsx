@@ -141,8 +141,6 @@ class StoreHome extends Component {
     category_top_list_dom = <div>
                               {category_line_box}
                             </div>
-    
-    
     return (
       <div className={'StoreHome'}>
         <Home_Top_Banner></Home_Top_Banner>

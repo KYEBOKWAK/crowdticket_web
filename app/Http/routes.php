@@ -199,6 +199,8 @@ Route::get('event/{alias}', 'ProjectController@getEventPage');
 //     return view('auth.login');
 // });
 
+Route::get('bridge/download', 'WelcomeController@goDownloadPage');
+
 Route::get('category/{top_id}', 'WelcomeController@getCategoryPage');
 
 Route::group(['middleware' => 'auth'], function () {

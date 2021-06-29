@@ -25,6 +25,8 @@ import Popup_image_preview from '../component/Popup_image_preview';
 
 import moment from 'moment';
 
+import {isIOS, isMobileSafari, isSafari} from 'react-device-detect';
+
 const FILE_UPLOADER_BOX_WIDTH = 80;
 
 class FileUploader extends Component{
@@ -114,7 +116,8 @@ class FileUploader extends Component{
             name: data.originalname
           },
           downloadURL: data.url,
-          isExpired: data.isExpired
+          isExpired: data.isExpired,
+          file_id: data.id
         }
 
         _files.push(reData);
@@ -428,6 +431,77 @@ class FileUploader extends Component{
     })
   }
 
+  onClickFileDownload = (e, file_id, file_name) => {
+    e.preventDefault();
+
+    if(file_id === undefined || file_id === null || file_id === ''){
+      alert('파일 ID가 없습니다. 새로고침 후 다시 이용 부탁드립니다.');
+      return;
+    }
+
+    const myID = Number(document.querySelector('#myId').value);
+    if(myID === 0){
+      //ID값이 0이면 로그인 안함.
+      alert('유저 ID 정보가 없습니다.');
+      return;
+    }
+
+    axios.post('/filedownload/token/make', {
+      file_id: file_id
+    }, (result) => {
+      const isNaver = window.navigator.userAgent.indexOf('NAVER');
+      let isGoSafari = false;
+
+      if(isIOS){
+        if(!isMobileSafari){
+          isGoSafari = true;
+        }
+
+        if(isNaver > 0){
+          isGoSafari = true;
+        }
+      }
+
+      let apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_REAL;
+      let appType = 'real';
+      const app_type_key = document.querySelector('#g_app_type');
+      if(app_type_key){
+        if(app_type_key.value === 'local'){
+          apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_local;
+          appType = app_type_key.value;
+          // apiDownloadURL = 'http://172.30.1.1:8080';
+        }else if(app_type_key.value === 'qa'){
+          apiDownloadURL = process.env.REACT_APP_DOWNLOAD_API_SERVER_QA;
+          appType = app_type_key.value;
+        }else{
+          appType = 'real';
+        }
+      }
+
+      if(isGoSafari){
+        // alert('사파리로 이동해서 다운로드!!');
+        const bridgeURL = process.env.REACT_APP_FTP_BRIDGE_URL;
+        window.location.href = `${bridgeURL}?target=${appType}&token=${result.filedownloadtoken}&user_id=${myID}`;
+        //ios 인데 사파리가 아니면 사파리로 이동한다!      
+      }else{
+        // alert('그낭 다운로드!!');        
+        
+        const filename = file_name;
+
+        const downloadLink = `${apiDownloadURL}/downloader/get/custom/file/${filename}?token=${result.filedownloadtoken}&user_id=${myID}`;
+
+        const link = document.createElement('a');
+        link.href = downloadLink;
+        link.download=filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);      
+      }
+    }, (error) => {
+
+    })
+  }
+
   render(){
     if(this.props.product_state === Types.product_state.ONE_TO_ONE){
       return (
@@ -503,10 +577,16 @@ class FileUploader extends Component{
 
       }
       else{
+        // bottomDom = <div className={'download_text'}>
+        //               <a href={data.downloadURL} download={data.file.name}>
+        //                 <img src={ic_file_download_img} />
+        //               </a>
+        //             </div>
+
         bottomDom = <div className={'download_text'}>
-                      <a href={data.downloadURL} download={data.file.name}>
+                      <button onClick={(e) => {this.onClickFileDownload(e, data.file_id, data.file.name)}}>
                         <img src={ic_file_download_img} />
-                      </a>
+                      </button>
                     </div>
       }
 
