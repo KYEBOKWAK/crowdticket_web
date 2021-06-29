@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import _axios from 'axios';
+import Util from './lib/Util';
 
 class App_File_Download_Temp_Page extends Component{
 
@@ -45,7 +46,7 @@ class App_File_Download_Temp_Page extends Component{
         return;
       }
 
-      const filename = data.originalname;
+      const filename = Util.regExp(data.originalname);
 
       const downloadLink = `${apiDownloadURL}/downloader/get/custom/file/${filename}?token=${filedownloadtoken}&user_id=${user_id}`;
       

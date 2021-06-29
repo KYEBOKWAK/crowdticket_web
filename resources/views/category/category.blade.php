@@ -40,5 +40,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=12') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=13') }}"></script>
 @endsection

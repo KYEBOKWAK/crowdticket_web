@@ -39,5 +39,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Event.js?version=1') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Event.js?version=2') }}"></script>
 @endsection
