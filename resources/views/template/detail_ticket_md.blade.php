@@ -35,8 +35,8 @@
   </div>
 
   <div class='mannayo_banner_container'>
-    <a href="https://crowdticket.typeform.com/to/rRUBMA" target='_blank'>
-      <img class='mannayo_banner_img' src='https://crowdticket0.s3-ap-northeast-1.amazonaws.com/banner/200414_online_detail_page_banner.png'>
+    <a href="https://crowdticket.kr/category/0" target='_blank'>
+      <img class='mannayo_banner_img' src='https://crowdticket0.s3.ap-northeast-1.amazonaws.com/banner/210701_online_event_banner.jpg'>
     </a>
   </div>
 </div>
