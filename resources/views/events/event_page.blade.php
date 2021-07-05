@@ -20,8 +20,12 @@
   }
   </style>
 
-
-  <link href="{{ asset('/dist/css/App_Event.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/ReactToastify.css?version=0') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/App_Event.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Product_Label.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Tag.css?version=1') }}" rel="stylesheet"/>
+  
 
 @endsection
 
@@ -39,5 +43,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Event.js?version=2') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Event.js?version=3') }}"></script>
 @endsection

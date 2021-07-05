@@ -136,7 +136,8 @@ const Types = {
     trend: 'trend',
     attention: 'attention',
     live_update: 'live_update',
-    hot: 'hot'
+    hot: 'hot',
+    props: 'props'
   },
   thumbnails: {
     recomment: 1,

@@ -108,9 +108,6 @@ class App_Top_Banner extends Component{
       });
     }else{
       window.location.href = this.state.link_url
-      // this.closeBanner(() => {
-      //   window.location.href = this.state.link_url
-      // });
     }
   }
 

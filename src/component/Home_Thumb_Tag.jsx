@@ -11,6 +11,7 @@ class Home_Thumb_Tag extends Component{
     super(props);
 
     this.state = {
+      text: this.props.text
     }
   };
 
@@ -25,7 +26,12 @@ class Home_Thumb_Tag extends Component{
     
   };
 
-  componentDidUpdate(){
+  componentDidUpdate(prevProps, prevState){
+    if(this.props.text !== this.state.text){
+      this.setState({
+        text: this.props.text
+      })
+    }
   }
 
   render(){
@@ -47,6 +53,8 @@ class Home_Thumb_Tag extends Component{
       }
     }else if(this.props.thumb_tags === Types.thumb_tags.hot){
       text = '🔥 HOT';
+    }else if(this.props.thumb_tags === Types.thumb_tags.props){
+      text = this.state.text
     }
     return(
       <div className='Home_Thumb_Tag'>
@@ -59,7 +67,8 @@ class Home_Thumb_Tag extends Component{
 };
 
 Home_Thumb_Tag.defaultProps = {
-  thumb_tags: Types.thumb_tags.trend
+  thumb_tags: Types.thumb_tags.trend,
+  text: null
 }
 
 export default Home_Thumb_Tag;

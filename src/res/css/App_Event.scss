@@ -4,11 +4,18 @@
 // }
 
 .App_Event {
-  padding-bottom: 64px;
+  // padding-bottom: 64px;
 
   width: 100%;
   overflow: hidden;
   background-color: white;
+
+  .padding_container {
+    width: 100%;
+    max-width: 1176px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .images_container {
     display: flex;
@@ -23,6 +30,170 @@
     display: none;
   }
 
+  .row_items_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+
+  .column_items_container {
+    display: flex;
+    // margin-top: 32px;
+  }
+
+  .row_items_gap {
+    width: 24px;
+    // background-color: red;
+  }
+
+  .column_items_gap{
+    width: 24px;
+    // background-color: red;
+  }
+
+  .list_container {
+    margin-top: -8px;
+  }
+
+  .title_text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #191919;
+  }
+
+  .container_box {
+    margin-top: 80px;
+  }
+
+  .tag_container {
+    margin-bottom: 8px;
+  }
+
+  .other_contents_button {
+    margin-top: 40px;
+    width: 100%;
+    height: 56px;
+    border-radius: 4px;
+    background-color: #fafafa;
+    font-size: 16px;
+    font-weight: bold;
+    color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bottom_banners_container {
+    display: flex;
+    margin-top: 60px;
+    justify-content: space-between;
+  }
+
+  .share_button {
+    width: 576px;
+    height: 120px;
+    border-radius: 4px;
+    background-color: #005cff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 32px;
+    position: relative;
+  }
+
+  .alarm_button_color {
+    background-color: #ff5e00;
+  }
+
+  .share_text_box {
+    text-align: left;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .share_text_bottom {
+    font-weight: bold; 
+  }
+  
+  .share_img {
+    // height: 100%;
+    width: 250px;
+    height: 120px;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .notice_container_bg {
+    
+  }
+
+  .notice_container {
+    white-space: pre-wrap;
+    width: 100%;
+    padding-top: 48px;
+    padding-bottom: 48px;
+    background-color: #fafafa;
+    margin-top: 60px;
+  }
+
+  .notice_title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .notice_content_box {
+    font-size: 14px;
+    color: #999999;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 1176px){
+
+    .column_items_gap {
+      width: 0px;
+    }
+    .column_items_container {
+      display: block;
+      margin-top: 0px;
+    }
+
+    .row_items_container {
+      margin-top: 40px;
+    }
+
+    .padding_container {
+      width: 100%;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    .bottom_banners_container {
+      display: block;
+      margin-top: 56px;
+    }
+
+    .share_button {
+      width: 100%;
+    }
+    
+    .alarm_button_color {
+      margin-top: 16px;
+    }
+
+    .notice_container {
+      margin-top: 56px;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .other_contents_button {
+      margin-top: 40px;
+    }
+  }
+
   @media (max-width: 768px){
     /*모바일일때*/  
     .images_pc {
@@ -31,7 +202,47 @@
     .images_mobile {
       display: block;
       width: 1250px;
-    }    
+    }
+    .row_items_gap {
+      width: 17px;
+    }
+
+    .padding_container {
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .other_contents_button {
+      height: 44px;
+      margin-top: 32px;
+      font-size: 14px;
+    }
+
+    .bottom_banners_container {
+      margin-top: 40px;
+    }
+
+    .share_button {
+      padding-left: 16px;
+      height: 88px
+    }
+    .share_text_box {
+      font-size: 16px;
+    }
+
+    .share_img {
+      width: 148px;
+      height: 88px;
+    }
+
+    .notice_title {
+      font-size: 16px;
+    }
+
+    .notice_content_box {
+      font-size: 12px;
+    }
   }
 
   @media (max-width: 365px){
@@ -41,4 +252,8 @@
 
 .pageController {
   width: 100%;
+}
+
+.Footer_React {
+  padding-top: 0px;
 }
