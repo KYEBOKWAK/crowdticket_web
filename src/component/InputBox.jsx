@@ -7,7 +7,8 @@ import ic_eye_on from '../res/img/ic-eye-on.svg';
 import ic_eye_off from '../res/img/ic-eye-off.svg';
 
 class InputBox extends Component{
-
+  inputRef = null;
+  
   constructor(props){
     super(props);
 
@@ -65,10 +66,18 @@ class InputBox extends Component{
   };
 
   componentWillUnmount(){
-    
+    this.inputRef = null;
   };
 
   componentDidUpdate(prevProps, prevState){
+    // if(this.props.name === 'phone'){
+    //   if(this.state.text !== prevState.text){
+    //     let text = getRemoveExpWord(this.state.text);
+    //     this.setState({
+    //       text: text
+    //     })
+    //   }
+    // }
   }
 
   clear = () => {
@@ -156,6 +165,14 @@ class InputBox extends Component{
     })
   }
 
+  setFocusInput = () => {
+    if(this.inputRef === null){
+      return alert('input ref error');
+    }
+
+    this.inputRef.focus();
+  }
+
   onFocusInput = (e) => {
     this.setState({
       isBlur: false
@@ -195,7 +212,7 @@ class InputBox extends Component{
 
     return(
       <div className={'InputBox'}>
-        <input disabled={this.state.is_disabled} maxLength={this.props.maxLength} style={this.props.styleProps} className={inputClassName} type={inputType} name={this.props.name} placeholder={this.props.placeholder} value={this.state.text} onFocus={(e) => {this.onFocusInput(e)}} onChange={(e) => {this.onChangeText(e)}} onBlur={(e) => {this.onChangeTextBlur(e)}} />
+        <input ref={(ref) => {this.inputRef = ref}} disabled={this.state.is_disabled} maxLength={this.props.maxLength} style={this.props.styleProps} className={inputClassName} type={inputType} name={this.props.name} placeholder={this.props.placeholder} value={this.state.text} onFocus={(e) => {this.onFocusInput(e)}} onChange={(e) => {this.onChangeText(e)}} onBlur={(e) => {this.onChangeTextBlur(e)}} />
 
         {password_show_icon_dom}
       </div>

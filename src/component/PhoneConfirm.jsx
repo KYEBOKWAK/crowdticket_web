@@ -76,6 +76,13 @@ class PhoneConfirm extends Component{
   componentDidMount(){
     this.setState({
       isInit: true
+    }, () => {
+      let countryCodeDom = document.querySelectorAll('.PhoneConfirm .react-tel-input .form-control');
+      if(countryCodeDom.length > 0){
+        countryCodeDom[0].addEventListener('focus', () => {
+          this.input_phone_ref.setFocusInput();
+        })
+      }
     })
   };
 
@@ -166,6 +173,7 @@ class PhoneConfirm extends Component{
     if(text.length > 0){
       sendConfirmButtonDisabled = false;
     }
+
     this.setState(
     {
       number: text,
@@ -196,6 +204,10 @@ class PhoneConfirm extends Component{
   }
 
   onClickSendConfirmNumber = (e) => {
+    if(!isCheckPhoneNumber(this.state.number)){
+      return;
+    }
+    
     axios.post("/any/call/certify/number", {
       contact: this.state.number,
       countryCode: this.state.countryCode
