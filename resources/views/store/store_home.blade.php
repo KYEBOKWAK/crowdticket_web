@@ -29,7 +29,8 @@
   <link href="{{ asset('/dist/css/Popup_progress.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_list.css?version=1') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Popular_item.css?version=1') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Popular_item.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Tag_Thumb_Item.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/alice-carousel.css?version=0') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Product_Label.css?version=1') }}" rel="stylesheet"/>
@@ -39,7 +40,7 @@
   <link href="{{ asset('/dist/css/Home_Thumb_Attention_Item.css?version=2') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Container_List.css?version=2') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=3') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Home_Thumb_Stores_Item.css?version=2') }}" rel="stylesheet"/>
 

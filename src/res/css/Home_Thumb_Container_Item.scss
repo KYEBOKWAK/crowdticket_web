@@ -21,14 +21,13 @@ $item_mobile_item_width: 230px;
 
   .item_img_wrapper {
     width: $item_width;
-    // max-width: 276px;
-    // height: $item_height;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 4px;
     overflow: hidden;
     flex-shrink: 0;
+    position: relative;
   }
 
   .item_img {

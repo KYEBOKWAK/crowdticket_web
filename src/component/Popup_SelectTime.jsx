@@ -219,23 +219,7 @@ class Popup_SelectTime extends Component{
 
     // console.log(this.state.end_time_moment.format("YYYY-MM-DD"));
 
-    return month_options_dom;
-
-    // console.log(moment_timezone.duration(this.state.end_time_moment.diff(this.state.now_time_moment)).months());
-
-    // moment_timezone.duration(this.state.end_time_moment.diff(this.state.now_time_moment)).months()
-    /*
-    const nowYear = this.state.now_time_moment.year();
-
-    // const nextMonthMoment = moment_timezone(this.state.now_time_moment).add(1, 'month').format("YYYY-MM-01");
-    const nextMonthMoment = moment_timezone('2020-02-03').add(1, 'month').format("YYYY-MM-01");
-    const nowMaxData = moment_timezone(nextMonthMoment).add(-1, 'day').format("YYYY-MM-DD");
-    console.log(nowMaxData);
-    if(this.state.select_year_value === nowYear){
-
-    }
-    */
-    
+    return month_options_dom;    
   }
 
   getDaysValue = () => {

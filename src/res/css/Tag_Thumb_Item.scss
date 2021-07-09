@@ -1,0 +1,30 @@
+
+.Tag_Thumb_Item {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  .tag_box_container {
+    display: flex;
+  }
+
+  .tag_box {
+    margin-right: 4px;
+    padding: 6px 8px;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px){
+    /*테블릿*/
+    .tag_box {
+      font-size: 9px;
+    }
+  }
+
+  @media (max-width: 453px){
+    /*모바일일때*/  
+  }
+}

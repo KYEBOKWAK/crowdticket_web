@@ -17,7 +17,8 @@
   <link href="{{ asset('/dist/css/Category_Top_Carousel_Item.css?version=2') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Category_Result_List.css?version=3') }}" rel="stylesheet"/>
-  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=2') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Home_Thumb_Container_Item.css?version=3') }}" rel="stylesheet"/>
+  <link href="{{ asset('/dist/css/Tag_Thumb_Item.css?version=0') }}" rel="stylesheet"/>
   <link href="{{ asset('/dist/css/Home_Thumb_Product_Label.css?version=1') }}" rel="stylesheet"/>
 
   <link href="{{ asset('/dist/css/Profile.css?version=2') }}" rel="stylesheet"/>
@@ -40,5 +41,5 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=14') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Category.js?version=15') }}"></script>
 @endsection

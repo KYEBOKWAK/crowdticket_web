@@ -580,10 +580,10 @@ function logout(){
     }
 </script>
 
-<script type="text/javascript" src="{{ asset('/dist/App.js?version=204') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=36') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=14') }}"></script>
-<script type="text/javascript" src="{{ asset('/dist/App_Top_Banner.js?version=5') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App.js?version=205') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Login.js?version=37') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_PC_776.js?version=15') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_Top_Banner.js?version=6') }}"></script>
 
 </body>
 </html>

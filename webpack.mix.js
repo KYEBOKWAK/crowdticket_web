@@ -130,6 +130,7 @@ if (mix.inProduction()) {
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
   .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
   .sass('src/res/css/App_Event.scss', 'dist/css/')
+  .sass('src/res/css/Tag_Thumb_Item.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()
@@ -246,6 +247,7 @@ if (mix.inProduction()) {
   .sass('src/res/css/InActivePage.scss', 'dist/css/')
   .sass('src/res/css/App_Top_Banner.scss', 'dist/css/')
   .sass('src/res/css/App_Event.scss', 'dist/css/')
+  .sass('src/res/css/Tag_Thumb_Item.scss', 'dist/css/')
   .webpackConfig({
     plugins: [
       new Dotenv()

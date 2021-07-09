@@ -11,6 +11,8 @@ import Home_Thumb_Product_Label from '../component/Home_Thumb_Product_Label';
 import Util from '../lib/Util';
 import Types from '../Types';
 
+import Tag_Thumb_Item from '../component/Tag_Thumb_Item';
+
 class Home_Thumb_Popular_item extends Component{
 
   COORDS = {
@@ -132,7 +134,10 @@ class Home_Thumb_Popular_item extends Component{
       <div className={'Home_Thumb_Popular_item'}>
         <button onDragStart={(e) => {e.preventDefault();}} onMouseDown={(e) => {this.handleOnMouseDown(e)}}
             onMouseUp={(e) => {this.handleMouseUp(e)}} onClick={(e) => {this.onClickItem(e)}} className={'item_box'}>
-          <img onDragStart={(e) => {e.preventDefault()}} className={'item_img'} src={this.state.thumb_img_url} />
+          <div className={'img_box'}>
+            <img onDragStart={(e) => {e.preventDefault()}} className={'item_img'} src={this.state.thumb_img_url} />
+            <Tag_Thumb_Item item_id={this.props.store_item_id}></Tag_Thumb_Item>
+          </div>
           <div className={'item_content_container'}>
             <Profile user_id={this.state.store_user_id} circleSize={32} isEdit={false}></Profile>
             <div className={'item_content'}>

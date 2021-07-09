@@ -6,6 +6,8 @@ import axios from '../lib/Axios';
 
 import Home_Thumb_Product_Label from '../component/Home_Thumb_Product_Label';
 
+import Tag_Thumb_Item from '../component/Tag_Thumb_Item';
+
 import Profile from '../component/Profile';
 import Name from '../component/Name';
 import Types from '../Types';
@@ -230,6 +232,7 @@ class Home_Thumb_Container_Item extends Component{
         <button onClick={(e) => {this.onClickGoItem(e)}} className={'item_container'}>
           <div className={'item_img_wrapper'} style={imageWrapperStyle}>
             <img className={'item_img'} style={imageStyle} onLoad={(img) => {this.onImgLoad(img)}} src={this.state.item_img_url} />
+            <Tag_Thumb_Item item_id={this.props.store_item_id}></Tag_Thumb_Item>
           </div>
           
           <div className={'item_bottom_container'}>
