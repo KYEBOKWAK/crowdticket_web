@@ -17,6 +17,9 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { ToastContainer, toast } from 'react-toastify';
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 const HOME_THUMB_CONTAINER_SHOW_LINE_COUNT = 4;
 const REQUEST_ONCE_ITME = 16;
 
@@ -75,11 +78,37 @@ class App_Event extends Component{
         this.requestEventTag();
         this.requestEventTitle();
         this.requestEventNotice();
+        this.addViewCount();
       })
     }, (error) => {
       alert('존재 하지 않는 이벤트 입니다.');
     })
   };
+
+  addViewCount = () => {
+    let cookiesName = 'cr_event_view_'+this.state.alias;
+
+    let view_store = cookies.get(cookiesName);
+    if(view_store === undefined){
+      var today = new Date();
+
+      var nextDay = new Date(today);
+      nextDay.setMinutes(today.getMinutes() + 10);
+
+      cookies.set(cookiesName, '0', 
+      { 
+        path: '/',
+        expires: nextDay
+      });
+
+      axios.post('/viewcount/any/event/add', {
+        alias: this.state.alias
+      }, (result) => {
+      }, (error) => {
+
+      })
+    }
+  }
 
   requestEventNotice = () => {
     if(this.state.alias === null){

@@ -12,7 +12,7 @@
 <div id="react_app_file_download_temp_page">
 </div>
 
-<script type="text/javascript" src="{{ asset('/dist/App_File_Download_Temp_Page.js?version=3') }}"></script>
+<script type="text/javascript" src="{{ asset('/dist/App_File_Download_Temp_Page.js?version=4') }}"></script>
 
 </body>
 </html>
