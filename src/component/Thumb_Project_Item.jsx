@@ -57,6 +57,7 @@ class Thumb_Project_Item extends Component{
     // window.addEventListener('resize', this.updateDimensions);
 
     this.requestProjectInfo();
+    this.requestShowDate();
   };
 
   requestProjectInfo = () => {
@@ -103,6 +104,39 @@ class Thumb_Project_Item extends Component{
       })
 
       // console.log(result);
+    }, (error) => {
+
+    })
+  }
+
+  requestShowDate = () => {
+    if(this.props.project_id === null){
+      return;
+    }
+
+    axios.post('/projects/any/ticket/showdate', {
+      project_id: this.props.project_id
+    }, (result) => {
+      if(result.list.length === 0){
+        return this.setState({
+          isHaveTicketShowDate: false
+        })
+      }
+
+      if(result.list[0].show_date === '0000-00-00 00:00:00'){
+        return this.setState({
+          isHaveTicketShowDate: false
+        })
+      }
+
+      let ticket_date = Util.getTicketShowDate(result.list[0].show_date, result.list[result.list.length - 1].show_date);
+
+      this.setState({
+        ticket_date: ticket_date,
+        isHaveTicketShowDate: true
+      })
+      // start_date_moment
+
     }, (error) => {
 
     })
