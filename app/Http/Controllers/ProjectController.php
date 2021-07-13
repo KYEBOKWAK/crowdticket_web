@@ -18,6 +18,8 @@ use App\Models\Magazine as Magazine;
 
 use App\Models\Main_thumb_play_creator as Main_thumb_play_creator;
 
+use App\Models\Event_page as Event_page;
+
 use App\Services\SmsService;
 
 use Illuminate\Http\Request as Request;
@@ -2128,9 +2130,19 @@ class ProjectController extends Controller
       //     'alias' => $alias
       //   ]);
       // }
+
+      $event_pages = Event_page::where('alias', $alias)->where('row_type', 'ogimage')->get();
+
+      $ogImageURL = null;
+
+      if(count($event_pages) > 0){
+        $event_page = $event_pages[0];
+        $ogImageURL = $event_page->image_pc;
+      }
       
       return view('events.event_page', [
-        'alias' => $alias
+        'alias' => $alias,
+        'ogImageURL' => $ogImageURL
       ]);
     }
 }
