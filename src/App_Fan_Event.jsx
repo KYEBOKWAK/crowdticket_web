@@ -155,7 +155,7 @@ class App_Fan_Event extends Component {
 
         <div className={'page_container fan_project_list_box'}>
           <div className={'fan_project_list_label'}>
-            지난 팬 이벤트
+            모든 팬 이벤트
           </div>
           <Fan_Project_List></Fan_Project_List>
         </div>
