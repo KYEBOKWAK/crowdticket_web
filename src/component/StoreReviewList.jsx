@@ -2,8 +2,6 @@
 
 import React, { Component } from 'react';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
-
 import Util from '../lib/Util';
 import Login from '../lib/Login';
 
@@ -13,20 +11,22 @@ import Types from '../Types';
 
 import Str from '../component/Str';
 
-const REQUEST_ONCE_ITME = 5;
+const REQUEST_ONCE_ITME = 10;
 let isRequestInitData = false;
 
 class StoreReviewList extends Component{
+  isUnmount = false;
 
   constructor(props){
     super(props);
 
     this.state = {
       items: [],
-      hasMore: true
+      hasMore: true,
+      isRefreshing: true
     }
 
-    this.requestMoreData = this.requestMoreData.bind(this);
+    // this.requestMoreData = this.requestMoreData.bind(this);
   };
 
   // shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -38,32 +38,13 @@ class StoreReviewList extends Component{
     this.requestStoreContents();
 
     this.requestMoreData();
-    // let _items = [];
-
-    // let itemIndex = _items.length;
-    // if(itemIndex < 0){
-    //   itemIndex = 0;
-    // }
-
-    // // let hasMore = true;
-    // for(let i = 0 ; i < REQUEST_ONCE_ITME ; i++){
-    //   if(itemIndex >= itemsData.length ){
-    //     // hasMore = false;
-    //     break;
-    //   }
-
-    //   _items.push(itemsData[itemIndex]);
-    //   itemIndex++;
-    // }
     
-    // this.setState({
-    //   items: _items.concat(),
-    // });
-    
+    window.addEventListener('scroll', this.handleScroll);
   };
 
   componentWillUnmount(){
-    
+    this.isUnmount = true;
+    window.removeEventListener('scroll', this.handleScroll);
   };
 
   componentDidUpdate(){
@@ -73,7 +54,7 @@ class StoreReviewList extends Component{
   requestStoreContents(){
   }
 
-  requestMoreData(){
+  requestMoreData = () => {
     if(this.state.items.length === 0 && this.isRequestInitData){
       return;
     }
@@ -90,6 +71,10 @@ class StoreReviewList extends Component{
       // lastID: 
     }, 
     (result) => {
+      if(this.isUnmount){
+        return;
+      }
+
       let itemsData = result.list.concat();
       let _items = this.state.items.concat();
       
@@ -107,44 +92,12 @@ class StoreReviewList extends Component{
       
       this.setState({
         items: _items.concat(),
+        isRefreshing: false,
         hasMore: hasMore
       });
     }, (error) => {
 
     })
-
-    /*
-    setTimeout(() => {
-      let _items = this.state.items.concat();
-
-      // if(_items.length === 0){
-      //   _items = itemsData.
-      // }else{
-
-      // }
-
-      let itemIndex = _items.length;
-      if(itemIndex < 0){
-        itemIndex = 0;
-      }
-
-      let hasMore = true;
-      for(let i = 0 ; i < REQUEST_ONCE_ITME ; i++){
-        if(itemIndex >= itemsData.length ){
-          hasMore = false;
-          break;
-        }
-
-        _items.push(itemsData[itemIndex]);
-        itemIndex++;
-      }
-      
-      this.setState({
-        items: _items.concat(),
-        hasMore: hasMore
-      });
-    }, 1000);
-    */
   };
 
   goWriteReviewPage = () => {
@@ -182,51 +135,52 @@ class StoreReviewList extends Component{
     // console.log(reviewWriteURL);
   }
 
+  handleScroll = () => {
+    let refresh_target_dom = document.querySelector('#refresh_fake_dom');
+    if(refresh_target_dom){
+      const { top, height } = refresh_target_dom.getBoundingClientRect();
+
+      const windowHeight = window.innerHeight;
+
+      if(top <= windowHeight){
+        if(!this.state.isRefreshing && this.state.hasMore){
+          this.setState({
+            isRefreshing: true
+          }, () => {
+            this.requestMoreData();
+          })
+        }
+      }
+    }
+  }
+
   render(){
+    let itemList = [];
+    for(let i = 0 ; i < this.state.items.length ; i++){
+      const data = this.state.items[i];
+      const itemObject = <div key={data.comment_id} style={{marginTop: 32}}>
+                          <StoreReviewItem user_id={data.user_id} created_at={data.created_at} id={data.comment_id} store_id={this.props.store_id} name={data.name} nick_name={data.nick_name} content={data.contents} profile_photo_url={data.profile_photo_url}></StoreReviewItem>
+                        </div>
+
+      itemList.push(itemObject);
+    }
+
     return(
+      
+        
       <div className={'StoreReviewList'}>
         <div style={{paddingLeft: 10, paddingRight: 10, width: '100%'}}>
           <button onClick={(e) => {this.clickWriteReview(e)}} className={'reviewButton'}>
-            {/* 작성하기 */}
             <Str strKey={'s145'} />
           </button>
         </div>
-        <InfiniteScroll
-          // style={{width: '100%'}}
-          dataLength={this.state.items.length} //This is important field to render the next data
-          next={this.requestMoreData}
-          hasMore={this.state.hasMore}
-          loader=
-          {
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-              <h4>Loading...</h4>
-            </div>
-          }
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              {/* <b>Yay! You have seen it all</b> */}
-            </p>
-          }
-          // below props only if you need pull down functionality
-          // refreshFunction={this.refresh}
-          // pullDownToRefresh
-          pullDownToRefreshThreshold={50}
-          pullDownToRefreshContent={
-            <></>
-            // <h3 style={{ textAlign: 'center' }}>&#8595; Pull down to refresh</h3>
-          }
-          releaseToRefreshContent={
-            <></>
-            // <h3 style={{ textAlign: 'center' }}>&#8593; Release to refresh</h3>
-          }
-        >
-          {this.state.items.map((data) => {
-            return <div key={data.comment_id} style={{marginTop: 32}}>
-                    <StoreReviewItem user_id={data.user_id} created_at={data.created_at} id={data.comment_id} store_id={this.props.store_id} name={data.name} nick_name={data.nick_name} content={data.contents} profile_photo_url={data.profile_photo_url}></StoreReviewItem>
-                  </div>
-          })}
-        </InfiniteScroll>
+
+        {itemList}
+
+        <div id={'refresh_fake_dom'}>
+        </div>
       </div>
+      
     )
   }
 };

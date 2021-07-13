@@ -557,9 +557,11 @@ class StoreDetailPage extends Component {
               {reviewUnderLine}
             </button>
           </div>
+        
           {mainContent}
 
-        </div>        
+        </div>
+        
       </div>
     );
   }
