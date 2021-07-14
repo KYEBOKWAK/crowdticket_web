@@ -4,9 +4,6 @@ import React, { Component } from 'react';
 import axios from '../lib/Axios';
 import Types from '../Types';
 
-// import ScrollArea from 'react-scrollbar';
-// import {Scrollbar} from 'smooth-scrollbar-react';
-
 const CATEGORY_DEFAULT_VALUE = 1;
 const CATEGORY_DOWNLOAD_DEFAULT_VALUE = 7;
 class Category_Selecter extends Component{
@@ -14,13 +11,17 @@ class Category_Selecter extends Component{
   constructor(props){
     super(props);
 
+    const pageState = document.querySelector('#add_item_page_state').value;
+
     this.state = {
       select_top_id: null,
       select_sub_id: null,
       category_top_list: [],
       category_sub_list: [],
 
-      isInitInfo: false,
+      // isInitInfo: false,
+
+      item_add_page_type: pageState,
 
       explain_list: [
         {
@@ -56,26 +57,32 @@ class Category_Selecter extends Component{
   // }
 
   componentDidMount(){
-    this.requestTopCategoryList();
+    if(this.state.item_add_page_type === Types.add_page_state.ADD){
+      this.requestTopCategoryList();
+    }
   };
 
   componentDidUpdate(prevProps, prevState){
     if(prevProps.default_category_sub_id !== this.props.default_category_sub_id){
-      if(!this.state.isInitInfo){
-        this.setState({
-          isInitInfo: true
-        }, () => {
-          this.getCategoryInfo();
-        })
-      }
+      this.requestTopCategoryList();      
     }
 
-    if(prevProps.item_type_contents !== this.props.item_type_contents){
-      this.setDefaultTopCategory();
+    if(this.state.item_add_page_type === Types.add_page_state.ADD){
+      if(prevProps.item_type_contents !== this.props.item_type_contents){
+        this.setState({
+          select_top_id: null,
+          select_sub_id: null,
+          category_top_list: [],
+          category_sub_list: [],
+
+          // isInitInfo: false,
+        }, () => {
+          this.props.callback_select(this.state.select_top_id, this.state.select_sub_id);
+          // this.requestTopCategoryList();
+          
+        })
+      }  
     }
-    // if(prevState.select_top_id !== this.state.select_top_id){
-    //   this.requsetSubCategoryList(); 
-    // }
   }
 
   requestTopCategoryList = () => {
@@ -84,12 +91,7 @@ class Category_Selecter extends Component{
       this.setState({
         category_top_list: result.list.concat()
       }, () => {
-        // if(this.props.default_category_sub_id === null){
-          this.setDefaultTopCategory();
-        // }else{
-          // this.getCategoryInfo();
-        // }
-        
+        this.getCategoryInfo();        
       })
     }, (error) => {
 
@@ -97,6 +99,10 @@ class Category_Selecter extends Component{
   }
 
   getCategoryInfo = () => {
+    if(this.props.default_category_sub_id === null){
+      return;
+    }
+
     axios.post("/category/any/get/info", {
       category_sub_item_id: this.props.default_category_sub_id
     }, (result) => {
@@ -111,21 +117,6 @@ class Category_Selecter extends Component{
     })
   }
 
-  setDefaultTopCategory = () => {
-
-    let default_top_id = CATEGORY_DEFAULT_VALUE
-    if(this.props.item_type_contents === Types.contents.completed){
-      default_top_id = CATEGORY_DOWNLOAD_DEFAULT_VALUE;
-    }
-    
-    this.setState({
-      select_top_id: default_top_id,
-    }, () => {
-      this.setSubCategory(null);
-      this.requsetSubCategoryList();
-    })
-  }
-
   requsetSubCategoryList = () => {
     if(this.state.select_top_id === null){
       return;
@@ -136,6 +127,8 @@ class Category_Selecter extends Component{
     }, (result) => {
       this.setState({
         category_sub_list: result.list.concat()
+      }, () => {
+        this.setSubCategory(this.state.select_sub_id);
       })
     }, (error) => {
 
@@ -151,8 +144,9 @@ class Category_Selecter extends Component{
 
     this.setState({
       select_top_id: select_category_top_id,
+      select_sub_id: null
     }, () => {
-      this.setSubCategory(null);
+      // this.setSubCategory(null);
       this.requsetSubCategoryList();
     })
   }
