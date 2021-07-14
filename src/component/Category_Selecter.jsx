@@ -64,7 +64,7 @@ class Category_Selecter extends Component{
 
   componentDidUpdate(prevProps, prevState){
     if(prevProps.default_category_sub_id !== this.props.default_category_sub_id){
-      this.requestTopCategoryList();      
+      this.requestTopCategoryList();
     }
 
     if(this.state.item_add_page_type === Types.add_page_state.ADD){
@@ -78,6 +78,7 @@ class Category_Selecter extends Component{
           // isInitInfo: false,
         }, () => {
           this.props.callback_select(this.state.select_top_id, this.state.select_sub_id);
+          this.requestTopCategoryList();
           // this.requestTopCategoryList();
           
         })
