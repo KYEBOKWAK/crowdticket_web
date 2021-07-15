@@ -423,12 +423,10 @@ class StoreAddItemPage extends Component{
       })
     }
     else if(type === INPUT_STORE_MANAGER_ADD_ITEM_PRICE){
-      if(e.target.value < 0){
-        return;
-      }
       this.setState({
         item_price: e.target.value
       })
+      
     }
     else if(type === INPUT_STORE_MANAGER_ADD_ITEM_ASK){
       this.setState({
@@ -573,14 +571,20 @@ class StoreAddItemPage extends Component{
         return;
       }
     }
-    
-    if(this.state.item_price < 0){
+
+    const total_price = Number(this.state.item_price);    
+    if(total_price < 0){
       alert("0원 이상의 가격으로 입력해주세요.");
       return;
     }
     
     if(this.state.select_sub_id === null){
       alert('콘텐츠의 카테고리를 선택해주세요!');
+      return;
+    }
+
+    if(!isCheckOnlyNumber(total_price)){
+      alert('콘텐츠 가격은 숫자만 입력 가능합니다.');
       return;
     }
 
@@ -1417,7 +1421,7 @@ class StoreAddItemPage extends Component{
             <div className={'necessary_dot'}>
             </div>
           </div>
-          <input className={'input_box'} type="number" name={'price'} placeholder={'콘텐츠 가격을 입력해주세요.'} value={priceText} disabled={priceInputDisabled} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_PRICE)}}/>
+          <input className={'input_box'} type="text" name={'price'} placeholder={'콘텐츠 가격을 입력해주세요.'} value={priceText} disabled={priceInputDisabled} onChange={(e) => {this.onChangeInput(e, INPUT_STORE_MANAGER_ADD_ITEM_PRICE)}}/>
           
           <div className={'input_container'}>
             <div className={'input_label'}>
